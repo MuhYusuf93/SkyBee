@@ -1,0 +1,39 @@
+{
+  "finalized_local_date": "2026-10-15",
+  "test_local_date": "2026-10-14",
+  "functional_unique_per_target": {
+    "Windows": 173,
+    "Poco F6": 128,
+    "DV8910": 74,
+    "Emulator": 30
+  },
+  "benchmark_separate": {
+    "Windows": 2,
+    "DV8910": 1
+  },
+  "not_a_single_all_pass_runner": [
+    "DV8910",
+    "Emulator"
+  ],
+  "dv_management_coverage": "12 completed partial cases + focused pagination1 + migration1; retry3 excluded",
+  "poco_baseline_hashes_unchanged": {
+    "databases/kasir_app.db": "989aa556a59063e7c5b0faa92d19a9263a86c103cb2ef44838c9a1f419e76e22",
+    "databases/kasir_app.db-journal": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560"
+  },
+  "emulator_baseline_hashes_unchanged": {
+    "databases/kasir_app.db": "bad683d01ae17c2f958543cdf7ea3f6e474f492e95b09abc619e63bf5f310115",
+    "databases/kasir_app.db-journal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "emulator_initial_journal_evidence": "zero-byte file metadata; empty SHA256 derived, not measured until after/final",
+  "ordinary_artifact_hashes_match": true,
+  "python_ast_files": 4,
+  "remaining_limits": [
+    "OEM keyboard/clipboard/physical scanner",
+    "TalkBack",
+    "full release runtime",
+    "reboot/powerloss",
+    "peak RAM",
+    "operational backup/restore M5",
+    "intermittent emulator frame/handshake and DV transport exact causes"
+  ]
+}

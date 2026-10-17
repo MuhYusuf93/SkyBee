@@ -1,0 +1,12 @@
+ACTIVITY MANAGER PROCESS EXIT INFO (dumpsys activity exit-info)
+Last Timestamp of Persistence Into Persistent Storage: 2026-10-13 03:47:17.459
+  package: com.example.kasir_app.integration
+    Historical Process Exit for uid=10537
+        ApplicationExitInfo #0:
+          timestamp=2026-10-13 03:56:06.398 pid=7624 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0,00 rss=0,00 description=stop com.example.kasir_app.integration due to from process:14657 state=empty trace=null
+        ApplicationExitInfo #1:
+          timestamp=2026-10-13 03:54:39.435 pid=6950 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=305MB rss=431MB description=stop com.example.kasir_app.integration due to from process:13295 state=empty trace=null

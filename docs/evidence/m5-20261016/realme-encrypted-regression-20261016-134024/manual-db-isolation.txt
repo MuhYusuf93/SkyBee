@@ -1,0 +1,1 @@
+Exact manual fixture DB and sidecar fingerprints unchanged across test interval.

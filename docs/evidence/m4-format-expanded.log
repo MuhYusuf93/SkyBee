@@ -1,0 +1,15 @@
+Formatted lib\data\repositories\sqlite_reports_repository.dart
+Formatted lib\features\cashier\application\product_search_service.dart
+Formatted lib\features\reports\presentation\financial_filters.dart
+Formatted lib\features\sale_history\presentation\sale_detail_screen.dart
+Formatted test\m4_performance_test.dart
+Formatted test\m4_storage_test.dart
+Formatted test\m4_ui_test.dart
+Formatted test\m4_value_types_test.dart
+Formatted test\support\m4_performance_suite.dart
+Formatted test\support\m4_storage_suite.dart
+Formatted test\support\m4_ui_suite.dart
+Formatted integration_test\m4_performance_test.dart
+Formatted integration_test\m4_storage_test.dart
+Formatted integration_test\m4_ui_test.dart
+Formatted 131 files (14 changed) in 0.40 seconds.

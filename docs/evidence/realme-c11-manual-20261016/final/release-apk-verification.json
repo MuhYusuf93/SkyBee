@@ -1,0 +1,40 @@
+{
+  "apk": "build\\realme-c11-20261015\\realme-cashier-release.apk",
+  "sha256": "969bccdda9605a2e82d137957316f1dbb848075f314532eb479befca21f709f7",
+  "bytes": 17022097,
+  "package": "com.example.kasir_app.integration",
+  "min_sdk": 24,
+  "metadata": [
+    "package: name='com.example.kasir_app.integration' versionCode='6' versionName='0.4.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+    "application-label:'kasir_app tests'",
+    "launchable-activity: name='com.example.kasir_app.IntegrationActivity'  label='' icon=''",
+    "native-code: 'armeabi-v7a'"
+  ],
+  "permissions": [
+    "package: com.example.kasir_app.integration",
+    "permission: com.example.kasir_app.integration.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+    "uses-permission: name='com.example.kasir_app.integration.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'"
+  ],
+  "native": [
+    {
+      "abi": "armeabi-v7a",
+      "bytes": 8892,
+      "elf_class": "ELF32",
+      "machine": "ARM",
+      "sha256": "a9de22f772281b9df4f4118c2018f6e65ac866ef976c97e45c5a81beb7d8be08",
+      "jni_export_present": true,
+      "load_alignment_at_least_16k": true,
+      "needed": [
+        "libm.so",
+        "libdl.so",
+        "libc.so"
+      ]
+    }
+  ],
+  "installed_by_this_check": false,
+  "zipalign_16k_pass": true,
+  "dex_checked": [
+    "classes.dex"
+  ],
+  "license_packaged_unchanged": true
+}

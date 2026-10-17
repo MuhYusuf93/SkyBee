@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "native-cashier-ui-clean-retest",
+    "File": "integration_test/cashier_ui_test.dart",
+    "Start": "2026-10-16T03:46:16.9705361+07:00",
+    "End": "2026-10-16T03:48:23.7568902+07:00",
+    "Exit": 0,
+    "Log": "docs\\evidence\\realme-c11-manual-20261016\\final\\native-cashier-ui-clean-retest.log",
+    "UiAutomatorDuringTest": false
+  },
+  {
+    "Name": "native-exact-ledger-final",
+    "File": "integration_test/realme_post_manual_audit_test.dart",
+    "Start": "2026-10-16T03:48:23.8119919+07:00",
+    "End": "2026-10-16T03:49:40.8665585+07:00",
+    "Exit": 0,
+    "Log": "docs\\evidence\\realme-c11-manual-20261016\\final\\native-exact-ledger-final.log",
+    "UiAutomatorDuringTest": false
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "exit_code": 0,
+  "suites": [
+    {
+      "suite": "database_test.dart",
+      "count": 11,
+      "reporter_duration": "00:03"
+    },
+    {
+      "suite": "management_inventory_test.dart",
+      "count": 14,
+      "reporter_duration": "01:39"
+    },
+    {
+      "suite": "locale_currency_test.dart",
+      "count": 6,
+      "reporter_duration": "01:35"
+    },
+    {
+      "suite": "cashier_sql_test.dart",
+      "count": 30,
+      "reporter_duration": "00:13"
+    },
+    {
+      "suite": "wholesale_packaging_sql_test.dart",
+      "count": 14,
+      "reporter_duration": "01:01"
+    },
+    {
+      "suite": "localization_ui_test.dart",
+      "count": 1,
+      "reporter_duration": "00:26"
+    },
+    {
+      "suite": "management_ui_test.dart",
+      "count": 1,
+      "reporter_duration": "00:27"
+    },
+    {
+      "suite": "cashier_ui_test.dart",
+      "count": 2,
+      "reporter_duration": "00:45"
+    },
+    {
+      "suite": "wholesale_packaging_ui_test.dart",
+      "count": 1,
+      "reporter_duration": "01:06"
+    },
+    {
+      "suite": "m31_ui_gaps_test.dart",
+      "count": 4,
+      "reporter_duration": "00:47"
+    }
+  ],
+  "total": 84,
+  "sql": 75,
+  "ui": 9,
+  "operational_db_sha256_before": "2d3803984e87c541806fc25f5dc15f495f3da7d8f54ff77ee95f4ffab4af37c7",
+  "operational_db_sha256_after": "2d3803984e87c541806fc25f5dc15f495f3da7d8f54ff77ee95f4ffab4af37c7"
+}

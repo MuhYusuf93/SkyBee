@@ -1,0 +1,29 @@
+[
+  {
+    "Name": "native-checkout-idempotency",
+    "File": "integration_test/cashier_sql_test.dart",
+    "Filter": "checkout same attempt is idempotent; changed payment rejected and completed draft guarded",
+    "Start": "2026-10-16T03:40:39.4642149+07:00",
+    "End": "2026-10-16T03:41:56.7927759+07:00",
+    "Exit": 0,
+    "Log": "docs\\evidence\\realme-c11-manual-20261016\\final\\native-checkout-idempotency.log"
+  },
+  {
+    "Name": "native-cashier-ui",
+    "File": "integration_test/cashier_ui_test.dart",
+    "Filter": "",
+    "Start": "2026-10-16T03:41:56.8421753+07:00",
+    "End": "2026-10-16T03:44:27.6807554+07:00",
+    "Exit": 1,
+    "Log": "docs\\evidence\\realme-c11-manual-20261016\\final\\native-cashier-ui.log"
+  },
+  {
+    "Name": "native-exact-ledger-after-regression",
+    "File": "integration_test/realme_post_manual_audit_test.dart",
+    "Filter": "",
+    "Start": "2026-10-16T03:44:27.6842270+07:00",
+    "End": "2026-10-16T03:45:30.8970063+07:00",
+    "Exit": 0,
+    "Log": "docs\\evidence\\realme-c11-manual-20261016\\final\\native-exact-ledger-after-regression.log"
+  }
+]

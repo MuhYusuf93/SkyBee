@@ -1,0 +1,10 @@
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/shell_test.dart
+00:00 +0: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_ui_test.dart: PIN setup 320.0x568.0 text 2x/keyboard/masked/string zero
+00:01 +1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_ui_test.dart: PIN setup 320.0x568.0 text 2x/keyboard/masked/string zero
+00:01 +2: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/shell_test.dart: shell 1024.0x768.0, text 2x, unavailable actions
+00:01 +3: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_ui_test.dart: PIN setup 1024.0x768.0 text 2x/keyboard/masked/string zero
+00:01 +4: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_ui_test.dart: PIN setup 1024.0x768.0 text 2x/keyboard/masked/string zero
+00:01 +5: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/shell_test.dart: failed storage shows Indonesian retry and successful retry
+00:01 +6: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_ui_test.dart: PIN setup 568.0x320.0 text 2x/keyboard/masked/string zero
+00:01 +7: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_ui_test.dart: PIN setup 568.0x320.0 text 2x/keyboard/masked/string zero
+00:01 +8: All tests passed!

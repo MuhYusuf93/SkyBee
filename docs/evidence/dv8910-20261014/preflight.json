@@ -1,0 +1,74 @@
+{
+  "hardware_user_confirmed": "DV8910",
+  "firmware": "DV8947-KIX",
+  "serial": "192.168.0.102:5555",
+  "production_and_test_packages_absent_before_install": true,
+  "root_used": false,
+  "checks": [
+    {
+      "command": "adb -s 192.168.0.102:5555 shell getprop ro.product.model",
+      "exit": 0,
+      "output": "AX810\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell getprop ro.product.device",
+      "exit": 0,
+      "output": "DV8947-KIX\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell getprop ro.product.cpu.abilist",
+      "exit": 0,
+      "output": "armeabi-v7a,armeabi\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell getprop ro.build.version.release",
+      "exit": 0,
+      "output": "11\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell getprop ro.build.version.sdk",
+      "exit": 0,
+      "output": "30\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell getprop ro.build.version.security_patch",
+      "exit": 0,
+      "output": "2022-02-05\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell wm size",
+      "exit": 0,
+      "output": "Physical size: 1920x1080\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell wm density",
+      "exit": 0,
+      "output": "Physical density: 320\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell df -h /data",
+      "exit": 0,
+      "output": "Filesystem      Size  Used Avail Use% Mounted on\r\n/dev/block/dm-5  25G  3.9G   21G  16% /storage/emulated/0/Android/obb\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell pm list features",
+      "exit": 0,
+      "output": "feature:reqGlEsVersion=0x30002\r\nfeature:android.hardware.audio.output\r\nfeature:android.hardware.bluetooth\r\nfeature:android.hardware.bluetooth_le\r\nfeature:android.hardware.camera.any\r\nfeature:android.hardware.camera.external\r\nfeature:android.hardware.ethernet\r\nfeature:android.hardware.gamepad\r\nfeature:android.hardware.hdmi.cec\r\nfeature:android.hardware.location\r\nfeature:android.hardware.location.network\r\nfeature:android.hardware.opengles.aep\r\nfeature:android.hardware.ram.normal\r\nfeature:android.hardware.screen.landscape\r\nfeature:android.hardware.type.television\r\nfeature:android.hardware.usb.host\r\nfeature:android.hardware.vulkan.compute\r\nfeature:android.hardware.vulkan.level=1\r\nfeature:android.hardware.vulkan.version=4198400\r\nfeature:android.hardware.wifi\r\nfeature:android.hardware.wifi.direct\r\nfeature:android.hardware.wifi.passpoint\r\nfeature:android.software.activities_on_secondary_displays\r\nfeature:android.software.adoptable_storage\r\nfeature:android.software.app_enumeration\r\nfeature:android.software.app_widgets\r\nfeature:android.software.autofill\r\nfeature:android.software.backup\r\nfeature:android.software.cant_save_state\r\nfeature:android.software.cts\r\nfeature:android.software.file_based_encryption\r\nfeature:android.software.incremental_delivery\r\nfeature:android.software.input_methods\r\nfeature:android.software.ipsec_tunnels\r\nfeature:android.software.leanback\r\nfeature:android.software.leanback_only\r\nfeature:android.software.live_tv\r\nfeature:android.software.midi\r\nfeature:android.software.picture_in_picture\r\nfeature:android.software.securely_removes_users\r\nfeature:android.software.verified_boot\r\nfeature:android.software.voice_recognizers\r\nfeature:android.software.vulkan.deqp.level=132383489\r\nfeature:android.software.webview\r\nfeature:com.amazon.amazonvideo.livingroom.feature.AV_TARGET\r\nfeature:com.google.android.feature.GLOBAL_ASSIST_TRIGGERING\r\nfeature:com.google.android.tv.custom_launcher\r\nfeature:com.google.android.tv.custom_launcher_eligible\r\nfeature:com.google.android.tv.installed\r\nfeature:com.google.android.tv.operator_tier\r\nfeature:droidlogic.software.netflix\r\nfeature:nrdp.modelgroup\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell settings get secure enabled_accessibility_services",
+      "exit": 0,
+      "output": "null\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell ime list -s",
+      "exit": 0,
+      "output": "org.liskovsoft.androidtv.rukeyboard/com.liskovsoft.leankeyboard.ime.LeanbackImeService\r\ncom.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME\r\n"
+    },
+    {
+      "command": "adb -s 192.168.0.102:5555 shell dumpsys input",
+      "exit": 0,
+      "output": "  Device 9: RemoteB043 Consumer Control\n    Sources: 0x80002303\n    KeyboardType: 1\n      KeyboardType: 1\n      KeyboardType: 1\n  Device 8: virtual-search\n    Sources: 0x00000701\n    KeyboardType: 1\n      KeyboardType: 1\n  Device 7: gpio_keypad\n    Sources: 0x00000101\n    KeyboardType: 1\n      KeyboardType: 1\n  Device -1: Virtual\n    Sources: 0x00000301\n    KeyboardType: 2\n      KeyboardType: 2\n  Device 3: input_btrcu\n    Sources: 0x00000101\n    KeyboardType: 1\n      KeyboardType: 1\n  Device 5: vad_keypad\n    Sources: 0x00000101\n    KeyboardType: 1\n      KeyboardType: 1\n  Device 6: cec_input\n    Sources: 0x00000101\n    KeyboardType: 1\n      KeyboardType: 1\n  Device 4: ir_keypad\n    Sources: 0x00002303\n    KeyboardType: 2\n      KeyboardType: 2\n  Device 2: adc_keypad\n    Sources: 0x00000101\n    KeyboardType: 1\n      KeyboardType: 1"
+    }
+  ]
+}

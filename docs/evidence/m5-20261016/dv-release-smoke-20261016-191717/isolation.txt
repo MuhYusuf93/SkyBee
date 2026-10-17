@@ -1,0 +1,1 @@
+Existing default DB+sidecar hashes unchanged; original fixture APK restored.

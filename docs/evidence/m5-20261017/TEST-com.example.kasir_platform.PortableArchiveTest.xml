@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.kasir_platform.PortableArchiveTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-16T18:08:21.440Z" hostname="YUSUF-PC" time="0.1">
+  <properties/>
+  <testcase name="existingDestinationIsRetained" classname="com.example.kasir_platform.PortableArchiveTest" time="0.037"/>
+  <testcase name="streamedRoundTripPreservesAllFixedMembers" classname="com.example.kasir_platform.PortableArchiveTest" time="0.013"/>
+  <testcase name="authenticatedTraversalAndUnknownMembersAreRejected" classname="com.example.kasir_platform.PortableArchiveTest" time="0.021"/>
+  <testcase name="missingRequiredMemberAndStorageBudgetFailClosed" classname="com.example.kasir_platform.PortableArchiveTest" time="0.008"/>
+  <testcase name="authenticatedDuplicateMembersAreRejected" classname="com.example.kasir_platform.PortableArchiveTest" time="0.006"/>
+  <testcase name="wrongRecoveryAndAuthenticatedEndAreRequired" classname="com.example.kasir_platform.PortableArchiveTest" time="0.013"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

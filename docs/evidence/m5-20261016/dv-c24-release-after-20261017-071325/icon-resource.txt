@@ -1,0 +1,2 @@
+      spec resource 0x7f08007e com.example.kasir_app.integration:drawable/ic_stock_notification: flags=0x00000000
+        resource 0x7f08007e com.example.kasir_app.integration:drawable/ic_stock_notification: t=0x03 d=0x0000000f (s=0x0008 r=0x00)

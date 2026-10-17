@@ -1,0 +1,11 @@
+{
+  "id": "D-MAN01R",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Real Google account picker canceled on patched Poco fixture APK; inline Dibatalkan and choose/change account button still available below schedule rows",
+  "automaticEvidence": false,
+  "actualGoogleApi": "UNVERIFIED",
+  "limits": "No account selection, consent, saved destination, API or upload proven. Conditional PIN prompt not established."
+}

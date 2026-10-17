@@ -1,0 +1,29 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "nodes": [
+    {
+      "label": "DV8910 isolated test",
+      "bounds": "[32,28][440,84]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "{\"stage\":\"draft_recovered\",\"launches\":2,\"draft_quantity\":3,\"stock\":20,\"management_locked\":true}",
+      "bounds": "[40,152][1880,192]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "COMMIT FIXTURE",
+      "bounds": "[40,192][1880,288]",
+      "class": "android.widget.Button",
+      "clickable": "true"
+    },
+    {
+      "label": "OPEN CASHIER",
+      "bounds": "[40,288][1880,384]",
+      "class": "android.widget.Button",
+      "clickable": "true"
+    }
+  ]
+}

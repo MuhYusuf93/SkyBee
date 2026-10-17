@@ -1,0 +1,50 @@
+[
+  {
+    "name": "RMX3231",
+    "id": "0062112V2210F9B3",
+    "isSupported": true,
+    "targetPlatform": "android-arm",
+    "emulator": false,
+    "sdk": "Android 11 (API 30)",
+    "capabilities": {
+      "hotReload": true,
+      "hotRestart": true,
+      "screenshot": true,
+      "flutterExit": true,
+      "hardwareRendering": false,
+      "startPaused": true
+    }
+  },
+  {
+    "name": "Chrome",
+    "id": "chrome",
+    "isSupported": true,
+    "targetPlatform": "web-javascript",
+    "emulator": false,
+    "sdk": "Google Chrome 155.0.8059.41",
+    "capabilities": {
+      "hotReload": true,
+      "hotRestart": true,
+      "screenshot": false,
+      "flutterExit": false,
+      "hardwareRendering": false,
+      "startPaused": true
+    }
+  },
+  {
+    "name": "Edge",
+    "id": "edge",
+    "isSupported": true,
+    "targetPlatform": "web-javascript",
+    "emulator": false,
+    "sdk": "Microsoft Edge 155.0.4283.45",
+    "capabilities": {
+      "hotReload": true,
+      "hotRestart": true,
+      "screenshot": false,
+      "flutterExit": false,
+      "hardwareRendering": false,
+      "startPaused": true
+    }
+  }
+]

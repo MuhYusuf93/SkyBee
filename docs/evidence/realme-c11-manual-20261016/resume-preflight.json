@@ -1,0 +1,27 @@
+{
+  "device": "0062112V2210F9B3",
+  "date": "2026-10-16",
+  "method": "read-only resume preflight; no install/reset/force-stop",
+  "model": "RMX3231",
+  "sdk": "30",
+  "abi": "armeabi-v7a,armeabi",
+  "ordinary_package": "",
+  "test_package": "package:/data/app/~~uOdx8CxN_FAD26e6bBqByg==/com.example.kasir_app.integration-4ajyXcp1ocPbZTWslLcNiA==/base.apk",
+  "launcher": "priority=0 preferredOrder=0 match=0x108000 specificIndex=-1 isDefault=false\ncom.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity",
+  "font_scale": "1.0",
+  "talkback_enabled": false,
+  "keyboard": "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME",
+  "power": [
+    "mWakefulness=Awake",
+    "mWakefulnessChanging=false"
+  ],
+  "keyguard": [
+    "mDisplayHomeButtonHandlers=    mKeyguardOccluded=false mKeyguardOccludedChanged=false mPendingKeyguardOccluded=false",
+    "showing=false",
+    "showingAndNotOccluded=true",
+    "inputRestricted=false",
+    "mIsShowing=false",
+    "mInputRestricted=false"
+  ],
+  "installed_apk_sha256": "969bccdda9605a2e82d137957316f1dbb848075f314532eb479befca21f709f7"
+}

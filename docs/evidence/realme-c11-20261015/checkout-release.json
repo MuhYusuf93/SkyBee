@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "samples_us": [
+    66205,
+    64840,
+    69338,
+    72849,
+    62668
+  ],
+  "warmups": 1,
+  "sample_scope": "release production checkout service/SQL; excludes seed/cart preparation/UI",
+  "fixture_deleted": true,
+  "manual_fixture_touched": false,
+  "device": "0062112V2210F9B3",
+  "pid": "21552",
+  "mode": "release"
+}

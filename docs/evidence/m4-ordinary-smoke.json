@@ -1,0 +1,14 @@
+{
+  "package": "com.example.kasir_app",
+  "device": "7f0edea0",
+  "pid": 19416,
+  "identity": [
+    "versionCode=6 minSdk=24 targetSdk=36",
+    "versionName=0.4.0",
+    "dataDir=/data/user/0/com.example.kasir_app"
+  ],
+  "app_ui_nodes": 22,
+  "cashier_manage_action_visible": true,
+  "fatal_unhandled_flutter_error_lines": 0,
+  "scope": "cold debug cashier startup; no management PIN/data entry, no OEM/TalkBack/release/restore acceptance"
+}

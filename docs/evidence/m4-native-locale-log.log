@@ -1,0 +1,183 @@
+package=com.example.kasir_app.integration pid=26429
+--------- beginning of main
+10-14 03:05:00.690 26429 26429 E Zygote  : process_name_ptr:26429 com.example.kasir_app.integration
+10-14 03:05:00.690 26429 26429 E Zygote  : SetMemoryProtected process_name_ptr:26429 com.example.kasir_app.integration
+10-14 03:05:00.697 26429 26429 I app.integration: Late-enabling -Xcheck:jni
+10-14 03:05:00.713 26429 26429 I app.integration: Using generational CollectorTypeCMC GC.
+10-14 03:05:00.720 26429 26429 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+--------- beginning of system
+10-14 03:05:00.722 26429 26429 I ActivityThread: Current dynamic renderEngine type=0
+10-14 03:05:00.733 26429   811 D MiuiDownscaleImpl: set override inverted scale : 1.0
+10-14 03:05:00.736 26429   810 D AppScoutStateMachine: 26429-ScoutStateMachinecreated
+10-14 03:05:00.737 26429 26429 I RENDER_TURBO: onActivityThreadCreate not in white list, pkg=com.example.kasir_app.integration, type=peridot
+10-14 03:05:00.744 26429 26429 D ActivityThread: setEmbeddedParam packageName=com.example.kasir_app.integration processName=com.example.kasir_app.integration isEmbedded=false isIsolated=false
+10-14 03:05:00.746 26429 26429 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+10-14 03:05:00.746 26429 26429 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+10-14 03:05:00.809 26429 26429 D nativeloader: Configuring clns-10 for other apk /data/app/~~znLoL7WaduV6Gu4ONGQ36w==/com.example.kasir_app.integration-HNrkiL1O-g8ilI_EQozH_w==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~znLoL7WaduV6Gu4ONGQ36w==/com.example.kasir_app.integration-HNrkiL1O-g8ilI_EQozH_w==/lib/arm64:/data/app/~~znLoL7WaduV6Gu4ONGQ36w==/com.example.kasir_app.integration-HNrkiL1O-g8ilI_EQozH_w==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.example.kasir_app.integration
+10-14 03:05:00.812 26429 26429 I app.integration: AssetManager2(0xb40000757debeb78) locale list changing from [] to [in-ID]
+10-14 03:05:00.814 26429 26429 E MiuiPreloadClassImpl: invoke error.
+10-14 03:05:00.814 26429 26429 D MiuiMonitorThread: Shared singleton Thread for stability monitor start
+10-14 03:05:00.816 26429 26429 D HWUI    : [HWUI] Flag vulkan_enhance_pipeline_cache enabled
+10-14 03:05:00.816 26429 26429 D HWUI    : [HWUI] EnhanceVkPipelineCache is disabled
+10-14 03:05:00.816 26429 26429 D HWUI    : [HWUI] Flag ddre enabled
+10-14 03:05:00.816 26429 26429 V GraphicsEnvironment: Currently set values for:
+10-14 03:05:00.816 26429 26429 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[com.android.angle, com.linecorp.b612.android, com.campmobile.snow, com.google.android.apps.tachyon]
+10-14 03:05:00.816 26429 26429 V GraphicsEnvironment:   angle_gl_driver_selection_values=[angle, native, native, native]
+10-14 03:05:00.816 26429 26429 V GraphicsEnvironment: com.example.kasir_app.integration is not listed in per-application setting
+10-14 03:05:00.816 26429 26429 V GraphicsEnvironment: ANGLE allowlist from config: 
+10-14 03:05:00.817 26429 26429 V GraphicsEnvironment: com.example.kasir_app.integration is not listed in ANGLE allowlist or settings, returning default
+10-14 03:05:00.817 26429 26429 V GraphicsEnvironment: Updatable production driver is not supported on the device.
+10-14 03:05:00.819 26429   817 I Perf    : Connecting to perf service.
+10-14 03:05:00.819 26429 26429 D ResMonitorStub: The current process type is: third_party_app, process name is: com.example.kasir_app.integration
+10-14 03:05:00.835 26429   817 I ActivityThread: TrafficStats init done
+10-14 03:05:00.842 26429   817 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+10-14 03:05:00.843 26429   817 I ForceDarkHelperStubImpl: initialize for com.example.kasir_app.integration , ForceDarkAppConfig: null
+10-14 03:05:00.843 26429   817 D nativeloader: Load libforcedarkimpl.so using system ns (caller=/system_ext/framework/miui-framework.jar): ok
+10-14 03:05:00.843 26429   817 D HWUI    : JNI_OnLoad success
+10-14 03:05:00.844 26429   817 I MiuiForceDarkConfig: setConfig density:3.000000, mainRule:0, secondaryRule:0, tertiaryRule:0
+10-14 03:05:00.850 26429   817 I ActivityThread: Miui Feature Init done
+10-14 03:05:00.864 26429 26429 W libc    : Access denied finding property "vendor.boostfwk.frameprefetcher"
+10-14 03:05:00.865 26429 26429 D FramePredict: FramePredict init: false
+10-14 03:05:00.867 26429 26429 D HWUI    : [HWUI] Flag vulkan_enhance_pipeline_cache enabled
+10-14 03:05:00.867 26429 26429 D HWUI    : [HWUI] EnhanceVkPipelineCache is disabled
+10-14 03:05:00.867 26429 26429 D HWUI    : [HWUI] Flag ddre enabled
+10-14 03:05:00.867 26429 26429 D app.integration: blurUtils, initBackgroundBlurMinInterval processName(com.example.kasir_app.integration), inWhiteLists(0)
+10-14 03:05:00.867 26429   817 I ActivityThread: HardwareRenderer preload  done
+10-14 03:05:00.868 26429   899 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-14 03:05:00.869 26429   899 W libc    : Access denied finding property "vendor.migl.debug"
+10-14 03:05:00.870 26429   899 I libMiGL : EnableDR: 0
+10-14 03:05:00.870 26429   899 D libMiGL : mDFIInterval: -1
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: QUALCOMM build                   : a0053eb399, I31b05c049d
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Build Date                       : 12/22/25
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: OpenGL ES Shader Compiler Version: E031.45.02.25
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Local Branch                     : 
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Remote Branch                    : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.14.3.0.11.00.00.974.116
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Remote Branch                    : NONE
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Reconstruct Branch               : NOTHING
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Build Config                     : S P 16.1.2 AArch64
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Driver Path                      : /vendor/lib64/egl/libGLESv2_adreno.so
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Driver Version                   : 0762.36.1
+10-14 03:05:00.870 26429   899 I AdrenoGLES-0: Process Name                     : com.example.kasir_app.integration
+10-14 03:05:00.877 26429   899 I AdrenoGLES-0: PFP: 0x01310168, ME: 0x00000000
+10-14 03:05:00.886 26429 26429 I app.integration: AssetManager2(0xb40000757debb338) locale list changing from [] to [in-ID]
+10-14 03:05:00.890 26429   899 I AdrenoUtils: <ReadGpuID:357>: Reading chip ID through GSL
+10-14 03:05:00.894 26429   899 I libEGL  : shader cache num entries: 2
+10-14 03:05:00.894 26429   899 D HWUI    : [HWUI] Flag vulkan_enhance_pipeline_cache enabled
+10-14 03:05:00.894 26429   899 D HWUI    : [HWUI] EnhanceVkPipelineCache is disabled
+10-14 03:05:00.894 26429   899 D HWUI    : [HWUI] Flag ddre enabled
+10-14 03:05:00.894 26429   899 D SKIA    : [Skia] Flag vulkan_enhance_pipeline_cache enabled
+10-14 03:05:00.894 26429   899 D SKIA    : [Skia] EnhanceVkPipelineCache is false
+10-14 03:05:00.894 26429   899 D HWUI    : MiShaderPrecompile handle com.example.kasir_app.integration, isSksl: 0, isAppInPreCacheList: 0, isGpuVersionChanged: 0, isSkslChanged: 0
+10-14 03:05:00.896 26429 26429 I FlutterActivityAndFragmentDelegate: If you are attempting to set --enable-dart-profiling via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --enable-dart-profiling or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+10-14 03:05:00.900 26429   905 D FlutterJNI: Beginning load of flutter...
+10-14 03:05:00.906 26429   905 D nativeloader: Load /data/app/~~znLoL7WaduV6Gu4ONGQ36w==/com.example.kasir_app.integration-HNrkiL1O-g8ilI_EQozH_w==/base.apk!/lib/arm64-v8a/libflutter.so using class loader ns clns-10 (caller=/data/app/~~znLoL7WaduV6Gu4ONGQ36w==/com.example.kasir_app.integration-HNrkiL1O-g8ilI_EQozH_w==/base.apk): ok
+10-14 03:05:00.907 26429   905 D FlutterJNI: flutter (null) was loaded normally!
+10-14 03:05:00.910 26429   906 I ResourceExtractor: Found extracted resources res_timestamp-6-1791921765484
+10-14 03:05:00.910 26429   906 I ResourceExtractor: Resource version mismatch res_timestamp-6-1791921900152
+10-14 03:05:00.917 26429   908 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+10-14 03:05:01.149 26429   906 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+10-14 03:05:01.149 26429   906 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+10-14 03:05:01.200 26429   906 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+10-14 03:05:01.208 26429 26429 I app.integration: AssetManager2(0xb40000757dec0798) locale list changing from [] to [in-ID]
+10-14 03:05:01.228 26429 26429 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+10-14 03:05:01.245 26429   953 W libc    : Access denied finding property "vendor.mivk.log.debug"
+10-14 03:05:01.246 26429   953 D vulkan  : searching for layers in '/data/app/~~znLoL7WaduV6Gu4ONGQ36w==/com.example.kasir_app.integration-HNrkiL1O-g8ilI_EQozH_w==/lib/arm64'
+10-14 03:05:01.246 26429   953 D vulkan  : searching for layers in '/data/app/~~znLoL7WaduV6Gu4ONGQ36w==/com.example.kasir_app.integration-HNrkiL1O-g8ilI_EQozH_w==/base.apk!/lib/arm64-v8a'
+10-14 03:05:01.251 26429   953 D vulkan  : added global layer 'VK_LAYER_KHRONOS_validation' from library '/data/app/~~znLoL7WaduV6Gu4ONGQ36w==/com.example.kasir_app.integration-HNrkiL1O-g8ilI_EQozH_w==/base.apk!/lib/arm64-v8a/libVkLayer_khronos_validation.so'
+10-14 03:05:01.260 26429   953 I AdrenoVK-0: ===== BEGIN DUMP OF OVERRIDDEN SETTINGS =====
+10-14 03:05:01.260 26429   953 I AdrenoVK-0: ===== END DUMP OF OVERRIDDEN SETTINGS =====
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: QUALCOMM build          : a0053eb399, I31b05c049d
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Build Date              : 12/22/25
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Shader Compiler Version : E031.45.02.25
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Local Branch            : 
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Remote Branch           : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.14.3.0.11.00.00.974.116
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Remote Branch           : NONE
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Reconstruct Branch      : NOTHING
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Build Config            : S P 16.1.2 AArch64
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Driver Path             : /vendor/lib64/hw/vulkan.adreno.so
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Driver Version          : 0762.36.1
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: PFP                     : 0x01310168
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: ME                      : 0x00000000
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Application Name    : Impeller
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Application Version : 0x00400000
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Engine Name         : Impeller
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Engine Version      : 0x00800000
+10-14 03:05:01.264 26429   953 I AdrenoVK-0: Api Version         : 0x00401000
+10-14 03:05:01.271 26429   953 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+10-14 03:05:01.393 26429 26429 D MiuiMultiWindowUtils: freeform resolution args raw data:{  "wide_default":{    "freeform_args": {        "vertical_portrait":{"aspect_ratio":0.626, "original_ratio":0.5643,"original_scale":0.74,"top_margin":0.168,"left_margin":0.484},        "horizontal_portrait":{"aspect_ratio":0.626, "original_ratio":0.5643,"original_scale":0.74,"top_margin":0.1222,"left_margin":0.59745},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":0.6992,"original_scale":0.604,"top_margin":0.2596,"left_margin":0.2624},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":0.6992,"original_scale":0.604,"top_margin":0.213,"left_margin":0.3758}    },    "mini_freeform_args":{        "vertical_portrait":{"original_ratio":0.147},        "horizontal_portrait":{"original_ratio":0.147},        "vertical_landscape":{"original_ratio":0.165},        "horizontal_landscape":{"original_ratio":0.165}    }  },  "narrow_default": {    "freeform_args": {        "vertical_portrait":{"aspect_ratio":0.626, "original_ratio":1,"original_scale":0.74,"top_margin":0.0753,"left_margin":-1},        "horizontal_portrait":{"aspect_ratio":0.626, "original_ratio":1,"original_scale":0.5756,"top_margin":-1,"left_margin":0.0753},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.587,"top_margin":0.0753,"left_margin":-1},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.587,"top_margin":-1,"left_margin":0.0753}    },    "mini_freeform_args":{        "vertical_portrait":{"original_ratio":0.26},        "horizontal_portrait":{"original_ratio":0.26},        "vertical_landscape":{"original_ratio":0.293},        "horizontal_landscape":{"original_ratio":0.293}    }  },  "regular_default": {    "freeform_args": {      "vertical_portrait":{"aspect_ratio":0.625, "original_ratio":1,"original_scale":0.7,"top_margin":0.109,"left_margin":-1},      "horizontal_portrait":{"aspect_ratio":0.6667, "original_ratio":1,"original_scale":0.6102,"top_margin":-1,"left_margin":0.026},      "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.5899,"top_margin":0.109,"left_margin":-1},      "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.5899,"top_margin":-1,"left_margin":0.026}    },    "mini_freeform_args":{      "vertical_portrait":{"original_ratio":0.25},      "horizontal_portrait":{"original_ratio":0.25},      "vertical_landscape":{"original_ratio":0.25},      "horizontal_landscape":{"original_ratio":0.25}    }  },  "pad_default": {    "freeform_args": {      "vertical_portrait":{"aspect_ratio":0.5625, "original_ratio":0.375,"original_scale":0.835,"top_margin":0.049,"left_margin":0.2775},      "horizontal_portrait":{"aspect_ratio":0.5625, "original_ratio":0.375,"original_scale":0.835,"top_margin":-1,"left_margin":0.6525},      "vertical_landscape":{"aspect_ratio":-1, "original_ratio":1,"original_scale":0.468,"top_margin":0.049,"left_margin":-1},      "horizontal_landscape":{"aspect_ratio":-1, "original_ratio":1,"original_scale":0.468,"top_margin":-1,"left_margin":0.4976}    },    "mini_freeform_args":{      "vertical_portrait":{"original_ratio":0.144},      "horizontal_portrait":{"original_ratio":0.144},      "vertical_landscape":{"original_ratio":0.2},      "horizontal_landscape":{"original_ratio":0.2}    }  }}
+10-14 03:05:01.395 26429 26429 D MiuiMultiWindowUtils: initFreeFormResolutionArgs failed, device is peridot
+10-14 03:05:01.398 26429   976 I flutter : The Dart VM service is listening on http://127.0.0.1:34487/FbLLOsIIHSg=/
+10-14 03:05:01.408 26429 26429 I app.integration: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported,test-api) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+10-14 03:05:01.408 26429 26429 I app.integration: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+10-14 03:05:01.409 26429 26429 I app.integration: hiddenapi: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+10-14 03:05:01.409 26429 26429 I app.integration: hiddenapi: Accessing hidden method Landroid/util/LongArray;->get(I)J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+10-14 03:05:01.415 26429 26429 D FlutterRenderer: Width is zero. 0,0
+10-14 03:05:01.417 26429 26429 D CompatChangeReporter: Compat change id reported: 377864165; UID 10537; state: ENABLED
+10-14 03:05:01.419 26429 26429 D DecorView: updateFreeformOutlineFromActivity, inFreeform=false,inFreeformWindowMode=false
+10-14 03:05:01.419 26429 26429 W MessageMonitor: PerfMonitor: Slow Operation: Activity com.example.kasir_app.integration/com.example.kasir_app.MainActivity onCreate took 525ms
+10-14 03:05:01.421 26429 26429 D Activity: Activity = ActivityInfo{fa2fd39 com.example.kasir_app.MainActivity}, Resume onConfigurationChanged = {0.9 510mcc10mnc [id_ID] ldltr sw407dp w407dp h904dp 480dpi nrml long hdr widecg port uimode=10 night finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1220, 2712) mAppBounds=Rect(0, 0 - 1220, 2712) mMaxBounds=Rect(0, 0 - 1220, 2712) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0 mInSplitScreen=false letterBoxed=false foScaled=false isSpecificEmbedded=false embeddingScale=1.0} s.2 fontWeightAdjustment=0/d/o themeChanged=0 themeChangedFlags=0 display=0 extraData = Bundle[{}] screenType=0/o}
+10-14 03:05:01.426 26429 26429 D RenderLite: trim renderNode enable: false
+10-14 03:05:01.429 26429 26429 D FramePredict: init success
+10-14 03:05:01.430 26429   999 E FramePredict: registerContentObserver fail
+10-14 03:05:01.430 26429 26429 D app.integration: MiuiProcessManagerServiceStub setSchedFifo
+10-14 03:05:01.430 26429 26429 I MiuiProcessManagerImpl: setSchedFifo pid:26429, mode:3
+10-14 03:05:01.433 26429   899 D HWUI    : TAG_DDRE, CanvasContext::setDdreActivities: 
+10-14 03:05:01.433 26429 26429 I ForceDarkHelperStubImpl: setViewRootImplForceDark: false for com.example.kasir_app.MainActivity@4f3abe2, reason: AppDarkModeEnable
+10-14 03:05:01.434 26429 26429 D FirstFrameSpeedUp: bls: [com.xcj.hm.kangfuyixue, jp.co.jibunbank.jibunmain]
+10-14 03:05:01.434 26429 26429 I ViewRootImpl: com.example.kasir_app.integration/com.example.kasir_app.MainActivity use first frame acceleration
+10-14 03:05:01.482 26429 26429 D DecorViewImmersiveImpl: onAttachedToWindow. pkg: com.example.kasir_app.integration
+10-14 03:05:01.482 26429 26429 I ComputilityLevel: getComputilityLevel(): 4
+10-14 03:05:01.482 26429 26429 D DecorViewImmersiveImpl: com.example.kasir_app.MainActivity@4f3abe2 already set forced E2E by app
+10-14 03:05:01.487 26429 26429 I WindowExtensionsImpl: Initializing Window Extensions, vendor API level=9, activity embedding enabled=true
+10-14 03:05:01.498 26429 26429 D FlutterRenderer: Width is zero. 0,0
+10-14 03:05:01.505 26429 26429 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+10-14 03:05:01.510 26429 26429 D FlutterJNI: Sending viewport metrics to the engine.
+10-14 03:05:01.511 26429 26429 D SurfaceView: UPDATE null, mIsCastMode = false
+10-14 03:05:01.513 26429 26429 D ViewRootImplStubImpl: onSurfaceViewAttached:
+10-14 03:05:01.513 26429 26429 D ViewRootImplStubImpl: , vri:android.view.ViewRootImpl@7036f53, com.example.kasir_app.integration/com.example.kasir_app.MainActivity
+10-14 03:05:01.513 26429 26429 D ViewRootImplStubImpl: , vri size:1220x2712
+10-14 03:05:01.513 26429 26429 D ViewRootImplStubImpl: , surfaceView:io.flutter.embedding.android.FlutterSurfaceView{4fec342 V.E...... ......ID 0,0-1220,2712}, SurfaceView[com.example.kasir_app.integration/com.example.kasir_app.MainActivity]
+10-14 03:05:01.513 26429 26429 D ViewRootImplStubImpl: , surfaceView size:1220x2712
+10-14 03:05:01.513 26429 26429 D ViewRootImplStubImpl: , surfaceControl:Surface(name=4fec342 SurfaceView[com.example.kasir_app.integration/com.example.kasir_app.MainActivity](BLAST)#1312)/@0x593e090
+10-14 03:05:01.515 26429   815 D BLASTBufferQueue: onGameOptimizeParameter: new GameOptimizeInfo game: no valid app, VsyncBuffergame: no valid app, mOptimizeEnable: 0, mSuperTouchEnable: 0,mVsyncBufferEnable: 0,mPendingBufferEnable 0,mNeedDynamicDropBuffer: 0, mNeedFirstFrameDropBuffer: 0
+10-14 03:05:01.515 26429   815 D BLASTBufferQueue: 
+10-14 03:05:01.516 26429   953 W qdgralloc: GetSize: Pixel format: 0x3b is not supported by gralloc
+10-14 03:05:01.516 26429   953 W qdgralloc: gralloc failed to allocate buffer for size 0 format 59 AWxAH 1x1 usage 2816
+10-14 03:05:01.516 26429   953 E Gralloc4: isSupported(1, 1, 59, 1, ...) failed with 7
+10-14 03:05:01.516 26429   953 E GraphicBufferAllocator: Failed to allocate (4 x 4) layerCount 1 format 59 usage b00: 2
+10-14 03:05:01.517 26429   953 E AHardwareBuffer: GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -2), handle=0x0
+10-14 03:05:01.517 26429   953 W qdgralloc: GetSize: Pixel format: 0x3b is not supported by gralloc
+10-14 03:05:01.517 26429   953 W qdgralloc: gralloc failed to allocate buffer for size 0 format 59 AWxAH 1x1 usage 2816
+10-14 03:05:01.517 26429   953 E Gralloc4: isSupported(1, 1, 59, 1, ...) failed with 7
+10-14 03:05:01.517 26429   953 E GraphicBufferAllocator: Failed to allocate (4 x 4) layerCount 1 format 59 usage b00: 2
+10-14 03:05:01.517 26429   953 E AHardwareBuffer: GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -2), handle=0x0
+10-14 03:05:01.518 26429   953 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-14 03:05:01.520 26429   953 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-14 03:05:01.522 26429   953 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-14 03:05:01.523 26429   953 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-14 03:05:01.526 26429   953 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-14 03:05:01.527 26429   953 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-14 03:05:01.529 26429 26429 I Choreographer: first vsync insert message into MessageQueue Head
+10-14 03:05:01.529 26429 26429 D SurfaceView: UPDATE Surface(name=4fec342 SurfaceView[com.example.kasir_app.integration/com.example.kasir_app.MainActivity]#1311)/@0xdb9d18e, mIsProjectionMode = false
+10-14 03:05:01.532 26429   899 D HWUI    : [HWUI] Flag vulkan_enhance_pipeline_cache enabled
+10-14 03:05:01.532 26429   899 D HWUI    : [HWUI] EnhanceVkPipelineCache is disabled
+10-14 03:05:01.532 26429   899 D HWUI    : [HWUI] Flag ddre enabled
+10-14 03:05:01.536 26429 26429 D WindowLayoutComponentImpl: Register WindowLayoutInfoListener on Context=com.example.kasir_app.MainActivity@4f3abe2, of which baseContext=android.app.ContextImpl@39f9945
+10-14 03:05:01.537 26429 26429 D FlutterJNI: Sending viewport metrics to the engine.
+10-14 03:05:01.570 26429 26429 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+10-14 03:05:01.864 26429   805 I app.integration: Compiler allocated 6810KB to compile void android.view.ViewRootImpl.performTraversals()
+10-14 03:05:06.246 26429  1315 D ProfileInstaller: Installing profile for com.example.kasir_app.integration
+10-14 03:05:10.862 26429   810 D ActivityThread: invoke error.
+10-14 03:05:10.913 26429 26429 W FinalizerDaemon: type=1400 audit(0.0:45744): avc:  denied  { getopt } for  path="/dev/socket/usap_pool_primary" scontext=u:r:untrusted_app:s0:c25,c258,c512,c768 tcontext=u:r:zygote:s0 tclass=unix_stream_socket permissive=0 app=com.example.kasir_app.integration
+10-14 03:05:10.924 26429  1330 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_1.db
+10-14 03:05:16.719 26429  1351 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_1.db
+10-14 03:05:28.651 26429  1486 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:05:38.459 26429  1603 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:05:50.339 26429  2174 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:06:01.630 26429  2291 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:06:12.291 26429  2717 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:06:23.096 26429  2874 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:06:32.479 26429  2993 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:06:43.298 26429  3190 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:06:51.583 26429  3326 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db
+10-14 03:07:02.671 26429  3544 I SQLiteConnection: Long db operation: /data/user/0/com.example.kasir_app.integration/databases/locale_1791921902229660_2.db

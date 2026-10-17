@@ -1,0 +1,41 @@
+[
+  {
+    "mode": "debug",
+    "path": "build\\bugfix-20261014\\ordinary-debug.apk",
+    "bytes": 156130291,
+    "sha256": "946cff2ae95baf722189778202970b6cdbbf80d248da1d6866c2d905a7a6bb96",
+    "metadata": [
+      "package: name='com.example.kasir_app' versionCode='6' versionName='0.4.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+      "application-label:'kasir_app'",
+      "launchable-activity: name='com.example.kasir_app.MainActivity'  label='' icon=''"
+    ],
+    "dex_checked": [
+      "classes.dex",
+      "classes2.dex",
+      "classes3.dex",
+      "classes4.dex",
+      "classes5.dex",
+      "classes6.dex",
+      "classes7.dex",
+      "classes8.dex"
+    ],
+    "IntegrationActivity_absent": true,
+    "installed": false
+  },
+  {
+    "mode": "release",
+    "path": "build\\bugfix-20261014\\ordinary-release.apk",
+    "bytes": 56355342,
+    "sha256": "cd897184f96e759dd0b09f46e30ca3fa78d6a5bb31a7716092a745d43abffc7d",
+    "metadata": [
+      "package: name='com.example.kasir_app' versionCode='6' versionName='0.4.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+      "application-label:'kasir_app'",
+      "launchable-activity: name='com.example.kasir_app.MainActivity'  label='' icon=''"
+    ],
+    "dex_checked": [
+      "classes.dex"
+    ],
+    "IntegrationActivity_absent": true,
+    "installed": false
+  }
+]

@@ -1,0 +1,13 @@
+Computing fixes in lib...
+Applying fixes...
+
+features\cashier\application\checkout_service.dart
+  curly_braces_in_flow_control_structures - 1 fix
+
+features\inventory\application\inventory_service.dart
+  curly_braces_in_flow_control_structures - 3 fixes
+
+features\inventory\presentation\product_form.dart
+  curly_braces_in_flow_control_structures - 1 fix
+
+5 fixes made in 3 files.

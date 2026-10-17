@@ -1,0 +1,34 @@
+{
+  "device": "emulator-5554",
+  "package": "com.example.kasir_app.integration",
+  "verified_sandbox": "/data/user/0/com.example.kasir_app.integration",
+  "ownership_evidence": {
+    "m2_ui_1791991227986095.db": "emulator-independent-management_ui_test.log (22:20)",
+    "m3_ui_1791991573601207.db": "emulator-independent-cashier_ui_test.log (22:26)",
+    "m31_ui_1791991994322269.db": "emulator-independent-wholesale_packaging_ui_test.log (22:33)",
+    "m31_ui_1791993222329587.db": "emulator-bootstrap-wholesale_packaging_ui_test.log (22:53)"
+  },
+  "exact_targets": [
+    "m2_ui_1791991227986095.db",
+    "m2_ui_1791991227986095.db-journal",
+    "m3_ui_1791991573601207.db",
+    "m3_ui_1791991573601207.db-journal",
+    "m31_ui_1791991994322269.db",
+    "m31_ui_1791991994322269.db-journal",
+    "m31_ui_1791993222329587.db",
+    "m31_ui_1791993222329587.db-journal"
+  ],
+  "deleted": [
+    "m2_ui_1791991227986095.db",
+    "m2_ui_1791991227986095.db-journal",
+    "m3_ui_1791991573601207.db",
+    "m3_ui_1791991573601207.db-journal",
+    "m31_ui_1791991994322269.db",
+    "m31_ui_1791991994322269.db-journal",
+    "m31_ui_1791993222329587.db",
+    "m31_ui_1791993222329587.db-journal"
+  ],
+  "ordinary_touched": false,
+  "recursive_delete": false,
+  "remaining": []
+}

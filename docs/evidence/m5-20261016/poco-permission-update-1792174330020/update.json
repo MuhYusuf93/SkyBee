@@ -1,0 +1,12 @@
+{
+  "device": "7f0edea0",
+  "package": "com.example.kasir_app.integration",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "priorApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-permission-update-1792174330020\\prior-c19-release.apk",
+  "priorSha256": "c8f086885212e49e25e155f178179ea5c9a9f3f3b6571b9796d049682bf3640d",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-012541\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-012541\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "originalV6Restoration": "still pending in original handover",
+  "state": "C20 update + before/after audit + installed hash + own release startup PASS; handover for manual denial/regrant retest",
+  "automaticDeviceControlActive": false
+}

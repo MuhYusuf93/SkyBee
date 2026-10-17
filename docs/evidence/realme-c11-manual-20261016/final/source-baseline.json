@@ -1,0 +1,1218 @@
+[
+  {
+    "path": "AGENTS.md",
+    "sha256": "b7b6945f1ae764700220464bc494c78acea8a0eb3c08e00c829daebcdc0a76d7"
+  },
+  {
+    "path": "android/app/build.gradle.kts",
+    "sha256": "7a47e42ab2c00e798e421e35e843e559011d85c3cd8bb6e9aa4f22c67b962dc0"
+  },
+  {
+    "path": "android/app/src/debug/AndroidManifest.xml",
+    "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c"
+  },
+  {
+    "path": "android/app/src/integrationFixture/kotlin/com/example/kasir_app/IntegrationActivity.kt",
+    "sha256": "e4fd8bed536e61e5821b2ebecc561a30775b434395ff10875b25b0aeca45d51d"
+  },
+  {
+    "path": "android/app/src/main/AndroidManifest.xml",
+    "sha256": "9d81fc86279e9b6b01dc9ed205e854d86d5377e92c461006a5ec55dbe6b3938e"
+  },
+  {
+    "path": "android/app/src/main/assets/third_party/mbedtls-LICENSE.txt",
+    "sha256": "9b405ef4c89342f5eae1dd828882f931747f71001cfba7d114801039b52ad09b"
+  },
+  {
+    "path": "android/app/src/main/cpp/CMakeLists.txt",
+    "sha256": "ea53d6053c3b7e3dbd1c628d2c7c489245380da22b6df9e539800423a30cf6f0"
+  },
+  {
+    "path": "android/app/src/main/cpp/pin_crypto_config.h",
+    "sha256": "c9e1d5444ed88ea6ef47e4c6b7b386db08a9db662212584dcd3e14879488d5e9"
+  },
+  {
+    "path": "android/app/src/main/cpp/pin_kdf.c",
+    "sha256": "0cc6bdab841ceeb436ad9830fce49158b05e493bd9659b806de85d10e7f14316"
+  },
+  {
+    "path": "android/app/src/main/cpp/README.md",
+    "sha256": "9b2d0d670c09ef340bcd5601fcb60336d4aa9335419838540ae9d640211cb0c6"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/aes.h",
+    "sha256": "ce71f35d91cf1609bddff21d613863c1177bccc97327f7994c39965ebf044b56"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/aria.h",
+    "sha256": "71fadc4b862611c8a75de841ccf4a346f756cec7345d34d2ed58398ebf79c72a"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/asn1.h",
+    "sha256": "bff209b57c95feb92edf78194f77bcc139172ff2c78b5aa0ad25a9739ce570bc"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/asn1write.h",
+    "sha256": "28187d70e8e6ed663053c748628eff16aa94aacf356664caa646139f30b27ae4"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/base64.h",
+    "sha256": "30f5bfb1b8af6ecc035d005126f25395ecc5164b810b3d8c6ade74b1acf46848"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/bignum.h",
+    "sha256": "f4167d7a91c3431f37341d0d32c72280fd912dfaf360d6fccb1cd9c5fa9da92c"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/block_cipher.h",
+    "sha256": "edddbf6b03a54e04b2ae3ee3da00a7e243a7ef3f81db5747c69884b222980898"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/build_info.h",
+    "sha256": "4bb715278f3199298220b930514ace4f461ed0e9ff27b656d6e2616a1ca3287f"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/camellia.h",
+    "sha256": "32e959e91fd7cce4f9b6fa204afaf6a713e34c7940a35e716fa5e3681aadf6bd"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ccm.h",
+    "sha256": "7a71ba5bba1af8cb6d79474ae9130d9a88319bb15034f331acaab755b1c6764c"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/chacha20.h",
+    "sha256": "ebbced7d6162fda31d953b5de77733371375b5bbeba959c14eb8576c18773c2b"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/chachapoly.h",
+    "sha256": "edef9e38e446b87289b20bb7b7db6a9f5792a25ad00beb567732088d4e4ba67f"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/check_config.h",
+    "sha256": "66696df9cc3f7cbbe84786046937242b18140963b94c34347404f7827c428efa"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/cipher.h",
+    "sha256": "9dc945cc9ad4a97e656d435ece879c207df249b037d8b7cd1a5d9efeceeeb577"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/cmac.h",
+    "sha256": "181015eae9af1a0e3ed94f54d42c806ee7897f623968eeece045d7c46cc347e9"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/compat-2.x.h",
+    "sha256": "9e10b95f0c0c920b1f41152e6d81d48b5df1ab166dbc27c2689546c9079774fa"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/config_adjust_legacy_crypto.h",
+    "sha256": "f404960e2878c21c22a5d67caba6cd1d29f382b3d913a56ce856931dd15b2886"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/config_adjust_legacy_from_psa.h",
+    "sha256": "8e031e9153f87fd3456cf2b997b9f37de9b39af57e62665e1500e3cdc8d7daf4"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/config_adjust_psa_from_legacy.h",
+    "sha256": "4311a3e3a393677fd329006d7c88941311e7bceb94e81763a300754f721db78d"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/config_adjust_psa_superset_legacy.h",
+    "sha256": "347736d9df62e4b874d06ee5d76b3d135d693d498a9ebad30eed4f4cdb65825a"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/config_adjust_ssl.h",
+    "sha256": "2d37a7552566e9fbd8a5a8b3e6cf6d4e21125a5e48a7e24ca30f3c683d141871"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/config_adjust_x509.h",
+    "sha256": "92909d91c59340f13eb2b447cf44e0075a0ee742a18f22fb7843f6a18c5af5dc"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/config_psa.h",
+    "sha256": "1c65cb4b836aeefa764bf7ddf69090347d4d4021379b0cef6201c6ed0f3dc7f8"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/constant_time.h",
+    "sha256": "1f4196abb876364c85bcc044990b01661114e32d5ddeade427259adb58bb0c79"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ctr_drbg.h",
+    "sha256": "601db8f2eb7a1269807547180f5d46249c07968a9191a187e0e88aba312bc74a"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/debug.h",
+    "sha256": "ad575ef8b6fc99409be0f0d56a622147f8ef088e8e9b5814e7664bd823acc0cc"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/des.h",
+    "sha256": "05ddc8143ac3c6287946c73556c7a0ee50ecaa74132cf9d7895d9b894a115310"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/dhm.h",
+    "sha256": "92d8ced06e17876b72df79d08f931b1642c53618b4f63e2add804fb5cfb94977"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ecdh.h",
+    "sha256": "638011cd4d5a40de48639169c4ce6c24104b2bb369caf2321f2fe453258b0568"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ecdsa.h",
+    "sha256": "c4e419b690d0da2631d7c1f6893e392f7ad02a818b8cb24a323b66caea9eada0"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ecjpake.h",
+    "sha256": "13a7908d6c9193ef176baf4250bd235ae6813b2a44d7c5dc2692294587df5d42"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ecp.h",
+    "sha256": "f0cb2c6d6962623e7b379bcacb8a188cee24285adb31823b89fe05749187ed36"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/entropy.h",
+    "sha256": "9c3fc1d14497c0989c0f2ea590f708093f4dac39228353eeb1f5f83392df3dca"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/error.h",
+    "sha256": "ddcb14c1bf9d6fd2f2f1d2eb62117ce9bf05a0f9430c6931d7555b23f9ed3ddb"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/gcm.h",
+    "sha256": "e28c3e5923269dbc921bc57e83e0ab2a6488a16e1bcbae943e5ad36ccc57d1f4"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/hkdf.h",
+    "sha256": "58c991c0bc9e821ee8abcded770b83b40682ccc3c12b1bc58b35a853d104a12a"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/hmac_drbg.h",
+    "sha256": "08a52034212dcd99aefc603c9eb62cce1c3d33d41142efca626d7baa80b73630"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/lms.h",
+    "sha256": "00a6e65ca542180223b60180790a9fce8903ee85644eca914c9f7ae86f626350"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/mbedtls_config.h",
+    "sha256": "004edfaa0f9877a9f3baa7911ab708fd9d7c615f836f6b6674434e337145b7be"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/md.h",
+    "sha256": "89c41b36251ab26facdedc7b379ad5236af8f941cae58941be7f6de690fecd4e"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/md5.h",
+    "sha256": "21893a1ffcb6d65057178a45977774ed249387ace6d733f32434d8546dd827f7"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/memory_buffer_alloc.h",
+    "sha256": "cf561b299149797735dd23e5cd898aa503a6e4e35fe196e3d8a3d74d2d16bb94"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/net_sockets.h",
+    "sha256": "61ba8b8ac6aafb07ac3e147645579f7dca872e3f95b309036804dda2d909ea6f"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/nist_kw.h",
+    "sha256": "a63a6452d9de9f8f84cbf05cc6f3a710c1ad7b4fc305c04924a12c7ee97ddc8d"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/oid.h",
+    "sha256": "43b033ffcf575a549267f5a561c40ebd33d6ff6dea12981dd186b9edc2ffe9de"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/pem.h",
+    "sha256": "df7044dbd27684d4305a93077a3bd5af661a21443897f81a8a0a82cec6a8fdbf"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/pk.h",
+    "sha256": "b6974afcc43dbcddbcb222a689caccc011044f2c8b8843571b4584254c500bc2"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/pkcs12.h",
+    "sha256": "37ea587a2be9212b54dc65aaf3916165241b241c925b7368a22d22acb20b39e4"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/pkcs5.h",
+    "sha256": "d461711e57754093228a127268303bf03f33522d05aff3d1e0f3915bb5e4e370"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/pkcs7.h",
+    "sha256": "565d6baf3c1cc3eb7cd27bb6560e6e4f5a78b3eb82854150261360eaba9f015f"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/platform.h",
+    "sha256": "e6e1edc99d90698acf751d5d837c9b59898d7277deb993bcbf7473172b7a3523"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/platform_time.h",
+    "sha256": "5baf1588bccb5ef634e765012e4e1d680f1ded4d62e2a6573b5c238546f71327"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/platform_util.h",
+    "sha256": "1237d849e96bc15b479e8086160e4568c1de86563bb51c60eead45b99ad1b4ac"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/poly1305.h",
+    "sha256": "393389d0f437930fae11e0cc1f325bbd82282723dffd57f080a08f82453d1e6e"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/private_access.h",
+    "sha256": "c897213b3e534e8d5db83629177f9c01d90461ed6fea57906836262dba87056d"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/psa_util.h",
+    "sha256": "382c0cc5184a102f7a6ee2ada6ebaf95c327bad7e08d9fa2ff2940e9585dde1b"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ripemd160.h",
+    "sha256": "138b3cd792a3301fb869e5303fe0dd317743b2009b7a8f8423a51511444e23dc"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/rsa.h",
+    "sha256": "ff1c3dd80dfdaecea95bdcdd9c525cd1ad816a1590b65234cd4b7df84e08cb81"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/sha1.h",
+    "sha256": "e644d96d46d44da66e160eb69ad637f13caef1d192e3361616833b342c6a859b"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/sha256.h",
+    "sha256": "a2ee050ca15b7598a8d227cac0e0ec9fd6c38615b817737a8007e90b3feab0d9"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/sha3.h",
+    "sha256": "8cc0b3928976871e2a4847d0f6bf02da4663a94cc0779afdec3438a0c76a5499"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/sha512.h",
+    "sha256": "0f77abf1b4dfc18b865725e8a221d5d9279899c274e993005359be182b7574a2"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ssl.h",
+    "sha256": "8163fa47c3a8605a5eb58c6ed258c98ea846863a22026a6fd7a38d8fb1244184"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ssl_cache.h",
+    "sha256": "30211032125e7ea766170195f86a69ce44846488d2828467c9a7e5b210bd491e"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ssl_ciphersuites.h",
+    "sha256": "f7c3136ebd9ab933aa94544880a20c1fb97ff71d320dc47f97ae70023df8270c"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ssl_cookie.h",
+    "sha256": "dd533ea587703b57769785747d3497cbc58e0e0582d1b9a6d9eeadfc7a32e59c"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/ssl_ticket.h",
+    "sha256": "1e6edbe8c647a6471472fc82ba262bd36159a6c6b0e0d340b741006560a39700"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/threading.h",
+    "sha256": "5688b2bef81fa61b9d29bca9383931db26b7dcb8a96785dbc957b95e01292b72"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/timing.h",
+    "sha256": "177074f8d1699bfd8940eef3749e018f10298ad39af1cbe3a48c04126408ce1c"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/version.h",
+    "sha256": "ed3e527b2f2ab3b9c9e2633a1a49a764fb3854fc44835afa07f325ce671334de"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/x509.h",
+    "sha256": "aa138f6080869285173296afd08727e0ab0313cca959b830250b72a3c37a3bc4"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/x509_crl.h",
+    "sha256": "f5fa1c1bfeac75548fd9b68903e05c5a4435634c1f1457d0ffdd2becd0cd72f1"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/x509_crt.h",
+    "sha256": "2bc2f06295bce2b267a4efb608b2e6f8f751f0c58acf35a63d47b946860afd80"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/mbedtls/x509_csr.h",
+    "sha256": "dd0bcea7e36ddb018affc8b7b52f1f7e9fb12b5f69c8c712f9c2b7fd2972ed07"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/build_info.h",
+    "sha256": "9eb0dbed47ac851acee62bd0829ce177aac6fe8515a4ce7e904ecf71829cb3d0"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto.h",
+    "sha256": "1f5b3a248a348ea39d093208067e377e5c8908718e71e396f9ff4d2c7fb5ebdd"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_adjust_auto_enabled.h",
+    "sha256": "34ea7513c9ed3467b5d185ec350f207caf31160ad1d24369b86593050449edae"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_adjust_config_dependencies.h",
+    "sha256": "7dae42efb18e0f3d428fd0e4b4223534b66b650a56b7cf7302b4e179e81e2f56"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_adjust_config_key_pair_types.h",
+    "sha256": "9cb1fba3c26ab4feada289813242545670f9703c5ebe9f5ab336f3dbdea4a1b5"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_adjust_config_synonyms.h",
+    "sha256": "039eb983eb52a46bc273d513e0e17817bd77015004efdb3f9cd8b65eac02de77"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_builtin_composites.h",
+    "sha256": "1e2eec329b2b4ec3b5da3f9d5761bc5645833445401a43cbff812fdb76b0ae9e"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_builtin_key_derivation.h",
+    "sha256": "8b3d5d3174dbd33e5e332f51e5f00d2734716f3e744656631bccb4d355e92bdc"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_builtin_primitives.h",
+    "sha256": "a3078c5637a4ef2a40ef022f89881b8ca5d3321bcab31f6f550c6154c58543c5"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_compat.h",
+    "sha256": "0c0396d7f339f9207af3a003e98e9921516367c71d53724cb42e32f0f66142f7"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_config.h",
+    "sha256": "dd8222851bf799827f45aab2b7783d5e65c8e54c24092ec0dbafa2b259612bef"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_driver_common.h",
+    "sha256": "25207d12a91fc8c0670370596c3306c256ec054b4d6a6d1dd9b5bbb7d5bbe35b"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_driver_contexts_composites.h",
+    "sha256": "9f6bc40047a2d0d48361d82e5a5b05c477d946518b0091a3d4cb8c2cd0c877fd"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_driver_contexts_key_derivation.h",
+    "sha256": "77c8ef9b7a8fac177a53472c7a39a9835da61bf864df951979cd15f71143796f"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_driver_contexts_primitives.h",
+    "sha256": "829aaa3fbf90beeb20bf989a9db20829469d4875d514d0cc18591f8748a0ba0c"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_extra.h",
+    "sha256": "7357e1a806b9cf2fc677d9b0d4890eb1876a9430167955921bca6b8b0b98d2a0"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_legacy.h",
+    "sha256": "51c4415dcae97a01f1f0f3901e3e7d91b623cbc30d02e8d9496542545966aae4"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_platform.h",
+    "sha256": "26db28657e60ff6c3198b83e10ba86b25ced721cdda1d67e1c0ec679f1f7d041"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_se_driver.h",
+    "sha256": "cecf5150230f20d60ad8df60fa96982bb40ecbbb90ff54a14c98f180438b62e1"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_sizes.h",
+    "sha256": "a2ec8ebd505ba034ea8916cacd10734c9b82850b120a78c0ce7944e26ee0fb2b"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_struct.h",
+    "sha256": "0f5b72d1c0f7ff64a4823998d4641c80f29091a372bce8385261bf7419c81655"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_types.h",
+    "sha256": "219ac995d8c48ee0a70a35f1bb70c92215151862c2a1c22385c7018c9ccb7aa6"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/include/psa/crypto_values.h",
+    "sha256": "bbb8fea69782eb077317e973e6ba92d3024e69932f284265041cadc35307f0e3"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/library/alignment.h",
+    "sha256": "e97b8844abfadc4cc2fecce5b040d58cd53f549c42712205a267e00e372efd3d"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/library/common.h",
+    "sha256": "adfd493f8ecb11f87f7e75f270a97cbd05d1902345ef32db51d39c076e4f8fde"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/library/md.c",
+    "sha256": "5ba79d51ff85951cb4001a22b2428568e4bc1072b367222808f3eac1ad91884d"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/library/md_wrap.h",
+    "sha256": "383077e483c60893f8256db246a7bd1fb1fc30bc7dd8e15133d2cb16b9dc5c82"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/library/pkcs5.c",
+    "sha256": "1d29edc77054f108a204b7358eb039dbc506ed485871708dc35857d7836eee07"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/library/platform_util.c",
+    "sha256": "83051fddcd37171831ff5706613dc3d336b2e53c42e6515f2f14ac0f8aa649f1"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/library/psa_util_internal.h",
+    "sha256": "342d2699a1ad757d27325be03b06501b4e3acc46d8e72ddcda6238ecdcca447b"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/library/sha256.c",
+    "sha256": "632672d0c954d8bc0e20fdc8370c9f1725f3ffc5fcdaacc14949e42a1b5424d7"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/LICENSE",
+    "sha256": "9b405ef4c89342f5eae1dd828882f931747f71001cfba7d114801039b52ad09b"
+  },
+  {
+    "path": "android/app/src/main/cpp/third_party/mbedtls/PROVENANCE.json",
+    "sha256": "9a1f0b32362c32500e4abe03600878e5af7f7552aa685731c80d69ab096ea6a1"
+  },
+  {
+    "path": "android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java",
+    "sha256": "75ec874914054954f507d1e69aa3b8f6608785e557846841d44c9158a33796d2"
+  },
+  {
+    "path": "android/app/src/main/kotlin/com/example/kasir_app/MainActivity.kt",
+    "sha256": "be96a60b65a1dd536195f38119c8f38baeb6f912ce8c644aa3f8e795b484948e"
+  },
+  {
+    "path": "android/app/src/main/res/drawable/launch_background.xml",
+    "sha256": "2df60e2cfbee873ce2858088cf003e6b93498f2f568476da437610467ea1a9d7"
+  },
+  {
+    "path": "android/app/src/main/res/drawable-v21/launch_background.xml",
+    "sha256": "dca312ec77de83e43ef70a825c299b51451247286c29167d62f19165750b8793"
+  },
+  {
+    "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+    "sha256": "6a7c8f0d703e3682108f9662f813302236240d3f8f638bb391e32bfb96055fef"
+  },
+  {
+    "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+    "sha256": "c7c0c0189145e4e32a401c61c9bdc615754b0264e7afae24e834bb81049eaf81"
+  },
+  {
+    "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+    "sha256": "e14aa40904929bf313fded22cf7e7ffcbf1d1aac4263b5ef1be8bfce650397aa"
+  },
+  {
+    "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+    "sha256": "4d470bf22d5c17d84edc5f82516d1ba8a1c09559cd761cefb792f86d9f52b540"
+  },
+  {
+    "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+    "sha256": "3c34e1f298d0c9ea3455d46db6b7759c8211a49e9ec6e44b635fc5c87dfb4180"
+  },
+  {
+    "path": "android/app/src/main/res/values/styles.xml",
+    "sha256": "cca15a99b59380a548bf6a890f7ca5380ee509b1f9bbb2f5f9ec3589fa25c2f7"
+  },
+  {
+    "path": "android/app/src/main/res/values-night/styles.xml",
+    "sha256": "ea763597dc1a84c8034251caee98d7753e0fbf57340ffc94677427de4b537516"
+  },
+  {
+    "path": "android/app/src/main/res/xml/backup_rules.xml",
+    "sha256": "687d4e932da8410d0e66cc4cfaf29411c6f716953b022f67d09055a7f250192a"
+  },
+  {
+    "path": "android/app/src/main/res/xml/data_extraction_rules.xml",
+    "sha256": "eda9dddce1e895de1efd716fe75e244187bf8f91a3bb7444c6ea1731e51c74a8"
+  },
+  {
+    "path": "android/app/src/profile/AndroidManifest.xml",
+    "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c"
+  },
+  {
+    "path": "docs/SPEC.md",
+    "sha256": "14db5f2bde56192c1d0ccb692680ef29610ef1bc9f4435bf29f8d8b5b611fef5"
+  },
+  {
+    "path": "integration_test/bugfix_regression_test.dart",
+    "sha256": "460cb556c7af1c3e75e17afac9e74240c6561bebd9c8a1105bdf6e972141ac5a"
+  },
+  {
+    "path": "integration_test/cashier_sql_test.dart",
+    "sha256": "8f74a5f71a54571ddb771bd0a13174e4c24e1cc0e676045007567d8668b6de82"
+  },
+  {
+    "path": "integration_test/cashier_ui_test.dart",
+    "sha256": "d3d7bb88c3a1524cf443f45e2446688c86d8734b4fccaa9d834eb7c34ff72093"
+  },
+  {
+    "path": "integration_test/database_test.dart",
+    "sha256": "3f541fd896fe52df3df9a8cfe73fcba78769191c607b243dd97f33b6baff4389"
+  },
+  {
+    "path": "integration_test/dv8910_performance_test.dart",
+    "sha256": "a4c121e5b8862f08a086c41336ed6727dceb33cde30398ce596baf9bc3984965"
+  },
+  {
+    "path": "integration_test/frame_probe_test.dart",
+    "sha256": "0fc5bd36f206f13902f691038eb68a54c760f2b4d6d457601c0318e190196cae"
+  },
+  {
+    "path": "integration_test/locale_currency_test.dart",
+    "sha256": "e92ca22e73cc476d48de8695150f1e79c9bfd0ef24e74a240895aa68ee20a0d3"
+  },
+  {
+    "path": "integration_test/localization_ui_test.dart",
+    "sha256": "c59e1175e8557dee3534facaf7d854110268b8a3d09d8527303599179842e0a8"
+  },
+  {
+    "path": "integration_test/m31_ui_gaps_test.dart",
+    "sha256": "114ebe4e9bd5ebd64b67990484b5d7850541562646e365489f02d34b69ef41b2"
+  },
+  {
+    "path": "integration_test/m4_performance_test.dart",
+    "sha256": "e88846b39c4645bc86e8b4679b1b2f4c1863fb9facaae0693073f266368bfde5"
+  },
+  {
+    "path": "integration_test/m4_storage_test.dart",
+    "sha256": "ae9eedd778142dab73def0ffeebc0a97798f8612309729aa14b07b54d1b75b38"
+  },
+  {
+    "path": "integration_test/m4_ui_test.dart",
+    "sha256": "3b6c532a946f32d436849f0a3a0d9569d6c6297f6608afd3aff5d3c2dbac6cb6"
+  },
+  {
+    "path": "integration_test/management_inventory_test.dart",
+    "sha256": "a96c4a0097dceecab53325bf2d898582c0d77d8fa72e9d2085dd2cf85416ceee"
+  },
+  {
+    "path": "integration_test/management_ui_test.dart",
+    "sha256": "84c84fa0cf88f66f3011ff7922d9449c43773c33f97eb0a95458df7ab4ffa05c"
+  },
+  {
+    "path": "integration_test/pin_native_backend_test.dart",
+    "sha256": "a8332cbaa85381adca8be5c9d668e8df05283047da9abc2c4b622770f0f8c585"
+  },
+  {
+    "path": "integration_test/protected_reads_test.dart",
+    "sha256": "e3dacd54f4c16f6b8208c1e0487ed126536f3c3f218b42d23126d831fab146a0"
+  },
+  {
+    "path": "integration_test/realme_acceptance_test.dart",
+    "sha256": "3224fe93966c7e06cf432195e8873428229fcfa473f74379960a9d11ff68257c"
+  },
+  {
+    "path": "integration_test/realme_manual_integrity_test.dart",
+    "sha256": "becd397966d015898eda7aa95f2dd89921ad15d6f511f3ce5139e46418ce60c2"
+  },
+  {
+    "path": "integration_test/realme_performance_test.dart",
+    "sha256": "63ddc587e30d2a39a399c5f3569cbb9213a19fd5a4625fcabbc7940ac3d6d6ae"
+  },
+  {
+    "path": "integration_test/realme_value_input_test.dart",
+    "sha256": "d5f5e28c47685f676d05be5b46a144370f89ac44c9f88d4bae6960096bc99e1a"
+  },
+  {
+    "path": "integration_test/reports_corrections_sql_test.dart",
+    "sha256": "1cadaceb3bf8b389c71da40b6fd371f387f6c9fc1312b6b2b14905a7af90fc9f"
+  },
+  {
+    "path": "integration_test/wholesale_packaging_sql_test.dart",
+    "sha256": "8c2c1e25a4f7c0f86a4fbe7fb96ee07fb78b4abd60e767d72ae0ef43a314d8b5"
+  },
+  {
+    "path": "integration_test/wholesale_packaging_ui_test.dart",
+    "sha256": "68ce8f5412ff9a45d80062788dc6037e05fbaa105d39f0ff7001a10cea5c118f"
+  },
+  {
+    "path": "lib/app/app_services.dart",
+    "sha256": "8be059d441f4e2672e81848e425cd8b59b5830e5fe59ebcfd6457ad24890f890"
+  },
+  {
+    "path": "lib/app/kasir_app.dart",
+    "sha256": "3d752a971c3ca2a6d071ec95453873326147ea5e85a9c8c9f0647451c568e164"
+  },
+  {
+    "path": "lib/app/theme.dart",
+    "sha256": "2c02ed31a15a42198c45feeb06d4ee08ca6c7616bc869d9385c06c6518c2f80c"
+  },
+  {
+    "path": "lib/core/domain/app_error.dart",
+    "sha256": "490d4ba15d6fe42e340ff446d091e965d20f6904e8344861bd2deffdb6ba963d"
+  },
+  {
+    "path": "lib/core/domain/pricing_mode.dart",
+    "sha256": "65e9e2a7534ab0f4f1b8df67f4aa722dbf6a433857c32fc953653c3fba969c3d"
+  },
+  {
+    "path": "lib/core/domain/value_types.dart",
+    "sha256": "421b0fb83527d8b0d7d05fbcaacc54b015eaf2c4c5aa0fc329d2a21ccbc744c8"
+  },
+  {
+    "path": "lib/core/money/money.dart",
+    "sha256": "58fa0a48a533c309c085b7fd6645fbed4aca21d9b0a8508fc56fe5c3238f0875"
+  },
+  {
+    "path": "lib/core/money/money_codec.dart",
+    "sha256": "d58768bc1643b948d5124d6597ba3fd58d05ac314b46fd72921c49d4a66b5c1c"
+  },
+  {
+    "path": "lib/core/money/money_field.dart",
+    "sha256": "33fb662067467bcedd338103c1ef200795c0988d7e79b05896be4ab1d5b2c0f7"
+  },
+  {
+    "path": "lib/core/money/money_text_input_formatter.dart",
+    "sha256": "ba14da229ffd9adf24e5bcc478a37b6dd0219cc7a0bce02c6b87b22461c99ccf"
+  },
+  {
+    "path": "lib/core/pagination/page.dart",
+    "sha256": "d9cc8b4b508e37fb266c8268673f363226fb1b81df24cd3f9a64efbb8eb7d98b"
+  },
+  {
+    "path": "lib/core/pagination/paged_controller.dart",
+    "sha256": "241b4f42c4c2109c4231b01b21edd29fa79d2f50300c53410518c32e3a357ce4"
+  },
+  {
+    "path": "lib/core/time/store_clock.dart",
+    "sha256": "fb711a885bc78faf780bd3eefc64153be348b578fc35ddfe4efe768b51d5f525"
+  },
+  {
+    "path": "lib/data/database/database_coordinator.dart",
+    "sha256": "d55fa5f35924b85d176141fb30cae9caa51d62b689dfe8650dd020c4b45bc576"
+  },
+  {
+    "path": "lib/data/database/schema.dart",
+    "sha256": "7fdd8a6a93ed4a8dc5f40f188bb4c3425849c25028b676a3ef3387e9198211df"
+  },
+  {
+    "path": "lib/data/repositories/keyset_queries.dart",
+    "sha256": "6c8688e1ff1940de086acfbfe405299bce6c754c3a5142d442ab28864d9fa8b6"
+  },
+  {
+    "path": "lib/data/repositories/sqlite_product_repository.dart",
+    "sha256": "50232b77a8cec206bae48a4a3411f39c3956c5db10b9c4c93d1852889548e762"
+  },
+  {
+    "path": "lib/data/repositories/sqlite_reports_repository.dart",
+    "sha256": "3cdf5826a659bfb9abb6615572525148cde8067197fdb8588b2920f0499171dc"
+  },
+  {
+    "path": "lib/data/repositories/sqlite_sale_transaction_repository.dart",
+    "sha256": "ea14e9fabb849064261a3cf923995f4588a8f3e98c2196cdd9b09361e5d885d1"
+  },
+  {
+    "path": "lib/features/cashier/application/cart_service.dart",
+    "sha256": "3ed1b5762428ce831ca7fa73f9694dc71f3f99a2acc59a9749be899dad833b1d"
+  },
+  {
+    "path": "lib/features/cashier/application/cashier_store.dart",
+    "sha256": "45c01faefd687a08d77c388a9ff20e1eb960a9044ff33217b20ea545487fc948"
+  },
+  {
+    "path": "lib/features/cashier/application/checkout_service.dart",
+    "sha256": "7678c8d1f5635dafc20374ea7e7ffc85c65eff0267f11baad2879e879c3617da"
+  },
+  {
+    "path": "lib/features/cashier/application/product_search_service.dart",
+    "sha256": "53ae7a2fa63479a716baa660fdd9ad51e43a015bcf0275021f3fbfa7d554c101"
+  },
+  {
+    "path": "lib/features/cashier/domain/cashier_models.dart",
+    "sha256": "ae76dd4d4069cad27cfcce7f2c2da99fe13d79cbdcb20b6f4e10760f3751976d"
+  },
+  {
+    "path": "lib/features/cashier/presentation/cart_provider.dart",
+    "sha256": "e3470793d5b6b351c7b5f0d0426e47f9ac19f8f02bbf548354c3720432cdaddb"
+  },
+  {
+    "path": "lib/features/cashier/presentation/cashier_screen.dart",
+    "sha256": "09439a5d9da6d876a68021662e6c54395dc3e86528a29a580c0accd2e5821e95"
+  },
+  {
+    "path": "lib/features/cashier/presentation/checkout_provider.dart",
+    "sha256": "99407a24b2310ca8c8ab83b235b07ef07f0adeabafaa6d962d06d391b57bfec5"
+  },
+  {
+    "path": "lib/features/cashier/presentation/checkout_screen.dart",
+    "sha256": "39b45f0131f2c2fd754e15c8b6e55afba452fba54c9bdabe947387e678e92b55"
+  },
+  {
+    "path": "lib/features/cashier/presentation/product_search_provider.dart",
+    "sha256": "265f9a8533617a65196c49b1e71c9d66be7194f9010c3a37119d3274cae969ca"
+  },
+  {
+    "path": "lib/features/cashier/presentation/receipt_view.dart",
+    "sha256": "d311b54cb3178177e66bf28657fe87a420cec891acd3c8014052cc2423d01ad6"
+  },
+  {
+    "path": "lib/features/catalog/domain/product.dart",
+    "sha256": "e26a78ae5cbee292dcbe78219bd3e1acde2d2f94292d09575afe0b1a61d255fa"
+  },
+  {
+    "path": "lib/features/catalog/domain/product_repository.dart",
+    "sha256": "0b1daa29b36765e79559eddcac58474b0eef72d4f34f4b792e1294bb85a2f216"
+  },
+  {
+    "path": "lib/features/corrections/application/correction_service.dart",
+    "sha256": "5ed42e409dec5b07c0366d587059c3dce5c3926b0161f72e099b3a41201e6596"
+  },
+  {
+    "path": "lib/features/corrections/presentation/correction_dialog.dart",
+    "sha256": "d5f4f51ed611027d5135b2b0b594f891e6b7dc32d8e8a0c9f022938386064909"
+  },
+  {
+    "path": "lib/features/foundation/application/foundation_service.dart",
+    "sha256": "7cf3546f1d241b8ea39ef81525b4a0d5044973ad9a8478849b0e6d0add36d499"
+  },
+  {
+    "path": "lib/features/foundation/presentation/cashier_shell.dart",
+    "sha256": "eb1e83ac848afabcf6be715bacc9e1a031a08b617c32920a99836987cf314254"
+  },
+  {
+    "path": "lib/features/foundation/presentation/foundation_controller.dart",
+    "sha256": "607702f7cf8bdc3466c9de8915085055b73b1eaf4e782499cdab279f371e1fdb"
+  },
+  {
+    "path": "lib/features/inventory/application/inventory_service.dart",
+    "sha256": "4cf8b54eadf16627a6916ee9558d7a7a794b614bafd19f8138495a15309ec235"
+  },
+  {
+    "path": "lib/features/inventory/domain/change_record.dart",
+    "sha256": "4453da069cf9fa6fe85252138857b1441469166b191a05905f5366c949d20c11"
+  },
+  {
+    "path": "lib/features/inventory/domain/inventory_models.dart",
+    "sha256": "fd6f5fc5a45b4c8d905b9dd38086d4789d4a431ff08f867a0d7e5570032e4f71"
+  },
+  {
+    "path": "lib/features/inventory/domain/stock_input.dart",
+    "sha256": "932910f305a824cd1a456ebdf234aa8838ed9d42d06f94844f05d856f4f68a4f"
+  },
+  {
+    "path": "lib/features/inventory/domain/stock_rules.dart",
+    "sha256": "799ba715244520a70ece478d2e0faca6e9db0275f9f6f10bde3e0702756b7cc9"
+  },
+  {
+    "path": "lib/features/inventory/presentation/inventory_history_screen.dart",
+    "sha256": "8d102d0187fc03aee4e9104530d2b3cafa3c0685912aaa7115e16a1c79923cb8"
+  },
+  {
+    "path": "lib/features/inventory/presentation/inventory_provider.dart",
+    "sha256": "10f834c8f18e9dbce52791e984211bbc12f1b27aadf64e44cf0a985f58530c2c"
+  },
+  {
+    "path": "lib/features/inventory/presentation/inventory_screen.dart",
+    "sha256": "a73c17557ab0d206e056130972811ab6b8a41259fe4fdd11c814ff5e6f5a8f40"
+  },
+  {
+    "path": "lib/features/inventory/presentation/master_list.dart",
+    "sha256": "dbbd729fbfbdea6052228a34b5e26b52507ece2f7490dde9c5eb7822b975e3cc"
+  },
+  {
+    "path": "lib/features/inventory/presentation/product_detail_provider.dart",
+    "sha256": "8d5cf8761a660047e507cddf351589c0c04ab671f9c889a795eabda63b1ea783"
+  },
+  {
+    "path": "lib/features/inventory/presentation/product_detail_screen.dart",
+    "sha256": "7283e0e4f765710e3c3e6a594a5af4d299a06ad816b72d648f1d4338503990ca"
+  },
+  {
+    "path": "lib/features/inventory/presentation/product_form.dart",
+    "sha256": "a546599b0bbb03ef3453d3806b137b57d9452cddabf396b0a227dd32775308a8"
+  },
+  {
+    "path": "lib/features/inventory/presentation/relation_field.dart",
+    "sha256": "e3d24218d38a861b576c050dee29f000e943ce6eb8d8f1f454c2256e2c257438"
+  },
+  {
+    "path": "lib/features/inventory/presentation/stock_input_fields.dart",
+    "sha256": "ec01c605cd1bbe5f7cde5a2ba68ac0b3ee96aa4a036e15cf2b9d7902bc11fe6d"
+  },
+  {
+    "path": "lib/features/inventory/presentation/whole_quantity_formatter.dart",
+    "sha256": "237270c2d12859775c9cc7df6a3145349e0abd4efe1e9d8a769fb79d6da3030c"
+  },
+  {
+    "path": "lib/features/management/application/management_service.dart",
+    "sha256": "22974614d6ddde526b46c5c7ce2d51097146b8914cf91680648c55e910dcbc30"
+  },
+  {
+    "path": "lib/features/management/application/pin_hasher.dart",
+    "sha256": "ab1a1588ab3b723695c4a77b3eff2f4abdd3a865b13f5f61933e793a0a68412b"
+  },
+  {
+    "path": "lib/features/management/presentation/managed_text_field.dart",
+    "sha256": "026102f16fbf9e3c68ddecb4f744dd576a589057c99847b3a455b51287cff58d"
+  },
+  {
+    "path": "lib/features/management/presentation/management_gate.dart",
+    "sha256": "7e85e903d156023ad431790a39699159fbdfb02c7f0f4a39a2150537d0843916"
+  },
+  {
+    "path": "lib/features/management/presentation/management_screen.dart",
+    "sha256": "bd2fec64200da257c41b4956095b0c1650bf7f270d22693230026952f1da0003"
+  },
+  {
+    "path": "lib/features/management/presentation/management_session_provider.dart",
+    "sha256": "403598c06d2f5cfcb014bbd6b2c1054d18985f469adc9a7ea06e82c4072df95b"
+  },
+  {
+    "path": "lib/features/management/presentation/pin_screen.dart",
+    "sha256": "1a62c17e32af1166b6c1c00dab6489979c88c2e1fefd9775df331ec6b7482c2a"
+  },
+  {
+    "path": "lib/features/management/presentation/protected_dialog.dart",
+    "sha256": "858896c950fe547d505edb35e0f8ae1e25c793d198514133e0d9a4b6c836b41b"
+  },
+  {
+    "path": "lib/features/receivables/application/receivables_service.dart",
+    "sha256": "7b7d33232cf0c04b856a0737a4278a93db868b09f28435402b009f7a544809c1"
+  },
+  {
+    "path": "lib/features/receivables/presentation/receivables_provider.dart",
+    "sha256": "1a72465f3e7abd3e5cdd1f7d77d75f2936e5006e9a447c6c2b27bf0cc281281f"
+  },
+  {
+    "path": "lib/features/receivables/presentation/receivables_screen.dart",
+    "sha256": "2c0f08498dd73eac576b0a896453cc1f05da098e48c778116c7e6785df761adb"
+  },
+  {
+    "path": "lib/features/reports/application/reports_service.dart",
+    "sha256": "76b8f5236d52fe0812d33f67cf1f52176ea76a63c251a380ef222baa8f0614e4"
+  },
+  {
+    "path": "lib/features/reports/domain/report_models.dart",
+    "sha256": "a90048275b44b355ed6d8a6f877caa124311cc741989489080cdf512bc4224de"
+  },
+  {
+    "path": "lib/features/reports/presentation/financial_filters.dart",
+    "sha256": "9868efb3dbb5d980455b57e0ea334c76abfc0973de266d04ce084753f8624670"
+  },
+  {
+    "path": "lib/features/reports/presentation/reports_provider.dart",
+    "sha256": "738b76cfe1a25d50418123d077b52ba8a6fc6f4b71d5042eb221962112f9c165"
+  },
+  {
+    "path": "lib/features/reports/presentation/reports_screen.dart",
+    "sha256": "57036602eb053bbfda94b4179223a1b2c1ebd04efb2d52eb3ed1afa21501e44a"
+  },
+  {
+    "path": "lib/features/sale_history/application/sale_history_service.dart",
+    "sha256": "9b873b5cd31c4172f44efad4ae0f2948f021c91e6d2b981883820b2b4f6b7c41"
+  },
+  {
+    "path": "lib/features/sale_history/domain/sale_transaction.dart",
+    "sha256": "ca54f93e7753eb38cedb419304c9bae4208015dcaa0bfe3ab450a2e3fe7291f0"
+  },
+  {
+    "path": "lib/features/sale_history/domain/sale_transaction_repository.dart",
+    "sha256": "9dd16b60631e0d91473168988223c6925831e1056875f4421be6eda9535028f1"
+  },
+  {
+    "path": "lib/features/sale_history/presentation/sale_detail_screen.dart",
+    "sha256": "8695bb0e4e415cc0a798b9d959090da83d4296799181e1df364bd82990ef597f"
+  },
+  {
+    "path": "lib/features/sale_history/presentation/sale_history_provider.dart",
+    "sha256": "fbc93737874cba8ab71d26b85e20d7476669c17b3146cbd1cbb716bbfdaf2a35"
+  },
+  {
+    "path": "lib/features/sale_history/presentation/sale_history_screen.dart",
+    "sha256": "b7f7c25a33569826100cb337d23591d94c3d39a80d2250073d5c8815e98699d9"
+  },
+  {
+    "path": "lib/features/settings/application/settings_service.dart",
+    "sha256": "aa66201156aaae9b3a2edb1e0efcfaa392db90d426a5a5360f7b2005e91c8bbd"
+  },
+  {
+    "path": "lib/features/settings/presentation/currency_selector.dart",
+    "sha256": "b51aeede6ed4b9cb1819e50c69f4cd927bcd6f7a0478ffa1a8664d5b0dce3687"
+  },
+  {
+    "path": "lib/features/settings/presentation/language_button.dart",
+    "sha256": "76332bd56a212b93a4095264e07f4fdce157b13138f85961400a9f30bfdba0ad"
+  },
+  {
+    "path": "lib/features/settings/presentation/locale_provider.dart",
+    "sha256": "83a71e148f482e1360d464262ec93571173589de2aabf5a968928dfb057444f7"
+  },
+  {
+    "path": "lib/features/settings/presentation/settings_provider.dart",
+    "sha256": "13ca8d1c36ba1e2eb7bb1e927be09533c0b4db358016d992d217652eb0e74f6c"
+  },
+  {
+    "path": "lib/features/settings/presentation/settings_screen.dart",
+    "sha256": "f6c726952685508acebf39c69a95ef41704334f68ee458ce23e8694c01fa1fa0"
+  },
+  {
+    "path": "lib/l10n/app_en.arb",
+    "sha256": "7dbcce6d512bbac9bd87632d812b27d0fac7fa4eb890067a1f61689e5f6a796d"
+  },
+  {
+    "path": "lib/l10n/app_id.arb",
+    "sha256": "8ada84a1643300edcce2853091bbe7e34087365d9280e894062267da68778940"
+  },
+  {
+    "path": "lib/l10n/app_localizations.dart",
+    "sha256": "8df28cb0e7bf95f3774d8da2dec67626ec6bdf16ac9348641319e942e4c2b5e6"
+  },
+  {
+    "path": "lib/l10n/app_localizations_en.dart",
+    "sha256": "680337626f0f0d7f6a79cdeb54e9b6b11d0c35d6948253e32ef9a3024e5dc302"
+  },
+  {
+    "path": "lib/l10n/app_localizations_id.dart",
+    "sha256": "8317b07a9c469cdd0f90b17ff15d0572f851d54e7911d9df52e4bb9505b250c4"
+  },
+  {
+    "path": "lib/l10n/localization.dart",
+    "sha256": "20294c8da48256fe4d3c41b2a2c2bd34e9eaafdc052eda9d2e04ca7b6388d3a6"
+  },
+  {
+    "path": "lib/l10n/localized_notice.dart",
+    "sha256": "67ff5aceaaa1183728d07cad9f8ed268d672b348c248a9b6bd74bb6927feceba"
+  },
+  {
+    "path": "lib/main.dart",
+    "sha256": "cee6eed16afe5fdbb6f4e9abaa86e4918bc74da969db811de1130234c90401d0"
+  },
+  {
+    "path": "pubspec.lock",
+    "sha256": "1f073b528f37da0136009bf117a7ed5b7bb4baa952603cc0a09d27613ae26d08"
+  },
+  {
+    "path": "pubspec.yaml",
+    "sha256": "26b3f2b79a024da0ff8fa35273a5d325428a4b1b4a8860c722a88fd18eafae28"
+  },
+  {
+    "path": "test/bugfix_regression_test.dart",
+    "sha256": "9fdf2024e2f28634cf58556351c2136c9dd59d07a924f25f189ccc859340f395"
+  },
+  {
+    "path": "test/cashier_layout_test.dart",
+    "sha256": "080b37cea5d00407aeeb894f40700951691b77f40f29ba915ee1768b34c56bf9"
+  },
+  {
+    "path": "test/cashier_provider_test.dart",
+    "sha256": "573d0da84a087b41108c8e059056f93c7698a8cf0680d68e94c96c5075b66a41"
+  },
+  {
+    "path": "test/cashier_sql_test.dart",
+    "sha256": "a42bf4c1c90f701525e7f769bbbeb9c65649ca029dd2a5eae7e76b5728f053ed"
+  },
+  {
+    "path": "test/database_test.dart",
+    "sha256": "680dbcd204ff4a2ecfefc3bd567893ab97585c198a57c874f882864aed224d7e"
+  },
+  {
+    "path": "test/dv8910_performance_test.dart",
+    "sha256": "739d9de386e369bd2d81d21712f329d3abe690d42f8bfb401500141634c5c14e"
+  },
+  {
+    "path": "test/locale_currency_sql_test.dart",
+    "sha256": "b83903af9eecfd422e943c8162243752be9079e53298954f08f08274e071b9a3"
+  },
+  {
+    "path": "test/localization_ui_test.dart",
+    "sha256": "6c625d82c765722d2fdba13d999d404fbe5fae129ba1cef8097ea57591017513"
+  },
+  {
+    "path": "test/m31_ui_gaps_test.dart",
+    "sha256": "e7fd71272d846a3a2954a865dbc62b2faa5ec58117ce640d9f6aa064743d3bec"
+  },
+  {
+    "path": "test/m4_performance_test.dart",
+    "sha256": "6ccdfd7228b3b8c20ef425d54580df56345d752d85c9770556b95172bec06525"
+  },
+  {
+    "path": "test/m4_storage_test.dart",
+    "sha256": "eaabd5f60452e5a122bff9436e609a07e9e0d3119ec48f01cd2b9d9e46687a18"
+  },
+  {
+    "path": "test/m4_ui_test.dart",
+    "sha256": "883eb59bd56e273a0047d36b4f32f93a620514d28aa3e608715c2b43c5a504de"
+  },
+  {
+    "path": "test/m4_value_types_test.dart",
+    "sha256": "e7beab5d7d110b437d9147ea6c43adac844d6732c3353644422ed97cb879b6e8"
+  },
+  {
+    "path": "test/management_inventory_test.dart",
+    "sha256": "cad27b10389fc9e1e06d54550e0ca84dbaa6e7157f40b95cfb7016bfd563aec0"
+  },
+  {
+    "path": "test/management_ui_test.dart",
+    "sha256": "adb3d99280e9bf7fd557b02d1176baca2f79e9c3f042cca526a147b58e335bc1"
+  },
+  {
+    "path": "test/money_test.dart",
+    "sha256": "75bca1d2fef63711f60c2ab285fd37e34f0f6ac70e9aec22f6e676d38e104656"
+  },
+  {
+    "path": "test/paged_controller_test.dart",
+    "sha256": "144f8dd30b26d192e6163149b08ed7fca22f2119c2b1a01c43ad620d5f647617"
+  },
+  {
+    "path": "test/pin_backend_contract_test.dart",
+    "sha256": "d6653625d0a704212a944ff1ba361da8c19b565830e630997482d2135055a4af"
+  },
+  {
+    "path": "test/protected_reads_test.dart",
+    "sha256": "ed4003cdefcad04d07b7529fc4616c010a3eb3526c42ed02266fdde844f393e8"
+  },
+  {
+    "path": "test/realme_acceptance_test.dart",
+    "sha256": "10ffef5ba26b8a5f4fac5bef91786f36ca9de08b033c87d9e987c7cd847a2526"
+  },
+  {
+    "path": "test/reports_corrections_sql_test.dart",
+    "sha256": "7c74b25a56d96a0ca96d15c10d754547c6b486bc1d5f8066f0cad97c27c48b40"
+  },
+  {
+    "path": "test/shell_test.dart",
+    "sha256": "c463e58cd5e380c63856876a8b002fe43975fe9c7c02e3d4879d694dfd011426"
+  },
+  {
+    "path": "test/stock_input_test.dart",
+    "sha256": "f3cbe6bcfb436bb1bc1f0aef5e60631ad2210cfa572924e01a5dc91a86a886b7"
+  },
+  {
+    "path": "test/support/bugfix_regression_suite.dart",
+    "sha256": "12e2e3bafbab4aab00f24898b7d33bd45ba484c172e801bb1d4b8858329a4e02"
+  },
+  {
+    "path": "test/support/cashier_suite.dart",
+    "sha256": "0abf756b9776e3a59b5b8b454c20696fb68174711bf9b80839810e3de332878b"
+  },
+  {
+    "path": "test/support/database_contract_suite.dart",
+    "sha256": "f35fd97f3a43bcd2e33a99011516e9240b5e516fa87cad8fabf46855b3279639"
+  },
+  {
+    "path": "test/support/locale_currency_suite.dart",
+    "sha256": "76770ac73c9acb3176fbea4bdc2ea7708db7c0d970e34b40fa8ab2062eafa987"
+  },
+  {
+    "path": "test/support/m31_ui_gaps_suite.dart",
+    "sha256": "5e567ddc5f2e6c25c009ffb7ca301a33c0c84273a41061f94fe05a3e3fdc8f94"
+  },
+  {
+    "path": "test/support/m4_performance_suite.dart",
+    "sha256": "3c9362381a1591443cbef209329d3ec1a321c29f9b1d87334f8990c61293f83a"
+  },
+  {
+    "path": "test/support/m4_storage_suite.dart",
+    "sha256": "a8557adae716e9ea933c71c0f2fce47ec60112e0a39479eafdbbb5266b55d599"
+  },
+  {
+    "path": "test/support/m4_ui_suite.dart",
+    "sha256": "525484bc3445fa9fd7d5586960151bed5c57d9ad18a27d6fccf54c4d1b1b8fa9"
+  },
+  {
+    "path": "test/support/management_inventory_suite.dart",
+    "sha256": "7b7ff73fdd3bd700abe89e2e5ade821c9d43d35e9b46bdeacfebf05a5ad8b797"
+  },
+  {
+    "path": "test/support/protected_reads_suite.dart",
+    "sha256": "e5324a074c1fcfabacd73bfffc3b509dbcde708c43b8e260d38cb5dcda656823"
+  },
+  {
+    "path": "test/support/realme_acceptance_suite.dart",
+    "sha256": "b152383babd56abb4b43febdef10113d2f60eefe933af9901bf7f0aceaf8c70a"
+  },
+  {
+    "path": "test/support/reports_corrections_suite.dart",
+    "sha256": "7df095d791145516df6c2bda7aa80259e6af9f13b5d43e6882cf5cc22c8b63b2"
+  },
+  {
+    "path": "test/support/wholesale_packaging_suite.dart",
+    "sha256": "afd97412f6957bc0b7202606e29ae7ddc3b92856dd1c1f91e4093daa07a206ae"
+  },
+  {
+    "path": "test/value_types_test.dart",
+    "sha256": "b49536c1f2eebe5b1964335dc13325b20aeb06e9942adfabb6027b29c1d17b05"
+  },
+  {
+    "path": "test/wholesale_packaging_sql_test.dart",
+    "sha256": "9fe79bf5af4aef203f1b37680cd52b7f091899f9ce6046a66e6af6a803d7e509"
+  },
+  {
+    "path": "test/wholesale_packaging_widgets_test.dart",
+    "sha256": "7312761997772ffc61c209122589b8afa7ede29e85d04c058ba5a30d83c3a496"
+  },
+  {
+    "path": "tools/audit_localization.py",
+    "sha256": "d47f045d5b6416c9bcf14fac0009fd3d3c5edf44c701a1c450542c3c686ad165"
+  },
+  {
+    "path": "tools/audit_pin_crypto.py",
+    "sha256": "9fe0eba3d262ca842ef5e243225331e742b74d171f6b78d4b232796753058605"
+  },
+  {
+    "path": "tools/cleanup_dv8910_test_fixtures.py",
+    "sha256": "28fef04bc06d569b3483cb42023be1d06c41542d4d3f355c621d342663a8e200"
+  },
+  {
+    "path": "tools/create_requirement_matrix.ps1",
+    "sha256": "70cd99ce6fadbb1c1fbc990bf1ec7914f36da79ff463b45a2a48b6a47d8ded53"
+  },
+  {
+    "path": "tools/dv8910_device_probe.py",
+    "sha256": "bdc58889b2f3e0686ba7f399f882545084691f9211d701988d7a8d804903a704"
+  },
+  {
+    "path": "tools/dv8910_input_probe.dart",
+    "sha256": "5f57027e146985127a52279def434e7a6e14d6891b0d5793897e500696ab963a"
+  },
+  {
+    "path": "tools/dv8910_smoke.dart",
+    "sha256": "21ab0385b33b11e4fb46ef6500c3f1f136cdcf4870d35615ad06f6851f318980"
+  },
+  {
+    "path": "tools/inspect_android_database.py",
+    "sha256": "3025d53cd8dd89ad586575d84b22876fb6e965e167617dd553dfe515cd208392"
+  },
+  {
+    "path": "tools/realme_actual_runtime.py",
+    "sha256": "9327a5ccbaf93dd52a529af68d79ef1a3255ad31dd6e09cb3e4e9c182ccb2184"
+  },
+  {
+    "path": "tools/realme_c11_preflight.py",
+    "sha256": "2ba87449a7db3294c61dfc3ba9acb475d463f80d24de32e0245071fb99d989a6"
+  },
+  {
+    "path": "tools/realme_cashier.dart",
+    "sha256": "e0f4dc65003479dea1383dc8d593486754c82046500b19e0d34750be7bc68f72"
+  },
+  {
+    "path": "tools/realme_checkout_probe.dart",
+    "sha256": "87312c32c69fabf901116cbacdbf1a4dc1e49c44ebefabb770894dcb52e5a5e8"
+  },
+  {
+    "path": "tools/realme_checkout_runtime.py",
+    "sha256": "2fe292bb34f7916c93a96700b6cfe4d11cfe7a42eff3e651f905ec9d70728057"
+  },
+  {
+    "path": "tools/realme_device_probe.py",
+    "sha256": "e9f9d6c7e57801ff56eb3a093eb61650ba06adc69f58a644c3ab8855d1a2e20d"
+  },
+  {
+    "path": "tools/realme_runtime_recovery.py",
+    "sha256": "b55279d29fc4b08400f9f880e92ff5fad7ba16301d39a4c8106a92a5a55b68f1"
+  },
+  {
+    "path": "tools/realme_smoke.dart",
+    "sha256": "8c8b166367d930dad46ea3b20c37c41aebfd55d8f409108dee70fc30e11793a2"
+  },
+  {
+    "path": "tools/reset_dummy_android_db.ps1",
+    "sha256": "3db1b30015e22f770cf3e1a0b8190cc784b0d50c5e797d25c4f8eaed6f0ff85b"
+  },
+  {
+    "path": "tools/test_android.ps1",
+    "sha256": "b46daa8f2e998440a2a322442c5a2c52330643d03ded0d3bb659b200b5c0b74b"
+  },
+  {
+    "path": "tools/vendor_pin_crypto.py",
+    "sha256": "632659e43884e4cc776b7f25d5e38e61d482374b8f31a22a2ed2b18b8a420c62"
+  },
+  {
+    "path": "tools/verify_pin_apk.py",
+    "sha256": "7082312fa856bec588702ed5beb13659186d3a447ab367b4d2046f2018057ded"
+  }
+]

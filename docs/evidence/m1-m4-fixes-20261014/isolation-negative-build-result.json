@@ -1,0 +1,7 @@
+{
+  "Target": "integration_test/frame_probe_test.dart",
+  "InstallAttempted": false,
+  "ActualBuildExit": 1,
+  "IsolationFlagPassed": false,
+  "ExpectedRejected": true
+}

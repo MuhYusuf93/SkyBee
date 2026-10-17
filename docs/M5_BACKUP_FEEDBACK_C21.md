@@ -1,0 +1,21 @@
+# C21 — Status backup di luar viewport aksi
+
+**Klarifikasi pengguna berikutnya mengoreksi diagnosis manual awal:** pengguna mengira pesan keberhasilan berbentuk dialog. Pesan inline mungkin telah tampil tetapi belum dibaca. Jadi laporan manual tidak membuktikan pesan hilang, offscreen saat itu, atau proses backup gagal. Instruksi berikutnya menyebut jelas teks status di halaman. Repro scroll otomatis1FAIL adalah bukti terpisah tentang keterlihatan status pada viewport yang diuji; perbaikan UI tetap source-only dan tidak mengubah proses backup.
+
+17 Oktober2026, M5 aktif. B-MAN03: dua create terpisah (kedua tidak sengaja) menghasilkan dua kartu ID/waktu/schema8/IDR. Pengguna tidak melihat pesan sukses; follow-up scroll ke paling atas mengonfirmasi pesan Validated-local. Kasus bukan kehilangan data atau create gagal yang telah terbukti. Kedua backup dipertahankan; tidak menganggap dua kartu sebagai dua penjualan atau bug concurrent submit.
+
+Penyebab: backup_settings_screen.dart menaruh s.busy/LinearProgressIndicator dan s.message sebagai elemen awal ListView panjang. Status sukses/error/cancel/progress bisa berada di luar viewport setelah pengguna menggulir ke kontrol. Kelompok sama dengan feedback offscreen C19 pada printer, tetapi modul backup juga mempunyai picker dan PIN gate.
+
+Perbaikan source: status/progress dipindah ke area tetap di atas form scroll, masih di dalam ManagementGate. Notice live-region dibatasi35% tinggi area dan dapat digulir untuk font besar; form Expanded diberi key untuk mempertahankan state scroll saat notice berubah. Tidak mengubah SQL, archive/crypto, operation identity, recovery key, SAF transport, jadwal Drive atau aturan PIN. UUID pada kartu adalah ID backup; tidak menghapus/merotasi arsip/kode.
+
+Bukti sebelum: c21-feedback-before.log,1FAIL widget viewport. Test menyuntikkan completed-operation state untuk menguji layout, tidak mengklaim menjalankan enkripsi/ekspor nyata. Repro sama dengan laporan pengguna: pesan sukses offscreen. Kasus baru memeriksa sukses/progress/error tetap terlihat pada320x560/font1,6 dan notice hilang saat PIN lock; retest sedang berjalan.
+
+File: lib/features/backup/presentation/backup_settings_screen.dart dan test/m5_settings_ui_test.dart (suite shared integration_test/m5_settings_ui_test.dart). Regresi host/native/build/update preservation dan retest fisik patch belum dianggap lulus. APK Poco masih C20 SHA49fb5e29..., pengguna melanjutkan B-MAN04 cancel export; tidak ada kontrol otomatis.
+
+Checkpoint data manual: dua sales42000/HPP36000/pay22000/debt20000/mainstock16+2/value150000 telah diaudit saat update C20, sebelum dua backup dibuat. Katalog backup sekarang berubah secara sah; jangan menyatakan seluruh tabel masih identik terhadap C20 setelah aktivitas ini. Before/after update C21 mendatang membutuhkan snapshot baru, juga hash berkas kedua arsip bila diuji. SAF/restore belum lulus dari kartu/status saja.
+
+Host c21-ui-retest.log16PASS44s (settings9+queue7). Focused final1PASS4s menambah assertion posisi scroll object tetap sama dan viewport pendek320x320/font1,6 tanpa overflow; ini pengulangan kasus yang sama, bukan kasus unik tambahan. Analyzer No issues7s; formatter dijalankan. Native DV9 sedang berjalan dengan awake restored di finally; tidak menyentuh Poco selama manual. B-MAN04 cancel SAF PASS reported; ekspor nyata B-MAN05 pending.
+
+Native DV c21-backup-feedback-20261017-020056:9PASS1:55. Guard UI PIN/recovery/permission/preview/picker/copy regressions included. Awake restored/read back exactly; ordinary absent on wrapper interval, no preservation claim for nonexistent ordinary DB. Build-only release/bridge started via build_m5_acceptance.ps1 with readiness target DV, session47617; log c21-release-invocation.log. No installation/Poco input, B-MAN05 manual SAF save still pending.
+
+Checkpoint17Oktober2026 terbaru: C21+C22 tergabung pada fixture release023917 yang dipasang Poco dengan before/after post_backup audit dan startup PASS; Windows19/JVM11/Poco10/DV10/analyzer/build PASS. Actual keyboard/status feedback fisik retest pending. B-MAN05 SAF ekspor manual PASS; dua arsip+public export tetap. Rincian akhir dan rawfailure: M5_EXPORT_FILENAME_C22.md. C21 manual offscreen cause tidak terbukti setelah klarifikasi pengguna; hasil automated scroll repro tetap dipisahkan.

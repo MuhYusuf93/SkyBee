@@ -1,0 +1,20 @@
+Could not format because the source could not be parsed:
+
+line 95, column 111 of test\support\m31_ui_gaps_suite.dart: Expected to find ';'.
+   ╷
+95 │     (widget.decoration?.labelText == label || (widget.decoration?.labelText?.startsWith('$label (') ?? false))));
+   │                                                                                                               ^
+   ╵
+line 95, column 112 of test\support\m31_ui_gaps_suite.dart: Expected an identifier.
+   ╷
+95 │     (widget.decoration?.labelText == label || (widget.decoration?.labelText?.startsWith('$label (') ?? false))));
+   │                                                                                                                ^
+   ╵
+line 95, column 112 of test\support\m31_ui_gaps_suite.dart: Unexpected text ';'.
+   ╷
+95 │     (widget.decoration?.labelText == label || (widget.decoration?.labelText?.startsWith('$label (') ?? false))));
+   │                                                                                                                ^
+   ╵
+Formatted test/m31_ui_gaps_test.dart
+Formatted integration_test/m31_ui_gaps_test.dart
+Formatted 2 files (2 changed) in 0.01 seconds.

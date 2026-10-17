@@ -1,0 +1,77 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "nodes": [
+    {
+      "label": "Synthetic DV8910 test",
+      "bounds": "[32,28][465,84]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "ID",
+      "bounds": "[1841,9][1920,103]",
+      "class": "android.view.View",
+      "clickable": "true"
+    },
+    {
+      "label": "Penjualan tersimpan dipulihkan. Belanja ini sudah selesai.",
+      "bounds": "[32,144][1888,208]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Nomor penjualan: MV7IUW00-C520E5AD",
+      "bounds": "[32,208][1888,254]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "14/10/2026 10:00",
+      "bounds": "[32,254][1888,300]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Pelanggan: Synthetic DV8910 customer",
+      "bounds": "[32,300][1888,346]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "DV8910 fixture goods\n3 \u00d7 IDR 12.000\nIDR 36.000",
+      "bounds": "[32,378][1888,548]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Total: IDR 36.000",
+      "bounds": "[32,548][1888,594]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Pembayaran dicatat: IDR 10.000",
+      "bounds": "[32,594][1888,640]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Sisa hutang: IDR 26.000",
+      "bounds": "[32,640][1888,686]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Penjualan tersimpan. Pencetakan struk belum tersedia.",
+      "bounds": "[32,718][1888,764]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Belanja berikutnya",
+      "bounds": "[32,764][1888,860]",
+      "class": "android.widget.Button",
+      "clickable": "true"
+    }
+  ]
+}

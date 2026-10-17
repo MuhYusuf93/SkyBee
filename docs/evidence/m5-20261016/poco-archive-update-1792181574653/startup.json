@@ -1,0 +1,7 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "pid": 471,
+  "synthetic_screen_visible": true,
+  "startup_error_markers": 0,
+  "scope": "startup only; not printer, Google, restore or full release acceptance"
+}

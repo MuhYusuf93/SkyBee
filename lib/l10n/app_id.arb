@@ -1,0 +1,2174 @@
+{
+  "@@locale": "id",
+  "managementAccess": "Akses pengelolaan",
+  "@managementAccess": {
+    "description": "User-facing Management access"
+  },
+  "addressOptional": "Alamat (opsional)",
+  "@addressOptional": {
+    "description": "User-facing Address (optional)"
+  },
+  "correctionReason": "Alasan koreksi",
+  "@correctionReason": {
+    "description": "User-facing Correction reason"
+  },
+  "archive": "Arsip",
+  "@archive": {
+    "description": "User-facing Archive"
+  },
+  "archiveProduct": "Arsip barang?",
+  "@archiveProduct": {
+    "description": "User-facing Archive product?"
+  },
+  "archiveRecord": "Arsip data?",
+  "@archiveRecord": {
+    "description": "User-facing Archive record?"
+  },
+  "products": "Barang",
+  "@products": {
+    "description": "User-facing Products"
+  },
+  "receiveStock": "Barang masuk",
+  "@receiveStock": {
+    "description": "User-facing Receive stock"
+  },
+  "stockCannotBeSoldFromItsExpiry": "Barang tidak layak jual mulai tanggal kedaluwarsa di zona waktu toko. Aktifkan pemantauan untuk mencatat tanggal; stok tanpa tanggal ditandai belum dicatat.",
+  "@stockCannotBeSoldFromItsExpiry": {
+    "description": "User-facing Stock cannot be sold from its expiry date in the store time zone. Enable tracking to record dates; undated stock is marked as unrecorded."
+  },
+  "barcodeOptional": "Barcode (opsional)",
+  "@barcodeOptional": {
+    "description": "User-facing Barcode (optional)"
+  },
+  "cancel": "Batal",
+  "@cancel": {
+    "description": "User-facing Cancel"
+  },
+  "reverseLatestReceipt": "Batalkan penerimaan terakhir",
+  "@reverseLatestReceipt": {
+    "description": "User-facing Reverse latest receipt"
+  },
+  "pay": "Bayar",
+  "@pay": {
+    "description": "User-facing Pay"
+  },
+  "noProductsYet": "Belum ada barang.",
+  "@noProductsYet": {
+    "description": "User-facing No products yet."
+  },
+  "noRecordsYet": "Belum ada data.",
+  "@noRecordsYet": {
+    "description": "User-facing No records yet."
+  },
+  "noHistoryYet": "Belum ada riwayat.",
+  "@noHistoryYet": {
+    "description": "User-facing No history yet."
+  },
+  "uncategorized": "Belum dikategorikan",
+  "@uncategorized": {
+    "description": "User-facing Uncategorized"
+  },
+  "createAPinForInventoryAndSettings": "Buat PIN baru untuk gudang dan pengaturan. Simpan kode pemulihan di luar perangkat.",
+  "@createAPinForInventoryAndSettings": {
+    "description": "User-facing Create a PIN for inventory and settings. Keep the recovery code outside this device."
+  },
+  "createManagementPin": "Buat PIN pengelolaan",
+  "@createManagementPin": {
+    "description": "User-facing Create management PIN"
+  },
+  "generateCode": "Buat kode",
+  "@generateCode": {
+    "description": "User-facing Generate code"
+  },
+  "openManagement": "Buka pengelolaan",
+  "@openManagement": {
+    "description": "User-facing Open management"
+  },
+  "searchOrAddCategory": "Cari / tambah cepat kategori",
+  "@searchOrAddCategory": {
+    "description": "User-facing Search or add category"
+  },
+  "searchOrAddSupplier": "Cari / tambah cepat supplier",
+  "@searchOrAddSupplier": {
+    "description": "User-facing Search or add supplier"
+  },
+  "searchProducts": "Cari barang",
+  "@searchProducts": {
+    "description": "User-facing Search products"
+  },
+  "searchNamePrefix": "Cari nama (awalan)",
+  "@searchNamePrefix": {
+    "description": "User-facing Search name prefix"
+  },
+  "searchProductNamePrefix": "Cari nama barang (awalan)",
+  "@searchProductNamePrefix": {
+    "description": "User-facing Search product name prefix"
+  },
+  "writeThisCodeDownAndStoreIt": "Catat kode ini dan simpan di luar perangkat. Kode hanya ditampilkan sekali. Jika PIN dan kode hilang, data lokal tidak dapat dibuka lewat pengelolaan tanpa prosedur pemulihan yang sah.",
+  "@writeThisCodeDownAndStoreIt": {
+    "description": "User-facing Write this code down and store it outside this device. It is shown only once. If both PIN and code are lost, management access requires a valid recovery procedure."
+  },
+  "recordDamagedOrExpiredStock": "Catat rusak / kedaluwarsa",
+  "@recordDamagedOrExpiredStock": {
+    "description": "User-facing Record damaged or expired stock"
+  },
+  "tryAgain": "Coba lagi",
+  "@tryAgain": {
+    "description": "User-facing Try again"
+  },
+  "shoppingList": "Daftar belanja",
+  "@shoppingList": {
+    "description": "User-facing Shopping list"
+  },
+  "productDetails": "Detail barang",
+  "@productDetails": {
+    "description": "User-facing Product details"
+  },
+  "inventory": "Gudang",
+  "@inventory": {
+    "description": "User-facing Inventory"
+  },
+  "useRecoveryCode": "Gunakan kode pemulihan",
+  "@useRecoveryCode": {
+    "description": "User-facing Use recovery code"
+  },
+  "price": "Harga",
+  "@price": {
+    "description": "User-facing Price"
+  },
+  "purchasePriceWhenStockIsEmpty": "Harga beli jika stok kosong",
+  "@purchasePriceWhenStockIsEmpty": {
+    "description": "User-facing Purchase price when stock is empty"
+  },
+  "purchasePricePerUnit": "Harga beli per pcs",
+  "@purchasePricePerUnit": {
+    "description": "User-facing Purchase price per unit"
+  },
+  "priceSaved": "Harga disimpan.",
+  "@priceSaved": {
+    "description": "User-facing Price saved."
+  },
+  "sellingPrice": "Harga jual",
+  "@sellingPrice": {
+    "description": "User-facing Selling price"
+  },
+  "debts": "Hutang",
+  "@debts": {
+    "description": "User-facing Debts"
+  },
+  "initialQuantity": "Jumlah awal",
+  "@initialQuantity": {
+    "description": "User-facing Initial quantity"
+  },
+  "currentPhysicalQuantity": "Jumlah fisik sekarang",
+  "@currentPhysicalQuantity": {
+    "description": "User-facing Current physical quantity"
+  },
+  "unitQuantity": "Jumlah unit",
+  "@unitQuantity": {
+    "description": "User-facing Unit quantity"
+  },
+  "cashier": "Kasir",
+  "@cashier": {
+    "description": "User-facing Cashier"
+  },
+  "checkoutReceivablesReportsPrintingAndBackupsWill": "Kasir, piutang, laporan, printer, dan backup tersedia pada tahap berikutnya.",
+  "@checkoutReceivablesReportsPrintingAndBackupsWill": {
+    "description": "User-facing Checkout, receivables, reports, printing and backups will be added in later stages."
+  },
+  "categories": "Kategori",
+  "@categories": {
+    "description": "User-facing Categories"
+  },
+  "categoryOptional": "Kategori (opsional)",
+  "@categoryOptional": {
+    "description": "User-facing Category (optional)"
+  },
+  "savedCategory": "Kategori tersimpan",
+  "@savedCategory": {
+    "description": "User-facing Saved category"
+  },
+  "expiryYyyyMmDdOptional": "Kedaluwarsa yyyy-MM-dd (opsional)",
+  "@expiryYyyyMmDdOptional": {
+    "description": "User-facing Expiry yyyy-MM-dd (optional)"
+  },
+  "manage": "Kelola",
+  "@manage": {
+    "description": "User-facing Manage"
+  },
+  "typeANamePrefixThenSelect": "Ketik awalan nama lalu pilih",
+  "@typeANamePrefixThenSelect": {
+    "description": "User-facing Type a name prefix, then select"
+  },
+  "recoveryCode": "Kode pemulihan",
+  "@recoveryCode": {
+    "description": "User-facing Recovery code"
+  },
+  "storeCodeAutomaticIfEmpty": "Kode toko (otomatis jika kosong)",
+  "@storeCodeAutomaticIfEmpty": {
+    "description": "User-facing Store code (automatic if empty)"
+  },
+  "codeBarcodeAndCategory": "Kode, barcode & kategori",
+  "@codeBarcodeAndCategory": {
+    "description": "User-facing Code, barcode and category"
+  },
+  "confirmNewPin": "Konfirmasi PIN baru",
+  "@confirmNewPin": {
+    "description": "User-facing Confirm new PIN"
+  },
+  "correctLatestReceipt": "Koreksi penerimaan terakhir",
+  "@correctLatestReceipt": {
+    "description": "User-facing Correct latest receipt"
+  },
+  "clearSelection": "Kosongkan pilihan",
+  "@clearSelection": {
+    "description": "User-facing Clear selection"
+  },
+  "lock": "Kunci",
+  "@lock": {
+    "description": "User-facing Lock"
+  },
+  "continueAction": "Lanjut",
+  "@continueAction": {
+    "description": "User-facing Continue"
+  },
+  "enterAValidAmountQuantityAndYyyy": "Lengkapi nominal/jumlah dengan angka dan tanggal yyyy-MM-dd yang valid.",
+  "@enterAValidAmountQuantityAndYyyy": {
+    "description": "User-facing Enter a valid amount, quantity and yyyy-MM-dd date."
+  },
+  "forgotPinOrChangeRecoveryCode": "Lupa PIN / ubah kode pemulihan",
+  "@forgotPinOrChangeRecoveryCode": {
+    "description": "User-facing Forgot PIN or change recovery code"
+  },
+  "enterPinAgain": "Masukkan PIN kembali",
+  "@enterPinAgain": {
+    "description": "User-facing Enter PIN again"
+  },
+  "checking": "Memeriksa…",
+  "@checking": {
+    "description": "User-facing Checking…"
+  },
+  "expiringSoon": "Mendekati kedaluwarsa",
+  "@expiringSoon": {
+    "description": "User-facing Expiring soon"
+  },
+  "preparingStorage": "Menyiapkan penyimpanan…",
+  "@preparingStorage": {
+    "description": "User-facing Preparing storage…"
+  },
+  "saving": "Menyimpan…",
+  "@saving": {
+    "description": "User-facing Saving…"
+  },
+  "loadMore": "Muat berikutnya",
+  "@loadMore": {
+    "description": "User-facing Load more"
+  },
+  "reload": "Muat ulang",
+  "@reload": {
+    "description": "User-facing Reload"
+  },
+  "reloadDetails": "Muat ulang detail",
+  "@reloadDetails": {
+    "description": "User-facing Reload details"
+  },
+  "name": "Nama",
+  "@name": {
+    "description": "User-facing Name"
+  },
+  "productName": "Nama barang",
+  "@productName": {
+    "description": "User-facing Product name"
+  },
+  "searchAliasesSeparatedByCommas": "Nama lain pencarian, pisahkan dengan koma",
+  "@searchAliasesSeparatedByCommas": {
+    "description": "User-facing Search aliases, separated by commas"
+  },
+  "storeName": "Nama toko",
+  "@storeName": {
+    "description": "User-facing Store name"
+  },
+  "nameCodeOrBarcode": "Nama, kode, atau barcode",
+  "@nameCodeOrBarcode": {
+    "description": "User-facing Name, code or barcode"
+  },
+  "contactNumberOptional": "Nomor kontak (opsional)",
+  "@contactNumberOptional": {
+    "description": "User-facing Contact number (optional)"
+  },
+  "operationFailedTryAgainOrCheckDevice": "Operasi gagal. Coba lagi atau periksa penyimpanan perangkat.",
+  "@operationFailedTryAgainOrCheckDevice": {
+    "description": "User-facing Operation failed. Try again or check device storage."
+  },
+  "pin": "PIN",
+  "@pin": {
+    "description": "User-facing PIN"
+  },
+  "newPin": "PIN baru",
+  "@newPin": {
+    "description": "User-facing New PIN"
+  },
+  "theFourDigitPinRestrictsAccessWithin": "PIN empat digit membatasi akses dari aplikasi; database dan perangkat tidak terenkripsi oleh PIN ini. Jangan membagikan kode pemulihan.",
+  "@theFourDigitPinRestrictsAccessWithin": {
+    "description": "User-facing The four-digit PIN restricts access within the app; it does not encrypt the database or device. Keep the recovery code private."
+  },
+  "oldPin": "PIN lama",
+  "@oldPin": {
+    "description": "User-facing Old PIN"
+  },
+  "trackExpiry": "Pantau kedaluwarsa",
+  "@trackExpiry": {
+    "description": "User-facing Track expiry"
+  },
+  "cashierSearchCartAndPaymentsAreNot": "Pencarian kasir, keranjang dan pembayaran belum tersedia. Pengelolaan dibuka melalui Kelola.",
+  "@cashierSearchCartAndPaymentsAreNot": {
+    "description": "User-facing Cashier search, cart and payments are not available yet. Open inventory using Manage."
+  },
+  "nextReceipts": "Penerimaan berikutnya",
+  "@nextReceipts": {
+    "description": "User-facing Next receipts"
+  },
+  "aReceiptCanBeReversedOnlyIf": "Penerimaan hanya dapat dibalik jika belum ada pergerakan stok yang bergantung padanya. Catatan asli tetap disimpan.",
+  "@aReceiptCanBeReversedOnlyIf": {
+    "description": "User-facing A receipt can be reversed only if no subsequent stock movement depends on it. Original records are retained."
+  },
+  "settingsSaved": "Pengaturan disimpan.",
+  "@settingsSaved": {
+    "description": "User-facing Settings saved."
+  },
+  "storeSettings": "Pengaturan toko",
+  "@storeSettings": {
+    "description": "User-facing Store settings"
+  },
+  "management": "Pengelolaan",
+  "@management": {
+    "description": "User-facing Management"
+  },
+  "cannotOpenManagementTryAgain": "Pengelolaan belum dapat dibuka. Coba lagi.",
+  "@cannotOpenManagementTryAgain": {
+    "description": "User-facing Cannot open management. Try again."
+  },
+  "managementLocked": "Pengelolaan terkunci",
+  "@managementLocked": {
+    "description": "User-facing Management locked"
+  },
+  "removeStock": "Pengeluaran stok",
+  "@removeStock": {
+    "description": "User-facing Remove stock"
+  },
+  "cannotOpenStorage": "Penyimpanan gagal dibuka.",
+  "@cannotOpenStorage": {
+    "description": "User-facing Cannot open storage."
+  },
+  "cannotOpenStorageTryAgainOrCheck": "Penyimpanan gagal dibuka. Coba lagi atau periksa ruang perangkat.",
+  "@cannotOpenStorageTryAgainOrCheck": {
+    "description": "User-facing Cannot open storage. Try again or check free device space."
+  },
+  "localStorageReady": "Penyimpanan lokal siap.",
+  "@localStorageReady": {
+    "description": "User-facing Local storage ready."
+  },
+  "checkQuantityAmountAndDateUseWhole": "Periksa jumlah, nominal, dan tanggal. Gunakan unit bulat dan tanggal yyyy-MM-dd yang valid.",
+  "@checkQuantityAmountAndDateUseWhole": {
+    "description": "User-facing Check quantity, amount and date. Use whole units and a valid yyyy-MM-dd date."
+  },
+  "stockAndExpiryWarnings": "Peringatan stok & kedaluwarsa",
+  "@stockAndExpiryWarnings": {
+    "description": "User-facing Stock and expiry warnings"
+  },
+  "lowStockWarning": "Peringatan stok rendah",
+  "@lowStockWarning": {
+    "description": "User-facing Low stock warning"
+  },
+  "selectCategory": "Pilih kategori",
+  "@selectCategory": {
+    "description": "User-facing Select category"
+  },
+  "selectSupplier": "Pilih supplier",
+  "@selectSupplier": {
+    "description": "User-facing Select supplier"
+  },
+  "restore": "Pulihkan",
+  "@restore": {
+    "description": "User-facing Restore"
+  },
+  "restoreProduct": "Pulihkan barang?",
+  "@restoreProduct": {
+    "description": "User-facing Restore product?"
+  },
+  "restoreRecord": "Pulihkan data?",
+  "@restoreRecord": {
+    "description": "User-facing Restore record?"
+  },
+  "productHistory": "Riwayat barang",
+  "@productHistory": {
+    "description": "User-facing Product history"
+  },
+  "stockAndPriceHistory": "Riwayat stok & harga",
+  "@stockAndPriceHistory": {
+    "description": "User-facing Stock and price history"
+  },
+  "sessionLocked": "Sesi terkunci",
+  "@sessionLocked": {
+    "description": "User-facing Session locked"
+  },
+  "save": "Simpan",
+  "@save": {
+    "description": "User-facing Save"
+  },
+  "saveProduct": "Simpan barang",
+  "@saveProduct": {
+    "description": "User-facing Save product"
+  },
+  "saveRecoveryCode": "Simpan kode pemulihan",
+  "@saveRecoveryCode": {
+    "description": "User-facing Save recovery code"
+  },
+  "saveSettings": "Simpan pengaturan",
+  "@saveSettings": {
+    "description": "User-facing Save settings"
+  },
+  "productStatusUpdated": "Status barang diperbarui.",
+  "@productStatusUpdated": {
+    "description": "User-facing Product status updated."
+  },
+  "stock": "Stok",
+  "@stock": {
+    "description": "User-facing Stock"
+  },
+  "initialStockAndPurchasePrice": "Stok awal & harga beli",
+  "@initialStockAndPurchasePrice": {
+    "description": "User-facing Initial stock and purchase price"
+  },
+  "initialStock": "Stok awal",
+  "@initialStock": {
+    "description": "User-facing Initial stock"
+  },
+  "minimumStock": "Stok minimum",
+  "@minimumStock": {
+    "description": "User-facing Minimum stock"
+  },
+  "stockCount": "Stok opname",
+  "@stockCount": {
+    "description": "User-facing Stock count"
+  },
+  "stockByReceipt": "Stok per penerimaan",
+  "@stockByReceipt": {
+    "description": "User-facing Stock by receipt"
+  },
+  "lowStock": "Stok rendah",
+  "@lowStock": {
+    "description": "User-facing Low stock"
+  },
+  "iHaveSavedIt": "Sudah saya simpan",
+  "@iHaveSavedIt": {
+    "description": "User-facing I have saved it"
+  },
+  "suppliers": "Supplier",
+  "@suppliers": {
+    "description": "User-facing Suppliers"
+  },
+  "supplierOptional": "Supplier (opsional)",
+  "@supplierOptional": {
+    "description": "User-facing Supplier (optional)"
+  },
+  "addProduct": "Tambah barang",
+  "@addProduct": {
+    "description": "User-facing Add product"
+  },
+  "showPin": "Tampilkan PIN",
+  "@showPin": {
+    "description": "User-facing Show PIN"
+  },
+  "showArchived": "Tampilkan arsip",
+  "@showArchived": {
+    "description": "User-facing Show archived"
+  },
+  "dateNotRecorded": "Tanggal belum dicatat",
+  "@dateNotRecorded": {
+    "description": "User-facing Date not recorded"
+  },
+  "someStockHasNoRecordedExpiryDate": "Tanggal belum dicatat untuk sebagian stok.",
+  "@someStockHasNoRecordedExpiryDate": {
+    "description": "User-facing Some stock has no recorded expiry date."
+  },
+  "expiryDateYyyyMmDdOptional": "Tanggal kedaluwarsa yyyy-MM-dd (opsional)",
+  "@expiryDateYyyyMmDdOptional": {
+    "description": "User-facing Expiry date yyyy-MM-dd (optional)"
+  },
+  "noSupplier": "Tanpa supplier",
+  "@noSupplier": {
+    "description": "User-facing No supplier"
+  },
+  "cannotUndo": "Tidak dapat diurungkan.",
+  "@cannotUndo": {
+    "description": "User-facing Cannot undo."
+  },
+  "myStore": "Toko saya",
+  "@myStore": {
+    "description": "User-facing My store"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "User-facing Total"
+  },
+  "close": "Tutup",
+  "@close": {
+    "description": "User-facing Close"
+  },
+  "closeThisDialogAndEnterYourPin": "Tutup dialog dan masukkan PIN kembali.",
+  "@closeThisDialogAndEnterYourPin": {
+    "description": "User-facing Close this dialog and enter your PIN again."
+  },
+  "changePinOrRecovery": "Ubah PIN / pemulihan",
+  "@changePinOrRecovery": {
+    "description": "User-facing Change PIN or recovery"
+  },
+  "changePinOrRenewRecoveryCode": "Ubah PIN / perbarui kode pemulihan",
+  "@changePinOrRenewRecoveryCode": {
+    "description": "User-facing Change PIN or renew recovery code"
+  },
+  "editProduct": "Ubah barang",
+  "@editProduct": {
+    "description": "User-facing Edit product"
+  },
+  "editRecord": "Ubah data",
+  "@editRecord": {
+    "description": "User-facing Edit record"
+  },
+  "receiptFooterOptional": "Ucapan pada struk (opsional)",
+  "@receiptFooterOptional": {
+    "description": "User-facing Receipt footer (optional)"
+  },
+  "undo": "Urungkan",
+  "@undo": {
+    "description": "User-facing Undo"
+  },
+  "whatsappOrPhoneOptional": "WA / telepon (opsional)",
+  "@whatsappOrPhoneOptional": {
+    "description": "User-facing WhatsApp or phone (optional)"
+  },
+  "storeTimeZoneEGAsiaJakarta": "Zona waktu toko, contoh Asia/Jakarta",
+  "@storeTimeZoneEGAsiaJakarta": {
+    "description": "User-facing Store time zone, e.g. Asia/Jakarta"
+  },
+  "productNotFound": "Barang tidak ditemukan.",
+  "@productNotFound": {
+    "description": "User-facing Product not found."
+  },
+  "productIsArchivedRestoreItFirst": "Barang diarsipkan. Pulihkan dahulu.",
+  "@productIsArchivedRestoreItFirst": {
+    "description": "User-facing Product is archived. Restore it first."
+  },
+  "categoryOrSupplierUnavailableSelectAgain": "Kategori atau supplier tidak tersedia. Pilih kembali.",
+  "@categoryOrSupplierUnavailableSelectAgain": {
+    "description": "User-facing Category or supplier unavailable. Select again."
+  },
+  "productNameIsRequired": "Nama barang wajib diisi.",
+  "@productNameIsRequired": {
+    "description": "User-facing Product name is required."
+  },
+  "codeOrBarcodeBelongsToAnArchived": "Kode atau barcode dimiliki barang arsip. Pulihkan barang tersebut atau gunakan kode lain.",
+  "@codeOrBarcodeBelongsToAnArchived": {
+    "description": "User-facing Code or barcode belongs to an archived product. Restore it or use a different code."
+  },
+  "codeOrBarcodeIsAlreadyUsedBy": "Kode atau barcode sudah digunakan barang lain.",
+  "@codeOrBarcodeIsAlreadyUsedBy": {
+    "description": "User-facing Code or barcode is already used by another product."
+  },
+  "purchasePriceIsRequiredForInitialStock": "Harga beli wajib untuk stok awal.",
+  "@purchasePriceIsRequiredForInitialStock": {
+    "description": "User-facing Purchase price is required for initial stock."
+  },
+  "datedStockRemainsHandleItBeforeDisabling": "Masih ada stok bertanggal kedaluwarsa. Tangani stok itu sebelum menonaktifkan pemantauan.",
+  "@datedStockRemainsHandleItBeforeDisabling": {
+    "description": "User-facing Dated stock remains. Handle it before disabling expiry tracking."
+  },
+  "productChangedReloadBeforeSaving": "Barang sudah berubah. Muat ulang sebelum menyimpan.",
+  "@productChangedReloadBeforeSaving": {
+    "description": "User-facing Product changed. Reload before saving."
+  },
+  "productChangedReloadFirst": "Barang berubah. Muat ulang terlebih dahulu.",
+  "@productChangedReloadFirst": {
+    "description": "User-facing Product changed. Reload first."
+  },
+  "cannotUndoTheTimeLimitPassedOr": "Perubahan tidak dapat diurungkan karena sudah lewat atau ada perubahan lain.",
+  "@cannotUndoTheTimeLimitPassedOr": {
+    "description": "User-facing Cannot undo: the time limit passed or another change occurred."
+  },
+  "stockRemainsArchivingIsRefused": "Stok masih tersisa. Arsip ditolak.",
+  "@stockRemainsArchivingIsRefused": {
+    "description": "User-facing Stock remains. Archiving is refused."
+  },
+  "invalidOperationIdentifier": "Identitas operasi tidak valid.",
+  "@invalidOperationIdentifier": {
+    "description": "User-facing Invalid operation identifier."
+  },
+  "operationIdentifierAlreadyUsedForDifferentData": "Identitas operasi sudah digunakan untuk data berbeda.",
+  "@operationIdentifierAlreadyUsedForDifferentData": {
+    "description": "User-facing Operation identifier already used for different data."
+  },
+  "enableExpiryTrackingBeforeRecordingDates": "Aktifkan pantau kedaluwarsa sebelum mencatat tanggal.",
+  "@enableExpiryTrackingBeforeRecordingDates": {
+    "description": "User-facing Enable expiry tracking before recording dates."
+  },
+  "stockChangedRetryWithCurrentData": "Stok sudah berubah. Coba ulang dari data terbaru.",
+  "@stockChangedRetryWithCurrentData": {
+    "description": "User-facing Stock changed. Retry with current data."
+  },
+  "correctionReasonIsRequired": "Alasan koreksi wajib diisi.",
+  "@correctionReasonIsRequired": {
+    "description": "User-facing Correction reason is required."
+  },
+  "receiptCannotBeReversedThroughThisFlow": "Penerimaan tidak dapat dibalik melalui alur ini.",
+  "@receiptCannotBeReversedThroughThisFlow": {
+    "description": "User-facing Receipt cannot be reversed through this flow."
+  },
+  "receiptAlreadyReversed": "Penerimaan sudah dibalik.",
+  "@receiptAlreadyReversed": {
+    "description": "User-facing Receipt already reversed."
+  },
+  "stockCountReasonIsRequired": "Alasan stok opname wajib diisi.",
+  "@stockCountReasonIsRequired": {
+    "description": "User-facing Stock count reason is required."
+  },
+  "physicalQuantityAlreadyMatchesTheRecord": "Jumlah fisik sudah sama dengan catatan.",
+  "@physicalQuantityAlreadyMatchesTheRecord": {
+    "description": "User-facing Physical quantity already matches the record."
+  },
+  "purchasePriceIsRequiredWhenAddingTo": "Harga beli wajib ketika menambah stok kosong.",
+  "@purchasePriceIsRequiredWhenAddingTo": {
+    "description": "User-facing Purchase price is required when adding to empty stock."
+  },
+  "stockRemovalReasonIsRequired": "Alasan pengeluaran wajib diisi.",
+  "@stockRemovalReasonIsRequired": {
+    "description": "User-facing Stock removal reason is required."
+  },
+  "insufficientBatchQuantity": "Jumlah batch tidak mencukupi.",
+  "@insufficientBatchQuantity": {
+    "description": "User-facing Insufficient batch quantity."
+  },
+  "batchListChangedReload": "Daftar batch berubah. Muat ulang.",
+  "@batchListChangedReload": {
+    "description": "User-facing Batch list changed. Reload."
+  },
+  "nameIsRequired": "Nama wajib diisi.",
+  "@nameIsRequired": {
+    "description": "User-facing Name is required."
+  },
+  "recordUnavailableReload": "Data tidak tersedia. Muat ulang.",
+  "@recordUnavailableReload": {
+    "description": "User-facing Record unavailable. Reload."
+  },
+  "recordNotFound": "Data tidak ditemukan.",
+  "@recordNotFound": {
+    "description": "User-facing Record not found."
+  },
+  "historyFilterChangedReload": "Filter riwayat berubah. Muat ulang.",
+  "@historyFilterChangedReload": {
+    "description": "User-facing History filter changed. Reload."
+  },
+  "filterChangedReloadList": "Filter berubah. Muat ulang daftar.",
+  "@filterChangedReloadList": {
+    "description": "User-facing Filter changed. Reload list."
+  },
+  "managementSessionLockedEnterPinAgain": "Sesi pengelolaan terkunci. Masukkan PIN kembali.",
+  "@managementSessionLockedEnterPinAgain": {
+    "description": "User-facing Management session locked. Enter PIN again."
+  },
+  "pinMustContainFourDigits": "PIN harus empat digit.",
+  "@pinMustContainFourDigits": {
+    "description": "User-facing PIN must contain four digits."
+  },
+  "pinConfirmationDoesNotMatch": "Konfirmasi PIN tidak sama.",
+  "@pinConfirmationDoesNotMatch": {
+    "description": "User-facing PIN confirmation does not match."
+  },
+  "storeNameIsRequired": "Nama toko wajib diisi.",
+  "@storeNameIsRequired": {
+    "description": "User-facing Store name is required."
+  },
+  "createAManagementPinFirst": "Buat PIN pengelolaan terlebih dahulu.",
+  "@createAManagementPinFirst": {
+    "description": "User-facing Create a management PIN first."
+  },
+  "unsupportedPinConfiguration": "Konfigurasi PIN tidak didukung.",
+  "@unsupportedPinConfiguration": {
+    "description": "User-facing Unsupported PIN configuration."
+  },
+  "pinOrRecoveryCodeDoesNotMatch": "PIN atau kode pemulihan tidak cocok.",
+  "@pinOrRecoveryCodeDoesNotMatch": {
+    "description": "User-facing PIN or recovery code does not match."
+  },
+  "sessionLockedEnterPinAgain": "Sesi dikunci. Masukkan PIN kembali.",
+  "@sessionLockedEnterPinAgain": {
+    "description": "User-facing Session locked. Enter PIN again."
+  },
+  "pinChangeIsInProgress": "Perubahan PIN sedang berjalan.",
+  "@pinChangeIsInProgress": {
+    "description": "User-facing PIN change is in progress."
+  },
+  "unknownTimeZoneExampleAsiaJakarta": "Zona waktu tidak dikenal. Contoh: Asia/Jakarta.",
+  "@unknownTimeZoneExampleAsiaJakarta": {
+    "description": "User-facing Unknown time zone. Example: Asia/Jakarta."
+  },
+  "priceChange": "Perubahan harga",
+  "@priceChange": {
+    "description": "User-facing Price change"
+  },
+  "undoPrice": "Urungkan harga",
+  "@undoPrice": {
+    "description": "User-facing Undo price"
+  },
+  "language": "Bahasa",
+  "@language": {
+    "description": "Language"
+  },
+  "operationFailed": "Operasi gagal. Coba lagi atau periksa penyimpanan perangkat.",
+  "@operationFailed": {
+    "description": "Operation failed. Try again or check device storage."
+  },
+  "currencyConversionRequired": "Mata uang tidak dapat diganti karena sudah ada data keuangan. Penggantian memerlukan migrasi/konversi khusus.",
+  "@currencyConversionRequired": {
+    "description": "Currency cannot be changed because financial data already exists. A dedicated migration or conversion is required."
+  },
+  "currency": "Mata uang",
+  "@currency": {
+    "description": "Currency"
+  },
+  "currencyMismatch": "Mata uang nominal berbeda dari mata uang toko.",
+  "@currencyMismatch": {
+    "description": "Amount currency differs from the store currency."
+  },
+  "currencyScaleHelp": "IDR memakai rupiah bulat. USD, MYR dan EUR memakai dua desimal. Bahasa tidak mengubah mata uang.",
+  "@currencyScaleHelp": {
+    "description": "IDR uses whole rupiah. USD, MYR and EUR use two decimals. Language does not change currency."
+  },
+  "rupiahCurrency": "IDR · Rupiah Indonesia",
+  "@rupiahCurrency": {
+    "description": "Indonesian rupiah · IDR"
+  },
+  "dollarCurrency": "USD · Dolar Amerika",
+  "@dollarCurrency": {
+    "description": "US dollar · USD"
+  },
+  "ringgitCurrency": "MYR · Ringgit Malaysia",
+  "@ringgitCurrency": {
+    "description": "Malaysian ringgit · MYR"
+  },
+  "euroCurrency": "EUR · Euro",
+  "@euroCurrency": {
+    "description": "Euro · EUR"
+  },
+  "retryAfterSeconds": "Coba lagi dalam {count, plural, =1{1 detik} other{{count} detik}}.",
+  "@retryAfterSeconds": {
+    "description": "User-facing Try again in {count, plural, =1{1 second} other{{count} seconds}}.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "expiredUnits": "{count, plural, =1{1 unit kedaluwarsa} other{{count} unit kedaluwarsa}}",
+  "@expiredUnits": {
+    "description": "User-facing {count, plural, =1{1 expired unit} other{{count} expired units}}",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "stockSummary": "Stok fisik {physical} • Layak jual {saleable} • Kedaluwarsa {expired}",
+  "@stockSummary": {
+    "description": "User-facing Physical stock {physical} • Saleable {saleable} • Expired {expired}",
+    "placeholders": {
+      "physical": {
+        "type": "int",
+        "example": "1"
+      },
+      "saleable": {
+        "type": "int",
+        "example": "1"
+      },
+      "expired": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "productSummary": "{price} • Stok {physical} • Layak jual {saleable}",
+  "@productSummary": {
+    "description": "User-facing {price} • Stock {physical} • Saleable {saleable}",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "value"
+      },
+      "physical": {
+        "type": "int",
+        "example": "1"
+      },
+      "saleable": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "sellingPriceAmount": "Harga jual {amount}",
+  "@sellingPriceAmount": {
+    "description": "User-facing Selling price {amount}",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "averageCostAmount": "Harga beli rata-rata {amount}",
+  "@averageCostAmount": {
+    "description": "User-facing Average purchase price {amount}",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "storeCodeValue": "Kode {code}",
+  "@storeCodeValue": {
+    "description": "User-facing Code {code}",
+    "placeholders": {
+      "code": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "barcodeValue": "Barcode {code}",
+  "@barcodeValue": {
+    "description": "User-facing Barcode {code}",
+    "placeholders": {
+      "code": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "batchUnits": "{count, plural, =1{1 unit} other{{count} unit}} • {date}",
+  "@batchUnits": {
+    "description": "User-facing {count, plural, =1{1 unit} other{{count} units}} • {date}",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      },
+      "date": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "stockChange": "{count} unit • {amount}",
+  "@stockChange": {
+    "description": "User-facing {count} units • {amount}",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      },
+      "amount": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "stockRemainsHandleBeforeArchive": "Masih ada stok. Catat pengeluaran atau stok opname sebelum arsip.",
+  "@stockRemainsHandleBeforeArchive": {
+    "description": "User-facing Stock remains. Record removal or a stock count before archiving."
+  },
+  "stockDependencyBlocksReversal": "Ada pergerakan stok berikutnya. Gunakan stok opname atau pengeluaran yang benar.",
+  "@stockDependencyBlocksReversal": {
+    "description": "User-facing Subsequent stock movements exist. Use a stock count or the appropriate removal."
+  },
+  "batchReconciliationRequired": "Stok batch tidak cocok. Perlu pemeriksaan catatan.",
+  "@batchReconciliationRequired": {
+    "description": "User-facing Batch stock does not match. Check the records."
+  },
+  "categoryStillUsed": "Kategori masih digunakan. Pindahkan barang ke kategori lain terlebih dahulu.",
+  "@categoryStillUsed": {
+    "description": "User-facing Category still in use. Move products to another category first."
+  },
+  "pinAlreadyConfigured": "PIN sudah dibuat. Gunakan ubah PIN atau kode pemulihan.",
+  "@pinAlreadyConfigured": {
+    "description": "User-facing PIN already configured. Use PIN change or recovery code."
+  },
+  "listLoadFailed": "Daftar gagal dimuat. Coba lagi.",
+  "@listLoadFailed": {
+    "description": "User-facing Cannot load list. Try again."
+  },
+  "loading": "Memuat…",
+  "@loading": {
+    "description": "User-facing Loading…"
+  },
+  "addCategory": "Tambah kategori",
+  "@addCategory": {
+    "description": "Add category"
+  },
+  "addSupplier": "Tambah supplier",
+  "@addSupplier": {
+    "description": "Add supplier"
+  },
+  "insufficientStock": "Jumlah stok tidak mencukupi.",
+  "@insufficientStock": {
+    "description": "Insufficient stock quantity."
+  },
+  "insufficientSaleableStock": "Stok layak jual tidak mencukupi.",
+  "@insufficientSaleableStock": {
+    "description": "Insufficient saleable stock."
+  },
+  "indonesianLanguage": "ID · Bahasa Indonesia",
+  "@indonesianLanguage": {
+    "description": "Native name and indicator for Indonesian language"
+  },
+  "englishLanguage": "EN · English",
+  "@englishLanguage": {
+    "description": "Native name and indicator for English language"
+  },
+  "m3DraftUnavailable": "Draft tidak tersedia atau sudah selesai.",
+  "@m3DraftUnavailable": {
+    "description": "M3 cashier/debt message: m3DraftUnavailable"
+  },
+  "m3DraftChanged": "Daftar belanja berubah. Periksa kembali sebelum melanjutkan.",
+  "@m3DraftChanged": {
+    "description": "M3 cashier/debt message: m3DraftChanged"
+  },
+  "m3UndoExpired": "Tidak dapat mengurungkan: waktu habis atau daftar belanja sudah berubah.",
+  "@m3UndoExpired": {
+    "description": "M3 cashier/debt message: m3UndoExpired"
+  },
+  "m3SaleUnavailable": "Penjualan tidak tersedia.",
+  "@m3SaleUnavailable": {
+    "description": "M3 cashier/debt message: m3SaleUnavailable"
+  },
+  "m3AttemptChanged": "Upaya ini sudah tersimpan dengan rincian berbeda. Buka hasil tersimpan.",
+  "@m3AttemptChanged": {
+    "description": "M3 cashier/debt message: m3AttemptChanged"
+  },
+  "m3AmbiguousCode": "Kode cocok dengan lebih dari satu barang. Pilih barang dari hasil pencarian.",
+  "@m3AmbiguousCode": {
+    "description": "M3 cashier/debt message: m3AmbiguousCode"
+  },
+  "m3OperationFailed": "Operasi gagal. Coba kembali; data belanja tetap tersimpan.",
+  "@m3OperationFailed": {
+    "description": "M3 cashier/debt message: m3OperationFailed"
+  },
+  "m3SearchFailed": "Pencarian gagal. Coba ketik kembali.",
+  "@m3SearchFailed": {
+    "description": "M3 cashier/debt message: m3SearchFailed"
+  },
+  "m3StockChanged": "Stok berubah. Periksa kembali daftar belanja.",
+  "@m3StockChanged": {
+    "description": "M3 cashier/debt message: m3StockChanged"
+  },
+  "m3EmptyCart": "Tambahkan barang sebelum membayar.",
+  "@m3EmptyCart": {
+    "description": "M3 cashier/debt message: m3EmptyCart"
+  },
+  "m3InvalidPayment": "Periksa nominal pembayaran. Pembayaran sebagian harus lebih dari nol dan kurang dari total.",
+  "@m3InvalidPayment": {
+    "description": "M3 cashier/debt message: m3InvalidPayment"
+  },
+  "m3PricesChanged": "Harga barang berubah.",
+  "@m3PricesChanged": {
+    "description": "M3 cashier/debt message: m3PricesChanged"
+  },
+  "m3CustomerUnavailable": "Pelanggan tidak tersedia. Pilih kembali.",
+  "@m3CustomerUnavailable": {
+    "description": "M3 cashier/debt message: m3CustomerUnavailable"
+  },
+  "m3CustomerRequired": "Nama pelanggan wajib untuk pencatatan hutang.",
+  "@m3CustomerRequired": {
+    "description": "M3 cashier/debt message: m3CustomerRequired"
+  },
+  "m3SaleMovement": "Penjualan",
+  "@m3SaleMovement": {
+    "description": "M3 cashier/debt message: m3SaleMovement"
+  },
+  "m3PaymentTooLarge": "Pembayaran tidak boleh melebihi saldo hutang.",
+  "@m3PaymentTooLarge": {
+    "description": "M3 cashier/debt message: m3PaymentTooLarge"
+  },
+  "m3PaymentPlanChanged": "Saldo hutang berubah sejak pratinjau. Periksa alokasi pembayaran baru.",
+  "@m3PaymentPlanChanged": {
+    "description": "M3 cashier/debt message: m3PaymentPlanChanged"
+  },
+  "m3RecoveredSale": "Penjualan tersimpan dipulihkan. Belanja ini sudah selesai.",
+  "@m3RecoveredSale": {
+    "description": "M3 cashier/debt message: m3RecoveredSale"
+  },
+  "m3SaleSaved": "Penjualan berhasil disimpan.",
+  "@m3SaleSaved": {
+    "description": "M3 cashier/debt message: m3SaleSaved"
+  },
+  "m3ReceiptNumber": "Nomor penjualan",
+  "@m3ReceiptNumber": {
+    "description": "M3 cashier/debt message: m3ReceiptNumber"
+  },
+  "m3Customer": "Pelanggan",
+  "@m3Customer": {
+    "description": "M3 cashier/debt message: m3Customer"
+  },
+  "m3Paid": "Pembayaran dicatat",
+  "@m3Paid": {
+    "description": "M3 cashier/debt message: m3Paid"
+  },
+  "m3RemainingDebt": "Sisa hutang",
+  "@m3RemainingDebt": {
+    "description": "M3 cashier/debt message: m3RemainingDebt"
+  },
+  "m3PrintingLater": "Penjualan tersimpan. Pencetakan struk belum tersedia.",
+  "@m3PrintingLater": {
+    "description": "M3 cashier/debt message: m3PrintingLater"
+  },
+  "m3NextSale": "Belanja berikutnya",
+  "@m3NextSale": {
+    "description": "M3 cashier/debt message: m3NextSale"
+  },
+  "m3PaidFull": "Lunas",
+  "@m3PaidFull": {
+    "description": "M3 cashier/debt message: m3PaidFull"
+  },
+  "m3PartialDebt": "Sebagian hutang",
+  "@m3PartialDebt": {
+    "description": "M3 cashier/debt message: m3PartialDebt"
+  },
+  "m3AllDebt": "Hutang semua",
+  "@m3AllDebt": {
+    "description": "M3 cashier/debt message: m3AllDebt"
+  },
+  "m3PaidExplanation": "Pembayaran dicatat sebesar total. Uang fisik ditangani di toko.",
+  "@m3PaidExplanation": {
+    "description": "M3 cashier/debt message: m3PaidExplanation"
+  },
+  "m3PaidAmount": "Nominal dibayar",
+  "@m3PaidAmount": {
+    "description": "M3 cashier/debt message: m3PaidAmount"
+  },
+  "m3CustomerName": "Nama pelanggan",
+  "@m3CustomerName": {
+    "description": "M3 cashier/debt message: m3CustomerName"
+  },
+  "m3PhoneOptional": "HP pelanggan (opsional)",
+  "@m3PhoneOptional": {
+    "description": "M3 cashier/debt message: m3PhoneOptional"
+  },
+  "m3SelectedCustomer": "Pelanggan yang dipilih akan digunakan.",
+  "@m3SelectedCustomer": {
+    "description": "M3 cashier/debt message: m3SelectedCustomer"
+  },
+  "m3ChooseCustomer": "Pilih pelanggan yang sudah ada jika sesuai.",
+  "@m3ChooseCustomer": {
+    "description": "M3 cashier/debt message: m3ChooseCustomer"
+  },
+  "m3NoPhone": "HP belum dicatat",
+  "@m3NoPhone": {
+    "description": "M3 cashier/debt message: m3NoPhone"
+  },
+  "m3CreateSeparateCustomer": "Buat pelanggan baru, meskipun namanya sama",
+  "@m3CreateSeparateCustomer": {
+    "description": "M3 cashier/debt message: m3CreateSeparateCustomer"
+  },
+  "m3ConfirmSale": "Simpan penjualan",
+  "@m3ConfirmSale": {
+    "description": "M3 cashier/debt message: m3ConfirmSale"
+  },
+  "m3AcceptPricesExplanation": "Harga lama tetap ditampilkan pada daftar belanja. Terima harga terbaru untuk melanjutkan pembayaran.",
+  "@m3AcceptPricesExplanation": {
+    "description": "M3 cashier/debt message: m3AcceptPricesExplanation"
+  },
+  "m3AcceptPrices": "Terima harga terbaru",
+  "@m3AcceptPrices": {
+    "description": "M3 cashier/debt message: m3AcceptPrices"
+  },
+  "m3ClearSearch": "Bersihkan pencarian",
+  "@m3ClearSearch": {
+    "description": "M3 cashier/debt message: m3ClearSearch"
+  },
+  "m3Available": "Stok layak jual",
+  "@m3Available": {
+    "description": "M3 cashier/debt message: m3Available"
+  },
+  "m3ClearCart": "Kosongkan",
+  "@m3ClearCart": {
+    "description": "M3 cashier/debt message: m3ClearCart"
+  },
+  "m3ClearCartExplanation": "Hapus seluruh barang dari daftar belanja? Perubahan ini dapat diurungkan selama lima detik jika daftar belum berubah.",
+  "@m3ClearCartExplanation": {
+    "description": "M3 cashier/debt message: m3ClearCartExplanation"
+  },
+  "m3CartRemoved": "Daftar belanja diperbarui.",
+  "@m3CartRemoved": {
+    "description": "M3 cashier/debt message: m3CartRemoved"
+  },
+  "m3Decrease": "Kurangi jumlah",
+  "@m3Decrease": {
+    "description": "M3 cashier/debt message: m3Decrease"
+  },
+  "m3Increase": "Tambah jumlah",
+  "@m3Increase": {
+    "description": "M3 cashier/debt message: m3Increase"
+  },
+  "m3RemoveItem": "Hapus barang dari belanja",
+  "@m3RemoveItem": {
+    "description": "M3 cashier/debt message: m3RemoveItem"
+  },
+  "m3Quantity": "Jumlah barang",
+  "@m3Quantity": {
+    "description": "M3 cashier/debt message: m3Quantity"
+  },
+  "m3SearchCustomers": "Cari nama pelanggan (Enter)",
+  "@m3SearchCustomers": {
+    "description": "M3 cashier/debt message: m3SearchCustomers"
+  },
+  "m3NoDebt": "Tidak ada hutang aktif.",
+  "@m3NoDebt": {
+    "description": "M3 cashier/debt message: m3NoDebt"
+  },
+  "m3LoadMore": "Muat berikutnya",
+  "@m3LoadMore": {
+    "description": "M3 cashier/debt message: m3LoadMore"
+  },
+  "m3PaymentPreview": "Rincian pembayaran hutang",
+  "@m3PaymentPreview": {
+    "description": "M3 cashier/debt message: m3PaymentPreview"
+  },
+  "m3OldestFirst": "Pembayaran dialokasikan ke transaksi tertua terlebih dahulu.",
+  "@m3OldestFirst": {
+    "description": "M3 cashier/debt message: m3OldestFirst"
+  },
+  "m3ConfirmPayment": "Catat pembayaran ini",
+  "@m3ConfirmPayment": {
+    "description": "M3 cashier/debt message: m3ConfirmPayment"
+  },
+  "m3RepaymentAmount": "Nominal pelunasan",
+  "@m3RepaymentAmount": {
+    "description": "M3 cashier/debt message: m3RepaymentAmount"
+  },
+  "m3RecordPayment": "Catat pembayaran",
+  "@m3RecordPayment": {
+    "description": "M3 cashier/debt message: m3RecordPayment"
+  },
+  "m3SaleHistory": "Riwayat penjualan",
+  "@m3SaleHistory": {
+    "description": "M3 cashier/debt message: m3SaleHistory"
+  },
+  "m3CostSnapshot": "HPP tersimpan",
+  "@m3CostSnapshot": {
+    "description": "M3 cashier/debt message: m3CostSnapshot"
+  },
+  "m3LaterFeatures": "Laporan lengkap, koreksi penjualan, printer, dan backup belum tersedia.",
+  "@m3LaterFeatures": {
+    "description": "M3 cashier/debt message: m3LaterFeatures"
+  },
+  "m31WholeQuantity": "Masukkan bilangan bulat menggunakan digit 0–9.",
+  "@m31WholeQuantity": {
+    "description": "M3.1 wholesale/packaging: m31WholeQuantity"
+  },
+  "m31PackRequired": "Isi label dus/box dan jumlah pcs per dus/box, atau kosongkan keduanya.",
+  "@m31PackRequired": {
+    "description": "M3.1 wholesale/packaging: m31PackRequired"
+  },
+  "m31WholesalePositive": "Harga grosir harus lebih dari nol. Kosongkan jika tidak tersedia.",
+  "@m31WholesalePositive": {
+    "description": "M3.1 wholesale/packaging: m31WholesalePositive"
+  },
+  "m31ConflictingInput": "Gunakan satu pilihan unit untuk penerimaan ini.",
+  "@m31ConflictingInput": {
+    "description": "M3.1 wholesale/packaging: m31ConflictingInput"
+  },
+  "m31WholesaleChange": "Perubahan harga grosir",
+  "@m31WholesaleChange": {
+    "description": "M3.1 wholesale/packaging: m31WholesaleChange"
+  },
+  "m31WholesaleUnavailable": "Harga grosir sudah tidak tersedia. Pilih harga eceran atau hapus baris ini sebelum membayar.",
+  "@m31WholesaleUnavailable": {
+    "description": "M3.1 wholesale/packaging: m31WholesaleUnavailable"
+  },
+  "m31Wholesale": "Grosir",
+  "@m31Wholesale": {
+    "description": "M3.1 wholesale/packaging: m31Wholesale"
+  },
+  "m31WholesalePerBase": "Harga per pcs, berlaku untuk seluruh jumlah pada baris ini.",
+  "@m31WholesalePerBase": {
+    "description": "M3.1 wholesale/packaging: m31WholesalePerBase"
+  },
+  "m31UseRetail": "Gunakan harga eceran",
+  "@m31UseRetail": {
+    "description": "M3.1 wholesale/packaging: m31UseRetail"
+  },
+  "m31WholesaleOptional": "Harga grosir — opsional",
+  "@m31WholesaleOptional": {
+    "description": "M3.1 wholesale/packaging: m31WholesaleOptional"
+  },
+  "m31WholesalePrice": "Harga grosir per pcs",
+  "@m31WholesalePrice": {
+    "description": "M3.1 wholesale/packaging: m31WholesalePrice"
+  },
+  "m31WholesaleHelp": "Kosong berarti tidak tersedia. Kasir memilih Grosir secara manual; harga ini bukan harga per dus.",
+  "@m31WholesaleHelp": {
+    "description": "M3.1 wholesale/packaging: m31WholesaleHelp"
+  },
+  "m31PackOptional": "Kemasan dus/box — opsional",
+  "@m31PackOptional": {
+    "description": "M3.1 wholesale/packaging: m31PackOptional"
+  },
+  "m31PackLabel": "Label dus/box",
+  "@m31PackLabel": {
+    "description": "M3.1 wholesale/packaging: m31PackLabel"
+  },
+  "m31PackSize": "Jumlah pcs per dus/box",
+  "@m31PackSize": {
+    "description": "M3.1 wholesale/packaging: m31PackSize"
+  },
+  "m31PackConfigHelp": "Kemasan hanya membantu input Gudang. Mengubah isinya tidak mengubah stok atau riwayat lama. Penjualan tetap per pcs.",
+  "@m31PackConfigHelp": {
+    "description": "M3.1 wholesale/packaging: m31PackConfigHelp"
+  },
+  "m31InputUnit": "Unit input",
+  "@m31InputUnit": {
+    "description": "M3.1 wholesale/packaging: m31InputUnit"
+  },
+  "m31BaseUnit": "Satuan dasar (pcs)",
+  "@m31BaseUnit": {
+    "description": "M3.1 wholesale/packaging: m31BaseUnit"
+  },
+  "m31PackUnit": "Dus/box",
+  "@m31PackUnit": {
+    "description": "M3.1 wholesale/packaging: m31PackUnit"
+  },
+  "m31PackCount": "Jumlah dus/box",
+  "@m31PackCount": {
+    "description": "M3.1 wholesale/packaging: m31PackCount"
+  },
+  "m31DigitsHelp": "Gunakan digit 0–9; tanda minus, pecahan, dan notasi ilmiah tidak diterima.",
+  "@m31DigitsHelp": {
+    "description": "M3.1 wholesale/packaging: m31DigitsHelp"
+  },
+  "m31ReceiptOverride": "Boleh berbeda untuk penerimaan/opname ini; konfigurasi barang tidak berubah.",
+  "@m31ReceiptOverride": {
+    "description": "M3.1 wholesale/packaging: m31ReceiptOverride"
+  },
+  "m31PreviewInvalid": "Isi jumlah dan isi kemasan yang valid untuk melihat hasil dalam pcs.",
+  "@m31PreviewInvalid": {
+    "description": "M3.1 wholesale/packaging: m31PreviewInvalid"
+  },
+  "m31PurchasePerPack": "Harga beli per dus/box",
+  "@m31PurchasePerPack": {
+    "description": "M3.1 wholesale/packaging: m31PurchasePerPack"
+  },
+  "m31PriceWarning": "Periksa harga grosir",
+  "@m31PriceWarning": {
+    "description": "M3.1 wholesale/packaging: m31PriceWarning"
+  },
+  "m31AboveRetail": "Harga grosir melebihi harga eceran. Lanjutkan hanya jika sesuai keinginan Anda.",
+  "@m31AboveRetail": {
+    "description": "M3.1 wholesale/packaging: m31AboveRetail"
+  },
+  "m31BelowCost": "Harga grosir di bawah harga beli rata-rata. Penjualan dapat menghasilkan kerugian.",
+  "@m31BelowCost": {
+    "description": "M3.1 wholesale/packaging: m31BelowCost"
+  },
+  "m31BaseStock": "Stok satuan dasar",
+  "@m31BaseStock": {
+    "description": "M3.1 wholesale/packaging: m31BaseStock"
+  },
+  "m31Unavailable": "Tidak tersedia",
+  "@m31Unavailable": {
+    "description": "M3.1 wholesale/packaging: m31Unavailable"
+  },
+  "m31Retail": "Eceran",
+  "@m31Retail": {
+    "description": "M3.1 wholesale/packaging: m31Retail"
+  },
+  "m31ReceiptInput": "Input penerimaan",
+  "@m31ReceiptInput": {
+    "description": "M3.1 wholesale/packaging: m31ReceiptInput"
+  },
+  "m31InputPrice": "Harga beli per unit input",
+  "@m31InputPrice": {
+    "description": "M3.1 wholesale/packaging: m31InputPrice"
+  },
+  "m31ReceiptValue": "Total nilai penerimaan",
+  "@m31ReceiptValue": {
+    "description": "M3.1 wholesale/packaging: m31ReceiptValue"
+  },
+  "m31LegacyInput": "Unit input penerimaan lama tidak tercatat. Jumlah stok tetap dalam satuan dasar.",
+  "@m31LegacyInput": {
+    "description": "M3.1 wholesale/packaging: m31LegacyInput"
+  },
+  "m31ConversionPreview": "{count} dus/box × {size} pcs = {total} pcs",
+  "@m31ConversionPreview": {
+    "description": "M3.1 wholesale/packaging: m31ConversionPreview",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "size": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "m4Reports": "Laporan",
+  "@m4Reports": {
+    "description": "M4 reports/corrections: Reports"
+  },
+  "m4NetSales": "Penjualan bersih",
+  "@m4NetSales": {
+    "description": "M4 reports/corrections: Net sales"
+  },
+  "m4GrossProfit": "Laba kotor",
+  "@m4GrossProfit": {
+    "description": "M4 reports/corrections: Gross profit"
+  },
+  "m4NetPayments": "Pembayaran bersih periode",
+  "@m4NetPayments": {
+    "description": "M4 reports/corrections: Net payments in period"
+  },
+  "m4CheckoutPayments": "Pembayaran saat checkout",
+  "@m4CheckoutPayments": {
+    "description": "M4 reports/corrections: Payments at checkout"
+  },
+  "m4Repayments": "Pelunasan piutang",
+  "@m4Repayments": {
+    "description": "M4 reports/corrections: Receivable repayments"
+  },
+  "m4UnknownPayments": "Pembayaran asal belum diketahui",
+  "@m4UnknownPayments": {
+    "description": "M4 reports/corrections: Payments with unknown origin"
+  },
+  "m4CurrentReceivables": "Saldo piutang saat ini",
+  "@m4CurrentReceivables": {
+    "description": "M4 reports/corrections: Current receivables balance"
+  },
+  "m4InventoryValue": "Nilai persediaan saat ini",
+  "@m4InventoryValue": {
+    "description": "M4 reports/corrections: Current inventory value"
+  },
+  "m4PhysicalStock": "Jumlah stok fisik saat ini",
+  "@m4PhysicalStock": {
+    "description": "M4 reports/corrections: Current physical stock quantity"
+  },
+  "m4ExpiredStock": "Jumlah kedaluwarsa saat ini",
+  "@m4ExpiredStock": {
+    "description": "M4 reports/corrections: Current expired quantity"
+  },
+  "m4SalesCount": "Jumlah penjualan pada periode",
+  "@m4SalesCount": {
+    "description": "M4 reports/corrections: Sales recorded in period"
+  },
+  "m4ReturnsCount": "Jumlah pembatalan pada periode",
+  "@m4ReturnsCount": {
+    "description": "M4 reports/corrections: Sales cancelled in period"
+  },
+  "m4SelectPeriod": "Pilih periode",
+  "@m4SelectPeriod": {
+    "description": "M4 reports/corrections: Choose period"
+  },
+  "m4ThisMonth": "Bulan ini",
+  "@m4ThisMonth": {
+    "description": "M4 reports/corrections: This month"
+  },
+  "m4AllTime": "Semua waktu",
+  "@m4AllTime": {
+    "description": "M4 reports/corrections: All time"
+  },
+  "m4AllStatuses": "Semua status",
+  "@m4AllStatuses": {
+    "description": "M4 reports/corrections: All statuses"
+  },
+  "m4Active": "Aktif",
+  "@m4Active": {
+    "description": "M4 reports/corrections: Active"
+  },
+  "m4Cancelled": "Dibatalkan",
+  "@m4Cancelled": {
+    "description": "M4 reports/corrections: Cancelled"
+  },
+  "m4Reversal": "Pembalikan",
+  "@m4Reversal": {
+    "description": "M4 reports/corrections: Reversal"
+  },
+  "m4SaleEvent": "Penjualan",
+  "@m4SaleEvent": {
+    "description": "M4 reports/corrections: Sale"
+  },
+  "m4SalesEvents": "Rincian penjualan",
+  "@m4SalesEvents": {
+    "description": "M4 reports/corrections: Sales details"
+  },
+  "m4PaymentLedger": "Riwayat pembayaran",
+  "@m4PaymentLedger": {
+    "description": "M4 reports/corrections: Payment ledger"
+  },
+  "m4AllCustomers": "Semua pelanggan",
+  "@m4AllCustomers": {
+    "description": "M4 reports/corrections: All customers"
+  },
+  "m4CustomerFilter": "Filter pelanggan",
+  "@m4CustomerFilter": {
+    "description": "M4 reports/corrections: Customer filter"
+  },
+  "m4NoCustomer": "Tanpa pelanggan",
+  "@m4NoCustomer": {
+    "description": "M4 reports/corrections: No customer"
+  },
+  "m4PeriodPolicy": "Pembatalan mengurangi angka pada tanggal pembalikan. Pelunasan bukan penjualan baru. Laba kotor belum memperhitungkan biaya operasional.",
+  "@m4PeriodPolicy": {
+    "description": "M4 reports/corrections: Cancellations reduce amounts on the reversal date. Repayments are not new sales. Gross profit excludes operating expenses."
+  },
+  "m4CurrentSnapshot": "Piutang adalah saldo saat ini untuk pelanggan yang dipilih. Persediaan adalah kondisi seluruh toko saat ini, terpisah dari periode laporan.",
+  "@m4CurrentSnapshot": {
+    "description": "M4 reports/corrections: Receivables show current balances for the selected customers. Inventory shows the current whole-store position, separate from the report period."
+  },
+  "m4ReloadStart": "Muat ulang dari awal",
+  "@m4ReloadStart": {
+    "description": "M4 reports/corrections: Reload from the start"
+  },
+  "m4Reconcile": "Periksa kesesuaian catatan",
+  "@m4Reconcile": {
+    "description": "M4 reports/corrections: Check records agree"
+  },
+  "m4Consistent": "Catatan yang diperiksa sesuai.",
+  "@m4Consistent": {
+    "description": "M4 reports/corrections: The checked records agree."
+  },
+  "m4Inconsistent": "Ada catatan yang tidak sesuai. Jangan koreksi dengan menghapus riwayat.",
+  "@m4Inconsistent": {
+    "description": "M4 reports/corrections: Some records disagree. Do not correct them by deleting history."
+  },
+  "m4StockCheck": "Jumlah stok",
+  "@m4StockCheck": {
+    "description": "M4 reports/corrections: Stock quantities"
+  },
+  "m4ValueCheck": "Nilai persediaan",
+  "@m4ValueCheck": {
+    "description": "M4 reports/corrections: Inventory values"
+  },
+  "m4SaleCheck": "Rincian penjualan",
+  "@m4SaleCheck": {
+    "description": "M4 reports/corrections: Sales items"
+  },
+  "m4BatchCheck": "Alokasi batch",
+  "@m4BatchCheck": {
+    "description": "M4 reports/corrections: Batch allocations"
+  },
+  "m4PaymentCheck": "Alokasi pembayaran",
+  "@m4PaymentCheck": {
+    "description": "M4 reports/corrections: Payment allocations"
+  },
+  "m4DebtCheck": "Saldo piutang",
+  "@m4DebtCheck": {
+    "description": "M4 reports/corrections: Receivables balances"
+  },
+  "m4ReturnCheck": "Catatan barang kembali",
+  "@m4ReturnCheck": {
+    "description": "M4 reports/corrections: Returned-goods records"
+  },
+  "m4RelationsCheck": "Relasi catatan",
+  "@m4RelationsCheck": {
+    "description": "M4 reports/corrections: Record relationships"
+  },
+  "m4CancelSale": "Batalkan penjualan",
+  "@m4CancelSale": {
+    "description": "M4 reports/corrections: Cancel sale"
+  },
+  "m4CancelPayment": "Batalkan pembayaran",
+  "@m4CancelPayment": {
+    "description": "M4 reports/corrections: Cancel payment"
+  },
+  "m4Reason": "Alasan koreksi",
+  "@m4Reason": {
+    "description": "M4 reports/corrections: Correction reason"
+  },
+  "m4GoodsReturned": "Seluruh barang benar-benar sudah kembali ke toko.",
+  "@m4GoodsReturned": {
+    "description": "M4 reports/corrections: All goods have actually been returned to the store."
+  },
+  "m4MoneyHandled": "Pengembalian atau penyesuaian dana yang relevan ditangani di toko; aplikasi hanya membalik catatan.",
+  "@m4MoneyHandled": {
+    "description": "M4 reports/corrections: Any relevant refund or money adjustment is handled in the store; the app only reverses the records."
+  },
+  "m4CorrectionNotice": "Koreksi menambah catatan pembalik tanpa menghapus transaksi asli. Pembatalan penjualan penuh tidak diizinkan selama ada pelunasan lanjutan yang masih aktif.",
+  "@m4CorrectionNotice": {
+    "description": "M4 reports/corrections: A correction adds reversal records and keeps the original transaction. Full sale cancellation is refused while a later repayment remains active."
+  },
+  "m4ConfirmCancellation": "Konfirmasi pembatalan",
+  "@m4ConfirmCancellation": {
+    "description": "M4 reports/corrections: Confirm cancellation"
+  },
+  "m4ReasonRequired": "Isi alasan koreksi.",
+  "@m4ReasonRequired": {
+    "description": "M4 reports/corrections: Enter a correction reason."
+  },
+  "m4ReasonTooLong": "Alasan maksimal 500 karakter.",
+  "@m4ReasonTooLong": {
+    "description": "M4 reports/corrections: The reason may contain up to 500 characters."
+  },
+  "m4ConfirmMoney": "Konfirmasi penanganan dana di toko terlebih dahulu.",
+  "@m4ConfirmMoney": {
+    "description": "M4 reports/corrections: Confirm how the money is handled in the store first."
+  },
+  "m4ConfirmGoods": "Pembatalan penuh memerlukan seluruh barang benar-benar kembali.",
+  "@m4ConfirmGoods": {
+    "description": "M4 reports/corrections: A full cancellation requires all goods to have actually been returned."
+  },
+  "m4AlreadyCancelled": "Catatan ini sudah dibatalkan. Muat ulang untuk melihat hasilnya.",
+  "@m4AlreadyCancelled": {
+    "description": "M4 reports/corrections: This record has already been cancelled. Reload to see the result."
+  },
+  "m4ActiveRepayment": "Ada pelunasan lanjutan yang masih aktif. Tinjau dan balik pembayaran itu dahulu jika memang keliru; jangan menghapusnya.",
+  "@m4ActiveRepayment": {
+    "description": "M4 reports/corrections: A later repayment remains active. Review and reverse that payment first if it was recorded in error; do not delete it."
+  },
+  "m4AnonymousPayment": "Pembayaran ini tidak memiliki pelanggan untuk piutang yang dibuka kembali. Gunakan pembatalan penjualan penuh bila seluruh barang benar-benar kembali.",
+  "@m4AnonymousPayment": {
+    "description": "M4 reports/corrections: This payment has no customer to own the reopened debt. Use a full sale cancellation if all goods have actually been returned."
+  },
+  "m4PaymentUnavailable": "Pembayaran tidak tersedia atau merupakan catatan pembalik.",
+  "@m4PaymentUnavailable": {
+    "description": "M4 reports/corrections: The payment is unavailable or is itself a reversal."
+  },
+  "m4InconsistentData": "Catatan terkait tidak sesuai. Periksa rekonsiliasi; tidak ada koreksi yang disimpan.",
+  "@m4InconsistentData": {
+    "description": "M4 reports/corrections: Related records disagree. Check reconciliation; no correction was saved."
+  },
+  "m4DatasetChanged": "Data telah berubah. Muat ulang dari awal.",
+  "@m4DatasetChanged": {
+    "description": "M4 reports/corrections: The data changed. Reload from the start."
+  },
+  "m4InvalidPeriod": "Awal periode harus sebelum akhir periode.",
+  "@m4InvalidPeriod": {
+    "description": "M4 reports/corrections: The period start must precede its end."
+  },
+  "m4AggregateTooLarge": "Total laporan melebihi batas integer database. Pilih periode atau filter yang lebih kecil.",
+  "@m4AggregateTooLarge": {
+    "description": "M4 reports/corrections: The report total exceeds the database integer limit. Choose a smaller period or filter."
+  },
+  "m4LaterFeatures": "Printer, notifikasi, serta backup dan restore tersedia pada tahap berikutnya.",
+  "@m4LaterFeatures": {
+    "description": "M4 reports/corrections: Printing, notifications, backup and restore are planned for the next stage."
+  },
+  "m5OperationFailed": "Operasi belum berhasil. Periksa izin, koneksi, atau masuk kembali melalui PIN.",
+  "m5PermissionDenied": "Izin belum diberikan. Peringatan di dalam aplikasi tetap tersedia.",
+  "m5Printer": "Printer Bluetooth",
+  "m5PrinterHelp": "ESC/POS melalui Bluetooth Classic/SPP. Iware MP-581RL biasanya bernama RPP02N. Profil perlu dikalibrasi pada kertas nyata. Masuk kembali melalui PIN setelah dialog izin Android bila terkunci.",
+  "m5Paired": "Perangkat berpasangan",
+  "m5Discover": "Cari perangkat",
+  "m5Pair": "Pasangkan",
+  "m5PairRequested": "Permintaan pasangan dikirim ke Android; periksa dialog lalu muat perangkat berpasangan.",
+  "m5SavedPrinters": "Printer tersimpan",
+  "m5FirstPage": "Muat awal",
+  "m5NextPage": "Halaman berikutnya",
+  "m5PrintableDots": "Lebar area cetak (dots)",
+  "m5LeftDots": "Margin kiri (dots)",
+  "m5RightDots": "Margin kanan (dots)",
+  "m5ShiftDots": "Pergeseran horizontal (dots)",
+  "m5Feed": "Baris kosong setelah struk (0–8)",
+  "m5GeometryHelp": "203 DPI: 8 dots sekitar 1 mm. Lebar kertas berbeda dari area cetak. Pergeseran harus tetap di dalam area yang aman; -4 mm dari OpenLabel bukan default semua printer. Header/footer diatur pada pengaturan toko.",
+  "m5Bold": "Teks tebal",
+  "m5Logo": "Cetak logo bila tersedia",
+  "m5HeaderAlign": "Perataan header",
+  "m5FooterAlign": "Perataan footer",
+  "m5AlignLeft": "Kiri",
+  "m5AlignCenter": "Tengah",
+  "m5AlignRight": "Kanan",
+  "m5ResetTemplate": "Reset template profil",
+  "m5Preview": "Pratinjau",
+  "m5ProfileInvalid": "Geometri atau ukuran template tidak valid. Periksa area cetak dan margin.",
+  "m5PrinterSaved": "Profil printer disimpan.",
+  "m5TestPrint": "Cetak UJI COBA",
+  "m5ForgetPrinter": "Lupakan dari aplikasi",
+  "m5PrinterForgotten": "Pilihan printer dihapus dari aplikasi.",
+  "m5Disconnect": "Putuskan",
+  "m5Disconnected": "Koneksi diputuskan.",
+  "m5PrintReceipt": "Cetak struk",
+  "m5PrintCopy": "Cetak SALINAN",
+  "m5DataSent": "Data dikirim. Periksa hasil kertas pada printer.",
+  "m5DeliveryUnknown": "Hasil pengiriman tidak pasti. Periksa printer dahulu; cetak SALINAN hanya jika diperlukan.",
+  "m5NotSent": "Data belum terkirim. Periksa printer dan koneksinya.",
+  "m5PrintPrepared": "Pekerjaan cetak disiapkan.",
+  "m5PrintSetupRequired": "Printer belum siap. Periksa pengaturan printer melalui Kelola. Penjualan tetap tersimpan.",
+  "m5ScanCancelled": "Pencarian dibatalkan.",
+  "m5ScanTimedOut": "Batas waktu pencarian tercapai; hasil yang ditemukan ditampilkan.",
+  "m5ScanFinished": "Pencarian selesai.",
+  "m5Alerts": "Peringatan persediaan",
+  "m5AlertsHelp": "Peringatan stok mengikuti batas minimum barang. Kedaluwarsa dihitung dari batch tersisa dan tanggal toko. Notifikasi bersifat best effort; ketuk untuk membuka daftar melalui PIN.",
+  "m5ExpiryDays": "Pengingat sebelum kedaluwarsa (hari, 0–365)",
+  "m5Notifications": "Aktifkan notifikasi persediaan",
+  "m5SettingsSaved": "Pengaturan disimpan.",
+  "m5NoAlerts": "Tidak ada peringatan aktif.",
+  "m5Expiry": "Kedaluwarsa",
+  "m5Saleable": "Stok layak jual",
+  "m5Minimum": "Minimum",
+  "m5Backup": "Backup & Google Drive",
+  "m5BackupHelp": "Backup berisi data toko dan logo dalam arsip terenkripsi. Ekspor melalui pemilih berkas Android untuk menyimpan salinan di luar aplikasi. Pemulihan mengganti seluruh data aktif. Setelah dialog Android, masuk kembali melalui PIN untuk melanjutkan.",
+  "m5RecoveryConfigured": "Kode recovery backup sudah disiapkan.",
+  "m5RecoveryRequired": "Siapkan dan simpan kode recovery sebelum membuat backup.",
+  "m5GenerateCode": "Siapkan kode baru",
+  "m5ShowCode": "Tampilkan kode tersimpan",
+  "m5RecoveryCodeHelp": "Kode ini berbeda dari PIN dan recovery PIN. Simpan salinan pribadi di luar perangkat. Backup lama tetap membutuhkan kode yang dipakai saat dibuat; kode hilang tidak dapat dihitung ulang dari PIN.",
+  "m5ConfirmRecoveryCode": "Masukkan ulang kode yang disimpan",
+  "m5CodeStored": "Saya telah menyimpan salinan kode di tempat yang dapat saya akses kembali.",
+  "m5SaveRecoveryCode": "Konfirmasi dan simpan kode",
+  "m5LocalBackups": "Backup lokal terenkripsi",
+  "m5CreateBackup": "Buat backup lokal",
+  "m5Export": "Ekspor berkas",
+  "m5SelectRestore": "Pilih untuk pemulihan",
+  "m5Restore": "Pulihkan backup",
+  "m5ChooseArchive": "Pilih arsip dari berkas",
+  "m5ArchiveSelected": "Arsip dipilih. Masuk kembali melalui PIN jika diminta, lalu validasi dengan kode recovery arsip tersebut.",
+  "m5RecoveryCode": "Kode recovery backup",
+  "m5ValidateArchive": "Validasi arsip",
+  "m5RestoreWarning": "Seluruh data aktif termasuk draft lokal akan diganti oleh isi backup. Safety backup terenkripsi wajib berhasil terlebih dahulu. PIN setelah pemulihan mengikuti backup yang dipilih. Google, backup otomatis, notifikasi, dan pilihan printer perlu diatur kembali; tidak ada cetak otomatis.",
+  "m5ReplaceAndDrafts": "Saya menyetujui penggantian seluruh data dan draft lokal dengan isi backup yang dipilih.",
+  "m5RestoreFinalConfirmation": "Lanjutkan pemulihan penuh sekarang?",
+  "m5Confirm": "Konfirmasi",
+  "m5GoogleDrive": "Google Drive opsional",
+  "m5DriveHelp": "Hanya folder data aplikasi di akun yang dipilih. Bukan sinkronisasi stok. Upload manual mengirim arsip terenkripsi; otomatis memerlukan persetujuan terpisah. Tujuh backup berhasil dipertahankan untuk toko dan asal instalasi yang sama. OAuth Testing dapat meminta login ulang sekitar tujuh hari.",
+  "m5TargetAccount": "Akun tujuan",
+  "m5ChooseAccount": "Pilih atau ganti akun Google",
+  "m5PendingAccount": "Pilihan akun belum disimpan",
+  "m5UseAccount": "Gunakan akun ini",
+  "m5AutomaticBackup": "Backup Drive otomatis",
+  "m5AutomaticBackupHelp": "Target 21.00 menurut zona waktu toko, best effort. Dapat tertunda karena jaringan, Doze, atau batas perangkat; tidak dijamin berjalan setelah force-stop.",
+  "m5AutomaticConsent": "Izinkan pengiriman arsip toko terenkripsi secara otomatis ke akun tujuan yang ditampilkan?",
+  "m5UploadNow": "Backup ke Drive sekarang",
+  "m5DriveVersions": "Versi backup Drive",
+  "m5Refresh": "Muat ulang status",
+  "m5CodeSaved": "Kode recovery backup disimpan.",
+  "m5LocalBackupReady": "Backup lokal tervalidasi tersedia. Ekspor berkas untuk menyimpan salinan di luar aplikasi.",
+  "m5ExportVerified": "Berkas ekspor ditulis dan diverifikasi kembali.",
+  "m5Cancelled": "Dibatalkan.",
+  "m5ArchiveValidated": "Arsip terautentikasi dan data tervalidasi. Periksa metadata sebelum pemulihan.",
+  "m5RestoreComplete": "Pemulihan selesai. Gunakan PIN dari backup untuk membuka Kelola.",
+  "m5RestoreOutcomeCheck": "Pemulihan belum dapat dinyatakan selesai. Data aktif dibuka kembali; periksa status dan isi toko sebelum melanjutkan.",
+  "m5AccountPending": "Pilihan akun siap. Masuk kembali melalui PIN lalu konfirmasi akun tujuan.",
+  "m5AccountConnected": "Akun tujuan disimpan. Backup otomatis masih nonaktif.",
+  "m5DriveBackupReady": "Upload arsip Drive sudah diverifikasi.",
+  "m5DriveNeedsAuth": "Google memerlukan otorisasi ulang. Pilih akun melalui layar ini; worker tidak akan membuka dialog login.",
+  "m5DriveConsentChanged": "Operasi dihentikan karena akun atau persetujuan berubah.",
+  "m5DriveAccountMismatch": "Identitas akun tidak cocok. Pilih dan konfirmasi kembali akun tujuan.",
+  "m5DriveQuota": "Ruang Google Drive tidak mencukupi.",
+  "m5DriveOffline": "Jaringan belum tersedia atau batas waktu tercapai. Coba kembali.",
+  "m5DriveFailed": "Operasi Drive belum selesai. Periksa jaringan, otorisasi, dan konfigurasi akun.",
+  "m5DriveApiNotEnabled": "Google Drive API belum aktif atau dinonaktifkan pada project Google Cloud aplikasi. Aktifkan API tersebut pada project yang memiliki client OAuth, lalu coba lagi.",
+  "m5DriveForbidden": "Google Drive menolak akses. Periksa izin data Drive aplikasi dan konfigurasi project Google Cloud. Akun dalam daftar pengguna uji saja belum menjamin akses API.",
+  "@m5DriveApiNotEnabled": {
+    "description": "A structured Google API-disabled response, without upstream identifiers or messages."
+  },
+  "@m5DriveForbidden": {
+    "description": "Unclassified Drive access rejection; do not imply its exact cause is known."
+  },
+  "m5ArchiveRejected": "Kode atau arsip tidak valid, rusak, atau tidak dapat dibaca. Data aktif tidak diganti.",
+  "m5CodeRotationWarning": "Kode baru berlaku untuk backup berikutnya. Simpan kode lama untuk membuka backup yang sudah dibuat. Lanjutkan?",
+  "m5DatabaseKeyMissing": "Key database instalasi tidak ditemukan. Berkas dipertahankan; tidak dibuat database kosong. Gunakan salinan backup terverifikasi pada instalasi lain atau periksa pemulihan key.",
+  "m5DatabaseKeyUnavailable": "Keystore tidak dapat membuka key database. Berkas tetap dipertahankan.",
+  "m5DatabaseUnlockFailed": "Database tidak dapat dibuka dengan key instalasi. Berkas tetap dipertahankan; periksa backup dan status penyimpanan.",
+  "m5EncryptedExportFailed": "Ekspor terenkripsi gagal. Sumber data dipertahankan.",
+  "m5DatabaseInUse": "Database masih digunakan. Tunggu operasi lain selesai lalu coba kembali.",
+  "m5PrintSending": "Sedang mengirim data cetak",
+  "m5BackupRunning": "Berjalan",
+  "m5BackupFailed": "Belum berhasil",
+  "m5BackupSuccess": "Berhasil",
+  "m5ChooseLogo": "Pilih logo toko",
+  "m5ApplyLogo": "Gunakan logo terpilih",
+  "m5RemoveLogo": "Sembunyikan logo toko",
+  "m5ReceiptPreview": "Pratinjau struk",
+  "m5HideCode": "Sembunyikan kode pemulihan",
+  "m5LastAttempt": "Percobaan backup terakhir",
+  "m5LastSuccess": "Backup berhasil terakhir",
+  "m5NextTarget": "Target backup berikutnya (waktu toko)",
+  "m5NotScheduled": "Belum terjadwal",
+  "m5RunRunning": "Sedang diproses",
+  "m5RunCompleted": "Berhasil diverifikasi",
+  "m5RunFailed": "Gagal; belum menjadi backup berhasil",
+  "m5RunUnknown": "Status perlu diperiksa",
+  "m5RestoreContents": "Isi arsip dan identitas toko",
+  "m5RestoreCurrent": "Toko saat ini",
+  "@m5OperationFailed": {
+    "description": "M5 printer, alerts or backup interface: m5OperationFailed."
+  },
+  "@m5PermissionDenied": {
+    "description": "M5 printer, alerts or backup interface: m5PermissionDenied."
+  },
+  "@m5Printer": {
+    "description": "M5 printer, alerts or backup interface: m5Printer."
+  },
+  "@m5PrinterHelp": {
+    "description": "M5 printer, alerts or backup interface: m5PrinterHelp."
+  },
+  "@m5Paired": {
+    "description": "M5 printer, alerts or backup interface: m5Paired."
+  },
+  "@m5Discover": {
+    "description": "M5 printer, alerts or backup interface: m5Discover."
+  },
+  "@m5Pair": {
+    "description": "M5 printer, alerts or backup interface: m5Pair."
+  },
+  "@m5PairRequested": {
+    "description": "M5 printer, alerts or backup interface: m5PairRequested."
+  },
+  "@m5SavedPrinters": {
+    "description": "M5 printer, alerts or backup interface: m5SavedPrinters."
+  },
+  "@m5FirstPage": {
+    "description": "M5 printer, alerts or backup interface: m5FirstPage."
+  },
+  "@m5NextPage": {
+    "description": "M5 printer, alerts or backup interface: m5NextPage."
+  },
+  "@m5PrintableDots": {
+    "description": "M5 printer, alerts or backup interface: m5PrintableDots."
+  },
+  "@m5LeftDots": {
+    "description": "M5 printer, alerts or backup interface: m5LeftDots."
+  },
+  "@m5RightDots": {
+    "description": "M5 printer, alerts or backup interface: m5RightDots."
+  },
+  "@m5ShiftDots": {
+    "description": "M5 printer, alerts or backup interface: m5ShiftDots."
+  },
+  "@m5Feed": {
+    "description": "M5 printer, alerts or backup interface: m5Feed."
+  },
+  "@m5GeometryHelp": {
+    "description": "M5 printer, alerts or backup interface: m5GeometryHelp."
+  },
+  "@m5Bold": {
+    "description": "M5 printer, alerts or backup interface: m5Bold."
+  },
+  "@m5Logo": {
+    "description": "M5 printer, alerts or backup interface: m5Logo."
+  },
+  "@m5HeaderAlign": {
+    "description": "M5 printer, alerts or backup interface: m5HeaderAlign."
+  },
+  "@m5FooterAlign": {
+    "description": "M5 printer, alerts or backup interface: m5FooterAlign."
+  },
+  "@m5AlignLeft": {
+    "description": "M5 printer, alerts or backup interface: m5AlignLeft."
+  },
+  "@m5AlignCenter": {
+    "description": "M5 printer, alerts or backup interface: m5AlignCenter."
+  },
+  "@m5AlignRight": {
+    "description": "M5 printer, alerts or backup interface: m5AlignRight."
+  },
+  "@m5ResetTemplate": {
+    "description": "M5 printer, alerts or backup interface: m5ResetTemplate."
+  },
+  "@m5Preview": {
+    "description": "M5 printer, alerts or backup interface: m5Preview."
+  },
+  "@m5ProfileInvalid": {
+    "description": "M5 printer, alerts or backup interface: m5ProfileInvalid."
+  },
+  "@m5PrinterSaved": {
+    "description": "M5 printer, alerts or backup interface: m5PrinterSaved."
+  },
+  "@m5TestPrint": {
+    "description": "M5 printer, alerts or backup interface: m5TestPrint."
+  },
+  "@m5ForgetPrinter": {
+    "description": "M5 printer, alerts or backup interface: m5ForgetPrinter."
+  },
+  "@m5PrinterForgotten": {
+    "description": "M5 printer, alerts or backup interface: m5PrinterForgotten."
+  },
+  "@m5Disconnect": {
+    "description": "M5 printer, alerts or backup interface: m5Disconnect."
+  },
+  "@m5Disconnected": {
+    "description": "M5 printer, alerts or backup interface: m5Disconnected."
+  },
+  "@m5PrintReceipt": {
+    "description": "M5 printer, alerts or backup interface: m5PrintReceipt."
+  },
+  "@m5PrintCopy": {
+    "description": "M5 printer, alerts or backup interface: m5PrintCopy."
+  },
+  "@m5DataSent": {
+    "description": "M5 printer, alerts or backup interface: m5DataSent."
+  },
+  "@m5DeliveryUnknown": {
+    "description": "M5 printer, alerts or backup interface: m5DeliveryUnknown."
+  },
+  "@m5NotSent": {
+    "description": "M5 printer, alerts or backup interface: m5NotSent."
+  },
+  "@m5PrintPrepared": {
+    "description": "M5 printer, alerts or backup interface: m5PrintPrepared."
+  },
+  "@m5PrintSetupRequired": {
+    "description": "M5 printer, alerts or backup interface: m5PrintSetupRequired."
+  },
+  "@m5ScanCancelled": {
+    "description": "M5 printer, alerts or backup interface: m5ScanCancelled."
+  },
+  "@m5ScanTimedOut": {
+    "description": "M5 printer, alerts or backup interface: m5ScanTimedOut."
+  },
+  "@m5ScanFinished": {
+    "description": "M5 printer, alerts or backup interface: m5ScanFinished."
+  },
+  "@m5Alerts": {
+    "description": "M5 printer, alerts or backup interface: m5Alerts."
+  },
+  "@m5AlertsHelp": {
+    "description": "M5 printer, alerts or backup interface: m5AlertsHelp."
+  },
+  "@m5ExpiryDays": {
+    "description": "M5 printer, alerts or backup interface: m5ExpiryDays."
+  },
+  "@m5Notifications": {
+    "description": "M5 printer, alerts or backup interface: m5Notifications."
+  },
+  "@m5SettingsSaved": {
+    "description": "M5 printer, alerts or backup interface: m5SettingsSaved."
+  },
+  "@m5NoAlerts": {
+    "description": "M5 printer, alerts or backup interface: m5NoAlerts."
+  },
+  "@m5Expiry": {
+    "description": "M5 printer, alerts or backup interface: m5Expiry."
+  },
+  "@m5Saleable": {
+    "description": "M5 printer, alerts or backup interface: m5Saleable."
+  },
+  "@m5Minimum": {
+    "description": "M5 printer, alerts or backup interface: m5Minimum."
+  },
+  "@m5Backup": {
+    "description": "M5 printer, alerts or backup interface: m5Backup."
+  },
+  "@m5BackupHelp": {
+    "description": "M5 printer, alerts or backup interface: m5BackupHelp."
+  },
+  "@m5RecoveryConfigured": {
+    "description": "M5 printer, alerts or backup interface: m5RecoveryConfigured."
+  },
+  "@m5RecoveryRequired": {
+    "description": "M5 printer, alerts or backup interface: m5RecoveryRequired."
+  },
+  "@m5GenerateCode": {
+    "description": "M5 printer, alerts or backup interface: m5GenerateCode."
+  },
+  "@m5ShowCode": {
+    "description": "M5 printer, alerts or backup interface: m5ShowCode."
+  },
+  "@m5RecoveryCodeHelp": {
+    "description": "M5 printer, alerts or backup interface: m5RecoveryCodeHelp."
+  },
+  "@m5ConfirmRecoveryCode": {
+    "description": "M5 printer, alerts or backup interface: m5ConfirmRecoveryCode."
+  },
+  "@m5CodeStored": {
+    "description": "M5 printer, alerts or backup interface: m5CodeStored."
+  },
+  "@m5SaveRecoveryCode": {
+    "description": "M5 printer, alerts or backup interface: m5SaveRecoveryCode."
+  },
+  "@m5LocalBackups": {
+    "description": "M5 printer, alerts or backup interface: m5LocalBackups."
+  },
+  "@m5CreateBackup": {
+    "description": "M5 printer, alerts or backup interface: m5CreateBackup."
+  },
+  "@m5Export": {
+    "description": "M5 printer, alerts or backup interface: m5Export."
+  },
+  "@m5SelectRestore": {
+    "description": "M5 printer, alerts or backup interface: m5SelectRestore."
+  },
+  "@m5Restore": {
+    "description": "M5 printer, alerts or backup interface: m5Restore."
+  },
+  "@m5ChooseArchive": {
+    "description": "M5 printer, alerts or backup interface: m5ChooseArchive."
+  },
+  "@m5ArchiveSelected": {
+    "description": "M5 printer, alerts or backup interface: m5ArchiveSelected."
+  },
+  "@m5RecoveryCode": {
+    "description": "M5 printer, alerts or backup interface: m5RecoveryCode."
+  },
+  "@m5ValidateArchive": {
+    "description": "M5 printer, alerts or backup interface: m5ValidateArchive."
+  },
+  "@m5RestoreWarning": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreWarning."
+  },
+  "@m5ReplaceAndDrafts": {
+    "description": "M5 printer, alerts or backup interface: m5ReplaceAndDrafts."
+  },
+  "@m5RestoreFinalConfirmation": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreFinalConfirmation."
+  },
+  "@m5Confirm": {
+    "description": "M5 printer, alerts or backup interface: m5Confirm."
+  },
+  "@m5GoogleDrive": {
+    "description": "M5 printer, alerts or backup interface: m5GoogleDrive."
+  },
+  "@m5DriveHelp": {
+    "description": "M5 printer, alerts or backup interface: m5DriveHelp."
+  },
+  "@m5TargetAccount": {
+    "description": "M5 printer, alerts or backup interface: m5TargetAccount."
+  },
+  "@m5ChooseAccount": {
+    "description": "M5 printer, alerts or backup interface: m5ChooseAccount."
+  },
+  "@m5PendingAccount": {
+    "description": "M5 printer, alerts or backup interface: m5PendingAccount."
+  },
+  "@m5UseAccount": {
+    "description": "M5 printer, alerts or backup interface: m5UseAccount."
+  },
+  "@m5AutomaticBackup": {
+    "description": "M5 printer, alerts or backup interface: m5AutomaticBackup."
+  },
+  "@m5AutomaticBackupHelp": {
+    "description": "M5 printer, alerts or backup interface: m5AutomaticBackupHelp."
+  },
+  "@m5AutomaticConsent": {
+    "description": "M5 printer, alerts or backup interface: m5AutomaticConsent."
+  },
+  "@m5UploadNow": {
+    "description": "M5 printer, alerts or backup interface: m5UploadNow."
+  },
+  "@m5DriveVersions": {
+    "description": "M5 printer, alerts or backup interface: m5DriveVersions."
+  },
+  "@m5Refresh": {
+    "description": "M5 printer, alerts or backup interface: m5Refresh."
+  },
+  "@m5CodeSaved": {
+    "description": "M5 printer, alerts or backup interface: m5CodeSaved."
+  },
+  "@m5LocalBackupReady": {
+    "description": "M5 printer, alerts or backup interface: m5LocalBackupReady."
+  },
+  "@m5ExportVerified": {
+    "description": "M5 printer, alerts or backup interface: m5ExportVerified."
+  },
+  "@m5Cancelled": {
+    "description": "M5 printer, alerts or backup interface: m5Cancelled."
+  },
+  "@m5ArchiveValidated": {
+    "description": "M5 printer, alerts or backup interface: m5ArchiveValidated."
+  },
+  "@m5RestoreComplete": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreComplete."
+  },
+  "@m5RestoreOutcomeCheck": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreOutcomeCheck."
+  },
+  "@m5AccountPending": {
+    "description": "M5 printer, alerts or backup interface: m5AccountPending."
+  },
+  "@m5AccountConnected": {
+    "description": "M5 printer, alerts or backup interface: m5AccountConnected."
+  },
+  "@m5DriveBackupReady": {
+    "description": "M5 printer, alerts or backup interface: m5DriveBackupReady."
+  },
+  "@m5DriveNeedsAuth": {
+    "description": "M5 printer, alerts or backup interface: m5DriveNeedsAuth."
+  },
+  "@m5DriveConsentChanged": {
+    "description": "M5 printer, alerts or backup interface: m5DriveConsentChanged."
+  },
+  "@m5DriveAccountMismatch": {
+    "description": "M5 printer, alerts or backup interface: m5DriveAccountMismatch."
+  },
+  "@m5DriveQuota": {
+    "description": "M5 printer, alerts or backup interface: m5DriveQuota."
+  },
+  "@m5DriveOffline": {
+    "description": "M5 printer, alerts or backup interface: m5DriveOffline."
+  },
+  "@m5DriveFailed": {
+    "description": "M5 printer, alerts or backup interface: m5DriveFailed."
+  },
+  "@m5ArchiveRejected": {
+    "description": "M5 printer, alerts or backup interface: m5ArchiveRejected."
+  },
+  "@m5CodeRotationWarning": {
+    "description": "M5 printer, alerts or backup interface: m5CodeRotationWarning."
+  },
+  "@m5DatabaseKeyMissing": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseKeyMissing."
+  },
+  "@m5DatabaseKeyUnavailable": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseKeyUnavailable."
+  },
+  "@m5DatabaseUnlockFailed": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseUnlockFailed."
+  },
+  "@m5EncryptedExportFailed": {
+    "description": "M5 printer, alerts or backup interface: m5EncryptedExportFailed."
+  },
+  "@m5DatabaseInUse": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseInUse."
+  },
+  "@m5PrintSending": {
+    "description": "M5 printer, alerts or backup interface: m5PrintSending."
+  },
+  "@m5BackupRunning": {
+    "description": "M5 printer, alerts or backup interface: m5BackupRunning."
+  },
+  "@m5BackupFailed": {
+    "description": "M5 printer, alerts or backup interface: m5BackupFailed."
+  },
+  "@m5BackupSuccess": {
+    "description": "M5 printer, alerts or backup interface: m5BackupSuccess."
+  },
+  "@m5ChooseLogo": {
+    "description": "M5 printer, alerts or backup interface: m5ChooseLogo."
+  },
+  "@m5ApplyLogo": {
+    "description": "M5 printer, alerts or backup interface: m5ApplyLogo."
+  },
+  "@m5RemoveLogo": {
+    "description": "M5 printer, alerts or backup interface: m5RemoveLogo."
+  },
+  "@m5ReceiptPreview": {
+    "description": "M5 printer, alerts or backup interface: m5ReceiptPreview."
+  },
+  "@m5HideCode": {
+    "description": "M5 printer, alerts or backup interface: m5HideCode."
+  },
+  "@m5LastAttempt": {
+    "description": "M5 printer, alerts or backup interface: m5LastAttempt."
+  },
+  "@m5LastSuccess": {
+    "description": "M5 printer, alerts or backup interface: m5LastSuccess."
+  },
+  "@m5NextTarget": {
+    "description": "M5 printer, alerts or backup interface: m5NextTarget."
+  },
+  "@m5NotScheduled": {
+    "description": "M5 printer, alerts or backup interface: m5NotScheduled."
+  },
+  "@m5RunRunning": {
+    "description": "M5 printer, alerts or backup interface: m5RunRunning."
+  },
+  "@m5RunCompleted": {
+    "description": "M5 printer, alerts or backup interface: m5RunCompleted."
+  },
+  "@m5RunFailed": {
+    "description": "M5 printer, alerts or backup interface: m5RunFailed."
+  },
+  "@m5RunUnknown": {
+    "description": "M5 printer, alerts or backup interface: m5RunUnknown."
+  },
+  "@m5RestoreContents": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreContents."
+  },
+  "@m5RestoreCurrent": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreCurrent."
+  },
+  "m5LogoSize": "Ukuran logo dalam area cetak",
+  "m5LineGap": "Jarak antarbaris",
+  "@m5LogoSize": {
+    "description": "M5 printer, alerts or backup interface: m5LogoSize."
+  },
+  "@m5LineGap": {
+    "description": "M5 printer, alerts or backup interface: m5LineGap."
+  },
+  "m5DatabaseNewerSchema": "Database berasal dari versi aplikasi lebih baru. Gunakan versi yang sesuai; data tidak diganti.",
+  "@m5DatabaseNewerSchema": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseNewerSchema."
+  },
+  "m5CopyWarning": "Periksa kertas yang sudah keluar. Data terkirim tidak menjamin hasil cetak, dan cetak ulang bisa menghasilkan struk rangkap. Lanjutkan sebagai SALINAN?",
+  "@m5CopyWarning": {
+    "description": "M5 printer, alerts or backup interface: m5CopyWarning."
+  },
+  "m5OpenSourceLicenses": "Lisensi perangkat lunak",
+  "@m5OpenSourceLicenses": {
+    "description": "M5 printer, alerts or backup interface: m5OpenSourceLicenses."
+  },
+  "m5Connect": "Hubungkan",
+  "m5Connecting": "Menghubungkan printer…",
+  "m5Connected": "Terhubung ke printer",
+  "m5ConnectionFailed": "Koneksi printer gagal. Periksa printer dan coba lagi.",
+  "m5ConnectionNotChecked": "Koneksi printer belum diperiksa",
+  "m5CheckConnection": "Periksa koneksi",
+  "m5BluetoothUnavailable": "Bluetooth tidak tersedia pada perangkat ini",
+  "m5BluetoothDisabled": "Bluetooth mati. Aktifkan melalui pengaturan perangkat.",
+  "m5BluetoothPermissionHelp": "Izin perangkat sekitar (lokasi pada Android lama) diperlukan saat memakai printer. Jika dialog izin tidak muncul lagi, periksa izin aplikasi di Pengaturan Android.",
+  "@m5Connect": {
+    "description": "M5 printer, alerts or backup interface: m5Connect."
+  },
+  "@m5Connecting": {
+    "description": "M5 printer, alerts or backup interface: m5Connecting."
+  },
+  "@m5Connected": {
+    "description": "M5 printer, alerts or backup interface: m5Connected."
+  },
+  "@m5ConnectionFailed": {
+    "description": "M5 printer, alerts or backup interface: m5ConnectionFailed."
+  },
+  "@m5ConnectionNotChecked": {
+    "description": "M5 printer, alerts or backup interface: m5ConnectionNotChecked."
+  },
+  "@m5CheckConnection": {
+    "description": "M5 printer, alerts or backup interface: m5CheckConnection."
+  },
+  "@m5BluetoothUnavailable": {
+    "description": "M5 printer, alerts or backup interface: m5BluetoothUnavailable."
+  },
+  "@m5BluetoothDisabled": {
+    "description": "M5 printer, alerts or backup interface: m5BluetoothDisabled."
+  },
+  "@m5BluetoothPermissionHelp": {
+    "description": "M5 printer, alerts or backup interface: m5BluetoothPermissionHelp."
+  },
+  "driveRetryLimitReached": "Backup otomatis dihentikan setelah tiga percobaan gagal. Periksa koneksi dan coba backup manual. Jadwal hari berikutnya tetap aktif.",
+  "@driveRetryLimitReached": {
+    "description": "M5 printer, alerts or backup interface: driveRetryLimitReached."
+  },
+  "m5PrinterPermissionDenied": "Izin Bluetooth belum diberikan. Izinkan Perangkat di sekitar (Lokasi pada Android lama) melalui pengaturan Android aplikasi ini, lalu coba lagi.",
+  "@m5PrinterPermissionDenied": {
+    "description": "Printer permission denial with explicit Android settings recovery; no automatic permission dialog retry."
+  },
+  "m5ExportNameTitle": "Nama berkas ekspor",
+  "@m5ExportNameTitle": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  },
+  "m5ExportNameLabel": "Nama berkas",
+  "@m5ExportNameLabel": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  },
+  "m5ExportNameHelp": "Ekstensi .kasirbackup ditambahkan otomatis. Pilih lokasi pada langkah berikutnya.",
+  "@m5ExportNameHelp": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  },
+  "m5ExportNameInvalid": "Nama tidak valid. Hindari tanda pemisah folder dan karakter khusus; panjang maksimum 128 karakter termasuk ekstensi.",
+  "@m5ExportNameInvalid": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  },
+  "m5ExportChooseLocation": "Lanjut",
+  "@m5ExportChooseLocation": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  }
+}

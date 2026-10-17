@@ -1,0 +1,17 @@
+{
+  "time": "2026-10-15T03:15:37.480212+07:00",
+  "mode": "profile",
+  "device": "0062112V2210F9B3",
+  "package": "com.example.kasir_app.integration",
+  "method": "own process force-stop; not reboot/crash/powerloss",
+  "launches": [],
+  "failures": [
+    {
+      "type": "AssertionError",
+      "message": "Own process absent",
+      "status": "UNVERIFIED_CAUSE"
+    }
+  ],
+  "ordinary_touched": false,
+  "runtime_assertions_passed": false
+}

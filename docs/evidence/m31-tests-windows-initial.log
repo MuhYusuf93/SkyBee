@@ -1,0 +1,232 @@
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqlite3 3.5.2 (3.7.0 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.11 (0.7.15 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+13 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart
+00:00 +0: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: (setUpAll)
+00:00 +1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: (setUpAll)
+00:00 +2: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: (setUpAll)
+00:00 +3: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: (setUpAll)
+00:00 +4: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: (setUpAll)
+00:00 +4: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:00 +4: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_sql_test.dart: search normalizes compact/token/alias/category, exact ranks first, bounded and literal syntax
+M3 FTS5 capability: true; backend=BINARY token prefix
+00:00 +5: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:00 +6: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:00 +7: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:00 +8: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:00 +9: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:00 +10: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:00 +11: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:00 +12: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +12: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/database_test.dart: v1 to current upgrade preserves data and relationships, reopening and downgrade safety
+error Bad state: Downgrade skema ditolak agar data tetap aman. during open, closing...
+00:01 +13: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +14: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +15: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +15: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/database_test.dart: failed migration rolls back version/index changes and can retry without losing data
+error SqfliteFfiException(sqlite_error: 1, , SqliteException(1): while executing, index sale_transactions_history already exists, SQL logic error (code 1)
+  Causing statement: CREATE INDEX sale_transactions_history ON sale_transactions(created_at DESC, id COLLATE BINARY DESC), parameters: }) DatabaseException(SqliteException(1): while executing, index sale_transactions_history already exists, SQL logic error (code 1)
+  Causing statement: CREATE INDEX sale_transactions_history ON sale_transactions(created_at DESC, id COLLATE BINARY DESC), parameters: ) sql 'CREATE INDEX sale_transactions_history ON sale_transactions(created_at DESC, id COLLATE BINARY DESC)' {details: {database: {path: C:\Users\ACER\AppData\Local\Temp\kasir_m1_sql_c4488feb\fixture_6.db, id: 11, readOnly: false, singleInstance: false}}} during open, closing...
+00:01 +16: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +17: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +18: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +19: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +20: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +21: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +22: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +23: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +24: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +25: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +26: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +27: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +28: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +29: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +30: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +31: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +32: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +33: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +34: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +35: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +36: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_layout_test.dart: checkout id 320x568 text2x keyboard conditional fields and live money
+00:01 +37: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:01 +38: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:01 +38: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/database_test.dart: EXPLAIN actual first/continuation queries select matching indexes without temp sort
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=?)
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=? AND (normalized_name,id)>(?,?))
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=? AND normalized_name>? AND normalized_name<?)
+QUERY PLAN (sale_transactions_history): SEARCH sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)
+QUERY PLAN (sale_transactions_history): SEARCH sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)
+QUERY PLAN (sale_transactions_customer_history): SEARCH sale_transactions USING INDEX sale_transactions_customer_history (customer_id=? AND created_at>? AND created_at<?)
+00:01 +39: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:01 +40: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:01 +41: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:01 +42: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:01 +43: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +44: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +45: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +46: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +47: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +48: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +49: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +50: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +51: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +52: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +53: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +54: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +55: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +56: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:02 +57: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +58: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +59: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +60: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +61: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +62: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +63: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +64: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +65: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:03 +65: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: (setUpAll)
+KDF 600000 rounds / 256 bits: 2805 ms (test target, non-release)
+00:05 +65: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:05 +66: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:06 +67: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:06 +68: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:06 +69: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:06 +70: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:07 +71: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:07 +72: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:07 +73: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:07 +74: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:07 +75: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:07 +76: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:07 +77: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:07 +78: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:07 +79: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:07 +80: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +81: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +82: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +83: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +84: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +85: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +86: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +87: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +88: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +89: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +90: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +90 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:08 +90 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_sql_test.dart: V4 to V5 preserves exact old rows and draft; additive defaults, foreign keys and integrity [E]
+  Expected: {
+              'id': '00000000-0000-4000-8000-000000000001',
+              'name': 'Le Minerale',
+              'normalized_name': 'le minerale',
+              'compact_name': 'leminerale',
+              'sku': 'TEST-1',
+              'barcode': '000123',
+              'category_id': null,
+              'selling_price_rupiah': 12000,
+              'stock_quantity': 20,
+              'inventory_value_micros': 180000000000,
+              'min_stock': 5,
+              'low_stock_enabled': 1,
+              'expiry_enabled': 0,
+              'is_deleted': 0,
+              'revision': 0,
+              'created_at': 1,
+              'updated_at': 1,
+              'stock_revision': 0,
+              'currency_code': 'IDR',
+              'currency_scale': 0
+            }
+    Actual: {
+              'id': '00000000-0000-4000-8000-000000000001',
+              'name': 'Le Minerale',
+              'normalized_name': 'le minerale',
+              'compact_name': 'leminerale',
+              'sku': 'TEST-1',
+              'barcode': '000123',
+              'category_id': null,
+              'selling_price_rupiah': 12000,
+              'stock_quantity': 20,
+              'inventory_value_micros': 180000000000,
+              'min_stock': 5,
+              'low_stock_enabled': 1,
+              'expiry_enabled': 0,
+              'is_deleted': 0,
+              'revision': 0,
+              'created_at': 1,
+              'updated_at': 1,
+              'stock_revision': 0,
+              'currency_code': 'IDR',
+              'currency_scale': 0,
+              'wholesale_price_minor': null,
+              'pack_label': null,
+              'pack_size': null,
+              'base_unit_label': 'pcs'
+            }
+     Which: has different length and has extra map key 'wholesale_price_minor'
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\support\cashier_suite.dart 792:7               cashierSuite.<fn>
+  
+00:08 +90 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_sql_test.dart: V5 migration failure rolls back new columns/version and preserves V4 data
+error SqfliteFfiException(sqlite_error: 1, , SqliteException(1): while executing, table cashier_state already exists, SQL logic error (code 1)
+  Causing statement (at position 13): CREATE TABLE cashier_state(id INTEGER PRIMARY KEY CHECK(id=1), draft_id TEXT REFERENCES cart_drafts(id) ON DELETE RESTRICT), parameters: }) DatabaseException(SqliteException(1): while executing, table cashier_state already exists, SQL logic error (code 1)
+  Causing statement (at position 13): CREATE TABLE cashier_state(id INTEGER PRIMARY KEY CHECK(id=1), draft_id TEXT REFERENCES cart_drafts(id) ON DELETE RESTRICT), parameters: ) sql 'CREATE TABLE cashier_state(id INTEGER PRIMARY KEY CHECK(id=1), draft_id TEXT REFERENCES cart_drafts(id) ON DELETE RESTRICT)' {details: {database: {path: C:\Users\ACER\AppData\Local\Temp\kasir_m3_sql_1b4de0b4\fixture_29.db, id: 35, readOnly: false, singleInstance: false}}} during open, closing...
+00:08 +91 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:09 +92 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:10 +93 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:11 +94 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:12 +95 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:13 +96 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:15 +97 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:17 +98 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:19 +99 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:20 +100 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:22 +101 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:24 +102 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:26 +103 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:29 +104 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:31 +104 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/wholesale_packaging_sql_test.dart: V6 migration failure rolls back additive columns and preserves V5 data
+error SqfliteFfiException(sqlite_error: 1, , SqliteException(1): while executing, duplicate column name: pack_size, SQL logic error (code 1)
+  Causing statement: ALTER TABLE products ADD COLUMN pack_size INTEGER CHECK(pack_size IS NULL OR (typeof(pack_size)='integer' AND pack_size>0)), parameters: }) DatabaseException(SqliteException(1): while executing, duplicate column name: pack_size, SQL logic error (code 1)
+  Causing statement: ALTER TABLE products ADD COLUMN pack_size INTEGER CHECK(pack_size IS NULL OR (typeof(pack_size)='integer' AND pack_size>0)), parameters: ) sql 'ALTER TABLE products ADD COLUMN pack_size INTEGER CHECK(pack_size IS NULL OR (typeof(pack_size)='integer' AND pack_size>0))' {details: {database: {path: C:\Users\ACER\AppData\Local\Temp\kasir_m31_sql_47c8ffae\fixture_10.db, id: 15, readOnly: false, singleInstance: false}}} during open, closing...
+00:31 +105 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:33 +106 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:42 +107 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:44 +108 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:46 +109 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:48 +110 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+00:50 +111 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: receipt reversal exact valuation, idempotent and rejects intervening stock dependencies
+00:51 +112 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: USD inventory exact minor units, receipt/header/history metadata and repository
+00:53 +113 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: USD inventory exact minor units, receipt/header/history metadata and repository
+00:55 +114 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: physical count and waste allocate rounding residue; zero quantity has zero value
+00:55 +115 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: physical count and waste allocate rounding residue; zero quantity has zero value
+00:55 +115 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/locale_currency_sql_test.dart: v4 interrupted migration rolls back partial columns and leaves v3 usable
+error SqfliteFfiException(sqlite_error: 1, , SqliteException(1): while executing, duplicate column name: currency_code, SQL logic error (code 1)
+  Causing statement: ALTER TABLE products ADD COLUMN currency_code TEXT NOT NULL DEFAULT 'IDR' CHECK(currency_code IN ('IDR','USD','MYR','EUR')), parameters: }) DatabaseException(SqliteException(1): while executing, duplicate column name: currency_code, SQL logic error (code 1)
+  Causing statement: ALTER TABLE products ADD COLUMN currency_code TEXT NOT NULL DEFAULT 'IDR' CHECK(currency_code IN ('IDR','USD','MYR','EUR')), parameters: ) sql 'ALTER TABLE products ADD COLUMN currency_code TEXT NOT NULL DEFAULT 'IDR' CHECK(currency_code IN ('IDR','USD','MYR','EUR'))' {details: {database: {path: C:\Users\ACER\AppData\Local\Temp\kasir_locale_sql_8322b25b\fixture_5.db, id: 19, readOnly: false, singleInstance: false}}} during open, closing...
+00:55 +116 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: physical count and waste allocate rounding residue; zero quantity has zero value
+00:55 +117 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: price/archive undo does not overwrite later changes and logs reversal price
+00:57 +118 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: settings validated store zone/text, unchanged opt-in and protected saves
+00:59 +119 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: master, batch and ledger pagination handles same sort keys and literal prefixes
+01:02 +120 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: v2 to v3 preserves sale snapshots/relations and adds defaults non-destructively
+01:02 +121 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/management_inventory_test.dart: (tearDownAll)
+01:02 +121 -1: Some tests failed.
+
+Failing tests:
+  C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/cashier_sql_test.dart: V4 to V5 preserves exact old rows and draft; additive defaults, foreign keys and integrity

@@ -1,0 +1,1 @@
+Pre-install raw DB baseline unavailable because original fixture APK was release/non-debuggable. This baseline proves only the subsequent test interval.

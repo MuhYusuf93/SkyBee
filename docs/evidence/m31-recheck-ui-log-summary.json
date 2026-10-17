@@ -1,0 +1,20 @@
+{
+  "pid": 6885,
+  "lines": 43,
+  "first_event": "10-13 05:58:54.582",
+  "last_event": "10-13 05:59:22.305",
+  "counts": {
+    "fatal": 0,
+    "unhandled": 0,
+    "flutter_error": 0,
+    "database_error": 0
+  },
+  "error_tags": {
+    "MiuiPreloadClassImpl": 1,
+    "FramePredict": 1
+  },
+  "warning_tags": {
+    "MessageMonitor": 1,
+    "InsetsSource": 4
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "system_input_shown": false,
+  "nodes": [
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.LinearLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "true"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,176]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Kembali",
+      "bounds": "[8,72][104,168]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Ubah barang",
+      "bounds": "[144,92][392,148]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "ID",
+      "bounds": "[641,73][720,167]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,176][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,176][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Barang contoh",
+      "bounds": "[40,216][680,360]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "15.000",
+      "bounds": "[40,360][680,504]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "true"
+    },
+    {
+      "label": "",
+      "bounds": "[40,504][680,620]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Diciutkan",
+      "bounds": "[40,506][680,618]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Harga grosir \u2014 opsional, Diciutkan",
+      "bounds": "[40,506][680,618]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[40,620][680,736]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Diciutkan",
+      "bounds": "[40,622][680,734]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Kemasan dus/box \u2014 opsional, Diciutkan",
+      "bounds": "[40,622][680,734]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[40,736][680,852]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Diciutkan",
+      "bounds": "[40,738][680,850]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Kode, barcode & kategori, Diciutkan",
+      "bounds": "[40,738][680,850]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[40,852][680,968]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Diciutkan",
+      "bounds": "[40,854][680,966]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Peringatan stok & kedaluwarsa, Diciutkan",
+      "bounds": "[40,854][680,966]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[40,968][680,1000]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[40,1000][680,1096]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Simpan barang",
+      "bounds": "[40,1000][680,1096]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][0,0]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    }
+  ]
+}

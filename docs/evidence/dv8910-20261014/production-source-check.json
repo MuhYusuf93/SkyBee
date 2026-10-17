@@ -1,0 +1,12 @@
+{
+  "files_checked": 90,
+  "unchanged_count": 88,
+  "changed_allowed_test_routing": [
+    "android\\app\\build.gradle.kts",
+    "android\\app\\src\\main\\AndroidManifest.xml"
+  ],
+  "unexpected_changes": [],
+  "lib_unchanged": true,
+  "ordinary_identity_and_class_exclusion_verified": true,
+  "scope": "90 recorded files; no Git repository; APK ordinary not installed"
+}

@@ -1,0 +1,2174 @@
+{
+  "@@locale": "en",
+  "managementAccess": "Management access",
+  "@managementAccess": {
+    "description": "User-facing Management access"
+  },
+  "addressOptional": "Address (optional)",
+  "@addressOptional": {
+    "description": "User-facing Address (optional)"
+  },
+  "correctionReason": "Correction reason",
+  "@correctionReason": {
+    "description": "User-facing Correction reason"
+  },
+  "archive": "Archive",
+  "@archive": {
+    "description": "User-facing Archive"
+  },
+  "archiveProduct": "Archive product?",
+  "@archiveProduct": {
+    "description": "User-facing Archive product?"
+  },
+  "archiveRecord": "Archive record?",
+  "@archiveRecord": {
+    "description": "User-facing Archive record?"
+  },
+  "products": "Products",
+  "@products": {
+    "description": "User-facing Products"
+  },
+  "receiveStock": "Receive stock",
+  "@receiveStock": {
+    "description": "User-facing Receive stock"
+  },
+  "stockCannotBeSoldFromItsExpiry": "Stock cannot be sold from its expiry date in the store time zone. Enable tracking to record dates; undated stock is marked as unrecorded.",
+  "@stockCannotBeSoldFromItsExpiry": {
+    "description": "User-facing Stock cannot be sold from its expiry date in the store time zone. Enable tracking to record dates; undated stock is marked as unrecorded."
+  },
+  "barcodeOptional": "Barcode (optional)",
+  "@barcodeOptional": {
+    "description": "User-facing Barcode (optional)"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "User-facing Cancel"
+  },
+  "reverseLatestReceipt": "Reverse latest receipt",
+  "@reverseLatestReceipt": {
+    "description": "User-facing Reverse latest receipt"
+  },
+  "pay": "Pay",
+  "@pay": {
+    "description": "User-facing Pay"
+  },
+  "noProductsYet": "No products yet.",
+  "@noProductsYet": {
+    "description": "User-facing No products yet."
+  },
+  "noRecordsYet": "No records yet.",
+  "@noRecordsYet": {
+    "description": "User-facing No records yet."
+  },
+  "noHistoryYet": "No history yet.",
+  "@noHistoryYet": {
+    "description": "User-facing No history yet."
+  },
+  "uncategorized": "Uncategorized",
+  "@uncategorized": {
+    "description": "User-facing Uncategorized"
+  },
+  "createAPinForInventoryAndSettings": "Create a PIN for inventory and settings. Keep the recovery code outside this device.",
+  "@createAPinForInventoryAndSettings": {
+    "description": "User-facing Create a PIN for inventory and settings. Keep the recovery code outside this device."
+  },
+  "createManagementPin": "Create management PIN",
+  "@createManagementPin": {
+    "description": "User-facing Create management PIN"
+  },
+  "generateCode": "Generate code",
+  "@generateCode": {
+    "description": "User-facing Generate code"
+  },
+  "openManagement": "Open management",
+  "@openManagement": {
+    "description": "User-facing Open management"
+  },
+  "searchOrAddCategory": "Search or add category",
+  "@searchOrAddCategory": {
+    "description": "User-facing Search or add category"
+  },
+  "searchOrAddSupplier": "Search or add supplier",
+  "@searchOrAddSupplier": {
+    "description": "User-facing Search or add supplier"
+  },
+  "searchProducts": "Search products",
+  "@searchProducts": {
+    "description": "User-facing Search products"
+  },
+  "searchNamePrefix": "Search name prefix",
+  "@searchNamePrefix": {
+    "description": "User-facing Search name prefix"
+  },
+  "searchProductNamePrefix": "Search product name prefix",
+  "@searchProductNamePrefix": {
+    "description": "User-facing Search product name prefix"
+  },
+  "writeThisCodeDownAndStoreIt": "Write this code down and store it outside this device. It is shown only once. If both PIN and code are lost, management access requires a valid recovery procedure.",
+  "@writeThisCodeDownAndStoreIt": {
+    "description": "User-facing Write this code down and store it outside this device. It is shown only once. If both PIN and code are lost, management access requires a valid recovery procedure."
+  },
+  "recordDamagedOrExpiredStock": "Record damaged or expired stock",
+  "@recordDamagedOrExpiredStock": {
+    "description": "User-facing Record damaged or expired stock"
+  },
+  "tryAgain": "Try again",
+  "@tryAgain": {
+    "description": "User-facing Try again"
+  },
+  "shoppingList": "Shopping list",
+  "@shoppingList": {
+    "description": "User-facing Shopping list"
+  },
+  "productDetails": "Product details",
+  "@productDetails": {
+    "description": "User-facing Product details"
+  },
+  "inventory": "Inventory",
+  "@inventory": {
+    "description": "User-facing Inventory"
+  },
+  "useRecoveryCode": "Use recovery code",
+  "@useRecoveryCode": {
+    "description": "User-facing Use recovery code"
+  },
+  "price": "Price",
+  "@price": {
+    "description": "User-facing Price"
+  },
+  "purchasePriceWhenStockIsEmpty": "Purchase price when stock is empty",
+  "@purchasePriceWhenStockIsEmpty": {
+    "description": "User-facing Purchase price when stock is empty"
+  },
+  "purchasePricePerUnit": "Purchase price per pcs",
+  "@purchasePricePerUnit": {
+    "description": "User-facing Purchase price per unit"
+  },
+  "priceSaved": "Price saved.",
+  "@priceSaved": {
+    "description": "User-facing Price saved."
+  },
+  "sellingPrice": "Selling price",
+  "@sellingPrice": {
+    "description": "User-facing Selling price"
+  },
+  "debts": "Debts",
+  "@debts": {
+    "description": "User-facing Debts"
+  },
+  "initialQuantity": "Initial quantity",
+  "@initialQuantity": {
+    "description": "User-facing Initial quantity"
+  },
+  "currentPhysicalQuantity": "Current physical quantity",
+  "@currentPhysicalQuantity": {
+    "description": "User-facing Current physical quantity"
+  },
+  "unitQuantity": "Unit quantity",
+  "@unitQuantity": {
+    "description": "User-facing Unit quantity"
+  },
+  "cashier": "Cashier",
+  "@cashier": {
+    "description": "User-facing Cashier"
+  },
+  "checkoutReceivablesReportsPrintingAndBackupsWill": "Checkout, receivables, reports, printing and backups will be added in later stages.",
+  "@checkoutReceivablesReportsPrintingAndBackupsWill": {
+    "description": "User-facing Checkout, receivables, reports, printing and backups will be added in later stages."
+  },
+  "categories": "Categories",
+  "@categories": {
+    "description": "User-facing Categories"
+  },
+  "categoryOptional": "Category (optional)",
+  "@categoryOptional": {
+    "description": "User-facing Category (optional)"
+  },
+  "savedCategory": "Saved category",
+  "@savedCategory": {
+    "description": "User-facing Saved category"
+  },
+  "expiryYyyyMmDdOptional": "Expiry yyyy-MM-dd (optional)",
+  "@expiryYyyyMmDdOptional": {
+    "description": "User-facing Expiry yyyy-MM-dd (optional)"
+  },
+  "manage": "Manage",
+  "@manage": {
+    "description": "User-facing Manage"
+  },
+  "typeANamePrefixThenSelect": "Type a name prefix, then select",
+  "@typeANamePrefixThenSelect": {
+    "description": "User-facing Type a name prefix, then select"
+  },
+  "recoveryCode": "Recovery code",
+  "@recoveryCode": {
+    "description": "User-facing Recovery code"
+  },
+  "storeCodeAutomaticIfEmpty": "Store code (automatic if empty)",
+  "@storeCodeAutomaticIfEmpty": {
+    "description": "User-facing Store code (automatic if empty)"
+  },
+  "codeBarcodeAndCategory": "Code, barcode and category",
+  "@codeBarcodeAndCategory": {
+    "description": "User-facing Code, barcode and category"
+  },
+  "confirmNewPin": "Confirm new PIN",
+  "@confirmNewPin": {
+    "description": "User-facing Confirm new PIN"
+  },
+  "correctLatestReceipt": "Correct latest receipt",
+  "@correctLatestReceipt": {
+    "description": "User-facing Correct latest receipt"
+  },
+  "clearSelection": "Clear selection",
+  "@clearSelection": {
+    "description": "User-facing Clear selection"
+  },
+  "lock": "Lock",
+  "@lock": {
+    "description": "User-facing Lock"
+  },
+  "continueAction": "Continue",
+  "@continueAction": {
+    "description": "User-facing Continue"
+  },
+  "enterAValidAmountQuantityAndYyyy": "Enter a valid amount, quantity and yyyy-MM-dd date.",
+  "@enterAValidAmountQuantityAndYyyy": {
+    "description": "User-facing Enter a valid amount, quantity and yyyy-MM-dd date."
+  },
+  "forgotPinOrChangeRecoveryCode": "Forgot PIN or change recovery code",
+  "@forgotPinOrChangeRecoveryCode": {
+    "description": "User-facing Forgot PIN or change recovery code"
+  },
+  "enterPinAgain": "Enter PIN again",
+  "@enterPinAgain": {
+    "description": "User-facing Enter PIN again"
+  },
+  "checking": "Checking…",
+  "@checking": {
+    "description": "User-facing Checking…"
+  },
+  "expiringSoon": "Expiring soon",
+  "@expiringSoon": {
+    "description": "User-facing Expiring soon"
+  },
+  "preparingStorage": "Preparing storage…",
+  "@preparingStorage": {
+    "description": "User-facing Preparing storage…"
+  },
+  "saving": "Saving…",
+  "@saving": {
+    "description": "User-facing Saving…"
+  },
+  "loadMore": "Load more",
+  "@loadMore": {
+    "description": "User-facing Load more"
+  },
+  "reload": "Reload",
+  "@reload": {
+    "description": "User-facing Reload"
+  },
+  "reloadDetails": "Reload details",
+  "@reloadDetails": {
+    "description": "User-facing Reload details"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "User-facing Name"
+  },
+  "productName": "Product name",
+  "@productName": {
+    "description": "User-facing Product name"
+  },
+  "searchAliasesSeparatedByCommas": "Search aliases, separated by commas",
+  "@searchAliasesSeparatedByCommas": {
+    "description": "User-facing Search aliases, separated by commas"
+  },
+  "storeName": "Store name",
+  "@storeName": {
+    "description": "User-facing Store name"
+  },
+  "nameCodeOrBarcode": "Name, code or barcode",
+  "@nameCodeOrBarcode": {
+    "description": "User-facing Name, code or barcode"
+  },
+  "contactNumberOptional": "Contact number (optional)",
+  "@contactNumberOptional": {
+    "description": "User-facing Contact number (optional)"
+  },
+  "operationFailedTryAgainOrCheckDevice": "Operation failed. Try again or check device storage.",
+  "@operationFailedTryAgainOrCheckDevice": {
+    "description": "User-facing Operation failed. Try again or check device storage."
+  },
+  "pin": "PIN",
+  "@pin": {
+    "description": "User-facing PIN"
+  },
+  "newPin": "New PIN",
+  "@newPin": {
+    "description": "User-facing New PIN"
+  },
+  "theFourDigitPinRestrictsAccessWithin": "The four-digit PIN restricts access within the app; it does not encrypt the database or device. Keep the recovery code private.",
+  "@theFourDigitPinRestrictsAccessWithin": {
+    "description": "User-facing The four-digit PIN restricts access within the app; it does not encrypt the database or device. Keep the recovery code private."
+  },
+  "oldPin": "Old PIN",
+  "@oldPin": {
+    "description": "User-facing Old PIN"
+  },
+  "trackExpiry": "Track expiry",
+  "@trackExpiry": {
+    "description": "User-facing Track expiry"
+  },
+  "cashierSearchCartAndPaymentsAreNot": "Cashier search, cart and payments are not available yet. Open inventory using Manage.",
+  "@cashierSearchCartAndPaymentsAreNot": {
+    "description": "User-facing Cashier search, cart and payments are not available yet. Open inventory using Manage."
+  },
+  "nextReceipts": "Next receipts",
+  "@nextReceipts": {
+    "description": "User-facing Next receipts"
+  },
+  "aReceiptCanBeReversedOnlyIf": "A receipt can be reversed only if no subsequent stock movement depends on it. Original records are retained.",
+  "@aReceiptCanBeReversedOnlyIf": {
+    "description": "User-facing A receipt can be reversed only if no subsequent stock movement depends on it. Original records are retained."
+  },
+  "settingsSaved": "Settings saved.",
+  "@settingsSaved": {
+    "description": "User-facing Settings saved."
+  },
+  "storeSettings": "Store settings",
+  "@storeSettings": {
+    "description": "User-facing Store settings"
+  },
+  "management": "Management",
+  "@management": {
+    "description": "User-facing Management"
+  },
+  "cannotOpenManagementTryAgain": "Cannot open management. Try again.",
+  "@cannotOpenManagementTryAgain": {
+    "description": "User-facing Cannot open management. Try again."
+  },
+  "managementLocked": "Management locked",
+  "@managementLocked": {
+    "description": "User-facing Management locked"
+  },
+  "removeStock": "Remove stock",
+  "@removeStock": {
+    "description": "User-facing Remove stock"
+  },
+  "cannotOpenStorage": "Cannot open storage.",
+  "@cannotOpenStorage": {
+    "description": "User-facing Cannot open storage."
+  },
+  "cannotOpenStorageTryAgainOrCheck": "Cannot open storage. Try again or check free device space.",
+  "@cannotOpenStorageTryAgainOrCheck": {
+    "description": "User-facing Cannot open storage. Try again or check free device space."
+  },
+  "localStorageReady": "Local storage ready.",
+  "@localStorageReady": {
+    "description": "User-facing Local storage ready."
+  },
+  "checkQuantityAmountAndDateUseWhole": "Check quantity, amount and date. Use whole units and a valid yyyy-MM-dd date.",
+  "@checkQuantityAmountAndDateUseWhole": {
+    "description": "User-facing Check quantity, amount and date. Use whole units and a valid yyyy-MM-dd date."
+  },
+  "stockAndExpiryWarnings": "Stock and expiry warnings",
+  "@stockAndExpiryWarnings": {
+    "description": "User-facing Stock and expiry warnings"
+  },
+  "lowStockWarning": "Low stock warning",
+  "@lowStockWarning": {
+    "description": "User-facing Low stock warning"
+  },
+  "selectCategory": "Select category",
+  "@selectCategory": {
+    "description": "User-facing Select category"
+  },
+  "selectSupplier": "Select supplier",
+  "@selectSupplier": {
+    "description": "User-facing Select supplier"
+  },
+  "restore": "Restore",
+  "@restore": {
+    "description": "User-facing Restore"
+  },
+  "restoreProduct": "Restore product?",
+  "@restoreProduct": {
+    "description": "User-facing Restore product?"
+  },
+  "restoreRecord": "Restore record?",
+  "@restoreRecord": {
+    "description": "User-facing Restore record?"
+  },
+  "productHistory": "Product history",
+  "@productHistory": {
+    "description": "User-facing Product history"
+  },
+  "stockAndPriceHistory": "Stock and price history",
+  "@stockAndPriceHistory": {
+    "description": "User-facing Stock and price history"
+  },
+  "sessionLocked": "Session locked",
+  "@sessionLocked": {
+    "description": "User-facing Session locked"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "User-facing Save"
+  },
+  "saveProduct": "Save product",
+  "@saveProduct": {
+    "description": "User-facing Save product"
+  },
+  "saveRecoveryCode": "Save recovery code",
+  "@saveRecoveryCode": {
+    "description": "User-facing Save recovery code"
+  },
+  "saveSettings": "Save settings",
+  "@saveSettings": {
+    "description": "User-facing Save settings"
+  },
+  "productStatusUpdated": "Product status updated.",
+  "@productStatusUpdated": {
+    "description": "User-facing Product status updated."
+  },
+  "stock": "Stock",
+  "@stock": {
+    "description": "User-facing Stock"
+  },
+  "initialStockAndPurchasePrice": "Initial stock and purchase price",
+  "@initialStockAndPurchasePrice": {
+    "description": "User-facing Initial stock and purchase price"
+  },
+  "initialStock": "Initial stock",
+  "@initialStock": {
+    "description": "User-facing Initial stock"
+  },
+  "minimumStock": "Minimum stock",
+  "@minimumStock": {
+    "description": "User-facing Minimum stock"
+  },
+  "stockCount": "Stock count",
+  "@stockCount": {
+    "description": "User-facing Stock count"
+  },
+  "stockByReceipt": "Stock by receipt",
+  "@stockByReceipt": {
+    "description": "User-facing Stock by receipt"
+  },
+  "lowStock": "Low stock",
+  "@lowStock": {
+    "description": "User-facing Low stock"
+  },
+  "iHaveSavedIt": "I have saved it",
+  "@iHaveSavedIt": {
+    "description": "User-facing I have saved it"
+  },
+  "suppliers": "Suppliers",
+  "@suppliers": {
+    "description": "User-facing Suppliers"
+  },
+  "supplierOptional": "Supplier (optional)",
+  "@supplierOptional": {
+    "description": "User-facing Supplier (optional)"
+  },
+  "addProduct": "Add product",
+  "@addProduct": {
+    "description": "User-facing Add product"
+  },
+  "showPin": "Show PIN",
+  "@showPin": {
+    "description": "User-facing Show PIN"
+  },
+  "showArchived": "Show archived",
+  "@showArchived": {
+    "description": "User-facing Show archived"
+  },
+  "dateNotRecorded": "Date not recorded",
+  "@dateNotRecorded": {
+    "description": "User-facing Date not recorded"
+  },
+  "someStockHasNoRecordedExpiryDate": "Some stock has no recorded expiry date.",
+  "@someStockHasNoRecordedExpiryDate": {
+    "description": "User-facing Some stock has no recorded expiry date."
+  },
+  "expiryDateYyyyMmDdOptional": "Expiry date yyyy-MM-dd (optional)",
+  "@expiryDateYyyyMmDdOptional": {
+    "description": "User-facing Expiry date yyyy-MM-dd (optional)"
+  },
+  "noSupplier": "No supplier",
+  "@noSupplier": {
+    "description": "User-facing No supplier"
+  },
+  "cannotUndo": "Cannot undo.",
+  "@cannotUndo": {
+    "description": "User-facing Cannot undo."
+  },
+  "myStore": "My store",
+  "@myStore": {
+    "description": "User-facing My store"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "User-facing Total"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "User-facing Close"
+  },
+  "closeThisDialogAndEnterYourPin": "Close this dialog and enter your PIN again.",
+  "@closeThisDialogAndEnterYourPin": {
+    "description": "User-facing Close this dialog and enter your PIN again."
+  },
+  "changePinOrRecovery": "Change PIN or recovery",
+  "@changePinOrRecovery": {
+    "description": "User-facing Change PIN or recovery"
+  },
+  "changePinOrRenewRecoveryCode": "Change PIN or renew recovery code",
+  "@changePinOrRenewRecoveryCode": {
+    "description": "User-facing Change PIN or renew recovery code"
+  },
+  "editProduct": "Edit product",
+  "@editProduct": {
+    "description": "User-facing Edit product"
+  },
+  "editRecord": "Edit record",
+  "@editRecord": {
+    "description": "User-facing Edit record"
+  },
+  "receiptFooterOptional": "Receipt footer (optional)",
+  "@receiptFooterOptional": {
+    "description": "User-facing Receipt footer (optional)"
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "User-facing Undo"
+  },
+  "whatsappOrPhoneOptional": "WhatsApp or phone (optional)",
+  "@whatsappOrPhoneOptional": {
+    "description": "User-facing WhatsApp or phone (optional)"
+  },
+  "storeTimeZoneEGAsiaJakarta": "Store time zone, e.g. Asia/Jakarta",
+  "@storeTimeZoneEGAsiaJakarta": {
+    "description": "User-facing Store time zone, e.g. Asia/Jakarta"
+  },
+  "productNotFound": "Product not found.",
+  "@productNotFound": {
+    "description": "User-facing Product not found."
+  },
+  "productIsArchivedRestoreItFirst": "Product is archived. Restore it first.",
+  "@productIsArchivedRestoreItFirst": {
+    "description": "User-facing Product is archived. Restore it first."
+  },
+  "categoryOrSupplierUnavailableSelectAgain": "Category or supplier unavailable. Select again.",
+  "@categoryOrSupplierUnavailableSelectAgain": {
+    "description": "User-facing Category or supplier unavailable. Select again."
+  },
+  "productNameIsRequired": "Product name is required.",
+  "@productNameIsRequired": {
+    "description": "User-facing Product name is required."
+  },
+  "codeOrBarcodeBelongsToAnArchived": "Code or barcode belongs to an archived product. Restore it or use a different code.",
+  "@codeOrBarcodeBelongsToAnArchived": {
+    "description": "User-facing Code or barcode belongs to an archived product. Restore it or use a different code."
+  },
+  "codeOrBarcodeIsAlreadyUsedBy": "Code or barcode is already used by another product.",
+  "@codeOrBarcodeIsAlreadyUsedBy": {
+    "description": "User-facing Code or barcode is already used by another product."
+  },
+  "purchasePriceIsRequiredForInitialStock": "Purchase price is required for initial stock.",
+  "@purchasePriceIsRequiredForInitialStock": {
+    "description": "User-facing Purchase price is required for initial stock."
+  },
+  "datedStockRemainsHandleItBeforeDisabling": "Dated stock remains. Handle it before disabling expiry tracking.",
+  "@datedStockRemainsHandleItBeforeDisabling": {
+    "description": "User-facing Dated stock remains. Handle it before disabling expiry tracking."
+  },
+  "productChangedReloadBeforeSaving": "Product changed. Reload before saving.",
+  "@productChangedReloadBeforeSaving": {
+    "description": "User-facing Product changed. Reload before saving."
+  },
+  "productChangedReloadFirst": "Product changed. Reload first.",
+  "@productChangedReloadFirst": {
+    "description": "User-facing Product changed. Reload first."
+  },
+  "cannotUndoTheTimeLimitPassedOr": "Cannot undo: the time limit passed or another change occurred.",
+  "@cannotUndoTheTimeLimitPassedOr": {
+    "description": "User-facing Cannot undo: the time limit passed or another change occurred."
+  },
+  "stockRemainsArchivingIsRefused": "Stock remains. Archiving is refused.",
+  "@stockRemainsArchivingIsRefused": {
+    "description": "User-facing Stock remains. Archiving is refused."
+  },
+  "invalidOperationIdentifier": "Invalid operation identifier.",
+  "@invalidOperationIdentifier": {
+    "description": "User-facing Invalid operation identifier."
+  },
+  "operationIdentifierAlreadyUsedForDifferentData": "Operation identifier already used for different data.",
+  "@operationIdentifierAlreadyUsedForDifferentData": {
+    "description": "User-facing Operation identifier already used for different data."
+  },
+  "enableExpiryTrackingBeforeRecordingDates": "Enable expiry tracking before recording dates.",
+  "@enableExpiryTrackingBeforeRecordingDates": {
+    "description": "User-facing Enable expiry tracking before recording dates."
+  },
+  "stockChangedRetryWithCurrentData": "Stock changed. Retry with current data.",
+  "@stockChangedRetryWithCurrentData": {
+    "description": "User-facing Stock changed. Retry with current data."
+  },
+  "correctionReasonIsRequired": "Correction reason is required.",
+  "@correctionReasonIsRequired": {
+    "description": "User-facing Correction reason is required."
+  },
+  "receiptCannotBeReversedThroughThisFlow": "Receipt cannot be reversed through this flow.",
+  "@receiptCannotBeReversedThroughThisFlow": {
+    "description": "User-facing Receipt cannot be reversed through this flow."
+  },
+  "receiptAlreadyReversed": "Receipt already reversed.",
+  "@receiptAlreadyReversed": {
+    "description": "User-facing Receipt already reversed."
+  },
+  "stockCountReasonIsRequired": "Stock count reason is required.",
+  "@stockCountReasonIsRequired": {
+    "description": "User-facing Stock count reason is required."
+  },
+  "physicalQuantityAlreadyMatchesTheRecord": "Physical quantity already matches the record.",
+  "@physicalQuantityAlreadyMatchesTheRecord": {
+    "description": "User-facing Physical quantity already matches the record."
+  },
+  "purchasePriceIsRequiredWhenAddingTo": "Purchase price is required when adding to empty stock.",
+  "@purchasePriceIsRequiredWhenAddingTo": {
+    "description": "User-facing Purchase price is required when adding to empty stock."
+  },
+  "stockRemovalReasonIsRequired": "Stock removal reason is required.",
+  "@stockRemovalReasonIsRequired": {
+    "description": "User-facing Stock removal reason is required."
+  },
+  "insufficientBatchQuantity": "Insufficient batch quantity.",
+  "@insufficientBatchQuantity": {
+    "description": "User-facing Insufficient batch quantity."
+  },
+  "batchListChangedReload": "Batch list changed. Reload.",
+  "@batchListChangedReload": {
+    "description": "User-facing Batch list changed. Reload."
+  },
+  "nameIsRequired": "Name is required.",
+  "@nameIsRequired": {
+    "description": "User-facing Name is required."
+  },
+  "recordUnavailableReload": "Record unavailable. Reload.",
+  "@recordUnavailableReload": {
+    "description": "User-facing Record unavailable. Reload."
+  },
+  "recordNotFound": "Record not found.",
+  "@recordNotFound": {
+    "description": "User-facing Record not found."
+  },
+  "historyFilterChangedReload": "History filter changed. Reload.",
+  "@historyFilterChangedReload": {
+    "description": "User-facing History filter changed. Reload."
+  },
+  "filterChangedReloadList": "Filter changed. Reload list.",
+  "@filterChangedReloadList": {
+    "description": "User-facing Filter changed. Reload list."
+  },
+  "managementSessionLockedEnterPinAgain": "Management session locked. Enter PIN again.",
+  "@managementSessionLockedEnterPinAgain": {
+    "description": "User-facing Management session locked. Enter PIN again."
+  },
+  "pinMustContainFourDigits": "PIN must contain four digits.",
+  "@pinMustContainFourDigits": {
+    "description": "User-facing PIN must contain four digits."
+  },
+  "pinConfirmationDoesNotMatch": "PIN confirmation does not match.",
+  "@pinConfirmationDoesNotMatch": {
+    "description": "User-facing PIN confirmation does not match."
+  },
+  "storeNameIsRequired": "Store name is required.",
+  "@storeNameIsRequired": {
+    "description": "User-facing Store name is required."
+  },
+  "createAManagementPinFirst": "Create a management PIN first.",
+  "@createAManagementPinFirst": {
+    "description": "User-facing Create a management PIN first."
+  },
+  "unsupportedPinConfiguration": "Unsupported PIN configuration.",
+  "@unsupportedPinConfiguration": {
+    "description": "User-facing Unsupported PIN configuration."
+  },
+  "pinOrRecoveryCodeDoesNotMatch": "PIN or recovery code does not match.",
+  "@pinOrRecoveryCodeDoesNotMatch": {
+    "description": "User-facing PIN or recovery code does not match."
+  },
+  "sessionLockedEnterPinAgain": "Session locked. Enter PIN again.",
+  "@sessionLockedEnterPinAgain": {
+    "description": "User-facing Session locked. Enter PIN again."
+  },
+  "pinChangeIsInProgress": "PIN change is in progress.",
+  "@pinChangeIsInProgress": {
+    "description": "User-facing PIN change is in progress."
+  },
+  "unknownTimeZoneExampleAsiaJakarta": "Unknown time zone. Example: Asia/Jakarta.",
+  "@unknownTimeZoneExampleAsiaJakarta": {
+    "description": "User-facing Unknown time zone. Example: Asia/Jakarta."
+  },
+  "priceChange": "Price change",
+  "@priceChange": {
+    "description": "User-facing Price change"
+  },
+  "undoPrice": "Undo price",
+  "@undoPrice": {
+    "description": "User-facing Undo price"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language"
+  },
+  "operationFailed": "Operation failed. Try again or check device storage.",
+  "@operationFailed": {
+    "description": "Operation failed. Try again or check device storage."
+  },
+  "currencyConversionRequired": "Currency cannot be changed because financial data already exists. A dedicated migration or conversion is required.",
+  "@currencyConversionRequired": {
+    "description": "Currency cannot be changed because financial data already exists. A dedicated migration or conversion is required."
+  },
+  "currency": "Currency",
+  "@currency": {
+    "description": "Currency"
+  },
+  "currencyMismatch": "Amount currency differs from the store currency.",
+  "@currencyMismatch": {
+    "description": "Amount currency differs from the store currency."
+  },
+  "currencyScaleHelp": "IDR uses whole rupiah. USD, MYR and EUR use two decimals. Language does not change currency.",
+  "@currencyScaleHelp": {
+    "description": "IDR uses whole rupiah. USD, MYR and EUR use two decimals. Language does not change currency."
+  },
+  "rupiahCurrency": "IDR · Indonesian rupiah",
+  "@rupiahCurrency": {
+    "description": "Indonesian rupiah · IDR"
+  },
+  "dollarCurrency": "USD · US dollar",
+  "@dollarCurrency": {
+    "description": "US dollar · USD"
+  },
+  "ringgitCurrency": "MYR · Malaysian ringgit",
+  "@ringgitCurrency": {
+    "description": "Malaysian ringgit · MYR"
+  },
+  "euroCurrency": "EUR · Euro",
+  "@euroCurrency": {
+    "description": "Euro · EUR"
+  },
+  "retryAfterSeconds": "Try again in {count, plural, =1{1 second} other{{count} seconds}}.",
+  "@retryAfterSeconds": {
+    "description": "User-facing Try again in {count, plural, =1{1 second} other{{count} seconds}}.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "expiredUnits": "{count, plural, =1{1 expired unit} other{{count} expired units}}",
+  "@expiredUnits": {
+    "description": "User-facing {count, plural, =1{1 expired unit} other{{count} expired units}}",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "stockSummary": "Physical stock {physical} • Saleable {saleable} • Expired {expired}",
+  "@stockSummary": {
+    "description": "User-facing Physical stock {physical} • Saleable {saleable} • Expired {expired}",
+    "placeholders": {
+      "physical": {
+        "type": "int",
+        "example": "1"
+      },
+      "saleable": {
+        "type": "int",
+        "example": "1"
+      },
+      "expired": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "productSummary": "{price} • Stock {physical} • Saleable {saleable}",
+  "@productSummary": {
+    "description": "User-facing {price} • Stock {physical} • Saleable {saleable}",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "value"
+      },
+      "physical": {
+        "type": "int",
+        "example": "1"
+      },
+      "saleable": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "sellingPriceAmount": "Selling price {amount}",
+  "@sellingPriceAmount": {
+    "description": "User-facing Selling price {amount}",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "averageCostAmount": "Average purchase price {amount}",
+  "@averageCostAmount": {
+    "description": "User-facing Average purchase price {amount}",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "storeCodeValue": "Code {code}",
+  "@storeCodeValue": {
+    "description": "User-facing Code {code}",
+    "placeholders": {
+      "code": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "barcodeValue": "Barcode {code}",
+  "@barcodeValue": {
+    "description": "User-facing Barcode {code}",
+    "placeholders": {
+      "code": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "batchUnits": "{count, plural, =1{1 unit} other{{count} units}} • {date}",
+  "@batchUnits": {
+    "description": "User-facing {count, plural, =1{1 unit} other{{count} units}} • {date}",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      },
+      "date": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "stockChange": "{count} units • {amount}",
+  "@stockChange": {
+    "description": "User-facing {count} units • {amount}",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "1"
+      },
+      "amount": {
+        "type": "String",
+        "example": "value"
+      }
+    }
+  },
+  "stockRemainsHandleBeforeArchive": "Stock remains. Record removal or a stock count before archiving.",
+  "@stockRemainsHandleBeforeArchive": {
+    "description": "User-facing Stock remains. Record removal or a stock count before archiving."
+  },
+  "stockDependencyBlocksReversal": "Subsequent stock movements exist. Use a stock count or the appropriate removal.",
+  "@stockDependencyBlocksReversal": {
+    "description": "User-facing Subsequent stock movements exist. Use a stock count or the appropriate removal."
+  },
+  "batchReconciliationRequired": "Batch stock does not match. Check the records.",
+  "@batchReconciliationRequired": {
+    "description": "User-facing Batch stock does not match. Check the records."
+  },
+  "categoryStillUsed": "Category still in use. Move products to another category first.",
+  "@categoryStillUsed": {
+    "description": "User-facing Category still in use. Move products to another category first."
+  },
+  "pinAlreadyConfigured": "PIN already configured. Use PIN change or recovery code.",
+  "@pinAlreadyConfigured": {
+    "description": "User-facing PIN already configured. Use PIN change or recovery code."
+  },
+  "listLoadFailed": "Cannot load list. Try again.",
+  "@listLoadFailed": {
+    "description": "User-facing Cannot load list. Try again."
+  },
+  "loading": "Loading…",
+  "@loading": {
+    "description": "User-facing Loading…"
+  },
+  "addCategory": "Add category",
+  "@addCategory": {
+    "description": "Add category"
+  },
+  "addSupplier": "Add supplier",
+  "@addSupplier": {
+    "description": "Add supplier"
+  },
+  "insufficientStock": "Insufficient stock quantity.",
+  "@insufficientStock": {
+    "description": "Insufficient stock quantity."
+  },
+  "insufficientSaleableStock": "Insufficient saleable stock.",
+  "@insufficientSaleableStock": {
+    "description": "Insufficient saleable stock."
+  },
+  "indonesianLanguage": "ID · Bahasa Indonesia",
+  "@indonesianLanguage": {
+    "description": "Native name and indicator for Indonesian language"
+  },
+  "englishLanguage": "EN · English",
+  "@englishLanguage": {
+    "description": "Native name and indicator for English language"
+  },
+  "m3DraftUnavailable": "The basket draft is unavailable or already completed.",
+  "@m3DraftUnavailable": {
+    "description": "M3 cashier/debt message: m3DraftUnavailable"
+  },
+  "m3DraftChanged": "The basket changed. Review it before continuing.",
+  "@m3DraftChanged": {
+    "description": "M3 cashier/debt message: m3DraftChanged"
+  },
+  "m3UndoExpired": "Cannot undo: the time limit passed or the basket changed.",
+  "@m3UndoExpired": {
+    "description": "M3 cashier/debt message: m3UndoExpired"
+  },
+  "m3SaleUnavailable": "The sale is unavailable.",
+  "@m3SaleUnavailable": {
+    "description": "M3 cashier/debt message: m3SaleUnavailable"
+  },
+  "m3AttemptChanged": "This attempt is already saved with different details. Open the saved result.",
+  "@m3AttemptChanged": {
+    "description": "M3 cashier/debt message: m3AttemptChanged"
+  },
+  "m3AmbiguousCode": "This code matches more than one product. Choose a search result.",
+  "@m3AmbiguousCode": {
+    "description": "M3 cashier/debt message: m3AmbiguousCode"
+  },
+  "m3OperationFailed": "The operation failed. Try again; your basket remains saved.",
+  "@m3OperationFailed": {
+    "description": "M3 cashier/debt message: m3OperationFailed"
+  },
+  "m3SearchFailed": "Search failed. Try typing again.",
+  "@m3SearchFailed": {
+    "description": "M3 cashier/debt message: m3SearchFailed"
+  },
+  "m3StockChanged": "Stock changed. Review the basket.",
+  "@m3StockChanged": {
+    "description": "M3 cashier/debt message: m3StockChanged"
+  },
+  "m3EmptyCart": "Add products before paying.",
+  "@m3EmptyCart": {
+    "description": "M3 cashier/debt message: m3EmptyCart"
+  },
+  "m3InvalidPayment": "Check the payment amount. A partial payment must be above zero and below the total.",
+  "@m3InvalidPayment": {
+    "description": "M3 cashier/debt message: m3InvalidPayment"
+  },
+  "m3PricesChanged": "Product prices changed.",
+  "@m3PricesChanged": {
+    "description": "M3 cashier/debt message: m3PricesChanged"
+  },
+  "m3CustomerUnavailable": "The customer is unavailable. Select again.",
+  "@m3CustomerUnavailable": {
+    "description": "M3 cashier/debt message: m3CustomerUnavailable"
+  },
+  "m3CustomerRequired": "A customer name is required to record debt.",
+  "@m3CustomerRequired": {
+    "description": "M3 cashier/debt message: m3CustomerRequired"
+  },
+  "m3SaleMovement": "Sale",
+  "@m3SaleMovement": {
+    "description": "M3 cashier/debt message: m3SaleMovement"
+  },
+  "m3PaymentTooLarge": "Payment cannot exceed the outstanding debt.",
+  "@m3PaymentTooLarge": {
+    "description": "M3 cashier/debt message: m3PaymentTooLarge"
+  },
+  "m3PaymentPlanChanged": "Debt changed since the preview. Review a new payment allocation.",
+  "@m3PaymentPlanChanged": {
+    "description": "M3 cashier/debt message: m3PaymentPlanChanged"
+  },
+  "m3RecoveredSale": "Saved sale recovered. This basket is already completed.",
+  "@m3RecoveredSale": {
+    "description": "M3 cashier/debt message: m3RecoveredSale"
+  },
+  "m3SaleSaved": "Sale saved.",
+  "@m3SaleSaved": {
+    "description": "M3 cashier/debt message: m3SaleSaved"
+  },
+  "m3ReceiptNumber": "Sale number",
+  "@m3ReceiptNumber": {
+    "description": "M3 cashier/debt message: m3ReceiptNumber"
+  },
+  "m3Customer": "Customer",
+  "@m3Customer": {
+    "description": "M3 cashier/debt message: m3Customer"
+  },
+  "m3Paid": "Recorded payment",
+  "@m3Paid": {
+    "description": "M3 cashier/debt message: m3Paid"
+  },
+  "m3RemainingDebt": "Outstanding debt",
+  "@m3RemainingDebt": {
+    "description": "M3 cashier/debt message: m3RemainingDebt"
+  },
+  "m3PrintingLater": "Sale saved. Receipt printing is not available yet.",
+  "@m3PrintingLater": {
+    "description": "M3 cashier/debt message: m3PrintingLater"
+  },
+  "m3NextSale": "Next basket",
+  "@m3NextSale": {
+    "description": "M3 cashier/debt message: m3NextSale"
+  },
+  "m3PaidFull": "Paid in full",
+  "@m3PaidFull": {
+    "description": "M3 cashier/debt message: m3PaidFull"
+  },
+  "m3PartialDebt": "Partly on credit",
+  "@m3PartialDebt": {
+    "description": "M3 cashier/debt message: m3PartialDebt"
+  },
+  "m3AllDebt": "Entirely on credit",
+  "@m3AllDebt": {
+    "description": "M3 cashier/debt message: m3AllDebt"
+  },
+  "m3PaidExplanation": "Payment is recorded for the total. Handle physical money in the store.",
+  "@m3PaidExplanation": {
+    "description": "M3 cashier/debt message: m3PaidExplanation"
+  },
+  "m3PaidAmount": "Amount paid",
+  "@m3PaidAmount": {
+    "description": "M3 cashier/debt message: m3PaidAmount"
+  },
+  "m3CustomerName": "Customer name",
+  "@m3CustomerName": {
+    "description": "M3 cashier/debt message: m3CustomerName"
+  },
+  "m3PhoneOptional": "Customer phone (optional)",
+  "@m3PhoneOptional": {
+    "description": "M3 cashier/debt message: m3PhoneOptional"
+  },
+  "m3SelectedCustomer": "The selected customer will be used.",
+  "@m3SelectedCustomer": {
+    "description": "M3 cashier/debt message: m3SelectedCustomer"
+  },
+  "m3ChooseCustomer": "Select an existing customer if appropriate.",
+  "@m3ChooseCustomer": {
+    "description": "M3 cashier/debt message: m3ChooseCustomer"
+  },
+  "m3NoPhone": "No phone recorded",
+  "@m3NoPhone": {
+    "description": "M3 cashier/debt message: m3NoPhone"
+  },
+  "m3CreateSeparateCustomer": "Create a new customer, even with the same name",
+  "@m3CreateSeparateCustomer": {
+    "description": "M3 cashier/debt message: m3CreateSeparateCustomer"
+  },
+  "m3ConfirmSale": "Save sale",
+  "@m3ConfirmSale": {
+    "description": "M3 cashier/debt message: m3ConfirmSale"
+  },
+  "m3AcceptPricesExplanation": "The basket still shows the accepted prices. Accept the latest prices to continue payment.",
+  "@m3AcceptPricesExplanation": {
+    "description": "M3 cashier/debt message: m3AcceptPricesExplanation"
+  },
+  "m3AcceptPrices": "Accept latest prices",
+  "@m3AcceptPrices": {
+    "description": "M3 cashier/debt message: m3AcceptPrices"
+  },
+  "m3ClearSearch": "Clear search",
+  "@m3ClearSearch": {
+    "description": "M3 cashier/debt message: m3ClearSearch"
+  },
+  "m3Available": "Saleable stock",
+  "@m3Available": {
+    "description": "M3 cashier/debt message: m3Available"
+  },
+  "m3ClearCart": "Clear basket",
+  "@m3ClearCart": {
+    "description": "M3 cashier/debt message: m3ClearCart"
+  },
+  "m3ClearCartExplanation": "Remove all products from the basket? Undo is available for five seconds if the basket has not changed.",
+  "@m3ClearCartExplanation": {
+    "description": "M3 cashier/debt message: m3ClearCartExplanation"
+  },
+  "m3CartRemoved": "Basket updated.",
+  "@m3CartRemoved": {
+    "description": "M3 cashier/debt message: m3CartRemoved"
+  },
+  "m3Decrease": "Decrease quantity",
+  "@m3Decrease": {
+    "description": "M3 cashier/debt message: m3Decrease"
+  },
+  "m3Increase": "Increase quantity",
+  "@m3Increase": {
+    "description": "M3 cashier/debt message: m3Increase"
+  },
+  "m3RemoveItem": "Remove basket item",
+  "@m3RemoveItem": {
+    "description": "M3 cashier/debt message: m3RemoveItem"
+  },
+  "m3Quantity": "Product quantity",
+  "@m3Quantity": {
+    "description": "M3 cashier/debt message: m3Quantity"
+  },
+  "m3SearchCustomers": "Search customer name (Enter)",
+  "@m3SearchCustomers": {
+    "description": "M3 cashier/debt message: m3SearchCustomers"
+  },
+  "m3NoDebt": "No outstanding debts.",
+  "@m3NoDebt": {
+    "description": "M3 cashier/debt message: m3NoDebt"
+  },
+  "m3LoadMore": "Load more",
+  "@m3LoadMore": {
+    "description": "M3 cashier/debt message: m3LoadMore"
+  },
+  "m3PaymentPreview": "Debt payment details",
+  "@m3PaymentPreview": {
+    "description": "M3 cashier/debt message: m3PaymentPreview"
+  },
+  "m3OldestFirst": "Payment is allocated to the oldest sales first.",
+  "@m3OldestFirst": {
+    "description": "M3 cashier/debt message: m3OldestFirst"
+  },
+  "m3ConfirmPayment": "Record this payment",
+  "@m3ConfirmPayment": {
+    "description": "M3 cashier/debt message: m3ConfirmPayment"
+  },
+  "m3RepaymentAmount": "Repayment amount",
+  "@m3RepaymentAmount": {
+    "description": "M3 cashier/debt message: m3RepaymentAmount"
+  },
+  "m3RecordPayment": "Record payment",
+  "@m3RecordPayment": {
+    "description": "M3 cashier/debt message: m3RecordPayment"
+  },
+  "m3SaleHistory": "Sale history",
+  "@m3SaleHistory": {
+    "description": "M3 cashier/debt message: m3SaleHistory"
+  },
+  "m3CostSnapshot": "Stored cost of goods sold",
+  "@m3CostSnapshot": {
+    "description": "M3 cashier/debt message: m3CostSnapshot"
+  },
+  "m3LaterFeatures": "Full reports, sale corrections, printing and backups are not available yet.",
+  "@m3LaterFeatures": {
+    "description": "M3 cashier/debt message: m3LaterFeatures"
+  },
+  "m31WholeQuantity": "Enter a whole number using digits 0–9.",
+  "@m31WholeQuantity": {
+    "description": "M3.1 wholesale/packaging: m31WholeQuantity"
+  },
+  "m31PackRequired": "Fill in the box label and pcs per box, or leave both empty.",
+  "@m31PackRequired": {
+    "description": "M3.1 wholesale/packaging: m31PackRequired"
+  },
+  "m31WholesalePositive": "Wholesale price must be greater than zero. Leave empty if unavailable.",
+  "@m31WholesalePositive": {
+    "description": "M3.1 wholesale/packaging: m31WholesalePositive"
+  },
+  "m31ConflictingInput": "Use one input unit for this receipt.",
+  "@m31ConflictingInput": {
+    "description": "M3.1 wholesale/packaging: m31ConflictingInput"
+  },
+  "m31WholesaleChange": "Wholesale price change",
+  "@m31WholesaleChange": {
+    "description": "M3.1 wholesale/packaging: m31WholesaleChange"
+  },
+  "m31WholesaleUnavailable": "Wholesale price is no longer available. Choose retail or remove this line before paying.",
+  "@m31WholesaleUnavailable": {
+    "description": "M3.1 wholesale/packaging: m31WholesaleUnavailable"
+  },
+  "m31Wholesale": "Wholesale",
+  "@m31Wholesale": {
+    "description": "M3.1 wholesale/packaging: m31Wholesale"
+  },
+  "m31WholesalePerBase": "Price per pcs, applies to the entire quantity on this line.",
+  "@m31WholesalePerBase": {
+    "description": "M3.1 wholesale/packaging: m31WholesalePerBase"
+  },
+  "m31UseRetail": "Use retail price",
+  "@m31UseRetail": {
+    "description": "M3.1 wholesale/packaging: m31UseRetail"
+  },
+  "m31WholesaleOptional": "Wholesale price — optional",
+  "@m31WholesaleOptional": {
+    "description": "M3.1 wholesale/packaging: m31WholesaleOptional"
+  },
+  "m31WholesalePrice": "Wholesale price per pcs",
+  "@m31WholesalePrice": {
+    "description": "M3.1 wholesale/packaging: m31WholesalePrice"
+  },
+  "m31WholesaleHelp": "Empty means unavailable. The cashier selects Wholesale manually; this is not a price per box.",
+  "@m31WholesaleHelp": {
+    "description": "M3.1 wholesale/packaging: m31WholesaleHelp"
+  },
+  "m31PackOptional": "Box packaging — optional",
+  "@m31PackOptional": {
+    "description": "M3.1 wholesale/packaging: m31PackOptional"
+  },
+  "m31PackLabel": "Box label",
+  "@m31PackLabel": {
+    "description": "M3.1 wholesale/packaging: m31PackLabel"
+  },
+  "m31PackSize": "Pcs per box",
+  "@m31PackSize": {
+    "description": "M3.1 wholesale/packaging: m31PackSize"
+  },
+  "m31PackConfigHelp": "Packaging helps warehouse input. Changing its size does not change stock or old receipts. Sales remain in pcs.",
+  "@m31PackConfigHelp": {
+    "description": "M3.1 wholesale/packaging: m31PackConfigHelp"
+  },
+  "m31InputUnit": "Input unit",
+  "@m31InputUnit": {
+    "description": "M3.1 wholesale/packaging: m31InputUnit"
+  },
+  "m31BaseUnit": "Base unit (pcs)",
+  "@m31BaseUnit": {
+    "description": "M3.1 wholesale/packaging: m31BaseUnit"
+  },
+  "m31PackUnit": "Box",
+  "@m31PackUnit": {
+    "description": "M3.1 wholesale/packaging: m31PackUnit"
+  },
+  "m31PackCount": "Number of boxes",
+  "@m31PackCount": {
+    "description": "M3.1 wholesale/packaging: m31PackCount"
+  },
+  "m31DigitsHelp": "Use digits 0–9; signs, fractions and scientific notation are not accepted.",
+  "@m31DigitsHelp": {
+    "description": "M3.1 wholesale/packaging: m31DigitsHelp"
+  },
+  "m31ReceiptOverride": "May differ for this receipt/count; the product configuration stays unchanged.",
+  "@m31ReceiptOverride": {
+    "description": "M3.1 wholesale/packaging: m31ReceiptOverride"
+  },
+  "m31PreviewInvalid": "Enter a valid quantity and pack size to preview pcs.",
+  "@m31PreviewInvalid": {
+    "description": "M3.1 wholesale/packaging: m31PreviewInvalid"
+  },
+  "m31PurchasePerPack": "Purchase price per box",
+  "@m31PurchasePerPack": {
+    "description": "M3.1 wholesale/packaging: m31PurchasePerPack"
+  },
+  "m31PriceWarning": "Check wholesale price",
+  "@m31PriceWarning": {
+    "description": "M3.1 wholesale/packaging: m31PriceWarning"
+  },
+  "m31AboveRetail": "Wholesale price exceeds retail. Continue only if this is intentional.",
+  "@m31AboveRetail": {
+    "description": "M3.1 wholesale/packaging: m31AboveRetail"
+  },
+  "m31BelowCost": "Wholesale price is below average cost. A sale may make a loss.",
+  "@m31BelowCost": {
+    "description": "M3.1 wholesale/packaging: m31BelowCost"
+  },
+  "m31BaseStock": "Base-unit stock",
+  "@m31BaseStock": {
+    "description": "M3.1 wholesale/packaging: m31BaseStock"
+  },
+  "m31Unavailable": "Unavailable",
+  "@m31Unavailable": {
+    "description": "M3.1 wholesale/packaging: m31Unavailable"
+  },
+  "m31Retail": "Retail",
+  "@m31Retail": {
+    "description": "M3.1 wholesale/packaging: m31Retail"
+  },
+  "m31ReceiptInput": "Receipt input",
+  "@m31ReceiptInput": {
+    "description": "M3.1 wholesale/packaging: m31ReceiptInput"
+  },
+  "m31InputPrice": "Purchase cost per input unit",
+  "@m31InputPrice": {
+    "description": "M3.1 wholesale/packaging: m31InputPrice"
+  },
+  "m31ReceiptValue": "Total receipt value",
+  "@m31ReceiptValue": {
+    "description": "M3.1 wholesale/packaging: m31ReceiptValue"
+  },
+  "m31LegacyInput": "The original receipt input unit was not recorded. Stock quantity remains in base units.",
+  "@m31LegacyInput": {
+    "description": "M3.1 wholesale/packaging: m31LegacyInput"
+  },
+  "m31ConversionPreview": "{count} boxes × {size} pcs = {total} pcs",
+  "@m31ConversionPreview": {
+    "description": "M3.1 wholesale/packaging: m31ConversionPreview",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "size": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "m4Reports": "Reports",
+  "@m4Reports": {
+    "description": "M4 reports/corrections: Reports"
+  },
+  "m4NetSales": "Net sales",
+  "@m4NetSales": {
+    "description": "M4 reports/corrections: Net sales"
+  },
+  "m4GrossProfit": "Gross profit",
+  "@m4GrossProfit": {
+    "description": "M4 reports/corrections: Gross profit"
+  },
+  "m4NetPayments": "Net payments in period",
+  "@m4NetPayments": {
+    "description": "M4 reports/corrections: Net payments in period"
+  },
+  "m4CheckoutPayments": "Payments at checkout",
+  "@m4CheckoutPayments": {
+    "description": "M4 reports/corrections: Payments at checkout"
+  },
+  "m4Repayments": "Receivable repayments",
+  "@m4Repayments": {
+    "description": "M4 reports/corrections: Receivable repayments"
+  },
+  "m4UnknownPayments": "Payments with unknown origin",
+  "@m4UnknownPayments": {
+    "description": "M4 reports/corrections: Payments with unknown origin"
+  },
+  "m4CurrentReceivables": "Current receivables balance",
+  "@m4CurrentReceivables": {
+    "description": "M4 reports/corrections: Current receivables balance"
+  },
+  "m4InventoryValue": "Current inventory value",
+  "@m4InventoryValue": {
+    "description": "M4 reports/corrections: Current inventory value"
+  },
+  "m4PhysicalStock": "Current physical stock quantity",
+  "@m4PhysicalStock": {
+    "description": "M4 reports/corrections: Current physical stock quantity"
+  },
+  "m4ExpiredStock": "Current expired quantity",
+  "@m4ExpiredStock": {
+    "description": "M4 reports/corrections: Current expired quantity"
+  },
+  "m4SalesCount": "Sales recorded in period",
+  "@m4SalesCount": {
+    "description": "M4 reports/corrections: Sales recorded in period"
+  },
+  "m4ReturnsCount": "Sales cancelled in period",
+  "@m4ReturnsCount": {
+    "description": "M4 reports/corrections: Sales cancelled in period"
+  },
+  "m4SelectPeriod": "Choose period",
+  "@m4SelectPeriod": {
+    "description": "M4 reports/corrections: Choose period"
+  },
+  "m4ThisMonth": "This month",
+  "@m4ThisMonth": {
+    "description": "M4 reports/corrections: This month"
+  },
+  "m4AllTime": "All time",
+  "@m4AllTime": {
+    "description": "M4 reports/corrections: All time"
+  },
+  "m4AllStatuses": "All statuses",
+  "@m4AllStatuses": {
+    "description": "M4 reports/corrections: All statuses"
+  },
+  "m4Active": "Active",
+  "@m4Active": {
+    "description": "M4 reports/corrections: Active"
+  },
+  "m4Cancelled": "Cancelled",
+  "@m4Cancelled": {
+    "description": "M4 reports/corrections: Cancelled"
+  },
+  "m4Reversal": "Reversal",
+  "@m4Reversal": {
+    "description": "M4 reports/corrections: Reversal"
+  },
+  "m4SaleEvent": "Sale",
+  "@m4SaleEvent": {
+    "description": "M4 reports/corrections: Sale"
+  },
+  "m4SalesEvents": "Sales details",
+  "@m4SalesEvents": {
+    "description": "M4 reports/corrections: Sales details"
+  },
+  "m4PaymentLedger": "Payment ledger",
+  "@m4PaymentLedger": {
+    "description": "M4 reports/corrections: Payment ledger"
+  },
+  "m4AllCustomers": "All customers",
+  "@m4AllCustomers": {
+    "description": "M4 reports/corrections: All customers"
+  },
+  "m4CustomerFilter": "Customer filter",
+  "@m4CustomerFilter": {
+    "description": "M4 reports/corrections: Customer filter"
+  },
+  "m4NoCustomer": "No customer",
+  "@m4NoCustomer": {
+    "description": "M4 reports/corrections: No customer"
+  },
+  "m4PeriodPolicy": "Cancellations reduce amounts on the reversal date. Repayments are not new sales. Gross profit excludes operating expenses.",
+  "@m4PeriodPolicy": {
+    "description": "M4 reports/corrections: Cancellations reduce amounts on the reversal date. Repayments are not new sales. Gross profit excludes operating expenses."
+  },
+  "m4CurrentSnapshot": "Receivables show current balances for the selected customers. Inventory shows the current whole-store position, separate from the report period.",
+  "@m4CurrentSnapshot": {
+    "description": "M4 reports/corrections: Receivables show current balances for the selected customers. Inventory shows the current whole-store position, separate from the report period."
+  },
+  "m4ReloadStart": "Reload from the start",
+  "@m4ReloadStart": {
+    "description": "M4 reports/corrections: Reload from the start"
+  },
+  "m4Reconcile": "Check records agree",
+  "@m4Reconcile": {
+    "description": "M4 reports/corrections: Check records agree"
+  },
+  "m4Consistent": "The checked records agree.",
+  "@m4Consistent": {
+    "description": "M4 reports/corrections: The checked records agree."
+  },
+  "m4Inconsistent": "Some records disagree. Do not correct them by deleting history.",
+  "@m4Inconsistent": {
+    "description": "M4 reports/corrections: Some records disagree. Do not correct them by deleting history."
+  },
+  "m4StockCheck": "Stock quantities",
+  "@m4StockCheck": {
+    "description": "M4 reports/corrections: Stock quantities"
+  },
+  "m4ValueCheck": "Inventory values",
+  "@m4ValueCheck": {
+    "description": "M4 reports/corrections: Inventory values"
+  },
+  "m4SaleCheck": "Sales items",
+  "@m4SaleCheck": {
+    "description": "M4 reports/corrections: Sales items"
+  },
+  "m4BatchCheck": "Batch allocations",
+  "@m4BatchCheck": {
+    "description": "M4 reports/corrections: Batch allocations"
+  },
+  "m4PaymentCheck": "Payment allocations",
+  "@m4PaymentCheck": {
+    "description": "M4 reports/corrections: Payment allocations"
+  },
+  "m4DebtCheck": "Receivables balances",
+  "@m4DebtCheck": {
+    "description": "M4 reports/corrections: Receivables balances"
+  },
+  "m4ReturnCheck": "Returned-goods records",
+  "@m4ReturnCheck": {
+    "description": "M4 reports/corrections: Returned-goods records"
+  },
+  "m4RelationsCheck": "Record relationships",
+  "@m4RelationsCheck": {
+    "description": "M4 reports/corrections: Record relationships"
+  },
+  "m4CancelSale": "Cancel sale",
+  "@m4CancelSale": {
+    "description": "M4 reports/corrections: Cancel sale"
+  },
+  "m4CancelPayment": "Cancel payment",
+  "@m4CancelPayment": {
+    "description": "M4 reports/corrections: Cancel payment"
+  },
+  "m4Reason": "Correction reason",
+  "@m4Reason": {
+    "description": "M4 reports/corrections: Correction reason"
+  },
+  "m4GoodsReturned": "All goods have actually been returned to the store.",
+  "@m4GoodsReturned": {
+    "description": "M4 reports/corrections: All goods have actually been returned to the store."
+  },
+  "m4MoneyHandled": "Any relevant refund or money adjustment is handled in the store; the app only reverses the records.",
+  "@m4MoneyHandled": {
+    "description": "M4 reports/corrections: Any relevant refund or money adjustment is handled in the store; the app only reverses the records."
+  },
+  "m4CorrectionNotice": "A correction adds reversal records and keeps the original transaction. Full sale cancellation is refused while a later repayment remains active.",
+  "@m4CorrectionNotice": {
+    "description": "M4 reports/corrections: A correction adds reversal records and keeps the original transaction. Full sale cancellation is refused while a later repayment remains active."
+  },
+  "m4ConfirmCancellation": "Confirm cancellation",
+  "@m4ConfirmCancellation": {
+    "description": "M4 reports/corrections: Confirm cancellation"
+  },
+  "m4ReasonRequired": "Enter a correction reason.",
+  "@m4ReasonRequired": {
+    "description": "M4 reports/corrections: Enter a correction reason."
+  },
+  "m4ReasonTooLong": "The reason may contain up to 500 characters.",
+  "@m4ReasonTooLong": {
+    "description": "M4 reports/corrections: The reason may contain up to 500 characters."
+  },
+  "m4ConfirmMoney": "Confirm how the money is handled in the store first.",
+  "@m4ConfirmMoney": {
+    "description": "M4 reports/corrections: Confirm how the money is handled in the store first."
+  },
+  "m4ConfirmGoods": "A full cancellation requires all goods to have actually been returned.",
+  "@m4ConfirmGoods": {
+    "description": "M4 reports/corrections: A full cancellation requires all goods to have actually been returned."
+  },
+  "m4AlreadyCancelled": "This record has already been cancelled. Reload to see the result.",
+  "@m4AlreadyCancelled": {
+    "description": "M4 reports/corrections: This record has already been cancelled. Reload to see the result."
+  },
+  "m4ActiveRepayment": "A later repayment remains active. Review and reverse that payment first if it was recorded in error; do not delete it.",
+  "@m4ActiveRepayment": {
+    "description": "M4 reports/corrections: A later repayment remains active. Review and reverse that payment first if it was recorded in error; do not delete it."
+  },
+  "m4AnonymousPayment": "This payment has no customer to own the reopened debt. Use a full sale cancellation if all goods have actually been returned.",
+  "@m4AnonymousPayment": {
+    "description": "M4 reports/corrections: This payment has no customer to own the reopened debt. Use a full sale cancellation if all goods have actually been returned."
+  },
+  "m4PaymentUnavailable": "The payment is unavailable or is itself a reversal.",
+  "@m4PaymentUnavailable": {
+    "description": "M4 reports/corrections: The payment is unavailable or is itself a reversal."
+  },
+  "m4InconsistentData": "Related records disagree. Check reconciliation; no correction was saved.",
+  "@m4InconsistentData": {
+    "description": "M4 reports/corrections: Related records disagree. Check reconciliation; no correction was saved."
+  },
+  "m4DatasetChanged": "The data changed. Reload from the start.",
+  "@m4DatasetChanged": {
+    "description": "M4 reports/corrections: The data changed. Reload from the start."
+  },
+  "m4InvalidPeriod": "The period start must precede its end.",
+  "@m4InvalidPeriod": {
+    "description": "M4 reports/corrections: The period start must precede its end."
+  },
+  "m4AggregateTooLarge": "The report total exceeds the database integer limit. Choose a smaller period or filter.",
+  "@m4AggregateTooLarge": {
+    "description": "M4 reports/corrections: The report total exceeds the database integer limit. Choose a smaller period or filter."
+  },
+  "m4LaterFeatures": "Printing, notifications, backup and restore are planned for the next stage.",
+  "@m4LaterFeatures": {
+    "description": "M4 reports/corrections: Printing, notifications, backup and restore are planned for the next stage."
+  },
+  "m5OperationFailed": "Operation did not complete. Check permissions, connection, or enter your PIN again.",
+  "m5PermissionDenied": "Permission not granted. In-app alerts remain available.",
+  "m5Printer": "Bluetooth printer",
+  "m5PrinterHelp": "ESC/POS over Bluetooth Classic/SPP. Iware MP-581RL usually appears as RPP02N. Calibrate the profile on real paper. Enter your PIN again after an Android permission dialog if locked.",
+  "m5Paired": "Paired devices",
+  "m5Discover": "Discover devices",
+  "m5Pair": "Pair",
+  "m5PairRequested": "Pairing requested from Android; check its dialog, then reload paired devices.",
+  "m5SavedPrinters": "Saved printers",
+  "m5FirstPage": "Load first page",
+  "m5NextPage": "Next page",
+  "m5PrintableDots": "Printable width (dots)",
+  "m5LeftDots": "Left margin (dots)",
+  "m5RightDots": "Right margin (dots)",
+  "m5ShiftDots": "Horizontal shift (dots)",
+  "m5Feed": "Blank lines after receipt (0–8)",
+  "m5GeometryHelp": "203 DPI: 8 dots is about 1 mm. Paper width differs from printable width. Keep shifts within the safe area; the OpenLabel -4 mm setting is not a universal default. Edit header/footer in store settings.",
+  "m5Bold": "Bold text",
+  "m5Logo": "Print logo when available",
+  "m5HeaderAlign": "Header alignment",
+  "m5FooterAlign": "Footer alignment",
+  "m5AlignLeft": "Left",
+  "m5AlignCenter": "Center",
+  "m5AlignRight": "Right",
+  "m5ResetTemplate": "Reset profile template",
+  "m5Preview": "Preview",
+  "m5ProfileInvalid": "Invalid template geometry or size. Check printable area and margins.",
+  "m5PrinterSaved": "Printer profile saved.",
+  "m5TestPrint": "Print UJI COBA",
+  "m5ForgetPrinter": "Forget in this app",
+  "m5PrinterForgotten": "Printer binding removed from this app.",
+  "m5Disconnect": "Disconnect",
+  "m5Disconnected": "Disconnected.",
+  "m5PrintReceipt": "Print receipt",
+  "m5PrintCopy": "Print SALINAN",
+  "m5DataSent": "Data sent. Check the printed paper.",
+  "m5DeliveryUnknown": "Delivery is uncertain. Check the printer first; print SALINAN only if needed.",
+  "m5NotSent": "Data was not sent. Check the printer and connection.",
+  "m5PrintPrepared": "Print job prepared.",
+  "m5PrintSetupRequired": "Printer is not ready. Check printer settings in Management. The sale remains saved.",
+  "m5ScanCancelled": "Discovery cancelled.",
+  "m5ScanTimedOut": "Discovery timed out; discovered devices are shown.",
+  "m5ScanFinished": "Discovery finished.",
+  "m5Alerts": "Inventory alerts",
+  "m5AlertsHelp": "Stock alerts follow each product’s minimum. Expiry uses remaining batches and the shop calendar. Notifications are best effort; tap to open the protected list with your PIN.",
+  "m5ExpiryDays": "Days before expiry (0–365)",
+  "m5Notifications": "Enable inventory notifications",
+  "m5SettingsSaved": "Settings saved.",
+  "m5NoAlerts": "No active alerts.",
+  "m5Expiry": "Expiry",
+  "m5Saleable": "Saleable stock",
+  "m5Minimum": "Minimum",
+  "m5Backup": "Backup & Google Drive",
+  "m5BackupHelp": "Backups contain shop data and logo in an encrypted archive. Export with the Android file picker to keep a copy outside the app. Restore replaces all active data. After an Android dialog, enter your PIN again to continue.",
+  "m5RecoveryConfigured": "Backup recovery code is configured.",
+  "m5RecoveryRequired": "Set up and save a recovery code before creating a backup.",
+  "m5GenerateCode": "Set up a new code",
+  "m5ShowCode": "Show saved code",
+  "m5RecoveryCodeHelp": "This code differs from your PIN and PIN recovery. Keep a private copy outside the device. Older backups still need the code used when created; a lost code cannot be derived from your PIN.",
+  "m5ConfirmRecoveryCode": "Enter the code you saved",
+  "m5CodeStored": "I have saved a copy of this code where I can retrieve it.",
+  "m5SaveRecoveryCode": "Confirm and save code",
+  "m5LocalBackups": "Encrypted local backups",
+  "m5CreateBackup": "Create local backup",
+  "m5Export": "Export file",
+  "m5SelectRestore": "Select for restore",
+  "m5Restore": "Restore backup",
+  "m5ChooseArchive": "Choose archive from files",
+  "m5ArchiveSelected": "Archive selected. Enter your PIN again if prompted, then validate with that archive’s recovery code.",
+  "m5RecoveryCode": "Backup recovery code",
+  "m5ValidateArchive": "Validate archive",
+  "m5RestoreWarning": "All active data, including local drafts, will be replaced by the backup. An encrypted safety backup must succeed first. After restore, use the selected backup’s PIN. Reconfigure Google, automatic backups, notifications, and printer bindings; nothing prints automatically.",
+  "m5ReplaceAndDrafts": "I agree to replace all active data and local drafts with the selected backup.",
+  "m5RestoreFinalConfirmation": "Proceed with full restore now?",
+  "m5Confirm": "Confirm",
+  "m5GoogleDrive": "Optional Google Drive",
+  "m5DriveHelp": "Uses only the app data folder in the selected account. This does not synchronize stock. Manual upload sends an encrypted archive; automation requires separate consent. Seven successful backups are retained per shop and installation origin. OAuth Testing may require authorization again after about seven days.",
+  "m5TargetAccount": "Target account",
+  "m5ChooseAccount": "Choose or switch Google account",
+  "m5PendingAccount": "Account choice not yet saved",
+  "m5UseAccount": "Use this account",
+  "m5AutomaticBackup": "Automatic Drive backup",
+  "m5AutomaticBackupHelp": "Targets 21:00 in the shop timezone, best effort. Network, Doze, and device restrictions can delay it; execution after force-stop is not guaranteed.",
+  "m5AutomaticConsent": "Allow automatic upload of encrypted shop archives to the displayed target account?",
+  "m5UploadNow": "Back up to Drive now",
+  "m5DriveVersions": "Drive backup versions",
+  "m5Refresh": "Refresh status",
+  "m5CodeSaved": "Backup recovery code saved.",
+  "m5LocalBackupReady": "Validated local backup is ready. Export it to keep a copy outside the app.",
+  "m5ExportVerified": "Export file was written and read back successfully.",
+  "m5Cancelled": "Cancelled.",
+  "m5ArchiveValidated": "Archive authenticated and data validated. Review metadata before restore.",
+  "m5RestoreComplete": "Restore completed. Use the backup’s PIN to open Management.",
+  "m5RestoreOutcomeCheck": "Restore could not be confirmed complete. Active storage was reopened; check its status and shop contents before continuing.",
+  "m5AccountPending": "Account choice is ready. Enter your PIN again, then confirm the target account.",
+  "m5AccountConnected": "Target account saved. Automatic backup remains off.",
+  "m5DriveBackupReady": "Drive archive upload verified.",
+  "m5DriveNeedsAuth": "Google needs authorization again. Choose the account on this screen; workers do not open login dialogs.",
+  "m5DriveConsentChanged": "Operation stopped because the account or consent changed.",
+  "m5DriveAccountMismatch": "Account identity does not match. Choose and confirm the target account again.",
+  "m5DriveQuota": "Google Drive storage quota is insufficient.",
+  "m5DriveOffline": "Network unavailable or timed out. Try again.",
+  "m5DriveFailed": "Drive operation is incomplete. Check network, authorization, and account configuration.",
+  "m5DriveApiNotEnabled": "Google Drive API is not enabled or has been disabled in the app's Google Cloud project. Enable it in the project that owns the OAuth clients, then retry.",
+  "m5DriveForbidden": "Google Drive denied access. Check the app's Drive data permission and Google Cloud project configuration. Being listed as a test user alone does not guarantee API access.",
+  "@m5DriveApiNotEnabled": {
+    "description": "A structured Google API-disabled response, without upstream identifiers or messages."
+  },
+  "@m5DriveForbidden": {
+    "description": "Unclassified Drive access rejection; do not imply its exact cause is known."
+  },
+  "m5ArchiveRejected": "Code or archive is invalid, damaged, or unreadable. Active data was not replaced.",
+  "m5CodeRotationWarning": "A new code applies to future backups. Keep the old code for existing backups. Continue?",
+  "m5DatabaseKeyMissing": "Installation database key is missing. Files are retained; no empty database was created. Use a verified backup on another installation or investigate key recovery.",
+  "m5DatabaseKeyUnavailable": "Keystore could not unlock the database key. Existing files are retained.",
+  "m5DatabaseUnlockFailed": "Database could not be opened with the installation key. Files are retained; check backups and storage status.",
+  "m5EncryptedExportFailed": "Encrypted export failed. Source data is retained.",
+  "m5DatabaseInUse": "Database is still in use. Wait for other operations to finish, then retry.",
+  "m5PrintSending": "Sending print data",
+  "m5BackupRunning": "Running",
+  "m5BackupFailed": "Failed",
+  "m5BackupSuccess": "Succeeded",
+  "m5ChooseLogo": "Choose shop logo",
+  "m5ApplyLogo": "Apply selected logo",
+  "m5RemoveLogo": "Remove shop logo",
+  "m5ReceiptPreview": "Receipt preview",
+  "m5HideCode": "Hide recovery code",
+  "m5LastAttempt": "Last backup attempt",
+  "m5LastSuccess": "Last successful backup",
+  "m5NextTarget": "Next backup target (shop time)",
+  "m5NotScheduled": "Not scheduled",
+  "m5RunRunning": "In progress",
+  "m5RunCompleted": "Verified complete",
+  "m5RunFailed": "Failed; not a successful backup",
+  "m5RunUnknown": "Status needs review",
+  "m5RestoreContents": "Archive contents and shop identity",
+  "m5RestoreCurrent": "Current shop",
+  "@m5OperationFailed": {
+    "description": "M5 printer, alerts or backup interface: m5OperationFailed."
+  },
+  "@m5PermissionDenied": {
+    "description": "M5 printer, alerts or backup interface: m5PermissionDenied."
+  },
+  "@m5Printer": {
+    "description": "M5 printer, alerts or backup interface: m5Printer."
+  },
+  "@m5PrinterHelp": {
+    "description": "M5 printer, alerts or backup interface: m5PrinterHelp."
+  },
+  "@m5Paired": {
+    "description": "M5 printer, alerts or backup interface: m5Paired."
+  },
+  "@m5Discover": {
+    "description": "M5 printer, alerts or backup interface: m5Discover."
+  },
+  "@m5Pair": {
+    "description": "M5 printer, alerts or backup interface: m5Pair."
+  },
+  "@m5PairRequested": {
+    "description": "M5 printer, alerts or backup interface: m5PairRequested."
+  },
+  "@m5SavedPrinters": {
+    "description": "M5 printer, alerts or backup interface: m5SavedPrinters."
+  },
+  "@m5FirstPage": {
+    "description": "M5 printer, alerts or backup interface: m5FirstPage."
+  },
+  "@m5NextPage": {
+    "description": "M5 printer, alerts or backup interface: m5NextPage."
+  },
+  "@m5PrintableDots": {
+    "description": "M5 printer, alerts or backup interface: m5PrintableDots."
+  },
+  "@m5LeftDots": {
+    "description": "M5 printer, alerts or backup interface: m5LeftDots."
+  },
+  "@m5RightDots": {
+    "description": "M5 printer, alerts or backup interface: m5RightDots."
+  },
+  "@m5ShiftDots": {
+    "description": "M5 printer, alerts or backup interface: m5ShiftDots."
+  },
+  "@m5Feed": {
+    "description": "M5 printer, alerts or backup interface: m5Feed."
+  },
+  "@m5GeometryHelp": {
+    "description": "M5 printer, alerts or backup interface: m5GeometryHelp."
+  },
+  "@m5Bold": {
+    "description": "M5 printer, alerts or backup interface: m5Bold."
+  },
+  "@m5Logo": {
+    "description": "M5 printer, alerts or backup interface: m5Logo."
+  },
+  "@m5HeaderAlign": {
+    "description": "M5 printer, alerts or backup interface: m5HeaderAlign."
+  },
+  "@m5FooterAlign": {
+    "description": "M5 printer, alerts or backup interface: m5FooterAlign."
+  },
+  "@m5AlignLeft": {
+    "description": "M5 printer, alerts or backup interface: m5AlignLeft."
+  },
+  "@m5AlignCenter": {
+    "description": "M5 printer, alerts or backup interface: m5AlignCenter."
+  },
+  "@m5AlignRight": {
+    "description": "M5 printer, alerts or backup interface: m5AlignRight."
+  },
+  "@m5ResetTemplate": {
+    "description": "M5 printer, alerts or backup interface: m5ResetTemplate."
+  },
+  "@m5Preview": {
+    "description": "M5 printer, alerts or backup interface: m5Preview."
+  },
+  "@m5ProfileInvalid": {
+    "description": "M5 printer, alerts or backup interface: m5ProfileInvalid."
+  },
+  "@m5PrinterSaved": {
+    "description": "M5 printer, alerts or backup interface: m5PrinterSaved."
+  },
+  "@m5TestPrint": {
+    "description": "M5 printer, alerts or backup interface: m5TestPrint."
+  },
+  "@m5ForgetPrinter": {
+    "description": "M5 printer, alerts or backup interface: m5ForgetPrinter."
+  },
+  "@m5PrinterForgotten": {
+    "description": "M5 printer, alerts or backup interface: m5PrinterForgotten."
+  },
+  "@m5Disconnect": {
+    "description": "M5 printer, alerts or backup interface: m5Disconnect."
+  },
+  "@m5Disconnected": {
+    "description": "M5 printer, alerts or backup interface: m5Disconnected."
+  },
+  "@m5PrintReceipt": {
+    "description": "M5 printer, alerts or backup interface: m5PrintReceipt."
+  },
+  "@m5PrintCopy": {
+    "description": "M5 printer, alerts or backup interface: m5PrintCopy."
+  },
+  "@m5DataSent": {
+    "description": "M5 printer, alerts or backup interface: m5DataSent."
+  },
+  "@m5DeliveryUnknown": {
+    "description": "M5 printer, alerts or backup interface: m5DeliveryUnknown."
+  },
+  "@m5NotSent": {
+    "description": "M5 printer, alerts or backup interface: m5NotSent."
+  },
+  "@m5PrintPrepared": {
+    "description": "M5 printer, alerts or backup interface: m5PrintPrepared."
+  },
+  "@m5PrintSetupRequired": {
+    "description": "M5 printer, alerts or backup interface: m5PrintSetupRequired."
+  },
+  "@m5ScanCancelled": {
+    "description": "M5 printer, alerts or backup interface: m5ScanCancelled."
+  },
+  "@m5ScanTimedOut": {
+    "description": "M5 printer, alerts or backup interface: m5ScanTimedOut."
+  },
+  "@m5ScanFinished": {
+    "description": "M5 printer, alerts or backup interface: m5ScanFinished."
+  },
+  "@m5Alerts": {
+    "description": "M5 printer, alerts or backup interface: m5Alerts."
+  },
+  "@m5AlertsHelp": {
+    "description": "M5 printer, alerts or backup interface: m5AlertsHelp."
+  },
+  "@m5ExpiryDays": {
+    "description": "M5 printer, alerts or backup interface: m5ExpiryDays."
+  },
+  "@m5Notifications": {
+    "description": "M5 printer, alerts or backup interface: m5Notifications."
+  },
+  "@m5SettingsSaved": {
+    "description": "M5 printer, alerts or backup interface: m5SettingsSaved."
+  },
+  "@m5NoAlerts": {
+    "description": "M5 printer, alerts or backup interface: m5NoAlerts."
+  },
+  "@m5Expiry": {
+    "description": "M5 printer, alerts or backup interface: m5Expiry."
+  },
+  "@m5Saleable": {
+    "description": "M5 printer, alerts or backup interface: m5Saleable."
+  },
+  "@m5Minimum": {
+    "description": "M5 printer, alerts or backup interface: m5Minimum."
+  },
+  "@m5Backup": {
+    "description": "M5 printer, alerts or backup interface: m5Backup."
+  },
+  "@m5BackupHelp": {
+    "description": "M5 printer, alerts or backup interface: m5BackupHelp."
+  },
+  "@m5RecoveryConfigured": {
+    "description": "M5 printer, alerts or backup interface: m5RecoveryConfigured."
+  },
+  "@m5RecoveryRequired": {
+    "description": "M5 printer, alerts or backup interface: m5RecoveryRequired."
+  },
+  "@m5GenerateCode": {
+    "description": "M5 printer, alerts or backup interface: m5GenerateCode."
+  },
+  "@m5ShowCode": {
+    "description": "M5 printer, alerts or backup interface: m5ShowCode."
+  },
+  "@m5RecoveryCodeHelp": {
+    "description": "M5 printer, alerts or backup interface: m5RecoveryCodeHelp."
+  },
+  "@m5ConfirmRecoveryCode": {
+    "description": "M5 printer, alerts or backup interface: m5ConfirmRecoveryCode."
+  },
+  "@m5CodeStored": {
+    "description": "M5 printer, alerts or backup interface: m5CodeStored."
+  },
+  "@m5SaveRecoveryCode": {
+    "description": "M5 printer, alerts or backup interface: m5SaveRecoveryCode."
+  },
+  "@m5LocalBackups": {
+    "description": "M5 printer, alerts or backup interface: m5LocalBackups."
+  },
+  "@m5CreateBackup": {
+    "description": "M5 printer, alerts or backup interface: m5CreateBackup."
+  },
+  "@m5Export": {
+    "description": "M5 printer, alerts or backup interface: m5Export."
+  },
+  "@m5SelectRestore": {
+    "description": "M5 printer, alerts or backup interface: m5SelectRestore."
+  },
+  "@m5Restore": {
+    "description": "M5 printer, alerts or backup interface: m5Restore."
+  },
+  "@m5ChooseArchive": {
+    "description": "M5 printer, alerts or backup interface: m5ChooseArchive."
+  },
+  "@m5ArchiveSelected": {
+    "description": "M5 printer, alerts or backup interface: m5ArchiveSelected."
+  },
+  "@m5RecoveryCode": {
+    "description": "M5 printer, alerts or backup interface: m5RecoveryCode."
+  },
+  "@m5ValidateArchive": {
+    "description": "M5 printer, alerts or backup interface: m5ValidateArchive."
+  },
+  "@m5RestoreWarning": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreWarning."
+  },
+  "@m5ReplaceAndDrafts": {
+    "description": "M5 printer, alerts or backup interface: m5ReplaceAndDrafts."
+  },
+  "@m5RestoreFinalConfirmation": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreFinalConfirmation."
+  },
+  "@m5Confirm": {
+    "description": "M5 printer, alerts or backup interface: m5Confirm."
+  },
+  "@m5GoogleDrive": {
+    "description": "M5 printer, alerts or backup interface: m5GoogleDrive."
+  },
+  "@m5DriveHelp": {
+    "description": "M5 printer, alerts or backup interface: m5DriveHelp."
+  },
+  "@m5TargetAccount": {
+    "description": "M5 printer, alerts or backup interface: m5TargetAccount."
+  },
+  "@m5ChooseAccount": {
+    "description": "M5 printer, alerts or backup interface: m5ChooseAccount."
+  },
+  "@m5PendingAccount": {
+    "description": "M5 printer, alerts or backup interface: m5PendingAccount."
+  },
+  "@m5UseAccount": {
+    "description": "M5 printer, alerts or backup interface: m5UseAccount."
+  },
+  "@m5AutomaticBackup": {
+    "description": "M5 printer, alerts or backup interface: m5AutomaticBackup."
+  },
+  "@m5AutomaticBackupHelp": {
+    "description": "M5 printer, alerts or backup interface: m5AutomaticBackupHelp."
+  },
+  "@m5AutomaticConsent": {
+    "description": "M5 printer, alerts or backup interface: m5AutomaticConsent."
+  },
+  "@m5UploadNow": {
+    "description": "M5 printer, alerts or backup interface: m5UploadNow."
+  },
+  "@m5DriveVersions": {
+    "description": "M5 printer, alerts or backup interface: m5DriveVersions."
+  },
+  "@m5Refresh": {
+    "description": "M5 printer, alerts or backup interface: m5Refresh."
+  },
+  "@m5CodeSaved": {
+    "description": "M5 printer, alerts or backup interface: m5CodeSaved."
+  },
+  "@m5LocalBackupReady": {
+    "description": "M5 printer, alerts or backup interface: m5LocalBackupReady."
+  },
+  "@m5ExportVerified": {
+    "description": "M5 printer, alerts or backup interface: m5ExportVerified."
+  },
+  "@m5Cancelled": {
+    "description": "M5 printer, alerts or backup interface: m5Cancelled."
+  },
+  "@m5ArchiveValidated": {
+    "description": "M5 printer, alerts or backup interface: m5ArchiveValidated."
+  },
+  "@m5RestoreComplete": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreComplete."
+  },
+  "@m5RestoreOutcomeCheck": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreOutcomeCheck."
+  },
+  "@m5AccountPending": {
+    "description": "M5 printer, alerts or backup interface: m5AccountPending."
+  },
+  "@m5AccountConnected": {
+    "description": "M5 printer, alerts or backup interface: m5AccountConnected."
+  },
+  "@m5DriveBackupReady": {
+    "description": "M5 printer, alerts or backup interface: m5DriveBackupReady."
+  },
+  "@m5DriveNeedsAuth": {
+    "description": "M5 printer, alerts or backup interface: m5DriveNeedsAuth."
+  },
+  "@m5DriveConsentChanged": {
+    "description": "M5 printer, alerts or backup interface: m5DriveConsentChanged."
+  },
+  "@m5DriveAccountMismatch": {
+    "description": "M5 printer, alerts or backup interface: m5DriveAccountMismatch."
+  },
+  "@m5DriveQuota": {
+    "description": "M5 printer, alerts or backup interface: m5DriveQuota."
+  },
+  "@m5DriveOffline": {
+    "description": "M5 printer, alerts or backup interface: m5DriveOffline."
+  },
+  "@m5DriveFailed": {
+    "description": "M5 printer, alerts or backup interface: m5DriveFailed."
+  },
+  "@m5ArchiveRejected": {
+    "description": "M5 printer, alerts or backup interface: m5ArchiveRejected."
+  },
+  "@m5CodeRotationWarning": {
+    "description": "M5 printer, alerts or backup interface: m5CodeRotationWarning."
+  },
+  "@m5DatabaseKeyMissing": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseKeyMissing."
+  },
+  "@m5DatabaseKeyUnavailable": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseKeyUnavailable."
+  },
+  "@m5DatabaseUnlockFailed": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseUnlockFailed."
+  },
+  "@m5EncryptedExportFailed": {
+    "description": "M5 printer, alerts or backup interface: m5EncryptedExportFailed."
+  },
+  "@m5DatabaseInUse": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseInUse."
+  },
+  "@m5PrintSending": {
+    "description": "M5 printer, alerts or backup interface: m5PrintSending."
+  },
+  "@m5BackupRunning": {
+    "description": "M5 printer, alerts or backup interface: m5BackupRunning."
+  },
+  "@m5BackupFailed": {
+    "description": "M5 printer, alerts or backup interface: m5BackupFailed."
+  },
+  "@m5BackupSuccess": {
+    "description": "M5 printer, alerts or backup interface: m5BackupSuccess."
+  },
+  "@m5ChooseLogo": {
+    "description": "M5 printer, alerts or backup interface: m5ChooseLogo."
+  },
+  "@m5ApplyLogo": {
+    "description": "M5 printer, alerts or backup interface: m5ApplyLogo."
+  },
+  "@m5RemoveLogo": {
+    "description": "M5 printer, alerts or backup interface: m5RemoveLogo."
+  },
+  "@m5ReceiptPreview": {
+    "description": "M5 printer, alerts or backup interface: m5ReceiptPreview."
+  },
+  "@m5HideCode": {
+    "description": "M5 printer, alerts or backup interface: m5HideCode."
+  },
+  "@m5LastAttempt": {
+    "description": "M5 printer, alerts or backup interface: m5LastAttempt."
+  },
+  "@m5LastSuccess": {
+    "description": "M5 printer, alerts or backup interface: m5LastSuccess."
+  },
+  "@m5NextTarget": {
+    "description": "M5 printer, alerts or backup interface: m5NextTarget."
+  },
+  "@m5NotScheduled": {
+    "description": "M5 printer, alerts or backup interface: m5NotScheduled."
+  },
+  "@m5RunRunning": {
+    "description": "M5 printer, alerts or backup interface: m5RunRunning."
+  },
+  "@m5RunCompleted": {
+    "description": "M5 printer, alerts or backup interface: m5RunCompleted."
+  },
+  "@m5RunFailed": {
+    "description": "M5 printer, alerts or backup interface: m5RunFailed."
+  },
+  "@m5RunUnknown": {
+    "description": "M5 printer, alerts or backup interface: m5RunUnknown."
+  },
+  "@m5RestoreContents": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreContents."
+  },
+  "@m5RestoreCurrent": {
+    "description": "M5 printer, alerts or backup interface: m5RestoreCurrent."
+  },
+  "m5LogoSize": "Logo size within printable area",
+  "m5LineGap": "Line spacing",
+  "@m5LogoSize": {
+    "description": "M5 printer, alerts or backup interface: m5LogoSize."
+  },
+  "@m5LineGap": {
+    "description": "M5 printer, alerts or backup interface: m5LineGap."
+  },
+  "m5DatabaseNewerSchema": "This database requires a newer app version. Use a compatible version; data was not replaced.",
+  "@m5DatabaseNewerSchema": {
+    "description": "M5 printer, alerts or backup interface: m5DatabaseNewerSchema."
+  },
+  "m5CopyWarning": "Check any paper already printed. Sent data does not confirm printing, and reprinting can produce duplicates. Continue as SALINAN (copy)?",
+  "@m5CopyWarning": {
+    "description": "M5 printer, alerts or backup interface: m5CopyWarning."
+  },
+  "m5OpenSourceLicenses": "Open source licenses",
+  "@m5OpenSourceLicenses": {
+    "description": "M5 printer, alerts or backup interface: m5OpenSourceLicenses."
+  },
+  "m5Connect": "Connect",
+  "m5Connecting": "Connecting printer…",
+  "m5Connected": "Connected to printer",
+  "m5ConnectionFailed": "Printer connection failed. Check the printer and try again.",
+  "m5ConnectionNotChecked": "Printer connection has not been checked",
+  "m5CheckConnection": "Check connection",
+  "m5BluetoothUnavailable": "Bluetooth is unavailable on this device",
+  "m5BluetoothDisabled": "Bluetooth is off. Enable it in device settings.",
+  "m5BluetoothPermissionHelp": "Nearby devices permission (location on older Android) is needed when using the printer. If the permission dialog no longer appears, check app permissions in Android Settings.",
+  "@m5Connect": {
+    "description": "M5 printer, alerts or backup interface: m5Connect."
+  },
+  "@m5Connecting": {
+    "description": "M5 printer, alerts or backup interface: m5Connecting."
+  },
+  "@m5Connected": {
+    "description": "M5 printer, alerts or backup interface: m5Connected."
+  },
+  "@m5ConnectionFailed": {
+    "description": "M5 printer, alerts or backup interface: m5ConnectionFailed."
+  },
+  "@m5ConnectionNotChecked": {
+    "description": "M5 printer, alerts or backup interface: m5ConnectionNotChecked."
+  },
+  "@m5CheckConnection": {
+    "description": "M5 printer, alerts or backup interface: m5CheckConnection."
+  },
+  "@m5BluetoothUnavailable": {
+    "description": "M5 printer, alerts or backup interface: m5BluetoothUnavailable."
+  },
+  "@m5BluetoothDisabled": {
+    "description": "M5 printer, alerts or backup interface: m5BluetoothDisabled."
+  },
+  "@m5BluetoothPermissionHelp": {
+    "description": "M5 printer, alerts or backup interface: m5BluetoothPermissionHelp."
+  },
+  "driveRetryLimitReached": "Automatic backup stopped after three failed attempts. Check the connection and try a manual backup. The next daily schedule remains active.",
+  "@driveRetryLimitReached": {
+    "description": "M5 printer, alerts or backup interface: driveRetryLimitReached."
+  },
+  "m5PrinterPermissionDenied": "Bluetooth permission is not granted. Allow Nearby devices (Location on older Android) in this app’s Android settings, then try again.",
+  "@m5PrinterPermissionDenied": {
+    "description": "Printer permission denial with explicit Android settings recovery; no automatic permission dialog retry."
+  },
+  "m5ExportNameTitle": "Export file name",
+  "@m5ExportNameTitle": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  },
+  "m5ExportNameLabel": "File name",
+  "@m5ExportNameLabel": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  },
+  "m5ExportNameHelp": "The .kasirbackup extension is added automatically. Choose a location next.",
+  "@m5ExportNameHelp": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  },
+  "m5ExportNameInvalid": "Invalid name. Avoid path separators and special characters; maximum 128 characters including the extension.",
+  "@m5ExportNameInvalid": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  },
+  "m5ExportChooseLocation": "Continue",
+  "@m5ExportChooseLocation": {
+    "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "stage": "C25 installed; manual retry after API activation pending; C26 source diagnostics not deployed",
+  "manualStep": "D-MAN03R after user enables Google Drive API: accept correct account, verify destination saved and autoOff; no upload",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "priorSha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+  "hostFocused": "5PASS33s",
+  "hostRegression": "43PASS97s",
+  "automaticDeviceControlActive": false,
+  "sourceFiles": [
+    "lib/features/backup/presentation/backup_settings_provider.dart",
+    "test/m5_settings_ui_test.dart",
+    "integration_test/m5_acceptance_audit_test.dart"
+  ],
+  "activeLedger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-google-cancel-update-1792226124001\\update.json",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-google-cancel-update-1792226124001\\update.json",
+  "installedSha256": "02fbf81f16b07bd535b59425b35238fd8692c41d4e4ad8440d25636dcf02c687",
+  "actualGoogleRetest": "PASS user report D-MAN01R",
+  "actualGoogleApi": "D-MAN03 FAIL; API not enabled per user; retry pending",
+  "actualGoogleAccountSelection": "PASS user report D-MAN02 pending candidate only"
+}

@@ -1,0 +1,138 @@
+{
+  "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-154438\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "sha256": "6d8fad21d2d590f28fed44317e8c0017db32cbbdd5bff9058347e1df9489ca10",
+  "package": "com.example.kasir_app.integration",
+  "min_sdk": 24,
+  "notification_icon_present": true,
+  "native": {
+    "lib/arm64-v8a/libVkLayer_khronos_validation.so": {
+      "bytes": 15240080,
+      "sha256": "ae445f7e74d402e3a367adb230b1edd9841899fcb3310166e5cc96a09ad37a3f",
+      "class": "ELF64",
+      "load_alignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    "lib/arm64-v8a/libflutter.so": {
+      "bytes": 37584608,
+      "sha256": "4462eb296612496f21cc4c439f2f60453f850f15d6f87729bd40bc3e2bed451a",
+      "class": "ELF64",
+      "load_alignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    "lib/arm64-v8a/libkasir_pin_kdf.so": {
+      "bytes": 14352,
+      "sha256": "264b5896fff73c005df3c844fc1aac8bb1881196314893975431cb4571b14435",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384
+      ]
+    },
+    "lib/arm64-v8a/libsqlcipher.so": {
+      "bytes": 2100672,
+      "sha256": "32d4c1bb89a90b59a3d6be950bbc36c133f8762f627b333a3512205c8037a48b",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/arm64-v8a/libsqlite3.so": {
+      "bytes": 1732360,
+      "sha256": "081df67ee9ab852daea6a0679427e90fc89a0245d06f93dafe2309875c609c5c",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/armeabi-v7a/libflutter.so": {
+      "bytes": 31959500,
+      "sha256": "087396a6bdf8b4a9b71a554e82efb3b1cfb269fb64854dda0c135160eeb9a023",
+      "class": "ELF32",
+      "load_alignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    "lib/armeabi-v7a/libkasir_pin_kdf.so": {
+      "bytes": 9808,
+      "sha256": "b519472dbce485d00bed40488eb2c543da1c03a42992d3ac6735fe7422550c51",
+      "class": "ELF32",
+      "load_alignments": [
+        16384,
+        16384
+      ]
+    },
+    "lib/armeabi-v7a/libsqlcipher.so": {
+      "bytes": 1047124,
+      "sha256": "c2084efe2469e69ffafa09425800de4bf62fb34cb246b645ac7951294f3e28ba",
+      "class": "ELF32",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/armeabi-v7a/libsqlite3.so": {
+      "bytes": 1713736,
+      "sha256": "5f331b44ef2549f1e3fa2153ad22d60d85c5a43766e4690a29cc49a0652db772",
+      "class": "ELF32",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/x86_64/libflutter.so": {
+      "bytes": 38828136,
+      "sha256": "f5133252a4aafccd44bd14ed56292285e56957e95749f9eda4deda1cf538b908",
+      "class": "ELF64",
+      "load_alignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    "lib/x86_64/libkasir_pin_kdf.so": {
+      "bytes": 14704,
+      "sha256": "5b6fa448ac23fe02ebafd253b56c95c58aec67cc291c671bfef29738bccc5969",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384
+      ]
+    },
+    "lib/x86_64/libsqlcipher.so": {
+      "bytes": 2231848,
+      "sha256": "81b98e79ea7176482daf40497f34fc7eb701c661d13c09dada66a1a51e8d9561",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/x86_64/libsqlite3.so": {
+      "bytes": 1709544,
+      "sha256": "c773c3a25e4c11a450cc700ac95d665c3a1ae75ad426a204fc9b7a7a69b0e191",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    }
+  },
+  "installed_by_this_check": false,
+  "zipalign_16k_pass": true
+}

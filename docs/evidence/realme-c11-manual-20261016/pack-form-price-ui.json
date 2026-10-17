@@ -1,0 +1,209 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "system_input_shown": false,
+  "nodes": [
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.LinearLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "true"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,64][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[80,177][640,1399]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Barang masuk",
+      "bounds": "[128,225][592,289]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[128,321][592,1207]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[128,321][592,1207]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Unit input\nDus/box",
+      "bounds": "[128,321][592,433]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "5",
+      "bounds": "[128,433][592,585]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Gunakan digit 0\u20139; tanda minus, pecahan, dan notasi ilmiah tidak diterima.",
+      "bounds": "[128,553][592,585]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "40",
+      "bounds": "[128,585][592,737]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Boleh berbeda untuk penerimaan/opname ini; konfigurasi barang tidak berubah.",
+      "bounds": "[128,705][592,737]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "5 dus/box \u00d7 40 pcs = 200 pcs",
+      "bounds": "[128,761][560,807]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "12.000",
+      "bounds": "[128,831][592,943]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[128,943][592,1095]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Kosongkan pilihan",
+      "bounds": "[496,951][592,1047]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Tanpa supplier",
+      "bounds": "[160,1063][328,1095]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Cari / tambah cepat supplier",
+      "bounds": "[128,1095][592,1207]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "ID",
+      "bounds": "[161,1256][240,1350]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Batal",
+      "bounds": "[256,1255][384,1351]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Simpan",
+      "bounds": "[400,1255][592,1351]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][0,0]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    }
+  ]
+}

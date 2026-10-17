@@ -1,0 +1,18 @@
+{
+  "native_functional_pass": 118,
+  "native_SQL_Provider_pass": 109,
+  "native_UI_pass": 9,
+  "native_UI_fail": 2,
+  "native_benchmark_pass": 1,
+  "windows_functional_pass": 165,
+  "windows_benchmark_pass": 2,
+  "windows_focused_M31_current_helper_pass": 4,
+  "windows_focused_not_added_to_165": true,
+  "limitations": [
+    "native runners include separate runs/retries/exit1, not one all-pass run",
+    "ADB Enter plus Leanback path failed separately from 120 native cases",
+    "force-stop restart, not Android reboot or backup restore",
+    "release/profile small fixture, not full public release acceptance",
+    "hardware keyboard/scanner/OEM/TalkBack not certified"
+  ]
+}

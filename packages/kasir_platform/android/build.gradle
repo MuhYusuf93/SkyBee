@@ -1,0 +1,23 @@
+group = 'com.example.kasir_platform'
+version = '0.1.0'
+buildscript {
+    repositories { google(); mavenCentral() }
+    dependencies { classpath 'com.android.tools.build:gradle:8.11.1' }
+}
+apply plugin: 'com.android.library'
+android {
+    namespace 'com.example.kasir_platform'
+    compileSdk 36
+    defaultConfig { minSdk 24 }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
+}
+repositories { google(); mavenCentral() }
+dependencies {
+    implementation 'com.google.crypto.tink:tink-android:1.23.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+    testImplementation 'junit:junit:4.13.2'
+}

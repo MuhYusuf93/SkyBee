@@ -1,0 +1,13 @@
+{
+  "id": "N-MAN02",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Allow in active Android notification dialog; saved inline feedback/busy ended; one generic notification with expected title/body and no product/customer/debt details",
+  "settingsGrantPath": "not established; final allow was the active Android dialog",
+  "automaticEvidence": false,
+  "notificationTapPin": "UNVERIFIED",
+  "coldStartDedup": "UNVERIFIED",
+  "lockscreen": "UNVERIFIED"
+}

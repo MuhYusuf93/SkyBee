@@ -1,0 +1,13 @@
+{
+  "id": "D-MAN01-before",
+  "date": "2026-10-17",
+  "source": "user report",
+  "status": "PARTIAL; cancellation feedback FAIL",
+  "picker": "opened and cancelled by user",
+  "message": "Operasi belum berhasil. Periksa izin, koneksi, atau masuk kembali melalui PIN",
+  "scheduleRows": "last attempt/last success/next target all belum terjadwal reported",
+  "accountControls": "not established from report",
+  "actualSdkExceptionCode": "not captured",
+  "realGoogleDriveApi": "UNVERIFIED",
+  "automaticDeviceControlActive": false
+}

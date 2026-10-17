@@ -1,0 +1,7 @@
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart
+Running Gradle task 'assembleDebug'...                             18.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           5.8s
+00:00 +0: Android setup PIN → warehouse product/receipt → average → background lock
+00:56 +1: (tearDownAll)
+00:57 +1: All tests passed!

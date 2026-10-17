@@ -1,0 +1,222 @@
+{
+  "platform": "DV8910 / firmware DV8947-KIX / Android sqflite",
+  "mode": "debug test (not release/profile)",
+  "fixture_products": 1000,
+  "fixture_sales": 2000,
+  "sale_items": 2000,
+  "stock_sale_ledger_rows": 2000,
+  "payments": 600,
+  "seed_ms": 49518,
+  "search_index_build_ms": 15921,
+  "sample_policy": "1 warmup + 5 timed per query, seeding/anchors outside samples",
+  "far_cursor_policy": "primary-key lookup of known synthetic anchor, no OFFSET",
+  "metadata": {
+    "sqlite_version": "3.28.0",
+    "journal_mode": "truncate",
+    "page_count": 1827,
+    "page_size": 4096
+  },
+  "latency": {
+    "catalog_first": {
+      "samples_us": [
+        8882,
+        9696,
+        9242,
+        9201,
+        8498
+      ],
+      "median_us": 9201,
+      "max_us": 9696
+    },
+    "catalog_continuation": {
+      "samples_us": [
+        9132,
+        8481,
+        8109,
+        8436,
+        8239
+      ],
+      "median_us": 8436,
+      "max_us": 9132
+    },
+    "catalog_deep": {
+      "samples_us": [
+        4568,
+        4310,
+        4293,
+        4950,
+        4597
+      ],
+      "median_us": 4568,
+      "max_us": 4950
+    },
+    "history_first": {
+      "samples_us": [
+        10160,
+        11967,
+        10021,
+        11044,
+        11172
+      ],
+      "median_us": 11044,
+      "max_us": 11967
+    },
+    "history_continuation": {
+      "samples_us": [
+        10638,
+        10252,
+        10149,
+        12020,
+        10631
+      ],
+      "median_us": 10631,
+      "max_us": 12020
+    },
+    "history_deep_1500": {
+      "samples_us": [
+        9809,
+        9326,
+        10317,
+        9871,
+        9128
+      ],
+      "median_us": 9809,
+      "max_us": 10317
+    },
+    "report_detail_first": {
+      "samples_us": [
+        9058,
+        9027,
+        8541,
+        9057,
+        8274
+      ],
+      "median_us": 9027,
+      "max_us": 9058
+    },
+    "report_detail_continuation": {
+      "samples_us": [
+        9439,
+        9109,
+        10198,
+        9276,
+        9425
+      ],
+      "median_us": 9425,
+      "max_us": 10198
+    },
+    "report_detail_deep_1500": {
+      "samples_us": [
+        9411,
+        10326,
+        9745,
+        13555,
+        10560
+      ],
+      "median_us": 10326,
+      "max_us": 13555
+    },
+    "search_common": {
+      "samples_us": [
+        71044,
+        65545,
+        65099,
+        62924,
+        68386
+      ],
+      "median_us": 65545,
+      "max_us": 71044
+    },
+    "monthly_summary": {
+      "samples_us": [
+        61189,
+        60114,
+        59928,
+        60244,
+        65740
+      ],
+      "median_us": 60244,
+      "max_us": 65740
+    }
+  },
+  "plans": {
+    "catalog_first": [
+      "SEARCH TABLE products USING INDEX products_catalog (is_deleted=?)"
+    ],
+    "catalog_deep": [
+      "SEARCH TABLE products USING INDEX products_catalog (is_deleted=? AND (normalized_name,id)>(?,?))"
+    ],
+    "history_first": [
+      "SEARCH TABLE sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)",
+      "CORRELATED SCALAR SUBQUERY 1",
+      "SEARCH TABLE sale_transaction_reversals AS r USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)"
+    ],
+    "history_deep": [
+      "SEARCH TABLE sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)",
+      "CORRELATED SCALAR SUBQUERY 1",
+      "SEARCH TABLE sale_transaction_reversals AS r USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)"
+    ],
+    "report_first": [
+      "MERGE (UNION ALL)",
+      "LEFT",
+      "CO-ROUTINE 2",
+      "SEARCH TABLE sale_transactions AS s USING INDEX sale_transactions_history (created_at>? AND created_at<?)",
+      "CORRELATED SCALAR SUBQUERY 1",
+      "SEARCH TABLE sale_transaction_reversals AS x USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)",
+      "SCAN SUBQUERY 2",
+      "USE TEMP B-TREE FOR ORDER BY",
+      "RIGHT",
+      "CO-ROUTINE 5",
+      "SEARCH TABLE sale_transaction_reversals AS r USING INDEX sale_reversals_period (created_at>? AND created_at<?)",
+      "SEARCH TABLE sale_transactions AS s USING INDEX sqlite_autoindex_sale_transactions_1 (id=?)",
+      "CORRELATED SCALAR SUBQUERY 4",
+      "SEARCH TABLE sale_transaction_reversals AS x USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)",
+      "SCAN SUBQUERY 5",
+      "USE TEMP B-TREE FOR ORDER BY"
+    ],
+    "report_deep": [
+      "MERGE (UNION ALL)",
+      "LEFT",
+      "CO-ROUTINE 2",
+      "SEARCH TABLE sale_transactions AS s USING INDEX sale_transactions_history (created_at>? AND created_at<?)",
+      "CORRELATED SCALAR SUBQUERY 1",
+      "SEARCH TABLE sale_transaction_reversals AS x USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)",
+      "SCAN SUBQUERY 2",
+      "USE TEMP B-TREE FOR ORDER BY",
+      "RIGHT",
+      "CO-ROUTINE 5",
+      "SEARCH TABLE sale_transaction_reversals AS r USING INDEX sale_reversals_period (created_at>? AND created_at<?)",
+      "SEARCH TABLE sale_transactions AS s USING INDEX sqlite_autoindex_sale_transactions_1 (id=?)",
+      "CORRELATED SCALAR SUBQUERY 4",
+      "SEARCH TABLE sale_transaction_reversals AS x USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)",
+      "SCAN SUBQUERY 5",
+      "USE TEMP B-TREE FOR ORDER BY"
+    ],
+    "search_common": [
+      "MATERIALIZE 4",
+      "COMPOUND QUERY",
+      "LEFT-MOST SUBQUERY",
+      "SEARCH TABLE products USING INDEX sqlite_autoindex_products_3 (barcode=?)",
+      "UNION ALL",
+      "SEARCH TABLE products USING INDEX sqlite_autoindex_products_2 (sku=?)",
+      "UNION ALL",
+      "SEARCH TABLE products USING COVERING INDEX products_catalog (is_deleted=? AND normalized_name=?)",
+      "UNION ALL",
+      "SEARCH TABLE cashier_search_terms USING COVERING INDEX cashier_terms_prefix (term>? AND term<?)",
+      "SEARCH TABLE products AS p USING COVERING INDEX products_catalog (is_deleted=?)",
+      "SEARCH SUBQUERY 4 AS c USING AUTOMATIC COVERING INDEX (product_id=?)",
+      "USE TEMP B-TREE FOR GROUP BY",
+      "USE TEMP B-TREE FOR ORDER BY"
+    ],
+    "monthly_sales": [
+      "CO-ROUTINE 2",
+      "COMPOUND QUERY",
+      "LEFT-MOST SUBQUERY",
+      "SEARCH TABLE sale_transactions AS s USING INDEX sale_transactions_history (created_at>? AND created_at<?)",
+      "UNION ALL",
+      "SEARCH TABLE sale_transaction_reversals AS r USING INDEX sale_reversals_period (created_at>? AND created_at<?)",
+      "SEARCH TABLE sale_transactions AS s USING INDEX sqlite_autoindex_sale_transactions_1 (id=?)",
+      "SCAN SUBQUERY 2"
+    ]
+  }
+}

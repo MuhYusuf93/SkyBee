@@ -1,0 +1,195 @@
+[
+  {
+    "suite": "database_test.dart",
+    "log": "native-functional.log",
+    "cases": [
+      "fresh schema and foreign keys; no production fixtures; safe defaults",
+      "constraints: integers, stock, identity, barcode uniqueness including archive",
+      "sale relationships, snapshots, idempotency constraints and immutable facts",
+      "database operation failure rolls back and next operation still works",
+      "v1 to current upgrade preserves data and relationships, reopening and downgrade safety",
+      "catalog composite cursor: duplicates, Unicode, empty/final/default pages and prefix reset",
+      "failed migration rolls back version/index changes and can retry without losing data",
+      "startup service retries opening, shares one coordinator, disposes in-flight work safely",
+      "history cursor: same timestamps, half-open range, customer and session upper bound",
+      "EXPLAIN actual first/continuation queries select matching indexes without temp sort",
+      "coordinator serializes maintenance and writes; close rejects later operations"
+    ],
+    "result": "PASS",
+    "passed": 11,
+    "reporter_duration": "00:12"
+  },
+  {
+    "suite": "management_inventory_test.dart",
+    "log": "native-retest.log",
+    "cases": [
+      "authorization is service-enforced, idle expiry and lock revoke queued writes",
+      "session idle deadline uses monotonic time despite wall-clock changes",
+      "leading-zero PIN and persisted progressive lockout survive reopen/clock rollback",
+      "credential creation has no default PIN, salt random, confirmation and rotation/recovery",
+      "master CRUD, nullable relations, generated unique SKU and archived barcode collision",
+      "receipts are atomic/idempotent, supplier optional; weighted value/HPP example and no repricing cost",
+      "SQL failure rolls back receipt/item/batch/value/history/audit together",
+      "receipt reversal exact valuation, idempotent and rejects intervening stock dependencies",
+      "expiry calendar, undated, FEFO and expired stock remains physical until disposal",
+      "physical count and waste allocate rounding residue; zero quantity has zero value",
+      "price/archive undo does not overwrite later changes and logs reversal price",
+      "settings validated store zone/text, unchanged opt-in and protected saves",
+      "master, batch and ledger pagination handles same sort keys and literal prefixes",
+      "v2 to v3 preserves sale snapshots/relations and adds defaults non-destructively"
+    ],
+    "result": "PASS",
+    "passed": 14,
+    "reporter_duration": "09:54"
+  },
+  {
+    "suite": "locale_currency_test.dart",
+    "log": "native-retest.log",
+    "cases": [
+      "public language preference persists with no PIN; default currency and null device policy",
+      "empty store currency protected/persistent, scale catalog, non-financial masters preserved",
+      "currency change refused for every old financial surface, including archived and zero receipt",
+      "USD inventory exact minor units, receipt/header/history metadata and repository",
+      "M2 v3 migration preserves exact money stock HPP snapshots drafts and user strings",
+      "v4 interrupted migration rolls back partial columns and leaves v3 usable"
+    ],
+    "result": "PASS",
+    "passed": 6,
+    "reporter_duration": "09:09"
+  },
+  {
+    "suite": "cashier_sql_test.dart",
+    "log": "native-retest.log",
+    "cases": [
+      "search normalizes compact/token/alias/category, exact ranks first, bounded and literal syntax",
+      "dirty index follows category/alias/name/archive edits; ambiguous exact code never fuzzy-adds",
+      "three leading-zero scans merge quantity, draft persists input/reopen without reducing stock",
+      "cart stock/quantity/overflow validation rolls back; stale undo cannot overwrite later edits",
+      "changed prices require explicit acceptance; draft revision and archived product are revalidated",
+      "weighted snapshot example 36000/27000/9000 and debt 26000; settlement adds no sale or HPP",
+      "paid full ignores customer/cash received; free sale produces no zero payment",
+      "conditional partial/full debt validation and currency mismatch create no financial facts",
+      "checkout same attempt is idempotent; changed payment rejected and completed draft guarded",
+      "post-commit UI death recovers stored sale, input and pointer across restart; next acknowledged draft persists",
+      "two checkout services on the same local database compete for last unit; only one commits",
+      "checkout injected failure at validated rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at customer rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at sale rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at stock rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at items rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at batches rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at history rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at payment rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at draft rolls back all facts/stock/customer/draft, then retry succeeds",
+      "checkout injected failure at audit rolls back all facts/stock/customer/draft, then retry succeeds",
+      "expiry day excludes physical stock; FEFO dated first/undated last and exact residual cost",
+      "FEFO streams beyond 100 batches without skipping; sold out leaves zero valuation",
+      "repayment spans oldest sales with preview, idempotency, stale balance rejection and immutable sale cost",
+      "repayment failure at payment rolls back all allocations/payment/audit",
+      "repayment failure at allocation rolls back all allocations/payment/audit",
+      "repayment failure at audit rolls back all allocations/payment/audit",
+      "same-name customers stay separate, deterministic keyset pages and settled sales remain stored",
+      "V4 to current schema preserves old values and draft; additive defaults and integrity",
+      "V5 migration failure rolls back new columns/version and preserves V4 data"
+    ],
+    "result": "PASS",
+    "passed": 30,
+    "reporter_duration": "00:38"
+  },
+  {
+    "suite": "wholesale_packaging_sql_test.dart",
+    "log": "native-retest.log",
+    "cases": [
+      "legacy-style product without wholesale/pack retains retail and base receipt",
+      "toggle scan/quantity reopen undo preserve mode and payment intent, snapshot retry",
+      "changed wholesale needs acceptance, removal needs explicit retail correction",
+      "wholesale nullable undo restores removal and rejects later revision",
+      "5 dus x 40 = 200, 5 x 120000 = 600000, per-receipt override and master independent",
+      "USD fractional per-base cost keeps exact total and sold-out residue",
+      "MYR fractional per-base cost keeps exact total and sold-out residue",
+      "physical pack count follows existing average and does not insert a purchase",
+      "receipt reversal exact values, config edit not dependency, later sale blocks reversal",
+      "protected configuration/price history and zero/overflow failures leave no partial facts",
+      "pack receipt failure after stock update rolls back all source facts and permits retry",
+      "V5 upgrade preserves legacy facts/defaults, receipt origin remains unknown",
+      "V6 migration failure rolls back additive columns and preserves V5 data",
+      "closed consistent DB snapshot reopen preserves packaging, draft and sale facts (not M5 restore)"
+    ],
+    "result": "PASS",
+    "passed": 14,
+    "reporter_duration": "05:46"
+  },
+  {
+    "suite": "localization_ui_test.dart",
+    "log": "native-retest.log",
+    "cases": [
+      "Android public language, protected USD, live form locale, currency refusal",
+      "Android public language, protected USD, live form locale, currency refusal - did not complete [E]",
+      "(tearDownAll) - did not complete [E]",
+      "Some tests failed."
+    ],
+    "result": "incomplete"
+  },
+  {
+    "suite": "reports_corrections_sql_test.dart",
+    "log": "native-m4.log",
+    "cases": [
+      "moving average example: whole-period totals and repayment never create a new sale/profit",
+      "sales/payment corrections are protected, require reason and real-world attestations",
+      "full sale reversal is atomic/idempotent and retains draft/items/wholesale snapshots",
+      "return period is signed and does not rewrite original period; followup repayment must be reversed first",
+      "return after later restock/sale adds original cost to current valuation without repricing another sale",
+      "expired returned original batches stay unsaleable, physical/value/ledger still reconcile",
+      "repayment reversal mirrors every allocation, reopens debt, changes no stock/sales/HPP, retry safe",
+      "partial checkout payment can reopen its named debt; anonymous payment requires full goods return",
+      "sale failure at saleHeader rolls back ALL tables and emits no commit invalidation",
+      "sale failure at batch rolls back ALL tables and emits no commit invalidation",
+      "sale failure at stock rolls back ALL tables and emits no commit invalidation",
+      "sale failure at history rolls back ALL tables and emits no commit invalidation",
+      "sale failure at paymentHeader rolls back ALL tables and emits no commit invalidation",
+      "sale failure at paymentAllocation rolls back ALL tables and emits no commit invalidation",
+      "sale failure at audit rolls back ALL tables and emits no commit invalidation",
+      "payment failure at paymentHeader rolls back header/allocations/audit",
+      "payment failure at paymentAllocation rolls back header/allocations/audit",
+      "payment failure at audit rolls back header/allocations/audit",
+      "capability lost during correction rolls back rather than committing a queued protected write",
+      "shop calendar uses half-open UTC bounds, month boundary and DST days, not fixed 24h",
+      "reconciliation diagnoses stock/value mismatch and never mutates facts",
+      "receipt after a cancelled checkout remains readable for crash/retry recovery, never a second sale",
+      "same-name customers filter by identity; current inventory is whole shop independent of customer",
+      "USD fractional HPP and returned residue are preserved, negative profit uses exact micros"
+    ],
+    "result": "PASS",
+    "passed": 24,
+    "reporter_duration": "09:06"
+  },
+  {
+    "suite": "m4_storage_test.dart",
+    "log": "native-m4.log",
+    "cases": [
+      "route report cache stays bounded and ignores SQL reads for an obsolete customer filter",
+      "successful mutation refreshes route report totals and invalidates its detail cursor",
+      "all-time route history advances upper time on later inserts without keeping obsolete pages",
+      "whole-range summary exceeds one detail page and tie-safe event cursor visits every original/reversal once",
+      "cursor rejects changed filter and committed dataset; refreshed history tracks active/cancelled status",
+      "half-open period excludes end boundary while includes first/last millisecond, payment ledger ties remain total ordered",
+      "aggregate INTEGER overflow is explicit, never silently loses precision through TOTAL/double",
+      "V6 to V7 preserves every old value, backfills only proven origins, legacy confirmation stays unknown",
+      "V7 migration failure rolls back columns/version and preserves V6 rows",
+      "SQL rejects mismatched reversal amount/customer and mismatched original allocation"
+    ],
+    "result": "PASS",
+    "passed": 10,
+    "reporter_duration": "04:01"
+  },
+  {
+    "suite": "dv8910_performance_test.dart",
+    "log": "native-m4.log",
+    "cases": [
+      "M4 benchmark 1000 products / 2000 sales with items, batches and ledger"
+    ],
+    "result": "PASS",
+    "passed": 1,
+    "reporter_duration": "01:04"
+  }
+]

@@ -1,0 +1,36 @@
+ACTIVITY MANAGER PROCESS EXIT INFO (dumpsys activity exit-info)
+Last Timestamp of Persistence Into Persistent Storage: 2026-10-14 02:58:48.050
+  package: com.example.kasir_app.integration
+    Historical Process Exit for uid=10537
+        ApplicationExitInfo #0:
+          timestamp=2026-10-14 03:22:09.435 pid=15587 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=323MB rss=460MB description=stop com.example.kasir_app.integration due to from process:21292 state=empty trace=null
+        ApplicationExitInfo #1:
+          timestamp=2026-10-14 03:21:06.505 pid=13696 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=319MB rss=457MB description=stop com.example.kasir_app.integration due to from process:20005 state=empty trace=null
+        ApplicationExitInfo #2:
+          timestamp=2026-10-14 03:19:30.049 pid=11864 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=304MB rss=442MB description=stop com.example.kasir_app.integration due to from process:18176 state=empty trace=null
+        ApplicationExitInfo #3:
+          timestamp=2026-10-14 03:16:24.567 pid=10426 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=325MB rss=462MB description=stop com.example.kasir_app.integration due to from process:16204 state=empty trace=null
+        ApplicationExitInfo #4:
+          timestamp=2026-10-14 03:14:57.858 pid=8470 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0,00 rss=0,00 description=stop com.example.kasir_app.integration due to from process:14721 state=empty trace=null
+        ApplicationExitInfo #5:
+          timestamp=2026-10-14 03:13:18.221 pid=6607 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0,00 rss=0,00 description=stop com.example.kasir_app.integration due to from process:12518 state=empty trace=null
+        ApplicationExitInfo #6:
+          timestamp=2026-10-14 03:11:58.279 pid=5647 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0,00 rss=0,00 description=stop com.example.kasir_app.integration due to from process:11047 state=empty trace=null
+        ApplicationExitInfo #7:
+          timestamp=2026-10-14 03:10:46.324 pid=1271 realUid=10537 packageUid=10537 definingUid=10537 user=0
+          process=com.example.kasir_app.integration reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0,00 rss=0,00 description=stop com.example.kasir_app.integration due to from process:9307 state=empty trace=null

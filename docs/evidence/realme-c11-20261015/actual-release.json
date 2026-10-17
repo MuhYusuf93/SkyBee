@@ -1,0 +1,141 @@
+{
+  "device": "0062112V2210F9B3",
+  "mode": "release",
+  "package": "com.example.kasir_app.integration",
+  "time": "2026-10-15T07:20:26.840640+07:00",
+  "launches": [
+    {
+      "kind": "cold",
+      "pid": "17013",
+      "previous_pid": "",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 6077\r\nWaitTime: 6088\r\nComplete",
+      "ui_observation_bound_seconds": 9.968999999997322,
+      "actual_kind": "cold"
+    },
+    {
+      "kind": "cold",
+      "pid": "17447",
+      "previous_pid": "17013",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 1011\r\nWaitTime: 1025\r\nComplete",
+      "ui_observation_bound_seconds": 3.562000000005355,
+      "actual_kind": "cold"
+    },
+    {
+      "kind": "cold",
+      "pid": "17528",
+      "previous_pid": "17447",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 861\r\nWaitTime: 867\r\nComplete",
+      "ui_observation_bound_seconds": 3.4689999999973224,
+      "actual_kind": "cold"
+    },
+    {
+      "kind": "warm",
+      "pid": "17528",
+      "previous_pid": "17528",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 226\r\nWaitTime: 234\r\nComplete",
+      "ui_observation_bound_seconds": 2.889999999999418,
+      "actual_kind": "warm"
+    },
+    {
+      "kind": "warm",
+      "pid": "17528",
+      "previous_pid": "17528",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 221\r\nWaitTime: 225\r\nComplete",
+      "ui_observation_bound_seconds": 2.686999999990803,
+      "actual_kind": "warm"
+    },
+    {
+      "kind": "warm",
+      "pid": "17528",
+      "previous_pid": "17528",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 221\r\nWaitTime: 232\r\nComplete",
+      "ui_observation_bound_seconds": 2.672000000005937,
+      "actual_kind": "warm"
+    }
+  ],
+  "memory": [
+    {
+      "tag": "cashier-initial",
+      "pid": "17528",
+      "log": "memory-actual-release-cashier-initial.log",
+      "pss_kib": 43391,
+      "rss_kib": 107764,
+      "swap_pss_kib": 1190
+    },
+    {
+      "tag": "cycle-1-management",
+      "pid": "17528",
+      "log": "memory-actual-release-cycle-1-management.log",
+      "pss_kib": 52595,
+      "rss_kib": 121252,
+      "swap_pss_kib": 6167
+    },
+    {
+      "tag": "cycle-2-management",
+      "pid": "17528",
+      "log": "memory-actual-release-cycle-2-management.log",
+      "pss_kib": 53245,
+      "rss_kib": 122600,
+      "swap_pss_kib": 5457
+    },
+    {
+      "tag": "cycle-3-management",
+      "pid": "17528",
+      "log": "memory-actual-release-cycle-3-management.log",
+      "pss_kib": 51911,
+      "rss_kib": 121400,
+      "swap_pss_kib": 5453
+    },
+    {
+      "tag": "cashier-after-cycles",
+      "pid": "17528",
+      "log": "memory-actual-release-cashier-after-cycles.log",
+      "pss_kib": 40877,
+      "rss_kib": 76072,
+      "swap_pss_kib": 5001
+    }
+  ],
+  "details": [
+    {
+      "cycle": 1,
+      "route": "Inventory",
+      "observed_unique_row": true,
+      "opened_and_returned": true
+    },
+    {
+      "cycle": 1,
+      "route": "Sale history",
+      "observed_unique_row": true,
+      "opened_and_returned": true
+    },
+    {
+      "cycle": 2,
+      "route": "Inventory",
+      "observed_unique_row": true,
+      "opened_and_returned": true
+    },
+    {
+      "cycle": 2,
+      "route": "Sale history",
+      "observed_unique_row": true,
+      "opened_and_returned": true
+    },
+    {
+      "cycle": 3,
+      "route": "Inventory",
+      "observed_unique_row": true,
+      "opened_and_returned": true
+    },
+    {
+      "cycle": 3,
+      "route": "Sale history",
+      "observed_unique_row": true,
+      "opened_and_returned": true
+    }
+  ],
+  "failures": [],
+  "physical_input": false,
+  "method": "actual KasirApp; am start -W + UIAutomator observation; no profiler/recording/forced GC",
+  "android_home_relock_observed": true,
+  "completed": true
+}

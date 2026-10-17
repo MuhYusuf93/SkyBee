@@ -1,0 +1,105 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "ime_nodes_in_dump": false,
+  "system_input_shown": true,
+  "nodes": [
+    {
+      "label": "Synthetic input probe\nID",
+      "bounds": "[32,32][936,272]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Hutang",
+      "bounds": "[594,32][783,128]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Kelola",
+      "bounds": "[32,144][243,240]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "@edit",
+      "bounds": "[32,272][936,384]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "true"
+    },
+    {
+      "label": "Bersihkan pencarian",
+      "bounds": "[840,280][936,376]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Daftar belanja\nSynthetic barcode goods\nIDR 12.000 \u00d7 1 = IDR 12.000",
+      "bounds": "[984,32][1888,390]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Kosongkan",
+      "bounds": "[1658,72][1848,168]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Kurangi jumlah",
+      "bounds": "[1024,278][1120,374]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "1",
+      "bounds": "[1120,278][1248,374]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Tambah jumlah",
+      "bounds": "[1248,278][1344,374]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Hapus barang dari belanja",
+      "bounds": "[1344,278][1440,374]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Total",
+      "bounds": "[32,454][106,500]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "IDR 12.000",
+      "bounds": "[32,500][310,580]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Bayar",
+      "bounds": "[1720,469][1888,565]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+Computing fixes in lib...
+Applying fixes...
+
+data\repositories\sqlite_reports_repository.dart
+  curly_braces_in_flow_control_structures - 6 fixes
+
+data\repositories\sqlite_sale_transaction_repository.dart
+  curly_braces_in_flow_control_structures - 1 fix
+
+features\corrections\application\correction_service.dart
+  curly_braces_in_flow_control_structures - 14 fixes
+  use_null_aware_elements - 3 fixes
+
+features\corrections\presentation\correction_dialog.dart
+  curly_braces_in_flow_control_structures - 1 fix
+
+features\reports\application\reports_service.dart
+  curly_braces_in_flow_control_structures - 2 fixes
+
+features\sale_history\presentation\sale_history_provider.dart
+  curly_braces_in_flow_control_structures - 1 fix
+
+28 fixes made in 6 files.

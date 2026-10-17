@@ -1,0 +1,36 @@
+{
+  "status": "BLOCKED_BUILD_ABI_GATE",
+  "installed": false,
+  "reason": "KDF .so present arm64/x64 while Flutter app/engine only arm32",
+  "apk_sha256": "1ac9c87df7da4c7416e56187496566fac27c2b199fccc13d7dd51880945807d4",
+  "libraries": [
+    [
+      "lib/arm64-v8a/libkasir_pin_kdf.so",
+      14352
+    ],
+    [
+      "lib/armeabi-v7a/libapp.so",
+      11387468
+    ],
+    [
+      "lib/armeabi-v7a/libflutter.so",
+      8977900
+    ],
+    [
+      "lib/armeabi-v7a/libkasir_pin_kdf.so",
+      9808
+    ],
+    [
+      "lib/armeabi-v7a/libsqlite3.so",
+      1713736
+    ],
+    [
+      "lib/armeabi-v7a/libvmservice_snapshot.so",
+      1868364
+    ],
+    [
+      "lib/x86_64/libkasir_pin_kdf.so",
+      14704
+    ]
+  ]
+}

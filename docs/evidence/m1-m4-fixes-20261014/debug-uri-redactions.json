@@ -1,0 +1,22 @@
+{
+  "scope": "new task PID snapshots only",
+  "redacted": "ephemeral VM auth path; ports/assertions/timestamps retained",
+  "files": {
+    "dv-after-enter-ime-hidden.log": 1,
+    "dv-current-logcat.log": 1,
+    "dv-enter-ime-visible.log": 1,
+    "dv-input-initial-logcat.log": 1,
+    "dv-retry-logcat.log": 1,
+    "dv-three-enter-ime-hidden.log": 1,
+    "emulator-first-logcat.log": 1,
+    "emulator-protected-logcat.log": 1,
+    "emulator-setup-logcat.log": 1,
+    "poco-financial-logcat.log": 1,
+    "poco-regression-logcat.log": 1,
+    "poco-ui-logcat.log": 1,
+    "dv-gaps-logcat.log": 1,
+    "dv-locale-logcat.log": 1,
+    "emulator-cashier-logcat.log": 1,
+    "emulator-wholesale-logcat.log": 1
+  }
+}

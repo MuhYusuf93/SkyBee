@@ -1,0 +1,7 @@
+{
+  "ordinary": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261016-145515\\kasir-app-0.5.0-ordinary-release.apk",
+  "fixture": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261016-145515\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "evidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\release-artifacts-20261016-145515",
+  "installed": false,
+  "signing": "existing development certificate, not M6 release signing"
+}

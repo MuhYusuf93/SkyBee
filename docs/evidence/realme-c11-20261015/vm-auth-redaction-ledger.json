@@ -1,0 +1,9 @@
+[
+  {
+    "path": "pid-profile-loading.log",
+    "encoding": "utf-8",
+    "matches": 1,
+    "before_sha256": "085d7285da50c7ecfaddfb86cb96dbff45c31287d97192d4e9af8a73ab811709",
+    "after_sha256": "70d499ccaa604717691c3281797c3e037d34caa44f3f7ae8cedc662fe994cfc0"
+  }
+]

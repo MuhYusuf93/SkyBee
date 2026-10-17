@@ -1,0 +1,12 @@
+{
+  "device": "7f0edea0",
+  "model": "24069PC21G",
+  "package": "com.example.kasir_app.integration",
+  "fixtureSha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+  "matchesC24": true,
+  "notificationPermission": "android.permission.POST_NOTIFICATIONS: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]",
+  "deviceWrites": false,
+  "automaticDeviceControlActive": false,
+  "manualResult": "N-MAN01 pending user interaction",
+  "dv": "not present in adb devices; no connection/config changes"
+}

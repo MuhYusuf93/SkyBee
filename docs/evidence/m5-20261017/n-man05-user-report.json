@@ -1,0 +1,12 @@
+{
+  "id": "N-MAN05",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Two sequential Muat awal refreshes, unchanged condition, approximately10s wait, tapped notification did not reappear",
+  "automaticEvidence": false,
+  "coldStartDedup": "UNVERIFIED",
+  "thresholdRearm": "UNVERIFIED",
+  "expiryDelivery": "UNVERIFIED"
+}

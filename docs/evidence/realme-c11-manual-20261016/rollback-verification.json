@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-16",
+  "method": "SHA256 against saved 15 October final source; no device access",
+  "restored": {
+    "lib/features/inventory/presentation/stock_input_fields.dart": {
+      "sha256": "ec01c605cd1bbe5f7cde5a2ba68ac0b3ee96aa4a036e15cf2b9d7902bc11fe6d",
+      "baseline_sha256": "ec01c605cd1bbe5f7cde5a2ba68ac0b3ee96aa4a036e15cf2b9d7902bc11fe6d",
+      "matches": true
+    },
+    "lib/features/inventory/presentation/product_detail_screen.dart": {
+      "sha256": "7283e0e4f765710e3c3e6a594a5af4d299a06ad816b72d648f1d4338503990ca",
+      "baseline_sha256": "7283e0e4f765710e3c3e6a594a5af4d299a06ad816b72d648f1d4338503990ca",
+      "matches": true
+    },
+    "lib/features/inventory/presentation/product_form.dart": {
+      "sha256": "a546599b0bbb03ef3453d3806b137b57d9452cddabf396b0a227dd32775308a8",
+      "baseline_sha256": "a546599b0bbb03ef3453d3806b137b57d9452cddabf396b0a227dd32775308a8",
+      "matches": true
+    },
+    "test/wholesale_packaging_widgets_test.dart": {
+      "sha256": "7312761997772ffc61c209122589b8afa7ede29e85d04c058ba5a30d83c3a496",
+      "baseline_sha256": "7312761997772ffc61c209122589b8afa7ede29e85d04c058ba5a30d83c3a496",
+      "matches": true
+    },
+    "test/support/m31_ui_gaps_suite.dart": {
+      "sha256": "5e567ddc5f2e6c25c009ffb7ca301a33c0c84273a41061f94fe05a3e3fdc8f94",
+      "baseline_sha256": "5e567ddc5f2e6c25c009ffb7ca301a33c0c84273a41061f94fe05a3e3fdc8f94",
+      "matches": true
+    },
+    "integration_test/wholesale_packaging_ui_test.dart": {
+      "sha256": "68ce8f5412ff9a45d80062788dc6037e05fbaa105d39f0ff7001a10cea5c118f",
+      "baseline_sha256": "68ce8f5412ff9a45d80062788dc6037e05fbaa105d39f0ff7001a10cea5c118f",
+      "matches": true
+    },
+    "docs/SPEC.md": {
+      "sha256": "14db5f2bde56192c1d0ccb692680ef29610ef1bc9f4435bf29f8d8b5b611fef5",
+      "baseline_sha256": "14db5f2bde56192c1d0ccb692680ef29610ef1bc9f4435bf29f8d8b5b611fef5",
+      "matches": true
+    }
+  },
+  "earlier_fixes_preserved": {
+    "lib/features/management/application/pin_hasher.dart": {
+      "sha256": "ab1a1588ab3b723695c4a77b3eff2f4abdd3a865b13f5f61933e793a0a68412b",
+      "baseline_sha256": "ab1a1588ab3b723695c4a77b3eff2f4abdd3a865b13f5f61933e793a0a68412b",
+      "matches": true
+    },
+    "android/app/build.gradle.kts": {
+      "sha256": "7a47e42ab2c00e798e421e35e843e559011d85c3cd8bb6e9aa4f22c67b962dc0",
+      "baseline_sha256": "7a47e42ab2c00e798e421e35e843e559011d85c3cd8bb6e9aa4f22c67b962dc0",
+      "matches": true
+    },
+    "android/app/src/main/kotlin/com/example/kasir_app/MainActivity.kt": {
+      "sha256": "be96a60b65a1dd536195f38119c8f38baeb6f912ce8c644aa3f8e795b484948e",
+      "baseline_sha256": "be96a60b65a1dd536195f38119c8f38baeb6f912ce8c644aa3f8e795b484948e",
+      "matches": true
+    },
+    "integration_test/management_ui_test.dart": {
+      "sha256": "84c84fa0cf88f66f3011ff7922d9449c43773c33f97eb0a95458df7ab4ffa05c",
+      "baseline_sha256": "84c84fa0cf88f66f3011ff7922d9449c43773c33f97eb0a95458df7ab4ffa05c",
+      "matches": true
+    }
+  }
+}

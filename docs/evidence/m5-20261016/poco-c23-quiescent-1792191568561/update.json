@@ -1,0 +1,15 @@
+{
+  "nonce": "1792191568561",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-054951\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-054951\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "fixtureSha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+  "strictFreshBeforeAfter": "PASS; all tables and two private archive hashes equal",
+  "originalInterval": "Historical strict FAIL retained; metadata probe explains all four changed tables, no data rollback",
+  "ordinaryAndPublicExports": "unchanged",
+  "startupConfirmed": true,
+  "automaticDeviceControlActive": false,
+  "beforeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c23-quiescent-before-1792191568561-20261017-055928",
+  "afterEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c23-quiescent-after-1792191568561-20261017-060056",
+  "startupEvidence": "docs\\evidence\\m5-20261016\\poco-archive-update-1792181574653\\startup.json"
+}

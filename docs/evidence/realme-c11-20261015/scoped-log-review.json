@@ -1,0 +1,181 @@
+{
+  "scope": "partial own-PID snapshots, expected SQL injection/capability warnings reviewed separately",
+  "files": {
+    "pid-actual-release.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-bugfix_regression_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-cashier-release-ready.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-cashier_sql_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-cashier_ui_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-checkout-release.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-database_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-locale_currency_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-localization_ui_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-m31_ui_gaps_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-m4_storage_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-m4_ui_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-management_inventory_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-management_ui_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-profile-loading.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-profile-runtime.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-protected_reads_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-release-runtime.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-reports_corrections_sql_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-wholesale-live.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-wholesale_packaging_sql_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    },
+    "pid-wholesale_packaging_ui_test.log": {
+      "FATAL EXCEPTION": 0,
+      "Fatal signal": 0,
+      "Unhandled Exception": 0,
+      "E/flutter": 0,
+      "ANR in": 0,
+      "OutOfMemoryError": 0
+    }
+  }
+}

@@ -1,0 +1,14 @@
+Starting: Intent { cmp=com.example.kasir_app/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.example.kasir_app/.MainActivity
+TotalTime: 1404
+WaitTime: 1422
+Complete
+Starting: Intent { cmp=com.example.kasir_app/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.example.kasir_app/.MainActivity
+TotalTime: 1253
+WaitTime: 1259
+Complete

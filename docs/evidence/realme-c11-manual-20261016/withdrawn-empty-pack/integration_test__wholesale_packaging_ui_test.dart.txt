@@ -1,0 +1,290 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:path/path.dart' as path;
+import 'package:sqflite/sqflite.dart';
+import 'package:kasir_app/app/app_services.dart';
+import 'package:kasir_app/app/kasir_app.dart';
+import 'package:kasir_app/data/database/database_coordinator.dart';
+import 'package:kasir_app/features/settings/presentation/language_button.dart';
+import 'package:kasir_app/features/inventory/domain/stock_input.dart';
+import 'package:kasir_app/features/inventory/presentation/stock_input_fields.dart';
+
+/// Synthetic native form/input events, NOT evidence for OEM keyboard/scanner.
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized()
+    ..defaultTestTimeout = const Timeout(Duration(minutes: 5))
+    ..framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
+  // Standalone widget fixtures publish a frame before platform/credential IO.
+  runApp(const SizedBox.expand());
+  testWidgets(
+    'M3.1 warehouse boxes, physical count, wholesale scan draft and bilingual partial sale',
+    (tester) async {
+      final databasePath = path.join(
+        await getDatabasesPath(),
+        'm31_ui_${DateTime.now().microsecondsSinceEpoch}.db',
+      );
+      final db = DatabaseCoordinator(
+        factory: databaseFactory,
+        databasePath: databasePath,
+      );
+      final services = AppServices(db);
+      Finder field(String label) => find.byWidgetPredicate(
+        (widget) =>
+            widget is TextField &&
+            (widget.decoration?.labelText == label ||
+                (widget.decoration?.labelText?.startsWith('$label (') ??
+                    false)),
+      );
+      Future<void> waitFor(Finder target) async {
+        debugPrint('M31_FIXTURE_PHASE wait $target');
+        final timer = Stopwatch()..start();
+        while (target.evaluate().isEmpty &&
+            timer.elapsed < const Duration(seconds: 60)) {
+          await tester.pump(const Duration(milliseconds: 200));
+        }
+        expect(target, findsWidgets);
+        await tester.pumpAndSettle();
+      }
+
+      Future<void> show(Finder target) async {
+        if (target.evaluate().isEmpty) {
+          final scrollable = find.byType(Scrollable).first;
+          // Lazy fields may be above the current viewport as well as below it.
+          // Start at the top instead of assuming every next action is downward.
+          tester.state<ScrollableState>(scrollable).position.jumpTo(0);
+          await tester.pumpAndSettle();
+          if (target.evaluate().isEmpty) {
+            await tester.scrollUntilVisible(
+              target,
+              180,
+              scrollable: scrollable,
+            );
+          }
+        }
+        await tester.ensureVisible(target);
+        await tester.pumpAndSettle();
+      }
+
+      Future<void> tap(Finder target) async {
+        debugPrint('M31_FIXTURE_PHASE tap $target');
+        await show(target);
+        // A built/partly visible tile can have its center clipped by the fixed
+        // cashier footer or a live route/inset transition on a narrow phone.
+        // Reveal the center and require a real hit target; do not hide the
+        // keyboard, suppress missed taps, or accept an unchanged pricing mode.
+        final hitDeadline = Stopwatch()..start();
+        while (target.hitTestable().evaluate().isEmpty &&
+            hitDeadline.elapsed < const Duration(seconds: 4)) {
+          debugPrint(
+            'M31_HIT_WAIT rect=${tester.getRect(target)} '
+            'logicalSize=${tester.view.physicalSize / tester.view.devicePixelRatio} '
+            'inset=${tester.view.viewInsets.bottom / tester.view.devicePixelRatio}',
+          );
+          await Scrollable.ensureVisible(
+            tester.element(target),
+            alignment: 0.5,
+          );
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 100)),
+          );
+          await tester.pump(const Duration(milliseconds: 100));
+        }
+        expect(target.hitTestable(), findsWidgets);
+        await tester.tap(target);
+        await tester.pumpAndSettle();
+      }
+
+      Future<void> fill(String label, String text) async {
+        final target = field(label);
+        await show(target);
+        await tester.enterText(target, text);
+        await tester.pump();
+      }
+
+      Future<void> box() async {
+        await tap(
+          find.byWidgetPredicate(
+            (widget) => widget is DropdownButtonFormField<StockInputUnit>,
+          ),
+        );
+        await tap(find.text('Dus/box').last);
+      }
+
+      Future<void> enterPackSize() async {
+        final target = find.descendant(
+          of: find.byType(StockInputFields),
+          matching: field('Jumlah pcs per dus/box'),
+        );
+        await show(target);
+        expect(tester.widget<TextField>(target).controller!.text, isEmpty);
+        await tester.enterText(target, '40');
+        await tester.pump();
+      }
+
+      try {
+        debugPrint('M31_FIXTURE_PHASE before credential IO');
+        await tester.runAsync(() async {
+          await services.management.configure(
+            'Synthetic M31 store',
+            '0001',
+            '0001',
+          );
+          await services.settings.setLanguage('id');
+        });
+        debugPrint('M31_FIXTURE_PHASE before application pump');
+        await tester.pumpWidget(KasirApp(services: services));
+        debugPrint('M31_FIXTURE_PHASE application pumped');
+        await waitFor(field('Cari barang'));
+        await tap(find.text('Kelola'));
+        await waitFor(field('PIN'));
+        await fill('PIN', '0001');
+        await tap(find.text('Buka pengelolaan'));
+        await waitFor(find.text('Gudang'));
+        await tap(find.text('Gudang'));
+        await waitFor(find.text('Tambah barang'));
+        await tap(find.text('Tambah barang'));
+        await waitFor(field('Nama barang'));
+        await fill('Nama barang', 'Synthetic boxed water');
+        await fill('Harga jual', '12000');
+        await tap(find.text('Harga grosir — opsional'));
+        await fill('Harga grosir per pcs', '10000');
+        await tap(find.text('Kemasan dus/box — opsional'));
+        await fill('Label dus/box', 'dus');
+        await fill('Jumlah pcs per dus/box', '40');
+        await tap(find.text('Kode, barcode & kategori'));
+        await fill('Barcode (opsional)', '000031');
+        await tap(find.text('Stok awal & harga beli'));
+        await box();
+        await enterPackSize();
+        await fill('Jumlah dus/box', '5');
+        expect(find.text('5 dus/box × 40 pcs = 200 pcs'), findsOneWidget);
+        await fill('Harga beli per dus/box', '120000');
+        await tap(find.text('Simpan barang'));
+        await waitFor(find.widgetWithText(ListTile, 'Synthetic boxed water'));
+        await tap(find.widgetWithText(ListTile, 'Synthetic boxed water'));
+        await waitFor(find.text('Stok satuan dasar: 200 pcs'));
+        await tap(find.text('Barang masuk'));
+        await box();
+        await enterPackSize();
+        await fill('Jumlah dus/box', '1');
+        expect(find.text('1 dus/box × 40 pcs = 40 pcs'), findsOneWidget);
+        await fill('Harga beli per dus/box', '120000');
+        await tap(find.widgetWithText(FilledButton, 'Simpan'));
+        await waitFor(find.text('Stok satuan dasar: 240 pcs'));
+        await tap(find.text('Stok opname'));
+        await box();
+        await enterPackSize();
+        await fill('Jumlah dus/box', '5');
+        await fill('Alasan koreksi', 'Synthetic count');
+        await tap(find.widgetWithText(FilledButton, 'Simpan'));
+        await waitFor(find.text('Stok satuan dasar: 200 pcs'));
+        expect(
+          await db.read((database) => database.query('stock_receipts')),
+          hasLength(2),
+        );
+        final warehouse = await db.read(
+          (database) async => (await database.query('products')).single,
+        );
+        expect(warehouse['stock_quantity'], 200);
+        expect(warehouse['inventory_value_micros'], 600000000000);
+        await tap(find.byType(BackButton));
+        await tester.pumpAndSettle();
+        await tap(find.byType(BackButton));
+        await tester.pumpAndSettle();
+        await tap(find.byType(BackButton));
+        await waitFor(field('Cari barang'));
+        Future<void> scan() async {
+          await fill('Cari barang', '000031');
+          await tester.testTextInput.receiveAction(TextInputAction.search);
+          final timer = Stopwatch()..start();
+          while (field('Cari barang').evaluate().isNotEmpty &&
+              (tester
+                      .widget<TextField>(field('Cari barang'))
+                      .controller
+                      ?.text
+                      .isNotEmpty ??
+                  false) &&
+              timer.elapsed < const Duration(seconds: 30)) {
+            await tester.pump(const Duration(milliseconds: 200));
+          }
+          await tester.pumpAndSettle();
+        }
+
+        await scan();
+        await scan();
+        await scan();
+        await tap(find.byType(CheckboxListTile));
+        final pricingWait = Stopwatch()..start();
+        while (tester
+                    .widget<CheckboxListTile>(find.byType(CheckboxListTile))
+                    .value !=
+                true &&
+            pricingWait.elapsed < const Duration(seconds: 5)) {
+          await tester.pump(const Duration(milliseconds: 100));
+        }
+        expect(
+          tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value,
+          isTrue,
+        );
+        await scan();
+        expect(
+          tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value,
+          isTrue,
+        );
+        await tap(find.widgetWithText(TextButton, '4'));
+        await fill('Jumlah barang', '5');
+        await tap(find.text('Simpan'));
+        final draft = await services.cart.open();
+        expect(draft.lines, hasLength(1));
+        expect(draft.total.amountMinor, 50000);
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pumpAndSettle();
+        await tester.pumpWidget(KasirApp(services: services));
+        debugPrint('M31_FIXTURE_PHASE application pumped');
+        await waitFor(field('Cari barang'));
+        expect(
+          tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value,
+          isTrue,
+        );
+        await tap(find.byType(LanguageButton).first);
+        await tap(find.text('EN · English'));
+        await waitFor(find.text('Wholesale'));
+        await tap(find.text('Pay'));
+        await waitFor(find.text('Partly on credit'));
+        await tap(find.text('Partly on credit'));
+        await fill('Amount paid', '5000');
+        await fill('Customer name', 'Synthetic customer');
+        expect(find.textContaining('45,000'), findsWidgets);
+        // Finish editing before scrolling: caret auto-scroll must not pull the
+        // lazy submit button back out of the viewport while the driver settles.
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await tester.pumpAndSettle();
+        await tap(find.text('Save sale'));
+        await waitFor(find.text('Sale saved.'));
+        expect(find.text('Wholesale'), findsOneWidget);
+        final saved = await db.read(
+          (database) async =>
+              (await database.query('sale_transaction_items')).single,
+        );
+        expect(saved['quantity'], 5);
+        expect(saved['pricing_mode'], 'wholesale');
+        expect(saved['unit_price_rupiah'], 10000);
+        expect(saved['cost_micros'], 15000000000);
+        expect(
+          await db.read(
+            (database) => database.rawQuery('PRAGMA foreign_key_check'),
+          ),
+          isEmpty,
+        );
+        expect(tester.takeException(), isNull);
+      } finally {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pumpAndSettle();
+        await db.close();
+        await databaseFactory.deleteDatabase(databasePath);
+      }
+    },
+    timeout: const Timeout(Duration(minutes: 7)),
+  );
+}

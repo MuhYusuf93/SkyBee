@@ -1,0 +1,194 @@
+{
+  "time": "2026-10-15T07:10:29.847850+07:00",
+  "mode": "profile",
+  "device": "0062112V2210F9B3",
+  "package": "com.example.kasir_app.integration",
+  "method": "own process force-stop; not reboot/crash/powerloss",
+  "launches": [
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "",
+      "pid": "10620",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 6315\r\nWaitTime: 6334\r\nComplete",
+      "stage_ready_seconds": 11.562999999994645,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          34266,
+          29517,
+          26935,
+          26638,
+          37343
+        ],
+        "report_5_samples_us": [
+          67105,
+          55466,
+          58861,
+          66530,
+          55162
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3144262,
+        "launches": 6,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 51750,
+        "report_us_single_sample": 67627,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "10620",
+      "pid": "10854",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 2075\r\nWaitTime: 2081\r\nComplete",
+      "stage_ready_seconds": 7.2960000000020955,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          29990,
+          27379,
+          28369,
+          26605,
+          30318
+        ],
+        "report_5_samples_us": [
+          56431,
+          56180,
+          59920,
+          51454,
+          52376
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3112751,
+        "launches": 7,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 50573,
+        "report_us_single_sample": 61657,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "10854",
+      "pid": "10951",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 1977\r\nWaitTime: 1983\r\nComplete",
+      "stage_ready_seconds": 7.422000000005937,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          25196,
+          25196,
+          22787,
+          27237,
+          28501
+        ],
+        "report_5_samples_us": [
+          57192,
+          59210,
+          56473,
+          57098,
+          55395
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3121781,
+        "launches": 8,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 47426,
+        "report_us_single_sample": 58345,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "10951",
+      "pid": "11039",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 1953\r\nWaitTime: 1960\r\nComplete",
+      "stage_ready_seconds": 7.046999999991385,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          29742,
+          28694,
+          28764,
+          27248,
+          27254
+        ],
+        "report_5_samples_us": [
+          53379,
+          54972,
+          56785,
+          53598,
+          51654
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3114006,
+        "launches": 9,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 46644,
+        "report_us_single_sample": 59776,
+        "management_locked": true
+      }
+    }
+  ],
+  "failures": [
+    {
+      "type": "AssertionError",
+      "message": "",
+      "status": "UNVERIFIED_CAUSE"
+    }
+  ],
+  "ordinary_touched": false,
+  "runtime_assertions_passed": false
+}

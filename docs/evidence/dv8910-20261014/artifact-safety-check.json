@@ -1,0 +1,6 @@
+{
+  "synthetic_credential_literal_in_logs": false,
+  "python_helpers_AST_valid": true,
+  "no_other_app_screenshot_taken": true,
+  "limits": "literal audit only, not a general secret scanner; own screenshots visually checked and guarded"
+}

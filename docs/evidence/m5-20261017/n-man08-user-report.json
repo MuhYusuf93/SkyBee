@@ -1,0 +1,13 @@
+{
+  "id": "N-MAN08",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya semuanya sesuai",
+  "status": "PASS",
+  "scope": "Notification present in unlocked shade before action; app notificationsOff/save removed pending notification without manual deletion, warning2/min5 retained",
+  "additionalUserInformation": "Lockscreen notification permission for fixture app is enabled",
+  "lockscreenContent": "N-MAN07 UNVERIFIED, absent despite reported permission; cause unknown",
+  "finalAppNotificationsEnabled": false,
+  "osNotificationPermission": "not revoked by app switch",
+  "automaticEvidence": false
+}

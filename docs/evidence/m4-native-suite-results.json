@@ -1,0 +1,72 @@
+[
+  {
+    "suite": "database_test.dart",
+    "pass": 11,
+    "reporter_duration": "00:03"
+  },
+  {
+    "suite": "management_inventory_test.dart",
+    "pass": 14,
+    "reporter_duration": "01:49"
+  },
+  {
+    "suite": "locale_currency_test.dart",
+    "pass": 6,
+    "reporter_duration": "02:13"
+  },
+  {
+    "suite": "cashier_sql_test.dart",
+    "pass": 30,
+    "reporter_duration": "00:13"
+  },
+  {
+    "suite": "wholesale_packaging_sql_test.dart",
+    "pass": 14,
+    "reporter_duration": "01:28"
+  },
+  {
+    "suite": "localization_ui_test.dart",
+    "pass": 1,
+    "reporter_duration": "00:29"
+  },
+  {
+    "suite": "management_ui_test.dart",
+    "pass": 1,
+    "reporter_duration": "00:29"
+  },
+  {
+    "suite": "cashier_ui_test.dart",
+    "pass": 2,
+    "reporter_duration": "00:47"
+  },
+  {
+    "suite": "wholesale_packaging_ui_test.dart",
+    "pass": 1,
+    "reporter_duration": "01:03"
+  },
+  {
+    "suite": "m31_ui_gaps_test.dart",
+    "pass": 4,
+    "reporter_duration": "00:56"
+  },
+  {
+    "suite": "reports_corrections_sql_test.dart",
+    "pass": 24,
+    "reporter_duration": "02:32"
+  },
+  {
+    "suite": "m4_storage_test.dart",
+    "pass": 10,
+    "reporter_duration": "01:07"
+  },
+  {
+    "suite": "m4_ui_test.dart",
+    "pass": 2,
+    "reporter_duration": "00:36"
+  },
+  {
+    "suite": "m4_performance_test.dart",
+    "pass": 1,
+    "reporter_duration": "02:16"
+  }
+]

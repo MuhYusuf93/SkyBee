@@ -1,0 +1,16 @@
+{
+  "source": "normalized actual ADB tool stdout before/after KEYCODE_BACK; not a raw full input_method dump",
+  "package": "com.example.kasir_app.integration",
+  "before_Back": {
+    "mShowRequested": true,
+    "mInputShown": true,
+    "mIsInputViewShown": true
+  },
+  "after_Back": {
+    "mShowRequested": false,
+    "mInputShown": false,
+    "mIsInputViewShown": true
+  },
+  "uiautomator_IME_keys": 0,
+  "limits": "no IME prediction/user-text retained; stale service view flag not used as visibility proof; physical keyboard/virtual key selection not certified"
+}

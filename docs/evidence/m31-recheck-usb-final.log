@@ -1,0 +1,13 @@
+
+Status Class         FriendlyName
+------ -----         ------------
+OK     MEDIA         POCO F6 Hands-Free HF Audio
+OK     MEDIA         POCO F6 A2DP SNK
+OK     System        POCO F6 Hands-Free HF
+OK     AudioEndpoint Speakers (POCO F6 Hands-Free HF Audio)
+OK     Bluetooth     POCO F6
+OK     Bluetooth     POCO F6 Avrcp Transport
+OK     Bluetooth     POCO F6 Avrcp Transport
+OK     Bluetooth     POCO F6
+OK     AudioEndpoint Microphone (POCO F6 Hands-Free HF Audio)
+

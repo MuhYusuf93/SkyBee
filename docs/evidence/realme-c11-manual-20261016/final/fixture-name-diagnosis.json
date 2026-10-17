@@ -1,0 +1,20 @@
+{
+  "time": "2026-10-16T03:37:46.328645+07:00",
+  "method": "read-only copy into memory after failed audit closed DB; no bytes saved",
+  "package": "com.example.kasir_app.integration",
+  "database": "databases/realme_restart_20261015.db",
+  "sha256": "c887cf562c2a5f5cacd0812d664b5440d931cb404be8588e790fc12bd6598bf9",
+  "synthetic_sale_metadata": [
+    [
+      "Synthetic Realme C11 customer",
+      36000,
+      27000000000
+    ],
+    [
+      "uji realme 16",
+      36000,
+      27000000000
+    ]
+  ],
+  "quick_check": "ok"
+}

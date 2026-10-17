@@ -1,0 +1,14 @@
+{
+  "file": "m31-recheck-fresh-startup-logcat.log",
+  "pid": 26642,
+  "lines": 186,
+  "counts": {
+    "fatal": 0,
+    "unhandled": 0,
+    "flutter_error": 0,
+    "database_error": 0,
+    "input_connection": 0,
+    "spannable_error": 0,
+    "vendor_error_lines": 11
+  }
+}

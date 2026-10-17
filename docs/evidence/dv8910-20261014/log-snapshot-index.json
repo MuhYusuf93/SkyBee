@@ -1,0 +1,56 @@
+[
+  {
+    "file": "log-management.log",
+    "lines": 35,
+    "flutter_fatal_unhandled_matching_lines": 0,
+    "range_first": "10-14 04:14:50.275",
+    "range_last": "10-14 04:14:59.316",
+    "limits": "PID-scoped partial buffers; UI failures also in runner logs; count matching lines, not independent errors",
+    "pattern": "log-severity Flutter error/FATAL EXCEPTION/Unhandled Exception; URLs excluded"
+  },
+  {
+    "file": "debug-committed-recovered.log",
+    "lines": 33,
+    "flutter_fatal_unhandled_matching_lines": 0,
+    "range_first": "10-14 06:12:07.708",
+    "range_last": "10-14 06:12:37.771",
+    "limits": "PID-scoped partial buffers; UI failures also in runner logs; count matching lines, not independent errors",
+    "pattern": "log-severity Flutter error/FATAL EXCEPTION/Unhandled Exception; URLs excluded"
+  },
+  {
+    "file": "release-cashier.log",
+    "lines": 26,
+    "flutter_fatal_unhandled_matching_lines": 0,
+    "range_first": "10-14 06:14:58.241",
+    "range_last": "10-14 06:16:38.751",
+    "limits": "PID-scoped partial buffers; UI failures also in runner logs; count matching lines, not independent errors",
+    "pattern": "log-severity Flutter error/FATAL EXCEPTION/Unhandled Exception; URLs excluded"
+  },
+  {
+    "file": "profile-enter66.log",
+    "lines": 111,
+    "flutter_fatal_unhandled_matching_lines": 0,
+    "range_first": "10-14 06:18:28.700",
+    "range_last": "10-14 06:26:35.047",
+    "limits": "PID-scoped partial buffers; UI failures also in runner logs; count matching lines, not independent errors",
+    "pattern": "log-severity Flutter error/FATAL EXCEPTION/Unhandled Exception; URLs excluded"
+  },
+  {
+    "file": "ui-cashier-snapshot.log",
+    "lines": 116,
+    "flutter_fatal_unhandled_matching_lines": 0,
+    "range_first": "10-14 06:32:47.265",
+    "range_last": "10-14 06:34:07.176",
+    "limits": "PID-scoped partial buffers; UI failures also in runner logs; count matching lines, not independent errors",
+    "pattern": "log-severity Flutter error/FATAL EXCEPTION/Unhandled Exception; URLs excluded"
+  },
+  {
+    "file": "main-final-smoke.log",
+    "lines": 51,
+    "flutter_fatal_unhandled_matching_lines": 0,
+    "range_first": "10-14 07:19:20.532",
+    "range_last": "10-14 07:21:36.860",
+    "limits": "PID12975 main smoke partialbuffer, not native runner or all runtime",
+    "pattern": "log-severity errors, not URL substring"
+  }
+]

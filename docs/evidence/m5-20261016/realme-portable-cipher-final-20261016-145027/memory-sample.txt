@@ -1,0 +1,5 @@
+Single process memory snapshot during portable archive test; not peak RAM or leak proof.
+2026-10-16T14:53:58.9527249+07:00
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+        TOTAL   229994   126204    94980      254   229994    24207    20136     4070
+           TOTAL PSS:   229994            TOTAL RSS:   306888       TOTAL SWAP PSS:      254

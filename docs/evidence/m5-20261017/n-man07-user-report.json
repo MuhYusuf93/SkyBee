@@ -1,0 +1,11 @@
+{
+  "id": "N-MAN07",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "Notifikasi tidak terlihat",
+  "status": "OBSERVED; lockscreen content UNVERIFIED",
+  "scope": "No fixture notification visible on locked screen; no content assessment possible",
+  "cause": "NOT ESTABLISHED",
+  "systemSettingsChanged": false,
+  "automaticEvidence": false
+}

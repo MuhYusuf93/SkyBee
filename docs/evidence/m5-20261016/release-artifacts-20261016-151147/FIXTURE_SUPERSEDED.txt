@@ -1,0 +1,4 @@
+This checkpoint predates explicit printer connection/status, bounded persistent
+retry budget, and the fresh acceptance database override. Do not install it for
+Poco manual acceptance. Use the latest verified artifacts.json/handover ledger.
+Historical build and verification results remain valid for their source checkpoint.

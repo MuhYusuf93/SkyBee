@@ -1,0 +1,7 @@
+{
+  "baseline": "docs/evidence/realme-c11-20261015/final/source-baseline.json",
+  "production_files_checked": 221,
+  "changed": [],
+  "new_test": "integration_test/realme_post_manual_audit_test.dart",
+  "new_probe_python_ast": "PASS"
+}

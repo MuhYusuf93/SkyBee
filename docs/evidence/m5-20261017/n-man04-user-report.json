@@ -1,0 +1,14 @@
+{
+  "id": "N-MAN04",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Public fixture PIN unlock after warm notification tap showed alerts page,5days,notificationsOn,stock2/min5 and no failure message",
+  "savedAgain": false,
+  "newTransaction": false,
+  "automaticEvidence": false,
+  "coldLaunch": "UNVERIFIED",
+  "lockscreen": "UNVERIFIED",
+  "dedup": "UNVERIFIED"
+}

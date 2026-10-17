@@ -1,0 +1,12 @@
+{
+  "nonce": "1792152628551",
+  "workerPid": 17386,
+  "cipher": "4.19.0 community",
+  "products": 3,
+  "archiveId": "031a79e4-d38e-4366-a273-244a375b0ad6",
+  "archiveBytes": 607197,
+  "archiveSha256": "4d99fba9980d9a711177854c2f31ad27faee1042284c9ed6656558853adaf784",
+  "keystoreReopened": true,
+  "notificationPluginInitialized": true,
+  "retryAttemptAfterRestart": 2
+}

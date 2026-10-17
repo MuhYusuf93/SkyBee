@@ -1,0 +1,25 @@
+{
+  "baseline_files": 174,
+  "changed_existing": [
+    "android/app/build.gradle.kts",
+    "android/app/src/integrationFixture/kotlin/com/example/kasir_app/IntegrationActivity.kt",
+    "android/app/src/main/kotlin/com/example/kasir_app/MainActivity.kt",
+    "integration_test/management_ui_test.dart",
+    "integration_test/wholesale_packaging_ui_test.dart",
+    "lib/features/management/application/pin_hasher.dart"
+  ],
+  "python_ast_pass": [
+    "tools/audit_localization.py",
+    "tools/audit_pin_crypto.py",
+    "tools/cleanup_dv8910_test_fixtures.py",
+    "tools/dv8910_device_probe.py",
+    "tools/inspect_android_database.py",
+    "tools/realme_actual_runtime.py",
+    "tools/realme_c11_preflight.py",
+    "tools/realme_checkout_runtime.py",
+    "tools/realme_device_probe.py",
+    "tools/realme_runtime_recovery.py",
+    "tools/vendor_pin_crypto.py",
+    "tools/verify_pin_apk.py"
+  ]
+}

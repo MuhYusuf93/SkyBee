@@ -1,0 +1,122 @@
+[
+  {
+    "file": "dv-current-logcat.log",
+    "lines": 35,
+    "first_timestamp": "10-14 21:20:35.068",
+    "last_timestamp": "10-14 21:33:29.453",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "dv-final-logcat.log",
+    "lines": 1,
+    "first_timestamp": null,
+    "last_timestamp": null,
+    "fatal_unhandled_Eflutter_lines": 0,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "dv-gaps-logcat.log",
+    "lines": 44,
+    "first_timestamp": "10-14 22:08:59.623",
+    "last_timestamp": "10-14 22:10:21.640",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "dv-input-initial-logcat.log",
+    "lines": 36,
+    "first_timestamp": "10-14 20:45:18.540",
+    "last_timestamp": "10-14 20:46:13.618",
+    "fatal_unhandled_Eflutter_lines": 0,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "dv-locale-logcat.log",
+    "lines": 36,
+    "first_timestamp": "10-14 22:00:50.510",
+    "last_timestamp": "10-14 22:01:00.117",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "dv-retry-logcat.log",
+    "lines": 33,
+    "first_timestamp": "10-14 21:42:30.845",
+    "last_timestamp": "10-14 21:42:40.645",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "emulator-cashier-logcat.log",
+    "lines": 130,
+    "first_timestamp": "10-14 22:26:11.665",
+    "last_timestamp": "10-14 22:26:26.971",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "emulator-final-logcat.log",
+    "lines": 1,
+    "first_timestamp": null,
+    "last_timestamp": null,
+    "fatal_unhandled_Eflutter_lines": 0,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "emulator-first-logcat.log",
+    "lines": 76,
+    "first_timestamp": "10-14 20:46:57.214",
+    "last_timestamp": "10-14 20:48:38.577",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "emulator-protected-logcat.log",
+    "lines": 61,
+    "first_timestamp": "10-14 21:48:40.867",
+    "last_timestamp": "10-14 21:48:47.132",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "emulator-setup-logcat.log",
+    "lines": 67,
+    "first_timestamp": "10-14 21:43:53.651",
+    "last_timestamp": "10-14 21:44:16.739",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "emulator-wholesale-logcat.log",
+    "lines": 100,
+    "first_timestamp": "10-14 22:53:40.247",
+    "last_timestamp": "10-14 22:53:57.311",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "poco-financial-logcat.log",
+    "lines": 190,
+    "first_timestamp": "10-14 20:25:12.862",
+    "last_timestamp": "10-14 20:27:32.749",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "poco-regression-logcat.log",
+    "lines": 178,
+    "first_timestamp": "10-14 20:16:04.826",
+    "last_timestamp": "10-14 20:17:04.495",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  },
+  {
+    "file": "poco-ui-logcat.log",
+    "lines": 262,
+    "first_timestamp": "10-14 20:38:41.091",
+    "last_timestamp": "10-14 20:39:24.888",
+    "fatal_unhandled_Eflutter_lines": 1,
+    "scope": "snapshot of verified test PID; partial buffer, not entire run"
+  }
+]

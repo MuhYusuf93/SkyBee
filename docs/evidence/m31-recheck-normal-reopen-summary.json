@@ -1,0 +1,24 @@
+{
+  "package": "com.example.kasir_app",
+  "version": "0.3.1+5",
+  "pid": "25846",
+  "visible_app_texts": [
+    "Toko saya\nID",
+    "Hutang",
+    "Kelola",
+    "Bersihkan pencarian",
+    "Daftar belanja\nBelum ada barang.",
+    "Total",
+    "IDR 0",
+    "Bayar"
+  ],
+  "schema": 6,
+  "quick_check": [
+    [
+      "ok"
+    ]
+  ],
+  "foreign_key_check": [],
+  "journal_mode": "delete",
+  "sha256_unchanged": "2d3803984e87c541806fc25f5dc15f495f3da7d8f54ff77ee95f4ffab4af37c7"
+}

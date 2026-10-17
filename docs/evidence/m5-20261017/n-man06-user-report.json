@@ -1,0 +1,12 @@
+{
+  "id": "N-MAN06",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Off/save then On/save completed, low-stock card2/min5 and5day setting retained, one new generic notification after opt-in",
+  "additionalPermissionPinDialogs": "conditional instructions, occurrence not established",
+  "pendingNotificationCancel": "NOT YET TESTED",
+  "thresholdRearm": "UNVERIFIED",
+  "automaticEvidence": false
+}

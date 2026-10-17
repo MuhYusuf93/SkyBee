@@ -1,0 +1,170 @@
+--------- beginning of main
+10-13 06:40:35.086 15051 15051 E Zygote  : process_name_ptr:15051 com.example.kasir_app.integration
+10-13 06:40:35.086 15051 15051 E Zygote  : SetMemoryProtected process_name_ptr:15051 com.example.kasir_app.integration
+10-13 06:40:35.095 15051 15051 I app.integration: Using generational CollectorTypeCMC GC.
+10-13 06:40:35.100 15051 15051 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+--------- beginning of system
+10-13 06:40:35.101 15051 15051 I ActivityThread: Current dynamic renderEngine type=0
+10-13 06:40:35.128 15051  2122 D MiuiDownscaleImpl: set override inverted scale : 1.0
+10-13 06:40:35.129 15051 15051 I RENDER_TURBO: onActivityThreadCreate not in white list, pkg=com.example.kasir_app.integration, type=peridot
+10-13 06:40:35.131 15051  2122 D AppScoutStateMachine: 15051-ScoutStateMachinecreated
+10-13 06:40:35.133 15051 15051 D ActivityThread: setEmbeddedParam packageName=com.example.kasir_app.integration processName=com.example.kasir_app.integration isEmbedded=false isIsolated=false
+10-13 06:40:35.134 15051 15051 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+10-13 06:40:35.134 15051 15051 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+10-13 06:40:35.135 15051 15051 D nativeloader: Configuring clns-10 for other apk /data/app/~~IvfYCGIINstBANx-5Q4ckQ==/com.example.kasir_app.integration-nw3FkVCr7ATqM3tqfxuCMQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~IvfYCGIINstBANx-5Q4ckQ==/com.example.kasir_app.integration-nw3FkVCr7ATqM3tqfxuCMQ==/lib/arm64:/data/app/~~IvfYCGIINstBANx-5Q4ckQ==/com.example.kasir_app.integration-nw3FkVCr7ATqM3tqfxuCMQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.example.kasir_app.integration
+10-13 06:40:35.136 15051 15051 I app.integration: AssetManager2(0xb400007e006279d8) locale list changing from [] to [in-ID]
+10-13 06:40:35.137 15051 15051 E MiuiPreloadClassImpl: invoke error.
+10-13 06:40:35.137 15051 15051 D MiuiMonitorThread: Shared singleton Thread for stability monitor start
+10-13 06:40:35.138 15051 15051 D HWUI    : [HWUI] Flag vulkan_enhance_pipeline_cache enabled
+10-13 06:40:35.138 15051 15051 D HWUI    : [HWUI] EnhanceVkPipelineCache is disabled
+10-13 06:40:35.138 15051 15051 D HWUI    : [HWUI] Flag ddre enabled
+10-13 06:40:35.139 15051 15051 V GraphicsEnvironment: Currently set values for:
+10-13 06:40:35.139 15051 15051 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[com.android.angle, com.linecorp.b612.android, com.campmobile.snow, com.google.android.apps.tachyon]
+10-13 06:40:35.139 15051 15051 V GraphicsEnvironment:   angle_gl_driver_selection_values=[angle, native, native, native]
+10-13 06:40:35.139 15051 15051 V GraphicsEnvironment: com.example.kasir_app.integration is not listed in per-application setting
+10-13 06:40:35.139 15051 15051 V GraphicsEnvironment: ANGLE allowlist from config: 
+10-13 06:40:35.139 15051 15051 V GraphicsEnvironment: com.example.kasir_app.integration is not listed in ANGLE allowlist or settings, returning default
+10-13 06:40:35.139 15051 15051 V GraphicsEnvironment: Updatable production driver is not supported on the device.
+10-13 06:40:35.139 15051  2126 I Perf    : Connecting to perf service.
+10-13 06:40:35.140 15051 15051 D ResMonitorStub: The current process type is: third_party_app, process name is: com.example.kasir_app.integration
+10-13 06:40:35.144 15051  2126 I ActivityThread: TrafficStats init done
+10-13 06:40:35.158 15051  2126 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+10-13 06:40:35.160 15051  2126 I ForceDarkHelperStubImpl: initialize for com.example.kasir_app.integration , ForceDarkAppConfig: null
+10-13 06:40:35.160 15051  2126 D nativeloader: Load libforcedarkimpl.so using system ns (caller=/system_ext/framework/miui-framework.jar): ok
+10-13 06:40:35.160 15051  2126 D HWUI    : JNI_OnLoad success
+10-13 06:40:35.160 15051  2126 I MiuiForceDarkConfig: setConfig density:3.000000, mainRule:0, secondaryRule:0, tertiaryRule:0
+10-13 06:40:35.164 15051  2126 I ActivityThread: Miui Feature Init done
+10-13 06:40:35.173 15051 15051 W libc    : Access denied finding property "vendor.boostfwk.frameprefetcher"
+10-13 06:40:35.173 15051 15051 D FramePredict: FramePredict init: false
+10-13 06:40:35.174 15051 15051 D HWUI    : [HWUI] Flag vulkan_enhance_pipeline_cache enabled
+10-13 06:40:35.174 15051 15051 D HWUI    : [HWUI] EnhanceVkPipelineCache is disabled
+10-13 06:40:35.174 15051 15051 D HWUI    : [HWUI] Flag ddre enabled
+10-13 06:40:35.174 15051 15051 D app.integration: blurUtils, initBackgroundBlurMinInterval processName(com.example.kasir_app.integration), inWhiteLists(0)
+10-13 06:40:35.174 15051  2126 I ActivityThread: HardwareRenderer preload  done
+10-13 06:40:35.175 15051  2144 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-13 06:40:35.175 15051 15051 I app.integration: AssetManager2(0xb400007e0062e418) locale list changing from [] to [in-ID]
+10-13 06:40:35.177 15051  2144 W libc    : Access denied finding property "vendor.migl.debug"
+10-13 06:40:35.178 15051  2144 I libMiGL : EnableDR: 0
+10-13 06:40:35.178 15051  2144 D libMiGL : mDFIInterval: -1
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: QUALCOMM build                   : a0053eb399, I31b05c049d
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: Build Date                       : 12/22/25
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: OpenGL ES Shader Compiler Version: E031.45.02.25
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: Local Branch                     : 
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: Remote Branch                    : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.14.3.0.11.00.00.974.116
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: Remote Branch                    : NONE
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: Reconstruct Branch               : NOTHING
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: Build Config                     : S P 16.1.2 AArch64
+10-13 06:40:35.178 15051  2144 I AdrenoGLES-0: Driver Path                      : /vendor/lib64/egl/libGLESv2_adreno.so
+10-13 06:40:35.179 15051  2144 I AdrenoGLES-0: Driver Version                   : 0762.36.1
+10-13 06:40:35.179 15051  2144 I AdrenoGLES-0: Process Name                     : com.example.kasir_app.integration
+10-13 06:40:35.187 15051  2155 D nativeloader: Load /data/app/~~IvfYCGIINstBANx-5Q4ckQ==/com.example.kasir_app.integration-nw3FkVCr7ATqM3tqfxuCMQ==/base.apk!/lib/arm64-v8a/libflutter.so using class loader ns clns-10 (caller=/data/app/~~IvfYCGIINstBANx-5Q4ckQ==/com.example.kasir_app.integration-nw3FkVCr7ATqM3tqfxuCMQ==/base.apk): ok
+10-13 06:40:35.191 15051 15051 I app.integration: AssetManager2(0xb400007e0062ce38) locale list changing from [] to [in-ID]
+10-13 06:40:35.217 15051  2156 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+10-13 06:40:35.227 15051  2144 I AdrenoGLES-0: PFP: 0x01310168, ME: 0x00000000
+10-13 06:40:35.236 15051 15051 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+10-13 06:40:35.248 15051  2144 I AdrenoUtils: <ReadGpuID:357>: Reading chip ID through GSL
+10-13 06:40:35.280 15051  2157 W libc    : Access denied finding property "vendor.mivk.log.debug"
+10-13 06:40:35.280 15051  2157 D vulkan  : searching for layers in '/data/app/~~IvfYCGIINstBANx-5Q4ckQ==/com.example.kasir_app.integration-nw3FkVCr7ATqM3tqfxuCMQ==/lib/arm64'
+10-13 06:40:35.280 15051  2157 D vulkan  : searching for layers in '/data/app/~~IvfYCGIINstBANx-5Q4ckQ==/com.example.kasir_app.integration-nw3FkVCr7ATqM3tqfxuCMQ==/base.apk!/lib/arm64-v8a'
+10-13 06:40:35.281 15051  2144 I libEGL  : shader cache num entries: 2
+10-13 06:40:35.281 15051  2144 D HWUI    : [HWUI] Flag vulkan_enhance_pipeline_cache enabled
+10-13 06:40:35.281 15051  2144 D HWUI    : [HWUI] EnhanceVkPipelineCache is disabled
+10-13 06:40:35.281 15051  2144 D HWUI    : [HWUI] Flag ddre enabled
+10-13 06:40:35.281 15051  2144 D SKIA    : [Skia] Flag vulkan_enhance_pipeline_cache enabled
+10-13 06:40:35.281 15051  2144 D SKIA    : [Skia] EnhanceVkPipelineCache is false
+10-13 06:40:35.281 15051  2144 D HWUI    : MiShaderPrecompile handle com.example.kasir_app.integration, isSksl: 0, isAppInPreCacheList: 0, isGpuVersionChanged: 0, isSkslChanged: 0
+10-13 06:40:35.285 15051  2157 I AdrenoVK-0: ===== BEGIN DUMP OF OVERRIDDEN SETTINGS =====
+10-13 06:40:35.285 15051  2157 I AdrenoVK-0: ===== END DUMP OF OVERRIDDEN SETTINGS =====
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: QUALCOMM build          : a0053eb399, I31b05c049d
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Build Date              : 12/22/25
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Shader Compiler Version : E031.45.02.25
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Local Branch            : 
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Remote Branch           : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.14.3.0.11.00.00.974.116
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Remote Branch           : NONE
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Reconstruct Branch      : NOTHING
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Build Config            : S P 16.1.2 AArch64
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Driver Path             : /vendor/lib64/hw/vulkan.adreno.so
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Driver Version          : 0762.36.1
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: PFP                     : 0x01310168
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: ME                      : 0x00000000
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Application Name    : Impeller
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Application Version : 0x00400000
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Engine Name         : Impeller
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Engine Version      : 0x00800000
+10-13 06:40:35.292 15051  2157 I AdrenoVK-0: Api Version         : 0x00401000
+10-13 06:40:35.296 15051  2157 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+10-13 06:40:35.570 15051 15051 D MiuiMultiWindowUtils: freeform resolution args raw data:{  "wide_default":{    "freeform_args": {        "vertical_portrait":{"aspect_ratio":0.626, "original_ratio":0.5643,"original_scale":0.74,"top_margin":0.168,"left_margin":0.484},        "horizontal_portrait":{"aspect_ratio":0.626, "original_ratio":0.5643,"original_scale":0.74,"top_margin":0.1222,"left_margin":0.59745},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":0.6992,"original_scale":0.604,"top_margin":0.2596,"left_margin":0.2624},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":0.6992,"original_scale":0.604,"top_margin":0.213,"left_margin":0.3758}    },    "mini_freeform_args":{        "vertical_portrait":{"original_ratio":0.147},        "horizontal_portrait":{"original_ratio":0.147},        "vertical_landscape":{"original_ratio":0.165},        "horizontal_landscape":{"original_ratio":0.165}    }  },  "narrow_default": {    "freeform_args": {        "vertical_portrait":{"aspect_ratio":0.626, "original_ratio":1,"original_scale":0.74,"top_margin":0.0753,"left_margin":-1},        "horizontal_portrait":{"aspect_ratio":0.626, "original_ratio":1,"original_scale":0.5756,"top_margin":-1,"left_margin":0.0753},        "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.587,"top_margin":0.0753,"left_margin":-1},        "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.587,"top_margin":-1,"left_margin":0.0753}    },    "mini_freeform_args":{        "vertical_portrait":{"original_ratio":0.26},        "horizontal_portrait":{"original_ratio":0.26},        "vertical_landscape":{"original_ratio":0.293},        "horizontal_landscape":{"original_ratio":0.293}    }  },  "regular_default": {    "freeform_args": {      "vertical_portrait":{"aspect_ratio":0.625, "original_ratio":1,"original_scale":0.7,"top_margin":0.109,"left_margin":-1},      "horizontal_portrait":{"aspect_ratio":0.6667, "original_ratio":1,"original_scale":0.6102,"top_margin":-1,"left_margin":0.026},      "vertical_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.5899,"top_margin":0.109,"left_margin":-1},      "horizontal_landscape":{"aspect_ratio":1.6, "original_ratio":1,"original_scale":0.5899,"top_margin":-1,"left_margin":0.026}    },    "mini_freeform_args":{      "vertical_portrait":{"original_ratio":0.25},      "horizontal_portrait":{"original_ratio":0.25},      "vertical_landscape":{"original_ratio":0.25},      "horizontal_landscape":{"original_ratio":0.25}    }  },  "pad_default": {    "freeform_args": {      "vertical_portrait":{"aspect_ratio":0.5625, "original_ratio":0.375,"original_scale":0.835,"top_margin":0.049,"left_margin":0.2775},      "horizontal_portrait":{"aspect_ratio":0.5625, "original_ratio":0.375,"original_scale":0.835,"top_margin":-1,"left_margin":0.6525},      "vertical_landscape":{"aspect_ratio":-1, "original_ratio":1,"original_scale":0.468,"top_margin":0.049,"left_margin":-1},      "horizontal_landscape":{"aspect_ratio":-1, "original_ratio":1,"original_scale":0.468,"top_margin":-1,"left_margin":0.4976}    },    "mini_freeform_args":{      "vertical_portrait":{"original_ratio":0.144},      "horizontal_portrait":{"original_ratio":0.144},      "vertical_landscape":{"original_ratio":0.2},      "horizontal_landscape":{"original_ratio":0.2}    }  }}
+10-13 06:40:35.570 15051 15051 D MiuiMultiWindowUtils: initFreeFormResolutionArgs failed, device is peridot
+10-13 06:40:35.582 15051 15051 D CompatChangeReporter: Compat change id reported: 377864165; UID 10537; state: ENABLED
+10-13 06:40:35.583 15051 15051 D DecorView: updateFreeformOutlineFromActivity, inFreeform=false,inFreeformWindowMode=false
+10-13 06:40:35.583 15051 15051 D Activity: Activity = ActivityInfo{b7480e9 com.example.kasir_app.MainActivity}, Resume onConfigurationChanged = {0.9 510mcc10mnc [id_ID] ldltr sw407dp w407dp h904dp 480dpi nrml long hdr widecg port uimode=10 night finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1220, 2712) mAppBounds=Rect(0, 0 - 1220, 2712) mMaxBounds=Rect(0, 0 - 1220, 2712) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0 mInSplitScreen=false letterBoxed=false foScaled=false isSpecificEmbedded=false embeddingScale=1.0} s.2 fontWeightAdjustment=0/d/o themeChanged=0 themeChangedFlags=0 display=0 extraData = Bundle[{}] screenType=0/o}
+10-13 06:40:35.587 15051 15051 D RenderLite: trim renderNode enable: false
+10-13 06:40:35.589 15051 15051 D FramePredict: init success
+10-13 06:40:35.591 15051  2239 E FramePredict: registerContentObserver fail
+10-13 06:40:35.592 15051 15051 D app.integration: MiuiProcessManagerServiceStub setSchedFifo
+10-13 06:40:35.592 15051 15051 I MiuiProcessManagerImpl: setSchedFifo pid:15051, mode:3
+10-13 06:40:35.601 15051  2144 D HWUI    : TAG_DDRE, CanvasContext::setDdreActivities: 
+10-13 06:40:35.601 15051 15051 I ForceDarkHelperStubImpl: setViewRootImplForceDark: false for com.example.kasir_app.MainActivity@776bad2, reason: AppDarkModeEnable
+10-13 06:40:35.601 15051 15051 D FirstFrameSpeedUp: bls: [com.xcj.hm.kangfuyixue, jp.co.jibunbank.jibunmain]
+10-13 06:40:35.601 15051 15051 I ViewRootImpl: com.example.kasir_app.integration/com.example.kasir_app.MainActivity use first frame acceleration
+10-13 06:40:35.609 15051 15051 D DecorViewImmersiveImpl: onAttachedToWindow. pkg: com.example.kasir_app.integration
+10-13 06:40:35.609 15051 15051 I ComputilityLevel: getComputilityLevel(): 4
+10-13 06:40:35.610 15051 15051 D DecorViewImmersiveImpl: com.example.kasir_app.MainActivity@776bad2 already set forced E2E by app
+10-13 06:40:35.611 15051 15051 I WindowExtensionsImpl: Initializing Window Extensions, vendor API level=9, activity embedding enabled=true
+10-13 06:40:35.621 15051 15051 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+10-13 06:40:35.632 15051 15051 D SurfaceView: UPDATE null, mIsCastMode = false
+10-13 06:40:35.634 15051 15051 D ViewRootImplStubImpl: onSurfaceViewAttached:
+10-13 06:40:35.634 15051 15051 D ViewRootImplStubImpl: , vri:android.view.ViewRootImpl@48fc383, com.example.kasir_app.integration/com.example.kasir_app.MainActivity
+10-13 06:40:35.634 15051 15051 D ViewRootImplStubImpl: , vri size:1220x2712
+10-13 06:40:35.634 15051 15051 D ViewRootImplStubImpl: , surfaceView:g0.l{5540a32 V.E...... ......ID 0,0-1220,2712}, SurfaceView[com.example.kasir_app.integration/com.example.kasir_app.MainActivity]
+10-13 06:40:35.634 15051 15051 D ViewRootImplStubImpl: , surfaceView size:1220x2712
+10-13 06:40:35.634 15051 15051 D ViewRootImplStubImpl: , surfaceControl:Surface(name=5540a32 SurfaceView[com.example.kasir_app.integration/com.example.kasir_app.MainActivity](BLAST)#1112)/@0x91a5900
+10-13 06:40:35.638 15051  2157 W qdgralloc: GetSize: Pixel format: 0x3b is not supported by gralloc
+10-13 06:40:35.638 15051  2157 W qdgralloc: gralloc failed to allocate buffer for size 0 format 59 AWxAH 1x1 usage 2816
+10-13 06:40:35.638 15051  2157 E Gralloc4: isSupported(1, 1, 59, 1, ...) failed with 7
+10-13 06:40:35.638 15051  2157 E GraphicBufferAllocator: Failed to allocate (4 x 4) layerCount 1 format 59 usage b00: 2
+10-13 06:40:35.638 15051  2157 E AHardwareBuffer: GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -2), handle=0x0
+10-13 06:40:35.638 15051  2157 W qdgralloc: GetSize: Pixel format: 0x3b is not supported by gralloc
+10-13 06:40:35.638 15051  2157 W qdgralloc: gralloc failed to allocate buffer for size 0 format 59 AWxAH 1x1 usage 2816
+10-13 06:40:35.638 15051  2157 E Gralloc4: isSupported(1, 1, 59, 1, ...) failed with 7
+10-13 06:40:35.639 15051  2157 E GraphicBufferAllocator: Failed to allocate (4 x 4) layerCount 1 format 59 usage b00: 2
+10-13 06:40:35.639 15051  2157 E AHardwareBuffer: GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -2), handle=0x0
+10-13 06:40:35.642 15051  2157 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-13 06:40:35.646 15051  2157 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-13 06:40:35.650 15051  2157 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-13 06:40:35.656 15051  2157 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-13 06:40:35.660 15051  2157 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-13 06:40:35.664 15051  2157 W qdgralloc: getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+10-13 06:40:35.672 15051 15051 I Choreographer: first vsync insert message into MessageQueue Head
+10-13 06:40:35.673 15051 15051 D SurfaceView: UPDATE Surface(name=5540a32 SurfaceView[com.example.kasir_app.integration/com.example.kasir_app.MainActivity]#1111)/@0xb34977e, mIsProjectionMode = false
+10-13 06:40:35.674 15051  2144 D HWUI    : [HWUI] Flag vulkan_enhance_pipeline_cache enabled
+10-13 06:40:35.674 15051  2144 D HWUI    : [HWUI] EnhanceVkPipelineCache is disabled
+10-13 06:40:35.674 15051  2144 D HWUI    : [HWUI] Flag ddre enabled
+10-13 06:40:35.676 15051 15051 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+10-13 06:40:35.677 15051 15051 D WindowLayoutComponentImpl: Register WindowLayoutInfoListener on Context=com.example.kasir_app.MainActivity@776bad2, of which baseContext=android.app.ContextImpl@20a4818
+10-13 06:40:35.728 15051 15051 D VRI[MainActivity]: vri.Setup new sync=wmsSync-VRI[MainActivity]#1
+10-13 06:40:35.738 15051 15051 D VRI[MainActivity]: vri.reportDrawFinished 0 0 Rect(0, 0 - 1220, 2712)
+10-13 06:40:35.738 15051 15051 I NativeTurboSchedManager: Load libmiui_runtime
+10-13 06:40:35.776 15051 15051 I HandWritingStubImpl: refreshLastKeyboardType: 1
+10-13 06:40:35.776 15051 15051 I HandWritingStubImpl: getCurrentKeyboardType: 1
+10-13 06:40:35.781 15051 15051 D InsetsController: hide(ime(), fromIme=false)
+10-13 06:40:35.781 15051 15051 I ImeTracker: com.example.kasir_app.integration:dc4f32bb: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-13 06:40:35.792 15051 15051 I HandWritingStubImpl: getCurrentKeyboardType: 1
+10-13 06:40:35.830 15051 15051 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+10-13 06:40:36.056 15051 15051 I app.integration: AssetManager2(0xb400007e006965b8) locale list changing from [] to [in-ID]
+10-13 06:40:36.058 15051 15051 I app.integration: AssetManager2(0xb400007e0069ccd8) locale list changing from [] to [in-ID]
+10-13 06:40:36.067 15051 15051 I app.integration: AssetManager2(0xb400007e0069e2b8) locale list changing from [] to [in-ID]
+10-13 06:40:36.073 15051 15051 I app.integration: AssetManager2(0xb400007e0069c058) locale list changing from [] to [in-ID]
+10-13 06:40:36.077 15051 15051 I app.integration: AssetManager2(0xb400007e0069bd38) locale list changing from [] to [in-ID]
+10-13 06:40:36.082 15051 15051 I app.integration: AssetManager2(0xb400007e00699ad8) locale list changing from [] to [in-ID]
+10-13 06:40:36.088 15051 15051 I app.integration: AssetManager2(0xb400007e006a0e78) locale list changing from [] to [in-ID]
+10-13 06:40:36.094 15051 15051 I app.integration: AssetManager2(0xb400007e006a2778) locale list changing from [] to [in-ID]
+10-13 06:40:36.096 15051 15051 I app.integration: AssetManager2(0xb400007e006a3d58) locale list changing from [] to [in-ID]
+10-13 06:40:40.373 15051  2918 D ProfileInstaller: Installing profile for com.example.kasir_app.integration
+10-13 06:40:45.174 15051  2245 D ActivityThread: invoke error.
+10-13 06:40:59.765 15051 15051 W FinalizerDaemon: type=1400 audit(0.0:6681): avc:  denied  { getopt } for  path="/dev/socket/usap_pool_primary" scontext=u:r:untrusted_app:s0:c25,c258,c512,c768 tcontext=u:r:zygote:s0 tclass=unix_stream_socket permissive=0 app=com.example.kasir_app.integration
+10-13 06:41:04.848 15051  2144 E app.integration: FrameInsert open fail: No such file or directory
+10-13 06:41:04.849 15051  2157 I app.integration: DynamicFPS DF top: com.example.kasir_app.integration : 0.000000
+10-13 06:41:04.849 15051  2157 I app.integration: DF com.example.kasir_app.integration Support DynamicFPS.
+10-13 06:41:04.849 15051  2144 I app.integration: DynamicFPS DF top: com.example.kasir_app.integration : 0.000000
+10-13 06:41:04.849 15051  2144 I app.integration: DF com.example.kasir_app.integration Support DynamicFPS.

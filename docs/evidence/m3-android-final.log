@@ -1,0 +1,200 @@
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqlite3 3.5.2 (3.7.0 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.11 (0.7.15 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+13 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart
+Running Gradle task 'assembleDebug'...                             12.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           8.5s
+00:00 +0: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: fresh schema and foreign keys; no production fixtures; safe defaults
+00:00 +1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: constraints: integers, stock, identity, barcode uniqueness including archive
+00:00 +2: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: sale relationships, snapshots, idempotency constraints and immutable facts
+00:00 +3: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: database operation failure rolls back and next operation still works
+00:00 +4: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: v1 to current upgrade preserves data and relationships, reopening and downgrade safety
+error Bad state: Downgrade skema ditolak agar data tetap aman. during open, closing...
+00:01 +5: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: catalog composite cursor: duplicates, Unicode, empty/final/default pages and prefix reset
+00:01 +6: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: failed migration rolls back version/index changes and can retry without losing data
+error DatabaseException(index sale_transactions_history already exists (code 1 SQLITE_ERROR): , while compiling: CREATE INDEX sale_transactions_history ON sale_transactions(created_at DESC, id COLLATE BINARY DESC)) sql 'CREATE INDEX sale_transactions_history ON sale_transactions(created_at DESC, id COLLATE BINARY DESC)' args [] during open, closing...
+00:02 +7: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: startup service retries opening, shares one coordinator, disposes in-flight work safely
+00:02 +8: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: history cursor: same timestamps, half-open range, customer and session upper bound
+00:02 +9: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: EXPLAIN actual first/continuation queries select matching indexes without temp sort
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=?)
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=? AND (normalized_name,id)>(?,?))
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=? AND normalized_name>? AND normalized_name<?)
+QUERY PLAN (sale_transactions_history): SEARCH sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)
+QUERY PLAN (sale_transactions_history): SEARCH sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)
+QUERY PLAN (sale_transactions_customer_history): SEARCH sale_transactions USING INDEX sale_transactions_customer_history (customer_id=? AND created_at>? AND created_at<?)
+00:02 +10: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: coordinator serializes maintenance and writes; close rejects later operations
+00:03 +11: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart: (tearDownAll)
+00:03 +11: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart
+Running Gradle task 'assembleDebug'...                             12.3s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           7.3s
+00:26 +11: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: (setUpAll)
+KDF 600000 rounds / 256 bits: 5401 ms (test target, non-release)
+00:36 +11: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:47 +12: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: session idle deadline uses monotonic time despite wall-clock changes
+00:53 +13: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: leading-zero PIN and persisted progressive lockout survive reopen/clock rollback
+01:18 +14: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: credential creation has no default PIN, salt random, confirmation and rotation/recovery
+02:12 +15: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: master CRUD, nullable relations, generated unique SKU and archived barcode collision
+02:17 +16: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: receipts are atomic/idempotent, supplier optional; weighted value/HPP example and no repricing cost
+02:23 +17: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: SQL failure rolls back receipt/item/batch/value/history/audit together
+02:29 +18: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: receipt reversal exact valuation, idempotent and rejects intervening stock dependencies
+02:35 +19: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: expiry calendar, undated, FEFO and expired stock remains physical until disposal
+02:41 +20: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: physical count and waste allocate rounding residue; zero quantity has zero value
+02:47 +21: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: price/archive undo does not overwrite later changes and logs reversal price
+02:53 +22: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: settings validated store zone/text, unchanged opt-in and protected saves
+02:59 +23: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: master, batch and ledger pagination handles same sort keys and literal prefixes
+03:05 +24: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: v2 to v3 preserves sale snapshots/relations and adds defaults non-destructively
+03:06 +25: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart: (tearDownAll)
+03:06 +25: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart
+Running Gradle task 'assembleDebug'...                             10.2s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           7.2s
+03:27 +25: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart: public language preference persists with no PIN; default currency and null device policy
+03:27 +26: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+03:44 +27: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart: currency change refused for every old financial surface, including archived and zero receipt
+05:36 +28: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart: USD inventory exact minor units, receipt/header/history metadata and repository
+05:48 +29: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart: M2 v3 migration preserves exact money stock HPP snapshots drafts and user strings
+05:48 +30: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart: v4 interrupted migration rolls back partial columns and leaves v3 usable
+error DatabaseException(duplicate column name: currency_code (code 1 SQLITE_ERROR): , while compiling: ALTER TABLE products ADD COLUMN currency_code TEXT NOT NULL DEFAULT 'IDR' CHECK(currency_code IN ('IDR','USD','MYR','EUR'))) sql 'ALTER TABLE products ADD COLUMN currency_code TEXT NOT NULL DEFAULT 'IDR' CHECK(currency_code IN ('IDR','USD','MYR','EUR'))' args [] during open, closing...
+05:48 +31: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart: (tearDownAll)
+05:48 +31: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart
+Running Gradle task 'assembleDebug'...                             10.2s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          21.8s
+06:23 +31: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: search normalizes compact/token/alias/category, exact ranks first, bounded and literal syntax
+M3 FTS5 capability: false; backend=BINARY token prefix
+06:24 +32: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: dirty index follows category/alias/name/archive edits; ambiguous exact code never fuzzy-adds
+06:24 +33: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: three leading-zero scans merge quantity, draft persists input/reopen without reducing stock
+06:24 +34: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: cart stock/quantity/overflow validation rolls back; stale undo cannot overwrite later edits
+06:25 +35: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: changed prices require explicit acceptance; draft revision and archived product are revalidated
+06:25 +36: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: weighted snapshot example 36000/27000/9000 and debt 26000; settlement adds no sale or HPP
+06:26 +37: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: paid full ignores customer/cash received; free sale produces no zero payment
+06:26 +38: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: conditional partial/full debt validation and currency mismatch create no financial facts
+06:26 +39: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout same attempt is idempotent; changed payment rejected and completed draft guarded
+06:27 +40: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: post-commit UI death recovers stored sale, input and pointer across restart; next acknowledged draft persists
+06:27 +41: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: two checkout services on the same local database compete for last unit; only one commits
+06:30 +42: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at validated rolls back all facts/stock/customer/draft, then retry succeeds
+06:30 +43: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at customer rolls back all facts/stock/customer/draft, then retry succeeds
+06:30 +44: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at sale rolls back all facts/stock/customer/draft, then retry succeeds
+06:31 +45: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at stock rolls back all facts/stock/customer/draft, then retry succeeds
+06:31 +46: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at items rolls back all facts/stock/customer/draft, then retry succeeds
+06:31 +47: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at batches rolls back all facts/stock/customer/draft, then retry succeeds
+06:32 +48: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at history rolls back all facts/stock/customer/draft, then retry succeeds
+06:32 +49: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at payment rolls back all facts/stock/customer/draft, then retry succeeds
+06:32 +50: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at draft rolls back all facts/stock/customer/draft, then retry succeeds
+06:32 +51: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: checkout injected failure at audit rolls back all facts/stock/customer/draft, then retry succeeds
+06:33 +52: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: expiry day excludes physical stock; FEFO dated first/undated last and exact residual cost
+06:33 +53: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: FEFO streams beyond 100 batches without skipping; sold out leaves zero valuation
+06:34 +54: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: repayment spans oldest sales with preview, idempotency, stale balance rejection and immutable sale cost
+06:34 +55: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: repayment failure at payment rolls back all allocations/payment/audit
+06:34 +56: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: repayment failure at allocation rolls back all allocations/payment/audit
+06:34 +57: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: repayment failure at audit rolls back all allocations/payment/audit
+06:35 +58: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: same-name customers stay separate, deterministic keyset pages and settled sales remain stored
+06:35 +59: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: V4 to V5 preserves exact old rows and draft; additive defaults, foreign keys and integrity
+06:35 +60: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: V5 migration failure rolls back new columns/version and preserves V4 data
+error DatabaseException(table cashier_state already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE cashier_state(id INTEGER PRIMARY KEY CHECK(id=1), draft_id TEXT REFERENCES cart_drafts(id) ON DELETE RESTRICT)) sql 'CREATE TABLE cashier_state(id INTEGER PRIMARY KEY CHECK(id=1), draft_id TEXT REFERENCES cart_drafts(id) ON DELETE RESTRICT)' args [] during open, closing...
+06:35 +61: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart: (tearDownAll)
+06:36 +61: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart
+Running Gradle task 'assembleDebug'...                             11.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           8.1s
+06:58 +61: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart: Android public language, protected USD, live form locale, currency refusal
+07:08 +61: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart
+Some possible finders for the widgets at Offset(359.6, 642.0):
+  find.byType(ListView)
+  find.byType(Expanded)
+  find.byType(SafeArea)
+  find.byType(CustomMultiChildLayout)
+  find.byType(PhysicalModel)
+  find.byElementType(InheritedModelElement<_ModalRouteAspect>)
+  find.byElementType(InheritedModelElement<Object>)
+08:35 +61: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart: Android public language, protected USD, live form locale, currency refusal
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: at least one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Local storage ready.": []>
+   Which: means none were found but some were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.waitFor (file:///C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart:32:9)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart:60:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart line 32
+The test description was:
+  Android public language, protected USD, live form locale, currency refusal
+════════════════════════════════════════════════════════════════════════════════════════════════════
+08:35 +61 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart: Android public language, protected USD, live form locale, currency refusal [E]
+  Test failed. See exception logs above.
+  The test description was: Android public language, protected USD, live form locale, currency refusal
+  
+08:35 +61 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart: (tearDownAll)
+08:36 +61 -1: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart
+Running Gradle task 'assembleDebug'...                             10.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.8s
+08:56 +61 -1: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart: Android setup PIN → warehouse product/receipt → average → background lock
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: at least one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Penyimpanan lokal siap.": []>
+   Which: means none were found but some were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.waitFor (file:///C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart:38:9)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart:54:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart line 38
+The test description was:
+  Android setup PIN → warehouse product/receipt → average → background lock
+════════════════════════════════════════════════════════════════════════════════════════════════════
+10:28 +61 -2: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart: Android setup PIN → warehouse product/receipt → average → background lock [E]
+  Test failed. See exception logs above.
+  The test description was: Android setup PIN → warehouse product/receipt → average → background lock
+  
+10:28 +61 -2: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart: (tearDownAll)
+10:28 +61 -2: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_ui_test.dart
+Running Gradle task 'assembleDebug'...                             11.0s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          11.4s
+10:54 +61 -2: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_ui_test.dart: M3 three scans weighted checkout double-submit restart recovery and public settlement
+11:20 +62 -2: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_ui_test.dart: M3 USD partial payment live locale and explicit same-name customer selection
+11:41 +63 -2: C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_ui_test.dart: (tearDownAll)
+11:42 +63 -2: Some tests failed.
+
+Failing tests:
+  C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart: Android public language, protected USD, live form locale, currency refusal
+  C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart: Android setup PIN → warehouse product/receipt → average → background lock

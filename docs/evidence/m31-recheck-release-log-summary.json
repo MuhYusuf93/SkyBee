@@ -1,0 +1,28 @@
+{
+  "pid": 15051,
+  "lines": 170,
+  "first_event": "10-13 06:40:35.086",
+  "last_event": "10-13 06:41:04.849",
+  "counts": {
+    "fatal": 0,
+    "unhandled": 0,
+    "flutter_error": 0,
+    "database_error": 0
+  },
+  "error_tags": {
+    "Zygote": 2,
+    "MiuiPreloadClassImpl": 1,
+    "ashmem": 1,
+    "FramePredict": 1,
+    "Gralloc4": 2,
+    "GraphicBufferAllocator": 2,
+    "AHardwareBuffer": 2,
+    "app.integration": 1
+  },
+  "warning_tags": {
+    "libc": 3,
+    "InsetsSource": 3,
+    "qdgralloc": 10,
+    "FinalizerDaemon": 1
+  }
+}

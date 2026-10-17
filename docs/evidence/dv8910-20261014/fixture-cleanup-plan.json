@@ -1,0 +1,23 @@
+{
+  "serial": "192.168.0.102:5555",
+  "package": "com.example.kasir_app.integration",
+  "sandbox": "/data/user/0/com.example.kasir_app.integration",
+  "mode": "inspect",
+  "exact_names": [
+    "dv8910_restart_20261014.db",
+    "dv8910_restart_20261014.db-journal",
+    "kasir_app.db",
+    "kasir_app.db-journal",
+    "locale_ui_1791927772825158.db",
+    "locale_ui_1791927772825158.db-journal",
+    "locale_ui_1791932538344909.db",
+    "locale_ui_1791932538344909.db-journal",
+    "m31_gaps_1791934822660387_2.db",
+    "m31_gaps_1791934822660387_2.db-journal",
+    "m31_gaps_1791934822660387_3.db",
+    "m31_gaps_1791934822660387_3.db-journal"
+  ],
+  "deleted": [],
+  "root_used": false,
+  "production_touched": false
+}

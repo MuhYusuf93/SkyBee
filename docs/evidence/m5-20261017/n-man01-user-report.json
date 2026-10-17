@@ -1,0 +1,12 @@
+{
+  "id": "N-MAN01",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Android notification denial, expected inline message, busy ended, low-stock item2/min5 retained",
+  "pinReentry": "conditional instruction; actual occurrence not independently established",
+  "automaticEvidence": false,
+  "osDelivery": "UNVERIFIED",
+  "notificationTapPin": "UNVERIFIED"
+}

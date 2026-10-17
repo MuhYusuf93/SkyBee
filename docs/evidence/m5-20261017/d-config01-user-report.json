@@ -1,0 +1,9 @@
+{
+  "id": "D-CONFIG01",
+  "date": "2026-10-17",
+  "source": "user report",
+  "status": "CONFIGURATION ISSUE CONFIRMED",
+  "scope": "User checked Google Cloud project and reports Google Drive API not enabled; opening enable led to API library",
+  "activation": "PENDING, instructions supplied for Google Drive API by Google in skybee-cf8b9",
+  "limits": "Exact D-MAN03 HTTP status/reason not observed; configuration is a credible cause requiring retest after enable. Account addresses omitted."
+}

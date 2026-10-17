@@ -1,0 +1,70 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "ime_nodes_in_dump": false,
+  "system_input_shown": true,
+  "nodes": [
+    {
+      "label": "Synthetic input probe\nID",
+      "bounds": "[32,32][936,270]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Hutang",
+      "bounds": "[594,32][783,126]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Kelola",
+      "bounds": "[32,142][243,238]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "000123t",
+      "bounds": "[32,270][936,390]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "true"
+    },
+    {
+      "label": "Bersihkan pencarian",
+      "bounds": "[840,278][936,374]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Daftar belanja\nBelum ada barang.",
+      "bounds": "[984,32][1888,214]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Total",
+      "bounds": "[32,454][106,500]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "IDR 0",
+      "bounds": "[32,500][166,580]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Bayar",
+      "bounds": "[1720,469][1888,565]",
+      "class": "android.widget.Button",
+      "clickable": "false",
+      "focused": "false"
+    }
+  ]
+}

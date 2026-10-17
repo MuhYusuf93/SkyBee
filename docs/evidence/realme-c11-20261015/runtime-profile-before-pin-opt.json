@@ -1,0 +1,303 @@
+{
+  "time": "2026-10-15T03:17:54.716450+07:00",
+  "mode": "profile",
+  "device": "0062112V2210F9B3",
+  "package": "com.example.kasir_app.integration",
+  "method": "own process force-stop; not reboot/crash/powerloss",
+  "launches": [
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "",
+      "pid": "24409",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 6937\r\nWaitTime: 6943\r\nComplete",
+      "stage_ready_seconds": 82.90600000000268,
+      "stage": {
+        "stage": "draft_seeded",
+        "launches": 1,
+        "draft_quantity": 3,
+        "stock": 20,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "24409",
+      "pid": "25328",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 2003\r\nWaitTime: 2016\r\nComplete",
+      "stage_ready_seconds": 2.4219999999913853,
+      "stage": {
+        "stage": "draft_recovered",
+        "launches": 2,
+        "draft_quantity": 3,
+        "stock": 20,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "25328",
+      "pid": "25472",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 2004\r\nWaitTime: 2013\r\nComplete",
+      "stage_ready_seconds": 38.875,
+      "stage": {
+        "search_5_samples_us": [
+          23536,
+          23667,
+          23962,
+          24091,
+          25526
+        ],
+        "report_5_samples_us": [
+          49787,
+          52005,
+          59160,
+          50450,
+          51056
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "launches": 3,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 101555,
+        "report_us_single_sample": 56797,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "25472",
+      "pid": "25699",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 1980\r\nWaitTime: 1986\r\nComplete",
+      "stage_ready_seconds": 39.39099999998871,
+      "stage": {
+        "search_5_samples_us": [
+          25342,
+          26250,
+          23064,
+          38012,
+          26341
+        ],
+        "report_5_samples_us": [
+          50538,
+          49311,
+          51425,
+          49518,
+          51834
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "launches": 4,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 47205,
+        "report_us_single_sample": 54903,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "25699",
+      "pid": "26536",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 2008\r\nWaitTime: 2019\r\nComplete",
+      "stage_ready_seconds": 39.29700000000594,
+      "stage": {
+        "search_5_samples_us": [
+          26310,
+          23408,
+          27196,
+          24146,
+          27720
+        ],
+        "report_5_samples_us": [
+          52891,
+          54323,
+          60916,
+          51153,
+          57507
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "launches": 5,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 50081,
+        "report_us_single_sample": 56580,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "warm",
+      "actual_kind": "warm",
+      "previous_pid": "26536",
+      "pid": "26536",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 316\r\nWaitTime: 321\r\nComplete",
+      "stage_ready_seconds": 0.5930000000080327,
+      "stage": {
+        "search_5_samples_us": [
+          26310,
+          23408,
+          27196,
+          24146,
+          27720
+        ],
+        "report_5_samples_us": [
+          52891,
+          54323,
+          60916,
+          51153,
+          57507
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "launches": 5,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 50081,
+        "report_us_single_sample": 56580,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "warm",
+      "actual_kind": "warm",
+      "previous_pid": "26536",
+      "pid": "26536",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 147\r\nWaitTime: 157\r\nComplete",
+      "stage_ready_seconds": 0.4529999999940628,
+      "stage": {
+        "search_5_samples_us": [
+          26310,
+          23408,
+          27196,
+          24146,
+          27720
+        ],
+        "report_5_samples_us": [
+          52891,
+          54323,
+          60916,
+          51153,
+          57507
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "launches": 5,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 50081,
+        "report_us_single_sample": 56580,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "warm",
+      "actual_kind": "warm",
+      "previous_pid": "26536",
+      "pid": "26536",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 145\r\nWaitTime: 150\r\nComplete",
+      "stage_ready_seconds": 0.4380000000091968,
+      "stage": {
+        "search_5_samples_us": [
+          26310,
+          23408,
+          27196,
+          24146,
+          27720
+        ],
+        "report_5_samples_us": [
+          52891,
+          54323,
+          60916,
+          51153,
+          57507
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "launches": 5,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 50081,
+        "report_us_single_sample": 56580,
+        "management_locked": true
+      }
+    }
+  ],
+  "failures": [],
+  "ordinary_touched": false,
+  "actual_cashier_labels": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Synthetic Realme C11 test",
+    "ID",
+    "",
+    "",
+    "Penjualan tersimpan dipulihkan. Belanja ini sudah selesai.",
+    "Nomor penjualan: MV8YAQO0-7541C750",
+    "15/10/2026 10:00",
+    "Pelanggan: Synthetic Realme C11 customer",
+    "",
+    "Realme C11 fixture goods\n3 \u00d7 IDR 12.000\nIDR 36.000",
+    "Total: IDR 36.000",
+    "Pembayaran dicatat: IDR 10.000",
+    "Sisa hutang: IDR 26.000",
+    "",
+    "Penjualan tersimpan. Pencetakan struk belum tersedia.",
+    "",
+    "Belanja berikutnya",
+    ""
+  ],
+  "runtime_assertions_passed": true,
+  "actual_cashier_opened": true
+}

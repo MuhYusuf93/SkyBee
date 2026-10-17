@@ -1,0 +1,620 @@
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Running Gradle task 'assembleDebug'...                             11.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+
+package: name='com.example.kasir_app.integration' versionCode='6' versionName='0.4.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+application-label:'kasir_app tests'
+launchable-activity: name='com.example.kasir_app.MainActivity'  label='' icon=''
+Operational DB SHA256 before: 2d3803984e87c541806fc25f5dc15f495f3da7d8f54ff77ee95f4ffab4af37c7
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/database_test.dart
+Running Gradle task 'assembleDebug'...                             17.6s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           8.5s
+00:00 +0: fresh schema and foreign keys; no production fixtures; safe defaults
+00:00 +1: constraints: integers, stock, identity, barcode uniqueness including archive
+00:00 +2: sale relationships, snapshots, idempotency constraints and immutable facts
+00:00 +3: database operation failure rolls back and next operation still works
+00:01 +4: v1 to current upgrade preserves data and relationships, reopening and downgrade safety
+error Bad state: Downgrade skema ditolak agar data tetap aman. during open, closing...
+00:01 +5: catalog composite cursor: duplicates, Unicode, empty/final/default pages and prefix reset
+00:02 +6: failed migration rolls back version/index changes and can retry without losing data
+error DatabaseException(index sale_transactions_history already exists (code 1 SQLITE_ERROR): , while compiling: CREATE INDEX sale_transactions_history ON sale_transactions(created_at DESC, id COLLATE BINARY DESC)) sql 'CREATE INDEX sale_transactions_history ON sale_transactions(created_at DESC, id COLLATE BINARY DESC)' args [] during open, closing...
+00:02 +7: startup service retries opening, shares one coordinator, disposes in-flight work safely
+00:02 +8: history cursor: same timestamps, half-open range, customer and session upper bound
+00:02 +9: EXPLAIN actual first/continuation queries select matching indexes without temp sort
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=?)
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=? AND (normalized_name,id)>(?,?))
+QUERY PLAN (products_catalog): SEARCH products USING INDEX products_catalog (is_deleted=? AND normalized_name>? AND normalized_name<?)
+QUERY PLAN (sale_transactions_history): SEARCH sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)
+CORRELATED SCALAR SUBQUERY 1
+SEARCH r USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)
+QUERY PLAN (sale_transactions_history): SEARCH sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)
+CORRELATED SCALAR SUBQUERY 1
+SEARCH r USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)
+QUERY PLAN (sale_transactions_customer_history): SEARCH sale_transactions USING INDEX sale_transactions_customer_history (customer_id=? AND created_at>? AND created_at<?)
+CORRELATED SCALAR SUBQUERY 1
+SEARCH r USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)
+00:02 +10: coordinator serializes maintenance and writes; close rejects later operations
+00:03 +11: (tearDownAll)
+00:03 +11: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_inventory_test.dart
+Running Gradle task 'assembleDebug'...                             11.6s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.7s
+00:00 +0: (setUpAll)
+KDF 600000 rounds / 256 bits: 3638 ms (test target, non-release)
+00:06 +0: authorization is service-enforced, idle expiry and lock revoke queued writes
+00:15 +1: session idle deadline uses monotonic time despite wall-clock changes
+00:20 +2: leading-zero PIN and persisted progressive lockout survive reopen/clock rollback
+00:33 +3: credential creation has no default PIN, salt random, confirmation and rotation/recovery
+01:15 +4: master CRUD, nullable relations, generated unique SKU and archived barcode collision
+01:18 +5: receipts are atomic/idempotent, supplier optional; weighted value/HPP example and no repricing cost
+01:22 +6: SQL failure rolls back receipt/item/batch/value/history/audit together
+01:25 +7: receipt reversal exact valuation, idempotent and rejects intervening stock dependencies
+01:29 +8: expiry calendar, undated, FEFO and expired stock remains physical until disposal
+01:33 +9: physical count and waste allocate rounding residue; zero quantity has zero value
+01:37 +10: price/archive undo does not overwrite later changes and logs reversal price
+01:40 +11: settings validated store zone/text, unchanged opt-in and protected saves
+01:44 +12: master, batch and ledger pagination handles same sort keys and literal prefixes
+01:48 +13: v2 to v3 preserves sale snapshots/relations and adds defaults non-destructively
+01:49 +14: (tearDownAll)
+01:49 +14: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/locale_currency_test.dart
+Running Gradle task 'assembleDebug'...                             12.6s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.7s
+00:00 +0: public language preference persists with no PIN; default currency and null device policy
+00:00 +1: empty store currency protected/persistent, scale catalog, non-financial masters preserved
+00:14 +2: currency change refused for every old financial surface, including archived and zero receipt
+02:00 +3: USD inventory exact minor units, receipt/header/history metadata and repository
+02:12 +4: M2 v3 migration preserves exact money stock HPP snapshots drafts and user strings
+02:12 +5: v4 interrupted migration rolls back partial columns and leaves v3 usable
+error DatabaseException(duplicate column name: currency_code (code 1 SQLITE_ERROR): , while compiling: ALTER TABLE products ADD COLUMN currency_code TEXT NOT NULL DEFAULT 'IDR' CHECK(currency_code IN ('IDR','USD','MYR','EUR'))) sql 'ALTER TABLE products ADD COLUMN currency_code TEXT NOT NULL DEFAULT 'IDR' CHECK(currency_code IN ('IDR','USD','MYR','EUR'))' args [] during open, closing...
+02:12 +6: (tearDownAll)
+02:13 +6: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_sql_test.dart
+Running Gradle task 'assembleDebug'...                             12.6s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.8s
+00:00 +0: search normalizes compact/token/alias/category, exact ranks first, bounded and literal syntax
+M3 FTS5 capability: false; backend=BINARY token prefix
+00:00 +1: dirty index follows category/alias/name/archive edits; ambiguous exact code never fuzzy-adds
+00:00 +2: three leading-zero scans merge quantity, draft persists input/reopen without reducing stock
+00:01 +3: cart stock/quantity/overflow validation rolls back; stale undo cannot overwrite later edits
+00:01 +4: changed prices require explicit acceptance; draft revision and archived product are revalidated
+00:02 +5: weighted snapshot example 36000/27000/9000 and debt 26000; settlement adds no sale or HPP
+00:02 +6: paid full ignores customer/cash received; free sale produces no zero payment
+00:03 +7: conditional partial/full debt validation and currency mismatch create no financial facts
+00:03 +8: checkout same attempt is idempotent; changed payment rejected and completed draft guarded
+00:03 +9: post-commit UI death recovers stored sale, input and pointer across restart; next acknowledged draft persists
+00:03 +10: two checkout services on the same local database compete for last unit; only one commits
+00:06 +11: checkout injected failure at validated rolls back all facts/stock/customer/draft, then retry succeeds
+00:07 +12: checkout injected failure at customer rolls back all facts/stock/customer/draft, then retry succeeds
+00:07 +13: checkout injected failure at sale rolls back all facts/stock/customer/draft, then retry succeeds
+00:07 +14: checkout injected failure at stock rolls back all facts/stock/customer/draft, then retry succeeds
+00:07 +15: checkout injected failure at items rolls back all facts/stock/customer/draft, then retry succeeds
+00:08 +16: checkout injected failure at batches rolls back all facts/stock/customer/draft, then retry succeeds
+00:08 +17: checkout injected failure at history rolls back all facts/stock/customer/draft, then retry succeeds
+00:08 +18: checkout injected failure at payment rolls back all facts/stock/customer/draft, then retry succeeds
+00:09 +19: checkout injected failure at draft rolls back all facts/stock/customer/draft, then retry succeeds
+00:09 +20: checkout injected failure at audit rolls back all facts/stock/customer/draft, then retry succeeds
+00:09 +21: expiry day excludes physical stock; FEFO dated first/undated last and exact residual cost
+00:10 +22: FEFO streams beyond 100 batches without skipping; sold out leaves zero valuation
+00:10 +23: repayment spans oldest sales with preview, idempotency, stale balance rejection and immutable sale cost
+00:11 +24: repayment failure at payment rolls back all allocations/payment/audit
+00:11 +25: repayment failure at allocation rolls back all allocations/payment/audit
+00:11 +26: repayment failure at audit rolls back all allocations/payment/audit
+00:12 +27: same-name customers stay separate, deterministic keyset pages and settled sales remain stored
+00:12 +28: V4 to current schema preserves old values and draft; additive defaults and integrity
+00:12 +29: V5 migration failure rolls back new columns/version and preserves V4 data
+error DatabaseException(table cashier_state already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE cashier_state(id INTEGER PRIMARY KEY CHECK(id=1), draft_id TEXT REFERENCES cart_drafts(id) ON DELETE RESTRICT)) sql 'CREATE TABLE cashier_state(id INTEGER PRIMARY KEY CHECK(id=1), draft_id TEXT REFERENCES cart_drafts(id) ON DELETE RESTRICT)' args [] during open, closing...
+00:13 +30: (tearDownAll)
+00:13 +30: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/wholesale_packaging_sql_test.dart
+Running Gradle task 'assembleDebug'...                             13.3s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.4s
+00:00 +0: (setUpAll)
+00:09 +0: legacy-style product without wholesale/pack retains retail and base receipt
+00:15 +1: toggle scan/quantity reopen undo preserve mode and payment intent, snapshot retry
+00:22 +2: changed wholesale needs acceptance, removal needs explicit retail correction
+00:28 +3: wholesale nullable undo restores removal and rejects later revision
+00:34 +4: 5 dus x 40 = 200, 5 x 120000 = 600000, per-receipt override and master independent
+00:40 +5: USD fractional per-base cost keeps exact total and sold-out residue
+00:46 +6: MYR fractional per-base cost keeps exact total and sold-out residue
+00:52 +7: physical pack count follows existing average and does not insert a purchase
+00:56 +8: receipt reversal exact values, config edit not dependency, later sale blocks reversal
+01:01 +9: protected configuration/price history and zero/overflow failures leave no partial facts
+01:07 +10: pack receipt failure after stock update rolls back all source facts and permits retry
+01:12 +11: V5 upgrade preserves legacy facts/defaults, receipt origin remains unknown
+01:17 +12: V6 migration failure rolls back additive columns and preserves V5 data
+error DatabaseException(duplicate column name: pack_size (code 1 SQLITE_ERROR): , while compiling: ALTER TABLE products ADD COLUMN pack_size INTEGER CHECK(pack_size IS NULL OR (typeof(pack_size)='integer' AND pack_size>0))) sql 'ALTER TABLE products ADD COLUMN pack_size INTEGER CHECK(pack_size IS NULL OR (typeof(pack_size)='integer' AND pack_size>0))' args [] during open, closing...
+01:21 +13: closed consistent DB snapshot reopen preserves packaging, draft and sale facts (not M5 restore)
+01:27 +14: (tearDownAll)
+01:28 +14: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/localization_ui_test.dart
+Running Gradle task 'assembleDebug'...                             15.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.9s
+00:00 +0: Android public language, protected USD, live form locale, currency refusal
+00:29 +1: (tearDownAll)
+00:29 +1: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/management_ui_test.dart
+Running Gradle task 'assembleDebug'...                             16.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          20.4s
+00:00 +0: Android setup PIN → warehouse product/receipt → average → background lock
+00:28 +1: (tearDownAll)
+00:29 +1: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/cashier_ui_test.dart
+Running Gradle task 'assembleDebug'...                             19.7s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.7s
+00:00 +0: M3 three scans weighted checkout double-submit restart recovery and public settlement
+00:27 +1: M3 USD partial payment live locale and explicit same-name customer selection
+00:46 +2: (tearDownAll)
+00:47 +2: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/wholesale_packaging_ui_test.dart
+Running Gradle task 'assembleDebug'...                             15.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          13.1s
+00:00 +0: M3.1 warehouse boxes, physical count, wholesale scan draft and bilingual partial sale
+01:03 +1: (tearDownAll)
+01:03 +1: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/m31_ui_gaps_test.dart
+Running Gradle task 'assembleDebug'...                             15.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           7.2s
+00:00 +0: (setUpAll)
+00:07 +0: wholesale above retail warning cancel/confirm preserves chosen price
+00:24 +1: wholesale below exact inventory cost warning cancel/confirm preserves chosen price
+00:36 +2: removed wholesale draft blocks Pay until explicit retail correction
+00:45 +3: changed wholesale draft cancel/accept preserves mode and does not create a sale
+00:56 +4: (tearDownAll)
+00:56 +4: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/reports_corrections_sql_test.dart
+Running Gradle task 'assembleDebug'...                             13.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          13.1s
+00:00 +0: (setUpAll)
+00:06 +0: moving average example: whole-period totals and repayment never create a new sale/profit
+00:12 +1: sales/payment corrections are protected, require reason and real-world attestations
+00:18 +2: full sale reversal is atomic/idempotent and retains draft/items/wholesale snapshots
+00:23 +3: return period is signed and does not rewrite original period; followup repayment must be reversed first
+00:29 +4: return after later restock/sale adds original cost to current valuation without repricing another sale
+00:35 +5: expired returned original batches stay unsaleable, physical/value/ledger still reconcile
+00:40 +6: repayment reversal mirrors every allocation, reopens debt, changes no stock/sales/HPP, retry safe
+00:46 +7: partial checkout payment can reopen its named debt; anonymous payment requires full goods return
+00:53 +8: sale failure at saleHeader rolls back ALL tables and emits no commit invalidation
+00:59 +9: sale failure at batch rolls back ALL tables and emits no commit invalidation
+01:05 +10: sale failure at stock rolls back ALL tables and emits no commit invalidation
+01:11 +11: sale failure at history rolls back ALL tables and emits no commit invalidation
+01:18 +12: sale failure at paymentHeader rolls back ALL tables and emits no commit invalidation
+01:24 +13: sale failure at paymentAllocation rolls back ALL tables and emits no commit invalidation
+01:30 +14: sale failure at audit rolls back ALL tables and emits no commit invalidation
+01:36 +15: payment failure at paymentHeader rolls back header/allocations/audit
+01:42 +16: payment failure at paymentAllocation rolls back header/allocations/audit
+01:49 +17: payment failure at audit rolls back header/allocations/audit
+01:55 +18: capability lost during correction rolls back rather than committing a queued protected write
+02:01 +19: shop calendar uses half-open UTC bounds, month boundary and DST days, not fixed 24h
+02:07 +20: reconciliation diagnoses stock/value mismatch and never mutates facts
+02:13 +21: receipt after a cancelled checkout remains readable for crash/retry recovery, never a second sale
+02:19 +22: same-name customers filter by identity; current inventory is whole shop independent of customer
+02:26 +23: USD fractional HPP and returned residue are preserved, negative profit uses exact micros
+02:32 +24: (tearDownAll)
+02:32 +24: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/m4_storage_test.dart
+Running Gradle task 'assembleDebug'...                             15.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.7s
+00:00 +0: (setUpAll)
+00:05 +0: route report cache stays bounded and ignores SQL reads for an obsolete customer filter
+00:11 +1: successful mutation refreshes route report totals and invalidates its detail cursor
+00:17 +2: all-time route history advances upper time on later inserts without keeping obsolete pages
+00:23 +3: whole-range summary exceeds one detail page and tie-safe event cursor visits every original/reversal once
+00:30 +4: cursor rejects changed filter and committed dataset; refreshed history tracks active/cancelled status
+00:36 +5: half-open period excludes end boundary while includes first/last millisecond, payment ledger ties remain total ordered
+00:42 +6: aggregate INTEGER overflow is explicit, never silently loses precision through TOTAL/double
+00:48 +7: V6 to V7 preserves every old value, backfills only proven origins, legacy confirmation stays unknown
+00:55 +8: V7 migration failure rolls back columns/version and preserves V6 rows
+error DatabaseException(table checkout_payment_links already exists (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE checkout_payment_links(
+      payment_id TEXT PRIMARY KEY REFERENCES payments(id) ON DELETE RESTRICT,
+      sale_transaction_id TEXT NOT NULL UNIQUE REFERENCES sale_transactions(id) ON DELETE RESTRICT)) sql 'CREATE TABLE checkout_payment_links(
+      payment_id TEXT PRIMARY KEY REFERENCES payments(id) ON DELETE RESTRICT,
+      sale_transaction_id TEXT NOT NULL UNIQUE REFERENCES sale_transactions(id) ON DELETE RESTRICT)' args [] during open, closing...
+01:01 +9: SQL rejects mismatched reversal amount/customer and mismatched original allocation
+01:07 +10: (tearDownAll)
+01:07 +10: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/m4_ui_test.dart
+Running Gradle task 'assembleDebug'...                             13.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.7s
+00:00 +0: narrow reports -> protected sale cancellation -> snapshots retained and live ID/EN stays on route
+00:23 +1: wide text2x reports and locking conceal protected financial values
+00:36 +2: (tearDownAll)
+00:36 +2: All tests passed!
+Resolving dependencies...
+Downloading packages...
+  clock 1.1.2 (1.1.3 available)
+  code_assets 1.2.1 (2.1.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  intl 0.20.2 (0.20.3 available)
+  matcher 0.12.19 (0.12.20 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.0 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.5 available)
+  record_use 0.6.0 (1.1.1 available)
+  sqflite 2.4.4+1 (2.4.4+2 available)
+  sqflite_android 2.4.4 (2.4.4+1 available)
+  sqflite_common 2.5.13+1 (2.5.14 available)
+  sqflite_common_ffi 2.4.3 (2.4.4 available)
+  sqflite_darwin 2.4.4 (2.4.4+1 available)
+  sqlite3 3.5.2 (3.7.1 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  synchronized 3.4.2 (3.5.0 available)
+  test_api 0.7.11 (0.7.15 available)
+  timezone 0.11.1 (0.11.2 available)
+  vector_math 2.2.0 (2.4.3 available)
+Got dependencies!
+20 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/m4_performance_test.dart
+Running Gradle task 'assembleDebug'...                             11.9s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.9s
+00:00 +0: M4 benchmark 10000 products / 100000 sales with items, batches and ledger
+M4_BENCHMARK {"platform":"Android sqflite / physical target from safe runner","mode":"debug test (not release/profile)","fixture_products":10000,"fixture_sales":100000,"sale_items":100000,"stock_sale_ledger_rows":100000,"payments":600,"seed_ms":91414,"search_index_build_ms":40361,"sample_policy":"1 warmup + 5 timed per query, seeding/anchors outside samples","far_cursor_policy":"primary-key lookup of known synthetic anchor, no OFFSET","metadata":{"sqlite_version":"3.44.5","journal_mode":"persist","page_count":59463,"page_size":4096},"latency":{"catalog_first":{"samples_us":[3931,2809,2715,2815,2646],"median_us":2809,"max_us":3931},"catalog_continuation":{"samples_us":[2778,3534,2160,2158,2090],"median_us":2160,"max_us":3534},"catalog_deep":{"samples_us":[2544,2171,2009,2115,2085],"median_us":2115,"max_us":2544},"history_first":{"samples_us":[2848,4383,3149,4737,4112],"median_us":4112,"max_us":4737},"history_continuation":{"samples_us":[4251,4275,4919,6644,5865],"median_us":4919,"max_us":6644},"history_deep_75000":{"samples_us":[3801,3862,3900,4163,4033],"median_us":3900,"max_us":4163},"report_detail_first":{"samples_us":[3246,3300,4112,3941,3864],"median_us":3864,"max_us":4112},"report_detail_continuation":{"samples_us":[3995,3867,3777,5997,7181],"median_us":3995,"max_us":7181},"report_detail_deep_75000":{"samples_us":[6560,5548,5327,5902,5424],"median_us":5548,"max_us":6560},"search_common":{"samples_us":[47521,47130,59291,61952,65148],"median_us":59291,"max_us":65148},"monthly_summary":{"samples_us":[289911,341863,342013,322134,322327],"median_us":322327,"max_us":342013}},"plans":{"catalog_first":["SEARCH products USING INDEX products_catalog (is_deleted=?)"],"catalog_deep":["SEARCH products USING INDEX products_catalog (is_deleted=? AND (normalized_name,id)>(?,?))"],"history_first":["SEARCH sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)","CORRELATED SCALAR SUBQUERY 1","SEARCH r USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)"],"history_deep":["SEARCH sale_transactions USING INDEX sale_transactions_history (created_at>? AND created_at<?)","CORRELATED SCALAR SUBQUERY 1","SEARCH r USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)"],"report_first":["MERGE (UNION ALL)","LEFT","CO-ROUTINE (subquery-2)","SEARCH s USING INDEX sale_transactions_history (created_at>? AND created_at<?)","CORRELATED SCALAR SUBQUERY 1","SEARCH x USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)","SCAN (subquery-2)","USE TEMP B-TREE FOR ORDER BY","RIGHT","CO-ROUTINE (subquery-5)","SEARCH r USING INDEX sale_reversals_period (created_at>? AND created_at<?)","SEARCH s USING INDEX sqlite_autoindex_sale_transactions_1 (id=?)","CORRELATED SCALAR SUBQUERY 4","SEARCH x USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)","SCAN (subquery-5)","USE TEMP B-TREE FOR ORDER BY"],"report_deep":["MERGE (UNION ALL)","LEFT","CO-ROUTINE (subquery-2)","SEARCH s USING INDEX sale_transactions_history (created_at>? AND created_at<?)","CORRELATED SCALAR SUBQUERY 1","SEARCH x USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)","SCAN (subquery-2)","USE TEMP B-TREE FOR ORDER BY","RIGHT","CO-ROUTINE (subquery-5)","SEARCH r USING INDEX sale_reversals_period (created_at>? AND created_at<?)","SEARCH s USING INDEX sqlite_autoindex_sale_transactions_1 (id=?)","CORRELATED SCALAR SUBQUERY 4","SEARCH x USING COVERING INDEX sqlite_autoindex_sale_transaction_reversals_2 (sale_transaction_id=?)","SCAN (subquery-5)","USE TEMP B-TREE FOR ORDER BY"],"search_common":["CO-ROUTINE candidates","COMPOUND QUERY","LEFT-MOST SUBQUERY","SEARCH products USING INDEX sqlite_autoindex_products_3 (barcode=?)","UNION ALL","SEARCH products USING INDEX sqlite_autoindex_products_2 (sku=?)","UNION ALL","SEARCH products USING COVERING INDEX products_catalog (is_deleted=? AND normalized_name=?)","UNION ALL","SEARCH cashier_search_terms USING COVERING INDEX cashier_terms_prefix (term>? AND term<?)","SEARCH p USING COVERING INDEX products_catalog (is_deleted=?)","SEARCH c USING AUTOMATIC COVERING INDEX (product_id=?)","USE TEMP B-TREE FOR GROUP BY","USE TEMP B-TREE FOR ORDER BY"],"monthly_sales":["CO-ROUTINE events","COMPOUND QUERY","LEFT-MOST SUBQUERY","SEARCH s USING INDEX sale_transactions_history (created_at>? AND created_at<?)","UNION ALL","SEARCH r USING INDEX sale_reversals_period (created_at>? AND created_at<?)","SEARCH s USING INDEX sqlite_autoindex_sale_transactions_1 (id=?)","SCAN events"]}}
+02:16 +1: (tearDownAll)
+02:16 +1: All tests passed!
+Operational DB SHA256 after: 2d3803984e87c541806fc25f5dc15f495f3da7d8f54ff77ee95f4ffab4af37c7
+Operational DB fingerprint preserved across all requested suites.
+

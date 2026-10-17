@@ -1,0 +1,36 @@
+Running Gradle task 'assembleDebug'...                             11.6s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+
+package: name='com.example.kasir_app.integration' versionCode='5' versionName='0.3.1' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+application-label:'kasir_app tests'
+launchable-activity: name='com.example.kasir_app.MainActivity'  label='' icon=''
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/wholesale_packaging_sql_test.dart
+Running Gradle task 'assembleDebug'...                             12.7s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          16.0s
+00:00 +0: (setUpAll)
+00:10 +0: legacy-style product without wholesale/pack retains retail and base receipt
+00:17 +1: toggle scan/quantity reopen undo preserve mode and payment intent, snapshot retry
+00:23 +2: changed wholesale needs acceptance, removal needs explicit retail correction
+00:29 +3: wholesale nullable undo restores removal and rejects later revision
+00:36 +4: 5 dus x 40 = 200, 5 x 120000 = 600000, per-receipt override and master independent
+00:41 +5: USD fractional per-base cost keeps exact total and sold-out residue
+00:47 +6: MYR fractional per-base cost keeps exact total and sold-out residue
+00:53 +7: physical pack count follows existing average and does not insert a purchase
+00:59 +8: receipt reversal exact values, config edit not dependency, later sale blocks reversal
+01:05 +9: protected configuration/price history and zero/overflow failures leave no partial facts
+01:11 +10: pack receipt failure after stock update rolls back all source facts and permits retry
+01:16 +11: V5 upgrade preserves legacy facts/defaults, receipt origin remains unknown
+01:23 +12: V6 migration failure rolls back additive columns and preserves V5 data
+error DatabaseException(duplicate column name: pack_size (code 1 SQLITE_ERROR): , while compiling: ALTER TABLE products ADD COLUMN pack_size INTEGER CHECK(pack_size IS NULL OR (typeof(pack_size)='integer' AND pack_size>0))) sql 'ALTER TABLE products ADD COLUMN pack_size INTEGER CHECK(pack_size IS NULL OR (typeof(pack_size)='integer' AND pack_size>0))' args [] during open, closing...
+01:29 +13: closed consistent DB snapshot reopen preserves packaging, draft and sale facts (not M5 restore)
+01:35 +14: (tearDownAll)
+01:36 +14: All tests passed!
+00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/wholesale_packaging_ui_test.dart
+Running Gradle task 'assembleDebug'...                             11.3s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.6s
+00:00 +0: M3.1 warehouse boxes, physical count, wholesale scan draft and bilingual partial sale
+01:03 +1: (tearDownAll)
+01:03 +1: All tests passed!
+

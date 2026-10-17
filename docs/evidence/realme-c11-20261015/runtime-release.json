@@ -1,0 +1,397 @@
+{
+  "time": "2026-10-15T07:17:17.040276+07:00",
+  "mode": "release",
+  "device": "0062112V2210F9B3",
+  "package": "com.example.kasir_app.integration",
+  "method": "own process force-stop; not reboot/crash/powerloss",
+  "launches": [
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "",
+      "pid": "13609",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 5604\r\nWaitTime: 5611\r\nComplete",
+      "stage_ready_seconds": 9.468000000008033,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          14272,
+          11829,
+          12183,
+          11878,
+          12724
+        ],
+        "report_5_samples_us": [
+          30620,
+          27842,
+          26421,
+          25929,
+          27662
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3110195,
+        "launches": 14,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 37907,
+        "report_us_single_sample": 32440,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "13609",
+      "pid": "13896",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 922\r\nWaitTime: 927\r\nComplete",
+      "stage_ready_seconds": 4.8439999999973224,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          12587,
+          15930,
+          14857,
+          14272,
+          16986
+        ],
+        "report_5_samples_us": [
+          30301,
+          31980,
+          28881,
+          29105,
+          40313
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3206947,
+        "launches": 15,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 36265,
+        "report_us_single_sample": 32033,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "13896",
+      "pid": "14141",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 956\r\nWaitTime: 962\r\nComplete",
+      "stage_ready_seconds": 4.9060000000026776,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          14771,
+          13870,
+          11927,
+          13854,
+          13354
+        ],
+        "report_5_samples_us": [
+          30276,
+          29327,
+          33490,
+          29506,
+          27033
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3147174,
+        "launches": 16,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 36381,
+        "report_us_single_sample": 37410,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "cold",
+      "actual_kind": "cold",
+      "previous_pid": "14141",
+      "pid": "14233",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 945\r\nWaitTime: 957\r\nComplete",
+      "stage_ready_seconds": 4.75,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          14158,
+          11719,
+          12702,
+          11963,
+          12809
+        ],
+        "report_5_samples_us": [
+          29822,
+          29282,
+          28279,
+          28120,
+          25361
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3120506,
+        "launches": 17,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 35930,
+        "report_us_single_sample": 33521,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "warm",
+      "actual_kind": "warm",
+      "previous_pid": "14233",
+      "pid": "14233",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 315\r\nWaitTime: 320\r\nComplete",
+      "stage_ready_seconds": 0.5930000000080327,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          14158,
+          11719,
+          12702,
+          11963,
+          12809
+        ],
+        "report_5_samples_us": [
+          29822,
+          29282,
+          28279,
+          28120,
+          25361
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3120506,
+        "launches": 17,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 35930,
+        "report_us_single_sample": 33521,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "warm",
+      "actual_kind": "warm",
+      "previous_pid": "14233",
+      "pid": "14233",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 141\r\nWaitTime: 148\r\nComplete",
+      "stage_ready_seconds": 0.4369999999908032,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          14158,
+          11719,
+          12702,
+          11963,
+          12809
+        ],
+        "report_5_samples_us": [
+          29822,
+          29282,
+          28279,
+          28120,
+          25361
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3120506,
+        "launches": 17,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 35930,
+        "report_us_single_sample": 33521,
+        "management_locked": true
+      }
+    },
+    {
+      "kind": "warm",
+      "actual_kind": "warm",
+      "previous_pid": "14233",
+      "pid": "14233",
+      "am_start": "Starting: Intent { cmp=com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity }\r\nWarning: Activity not started, its current task has been brought to the front\r\nStatus: ok\r\nLaunchState: HOT\r\nActivity: com.example.kasir_app.integration/com.example.kasir_app.IntegrationActivity\r\nTotalTime: 135\r\nWaitTime: 139\r\nComplete",
+      "stage_ready_seconds": 0.4220000000059372,
+      "stage": {
+        "native_backend": {
+          "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+          "available": true,
+          "mainThread": false
+        },
+        "search_5_samples_us": [
+          14158,
+          11719,
+          12702,
+          11963,
+          12809
+        ],
+        "report_5_samples_us": [
+          29822,
+          29282,
+          28279,
+          28120,
+          25361
+        ],
+        "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+        "stage": "committed_recovered",
+        "pin_verification_us": 3120506,
+        "launches": 17,
+        "sales": 1,
+        "revenue": 36000,
+        "cost": 27000,
+        "gross_profit": 9000,
+        "debt": 26000,
+        "stock": 17,
+        "retry_same_sale": true,
+        "reconciled": true,
+        "search_us_single_sample": 35930,
+        "report_us_single_sample": 33521,
+        "management_locked": true
+      }
+    }
+  ],
+  "failures": [],
+  "ordinary_touched": false,
+  "debounced_search": {
+    "native_backend": {
+      "backend": "Mbed TLS 3.6.7 PBKDF2-HMAC-SHA256",
+      "available": true,
+      "mainThread": false
+    },
+    "search_5_samples_us": [
+      14158,
+      11719,
+      12702,
+      11963,
+      12809
+    ],
+    "report_5_samples_us": [
+      29822,
+      29282,
+      28279,
+      28120,
+      25361
+    ],
+    "sample_scope": "service latency small fixture; no debounce/UI/large-dataset claim",
+    "stage": "committed_recovered",
+    "pin_verification_us": 3120506,
+    "launches": 17,
+    "sales": 1,
+    "revenue": 36000,
+    "cost": 27000,
+    "gross_profit": 9000,
+    "debt": 26000,
+    "stock": 17,
+    "retry_same_sale": true,
+    "reconciled": true,
+    "search_us_single_sample": 35930,
+    "report_us_single_sample": 33521,
+    "management_locked": true,
+    "debounced_search_5_samples_us": [
+      289534,
+      288124,
+      299750,
+      291257,
+      290000
+    ],
+    "debounced_scope": "production Provider 275ms debounce + service; no keyboard/render/transport claim"
+  },
+  "actual_cashier_labels": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Synthetic Realme C11 test",
+    "ID",
+    "",
+    "",
+    "Penjualan tersimpan dipulihkan. Belanja ini sudah selesai.",
+    "Nomor penjualan: MV8YAQO0-7541C750",
+    "15/10/2026 10:00",
+    "Pelanggan: Synthetic Realme C11 customer",
+    "",
+    "Realme C11 fixture goods\n3 \u00d7 IDR 12.000\nIDR 36.000",
+    "Total: IDR 36.000",
+    "Pembayaran dicatat: IDR 10.000",
+    "Sisa hutang: IDR 26.000",
+    "",
+    "Penjualan tersimpan. Pencetakan struk belum tersedia.",
+    "",
+    "Belanja berikutnya",
+    ""
+  ],
+  "runtime_assertions_passed": true,
+  "actual_cashier_opened": true
+}

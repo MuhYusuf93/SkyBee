@@ -1,0 +1,7 @@
+{
+  "sqlcipherCore": "v4.19.0",
+  "retrieved": "2026-10-16",
+  "tinkJava": "v1.23.0",
+  "libtomcryptCommit": "476a9579ae94f32b9ea9e2747bfb04b302370259",
+  "sqlcipherAndroid": "v4.19.1"
+}

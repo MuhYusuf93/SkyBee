@@ -1,0 +1,7 @@
+{
+  "source_device": "192.168.0.102:5555",
+  "nonce": "1792150309449",
+  "archive_bytes": 607195,
+  "archive_sha256": "2a375c059a5399164186d681f12658e2782d0bbe9bbd6876b396182562d3219d",
+  "synthetic_fact_tables": 18
+}

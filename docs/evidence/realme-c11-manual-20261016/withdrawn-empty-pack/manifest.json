@@ -1,0 +1,42 @@
+[
+  {
+    "path": "lib/features/inventory/presentation/stock_input_fields.dart",
+    "sha256": "cb9c0321b7b22d0c1b6973022eac7c83953822241578579530bd21ebb293afeb",
+    "archive": "docs\\evidence\\realme-c11-manual-20261016\\withdrawn-empty-pack\\lib__features__inventory__presentation__stock_input_fields.dart.txt"
+  },
+  {
+    "path": "lib/features/inventory/presentation/product_detail_screen.dart",
+    "sha256": "4f846c31a13f7e86e2c53c75926081ef0d5b1e7b2827426e47dca5a7e241c897",
+    "archive": "docs\\evidence\\realme-c11-manual-20261016\\withdrawn-empty-pack\\lib__features__inventory__presentation__product_detail_screen.dart.txt"
+  },
+  {
+    "path": "lib/features/inventory/presentation/product_form.dart",
+    "sha256": "015d17d4f000a592ced1be74c7ec40f60cd00c91ae5e852836843c02e7cd3a1c",
+    "archive": "docs\\evidence\\realme-c11-manual-20261016\\withdrawn-empty-pack\\lib__features__inventory__presentation__product_form.dart.txt"
+  },
+  {
+    "path": "test/wholesale_packaging_widgets_test.dart",
+    "sha256": "647f7aba7d8001902c4c71fdc42957dbf3a1bd6c5b7621d458d73a7c07eb968e",
+    "archive": "docs\\evidence\\realme-c11-manual-20261016\\withdrawn-empty-pack\\test__wholesale_packaging_widgets_test.dart.txt"
+  },
+  {
+    "path": "test/support/m31_ui_gaps_suite.dart",
+    "sha256": "7b2e388bbf1bad63f00f6154e09b7de685365d9c9566783567497067720f4a59",
+    "archive": "docs\\evidence\\realme-c11-manual-20261016\\withdrawn-empty-pack\\test__support__m31_ui_gaps_suite.dart.txt"
+  },
+  {
+    "path": "integration_test/wholesale_packaging_ui_test.dart",
+    "sha256": "6622af79c1277f9ef2f9a66201f1b7b4252ca15833fa3500aeec2630ce004409",
+    "archive": "docs\\evidence\\realme-c11-manual-20261016\\withdrawn-empty-pack\\integration_test__wholesale_packaging_ui_test.dart.txt"
+  },
+  {
+    "path": "docs/SPEC.md",
+    "sha256": "038ede50d9774596ce04f7ffcc5d78751179a74f753332504cca50c55428f1e4",
+    "archive": "docs\\evidence\\realme-c11-manual-20261016\\withdrawn-empty-pack\\docs__SPEC.md.txt"
+  },
+  {
+    "path": "docs/M31-NOTES.md",
+    "sha256": "a9d33b71744d8e4e8fcb65cabaade200434dc6b4a16531286400ba9837742226",
+    "archive": "docs\\evidence\\realme-c11-manual-20261016\\withdrawn-empty-pack\\docs__M31-NOTES.md.txt"
+  }
+]

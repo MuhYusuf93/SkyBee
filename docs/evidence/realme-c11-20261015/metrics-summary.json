@@ -1,0 +1,489 @@
+{
+  "runtime-profile-before-pin-opt": {
+    "runtime_assertions_passed": true,
+    "failures": [],
+    "groups": {
+      "cold": {
+        "stage_ready_seconds": {
+          "samples": [
+            38.875,
+            39.39099999998871,
+            39.29700000000594
+          ],
+          "median": 39.29700000000594,
+          "min": 38.875,
+          "max": 39.39099999998871,
+          "n": 3
+        },
+        "activity_total_ms": {
+          "samples": [
+            2004,
+            1980,
+            2008
+          ],
+          "median": 2004,
+          "min": 1980,
+          "max": 2008,
+          "n": 3
+        },
+        "all_pids": [
+          "25472",
+          "25699",
+          "26536"
+        ],
+        "all_stage_ready_seconds": [
+          38.875,
+          39.39099999998871,
+          39.29700000000594
+        ]
+      },
+      "warm": {
+        "stage_ready_seconds": {
+          "samples": [
+            0.5930000000080327,
+            0.4529999999940628,
+            0.4380000000091968
+          ],
+          "median": 0.4529999999940628,
+          "min": 0.4380000000091968,
+          "max": 0.5930000000080327,
+          "n": 3
+        },
+        "activity_total_ms": {
+          "samples": [
+            316,
+            147,
+            145
+          ],
+          "median": 147,
+          "min": 145,
+          "max": 316,
+          "n": 3
+        },
+        "all_pids": [
+          "26536",
+          "26536",
+          "26536"
+        ],
+        "all_stage_ready_seconds": [
+          0.5930000000080327,
+          0.4529999999940628,
+          0.4380000000091968
+        ]
+      }
+    },
+    "search_5_samples_us": {
+      "samples": [
+        26310,
+        23408,
+        27196,
+        24146,
+        27720
+      ],
+      "median": 26310,
+      "min": 23408,
+      "max": 27720,
+      "n": 5
+    },
+    "report_5_samples_us": {
+      "samples": [
+        52891,
+        54323,
+        60916,
+        51153,
+        57507
+      ],
+      "median": 54323,
+      "min": 51153,
+      "max": 60916,
+      "n": 5
+    }
+  },
+  "runtime-profile": {
+    "runtime_assertions_passed": true,
+    "failures": [],
+    "groups": {
+      "cold": {
+        "stage_ready_seconds": {
+          "samples": [
+            6.921999999991385,
+            6.905999999988126,
+            6.9689999999973224
+          ],
+          "median": 6.921999999991385,
+          "min": 6.905999999988126,
+          "max": 6.9689999999973224,
+          "n": 3
+        },
+        "activity_total_ms": {
+          "samples": [
+            1982,
+            1982,
+            2013
+          ],
+          "median": 1982,
+          "min": 1982,
+          "max": 2013,
+          "n": 3
+        },
+        "all_pids": [
+          "12208",
+          "12398",
+          "12489",
+          "12575"
+        ],
+        "all_stage_ready_seconds": [
+          7.25,
+          6.921999999991385,
+          6.905999999988126,
+          6.9689999999973224
+        ]
+      },
+      "warm": {
+        "stage_ready_seconds": {
+          "samples": [
+            0.5939999999973224,
+            0.4529999999940628,
+            0.45300000000861473
+          ],
+          "median": 0.45300000000861473,
+          "min": 0.4529999999940628,
+          "max": 0.5939999999973224,
+          "n": 3
+        },
+        "activity_total_ms": {
+          "samples": [
+            304,
+            152,
+            160
+          ],
+          "median": 160,
+          "min": 152,
+          "max": 304,
+          "n": 3
+        },
+        "all_pids": [
+          "12575",
+          "12575",
+          "12575"
+        ],
+        "all_stage_ready_seconds": [
+          0.5939999999973224,
+          0.4529999999940628,
+          0.45300000000861473
+        ]
+      }
+    },
+    "search_5_samples_us": {
+      "samples": [
+        25468,
+        27584,
+        23466,
+        25394,
+        23940
+      ],
+      "median": 25394,
+      "min": 23466,
+      "max": 27584,
+      "n": 5
+    },
+    "report_5_samples_us": {
+      "samples": [
+        50421,
+        50284,
+        50668,
+        51100,
+        54192
+      ],
+      "median": 50668,
+      "min": 50284,
+      "max": 54192,
+      "n": 5
+    },
+    "pin_us": {
+      "samples": [
+        3132822,
+        3107720,
+        3102329,
+        3111934
+      ],
+      "median": 3109827.0,
+      "min": 3102329,
+      "max": 3132822,
+      "n": 4
+    },
+    "debounced_search_us": {
+      "samples": [
+        299919,
+        301583,
+        318183,
+        300551,
+        300704
+      ],
+      "median": 300704,
+      "min": 299919,
+      "max": 318183,
+      "n": 5
+    }
+  },
+  "runtime-release": {
+    "runtime_assertions_passed": true,
+    "failures": [],
+    "groups": {
+      "cold": {
+        "stage_ready_seconds": {
+          "samples": [
+            4.8439999999973224,
+            4.9060000000026776,
+            4.75
+          ],
+          "median": 4.8439999999973224,
+          "min": 4.75,
+          "max": 4.9060000000026776,
+          "n": 3
+        },
+        "activity_total_ms": {
+          "samples": [
+            922,
+            956,
+            945
+          ],
+          "median": 945,
+          "min": 922,
+          "max": 956,
+          "n": 3
+        },
+        "all_pids": [
+          "13609",
+          "13896",
+          "14141",
+          "14233"
+        ],
+        "all_stage_ready_seconds": [
+          9.468000000008033,
+          4.8439999999973224,
+          4.9060000000026776,
+          4.75
+        ]
+      },
+      "warm": {
+        "stage_ready_seconds": {
+          "samples": [
+            0.5930000000080327,
+            0.4369999999908032,
+            0.4220000000059372
+          ],
+          "median": 0.4369999999908032,
+          "min": 0.4220000000059372,
+          "max": 0.5930000000080327,
+          "n": 3
+        },
+        "activity_total_ms": {
+          "samples": [
+            315,
+            141,
+            135
+          ],
+          "median": 141,
+          "min": 135,
+          "max": 315,
+          "n": 3
+        },
+        "all_pids": [
+          "14233",
+          "14233",
+          "14233"
+        ],
+        "all_stage_ready_seconds": [
+          0.5930000000080327,
+          0.4369999999908032,
+          0.4220000000059372
+        ]
+      }
+    },
+    "search_5_samples_us": {
+      "samples": [
+        14158,
+        11719,
+        12702,
+        11963,
+        12809
+      ],
+      "median": 12702,
+      "min": 11719,
+      "max": 14158,
+      "n": 5
+    },
+    "report_5_samples_us": {
+      "samples": [
+        29822,
+        29282,
+        28279,
+        28120,
+        25361
+      ],
+      "median": 28279,
+      "min": 25361,
+      "max": 29822,
+      "n": 5
+    },
+    "pin_us": {
+      "samples": [
+        3110195,
+        3206947,
+        3147174,
+        3120506
+      ],
+      "median": 3133840.0,
+      "min": 3110195,
+      "max": 3206947,
+      "n": 4
+    },
+    "debounced_search_us": {
+      "samples": [
+        289534,
+        288124,
+        299750,
+        291257,
+        290000
+      ],
+      "median": 290000,
+      "min": 288124,
+      "max": 299750,
+      "n": 5
+    }
+  },
+  "actual-release": {
+    "completed": true,
+    "failures": [],
+    "memory": [
+      {
+        "tag": "cashier-initial",
+        "pid": "17528",
+        "log": "memory-actual-release-cashier-initial.log",
+        "pss_kib": 43391,
+        "rss_kib": 107764,
+        "swap_pss_kib": 1190
+      },
+      {
+        "tag": "cycle-1-management",
+        "pid": "17528",
+        "log": "memory-actual-release-cycle-1-management.log",
+        "pss_kib": 52595,
+        "rss_kib": 121252,
+        "swap_pss_kib": 6167
+      },
+      {
+        "tag": "cycle-2-management",
+        "pid": "17528",
+        "log": "memory-actual-release-cycle-2-management.log",
+        "pss_kib": 53245,
+        "rss_kib": 122600,
+        "swap_pss_kib": 5457
+      },
+      {
+        "tag": "cycle-3-management",
+        "pid": "17528",
+        "log": "memory-actual-release-cycle-3-management.log",
+        "pss_kib": 51911,
+        "rss_kib": 121400,
+        "swap_pss_kib": 5453
+      },
+      {
+        "tag": "cashier-after-cycles",
+        "pid": "17528",
+        "log": "memory-actual-release-cashier-after-cycles.log",
+        "pss_kib": 40877,
+        "rss_kib": 76072,
+        "swap_pss_kib": 5001
+      }
+    ],
+    "details": [
+      {
+        "cycle": 1,
+        "route": "Inventory",
+        "observed_unique_row": true,
+        "opened_and_returned": true
+      },
+      {
+        "cycle": 1,
+        "route": "Sale history",
+        "observed_unique_row": true,
+        "opened_and_returned": true
+      },
+      {
+        "cycle": 2,
+        "route": "Inventory",
+        "observed_unique_row": true,
+        "opened_and_returned": true
+      },
+      {
+        "cycle": 2,
+        "route": "Sale history",
+        "observed_unique_row": true,
+        "opened_and_returned": true
+      },
+      {
+        "cycle": 3,
+        "route": "Inventory",
+        "observed_unique_row": true,
+        "opened_and_returned": true
+      },
+      {
+        "cycle": 3,
+        "route": "Sale history",
+        "observed_unique_row": true,
+        "opened_and_returned": true
+      }
+    ],
+    "android_home_relock_observed": true,
+    "cold": {
+      "activity_total_ms": {
+        "samples": [
+          6077,
+          1011,
+          861
+        ],
+        "median": 1011,
+        "min": 861,
+        "max": 6077,
+        "n": 3
+      },
+      "ui_observation_bound_seconds": {
+        "samples": [
+          9.968999999997322,
+          3.562000000005355,
+          3.4689999999973224
+        ],
+        "median": 3.562000000005355,
+        "min": 3.4689999999973224,
+        "max": 9.968999999997322,
+        "n": 3
+      }
+    },
+    "warm": {
+      "activity_total_ms": {
+        "samples": [
+          226,
+          221,
+          221
+        ],
+        "median": 221,
+        "min": 221,
+        "max": 226,
+        "n": 3
+      },
+      "ui_observation_bound_seconds": {
+        "samples": [
+          2.889999999999418,
+          2.686999999990803,
+          2.672000000005937
+        ],
+        "median": 2.686999999990803,
+        "min": 2.672000000005937,
+        "max": 2.889999999999418,
+        "n": 3
+      }
+    }
+  }
+}

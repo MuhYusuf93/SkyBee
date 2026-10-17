@@ -1,0 +1,43 @@
+{
+  "package": "com.example.kasir_app",
+  "startup_pid": "26642",
+  "schema": 6,
+  "quick_check": [
+    [
+      "ok"
+    ]
+  ],
+  "foreign_key_check": [],
+  "counts": {
+    "android_metadata": 1,
+    "audit_log": 0,
+    "cart_draft_items": 0,
+    "cart_drafts": 1,
+    "cashier_search_dirty": 0,
+    "cashier_search_terms": 0,
+    "cashier_state": 1,
+    "categories": 0,
+    "customers": 0,
+    "installation_metadata": 0,
+    "inventory_operations": 0,
+    "legal_acceptances": 0,
+    "management_credentials": 0,
+    "payment_allocations": 0,
+    "payments": 0,
+    "price_history": 0,
+    "product_aliases": 0,
+    "products": 0,
+    "sale_batch_allocations": 0,
+    "sale_transaction_items": 0,
+    "sale_transaction_reversals": 0,
+    "sale_transactions": 0,
+    "stock_batches": 0,
+    "stock_history": 0,
+    "stock_receipt_items": 0,
+    "stock_receipts": 0,
+    "store_settings": 1,
+    "suppliers": 0
+  },
+  "sha256": "2d3803984e87c541806fc25f5dc15f495f3da7d8f54ff77ee95f4ffab4af37c7",
+  "bytes": 471040
+}

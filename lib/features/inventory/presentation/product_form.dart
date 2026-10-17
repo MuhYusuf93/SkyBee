@@ -1,0 +1,359 @@
+import 'whole_quantity_formatter.dart';
+import 'package:kasir_app/l10n/localization.dart';
+import '../../management/presentation/managed_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../app/app_services.dart';
+import '../../../core/domain/app_error.dart';
+import '../../../core/domain/value_types.dart';
+import '../../management/presentation/management_gate.dart';
+import '../domain/inventory_models.dart';
+import '../domain/stock_rules.dart';
+import '../domain/stock_input.dart';
+import 'stock_input_fields.dart';
+import 'relation_field.dart';
+import '../../../core/money/money_field.dart';
+import '../../settings/presentation/language_button.dart';
+
+/// Form expanded only as needed. Stock/value cannot be edited in master fields.
+class ProductForm extends StatefulWidget {
+  const ProductForm({super.key, this.product});
+  final InventoryProduct? product;
+  @override
+  State<ProductForm> createState() => _ProductFormState();
+}
+
+class _ProductFormState extends State<ProductForm> {
+  final name = TextEditingController(),
+      price = MoneyEditingController(),
+      sku = TextEditingController(),
+      barcode = TextEditingController(),
+      aliases = TextEditingController(),
+      minimum = TextEditingController(text: '5'),
+      wholesale = MoneyEditingController(),
+      packLabel = TextEditingController(),
+      packSize = TextEditingController(),
+      cost = MoneyEditingController(),
+      expiry = TextEditingController();
+  final stockInput = StockInputController();
+  MasterRecord? category;
+  bool tracking = false, low = true, busy = false;
+  String? error;
+  @override
+  void initState() {
+    super.initState();
+    final product = widget.product;
+    if (product != null) {
+      name.text = product.name;
+      packLabel.text = product.packLabel ?? '';
+      packSize.text = product.packSize?.toString() ?? '';
+      price.text = product.priceMinor.toString();
+      sku.text = product.sku;
+      barcode.text = product.barcode ?? '';
+      aliases.text = product.row['aliases'] as String? ?? '';
+      minimum.text = product.row['min_stock'].toString();
+      tracking = product.expiryEnabled;
+      low = product.row['low_stock_enabled'] == 1;
+      if (product.row['category_id'] != null) {
+        category = MasterRecord(
+          id: EntityId(product.row['category_id'] as String),
+          name: product.row['category_name'] as String? ?? '',
+        );
+      }
+    }
+  }
+
+  bool _moneyLoaded = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_moneyLoaded && widget.product != null) {
+      final codec = moneyCodec(context);
+      price.text = codec.format(
+        Money.fromStoredMinor(
+          widget.product!.priceMinor,
+          codec.policy.code,
+          codec.policy.scale,
+        ),
+        label: false,
+      );
+    }
+    if (!_moneyLoaded && widget.product?.wholesaleMinor != null) {
+      final codec = moneyCodec(context);
+      wholesale.text = codec.format(
+        Money.fromStoredMinor(
+          widget.product!.wholesaleMinor!,
+          codec.policy.code,
+          codec.policy.scale,
+        ),
+        label: false,
+      );
+    }
+    _moneyLoaded = true;
+  }
+
+  @override
+  void dispose() {
+    for (final c in [
+      name,
+      price,
+      sku,
+      barcode,
+      aliases,
+      minimum,
+      wholesale,
+      packLabel,
+      packSize,
+      cost,
+      expiry,
+    ]) {
+      c.dispose();
+    }
+    stockInput.dispose();
+    super.dispose();
+  }
+
+  Widget field(TextEditingController c, String label, {bool number = false}) =>
+      Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: ManagedTextField(
+          controller: c,
+          enabled: !busy,
+          keyboardType: number ? TextInputType.number : TextInputType.text,
+          inputFormatters: number ? const [WholeQuantityFormatter()] : null,
+          decoration: InputDecoration(
+            labelText: label,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+      );
+  Future<void> save() async {
+    if (busy) return;
+    setState(() {
+      busy = true;
+      error = null;
+    });
+    try {
+      final service = context.read<AppServices>().inventory;
+      final input = ProductInput(
+        name: name.text,
+        sellingPrice: price.parseMoney(finish: true),
+        wholesalePrice: wholesale.text.isEmpty
+            ? null
+            : wholesale.parseMoney(finish: true),
+        packLabel: packLabel.text.trim().isEmpty ? null : packLabel.text.trim(),
+        packSize: packSize.text.isEmpty
+            ? null
+            : parseWholeQuantity(packSize.text, positive: true),
+        sku: sku.text,
+        barcode: barcode.text,
+        categoryId: category?.id,
+        aliases: aliases.text.split(','),
+        minStock: parseWholeQuantity(minimum.text),
+        lowStockEnabled: low,
+        expiryEnabled: tracking,
+      );
+      final product = widget.product;
+      final entered = product == null ? stockInput.parse() : null;
+      final purchase =
+          entered != null && entered.quantityBase > 0 && cost.text.isNotEmpty
+          ? StockPurchase(
+              entered,
+              CostAmount.fromMoney(cost.parseMoney(finish: true)),
+            )
+          : null;
+      if (entered != null && entered.quantityBase > 0 && purchase == null) {
+        throw const AppError('purchasePriceIsRequiredForInitialStock');
+      }
+      final warnings = wholesaleWarnings(
+        input.sellingPrice,
+        input.wholesalePrice,
+        product?.quantity ?? entered!.quantityBase,
+        product?.valueMicros ?? purchase?.totalMicros ?? 0,
+      );
+      if (warnings.isNotEmpty && mounted) {
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(tr(context, 'm31PriceWarning')),
+            content: Text(warnings.map((key) => tr(context, key)).join('\n')),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(tr(context, 'cancel')),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: Text(tr(context, 'continueAction')),
+              ),
+            ],
+          ),
+        );
+        if (confirmed != true || !mounted) return;
+      }
+      if (product == null) {
+        await service.create(
+          input,
+          initialPurchase: purchase,
+          expiry: expiry.text.trim().isEmpty
+              ? null
+              : CalendarDate(expiry.text.trim()),
+        );
+      } else {
+        final token = await service.edit(product.id, input, product.revision);
+        if (mounted) Navigator.pop(context, token ?? true);
+        return;
+      }
+      if (mounted) Navigator.pop(context, true);
+    } on FormatException {
+      if (mounted) {
+        setState(() => error = 'enterAValidAmountQuantityAndYyyy');
+      }
+    } catch (e) {
+      if (mounted) setState(() => error = safeError(e));
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => ManagementGate(
+    child: Scaffold(
+      appBar: AppBar(
+        actions: const [LanguageButton()],
+        title: Text(
+          widget.product == null
+              ? tr(context, 'addProduct')
+              : tr(context, 'editProduct'),
+        ),
+      ),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(20),
+          children: [
+            field(name, tr(context, 'productName')),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: MoneyField(
+                controller: price,
+                label: tr(context, 'sellingPrice'),
+                enabled: !busy,
+              ),
+            ),
+            ExpansionTile(
+              title: Text(tr(context, 'm31WholesaleOptional')),
+              children: [
+                MoneyField(
+                  controller: wholesale,
+                  label: tr(context, 'm31WholesalePrice'),
+                  enabled: !busy,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Text(tr(context, 'm31WholesaleHelp')),
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Text(tr(context, 'm31PackOptional')),
+              children: [
+                field(packLabel, tr(context, 'm31PackLabel')),
+                field(packSize, tr(context, 'm31PackSize'), number: true),
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Text(tr(context, 'm31PackConfigHelp')),
+                ),
+              ],
+            ),
+            if (widget.product == null)
+              ExpansionTile(
+                title: Text(tr(context, 'initialStockAndPurchasePrice')),
+                children: [
+                  StockInputFields(
+                    controller: stockInput,
+                    enabled: !busy,
+                    quantityLabel: tr(context, 'initialQuantity'),
+                    onUnitChanged: () => setState(() {
+                      if (stockInput.unit == StockInputUnit.pack) {
+                        if (stockInput.size.text.isEmpty) {
+                          stockInput.size.text = packSize.text;
+                        }
+                        stockInput.packLabel = packLabel.text.trim().isEmpty
+                            ? 'box'
+                            : packLabel.text.trim();
+                      }
+                    }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: MoneyField(
+                      controller: cost,
+                      label: tr(
+                        context,
+                        stockInput.unit == StockInputUnit.pack
+                            ? 'm31PurchasePerPack'
+                            : 'purchasePricePerUnit',
+                      ),
+                      enabled: !busy,
+                    ),
+                  ),
+                  field(expiry, tr(context, 'expiryDateYyyyMmDdOptional')),
+                ],
+              ),
+            ExpansionTile(
+              title: Text(tr(context, 'codeBarcodeAndCategory')),
+              children: [
+                field(sku, tr(context, 'storeCodeAutomaticIfEmpty')),
+                field(barcode, tr(context, 'barcodeOptional')),
+                OutlinedButton(
+                  onPressed: busy
+                      ? null
+                      : () => setState(
+                          () => sku.text =
+                              'BRG-${const IdGenerator().next().value.toUpperCase()}',
+                        ),
+                  child: Text(tr(context, 'generateCode')),
+                ),
+                RelationField(
+                  kind: MasterKind.category,
+                  value: category,
+                  enabled: !busy,
+                  onChanged: (value) => setState(() => category = value),
+                ),
+                field(aliases, tr(context, 'searchAliasesSeparatedByCommas')),
+              ],
+            ),
+            ExpansionTile(
+              title: Text(tr(context, 'stockAndExpiryWarnings')),
+              children: [
+                field(minimum, tr(context, 'minimumStock'), number: true),
+                SwitchListTile(
+                  title: Text(tr(context, 'lowStockWarning')),
+                  value: low,
+                  onChanged: busy ? null : (v) => setState(() => low = v),
+                ),
+                SwitchListTile(
+                  title: Text(tr(context, 'trackExpiry')),
+                  value: tracking,
+                  onChanged: busy ? null : (v) => setState(() => tracking = v),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Text(tr(context, 'stockCannotBeSoldFromItsExpiry')),
+                ),
+              ],
+            ),
+            if (error != null) Text(message(context, error!)),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: busy ? null : save,
+              child: Text(
+                busy ? tr(context, 'saving') : tr(context, 'saveProduct'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}

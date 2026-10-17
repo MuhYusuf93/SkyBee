@@ -1,0 +1,113 @@
+[
+  {
+    "suite": "database_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T01:22:49.7637713+07:00",
+    "end": "2026-10-15T01:24:17.1791723+07:00",
+    "seconds": 87.415401
+  },
+  {
+    "suite": "management_inventory_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T01:24:17.5075244+07:00",
+    "end": "2026-10-15T01:37:52.4215475+07:00",
+    "seconds": 814.9140231
+  },
+  {
+    "suite": "cashier_sql_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T01:37:52.6257304+07:00",
+    "end": "2026-10-15T01:39:44.4264336+07:00",
+    "seconds": 111.8007032
+  },
+  {
+    "suite": "wholesale_packaging_sql_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T01:39:44.6002014+07:00",
+    "end": "2026-10-15T01:48:04.4560531+07:00",
+    "seconds": 499.85585169999996
+  },
+  {
+    "suite": "reports_corrections_sql_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T01:48:04.6231247+07:00",
+    "end": "2026-10-15T02:00:38.3572156+07:00",
+    "seconds": 753.7340909
+  },
+  {
+    "suite": "m4_storage_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T02:00:38.5426821+07:00",
+    "end": "2026-10-15T02:06:49.0216125+07:00",
+    "seconds": 370.47893039999997
+  },
+  {
+    "suite": "locale_currency_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T02:06:49.2041146+07:00",
+    "end": "2026-10-15T02:19:04.1653325+07:00",
+    "seconds": 734.9612179
+  },
+  {
+    "suite": "protected_reads_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T02:19:04.3392421+07:00",
+    "end": "2026-10-15T02:21:28.6352992+07:00",
+    "seconds": 144.29605709999998
+  },
+  {
+    "suite": "bugfix_regression_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T02:21:28.8236984+07:00",
+    "end": "2026-10-15T02:31:11.8684606+07:00",
+    "seconds": 583.0447621999999
+  },
+  {
+    "suite": "management_ui_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T02:31:12.0764491+07:00",
+    "end": "2026-10-15T02:34:06.1869260+07:00",
+    "seconds": 174.11047689999998
+  },
+  {
+    "suite": "cashier_ui_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T02:34:06.3688938+07:00",
+    "end": "2026-10-15T02:38:30.4149840+07:00",
+    "seconds": 264.0460902
+  },
+  {
+    "suite": "localization_ui_test.dart",
+    "exit": 0,
+    "start": "2026-10-15T02:38:30.6107352+07:00",
+    "end": "2026-10-15T02:41:06.9122707+07:00",
+    "seconds": 156.3015355
+  },
+  {
+    "suite": "wholesale_packaging_ui_test.dart",
+    "attempt": 2,
+    "log": "native-wholesale_packaging_ui_test-attempt2.log",
+    "exit": 1,
+    "start": "2026-10-15T02:46:33.2301838+07:00",
+    "end": "2026-10-15T02:49:25.5898552+07:00",
+    "seconds": 172.3596714
+  },
+  {
+    "suite": "m31_ui_gaps_test.dart",
+    "attempt": 1,
+    "log": "native-m31_ui_gaps_test.log",
+    "exit": 0,
+    "start": "2026-10-15T02:49:25.8013749+07:00",
+    "end": "2026-10-15T02:55:08.5257510+07:00",
+    "seconds": 342.7243761
+  },
+  {
+    "suite": "m4_ui_test.dart",
+    "attempt": 1,
+    "log": "native-m4_ui_test.log",
+    "exit": 0,
+    "start": "2026-10-15T02:55:08.7537727+07:00",
+    "end": "2026-10-15T02:58:55.1676037+07:00",
+    "seconds": 226.413831
+  }
+]

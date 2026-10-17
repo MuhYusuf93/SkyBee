@@ -1,0 +1,85 @@
+package com.example.kasir_app
+
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.StandardMethodCodec
+import java.security.GeneralSecurityException
+import java.security.NoSuchAlgorithmException
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+
+/** Same PBKDF2 verifier as Dart; compute on an engine-owned background queue.
+ * No secrets, parameters or verifier bytes are logged or persisted here.
+ * RFC8018 section5.2, one block for SHA256's 32-byte output. The OS Mac handles
+ * the cryptographic primitive; Mac.doFinal resets to the initialized key.
+ * Realme's stock SecretKeyFactory took ~18s/derive, so reuse the OS HMAC
+ * implementation rather than its slow PBKDF2 wrapper. Parameters stay.
+ */
+open class MainActivity : FlutterActivity() {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        val messenger = flutterEngine.dartExecutor.binaryMessenger
+        val queue = messenger.makeBackgroundTaskQueue()
+        MethodChannel(messenger, "kasir_app/pin_kdf", StandardMethodCodec.INSTANCE, queue)
+            .setMethodCallHandler { call, result ->
+                if (call.method == "backendInfo") {
+                    try {
+                        result.success(mapOf("prfProvider" to Mac.getInstance("HmacSHA256").provider.name,
+                            "thread" to Thread.currentThread().name))
+                    } catch (_: NoSuchAlgorithmException) {
+                        result.error("KDF_UNAVAILABLE", null, null)
+                    }
+                    return@setMethodCallHandler
+                }
+                if (call.method != "derivePbkdf2Sha256") {
+                    result.notImplemented()
+                    return@setMethodCallHandler
+                }
+                // Dart supplies its exact UTF8 bytes, avoiding differences in
+                // Java/Dart malformed-surrogate encoding. Never log the bytes.
+                val password = call.argument<ByteArray>("password")
+                val salt = call.argument<ByteArray>("salt")
+                // Valid rounds/bits fit the codec's Int32 range. Reject Double
+                // or oversized Long rather than silently truncating parameters.
+                val rounds = call.argument<Any>("iterations") as? Int
+                val bits = call.argument<Any>("bits") as? Int
+                if (password == null || salt == null || salt.size < 16 ||
+                    rounds == null || rounds !in 600000..2000000 || bits != 256) {
+                    result.error("KDF_PARAMETERS", null, null)
+                    return@setMethodCallHandler
+                }
+                try {
+                    val mac = Mac.getInstance("HmacSHA256")
+                    // Empty and one-zero-byte HMAC keys have the same padded
+                    // block. SecretKeySpec rejects empty, but PBKDF2 permits it.
+                    mac.init(SecretKeySpec(if (password.isEmpty()) byteArrayOf(0) else password, "HmacSHA256"))
+                    val first = salt.copyOf(salt.size + 4)
+                    first[first.lastIndex] = 1 // INT_32_BE(1), one output block.
+                    var previous = mac.doFinal(first)
+                    val key = previous.copyOf()
+                    for (iteration in 1 until rounds) {
+                        val next = mac.doFinal(previous)
+                        previous.fill(0)
+                        previous = next
+                        for (index in key.indices) {
+                            key[index] = (key[index].toInt() xor previous[index].toInt()).toByte()
+                        }
+                    }
+                    previous.fill(0)
+                    first.fill(0)
+                    if (key.size != 32) {
+                        result.error("KDF_RESULT", null, null)
+                    } else {
+                        result.success(key)
+                    }
+                } catch (_: NoSuchAlgorithmException) {
+                    result.error("KDF_UNAVAILABLE", null, null)
+                } catch (_: GeneralSecurityException) {
+                    result.error("KDF_FAILED", null, null)
+                } finally {
+                    password.fill(0)
+                }
+            }
+    }
+}

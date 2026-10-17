@@ -1,0 +1,40 @@
+{
+  "baseline": "dv8910 production-source-baseline.json",
+  "changed_existing_files": [
+    "lib\\features\\inventory\\application\\inventory_service.dart",
+    "lib\\features\\inventory\\presentation\\inventory_screen.dart",
+    "lib\\features\\inventory\\presentation\\master_list.dart",
+    "lib\\features\\management\\application\\management_service.dart",
+    "lib\\features\\receivables\\presentation\\receivables_provider.dart",
+    "lib\\features\\receivables\\presentation\\receivables_screen.dart",
+    "lib\\features\\settings\\application\\settings_service.dart",
+    "android\\app\\build.gradle.kts",
+    "android\\app\\src\\main\\AndroidManifest.xml"
+  ],
+  "unchanged_existing_count": 81,
+  "new_files": [
+    "test/support/bugfix_regression_suite.dart",
+    "test/bugfix_regression_test.dart",
+    "integration_test/bugfix_regression_test.dart",
+    "test/support/protected_reads_suite.dart",
+    "test/protected_reads_test.dart",
+    "integration_test/protected_reads_test.dart",
+    "integration_test/frame_probe_test.dart",
+    "tools/dv8910_input_probe.dart"
+  ],
+  "modified_workflow": [
+    "tools/test_android.ps1: NameFilter (exactly one suite); isolation/flag/identity/no-uninstall unchanged"
+  ],
+  "preexisting_DV_test_routing_deltas": [
+    "android\\app\\build.gradle.kts",
+    "android\\app\\src\\main\\AndroidManifest.xml"
+  ],
+  "application_change_count": 7,
+  "schema_business_math_unchanged": true,
+  "modified_native_test_fixtures": [
+    "integration_test/management_ui_test.dart: first surface, real-IO language setup, phase markers",
+    "integration_test/cashier_ui_test.dart: first surface, real-IO fixture seed, phase markers",
+    "integration_test/localization_ui_test.dart: first surface before existing real-IO seed",
+    "integration_test/wholesale_packaging_ui_test.dart: first surface, real-IO setup, pump/wait/tap/fill phase markers; business assertions retained"
+  ]
+}

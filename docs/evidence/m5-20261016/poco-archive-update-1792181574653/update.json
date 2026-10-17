@@ -1,0 +1,16 @@
+{
+  "device": "7f0edea0",
+  "package": "com.example.kasir_app.integration",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "priorApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-archive-update-1792181574653\\prior-c22-release.apk",
+  "priorSha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-054951\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-054951\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "originalV6Restoration": "still pending in original handover",
+  "state": "C23 deployed; original strict FAIL retained/exact metadata explanation PASS; fresh all-table+archives strict roundtrip PASS; ordinary/default/public endpoints preserved; own startup PASS. Human retest pending.",
+  "automaticDeviceControlActive": false,
+  "quiescentEvidence": "docs\\evidence\\m5-20261016\\poco-c23-quiescent-1792191568561",
+  "metadataExplanation": "docs/evidence/m5-20261017/c23-metadata-explanation.json",
+  "startupConfirmed": true,
+  "startupEvidence": "docs\\evidence\\m5-20261016\\poco-archive-update-1792181574653\\startup.json"
+}

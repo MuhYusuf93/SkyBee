@@ -1,0 +1,165 @@
+{
+  "time": "2026-10-15T07:28:39.977413+07:00",
+  "serial": "0062112V2210F9B3",
+  "method": "read-only explicit ADB; no root/settings changes",
+  "properties": {
+    "ro.product.manufacturer": {
+      "exit": 0,
+      "stdout": "realme",
+      "stderr": ""
+    },
+    "ro.product.model": {
+      "exit": 0,
+      "stdout": "RMX3231",
+      "stderr": ""
+    },
+    "ro.product.name": {
+      "exit": 0,
+      "stdout": "RMX3231",
+      "stderr": ""
+    },
+    "ro.product.marketname": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "ro.product.device": {
+      "exit": 0,
+      "stdout": "RMX3231",
+      "stderr": ""
+    },
+    "ro.build.version.release": {
+      "exit": 0,
+      "stdout": "11",
+      "stderr": ""
+    },
+    "ro.build.version.sdk": {
+      "exit": 0,
+      "stdout": "30",
+      "stderr": ""
+    },
+    "ro.build.version.security_patch": {
+      "exit": 0,
+      "stdout": "2024-02-05",
+      "stderr": ""
+    },
+    "ro.product.cpu.abilist": {
+      "exit": 0,
+      "stdout": "armeabi-v7a,armeabi",
+      "stderr": ""
+    },
+    "ro.product.cpu.abi": {
+      "exit": 0,
+      "stdout": "armeabi-v7a",
+      "stderr": ""
+    },
+    "ro.soc.model": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "ro.hardware": {
+      "exit": 0,
+      "stdout": "RMX3231",
+      "stderr": ""
+    },
+    "ro.build.fingerprint": {
+      "exit": 0,
+      "stdout": "realme/RMX3231/RMX3231:11/RP1A.201005.001/1709693423112:user/release-keys",
+      "stderr": ""
+    }
+  },
+  "memory": {
+    "exit": 0,
+    "stdout": "MemTotal:        1914140 kB\r\nMemFree:          161692 kB\r\nMemAvailable:     958768 kB\r\nBuffers:             228 kB\r\nCached:           830660 kB\r\nSwapCached:       147360 kB\r\nActive:           572272 kB\r\nInactive:         567184 kB\r\nActive(anon):     148568 kB\r\nInactive(anon):   167404 kB\r\nActive(file):     423704 kB\r\nInactive(file):   399780 kB\r\nUnevictable:        2808 kB\r\nMlocked:            2808 kB\r\nSwapTotal:       1435600 kB\r\nSwapFree:         777152 kB\r\nDirty:               720 kB\r\nWriteback:            16 kB\r\nAnonPages:        234888 kB\r\nMapped:           336772 kB\r\nShmem:              5244 kB\r\nKReclaimable:      72860 kB\r\nSlab:             165592 kB\r\nSReclaimable:      63852 kB\r\nSUnreclaim:       101740 kB\r\nKernelStack:       30364 kB\r\nPageTables:        30168 kB\r\nNFS_Unstable:          0 kB\r\nBounce:                0 kB\r\nWritebackTmp:          0 kB\r\nCommitLimit:     2392668 kB\r\nCommitted_AS:   16908452 kB\r\nVmallocTotal:   263061440 kB\r\nVmallocUsed:       45424 kB\r\nVmallocChunk:          0 kB\r\nPActive(anon):         0 kB\r\nPInactive(anon):       0 kB\r\nPActive(file):         0 kB\r\nPInactive(file):       0 kB",
+    "stderr": ""
+  },
+  "storage": {
+    "exit": 0,
+    "stdout": "Filesystem       1K-blocks     Used Available Use% Mounted on\r\n/dev/block/dm-11  24564716 21076120   3283796  87% /storage/emulated/0/Android/obb",
+    "stderr": ""
+  },
+  "screen_size": {
+    "exit": 0,
+    "stdout": "Physical size: 720x1600",
+    "stderr": ""
+  },
+  "screen_density": {
+    "exit": 0,
+    "stdout": "Physical density: 320",
+    "stderr": ""
+  },
+  "font_scale": {
+    "exit": 0,
+    "stdout": "1.0",
+    "stderr": ""
+  },
+  "battery": {
+    "exit": 0,
+    "stdout": "Current Battery Service state:\r\n  AC powered: false\r\n  USB powered: true\r\n  Wireless powered: false\r\n  Max charging current: 0\r\n  Max charging voltage: 0\r\n  Charge counter: 4832386\r\n  status: 2\r\n  health: 2\r\n  present: true\r\n  level: 99\r\n  scale: 100\r\n  voltage: 4421\r\n  temperature: 413\r\n  technology:",
+    "stderr": ""
+  },
+  "thermal": {
+    "exit": 0,
+    "stdout": "IsStatusOverride: false\r\nThermalEventListeners:\r\n\tcallbacks: 1\r\n\tkilled: false\r\n\tbroadcasts count: -1\r\nThermalStatusListeners:\r\n\tcallbacks: 3\r\n\tkilled: false\r\n\tbroadcasts count: -1\r\nThermal Status: 0\r\nCached temperatures:\r\n\tTemperature{mValue=40.33, mType=-1, mName=board-thmzone, mStatus=0}\r\n\tTemperature{mValue=47.503, mType=0, mName=cpu-thmzone, mStatus=0}\r\n\tTemperature{mValue=44.682, mType=1, mName=gpu-thmzone, mStatus=0}\r\nHAL Ready: true\r\nHAL connection:\r\n\tThermalHAL 2.0 connected: yes\r\nCurrent temperatures from HAL:\r\n\tTemperature{mValue=46.488, mType=1, mName=gpu-thmzone, mStatus=0}\r\n\tTemperature{mValue=44.003, mType=-1, mName=board-thmzone, mStatus=0}\r\n\tTemperature{mValue=45.697, mType=0, mName=cpu-thmzone, mStatus=0}\r\nCurrent cooling devices from HAL:\r\n\tCoolingDevice{mValue=100, mType=0, mName=test cooling device}",
+    "stderr": ""
+  },
+  "keyboard": {
+    "exit": 0,
+    "stdout": "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME",
+    "stderr": ""
+  },
+  "talkback_package": {
+    "exit": 0,
+    "stdout": "package:/data/app/~~8kndjg749-oTVy_qBzyltA==/com.google.android.marvin.talkback-uN3Cww0eExDxfA6o0NzlQg==/base.apk\r\npackage:/data/app/~~8kndjg749-oTVy_qBzyltA==/com.google.android.marvin.talkback-uN3Cww0eExDxfA6o0NzlQg==/split_config.armeabi_v7a.apk",
+    "stderr": ""
+  },
+  "operational_package": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "test_package": {
+    "exit": 0,
+    "stdout": "package:/data/app/~~uOdx8CxN_FAD26e6bBqByg==/com.example.kasir_app.integration-4ajyXcp1ocPbZTWslLcNiA==/base.apk",
+    "stderr": ""
+  },
+  "operational_pid": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "keyboard_version": [
+    "versionCode=176027081 minSdk=29 targetSdk=37",
+    "versionName=18.4.1.985164140-lite_release-armeabi-v7a",
+    "versionCode=54412501 minSdk=27 targetSdk=30",
+    "versionName=10.5.03.367007960-lite_release-armeabi-v7a"
+  ],
+  "cpu_metadata": [
+    "processor\t: 0",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 1",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 2",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 3",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 4",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 5",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 6",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 7",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "Hardware\t: Octa Core"
+  ]
+}

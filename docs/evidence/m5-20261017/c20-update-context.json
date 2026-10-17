@@ -1,0 +1,53 @@
+{
+  "nonce": "1792174330020",
+  "device": "7f0edea0",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "phase": "post_printer",
+  "test": "integration_test/m5_acceptance_audit_test.dart",
+  "status": "C20 automated and P29 physical Poco retest PASS user-reported; control stopped, continuing B-MAN01 backup status; not M5 complete",
+  "recordedAt": "2026-10-17T01:12:10.0510168+07:00",
+  "beforeAudit": {
+    "evidence": "docs/evidence/m5-20261016/poco-c20-before-1792174330020-20261017-011210",
+    "status": "1 PASS / 3s",
+    "scope": "integrity/FK, two sales distinct receipt numbers, payments/allocations/HPP/stock/print jobs; legacy default hashes baseline, ordinary hashes unchanged, prior C19 APK restored"
+  },
+  "hostValidation": {
+    "settingsAndQueue": "15 PASS / 42s",
+    "analyze": "No issues / 16.5s",
+    "jvmGate": "3 PASS",
+    "jvmArchive": "6 PASS",
+    "localization": "512 bilingual keys/362 refs/244 original requirement IDs"
+  },
+  "pocoSettings": {
+    "status": "8 PASS / 51s",
+    "evidence": "docs/evidence/m5-20261016/poco-c20-settings-1792174330020-20261017-011544",
+    "ordinaryHashes": "unchanged",
+    "priorApk": "restored C19",
+    "scope": "SQLCipher/native widget/PIN/picker; Bluetooth permission/transport channel mock, not OEM permission retest"
+  },
+  "dvSettings": {
+    "status": "8 PASS / 104s",
+    "evidence": "docs/evidence/m5-20261016/c20-settings-20261017-012257",
+    "awake": "restored/read back exact original screensaver1/timeout900000/stayawake0",
+    "scope": "native fixture UI with Bluetooth channel mock; not physical printer"
+  },
+  "releaseBuild": {
+    "artifacts": "docs\\evidence\\m5-20261016\\release-artifacts-20261017-012541\\artifacts.json",
+    "fixtureSha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+    "status": "ordinary+fixture release and restore bridge build/verification PASS; three ABIs/minSdk24/16KiB/licenses/signature checked; ordinary not installed"
+  },
+  "afterAudit": {
+    "status": "1 PASS / 3s",
+    "evidence": "docs/evidence/m5-20261016/poco-c20-after-1792174330020-20261017-012902",
+    "scope": "All table hashes equal before, same version; facts/integrity/FK/legacy hashes PASS, ordinary hashes equal across update endpoints and wrapper, new release APK restored and installed SHA checked"
+  },
+  "startup": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 28792,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "automaticDeviceControlActive": false,
+  "physicalRetest": "P29 yes: no repeated PIN after denial; restored Nearby Allow and paired list returns"
+}

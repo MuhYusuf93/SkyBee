@@ -1,0 +1,10 @@
+{
+  "id": "N-MAN02",
+  "date": "2026-10-17",
+  "source": "user report",
+  "status": "IN PROGRESS",
+  "observation": "Save once opened Android permission dialog; protected page covered by PIN UI",
+  "permissionDecision": "not yet reported",
+  "next": "Choose Allow for notification permission, reenter fixture PIN if prompted, no repeat Save, inspect inline status and generic notification",
+  "automaticDeviceControlActive": false
+}

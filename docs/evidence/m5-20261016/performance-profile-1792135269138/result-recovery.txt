@@ -1,0 +1,1 @@
+Measurement finished and flushed in profile PID11137. Initial harness failed while parsing a split/truncated logcat line; recovered complete private JSON by scoped run-as cat without rerunning the benchmark. Awake settings were already restored/read back by finally.

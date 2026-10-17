@@ -1,0 +1,489 @@
+import 'whole_quantity_formatter.dart';
+import 'package:kasir_app/l10n/localized_notice.dart';
+import '../../../core/money/money_field.dart';
+import 'package:kasir_app/features/settings/presentation/language_button.dart';
+import 'package:kasir_app/l10n/localization.dart';
+import '../../management/presentation/managed_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../app/app_services.dart';
+import '../../../core/domain/value_types.dart';
+import '../../management/presentation/management_gate.dart';
+import '../../management/presentation/protected_dialog.dart';
+import '../domain/inventory_models.dart';
+import '../domain/stock_rules.dart';
+import '../domain/stock_input.dart';
+import 'stock_input_fields.dart';
+import 'product_detail_provider.dart';
+import 'product_form.dart';
+import 'relation_field.dart';
+import 'inventory_history_screen.dart';
+
+class ProductDetailScreen extends StatelessWidget {
+  const ProductDetailScreen({super.key, required this.id});
+  final EntityId id;
+  @override
+  Widget build(BuildContext context) => ManagementGate(
+    child: ChangeNotifierProvider(
+      create: (_) =>
+          ProductDetailProvider(context.read<AppServices>().inventory, id)
+            ..load(),
+      child: const _DetailBody(),
+    ),
+  );
+}
+
+class _DetailBody extends StatelessWidget {
+  const _DetailBody();
+  Future<void> _operation(
+    BuildContext parent,
+    ProductDetailProvider state,
+    String kind, {
+    StockBatch? batch,
+  }) async {
+    final stockInput = StockInputController(
+      packSize: state.product!.packSize,
+      packLabel: state.product!.packLabel,
+      count: kind == 'count' ? state.product!.quantity.toString() : '',
+    );
+    final quantity = TextEditingController(
+          text: kind == 'count' ? state.product!.quantity.toString() : '',
+        ),
+        cost = MoneyEditingController(),
+        reason = TextEditingController(),
+        expiry = TextEditingController();
+    MasterRecord? supplier;
+    String? error;
+    bool busy = false;
+    final key = const IdGenerator().next().value;
+    await showManagedDialog<void>(
+      context: parent,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setState) => ProtectedDialog(
+          child: AlertDialog(
+            title: Text(switch (kind) {
+              'receive' => tr(context, 'receiveStock'),
+              'count' => tr(context, 'stockCount'),
+              'reverse' => tr(context, 'reverseLatestReceipt'),
+              _ => tr(context, 'removeStock'),
+            }),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (kind == 'receive' || kind == 'count')
+                    StockInputFields(
+                      controller: stockInput,
+                      enabled: !busy,
+                      quantityLabel: tr(
+                        context,
+                        kind == 'count'
+                            ? 'currentPhysicalQuantity'
+                            : 'unitQuantity',
+                      ),
+                      onUnitChanged: () => setState(() {}),
+                    ),
+                  if (kind != 'reverse' && kind != 'receive' && kind != 'count')
+                    ManagedTextField(
+                      controller: quantity,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: const [WholeQuantityFormatter()],
+                      decoration: InputDecoration(
+                        labelText: kind == 'count'
+                            ? tr(context, 'currentPhysicalQuantity')
+                            : tr(context, 'unitQuantity'),
+                      ),
+                    ),
+                  if (kind == 'receive' || kind == 'count')
+                    MoneyField(
+                      controller: cost,
+                      enabled: !busy,
+                      label: kind == 'receive'
+                          ? tr(
+                              context,
+                              stockInput.unit == StockInputUnit.pack
+                                  ? 'm31PurchasePerPack'
+                                  : 'purchasePricePerUnit',
+                            )
+                          : tr(context, 'purchasePriceWhenStockIsEmpty'),
+                    ),
+                  if (kind == 'receive') ...[
+                    if (state.product!.expiryEnabled)
+                      ManagedTextField(
+                        controller: expiry,
+                        decoration: InputDecoration(
+                          labelText: tr(context, 'expiryYyyyMmDdOptional'),
+                        ),
+                      ),
+                    RelationField(
+                      kind: MasterKind.supplier,
+                      value: supplier,
+                      enabled: !busy,
+                      onChanged: (value) => setState(() => supplier = value),
+                    ),
+                  ],
+                  if (kind != 'receive')
+                    ManagedTextField(
+                      controller: reason,
+                      decoration: InputDecoration(
+                        labelText: tr(context, 'correctionReason'),
+                      ),
+                    ),
+                  if (kind == 'reverse')
+                    Text(tr(context, 'aReceiptCanBeReversedOnlyIf')),
+                  if (error != null) Text(message(context, error!)),
+                ],
+              ),
+            ),
+            actions: [
+              const LanguageButton(),
+              TextButton(
+                onPressed: busy ? null : () => Navigator.pop(dialogContext),
+                child: Text(tr(context, 'cancel')),
+              ),
+              FilledButton(
+                onPressed: busy
+                    ? null
+                    : () async {
+                        setState(() => busy = true);
+                        final success = await state.run(() async {
+                          final service = state.service;
+                          switch (kind) {
+                            case 'receive':
+                              await service.receivePurchase(
+                                state.id,
+                                StockPurchase(
+                                  stockInput.parse(positive: true),
+                                  CostAmount.fromMoney(
+                                    cost.parseMoney(finish: true),
+                                  ),
+                                ),
+                                operationKey: key,
+                                supplierId: supplier?.id,
+                                expiry: expiry.text.trim().isEmpty
+                                    ? null
+                                    : CalendarDate(expiry.text.trim()),
+                              );
+                            case 'count':
+                              await service.adjustInput(
+                                state.id,
+                                stockInput.parse(),
+                                operationKey: key,
+                                reason: reason.text,
+                                unitCost: cost.text.isEmpty
+                                    ? null
+                                    : CostAmount.fromMoney(
+                                        cost.parseMoney(finish: true),
+                                      ),
+                              );
+                            case 'reverse':
+                              await service.reverseReceipt(
+                                state.receipt!,
+                                operationKey: key,
+                                reason: reason.text,
+                              );
+                            default:
+                              await service.waste(
+                                batch!.id,
+                                parseWholeQuantity(
+                                  quantity.text,
+                                  positive: true,
+                                ),
+                                operationKey: key,
+                                reason: reason.text,
+                              );
+                          }
+                        });
+                        if (!dialogContext.mounted) return;
+                        if (success) {
+                          Navigator.pop(dialogContext);
+                          await state.load();
+                        } else {
+                          setState(() => error = state.error);
+                        }
+                        if (dialogContext.mounted) setState(() => busy = false);
+                      },
+                child: Text(tr(context, 'save')),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    stockInput.dispose();
+    for (final c in [quantity, cost, reason, expiry]) {
+      c.dispose();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Consumer<ProductDetailProvider>(
+    builder: (context, state, _) {
+      final product = state.product;
+      return Scaffold(
+        appBar: AppBar(
+          actions: const [LanguageButton()],
+          title: Text(product?.name ?? tr(context, 'productDetails')),
+        ),
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.all(20),
+            children: [
+              if (state.busy)
+                LinearProgressIndicator(semanticsLabel: tr(context, 'loading')),
+              if (state.error != null) Text(message(context, state.error!)),
+              if (product == null && !state.busy)
+                FilledButton(
+                  onPressed: state.load,
+                  child: Text(tr(context, 'tryAgain')),
+                ),
+              if (product != null) ...[
+                Text(
+                  AppLocalizations.of(context)!.sellingPriceAmount(
+                    moneyLabel(
+                      context,
+                      product.priceMinor,
+                      currency: CurrencyPolicy.forCode(
+                        product.row['currency_code'] as String,
+                      ),
+                    ),
+                  ),
+                ),
+                Text(
+                  '${tr(context, 'm31BaseStock')}: ${product.quantity} ${product.baseUnit}',
+                ),
+                if (product.wholesaleMinor != null)
+                  Text(
+                    '${tr(context, 'm31WholesalePrice')}: ${moneyLabel(context, product.wholesaleMinor!)}',
+                  ),
+                for (final warning in wholesaleWarnings(
+                  Money.fromStoredMinor(
+                    product.priceMinor,
+                    product.row['currency_code'] as String,
+                    product.row['currency_scale'] as int,
+                  ),
+                  product.wholesaleMinor == null
+                      ? null
+                      : Money.fromStoredMinor(
+                          product.wholesaleMinor!,
+                          product.row['currency_code'] as String,
+                          product.row['currency_scale'] as int,
+                        ),
+                  product.quantity,
+                  product.valueMicros,
+                ))
+                  Text(tr(context, warning)),
+                Text(
+                  AppLocalizations.of(context)!.stockSummary(
+                    product.quantity,
+                    product.saleable,
+                    product.expired,
+                  ),
+                ),
+                if (product.undated > 0)
+                  Text(tr(context, 'someStockHasNoRecordedExpiryDate')),
+                Text(
+                  AppLocalizations.of(context)!.averageCostAmount(
+                    moneyCostLabel(
+                      context,
+                      averageCost(product.quantity, product.valueMicros),
+                      currency: CurrencyPolicy.forCode(
+                        product.row['currency_code'] as String,
+                      ),
+                    ),
+                  ),
+                ),
+                Text(AppLocalizations.of(context)!.storeCodeValue(product.sku)),
+                if (product.barcode != null)
+                  Text(
+                    AppLocalizations.of(
+                      context,
+                    )!.barcodeValue(product.barcode!),
+                  ),
+                const SizedBox(height: 16),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    if (!product.isDeleted) ...[
+                      FilledButton(
+                        onPressed: state.busy
+                            ? null
+                            : () => _operation(context, state, 'receive'),
+                        child: Text(tr(context, 'receiveStock')),
+                      ),
+                      OutlinedButton(
+                        onPressed: state.busy
+                            ? null
+                            : () => _operation(context, state, 'count'),
+                        child: Text(tr(context, 'stockCount')),
+                      ),
+                      OutlinedButton(
+                        onPressed: state.busy
+                            ? null
+                            : () async {
+                                final result = await Navigator.push<Object>(
+                                  context,
+                                  MaterialPageRoute<Object>(
+                                    builder: (_) =>
+                                        ProductForm(product: product),
+                                  ),
+                                );
+                                await state.load();
+                                if (result is UndoToken && context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: const Duration(seconds: 5),
+                                      content: LocalizedNotice(
+                                        messageKey: 'priceSaved',
+                                        onUndo: () async {
+                                          final success = await state.run(
+                                            () => state.service.undo(result),
+                                          );
+                                          if (!success && context.mounted) {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: LocalizedNotice(
+                                                  messageKey:
+                                                      state.error ??
+                                                      'cannotUndo',
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          await state.load();
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                        child: Text(tr(context, 'editProduct')),
+                      ),
+                      if (state.receipt != null)
+                        OutlinedButton(
+                          onPressed: state.busy
+                              ? null
+                              : () => _operation(context, state, 'reverse'),
+                          child: Text(tr(context, 'correctLatestReceipt')),
+                        ),
+                    ],
+                    OutlinedButton(
+                      onPressed: state.busy
+                          ? null
+                          : () async {
+                              final confirm = await showDialog<bool>(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text(
+                                    product.isDeleted
+                                        ? tr(context, 'restoreProduct')
+                                        : tr(context, 'archiveProduct'),
+                                  ),
+                                  actions: [
+                                    const LanguageButton(),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, false),
+                                      child: Text(tr(context, 'cancel')),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, true),
+                                      child: Text(
+                                        tr(context, 'continueAction'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              if (confirm != true) return;
+                              UndoToken? token;
+                              if (await state.run(() async {
+                                    token = await state.service.archive(
+                                      state.id,
+                                      product.revision,
+                                      restore: product.isDeleted,
+                                    );
+                                  }) &&
+                                  context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: const Duration(seconds: 5),
+                                    content: LocalizedNotice(
+                                      messageKey: 'productStatusUpdated',
+                                      onUndo: () async {
+                                        await state.run(
+                                          () => state.service.undo(token!),
+                                        );
+                                        await state.load();
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }
+                              await state.load();
+                            },
+                      child: Text(
+                        product.isDeleted
+                            ? tr(context, 'restore')
+                            : tr(context, 'archive'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Text(tr(context, 'stockByReceipt')),
+                OutlinedButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) =>
+                          InventoryHistoryScreen(productId: state.id),
+                    ),
+                  ),
+                  child: Text(tr(context, 'stockAndPriceHistory')),
+                ),
+                for (final batch in state.batchPage?.items ?? <StockBatch>[])
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      AppLocalizations.of(context)!.batchUnits(
+                        batch.remaining,
+                        batch.expiry?.iso ?? tr(context, 'dateNotRecorded'),
+                      ),
+                    ),
+                    trailing: product.isDeleted
+                        ? null
+                        : IconButton(
+                            tooltip: tr(context, 'recordDamagedOrExpiredStock'),
+                            icon: const Icon(Icons.remove_circle_outline),
+                            onPressed: state.busy
+                                ? null
+                                : () => _operation(
+                                    context,
+                                    state,
+                                    'waste',
+                                    batch: batch,
+                                  ),
+                          ),
+                  ),
+                if (state.batchPage?.hasMore ?? false)
+                  TextButton(
+                    onPressed: state.busy ? null : state.nextBatches,
+                    child: Text(tr(context, 'nextReceipts')),
+                  ),
+                TextButton(
+                  onPressed: state.busy ? null : state.load,
+                  child: Text(tr(context, 'reloadDetails')),
+                ),
+              ],
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}

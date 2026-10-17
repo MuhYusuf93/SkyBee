@@ -1,0 +1,53 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "nodes": [
+    {
+      "label": "Synthetic DV8910 test\nID",
+      "bounds": "[32,32][936,272]",
+      "class": "android.view.View",
+      "clickable": "true"
+    },
+    {
+      "label": "Hutang",
+      "bounds": "[615,32][804,128]",
+      "class": "android.widget.Button",
+      "clickable": "true"
+    },
+    {
+      "label": "Kelola",
+      "bounds": "[32,144][243,240]",
+      "class": "android.widget.Button",
+      "clickable": "true"
+    },
+    {
+      "label": "Bersihkan pencarian",
+      "bounds": "[840,280][936,376]",
+      "class": "android.widget.Button",
+      "clickable": "true"
+    },
+    {
+      "label": "Daftar belanja\nBelum ada barang.",
+      "bounds": "[984,32][1888,214]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Total",
+      "bounds": "[32,922][106,968]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "IDR 0",
+      "bounds": "[32,968][166,1048]",
+      "class": "android.view.View",
+      "clickable": "false"
+    },
+    {
+      "label": "Bayar",
+      "bounds": "[1720,937][1888,1033]",
+      "class": "android.widget.Button",
+      "clickable": "false"
+    }
+  ]
+}

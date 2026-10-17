@@ -1,0 +1,9 @@
+{
+  "Time": "2026-10-16T03:50:19.0540270+07:00",
+  "Device": "0062112V2210F9B3",
+  "Package": "com.example.kasir_app.integration",
+  "Sha256": "969bccdda9605a2e82d137957316f1dbb848075f314532eb479befca21f709f7",
+  "InstallExit": 0,
+  "LaunchExit": 0,
+  "Method": "Verified immutable APK, adb install -r only; no uninstall/reset/DB replacement"
+}

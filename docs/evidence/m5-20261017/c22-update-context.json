@@ -1,0 +1,72 @@
+{
+  "nonce": "1792178476161",
+  "device": "7f0edea0",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "phase": "post_backup",
+  "priorSha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+  "publicArchive": "/sdcard/Download/M5_poco_uji_20261017_01.kasirbackup",
+  "status": "Guarded update/data/archive/public export audit PASS; installed APK hash verified; own release startup PASS. Handed back for actual keyboard test, not yet manual PASS.",
+  "recordedAt": "2026-10-17T02:21:16.1914646+07:00",
+  "hostValidation": {
+    "windows": "19 PASS / 52s",
+    "jvm": "11 PASS (gate3/archive6/export-name2)",
+    "analyze": "No issues / 7.3s after two infos fixed",
+    "localization": "517 bilingual keys/366 refs/244 original IDs"
+  },
+  "beforeAudit": {
+    "status": "1 PASS / 3s",
+    "evidence": "docs/evidence/m5-20261016/poco-c22-before-1792178476161-20261017-022116",
+    "scope": "post_backup: two local archive bytes match catalog, two-sale/finance/stock/jobs/integrity/FK/default hash baseline; ordinary unchanged and C20 APK restored"
+  },
+  "pipelineExecSession": 94693,
+  "publicExportBeforeSha256": "2bd806ac198f81db22a40c3174a5809a7a96e530761be1b72842ab598b3e6318",
+  "pocoNativeFirst": {
+    "status": "9 PASS / 1 FAIL, 55s",
+    "evidence": "docs/evidence/m5-20261016/poco-c22-settings-1792178476161-20261017-022337",
+    "failure": "filename container hit-test after simulated IME; geometry/PIN diagnostics running",
+    "ordinaryHashes": "unchanged",
+    "priorC20Apk": "restored",
+    "pipeline": "stopped before DV/build as required"
+  },
+  "diagnosticExecSession": 70726,
+  "correctedPipelineExecSession": 29285,
+  "nativeImeDiagnosis": "Full InputDecorator target unsuitable, but strict EditableText bottom hit also failed due clipping. Production dialog compacted; keep strict line edges/IME bounds.",
+  "compactLayoutValidation": {
+    "windows": "19 PASS / 54s",
+    "analyze": "No issues / 11s",
+    "poco": "10 PASS / 60s clean full suite",
+    "pocoEvidence": "docs/evidence/m5-20261016/poco-c22-settings-final-20261017-023323",
+    "scope": "Actual native app with test viewport/IME insets, top+bottom editable hit-test/PIN/cancel/invalid-name/payload; physical keyboard retest pending"
+  },
+  "automaticDeviceControlActive": false,
+  "independentDvTestsActive": false,
+  "afterAudit": {
+    "status": "1 PASS / 3s",
+    "evidence": "docs\\evidence\\m5-20261016\\poco-c22-after-1792178476161-20261017-024222"
+  },
+  "dv": {
+    "status": "10 PASS / 2m12s",
+    "evidence": "docs\\evidence\\m5-20261016\\c22-settings-final-20261017-023605",
+    "awakeRestored": "readback 1/900000/0"
+  },
+  "releaseArtifacts": "docs/evidence/m5-20261016/release-artifacts-20261017-023917/artifacts.json",
+  "installedFixtureSha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+  "startup": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 676,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "manualStep": "B-MAN08 import picker cancellation pending",
+  "manualKeyboardRetest": {
+    "id": "B-MAN06",
+    "status": "PASS user-reported",
+    "scope": "app dialog actual Poco keyboard visibility only"
+  },
+  "manualNamedExportRetest": {
+    "id": "B-MAN07",
+    "status": "PASS user-reported",
+    "scope": "native prefill/Download save/verified status/two cards retained; independent digest pending"
+  }
+}

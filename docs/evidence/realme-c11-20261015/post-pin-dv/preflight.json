@@ -1,0 +1,153 @@
+{
+  "time": "2026-10-15T06:33:03.607135+07:00",
+  "serial": "192.168.0.102:5555",
+  "method": "read-only explicit ADB; no root/settings changes",
+  "properties": {
+    "ro.product.manufacturer": {
+      "exit": 0,
+      "stdout": "SDMC",
+      "stderr": ""
+    },
+    "ro.product.model": {
+      "exit": 0,
+      "stdout": "AX810",
+      "stderr": ""
+    },
+    "ro.product.name": {
+      "exit": 0,
+      "stdout": "XLHomeSTB22",
+      "stderr": ""
+    },
+    "ro.product.marketname": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "ro.product.device": {
+      "exit": 0,
+      "stdout": "DV8947-KIX",
+      "stderr": ""
+    },
+    "ro.build.version.release": {
+      "exit": 0,
+      "stdout": "11",
+      "stderr": ""
+    },
+    "ro.build.version.sdk": {
+      "exit": 0,
+      "stdout": "30",
+      "stderr": ""
+    },
+    "ro.build.version.security_patch": {
+      "exit": 0,
+      "stdout": "2022-02-05",
+      "stderr": ""
+    },
+    "ro.product.cpu.abilist": {
+      "exit": 0,
+      "stdout": "armeabi-v7a,armeabi",
+      "stderr": ""
+    },
+    "ro.product.cpu.abi": {
+      "exit": 0,
+      "stdout": "armeabi-v7a",
+      "stderr": ""
+    },
+    "ro.soc.model": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "ro.hardware": {
+      "exit": 0,
+      "stdout": "amlogic",
+      "stderr": ""
+    },
+    "ro.build.fingerprint": {
+      "exit": 0,
+      "stdout": "Skyworth/HP4609-Skyworth/YYT:11/RTT0.210618.003/C2.1.1_20220328:user/release-keys",
+      "stderr": ""
+    }
+  },
+  "memory": {
+    "exit": 0,
+    "stdout": "MemTotal:        3853984 kB\r\nMemFree:         1012636 kB\r\nMemAvailable:    2569132 kB\r\nBuffers:          130980 kB\r\nCached:          1508768 kB\r\nSwapCached:         7316 kB\r\nActive:          1540840 kB\r\nInactive:         746204 kB\r\nActive(anon):     245796 kB\r\nInactive(anon):   411780 kB\r\nActive(file):    1295044 kB\r\nInactive(file):   334424 kB\r\nUnevictable:        2100 kB\r\nMlocked:            2100 kB\r\nSwapTotal:        393212 kB\r\nSwapFree:         336380 kB\r\nDirty:               128 kB\r\nWriteback:             0 kB\r\nAnonPages:        646268 kB\r\nMapped:           700308 kB\r\nShmem:              8452 kB\r\nKReclaimable:      68936 kB\r\nSlab:             169900 kB\r\nSReclaimable:      67848 kB\r\nSUnreclaim:       102052 kB\r\nKernelStack:       25488 kB\r\nShadowCallStack:    1593 kB\r\nPageTables:        32696 kB\r\nNFS_Unstable:          0 kB\r\nBounce:                0 kB\r\nWritebackTmp:          0 kB\r\nCommitLimit:     2320204 kB\r\nCommitted_AS:   28991800 kB\r\nVmallocTotal:   262930368 kB\r\nVmallocUsed:       83860 kB\r\nVmallocChunk:          0 kB\r\nPercpu:             3360 kB\r\nCmaTotal:         757760 kB\r\nCmaFree:          349680 kB\r\nDriverCma:        111832 kB\r\nVmapStack:          7680 kB\r\nVmapFault:         10196 kB\r\nVmapPfault:            0 kB",
+    "stderr": ""
+  },
+  "storage": {
+    "exit": 0,
+    "stdout": "Filesystem      1K-blocks    Used Available Use% Mounted on\r\n/dev/block/dm-5  26733612 4513660  22170800  17% /storage/emulated/0/Android/obb",
+    "stderr": ""
+  },
+  "screen_size": {
+    "exit": 0,
+    "stdout": "Physical size: 1920x1080",
+    "stderr": ""
+  },
+  "screen_density": {
+    "exit": 0,
+    "stdout": "Physical density: 320",
+    "stderr": ""
+  },
+  "font_scale": {
+    "exit": 0,
+    "stdout": "1.0",
+    "stderr": ""
+  },
+  "battery": {
+    "exit": 0,
+    "stdout": "Current Battery Service state:\r\n  AC powered: true\r\n  USB powered: false\r\n  Wireless powered: false\r\n  Max charging current: 0\r\n  Max charging voltage: 0\r\n  Charge counter: 10\r\n  status: 2\r\n  health: 2\r\n  present: false\r\n  level: 50\r\n  scale: 100\r\n  voltage: 4\r\n  temperature: 40\r\n  technology: Li-ion",
+    "stderr": ""
+  },
+  "thermal": {
+    "exit": 0,
+    "stdout": "IsStatusOverride: false\r\nThermalEventListeners:\r\n\tcallbacks: 1\r\n\tkilled: false\r\n\tbroadcasts count: -1\r\nThermalStatusListeners:\r\n\tcallbacks: 3\r\n\tkilled: false\r\n\tbroadcasts count: -1\r\nThermal Status: 0\r\nCached temperatures:\r\n\tTemperature{mValue=39.5, mType=0, mName=soc_thermal, mStatus=0}\r\nHAL Ready: true\r\nHAL connection:\r\n\tThermalHAL 2.0 connected: yes\r\nCurrent temperatures from HAL:\r\n\tTemperature{mValue=41.4, mType=0, mName=soc_thermal, mStatus=0}\r\nCurrent cooling devices from HAL:\r\n\tCoolingDevice{mValue=0, mType=2, mName=thermal-cpufreq-0}\r\n\tCoolingDevice{mValue=0, mType=3, mName=thermal-gpufreq-0}",
+    "stderr": ""
+  },
+  "keyboard": {
+    "exit": 0,
+    "stdout": "org.liskovsoft.androidtv.rukeyboard/com.liskovsoft.leankeyboard.ime.LeanbackImeService",
+    "stderr": ""
+  },
+  "talkback_package": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "operational_package": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "test_package": {
+    "exit": 0,
+    "stdout": "package:/data/app/~~SAyVzZX61G5v_Yu8fT_cjA==/com.example.kasir_app.integration-J-DfRnJdgmzqT-RzpPVNAA==/base.apk",
+    "stderr": ""
+  },
+  "operational_pid": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "keyboard_version": [
+    "versionCode=206 minSdk=14 targetSdk=37",
+    "versionName=6.1.36",
+    "versionCode=185 minSdk=14 targetSdk=29",
+    "versionName=6.1.15"
+  ],
+  "cpu_metadata": [
+    "processor\t: 0",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 1",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 2",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "processor\t: 3",
+    "model name\t: ARMv8 Processor rev 0 (v8l)",
+    "CPU architecture: 8",
+    "Hardware\t: Amlogic"
+  ]
+}

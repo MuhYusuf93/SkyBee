@@ -1,0 +1,63 @@
+package com.example.kasir_app
+
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.StandardMethodCodec
+import android.os.Build
+import java.security.GeneralSecurityException
+import java.security.NoSuchAlgorithmException
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
+
+/** Same PBKDF2 verifier as Dart; compute on an engine-owned background queue.
+ * No secrets, parameters or verifier bytes are logged or persisted here.
+ * API24/25 retain the Dart implementation; minSdk and credential schema stay.
+ */
+open class MainActivity : FlutterActivity() {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        val messenger = flutterEngine.dartExecutor.binaryMessenger
+        val queue = messenger.makeBackgroundTaskQueue()
+        MethodChannel(messenger, "kasir_app/pin_kdf", StandardMethodCodec.INSTANCE, queue)
+            .setMethodCallHandler { call, result ->
+                if (call.method != "derivePbkdf2Sha256") {
+                    result.notImplemented()
+                    return@setMethodCallHandler
+                }
+                val input = call.argument<String>("input")
+                val salt = call.argument<ByteArray>("salt")
+                // Valid rounds/bits fit the codec's Int32 range. Reject Double
+                // or oversized Long rather than silently truncating parameters.
+                val rounds = call.argument<Any>("iterations") as? Int
+                val bits = call.argument<Any>("bits") as? Int
+                if (input == null || salt == null || salt.size < 16 ||
+                    rounds == null || rounds !in 600000..2000000 || bits != 256) {
+                    result.error("KDF_PARAMETERS", null, null)
+                    return@setMethodCallHandler
+                }
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    result.error("KDF_UNAVAILABLE", null, null)
+                    return@setMethodCallHandler
+                }
+                val password = input.toCharArray()
+                val spec = PBEKeySpec(password, salt, rounds, 256)
+                password.fill('\u0000')
+                try {
+                    val key = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+                        .generateSecret(spec).encoded
+                    if (key.size != 32) {
+                        result.error("KDF_RESULT", null, null)
+                    } else {
+                        result.success(key)
+                    }
+                } catch (_: NoSuchAlgorithmException) {
+                    result.error("KDF_UNAVAILABLE", null, null)
+                } catch (_: GeneralSecurityException) {
+                    result.error("KDF_FAILED", null, null)
+                } finally {
+                    spec.clearPassword()
+                }
+            }
+    }
+}

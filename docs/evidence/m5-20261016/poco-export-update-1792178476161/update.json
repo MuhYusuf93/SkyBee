@@ -1,0 +1,13 @@
+{
+  "device": "7f0edea0",
+  "package": "com.example.kasir_app.integration",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "priorApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-export-update-1792178476161\\prior-c20-release.apk",
+  "priorSha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-023917\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-023917\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "originalV6Restoration": "still pending in original handover",
+  "state": "Guarded update/data/archive/public export audit PASS; installed APK hash verified; own release startup PASS. Handed back for actual keyboard test, not yet manual PASS.",
+  "automaticDeviceControlActive": false,
+  "startupConfirmed": true
+}

@@ -1,0 +1,401 @@
+{
+  "package": "com.example.kasir_app",
+  "device": "7f0edea0",
+  "schema": 6,
+  "bytes": 471040,
+  "database_sha256": "2d3803984e87c541806fc25f5dc15f495f3da7d8f54ff77ee95f4ffab4af37c7",
+  "journal_mode": "delete",
+  "quick_check": "ok",
+  "foreign_key_violations": 0,
+  "tables": {
+    "android_metadata": {
+      "columns": [
+        "locale"
+      ],
+      "count": 1,
+      "row_values_sha256": "86fdcfa6b2e00fe6cbd6a0be6f443967a6c9647d70becd9aacb5725ca52324c3"
+    },
+    "audit_log": {
+      "columns": [
+        "id",
+        "installation_id",
+        "mode",
+        "action",
+        "entity_id",
+        "created_at"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cart_draft_items": {
+      "columns": [
+        "draft_id",
+        "product_id",
+        "quantity",
+        "accepted_price_rupiah",
+        "product_revision",
+        "pricing_mode"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cart_drafts": {
+      "columns": [
+        "id",
+        "state",
+        "completed_sale_transaction_id",
+        "revision",
+        "created_at",
+        "updated_at",
+        "currency_code",
+        "currency_scale",
+        "payment_mode",
+        "paid_minor",
+        "customer_id",
+        "customer_name",
+        "customer_phone"
+      ],
+      "count": 1,
+      "row_values_sha256": "de3b886955fc9b70f0e29ac495fc91ae721fafbd1247fbbf4a67156df08f440b"
+    },
+    "cashier_search_dirty": {
+      "columns": [
+        "product_id"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cashier_search_terms": {
+      "columns": [
+        "product_id",
+        "term",
+        "priority"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cashier_state": {
+      "columns": [
+        "id",
+        "draft_id"
+      ],
+      "count": 1,
+      "row_values_sha256": "244467a10bddcfd7649cbfbbe658072d4e61a5ef4a3cbd6244913a858c9fd67f"
+    },
+    "categories": {
+      "columns": [
+        "id",
+        "name",
+        "normalized_name",
+        "is_deleted",
+        "created_at"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "customers": {
+      "columns": [
+        "id",
+        "name",
+        "normalized_name",
+        "phone_number",
+        "is_deleted",
+        "created_at"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "installation_metadata": {
+      "columns": [
+        "id",
+        "created_at"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_operations": {
+      "columns": [
+        "id",
+        "operation_key",
+        "payload_hash",
+        "kind",
+        "product_id",
+        "stock_receipt_id",
+        "reverses_operation_id",
+        "before_quantity",
+        "before_value_micros",
+        "stock_revision_after",
+        "created_at",
+        "currency_code",
+        "currency_scale"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "legal_acceptances": {
+      "columns": [
+        "id",
+        "installation_id",
+        "document_version",
+        "accepted_at"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "management_credentials": {
+      "columns": [
+        "id",
+        "pin_verifier",
+        "salt",
+        "kdf_name",
+        "kdf_parameters",
+        "recovery_verifier",
+        "failed_attempts",
+        "blocked_until",
+        "last_attempt_at"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "payment_allocations": {
+      "columns": [
+        "id",
+        "payment_id",
+        "sale_transaction_id",
+        "amount_rupiah"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "payments": {
+      "columns": [
+        "id",
+        "operation_key",
+        "customer_id",
+        "kind",
+        "reverses_payment_id",
+        "amount_rupiah",
+        "created_at",
+        "reason",
+        "currency_code",
+        "currency_scale",
+        "payload_hash"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "price_history": {
+      "columns": [
+        "id",
+        "product_id",
+        "before_rupiah",
+        "after_rupiah",
+        "created_at",
+        "reason",
+        "product_revision_after",
+        "currency_code",
+        "currency_scale",
+        "reason_key",
+        "price_kind",
+        "before_price_minor",
+        "after_price_minor"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "product_aliases": {
+      "columns": [
+        "product_id",
+        "normalized_alias"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "products": {
+      "columns": [
+        "id",
+        "name",
+        "normalized_name",
+        "compact_name",
+        "sku",
+        "barcode",
+        "category_id",
+        "selling_price_rupiah",
+        "stock_quantity",
+        "inventory_value_micros",
+        "min_stock",
+        "low_stock_enabled",
+        "expiry_enabled",
+        "is_deleted",
+        "revision",
+        "created_at",
+        "updated_at",
+        "stock_revision",
+        "currency_code",
+        "currency_scale",
+        "wholesale_price_minor",
+        "pack_label",
+        "pack_size",
+        "base_unit_label"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sale_batch_allocations": {
+      "columns": [
+        "id",
+        "sale_transaction_item_id",
+        "stock_batch_id",
+        "quantity"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sale_transaction_items": {
+      "columns": [
+        "id",
+        "sale_transaction_id",
+        "product_id",
+        "product_name_snapshot",
+        "sku_snapshot",
+        "barcode_snapshot",
+        "quantity",
+        "unit_price_rupiah",
+        "total_rupiah",
+        "cost_micros",
+        "pricing_mode"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sale_transaction_reversals": {
+      "columns": [
+        "id",
+        "sale_transaction_id",
+        "operation_key",
+        "created_at",
+        "reason"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sale_transactions": {
+      "columns": [
+        "id",
+        "checkout_key",
+        "draft_id",
+        "customer_id",
+        "customer_name_snapshot",
+        "customer_phone_snapshot",
+        "created_at",
+        "total_rupiah",
+        "cost_micros",
+        "currency_code",
+        "currency_scale",
+        "payload_hash"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stock_batches": {
+      "columns": [
+        "id",
+        "product_id",
+        "stock_receipt_item_id",
+        "received_quantity",
+        "remaining_quantity",
+        "expiry_date",
+        "received_at"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stock_history": {
+      "columns": [
+        "id",
+        "product_id",
+        "stock_batch_id",
+        "sale_transaction_id",
+        "stock_receipt_id",
+        "sale_transaction_reversal_id",
+        "reverses_history_id",
+        "kind",
+        "quantity_delta",
+        "value_delta_micros",
+        "created_at",
+        "reason",
+        "inventory_operation_id",
+        "currency_code",
+        "currency_scale",
+        "reason_key"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stock_receipt_items": {
+      "columns": [
+        "id",
+        "stock_receipt_id",
+        "product_id",
+        "product_name_snapshot",
+        "quantity",
+        "unit_cost_micros",
+        "total_cost_micros",
+        "input_unit",
+        "input_quantity",
+        "pack_size_snapshot",
+        "pack_label_snapshot",
+        "base_unit_snapshot",
+        "input_unit_cost_micros",
+        "currency_code",
+        "currency_scale"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stock_receipts": {
+      "columns": [
+        "id",
+        "supplier_id",
+        "operation_key",
+        "created_at",
+        "note",
+        "currency_code",
+        "currency_scale"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "store_settings": {
+      "columns": [
+        "id",
+        "name",
+        "time_zone",
+        "address",
+        "contact_number",
+        "logo_path",
+        "receipt_footer",
+        "backup_enabled",
+        "notifications_enabled",
+        "ui_language",
+        "currency_code",
+        "currency_scale"
+      ],
+      "count": 1,
+      "row_values_sha256": "e7fbc4d493fa9b455e02d0e3431713f2597b4c0116d78edac0b314322ed39c19"
+    },
+    "suppliers": {
+      "columns": [
+        "id",
+        "name",
+        "normalized_name",
+        "contact_number",
+        "is_deleted",
+        "created_at"
+      ],
+      "count": 0,
+      "row_values_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "old_table_values_preserved": false
+}

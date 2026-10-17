@@ -1,0 +1,26 @@
+# Kontrak backup/restore untuk M5
+
+**Keputusan M5 16 Oktober 2026 mengatasi asumsi driver/arsip awal di bawah.** Source0.5.0+7/schema8 memakai SQLCipher wajib, key instalasi acak terproteksi Keystore dan arsip portable terenkripsi Tink+SQLCipher dengan recovery kuat terpisah PIN. Implementasi aktual berada di [BACKUP_RESTORE.md](BACKUP_RESTORE.md) dan [DATABASE_ENCRYPTION_AND_MIGRATION.md](DATABASE_ENCRYPTION_AND_MIGRATION.md); bukti/limit pada M5_TEST_REPORT. Seluruh fakta schema1–7, grosir/dus, currency, reversals dan metadata dipertahankan. Snapshot WAL/restore safety memakai maintenance lease; consent/account/printer/jobs/legal acceptance tidak dipulihkan sebagai izin baru. Histori “M5 belum tersedia/sqflite tetap” di bawah menggambarkan tahap sebelum keputusan terbaru, bukan status kode sekarang. Lintas key native telah diuji pada sandbox DV; real Drive, paper, ARM64 dan lintas perangkat tetap perlu bukti tersendiri. Insiden data lama tetap missing/unrecovered; M5 tidak diklaim memulihkan data tersebut.
+
+Kontrak terbaru mencakup **schema V7/M4**. Backup nantinya harus mempertahankan provenance `checkout_payment_links`/`receivable_payment_links`, attestation nullable/payload hash sale reversal, payment reversal/allocations, ledger pembalik dan audit. Jangan membuat ulang provenance unknown atau menghitung ulang snapshot harga/HPP dari master terkini. Restore harus menjalankan migration additive dan FK/integrity serta rekonsiliasi, termasuk signed reversals dan saldo reopened debt. Fingerprint ordinary V6→V7 dan copy tertutup test merupakan bukti migration, bukan implementasi archive/Drive/restore. Fitur M5 belum tersedia; kontrak V6 di bawah tetap berlaku.
+
+Ini kontrak pemeliharaan sampai schema V6, bukan fitur backup/Drive yang sudah dijalankan. V5 menambah form draft/cashier recovery pointer, payload hash idempotency dan search derived index. Arsip harus membawa pointer/form/minor/currency/fakta secara konsisten; derived search index dapat dibangun ulang melalui antrean dirty tanpa mengubah fakta.
+
+- Snapshot konsisten melalui DatabaseCoordinator.exclusive, schema version dan checksum wajib di manifest. Sertakan database/pengaturan/logo sesuai SPEC; UI bahasa, currency_code/currency_scale, seluruh metadata snapshot header, reason_key dan presisi biaya 10^6 per minor harus ikut dipulihkan.
+- Validasi staging database dengan foreign_key_check, quick_check/integrity_check, skema, katalog kode/skala, kesamaan metadata antar header/relasi, unit minor/micros serta rekonsiliasi. Jangan mengambil mata uang dari pilihan perangkat tujuan atau melabeli ulang fakta lama.
+- Arsip V1–V3 mempunyai integer rupiah dan micro-rupiah. Jalankan migration berurutan sampai versi aktif V6 pada database staging: V4 default IDR/0 tanpa x100, V5 form/pointer/guard/index additive. Pilihan bahasa lama tidak ada → perangkat id/en atau fallback en sampai pengguna memilih. V4+ memulihkan pilihan bahasa tersimpan.
+- Tolak schema lebih baru/tidak kompatibel, metadata kode/skala invalid atau campuran, checksum/relasi rusak. Jangan mengganti database aktif sebelum seluruh pemeriksaan staging selesai; perubahan currency bukan konversi saat restore.
+- Backup keselamatan lokal sebelum replacement; exclusive gate menguras operasi, rollback/recovery mengembalikan DB aktif bila gagal. Mode pengelolaan dikunci setelah restore. Draft ditangani sesuai konfirmasi SPEC. Consent per instalasi dan token Google tidak dianggap otomatis dipulihkan.
+- Driver sqflite tetap sama dengan implementasi aktual; tidak ada SQLCipher yang dihapus. Jika kelak enkripsi ditambahkan, format/key lifecycle wajib kompatibel dan diuji sendiri. Tidak ada token/kunci/PIN plaintext di log atau manifest.
+
+Archive serialization, restore/recovery, Drive/OAuth dan hardware pengujiannya masih pending M5. Migration V3→V4 kini diuji dengan fixture nyata; itu tidak merupakan bukti backup/restore bekerja.
+
+
+## Tambahan wajib V6 / M3.1
+
+Arsip seluruh database mencakup products.wholesale_price_minor/pack_label/pack_size/base_unit_label; cart_draft_items dan sale_transaction_items.pricing_mode; price_history.price_kind/before_price_minor/after_price_minor; stock_receipt_items.input_unit/input_quantity/pack_size_snapshot/pack_label_snapshot/base_unit_snapshot/input_unit_cost_micros/currency_code/currency_scale. total_cost_micros dan quantity dasar tetap otoritatif; jangan merekonstruksi total dari rounded unit_cost_micros atau konfigurasi produk terbaru.
+
+Migrasikan V5→V6 pada staging tanpa mengubah fakta: grosir/config NULL, mode retail, receipt input origin NULL untuk data lama. Snapshot nullable history grosir harus tetap NULL (bukan harga0). Validasi unit integer, jumlah×isi, total dari input-unit cost, header/detail currency, FK dan ledger/valuasi dengan presisi/residu. Uji M3.1 melakukan DB fixture tertutup → copy → reopen → perbandingan seluruh kolom fakta baru/ lama, bukan fitur ekspor/restore operasional. Restore archives/WAL/manifest/logo/crash recovery tetap pending M5.
+
+
+Insiden M3.1: default-uninstall runner menghapus/memasang ulang package operasional; DB lama tidak ditemukan dan pengguna tidak punya backup. Fixture copy/reopen bukan backup operasional dan tidak memulihkan data tersebut. Native harus package fixture terpisah/no-uninstall. Lihat INCIDENT-M31-ANDROID-TEST; preservation/restore nyata belum terpenuhi.

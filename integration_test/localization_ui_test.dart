@@ -1,0 +1,175 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:path/path.dart' as path;
+import 'package:sqflite/sqflite.dart';
+import 'package:kasir_app/app/app_services.dart';
+import 'package:kasir_app/app/kasir_app.dart';
+import 'package:kasir_app/data/database/database_coordinator.dart';
+import 'package:kasir_app/features/settings/presentation/language_button.dart';
+import 'package:kasir_app/core/money/money_field.dart';
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized()
+    ..defaultTestTimeout = const Timeout(Duration(minutes: 5))
+    ..framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
+  // Publish an initial fixture frame before slow credential IO. A test window
+  // with no first frame can remain behind the TV launcher/screensaver.
+  runApp(const SizedBox.expand());
+  testWidgets(
+    'Android public language, protected USD, live form locale, currency refusal',
+    (tester) async {
+      final databasePath = path.join(
+        await getDatabasesPath(),
+        'locale_ui_${DateTime.now().microsecondsSinceEpoch}.db',
+      );
+      final db = DatabaseCoordinator(
+        factory: databaseFactory,
+        databasePath: databasePath,
+      );
+      final services = AppServices(db);
+      Future<void> settle() async {
+        final timer = Stopwatch()..start();
+        do {
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 50)),
+          );
+          await tester.pump(const Duration(milliseconds: 100));
+        } while (tester.binding.hasScheduledFrame &&
+            timer.elapsed < const Duration(seconds: 120));
+        expect(
+          tester.binding.hasScheduledFrame,
+          false,
+          reason: 'UI frame/real-IO wait exceeded bound',
+        );
+      }
+
+      Future<void> waitFor(Finder finder) async {
+        final timer = Stopwatch()..start();
+        while (finder.evaluate().isEmpty &&
+            timer.elapsed < const Duration(seconds: 120)) {
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 50)),
+          );
+          await tester.pump(const Duration(milliseconds: 200));
+        }
+        expect(finder, findsWidgets);
+        await settle();
+      }
+
+      Finder field(String label) => find.byWidgetPredicate(
+        (w) => w is TextField && w.decoration?.labelText == label,
+      );
+      Future<void> fill(String label, String value) async {
+        await tester.ensureVisible(field(label));
+        await tester.enterText(field(label), value);
+        await tester.pump();
+      }
+
+      Future<void> language(String code) async {
+        await tester.tap(find.byType(LanguageButton).last);
+        await settle();
+        await tester.tap(
+          find
+              .text(code == 'id' ? 'ID · Bahasa Indonesia' : 'EN · English')
+              .last,
+        );
+        await settle();
+      }
+
+      try {
+        await tester.runAsync(() async {
+          await services.settings.setLanguage('en');
+          await services.management.configure('Store fixture', '0001', '0001');
+        });
+        debugPrint('DV8910_UI_STEP fixture_configured');
+        await tester.pumpWidget(KasirApp(services: services));
+        await waitFor(field('Search products'));
+        await language('id');
+        expect(services.management.isUnlocked, isFalse);
+        await waitFor(field('Cari barang'));
+        await language('en');
+        await waitFor(field('Search products'));
+        await tester.tap(find.text('Manage'));
+        await waitFor(field('PIN'));
+        await fill('PIN', '0001');
+        await tester.tap(find.text('Open management'));
+        await waitFor(find.text('Management'));
+        await tester.tap(find.text('Store settings'));
+        await waitFor(field('Store name'));
+        await tester.tap(find.byType(DropdownButtonFormField<String>));
+        await settle();
+        await tester.tap(find.text('USD · US dollar').last);
+        await settle();
+        expect((await services.settings.preferences())['currency_code'], 'USD');
+        expect(find.text('USD · US dollar'), findsOneWidget);
+        await tester.tap(find.byType(BackButton));
+        await settle();
+        await tester.tap(find.text('Inventory'));
+        await waitFor(find.text('Add product'));
+        await tester.tap(find.text('Add product'));
+        await waitFor(field('Product name'));
+        await fill('Product name', 'Milk user name');
+        await fill('Selling price (USD)', '15.50');
+        await language('id');
+        await waitFor(field('Harga jual (USD)'));
+        expect(
+          tester.widget<TextField>(field('Nama barang')).controller!.text,
+          'Milk user name',
+        );
+        final priceField = tester.widget<TextField>(field('Harga jual (USD)'));
+        expect(priceField.controller!.text, '15,50');
+        expect(
+          moneyCodec(
+            tester.element(field('Harga jual (USD)')),
+          ).parse(priceField.controller!.text).amountMinor,
+          1550,
+        );
+        expect(services.management.isUnlocked, isTrue);
+        // TV keyboards can cover the lower form after editing. Drain the focus
+        // transition and scroll to the expansion before injecting a pointer.
+        FocusManager.instance.primaryFocus?.unfocus();
+        await settle();
+        await tester.ensureVisible(find.text('Stok awal & harga beli'));
+        await settle();
+        await tester.tap(find.text('Stok awal & harga beli'));
+        await waitFor(field('Jumlah awal'));
+        await fill('Jumlah awal', '3');
+        await fill('Harga beli per pcs (USD)', '0,01');
+        await tester.ensureVisible(find.text('Simpan barang'));
+        await tester.tap(find.text('Simpan barang'));
+        await waitFor(find.text('Milk user name'));
+        await db.read((d) async {
+          final product = (await d.query('products')).single;
+          expect(product['selling_price_rupiah'], 1550);
+          expect(product['inventory_value_micros'], 3000000);
+        });
+        await language('en');
+        await waitFor(find.text('Inventory'));
+        expect(find.text('Milk user name'), findsOneWidget);
+        await tester.tap(find.byType(BackButton));
+        await settle();
+        await tester.tap(find.text('Store settings'));
+        await waitFor(field('Store name'));
+        await tester.tap(find.byType(DropdownButtonFormField<String>));
+        await settle();
+        await tester.tap(find.text('EUR · Euro').last);
+        await settle();
+        await waitFor(
+          find.text(
+            'Currency cannot be changed because financial data already exists. A dedicated migration or conversion is required.',
+          ),
+        );
+        expect((await services.settings.preferences())['currency_code'], 'USD');
+        expect(find.text('USD · US dollar'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await tester.pumpWidget(const SizedBox());
+        await tester.runAsync(() async {
+          await db.close();
+          await databaseFactory.deleteDatabase(databasePath);
+        });
+      }
+    },
+  );
+}

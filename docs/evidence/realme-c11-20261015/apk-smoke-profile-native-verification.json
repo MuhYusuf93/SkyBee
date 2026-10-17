@@ -1,0 +1,48 @@
+{
+  "apk": "build\\realme-c11-20261015\\realme-smoke-profile.apk",
+  "sha256": "76ec99eaffe8eb2e8d0ed84751ac0b01645164fba60c96e4dbd1e0266f9d58bf",
+  "bytes": 30230340,
+  "package": "com.example.kasir_app.integration",
+  "min_sdk": 24,
+  "metadata": [
+    "package: name='com.example.kasir_app.integration' versionCode='6' versionName='0.4.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+    "application-label:'kasir_app tests'",
+    "launchable-activity: name='com.example.kasir_app.IntegrationActivity'  label='' icon=''",
+    "native-code: 'armeabi-v7a'"
+  ],
+  "permissions": [
+    "package: com.example.kasir_app.integration",
+    "uses-permission: name='android.permission.INTERNET'",
+    "permission: com.example.kasir_app.integration.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+    "uses-permission: name='com.example.kasir_app.integration.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'"
+  ],
+  "native": [
+    {
+      "abi": "armeabi-v7a",
+      "bytes": 9808,
+      "elf_class": "ELF32",
+      "machine": "ARM",
+      "sha256": "2656675ffd9d190fe7b0c4c53a06ecae3fa98e147bae2f5d75649dca85a7393f",
+      "jni_export_present": true,
+      "load_alignment_at_least_16k": true,
+      "needed": [
+        "libm.so",
+        "libdl.so",
+        "libc.so"
+      ]
+    }
+  ],
+  "installed_by_this_check": false,
+  "zipalign_16k_pass": true,
+  "dex_checked": [
+    "classes.dex",
+    "classes2.dex",
+    "classes3.dex",
+    "classes4.dex",
+    "classes5.dex",
+    "classes6.dex",
+    "classes8.dex",
+    "classes7.dex"
+  ],
+  "license_packaged_unchanged": true
+}

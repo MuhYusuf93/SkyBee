@@ -1,0 +1,54 @@
+{
+  "nonce": "1792181574653",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "priorSha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+  "manualStep": "PAUSED native post_restore safety audit",
+  "hostBefore": "2 FAIL expected; native before1FAIL platform_io_failed generic message; helper initial compile failure fixed",
+  "automaticDeviceControlActive": true,
+  "hostAfter": "22 PASS65s",
+  "fixtureVisibility": "same-case1PASS5s with fixture flag; ordinary run masks input",
+  "analyze": "No issues95.7s",
+  "beforeAudit": "poco-c23-before-1792181574653-20261017-031614 /1PASS3s",
+  "pocoFirst": "12PASS1FAIL72s export name after unlock; source diagnosis pending; original C22 restored and ordinary hashes equal",
+  "pocoFinal": {
+    "settings": "13PASS59s",
+    "realArchive": "1PASS16s",
+    "evidence": "docs/evidence/m5-20261016/poco-c23-regression-final-1792181574653-20261017-054225",
+    "isolation": "ordinary hashes same; exact C22 APK restored"
+  },
+  "analyzeFinal": "No issues24.3s",
+  "dvFinal": {
+    "settings": "13PASS160s",
+    "realArchive": "1PASS25s",
+    "evidence": "docs/evidence/m5-20261016/c23-regression-1792181574653-20261017-054518",
+    "awake": "restored and read back exactly"
+  },
+  "releaseArtifacts": "docs/evidence/m5-20261016/release-artifacts-20261017-054951/artifacts.json",
+  "installedSha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+  "originalAfterAudit": "FAIL only four metadata tables differ; ordinary unchanged and new C23 APK restored",
+  "humanActivity": "User explicitly confirms opened fixture/entered PIN in interval",
+  "independentDvTestsActive": false,
+  "status": "C23 ready for manual B-MAN09R; original interval metadata changes explained, fresh strict roundtrip and startup PASS",
+  "metadataExplanation": "docs/evidence/m5-20261017/c23-metadata-explanation.json /1PASS2s",
+  "quiescentEvidence": "docs\\evidence\\m5-20261016\\poco-c23-quiescent-1792191568561",
+  "startup": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 471,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "analyzeLatest": "No issues9.5s",
+  "manualRetest": {
+    "id": "B-MAN09R",
+    "status": "PASS user-reported",
+    "scope": "dummy input visible/actionable rejection/no validated preview or loading hang"
+  },
+  "positiveValidationAttempt": "B-MAN10 rejection observed; source/completeness pending, submitted value excluded",
+  "positiveValidationRetry": "B-MAN10 full private copy/paste PASS user-reported; correct expected summary, no restore",
+  "manualRestoreCancel": "B-MAN11 PASS user-reported; checkbox guard/cancel only",
+  "manualRestoreResult": "B-MAN12 PASS reported complete UI/PIN relock; reconciliation/safety/native still pending",
+  "postRestoreReport": "B-MAN13/14 backup PIN and finance/stock UI PASS user-reported",
+  "postRestoreCatalogDrive": "B-MAN15/16 UI catalog3 and disconnected Drive PASS user-reported",
+  "postRestorePrinterAlerts": "B-MAN17/18 saved printer empty/notification off/derived warning PASS reported"
+}

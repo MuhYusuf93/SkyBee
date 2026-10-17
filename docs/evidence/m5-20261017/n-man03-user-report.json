@@ -1,0 +1,12 @@
+{
+  "id": "N-MAN03",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Home/background then tap notification once showed management PIN gate before inventory warning details",
+  "unlock": "not yet attempted",
+  "coldLaunch": "UNVERIFIED",
+  "lockscreen": "UNVERIFIED",
+  "automaticEvidence": false
+}

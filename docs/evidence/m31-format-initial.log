@@ -1,0 +1,15 @@
+Formatted lib\features\inventory\application\inventory_service.dart
+Formatted lib\features\inventory\domain\stock_input.dart
+Formatted lib\features\inventory\domain\stock_rules.dart
+Formatted lib\features\inventory\presentation\product_detail_screen.dart
+Formatted lib\features\inventory\presentation\product_form.dart
+Formatted lib\features\inventory\presentation\stock_input_fields.dart
+Formatted lib\features\cashier\application\cart_service.dart
+Formatted lib\features\cashier\application\cashier_store.dart
+Formatted lib\features\cashier\application\checkout_service.dart
+Formatted lib\features\cashier\domain\cashier_models.dart
+Formatted lib\features\cashier\presentation\cart_provider.dart
+Formatted lib\features\cashier\presentation\cashier_screen.dart
+Formatted lib\features\cashier\presentation\receipt_view.dart
+Formatted lib/data/database/schema.dart
+Formatted 29 files (14 changed) in 0.13 seconds.

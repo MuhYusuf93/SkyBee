@@ -1,0 +1,31 @@
+[
+  {
+    "name": "main",
+    "pauseEvent": {
+      "type": "Event",
+      "kind": "Resume",
+      "isolateGroup": {
+        "type": "@IsolateGroup",
+        "id": "isolateGroups/8492093142463496",
+        "name": "main.dart",
+        "number": "8492093142463496",
+        "isSystemIsolateGroup": false
+      },
+      "isolate": {
+        "type": "@Isolate",
+        "id": "isolates/1098173319716803",
+        "name": "main",
+        "number": "1098173319716803",
+        "isSystemIsolate": false,
+        "isolateGroupId": "isolateGroups/8492093142463496"
+      },
+      "timestamp": 1791991572743
+    },
+    "stack": {
+      "type": "Stack",
+      "frames": [],
+      "truncated": false,
+      "messages": []
+    }
+  }
+]

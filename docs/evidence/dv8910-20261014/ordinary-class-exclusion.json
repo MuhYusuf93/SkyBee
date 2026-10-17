@@ -1,0 +1,15 @@
+{
+  "apk": "build\\dv8910\\ordinary-debug.apk",
+  "dex_files_checked": [
+    "classes.dex",
+    "classes2.dex",
+    "classes3.dex",
+    "classes4.dex",
+    "classes5.dex",
+    "classes6.dex",
+    "classes7.dex",
+    "classes8.dex"
+  ],
+  "IntegrationActivity_present": false,
+  "ordinary_apk_installed_on_DV": false
+}

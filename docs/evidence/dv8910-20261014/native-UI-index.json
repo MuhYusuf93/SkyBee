@@ -1,0 +1,70 @@
+[
+  {
+    "file": "ui-final-localization_ui.log",
+    "reporter_lines": [
+      "00:00 +0: Android public language, protected USD, live form locale, currency refusal",
+      "01:23 +1: (tearDownAll)",
+      "01:23 +1: All tests passed!"
+    ],
+    "all_pass_marker": true,
+    "limits": "case pass in mixed cashier run separated from runner exit1; retries not double-counted"
+  },
+  {
+    "file": "ui-wholesale_packaging_ui.log",
+    "reporter_lines": [
+      "00:00 +0: M3.1 warehouse boxes, physical count, wholesale scan draft and bilingual partial sale",
+      "01:51 +1: (tearDownAll)",
+      "01:51 +1: All tests passed!"
+    ],
+    "all_pass_marker": true,
+    "limits": "case pass in mixed cashier run separated from runner exit1; retries not double-counted"
+  },
+  {
+    "file": "ui-final-cashier_ui.log",
+    "reporter_lines": [
+      "00:00 +0: M3 three scans weighted checkout double-submit restart recovery and public settlement",
+      "01:16 +0 -1: M3 three scans weighted checkout double-submit restart recovery and public settlement [E]",
+      "01:16 +0 -1: M3 USD partial payment live locale and explicit same-name customer selection",
+      "02:15 +1 -1: (tearDownAll)",
+      "02:15 +1 -1: Some tests failed."
+    ],
+    "all_pass_marker": false,
+    "limits": "case pass in mixed cashier run separated from runner exit1; retries not double-counted"
+  },
+  {
+    "file": "ui-check-m31_ui_gaps.log",
+    "reporter_lines": [
+      "00:00 +0: (setUpAll)",
+      "00:23 +0: wholesale above retail warning cancel/confirm preserves chosen price",
+      "01:21 +1: wholesale below exact inventory cost warning cancel/confirm preserves chosen price",
+      "02:13 +2: removed wholesale draft blocks Pay until explicit retail correction",
+      "03:03 +3: changed wholesale draft cancel/accept preserves mode and does not create a sale",
+      "03:55 +4: (tearDownAll)",
+      "03:55 +4: All tests passed!"
+    ],
+    "all_pass_marker": true,
+    "limits": "case pass in mixed cashier run separated from runner exit1; retries not double-counted"
+  },
+  {
+    "file": "ui-final-m4_ui.log",
+    "reporter_lines": [
+      "00:00 +0: narrow reports -> protected sale cancellation -> snapshots retained and live ID/EN stays on route",
+      "01:05 +1: wide text2x reports and locking conceal protected financial values",
+      "01:55 +2: (tearDownAll)",
+      "01:55 +2: All tests passed!"
+    ],
+    "all_pass_marker": true,
+    "limits": "case pass in mixed cashier run separated from runner exit1; retries not double-counted"
+  },
+  {
+    "file": "ui-management-driver-final.log",
+    "reporter_lines": [
+      "00:00 +0: Android setup PIN \u2192 warehouse product/receipt \u2192 average \u2192 background lock",
+      "01:37 +0 -1: Android setup PIN \u2192 warehouse product/receipt \u2192 average \u2192 background lock [E]",
+      "01:37 +0 -1: (tearDownAll)",
+      "01:37 +0 -1: Some tests failed."
+    ],
+    "all_pass_marker": false,
+    "limits": "case pass in mixed cashier run separated from runner exit1; retries not double-counted"
+  }
+]

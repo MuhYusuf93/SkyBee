@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN02",
+  "date": "2026-10-17",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Real Google account selection returned pending-account status, privately correct account, Pilihan akun belum disimpan and Gunakan akun ini button on Poco fixture app",
+  "automaticEvidence": false,
+  "limits": "Account not yet accepted as saved destination; Drive identify/API/upload not yet verified. Conditional consent or PIN dialogs are not independently established."
+}

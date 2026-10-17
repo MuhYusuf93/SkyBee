@@ -1,0 +1,9 @@
+{
+  "ordinary": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-020454\\kasir-app-0.5.0-ordinary-release.apk",
+  "fixture": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-020454\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-020454\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "evidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\release-artifacts-20261017-020454",
+  "installed": false,
+  "signing": "existing development certificate, not M6 release signing"
+}

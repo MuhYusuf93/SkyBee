@@ -1,0 +1,12 @@
+{
+  "id": "D-MAN03",
+  "date": "2026-10-17",
+  "source": "user report",
+  "status": "FAIL",
+  "statusText": "Operasi Drive belum selesai. Periksa jaringan, otorisasi, dan konfigurasi akun.",
+  "scope": "Accept selected Google destination failed with generic Drive feedback on two accounts; user states both belong to OAuth test audience",
+  "automaticEvidence": false,
+  "rootCause": "UNDETERMINED; selected account does not prove Drive API readiness or successful identity request",
+  "privacy": "Account addresses excluded",
+  "next": "Pause manual retries; inspect sanitized error classification and verify Drive API enabled status"
+}

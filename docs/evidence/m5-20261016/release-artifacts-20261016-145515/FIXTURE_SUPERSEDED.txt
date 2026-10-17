@@ -1,0 +1,7 @@
+The isolated fixture APK in this build passes package/ABI/signature/license checks
+but fails runtime rendering due to missing Banner.layoutDirection outside
+MaterialApp. Do not use it for manual acceptance. Source fixed and regression
+widget passes; use the later rebuilt fixture artifact documented in M5_TEST_REPORT.
+The ordinary APK does not include this fixture wrapper and remains the verified
+build-only operational artifact. This file preserves the original build evidence
+and failed release smoke.

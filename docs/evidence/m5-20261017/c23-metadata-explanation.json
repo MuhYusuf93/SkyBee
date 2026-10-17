@@ -1,0 +1,25 @@
+{
+  "changedTables": [
+    "alert_state",
+    "audit_log",
+    "m5_store",
+    "management_credentials"
+  ],
+  "allOtherTablesIdentical": true,
+  "onlyAlertGenerationChanged": true,
+  "alertGenerationBefore": 35,
+  "alertGenerationAfter": 38,
+  "oldAuditRowsUnchanged": true,
+  "appendedActions": [
+    {
+      "action": "management_verified",
+      "createdAt": 1792185862885
+    },
+    {
+      "action": "management_verified",
+      "createdAt": 1792186085266
+    }
+  ],
+  "credentialSecretsUnchanged": true,
+  "onlyAttemptMetadataChanged": true
+}

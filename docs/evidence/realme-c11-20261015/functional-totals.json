@@ -1,0 +1,109 @@
+{
+  "pre_pin_realme_core": {
+    "bugfix_regression_test": 7,
+    "cashier_sql_test": 30,
+    "cashier_ui_test": 2,
+    "database_test": 11,
+    "locale_currency_test": 6,
+    "localization_ui_test": 1,
+    "m31_ui_gaps_test": 4,
+    "m4_storage_test": 10,
+    "m4_ui_test": 2,
+    "management_inventory_test": 14,
+    "management_ui_test": 1,
+    "protected_reads_test": 1,
+    "realme_acceptance_test": 2,
+    "realme_value_input_test": 28,
+    "reports_corrections_sql_test": 24,
+    "wholesale_packaging_sql_test": 14,
+    "wholesale_packaging_ui_test": 1
+  },
+  "pre_pin_realme_core_count": 158,
+  "post_pin_realme_core": {
+    "post-pin-realme/bugfix_regression_test.log": 7,
+    "post-pin-realme/cashier_sql_test.log": 30,
+    "post-pin-realme/cashier_ui_test.log": 2,
+    "post-pin-realme/database_test.log": 11,
+    "post-pin-realme/locale_currency_test.log": 6,
+    "post-pin-realme/localization_ui_test.log": 1,
+    "post-pin-realme/m31_ui_gaps_test.log": 4,
+    "post-pin-realme/m4_storage_test.log": 10,
+    "post-pin-realme/m4_ui_test.log": 2,
+    "post-pin-realme/management_inventory_test.log": 14,
+    "post-pin-realme/management_ui_test.log": 1,
+    "post-pin-realme/protected_reads_test.log": 1,
+    "post-pin-realme/realme_acceptance_test.log": 2,
+    "post-pin-realme/realme_value_input_test.log": 28,
+    "post-pin-realme/reports_corrections_sql_test.log": 24,
+    "post-pin-realme/wholesale_packaging_sql_test.log": 14,
+    "post-pin-realme/wholesale_packaging_ui_test.log": 1
+  },
+  "post_pin_realme_core_count": 158,
+  "post_pin_realme_core_expected_suites": 17,
+  "post_pin_dv": {
+    "post-pin-dv/bugfix_regression_test.log": 1,
+    "post-pin-dv/management_inventory_test.log": 14,
+    "post-pin-dv/pin_native_backend_test.log": 1,
+    "post-pin-dv/protected_reads_test.log": 1
+  },
+  "post_pin_dv_count": 17,
+  "final_crypto_contract": {
+    "exit_markers": [
+      "RunnerExit=0"
+    ],
+    "source_encoding": "utf-8-sig",
+    "all_passed_reporter": true,
+    "passed_count": 4,
+    "skipped_count": 0,
+    "elapsed_reporter": "01:04",
+    "last_reported_pass_count": 4,
+    "failure_marker": false,
+    "test_events": [
+      "loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/pin_native_backend_test.dart\r",
+      "native PBKDF2 matches independent ASCII recovery and UTF8 vectors\r",
+      "native bridge rejects weak and non-integer parameters without fallback downgrade\r",
+      "native backend unlocks existing pre-optimization Dart verifier unchanged\r",
+      "native KDF five short samples with full 600k rounds, no invented SLA\r",
+      "(tearDownAll)\r",
+      "All tests passed!\r"
+    ]
+  },
+  "pre_manual_integrity": {
+    "exit_markers": [
+      "RunnerExit=0"
+    ],
+    "source_encoding": "utf-8-sig",
+    "all_passed_reporter": true,
+    "passed_count": 1,
+    "skipped_count": 0,
+    "elapsed_reporter": "00:04",
+    "last_reported_pass_count": 1,
+    "failure_marker": false,
+    "test_events": [
+      "loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/realme_manual_integrity_test.dart\r",
+      "Realme manual fixture final integrity and whole-period reconciliation\r",
+      "(tearDownAll)\r",
+      "All tests passed!\r"
+    ]
+  },
+  "after_cycles_integrity": {
+    "exit_markers": [
+      "RunnerExit=0"
+    ],
+    "source_encoding": "utf-8-sig",
+    "all_passed_reporter": true,
+    "passed_count": 1,
+    "skipped_count": 0,
+    "elapsed_reporter": "00:04",
+    "last_reported_pass_count": 1,
+    "failure_marker": false,
+    "test_events": [
+      "loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/integration_test/realme_manual_integrity_test.dart\r",
+      "Realme manual fixture final integrity and whole-period reconciliation\r",
+      "(tearDownAll)\r",
+      "All tests passed!\r"
+    ]
+  },
+  "final_integrity": null,
+  "post_pin_realme_unique_functional_count": 163
+}

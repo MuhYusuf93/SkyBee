@@ -1,0 +1,167 @@
+{
+  "package": "com.example.kasir_app.integration",
+  "system_input_shown": false,
+  "nodes": [
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.LinearLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.widget.FrameLayout",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][720,1448]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,64][720,1226]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,64][720,1226]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Synthetic Realme C11 test\nID",
+      "bounds": "[32,96][688,334]",
+      "class": "android.view.View",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Hutang",
+      "bounds": "[32,206][221,302]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "Kelola",
+      "bounds": "[237,206][448,302]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "barcode",
+      "bounds": "[32,334][688,492]",
+      "class": "android.widget.EditText",
+      "clickable": "true",
+      "focused": "true"
+    },
+    {
+      "label": "Bersihkan pencarian",
+      "bounds": "[592,342][688,438]",
+      "class": "android.widget.Button",
+      "clickable": "true",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[32,492][688,524]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[32,524][688,706]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Daftar belanja\nBelum ada barang.",
+      "bounds": "[32,524][688,706]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Total",
+      "bounds": "[32,1258][106,1304]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[32,1304][166,1384]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "IDR 0",
+      "bounds": "[32,1304][166,1384]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "Bayar",
+      "bounds": "[32,1384][688,1448]",
+      "class": "android.widget.Button",
+      "clickable": "false",
+      "focused": "false"
+    },
+    {
+      "label": "",
+      "bounds": "[0,0][0,0]",
+      "class": "android.view.View",
+      "clickable": "false",
+      "focused": "false"
+    }
+  ]
+}

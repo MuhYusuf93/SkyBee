@@ -1,0 +1,71 @@
+{
+  "time": "2026-10-16T03:52:38.314293+07:00",
+  "device": "0062112V2210F9B3",
+  "package": "com.example.kasir_app.integration",
+  "windows_focused_cases_passed": 1,
+  "native_distinct_closing_cases_passed": 4,
+  "native_audit_successful_repetitions": 3,
+  "historical_163_cases_not_rerun_in_full": true,
+  "production_files_unchanged": 221,
+  "python_ast_files": 3,
+  "final_audit": {
+    "schema": 7,
+    "sales": 2,
+    "payments": 4,
+    "allocations": 4,
+    "sales_minor": 72000,
+    "cost_micros": 54000000000,
+    "profit_micros": "18000000000",
+    "payments_minor": 46000,
+    "debt_minor": 26000,
+    "stock_quantity": 14,
+    "stock_value_micros": 126000000000,
+    "manual_customer_debt_minor": 0,
+    "original_customer_debt_minor": 26000,
+    "draft_quantity": 1,
+    "draft_total_minor": 12000,
+    "fk_clean": true,
+    "quick_check": "ok",
+    "reconciled": true,
+    "financial_and_draft_sha256_before": "5c4ffc6ac71e808539f66ffcf7ed716ae2054d47978ebaf3035b79465424bed4",
+    "financial_and_draft_sha256_after": "5c4ffc6ac71e808539f66ffcf7ed716ae2054d47978ebaf3035b79465424bed4",
+    "physical_double_submit_verified": false
+  },
+  "release_sha256": "969bccdda9605a2e82d137957316f1dbb848075f314532eb479befca21f709f7",
+  "release_draft_smoke": true,
+  "talkback_enabled": false,
+  "font_scale": "1.0",
+  "operational_package_absent_before_after": true,
+  "ordinary_db_hash_claim": false,
+  "database_restore_claim": false,
+  "pid_logs": [
+    {
+      "path": "docs\\evidence\\realme-c11-manual-20261016\\final\\runtime-before.pid.log",
+      "lines": 2,
+      "fatal_markers": 0,
+      "sha256": "794629e8240ab82c9fd1ae594b5e9848aa2ed7106de4955b37cd6c6293b022d9",
+      "scope": "available own-PID ring buffer only; not full history"
+    },
+    {
+      "path": "docs\\evidence\\realme-c11-manual-20261016\\final\\runtime-release-restored.pid.log",
+      "lines": 23,
+      "fatal_markers": 0,
+      "sha256": "8ae85c465fd0ba23afce6d7860bb8c5046fc264cd948eb5ed68ae9d6938632fc",
+      "scope": "available own-PID ring buffer only; not full history"
+    }
+  ],
+  "exit_reason_counts_before": {
+    "10": 16
+  },
+  "exit_reason_counts_after": {
+    "10": 16
+  },
+  "physical_double_submit": "UNVERIFIED",
+  "original_semantics_failure_cause": "UNVERIFIED_CAUSE; probe overlap suspected",
+  "initial_failures_retained": [
+    "analyze.log",
+    "native-exact-ledger.log",
+    "native-cashier-ui.log"
+  ],
+  "redacted_completed_log_files": 0
+}

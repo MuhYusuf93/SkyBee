@@ -1,0 +1,5 @@
+
+    versionCode=6 minSdk=24 targetSdk=36
+    versionName=0.4.0
+      dataDir=/data/user/0/com.example.kasir_app.integration
+
