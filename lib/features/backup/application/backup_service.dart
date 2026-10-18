@@ -76,6 +76,21 @@ final class BackupService {
     return value;
   }
 
+  /// Copies only an explicitly displayed recovery code after a fresh PIN gate
+  /// check. This does not rotate or confirm the code, inspect the clipboard, or
+  /// persist another secret. Android marks the clip as sensitive metadata.
+  Future<void> copyRecoveryCode(String shown) async {
+    access.requireAccess();
+    final code = normalizeCode(shown);
+    if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
+      throw const FormatException('backupCodeInvalid');
+    }
+    if (await platform.callNullable<bool>('copyRecoveryCode', {'text': code}) !=
+        true) {
+      throw PlatformException(code: 'clipboard_unavailable');
+    }
+  }
+
   Future<String> origin() =>
       platform.key('backup-origin-v1', allowCreate: true);
   static Future<String> portableDatabaseKey(String code, String id) async {
@@ -552,7 +567,7 @@ final class BackupService {
         }
         // The database exclusion lease spans safety creation through promotion:
         // no newer financial commit can fall between its safety copy and the swap.
-        await const KeystoreDrivePolicy().revoke();
+        await KeystoreDrivePolicy(platform).revoke();
         final source = await EncryptedDatabase.openFile(
           p.join(incoming.directory.path, 'database.db'),
           await portableDatabaseKey(incoming.code, incoming.manifest.id),

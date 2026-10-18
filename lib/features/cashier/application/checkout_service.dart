@@ -250,6 +250,8 @@ final class CheckoutService {
             'product_name_snapshot': product['name'],
             'sku_snapshot': product['sku'],
             'barcode_snapshot': product['barcode'],
+            if (database.schemaVersion >= 9)
+              ...line.product.attributes.toRow(suffix: '_snapshot'),
             'quantity': line.quantity,
             'unit_price_rupiah': line.acceptedPrice.amountMinor,
             'pricing_mode': line.pricingMode.name,

@@ -1621,6 +1621,18 @@
   "m5RecoveryRequired": "Set up and save a recovery code before creating a backup.",
   "m5GenerateCode": "Set up a new code",
   "m5ShowCode": "Show saved code",
+  "m5CopyCode": "Copy to clipboard",
+  "m5CodeCopied": "Recovery code copied without spaces or hyphens.",
+  "m5CodeCopyFailed": "Code was not copied. Show the complete code and retry while the app is active.",
+  "@m5CopyCode": {
+    "description": "Copy the explicitly displayed backup recovery code."
+  },
+  "@m5CodeCopied": {
+    "description": "Copy success without revealing secret text."
+  },
+  "@m5CodeCopyFailed": {
+    "description": "Sanitized clipboard failure without upstream details."
+  },
   "m5RecoveryCodeHelp": "This code differs from your PIN and PIN recovery. Keep a private copy outside the device. Older backups still need the code used when created; a lost code cannot be derived from your PIN.",
   "m5ConfirmRecoveryCode": "Enter the code you saved",
   "m5CodeStored": "I have saved a copy of this code where I can retrieve it.",
@@ -1690,6 +1702,8 @@
   "m5RemoveLogo": "Remove shop logo",
   "m5ReceiptPreview": "Receipt preview",
   "m5HideCode": "Hide recovery code",
+  "m5LastAutomaticFailure": "Last automatic attempt failure on this device",
+  "m5AutomaticFailureHistoryHelp": "This is a device record and may refer to a previous destination account.",
   "m5LastAttempt": "Last backup attempt",
   "m5LastSuccess": "Last successful backup",
   "m5NextTarget": "Next backup target (shop time)",
@@ -2057,6 +2071,12 @@
   "@m5HideCode": {
     "description": "M5 printer, alerts or backup interface: m5HideCode."
   },
+  "@m5LastAutomaticFailure": {
+    "description": "Historical automatic backup failure on this device, potentially for a prior account."
+  },
+  "@m5AutomaticFailureHistoryHelp": {
+    "description": "Avoid attributing persisted device attempt status to the currently selected account."
+  },
   "@m5LastAttempt": {
     "description": "M5 printer, alerts or backup interface: m5LastAttempt."
   },
@@ -2170,5 +2190,43 @@
   "m5ExportChooseLocation": "Continue",
   "@m5ExportChooseLocation": {
     "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
-  }
+  },
+  "m5DriveArchiveList": "Destination account Drive archives",
+  "@m5DriveArchiveList": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5DriveArchiveList."
+  },
+  "m5DriveArchiveEmpty": "No Drive archives on this page.",
+  "@m5DriveArchiveEmpty": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5DriveArchiveEmpty."
+  },
+  "m5RunHistoryTitle": "Backup history on this device",
+  "@m5RunHistoryTitle": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunHistoryTitle."
+  },
+  "m5RunHistoryHelp": "Drive upload records for all accounts on this device. Retention may remove older archives; history is retained.",
+  "@m5RunHistoryHelp": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunHistoryHelp."
+  },
+  "m5RunCurrentAccount": "Current destination account",
+  "@m5RunCurrentAccount": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunCurrentAccount."
+  },
+  "m5RunOtherAccount": "Another or previous destination account",
+  "@m5RunOtherAccount": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunOtherAccount."
+  },
+  "m5RunUnknownAccount": "Destination account not recorded",
+  "@m5RunUnknownAccount": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunUnknownAccount."
+  },
+  "m51Attributes": "Optional product attributes",
+  "m51Size": "Weight / volume",
+  "m51SizeHelp": "Up to 3 decimals, no grouping. Example: 0.5",
+  "m51Unit": "Size unit",
+  "m51NoUnit": "No unit",
+  "m51Liter": "liter",
+  "m51Shelf": "Shelf location",
+  "m51Note": "Product note",
+  "m51AttributesHelp": "Size is descriptive; stock stays in pcs. Shelf: 80 characters; note: 1,000. Clear both value and unit to remove size.",
+  "m51AttributesInvalid": "Enter a positive size with its unit (up to 3 decimals, no grouping). Check shelf 80 and note 1,000 character limits."
 }

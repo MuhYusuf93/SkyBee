@@ -1,5 +1,24 @@
 # Arsitektur aplikasi — M1–M4 + Localization/Money
 
+## Evolusi M5.1 dan M5.2
+
+M5.1 aktif A–G, M5.2 planned menunggu desain, M6 tidak dimulai. Source M5 tetap
+tersimpan sebagai handoff ordinary 0.5.0+7. Checkpoint A memakai ProductAttributes
+untuk metadata integer thousandths, satu parser ID/EN dan view compact yang
+dipakai ulang form/detail/cart/receipt UI. InventoryService mempersist metadata,
+CheckoutService menulis snapshot dalam dbTxn checkout yang sama; encoder struk
+tetap tidak menerima catatan internal. Tidak ada Provider katalog global atau
+SQL dalam widget. BackupValidation memeriksa metadata dari staging secara paged.
+KasirStore membaca kolom baru hanya untuk schema yang memilikinya agar fixture
+migration lama tetap memakai kontrak historis.
+
+Native crypto fixtures memiliki namespace kompilasi khusus pada KasirPlatform;
+ordinary tidak menerima namespace fixture. BackupService meneruskan dependency
+platform ke pencabutan Drive consent saat restore, sehingga suite terisolasi
+tidak mengubah consent/recovery kampanye manual pada DB lain. Default produksi
+tetap nama key M5 yang sama.
+
+
 Checkpoint M4: ReportsProvider, riwayat lengkap, detail dan form koreksi tersedia dengan scope route/dialog. ReportsService/SqliteReportsRepository menghitung seluruh rentang SQL; CorrectionService membalik fakta atomik melalui coordinator. DatabaseCoordinator memberi revision/commit stream untuk invalidation, tanpa menyimpan state fitur global. Receivables/history/reports membuang respons async usang serta cache maksimal tiga halaman. Lihat [M4-NOTES](M4-NOTES.md) dan hasil aktual [VALIDATION-M4](VALIDATION-M4.md). Catatan checkpoint M1–M3 di bawah adalah histori; laporan/koreksi/performa yang disebut pending di sana sudah menjadi lingkup M4. Printer/Drive/restore tetap M5, acceptance rilis M6.
 
 Query rincian laporan menggabungkan dua indexed branches original/reversal, maksimal 51 kandidat per branch, ORDER BY waktu DESC/kind DESC/ID BINARY DESC. History service mengikat revision mutasi, sementara kontrak repository dasar upper-bound M1 tetap tersedia. Batas waktu efektif continuation adalah minimum akhir periode dan waktu cursor (+1 ms bila perlu menyertakan timestamp tie); memakai satu batas scalar menghindari pemindaian hingga anchor jauh pada planner. EXPLAIN memakai query production yang sama, dan benchmark terpisah mencatat biaya ranking/agregasi; index tidak membuat SUM/ranking konstan.

@@ -1,5 +1,6 @@
 import '../../../core/domain/value_types.dart';
 import '../../../core/domain/pricing_mode.dart';
+import '../../inventory/domain/product_attributes.dart';
 export '../../../core/domain/pricing_mode.dart';
 
 /// Public cashier snapshots intentionally exclude purchase cost/valuation.
@@ -24,6 +25,7 @@ final class CashierProduct {
         );
   int get revision => row['revision'] as int;
   bool get archived => row['is_deleted'] == 1;
+  ProductAttributes get attributes => ProductAttributes.fromRow(row);
 }
 
 final class CartLine {

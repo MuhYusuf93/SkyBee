@@ -1433,6 +1433,17 @@ class AppLocalizationsId extends AppLocalizations {
   String get m5ShowCode => 'Tampilkan kode tersimpan';
 
   @override
+  String get m5CopyCode => 'Salin ke papan klip';
+
+  @override
+  String get m5CodeCopied =>
+      'Kode recovery disalin tanpa spasi atau tanda hubung.';
+
+  @override
+  String get m5CodeCopyFailed =>
+      'Kode belum disalin. Tampilkan kode lengkap dan coba lagi saat aplikasi aktif.';
+
+  @override
   String get m5RecoveryCodeHelp =>
       'Kode ini berbeda dari PIN dan recovery PIN. Simpan salinan pribadi di luar perangkat. Backup lama tetap membutuhkan kode yang dipakai saat dibuat; kode hilang tidak dapat dihitung ulang dari PIN.';
 
@@ -1652,6 +1663,14 @@ class AppLocalizationsId extends AppLocalizations {
   String get m5HideCode => 'Sembunyikan kode pemulihan';
 
   @override
+  String get m5LastAutomaticFailure =>
+      'Kegagalan percobaan otomatis terakhir di perangkat ini';
+
+  @override
+  String get m5AutomaticFailureHistoryHelp =>
+      'Status ini adalah catatan perangkat dan dapat berasal dari akun tujuan sebelumnya.';
+
+  @override
   String get m5LastAttempt => 'Percobaan backup terakhir';
 
   @override
@@ -1753,4 +1772,59 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m5ExportChooseLocation => 'Lanjut';
+
+  @override
+  String get m5DriveArchiveList => 'Arsip Drive akun tujuan';
+
+  @override
+  String get m5DriveArchiveEmpty => 'Tidak ada arsip Drive pada halaman ini.';
+
+  @override
+  String get m5RunHistoryTitle => 'Riwayat backup di perangkat ini';
+
+  @override
+  String get m5RunHistoryHelp =>
+      'Catatan pengiriman ke Drive untuk semua akun di perangkat ini. Arsip lama dapat terhapus oleh retensi; riwayat tetap disimpan.';
+
+  @override
+  String get m5RunCurrentAccount => 'Akun tujuan saat ini';
+
+  @override
+  String get m5RunOtherAccount => 'Akun tujuan lain atau sebelumnya';
+
+  @override
+  String get m5RunUnknownAccount => 'Akun tujuan tidak tercatat';
+
+  @override
+  String get m51Attributes => 'Atribut barang opsional';
+
+  @override
+  String get m51Size => 'Berat / volume';
+
+  @override
+  String get m51SizeHelp =>
+      'Maks. 3 desimal, tanpa pemisah ribuan. Contoh: 0,5';
+
+  @override
+  String get m51Unit => 'Satuan ukuran';
+
+  @override
+  String get m51NoUnit => 'Tanpa satuan';
+
+  @override
+  String get m51Liter => 'liter';
+
+  @override
+  String get m51Shelf => 'Letak rak';
+
+  @override
+  String get m51Note => 'Keterangan barang';
+
+  @override
+  String get m51AttributesHelp =>
+      'Ukuran hanya keterangan; stok tetap pcs. Rak maks. 80 karakter, keterangan maks. 1.000. Kosongkan nilai dan satuan untuk menghapus ukuran.';
+
+  @override
+  String get m51AttributesInvalid =>
+      'Isi ukuran positif beserta satuannya (maks. 3 desimal tanpa pemisah ribuan). Periksa batas rak 80 dan keterangan 1.000 karakter.';
 }

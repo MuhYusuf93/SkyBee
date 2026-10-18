@@ -5,6 +5,7 @@ import 'package:kasir_app/features/settings/presentation/language_button.dart';
 import 'package:kasir_app/l10n/localization.dart';
 import '../../management/presentation/managed_text_field.dart';
 import 'package:flutter/material.dart';
+import 'product_attributes_view.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/domain/value_types.dart';
@@ -238,6 +239,7 @@ class _DetailBody extends StatelessWidget {
                   child: Text(tr(context, 'tryAgain')),
                 ),
               if (product != null) ...[
+                ProductAttributesView(attributes: product.attributes),
                 Text(
                   AppLocalizations.of(context)!.sellingPriceAmount(
                     moneyLabel(

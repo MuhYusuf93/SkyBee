@@ -1,5 +1,15 @@
 # Skema dan migration — M1–M4 + Localization/Money
 
+Versi implementasi aktif **9 (M5.1-A)**; paragraf versi7/6 di bawah adalah
+histori. V8 M5 menambah SQLCipher/bootstrap dan tabel peripheral/backup sesuai
+source schema.dart. V9 aditif, tanpa rewrite nominal/stok/HPP: products mendapat
+size_milli INTEGER nullable (1..999999999999, skala1000), size_unit nullable
+(g/kg/ml/l) dengan CHECK pasangan, shelf_location nullable maks80, product_note
+nullable maks1000; sale_transaction_items memperoleh empat kolom dengan suffix
+_snapshot. Legacy tetap null, tidak dibackfill dari master. Barcode tetap TEXT.
+Migration dan CHECK menolak pasangan parsial; checkout snapshot atomik.
+
+
 Versi aktif **7** (M4). V7 additive menambah `sale_transaction_reversals.payload_hash` dan `goods_returned` nullable (legacy attestation unknown), tabel immutable `checkout_payment_links`/`receivable_payment_links`, index period pembayaran/pembatalan dan guard provenance/reversal header/allocation. Backfill checkout hanya dengan exact checkout key, timestamp/currency/customer serta single allocation yang cocok; pelunasan hanya dari audit lama yang membuktikannya. Receipt lain tetap unknown. Tidak mengubah nominal/HPP/stok/snapshot lama. Runtime services menulis provenance setelah allocations dalam dbTxn yang sama. Pembalikan append-only tidak menghapus completed draft atau transaksi asli. Detail/test/upgrade aktual: [M4-NOTES](M4-NOTES.md), [VALIDATION-M4](VALIDATION-M4.md). Paragraf versi6 dan checkpoint di bawah bersifat historis.
 
 Angka penjualan/pembayaran disimpan positif dengan event kind/reversal reference yang menentukan tanda saat agregasi. Gross profit bertanda memakai BigInt dalam micro-minor; SQLite SUM overflow ditolak secara eksplisit. Konversi kalender laporan ke UTC half-open dilakukan service, timestamp tetap indexed tanpa fungsi pembungkus. Reconciliation membaca seluruh dataset dan tidak memperbaiki fakta diam-diam.

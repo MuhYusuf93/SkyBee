@@ -1,7 +1,7 @@
 name: kasir_app
 description: Kasir offline Android, persediaan, dan piutang untuk satu perangkat toko.
 publish_to: none
-version: 0.5.0+7
+version: 0.5.1+8
 
 environment:
   sdk: ^3.12.2

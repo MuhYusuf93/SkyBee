@@ -1,4 +1,6 @@
 import '../../../core/domain/value_types.dart';
+import 'product_attributes.dart';
+export 'product_attributes.dart';
 
 /// Immutable inventory screen snapshot, physical stock distinct from saleable.
 final class InventoryProduct {
@@ -34,6 +36,7 @@ final class InventoryProduct {
   int? get packSize => row['pack_size'] as int?;
   String get baseUnit => row['base_unit_label'] as String? ?? 'pcs';
   bool get isDeleted => row['is_deleted'] == 1;
+  ProductAttributes get attributes => ProductAttributes.fromRow(row);
   bool get expiryEnabled => row['expiry_enabled'] == 1;
   bool get lowStock =>
       row['low_stock_enabled'] == 1 && saleable < (row['min_stock'] as int);
@@ -53,6 +56,7 @@ final class ProductInput {
     this.minStock = 5,
     this.lowStockEnabled = true,
     this.expiryEnabled = false,
+    this.attributes,
   });
   final String name;
   final Money sellingPrice;
@@ -66,6 +70,7 @@ final class ProductInput {
   final int minStock;
   final bool lowStockEnabled;
   final bool expiryEnabled;
+  final ProductAttributes? attributes;
 }
 
 enum MasterKind { category, supplier }

@@ -2648,6 +2648,24 @@ abstract class AppLocalizations {
   /// **'Show saved code'**
   String get m5ShowCode;
 
+  /// Copy the explicitly displayed backup recovery code.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to clipboard'**
+  String get m5CopyCode;
+
+  /// Copy success without revealing secret text.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery code copied without spaces or hyphens.'**
+  String get m5CodeCopied;
+
+  /// Sanitized clipboard failure without upstream details.
+  ///
+  /// In en, this message translates to:
+  /// **'Code was not copied. Show the complete code and retry while the app is active.'**
+  String get m5CodeCopyFailed;
+
   /// M5 printer, alerts or backup interface: m5RecoveryCodeHelp.
   ///
   /// In en, this message translates to:
@@ -3026,6 +3044,18 @@ abstract class AppLocalizations {
   /// **'Hide recovery code'**
   String get m5HideCode;
 
+  /// Historical automatic backup failure on this device, potentially for a prior account.
+  ///
+  /// In en, this message translates to:
+  /// **'Last automatic attempt failure on this device'**
+  String get m5LastAutomaticFailure;
+
+  /// Avoid attributing persisted device attempt status to the currently selected account.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a device record and may refer to a previous destination account.'**
+  String get m5AutomaticFailureHistoryHelp;
+
   /// M5 printer, alerts or backup interface: m5LastAttempt.
   ///
   /// In en, this message translates to:
@@ -3211,6 +3241,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue'**
   String get m5ExportChooseLocation;
+
+  /// Backup destination archive listing or device-local cross-account upload history: m5DriveArchiveList.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination account Drive archives'**
+  String get m5DriveArchiveList;
+
+  /// Backup destination archive listing or device-local cross-account upload history: m5DriveArchiveEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No Drive archives on this page.'**
+  String get m5DriveArchiveEmpty;
+
+  /// Backup destination archive listing or device-local cross-account upload history: m5RunHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup history on this device'**
+  String get m5RunHistoryTitle;
+
+  /// Backup destination archive listing or device-local cross-account upload history: m5RunHistoryHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive upload records for all accounts on this device. Retention may remove older archives; history is retained.'**
+  String get m5RunHistoryHelp;
+
+  /// Backup destination archive listing or device-local cross-account upload history: m5RunCurrentAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Current destination account'**
+  String get m5RunCurrentAccount;
+
+  /// Backup destination archive listing or device-local cross-account upload history: m5RunOtherAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Another or previous destination account'**
+  String get m5RunOtherAccount;
+
+  /// Backup destination archive listing or device-local cross-account upload history: m5RunUnknownAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination account not recorded'**
+  String get m5RunUnknownAccount;
+
+  /// No description provided for @m51Attributes.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional product attributes'**
+  String get m51Attributes;
+
+  /// No description provided for @m51Size.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight / volume'**
+  String get m51Size;
+
+  /// No description provided for @m51SizeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to 3 decimals, no grouping. Example: 0.5'**
+  String get m51SizeHelp;
+
+  /// No description provided for @m51Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Size unit'**
+  String get m51Unit;
+
+  /// No description provided for @m51NoUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'No unit'**
+  String get m51NoUnit;
+
+  /// No description provided for @m51Liter.
+  ///
+  /// In en, this message translates to:
+  /// **'liter'**
+  String get m51Liter;
+
+  /// No description provided for @m51Shelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf location'**
+  String get m51Shelf;
+
+  /// No description provided for @m51Note.
+  ///
+  /// In en, this message translates to:
+  /// **'Product note'**
+  String get m51Note;
+
+  /// No description provided for @m51AttributesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Size is descriptive; stock stays in pcs. Shelf: 80 characters; note: 1,000. Clear both value and unit to remove size.'**
+  String get m51AttributesHelp;
+
+  /// No description provided for @m51AttributesInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a positive size with its unit (up to 3 decimals, no grouping). Check shelf 80 and note 1,000 character limits.'**
+  String get m51AttributesInvalid;
 }
 
 class _AppLocalizationsDelegate

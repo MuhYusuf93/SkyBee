@@ -1,5 +1,12 @@
 # Kontrak backup/restore untuk M5
 
+Kontrak aktif M5.1-A schema9: seluruh metadata nullable produk dan snapshot
+ukuran/rak/catatan sale items ikut snapshot SQLCipher/arsip portable. Arsip M5
+schema8 dimigrasikan aditif pada staging; kolom historis tetap null. Validasi
+menolak metadata tidak sah tanpa mengubah DB aktif. Kontrak portable/envelope/
+safety M5 aktual: [BACKUP_RESTORE](BACKUP_RESTORE.md); bagian lama berikut adalah
+histori, bukan penyangkalan implementasi M5 yang telah selesai.
+
 **Keputusan M5 16 Oktober 2026 mengatasi asumsi driver/arsip awal di bawah.** Source0.5.0+7/schema8 memakai SQLCipher wajib, key instalasi acak terproteksi Keystore dan arsip portable terenkripsi Tink+SQLCipher dengan recovery kuat terpisah PIN. Implementasi aktual berada di [BACKUP_RESTORE.md](BACKUP_RESTORE.md) dan [DATABASE_ENCRYPTION_AND_MIGRATION.md](DATABASE_ENCRYPTION_AND_MIGRATION.md); bukti/limit pada M5_TEST_REPORT. Seluruh fakta schema1–7, grosir/dus, currency, reversals dan metadata dipertahankan. Snapshot WAL/restore safety memakai maintenance lease; consent/account/printer/jobs/legal acceptance tidak dipulihkan sebagai izin baru. Histori “M5 belum tersedia/sqflite tetap” di bawah menggambarkan tahap sebelum keputusan terbaru, bukan status kode sekarang. Lintas key native telah diuji pada sandbox DV; real Drive, paper, ARM64 dan lintas perangkat tetap perlu bukti tersendiri. Insiden data lama tetap missing/unrecovered; M5 tidak diklaim memulihkan data tersebut.
 
 Kontrak terbaru mencakup **schema V7/M4**. Backup nantinya harus mempertahankan provenance `checkout_payment_links`/`receivable_payment_links`, attestation nullable/payload hash sale reversal, payment reversal/allocations, ledger pembalik dan audit. Jangan membuat ulang provenance unknown atau menghitung ulang snapshot harga/HPP dari master terkini. Restore harus menjalankan migration additive dan FK/integrity serta rekonsiliasi, termasuk signed reversals dan saldo reopened debt. Fingerprint ordinary V6→V7 dan copy tertutup test merupakan bukti migration, bukan implementasi archive/Drive/restore. Fitur M5 belum tersedia; kontrak V6 di bawah tetap berlaku.

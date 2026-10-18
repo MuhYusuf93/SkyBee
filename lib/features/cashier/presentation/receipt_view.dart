@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../inventory/presentation/product_attributes_view.dart';
+import '../../inventory/domain/product_attributes.dart';
 import '../../../core/money/money_field.dart';
 import '../../../core/money/money.dart';
 import '../../../l10n/localization.dart';
@@ -53,6 +55,12 @@ class ReceiptView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(item['product_name_snapshot'] as String),
+                ProductAttributesView(
+                  attributes: ProductAttributes.fromRow(
+                    item,
+                    suffix: '_snapshot',
+                  ),
+                ),
                 if (item['pricing_mode'] == 'wholesale')
                   Text(tr(context, 'm31Wholesale')),
                 Text(

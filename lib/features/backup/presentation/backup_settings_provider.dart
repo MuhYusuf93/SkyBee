@@ -22,6 +22,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
   bool busy = false,
       restoring = false,
       loaded = false,
+      remoteLoaded = false,
       recoveryConfigured = false,
       _disposed = false;
   String? message, generatedCode, lastManualKey;
@@ -31,6 +32,24 @@ final class BackupSettingsProvider extends ChangeNotifier {
   BackupInspection? inspection;
   List<Map<String, Object?>> local = [], runs = [];
   Map<String, Object?> overview = {};
+
+  /// Scheduler failures may precede creation of a backup_runs row. Keep this
+  /// persisted device history visible across routes without attributing it to
+  /// the currently selected account or exposing an internal error code.
+  String? get automaticFailureMessage => switch (overview['error_code']) {
+    final String code when code.isNotEmpty => _driveFailureMessage(code),
+    _ => null,
+  };
+  static String _driveFailureMessage(String code) => switch (code) {
+    'driveNeedsAuthorization' => 'm5DriveNeedsAuth',
+    'driveConsentChanged' => 'm5DriveConsentChanged',
+    'driveAccountMismatch' => 'm5DriveAccountMismatch',
+    'driveQuotaExceeded' => 'm5DriveQuota',
+    'driveApiNotEnabled' => 'm5DriveApiNotEnabled',
+    'driveForbiddenOrNotConfigured' => 'm5DriveForbidden',
+    'driveOffline' || 'driveNetworkTimeout' => 'm5DriveOffline',
+    _ => 'm5DriveFailed',
+  };
   List<Map<String, dynamic>> remote = [];
   String? nextRemote;
   void _notify() {
@@ -46,16 +65,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
       await action();
     } catch (error) {
       message = error is DriveFailure
-          ? switch (error.code) {
-              'driveNeedsAuthorization' => 'm5DriveNeedsAuth',
-              'driveConsentChanged' => 'm5DriveConsentChanged',
-              'driveAccountMismatch' => 'm5DriveAccountMismatch',
-              'driveQuotaExceeded' => 'm5DriveQuota',
-              'driveApiNotEnabled' => 'm5DriveApiNotEnabled',
-              'driveForbiddenOrNotConfigured' => 'm5DriveForbidden',
-              'driveOffline' || 'driveNetworkTimeout' => 'm5DriveOffline',
-              _ => 'm5DriveFailed',
-            }
+          ? _driveFailureMessage(error.code)
           : error is FormatException
           ? 'm5ArchiveRejected'
           : 'm5OperationFailed';
@@ -92,6 +102,22 @@ final class BackupSettingsProvider extends ChangeNotifier {
   });
   Future<void> reveal() => task(() async {
     generatedCode = await app.backups.recoveryCode();
+  });
+  Future<void> copyCode() => task(() async {
+    app.management.requireAccess();
+    final shown = generatedCode;
+    if (shown == null) {
+      message = 'm5CodeCopyFailed';
+      return;
+    }
+    try {
+      await app.backups.copyRecoveryCode(shown);
+      message = 'm5CodeCopied';
+    } on PlatformException {
+      message = 'm5CodeCopyFailed';
+    } on FormatException {
+      message = 'm5CodeCopyFailed';
+    }
   });
   void hideCode() {
     generatedCode = null;
@@ -202,20 +228,32 @@ final class BackupSettingsProvider extends ChangeNotifier {
     await app.drive.acceptAccount(pendingAccount!);
     pendingAccount = null;
     policy = await app.drive.settings();
+    // Remote pages and their cursors belong to the confirmed account. Keeping
+    // the old page beneath a different destination would mislabel its backups.
+    remote = [];
+    nextRemote = null;
+    remoteLoaded = false;
     message = 'm5AccountConnected';
     await scheduler.refresh();
+    overview = await app.backups.overview();
   });
   Future<void> automatic(bool value) => task(() async {
     await app.drive.automatic(value);
     policy = await app.drive.settings();
     await scheduler.refresh();
+    // Scheduling writes its target through the service. Reload that projection
+    // before publishing success so the route also reflects enable/disable now.
+    overview = await app.backups.overview();
     message = 'm5SettingsSaved';
   });
   Future<void> disconnect() => task(() async {
     await app.drive.disconnect();
     policy = await app.drive.settings();
     remote = [];
+    nextRemote = null;
+    remoteLoaded = false;
     await scheduler.refresh();
+    overview = await app.backups.overview();
     message = 'm5Disconnected';
   });
   Future<void> upload({String? retryKey}) => task(() async {
@@ -229,6 +267,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
     final page = await app.drive.versions(pageToken: next ? nextRemote : null);
     remote = page.files;
     nextRemote = page.next;
+    remoteLoaded = true;
   });
   Future<void> download(String id) => task(() async {
     final file = await app.drive.download(id);

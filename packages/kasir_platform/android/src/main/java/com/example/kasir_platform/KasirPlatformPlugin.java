@@ -2,11 +2,14 @@ package com.example.kasir_platform;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PersistableBundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyInfo;
 import android.security.keystore.KeyProperties;
@@ -39,6 +42,7 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
     private MethodChannel channel;
     private ActivityPluginBinding activity;
     private PrinterBluetooth bluetooth;
+    private StrongBiometricsBridge biometrics;
     private final DocumentPicker picker=new DocumentPicker(IO);
     private MethodChannel.Result permissionResult;
     private static final ExecutorService IO = Executors.newCachedThreadPool();
@@ -53,17 +57,41 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
     @Override public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         context = binding.getApplicationContext();
         bluetooth=new PrinterBluetooth(context);
+        biometrics=new StrongBiometricsBridge(context);
         channel = new MethodChannel(binding.getBinaryMessenger(), "kasir_app/platform");
         channel.setMethodCallHandler(this);
     }
     @Override public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         channel.setMethodCallHandler(null);
         bluetooth.dispose();picker.detach();
+        biometrics.dispose();
         // The engine owner drains DB work before detaching. Process death is
         // handled by the kernel, not by deleting a lock file or a database.
         for (String token : owned) { try { release(token); } catch (Exception ignored) {} }
     }
     @Override public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        if(biometrics.handle(call,result))return;
+        if(call.method.equals("copyRecoveryCode")){
+            try {
+                // A foreground user action only; no worker can copy a secret.
+                String text=call.argument("text");
+                if(activity==null||!activity.getActivity().hasWindowFocus()
+                    ||text==null||!text.matches("[a-f0-9]{64}")) {
+                    throw new IllegalStateException("Clipboard request unavailable");
+                }
+                ClipData clip=ClipData.newPlainText("Backup recovery code",text);
+                PersistableBundle extras=new PersistableBundle();
+                // Compatible with minSdk24; Android13+ uses this to hide preview.
+                extras.putBoolean("android.content.extra.IS_SENSITIVE",true);
+                clip.getDescription().setExtras(extras);
+                ClipboardManager clipboard=(ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setPrimaryClip(clip);
+                result.success(true);
+            } catch(Exception error) {
+                result.error("clipboard_unavailable","Could not copy recovery code.",null);
+            }
+            return;
+        }
         if(call.method.equals("btPermissions")){requestBluetoothPermissions(result);return;}
         if(call.method.equals("pickExport")||call.method.equals("pickImport")){
             try{Number max=call.argument("maxBytes");picker.pick(result,call.method.equals("pickExport"),privateFile(call.argument("path")),call.argument("mime"),max==null?null:max.longValue(),call.argument("displayName"));}
@@ -159,11 +187,11 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         permissionResult.success(granted);permissionResult=null;return true;
     }
     @Override public boolean onActivityResult(int request,int code,Intent data){return picker.result(request,code,data);}
-    @Override public void onAttachedToActivity(ActivityPluginBinding binding){activity=binding;picker.attach(binding.getActivity());binding.addActivityResultListener(this);binding.addRequestPermissionsResultListener(this);}
+    @Override public void onAttachedToActivity(ActivityPluginBinding binding){activity=binding;picker.attach(binding.getActivity());biometrics.attach(binding.getActivity());binding.addActivityResultListener(this);binding.addRequestPermissionsResultListener(this);}
     @Override public void onDetachedFromActivityForConfigChanges(){detachActivity();}
     @Override public void onReattachedToActivityForConfigChanges(ActivityPluginBinding binding){onAttachedToActivity(binding);}
     @Override public void onDetachedFromActivity(){detachActivity();}
-    private void detachActivity(){if(activity!=null){activity.removeActivityResultListener(this);activity.removeRequestPermissionsResultListener(this);}activity=null;picker.detach();if(permissionResult!=null){permissionResult.error("permission_interrupted","Permission request interrupted.",null);permissionResult=null;}}
+    private void detachActivity(){biometrics.detach();if(activity!=null){activity.removeActivityResultListener(this);activity.removeRequestPermissionsResultListener(this);}activity=null;picker.detach();if(permissionResult!=null){permissionResult.error("permission_interrupted","Permission request interrupted.",null);permissionResult=null;}}
     private File privateFile(String path) throws IOException {
         File file = new File(path).getCanonicalFile();
         String root = context.getDataDir().getCanonicalPath() + File.separator;

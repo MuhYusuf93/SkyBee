@@ -1,5 +1,24 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+## Addendum aktif M5.1 / M5.2 — 19 Oktober 2026
+
+Kebutuhan baru setelah acceptance M5: [kontrak lengkap A–G](decisions/M51_REQUEST_20261019.md).
+M5.1 mencakup metadata ukuran desimal eksak/rak/catatan (bukan penjualan timbang),
+biometrik Class3 dan kebijakan sesi, cetak recovery nonpersisten, numpad/tender/
+kembalian, ekspor CSV/XLSX, transport USB Host, dan maintenance SQLCipher saat
+idle setelah backup valid. M5.2 PLANNED menunggu arahan desain; M6 tetap rilis/
+legal/identitas/Play. Aturan baru menggantikan bagian lama hanya dalam cakupan
+tersebut. M5 tidak dibuka kembali atau dinyatakan gagal oleh kebutuhan baru.
+
+Checkpoint A: schema9 menambah size_milli (thousandths, positif sampai
+999999999999), size_unit g/kg/ml/l, shelf_location80 dan product_note1000
+karakter Unicode. Nilai/unit kosong bersama menjadi null. Input desimal ID koma/
+EN titik, maksimal3digit pecahan tanpa grouping. Metadata hanya keterangan,
+stok/harga/HPP tetap pcs. Snapshot nullable pada sale_transaction_items menjaga
+fakta lama; catatan/rak tidak masuk payload struk. Kontrak lain A–G tetap aktif
+meskipun belum diimplementasikan, lihat laporan checkpoint.
+
+
 Bangun proyek Flutter lengkap untuk aplikasi kasir, persediaan barang, dan pencatatan piutang pelanggan. Saya seorang programmer dan menggunakan Android Studio. Saya akan memakai aplikasi ini di toko pribadi, memperbaikinya berdasarkan penggunaan nyata, lalu mempertimbangkan rilis di Google Play.
 
 Prioritas produk adalah kemudahan penggunaan: buka aplikasi, cari/scan barang, susun belanja, dan selesaikan transaksi. Fitur opsional muncul saat diperlukan. Aturan data dan perhitungan harus tetap benar tanpa membebani pengguna dengan istilah teknis.
@@ -242,15 +261,34 @@ Implementasikan dukungan Android untuk printer thermal Bluetooth ESC/POS yang ko
 
 ## 13. Backup dan restore
 
+Klarifikasi UI M5,18 Oktober2026: sesudah konfirmasi tujuan Google berhasil atau
+akun diputus, daftar versi/cursor milik tujuan sebelumnya diinvalidasi dan status
+target jadwal dimuat ulang dari service. Pembatalan/penolakan pemilihan tidak
+mengubah tujuan dan persetujuan yang telah tersimpan. Ini penerapan pemisahan
+konteks akun, bukan perubahan retensi, aturan restore atau sinkronisasi.
+
+Riwayat pengiriman backup di perangkat ditampilkan sebagai catatan lokal semua
+akun dengan penanda tujuan saat ini, tujuan lain/sebelumnya, atau tujuan tidak
+tercatat. Pisahkan dari daftar arsip akun Drive tujuan; jelaskan halaman kosong
+setelah permintaan daftar berhasil. Retensi arsip Drive tidak menghapus riwayat
+pekerjaan lokal.
+
+Kegagalan percobaan backup otomatis terakhir yang tersimpan tetap ditampilkan
+saat Pengaturan dibuka kembali, termasuk bila gagal sebelum baris pekerjaan
+dibuat. Label menjelaskan bahwa ini riwayat perangkat yang mungkin berasal dari
+akun tujuan sebelumnya; tampilkan pesan lokal yang aman, bukan kode internal.
+
 Sediakan ekspor/restore berkas lokal, serta Google Drive opsional. Nama berkas ekspor dapat diisi di dialog aplikasi yang menyesuaikan keyboard sebelum memilih lokasi Android; nama diteruskan sebagai isian awal tanpa mengubah arsip internal. Gunakan snapshot SQLite konsisten; jangan hanya menyalin `.db` aktif dan mengabaikan WAL. Pilih metode yang benar-benar tersedia pada plugin/runtime; bila perlu, hentikan penulisan sebentar melalui koordinator database dan buka kembali dengan aman.
 
 Paket backup memuat database, logo, metadata versi skema/aplikasi, identitas toko, timestamp, dan checksum. Jangan memasukkan token Google, rahasia aplikasi, kode pemulihan plaintext, atau kunci perangkat. Jelaskan bahwa backup memuat data toko/pelanggan. Arsip wajib terenkripsi dan terautentikasi sesuai keputusan M5: recovery kuat yang portable, terpisah dari PIN empat digit dan key Keystore instalasi. Tidak ada fallback arsip plaintext; kehilangan recovery dapat membuat backup tidak dapat dipulihkan.
+
+Saat kode recovery baru atau tersimpan ditampilkan melalui pengelolaan ber-PIN, sediakan tombol Salin ke papan klip pada aplikasi utama maupun paket uji. Salin kode lengkap sebagai 64 karakter heksadesimal tanpa spasi/tanda hubung; tolak kode tidak valid. Penyalinan merupakan tindakan eksplisit, tidak membaca clipboard, tidak membuat/menyimpan kode baru atau mengonfirmasi salinan secara otomatis. Beri feedback Indonesia/Inggris tanpa menampilkan nilai kode di pesan/log dan gunakan penanda clipboard sensitif Android. Pilihan penampilan teks input khusus fixture tidak berlaku pada fitur Salin ini.
 
 Google Drive:
 
 - Hubungkan akun dari Pengaturan dengan izin minimum sesuai kebutuhan. Default gunakan `appDataFolder` untuk backup aplikasi; jelaskan file tersebut dikelola dari aplikasi dan ekspor lokal tersedia untuk file yang ingin disimpan sendiri.
 - Backup otomatis mempunyai switch terpisah, default mati. Sebelum aktivasi, jelaskan jenis data yang diunggah dan akun tujuan; pengguna memberikan persetujuan nyata. Mematikan atau memutus akun menghentikan pekerjaan berikutnya.
-- Jika aktif, jadwalkan target harian pukul 21.00 zona waktu toko melalui mekanisme background Android yang sesuai. Jangan menjanjikan tepat pukul 21.00; lakukan retry dan pemeriksaan backup terlewat saat aplikasi dibuka.
+- Jika aktif, jadwalkan target harian pukul 21.00 zona waktu toko melalui mekanisme background Android yang sesuai. Jangan menjanjikan tepat pukul 21.00; lakukan retry dan pemeriksaan backup terlewat saat aplikasi dibuka. Perubahan switch otomatis memperbarui status target yang ditampilkan dari hasil penjadwalan tersimpan tanpa memerlukan refresh manual; label memakai waktu toko.
 - Backup manual, status terakhir berhasil/gagal, retry dengan backoff, dan batas retensi yang terdokumentasi, default tujuh versi berhasil. Jangan menghapus versi baik sebelum backup baru terverifikasi.
 - Gunakan nama/metadata unik untuk versi dan asal instalasi. Meskipun tidak mendukung sinkronisasi, jangan menimpa berkas backup dari instalasi lain secara diam-diam.
 - Dokumentasikan konfigurasi Google Cloud/OAuth, signing certificate, scope, dan konfigurasi build yang diperlukan tanpa mengarang credential. Fitur yang belum dikonfigurasi memberikan penjelasan dan ekspor lokal tetap bekerja.

@@ -1427,6 +1427,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get m5ShowCode => 'Show saved code';
 
   @override
+  String get m5CopyCode => 'Copy to clipboard';
+
+  @override
+  String get m5CodeCopied => 'Recovery code copied without spaces or hyphens.';
+
+  @override
+  String get m5CodeCopyFailed =>
+      'Code was not copied. Show the complete code and retry while the app is active.';
+
+  @override
   String get m5RecoveryCodeHelp =>
       'This code differs from your PIN and PIN recovery. Keep a private copy outside the device. Older backups still need the code used when created; a lost code cannot be derived from your PIN.';
 
@@ -1644,6 +1654,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get m5HideCode => 'Hide recovery code';
 
   @override
+  String get m5LastAutomaticFailure =>
+      'Last automatic attempt failure on this device';
+
+  @override
+  String get m5AutomaticFailureHistoryHelp =>
+      'This is a device record and may refer to a previous destination account.';
+
+  @override
   String get m5LastAttempt => 'Last backup attempt';
 
   @override
@@ -1746,4 +1764,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m5ExportChooseLocation => 'Continue';
+
+  @override
+  String get m5DriveArchiveList => 'Destination account Drive archives';
+
+  @override
+  String get m5DriveArchiveEmpty => 'No Drive archives on this page.';
+
+  @override
+  String get m5RunHistoryTitle => 'Backup history on this device';
+
+  @override
+  String get m5RunHistoryHelp =>
+      'Drive upload records for all accounts on this device. Retention may remove older archives; history is retained.';
+
+  @override
+  String get m5RunCurrentAccount => 'Current destination account';
+
+  @override
+  String get m5RunOtherAccount => 'Another or previous destination account';
+
+  @override
+  String get m5RunUnknownAccount => 'Destination account not recorded';
+
+  @override
+  String get m51Attributes => 'Optional product attributes';
+
+  @override
+  String get m51Size => 'Weight / volume';
+
+  @override
+  String get m51SizeHelp => 'Up to 3 decimals, no grouping. Example: 0.5';
+
+  @override
+  String get m51Unit => 'Size unit';
+
+  @override
+  String get m51NoUnit => 'No unit';
+
+  @override
+  String get m51Liter => 'liter';
+
+  @override
+  String get m51Shelf => 'Shelf location';
+
+  @override
+  String get m51Note => 'Product note';
+
+  @override
+  String get m51AttributesHelp =>
+      'Size is descriptive; stock stays in pcs. Shelf: 80 characters; note: 1,000. Clear both value and unit to remove size.';
+
+  @override
+  String get m51AttributesInvalid =>
+      'Enter a positive size with its unit (up to 3 decimals, no grouping). Check shelf 80 and note 1,000 character limits.';
 }

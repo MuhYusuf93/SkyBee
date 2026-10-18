@@ -1621,6 +1621,18 @@
   "m5RecoveryRequired": "Siapkan dan simpan kode recovery sebelum membuat backup.",
   "m5GenerateCode": "Siapkan kode baru",
   "m5ShowCode": "Tampilkan kode tersimpan",
+  "m5CopyCode": "Salin ke papan klip",
+  "m5CodeCopied": "Kode recovery disalin tanpa spasi atau tanda hubung.",
+  "m5CodeCopyFailed": "Kode belum disalin. Tampilkan kode lengkap dan coba lagi saat aplikasi aktif.",
+  "@m5CopyCode": {
+    "description": "Copy the explicitly displayed backup recovery code."
+  },
+  "@m5CodeCopied": {
+    "description": "Copy success without revealing secret text."
+  },
+  "@m5CodeCopyFailed": {
+    "description": "Sanitized clipboard failure without upstream details."
+  },
   "m5RecoveryCodeHelp": "Kode ini berbeda dari PIN dan recovery PIN. Simpan salinan pribadi di luar perangkat. Backup lama tetap membutuhkan kode yang dipakai saat dibuat; kode hilang tidak dapat dihitung ulang dari PIN.",
   "m5ConfirmRecoveryCode": "Masukkan ulang kode yang disimpan",
   "m5CodeStored": "Saya telah menyimpan salinan kode di tempat yang dapat saya akses kembali.",
@@ -1690,6 +1702,8 @@
   "m5RemoveLogo": "Sembunyikan logo toko",
   "m5ReceiptPreview": "Pratinjau struk",
   "m5HideCode": "Sembunyikan kode pemulihan",
+  "m5LastAutomaticFailure": "Kegagalan percobaan otomatis terakhir di perangkat ini",
+  "m5AutomaticFailureHistoryHelp": "Status ini adalah catatan perangkat dan dapat berasal dari akun tujuan sebelumnya.",
   "m5LastAttempt": "Percobaan backup terakhir",
   "m5LastSuccess": "Backup berhasil terakhir",
   "m5NextTarget": "Target backup berikutnya (waktu toko)",
@@ -2057,6 +2071,12 @@
   "@m5HideCode": {
     "description": "M5 printer, alerts or backup interface: m5HideCode."
   },
+  "@m5LastAutomaticFailure": {
+    "description": "Historical automatic backup failure on this device, potentially for a prior account."
+  },
+  "@m5AutomaticFailureHistoryHelp": {
+    "description": "Avoid attributing persisted device attempt status to the currently selected account."
+  },
   "@m5LastAttempt": {
     "description": "M5 printer, alerts or backup interface: m5LastAttempt."
   },
@@ -2170,5 +2190,43 @@
   "m5ExportChooseLocation": "Lanjut",
   "@m5ExportChooseLocation": {
     "description": "Backup export filename dialog; input remains in app above IME before Android destination picker."
-  }
+  },
+  "m5DriveArchiveList": "Arsip Drive akun tujuan",
+  "@m5DriveArchiveList": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5DriveArchiveList."
+  },
+  "m5DriveArchiveEmpty": "Tidak ada arsip Drive pada halaman ini.",
+  "@m5DriveArchiveEmpty": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5DriveArchiveEmpty."
+  },
+  "m5RunHistoryTitle": "Riwayat backup di perangkat ini",
+  "@m5RunHistoryTitle": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunHistoryTitle."
+  },
+  "m5RunHistoryHelp": "Catatan pengiriman ke Drive untuk semua akun di perangkat ini. Arsip lama dapat terhapus oleh retensi; riwayat tetap disimpan.",
+  "@m5RunHistoryHelp": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunHistoryHelp."
+  },
+  "m5RunCurrentAccount": "Akun tujuan saat ini",
+  "@m5RunCurrentAccount": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunCurrentAccount."
+  },
+  "m5RunOtherAccount": "Akun tujuan lain atau sebelumnya",
+  "@m5RunOtherAccount": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunOtherAccount."
+  },
+  "m5RunUnknownAccount": "Akun tujuan tidak tercatat",
+  "@m5RunUnknownAccount": {
+    "description": "Backup destination archive listing or device-local cross-account upload history: m5RunUnknownAccount."
+  },
+  "m51Attributes": "Atribut barang opsional",
+  "m51Size": "Berat / volume",
+  "m51SizeHelp": "Maks. 3 desimal, tanpa pemisah ribuan. Contoh: 0,5",
+  "m51Unit": "Satuan ukuran",
+  "m51NoUnit": "Tanpa satuan",
+  "m51Liter": "liter",
+  "m51Shelf": "Letak rak",
+  "m51Note": "Keterangan barang",
+  "m51AttributesHelp": "Ukuran hanya keterangan; stok tetap pcs. Rak maks. 80 karakter, keterangan maks. 1.000. Kosongkan nilai dan satuan untuk menghapus ukuran.",
+  "m51AttributesInvalid": "Isi ukuran positif beserta satuannya (maks. 3 desimal tanpa pemisah ribuan). Periksa batas rak 80 dan keterangan 1.000 karakter."
 }

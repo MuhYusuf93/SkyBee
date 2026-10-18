@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:kasir_app/core/time/store_clock.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/data/database/database_validation.dart';
 import 'package:kasir_app/features/backup/application/drive_authorization.dart';
@@ -33,8 +34,17 @@ void main() {
         'post_printer',
         'post_backup',
         'post_restore',
+        'post_drive_connected',
+        'post_drive_upload',
+        'post_drive_opt_in',
+        'post_drive_worker',
       ], contains(phase));
-      final restored = phase == 'post_restore';
+      final restored =
+          phase == 'post_restore' ||
+          phase == 'post_drive_connected' ||
+          phase == 'post_drive_upload' ||
+          phase == 'post_drive_opt_in' ||
+          phase == 'post_drive_worker';
       final directory = await getDatabasesPath();
       expect(await databaseExists(p.join(directory, name)), true);
       // Hash the closed legacy sandbox file without opening/migrating it. These
@@ -90,7 +100,11 @@ void main() {
             final archives = await db.query('local_backups');
             expect(
               archives.length,
-              restored ? 3 : 2,
+              phase == 'post_drive_worker'
+                  ? greaterThanOrEqualTo(13)
+                  : phase == 'post_drive_opt_in'
+                  ? 5
+                  : (phase == 'post_drive_upload' ? 4 : (restored ? 3 : 2)),
               reason: 'Reported manual backups, plus safety after restore',
             );
             final digests = <String, String>{};
@@ -123,7 +137,7 @@ void main() {
           }
           return facts;
         });
-        if (restored) {
+        if (phase == 'post_restore') {
           // This phase is valid only before real Drive consent/upload testing.
           // Report booleans, never account fields if the guard unexpectedly fails.
           final policy = await const KeystoreDrivePolicy().read();
@@ -132,6 +146,82 @@ void main() {
           expect(policy.accountId == null, true);
           expect(policy.email == null, true);
           expect(policy.permissionId == null, true);
+        }
+        if (phase == 'post_drive_connected' ||
+            phase == 'post_drive_upload' ||
+            phase == 'post_drive_opt_in' ||
+            phase == 'post_drive_worker') {
+          // A distinct phase preserves the pre-consent assertions above. Only a
+          // digest enters the marker; real account fields never enter reports.
+          final policy = await const KeystoreDrivePolicy().read();
+          expect(policy.connected, true);
+          expect(
+            policy.enabled,
+            phase == 'post_drive_opt_in' || phase == 'post_drive_worker',
+          );
+          expect(policy.accountId?.isNotEmpty == true, true);
+          expect(policy.email?.isNotEmpty == true, true);
+          expect(policy.permissionId?.isNotEmpty == true, true);
+          if (phase == 'post_drive_upload') {
+            final runs = await database.read((db) => db.query('backup_runs'));
+            expect(runs.length, 1);
+            expect(runs.single['status'], 'success');
+            expect(runs.single['account_id'] == policy.permissionId, true);
+            expect(
+              runs.single['remote_id'] is String &&
+                  (runs.single['remote_id'] as String).isNotEmpty,
+              true,
+            );
+          }
+          if (phase == 'post_drive_opt_in') {
+            await database.read((db) async {
+              expect(await db.query('backup_runs'), isEmpty);
+              final row = (await db.query('backup_schedule')).single;
+              final settings = (await db.query('store_settings')).single;
+              expect(settings['time_zone'], 'Asia/Jakarta');
+              expect(row['zone'], settings['time_zone']);
+              expect(row['next_target'], isA<int>());
+              expect(
+                StoreClock().displayTime(
+                  row['next_target'] as int,
+                  settings['time_zone'] as String,
+                ),
+                endsWith('21:00'),
+              );
+              expect(row['last_attempt'], isNull);
+              expect(row['last_success'], isNull);
+            });
+          }
+          if (phase == 'post_drive_worker') {
+            final runs = await database.read(
+              (db) => db.query(
+                'backup_runs',
+                where: 'operation_key LIKE ?',
+                whereArgs: ['live-probe:1792327725515:%'],
+              ),
+            );
+            expect(runs.length, 8);
+            expect(runs.map((row) => row['remote_id']).toSet().length, 8);
+            expect(
+              runs.every(
+                (row) =>
+                    row['status'] == 'success' &&
+                    row['error_code'] == null &&
+                    row['account_id'] == policy.permissionId &&
+                    row['remote_id'] is String,
+              ),
+              true,
+            );
+            final count = await database.read(
+              (db) => db.rawQuery('SELECT COUNT(*) AS n FROM local_backups'),
+            );
+            debugPrint(
+              'M5_LIVE_LEDGER successfulRuns=8 uniqueRemoteIds=8 localArchives=${count.single['n']}',
+            );
+          }
+          fingerprint['localDrivePolicyDigest'] = sha256
+              .convert(utf8.encode(jsonEncode(policy.toJson())))
+              .toString();
         }
         if (role == 'before') {
           expect(await marker.exists(), false);
@@ -145,6 +235,16 @@ void main() {
             expect(
               fingerprint['localArchiveDigests'],
               before['localArchiveDigests'],
+            );
+          }
+          if (phase == 'post_drive_connected' ||
+              phase == 'post_drive_upload' ||
+              phase == 'post_drive_opt_in' ||
+              phase == 'post_drive_worker') {
+            expect(
+              fingerprint['localDrivePolicyDigest'],
+              before['localDrivePolicyDigest'],
+              reason: 'Saved account, consent generation and opt-in unchanged',
             );
           }
         }

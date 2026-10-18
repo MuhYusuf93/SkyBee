@@ -6,6 +6,7 @@ import '../../../core/money/money.dart';
 import '../../../core/time/store_clock.dart';
 import '../../management/application/pin_hasher.dart';
 import '../domain/backup_manifest.dart';
+import '../../inventory/domain/product_attributes.dart';
 
 /// Archive authentication is necessary but not a substitute for supported
 /// business metadata. Scan bounded rows, preserving all accepted legacy values.
@@ -99,6 +100,30 @@ final class BackupValidation {
       cursor = rows.single['hash'] as String;
     }
     final shop = await db.query('m5_store');
+    // Imported SQLite may have forged away CHECK constraints. Validate bounded
+    // metadata before accepting the staged archive, never in a Provider.
+    for (final table in ['products', 'sale_transaction_items']) {
+      final suffix = table == 'products' ? '' : '_snapshot';
+      String? cursor;
+      while (true) {
+        final rows = await db.rawQuery(
+          '''SELECT id,size_milli$suffix,size_unit$suffix,
+          shelf_location$suffix,product_note$suffix FROM $table
+          ${cursor == null ? '' : 'WHERE id COLLATE BINARY>?'}
+          ORDER BY id COLLATE BINARY LIMIT 100''',
+          [?cursor],
+        );
+        if (rows.isEmpty) break;
+        for (final row in rows) {
+          try {
+            ProductAttributes.fromRow(row, suffix: suffix);
+          } catch (_) {
+            throw const FormatException('backupProductMetadataInvalid');
+          }
+        }
+        cursor = rows.last['id'] as String;
+      }
+    }
     if (shop.isNotEmpty && shop.single['store_id'] != manifest.storeId) {
       throw const FormatException('backupStoreMismatch');
     }

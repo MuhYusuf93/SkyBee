@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 8;
+  static const version = 10;
 
   static Future<void> migrate(
     Database db,
@@ -23,10 +23,15 @@ final class Schema {
         6 => _wholesalePackaging,
         7 => _reportingCorrections,
         8 => _peripheralsAndBackup,
+        9 => _productAttributes,
+        10 => _managementPolicy,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
       }
+    }
+    if (oldVersion == 0 && newVersion >= 10) {
+      await db.execute("UPDATE management_policy SET session_policy='immediate' WHERE id=1");
     }
     if (newVersion == version) {
       if ((await db.rawQuery('PRAGMA foreign_key_check')).isNotEmpty ||
@@ -41,6 +46,22 @@ final class Schema {
 
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
+
+  static const _managementPolicy = [
+    '''CREATE TABLE management_policy(id INTEGER PRIMARY KEY CHECK(id=1),
+      session_policy TEXT NOT NULL CHECK(session_policy IN ('legacy','1m','5m','15m','immediate')))''',
+    "INSERT INTO management_policy(id,session_policy) VALUES(1,'legacy')",
+  ];
+
+  /// Additive nullable metadata: old sale facts must never inherit master edits.
+  static List<String> get _productAttributes => [
+    for (final table in ['products', 'sale_transaction_items']) ...[
+      'ALTER TABLE $table ADD COLUMN size_milli${table == 'products' ? '' : '_snapshot'} INTEGER CHECK(size_milli${table == 'products' ? '' : '_snapshot'} IS NULL OR (typeof(size_milli${table == 'products' ? '' : '_snapshot'})=\'integer\' AND size_milli${table == 'products' ? '' : '_snapshot'} BETWEEN 1 AND 999999999999))',
+      'ALTER TABLE $table ADD COLUMN size_unit${table == 'products' ? '' : '_snapshot'} TEXT CHECK((size_milli${table == 'products' ? '' : '_snapshot'} IS NULL AND size_unit${table == 'products' ? '' : '_snapshot'} IS NULL) OR (size_milli${table == 'products' ? '' : '_snapshot'} IS NOT NULL AND size_unit${table == 'products' ? '' : '_snapshot'} IS NOT NULL AND size_unit${table == 'products' ? '' : '_snapshot'} IN (\'g\',\'kg\',\'ml\',\'l\')))',
+      'ALTER TABLE $table ADD COLUMN shelf_location${table == 'products' ? '' : '_snapshot'} TEXT CHECK(length(shelf_location${table == 'products' ? '' : '_snapshot'})<=80)',
+      'ALTER TABLE $table ADD COLUMN product_note${table == 'products' ? '' : '_snapshot'} TEXT CHECK(length(product_note${table == 'products' ? '' : '_snapshot'})<=1000)',
+    ],
+  ];
 
   /// Side effects have their own durable identities and never create financial
   /// facts. Restore clears installation-local consent, jobs and device bindings.

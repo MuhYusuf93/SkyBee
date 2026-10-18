@@ -3,7 +3,20 @@ import 'package:flutter/services.dart';
 /// Registered in foreground and headless Flutter engines. Secrets cross only
 /// this private channel, never preferences, logging, assets or backup manifests.
 final class KasirPlatform {
-  const KasirPlatform();
+  const KasirPlatform({this.fixtureNamespace = ''});
+
+  /// Explicit test-only namespace prevents native crypto tests overwriting a
+  /// retained manual campaign's recovery/Drive consent in the same test package.
+  final String fixtureNamespace;
+  String _secretName(String name) {
+    if (fixtureNamespace.isEmpty) return name;
+    if (!const bool.fromEnvironment('KASIR_INTEGRATION_TEST') ||
+        !RegExp(r'^test-m51-[0-9]{10,20}$').hasMatch(fixtureNamespace)) {
+      throw StateError('fixtureNamespaceRequired');
+    }
+    return '$fixtureNamespace-$name';
+  }
+
   static const channel = MethodChannel('kasir_app/platform');
   Future<T?> callNullable<T>(String name, [Map<String, Object?>? args]) =>
       channel.invokeMethod<T>(name, args);
@@ -12,9 +25,11 @@ final class KasirPlatform {
   Future<void> channelCall(String name, [Map<String, Object?>? args]) =>
       channel.invokeMethod(name, args);
   Future<String> key(String name, {required bool allowCreate}) =>
-      call('key', {'name': name, 'create': allowCreate});
-  Future<void> saveSecret(String name, String secret) =>
-      channel.invokeMethod('saveSecret', {'name': name, 'secret': secret});
+      call('key', {'name': _secretName(name), 'create': allowCreate});
+  Future<void> saveSecret(String name, String secret) => channel.invokeMethod(
+    'saveSecret',
+    {'name': _secretName(name), 'secret': secret},
+  );
   Future<String> acquire() => call('acquire');
   Future<void> release(String token) =>
       channel.invokeMethod('release', {'token': token});

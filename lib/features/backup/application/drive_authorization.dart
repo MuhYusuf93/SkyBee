@@ -70,6 +70,14 @@ abstract interface class DriveTokenSource {
   Future<void> invalidate(String token);
 }
 
+/// Silent authorization needs foreground consent. This carries no SDK payload
+/// and must never trigger account UI from a worker or be retried as a network IO.
+final class DriveAuthorizationRequired implements Exception {
+  const DriveAuthorizationRequired();
+  @override
+  String toString() => 'driveNeedsAuthorization';
+}
+
 /// The Web client ID is public build configuration, never a client secret. The
 /// latest ID supplied by the owner is the default and can be overridden per build.
 final class GoogleDriveAuthorization implements DriveTokenSource {
@@ -116,7 +124,7 @@ final class GoogleDriveAuthorization implements DriveTokenSource {
             ),
           ),
         );
-    if (tokens == null) throw StateError('driveNeedsAuthorization');
+    if (tokens == null) throw const DriveAuthorizationRequired();
     return tokens.accessToken;
   }
 

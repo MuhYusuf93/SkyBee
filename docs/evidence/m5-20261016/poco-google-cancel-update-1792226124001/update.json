@@ -1,7 +1,7 @@
 {
   "nonce": "1792226124001",
   "fixtureDatabase": "m5_acceptance_1792150309449.db",
-  "state": "C25 installed; manual retry after API activation pending; C26 source diagnostics not deployed",
+  "state": "C25 installed; D-MAN03R PASS reported after API enabled; C26 checks resumed, not deployed",
   "automaticDeviceControlActive": false,
   "originalV6Restoration": "pending in original handover, never overwrite original pointer",
   "dv": "native UI completed; exact prior APK and default sandbox hashes restored/equal; awake proof in native wrapper",
@@ -12,7 +12,7 @@
   "fixtureSha256": "02fbf81f16b07bd535b59425b35238fd8692c41d4e4ad8440d25636dcf02c687",
   "beforeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c25-before-1792226124001-20261017-154711",
   "afterEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c25-after-1792226124001-20261017-154842",
-  "manualStep": "D-MAN03R after user enables Google Drive API: accept correct account, verify destination saved and autoOff; no upload",
+  "manualStep": "D-MAN03R saved destination PASS reported; C26 checks resumed, next manual Drive upload after automated checks/handover",
   "nativePocoEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c25-ui-1792226124001-20261017-153524",
   "nativeDvEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\c25-ui-1792226124001-20261017-153931",
   "sourceSha256": {
@@ -21,6 +21,6 @@
     "integration_test/m5_acceptance_audit_test.dart": "d5515ffcef13f61e76ef977b0315982ed99bfdf109c60c75ff4a8dbb41575180"
   },
   "actualGoogleRetest": "PASS user report D-MAN01R",
-  "actualGoogleApi": "D-MAN03 FAIL; API not enabled per user; retry pending",
+  "actualGoogleApi": "Identity acceptance PASS user report D-MAN03R; upload unverified",
   "actualGoogleAccountSelection": "PASS user report D-MAN02 pending candidate only"
 }

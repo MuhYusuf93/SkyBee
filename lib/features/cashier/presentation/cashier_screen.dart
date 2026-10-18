@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../inventory/presentation/product_attributes_view.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
@@ -565,6 +566,7 @@ class _Basket extends StatelessWidget {
                       line.product.name,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
+                    ProductAttributesView(attributes: line.product.attributes),
                     Text(
                       '${moneyLabel(context, line.acceptedPrice.amountMinor)} × ${line.quantity} = ${moneyLabel(context, line.total.amountMinor)}',
                     ),

@@ -38,6 +38,8 @@ final class CashierStore {
   }
 
   Future<CashierProduct> product(DatabaseExecutor db, EntityId id) async {
+    final schema =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
     final rows = await db.query(
       'products',
       columns: [
@@ -54,6 +56,12 @@ final class CashierStore {
         'currency_scale',
         'is_deleted',
         'expiry_enabled',
+        if (schema >= 9) ...[
+          'size_milli',
+          'size_unit',
+          'shelf_location',
+          'product_note',
+        ],
       ],
       where: 'id=?',
       whereArgs: [id.value],
@@ -159,6 +167,8 @@ final class CashierStore {
     FROM sale_transactions s WHERE NOT EXISTS(SELECT 1 FROM sale_transaction_reversals r WHERE r.sale_transaction_id=s.id)''';
 
   Future<SaleReceipt> receipt(DatabaseExecutor db, EntityId id) async {
+    final schema =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
     // Recovered checkout retries and protected history must still read a
     // cancelled original. It never becomes a new sale or an active debt.
     final base = debtSql.substring(0, debtSql.indexOf(' WHERE NOT EXISTS'));
@@ -181,6 +191,12 @@ final class CashierStore {
         'quantity',
         'unit_price_rupiah',
         'total_rupiah',
+        if (schema >= 9) ...[
+          'size_milli_snapshot',
+          'size_unit_snapshot',
+          'shelf_location_snapshot',
+          'product_note_snapshot',
+        ],
       ],
       where: 'sale_transaction_id=?',
       whereArgs: [id.value],

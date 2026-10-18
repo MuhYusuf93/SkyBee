@@ -33,10 +33,14 @@ class _ProductFormState extends State<ProductForm> {
       wholesale = MoneyEditingController(),
       packLabel = TextEditingController(),
       packSize = TextEditingController(),
+      size = TextEditingController(),
+      shelf = TextEditingController(),
+      note = TextEditingController(),
       cost = MoneyEditingController(),
       expiry = TextEditingController();
   final stockInput = StockInputController();
   MasterRecord? category;
+  String? sizeUnit;
   bool tracking = false, low = true, busy = false;
   String? error;
   @override
@@ -47,6 +51,9 @@ class _ProductFormState extends State<ProductForm> {
       name.text = product.name;
       packLabel.text = product.packLabel ?? '';
       packSize.text = product.packSize?.toString() ?? '';
+      sizeUnit = product.attributes.unit;
+      shelf.text = product.attributes.shelf ?? '';
+      note.text = product.attributes.note ?? '';
       price.text = product.priceMinor.toString();
       sku.text = product.sku;
       barcode.text = product.barcode ?? '';
@@ -64,10 +71,32 @@ class _ProductFormState extends State<ProductForm> {
   }
 
   bool _moneyLoaded = false;
+  String? _sizeLanguage;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    final language = Localizations.localeOf(context).languageCode;
+    if (_sizeLanguage != null &&
+        _sizeLanguage != language &&
+        size.text.trim().isNotEmpty) {
+      try {
+        size.text = ProductAttributes(
+          sizeMilli: ProductAttributes.parseSize(
+            size.text,
+            language: _sizeLanguage!,
+          ),
+          unit: sizeUnit ?? 'g',
+        ).sizeText(language);
+      } on AppError {
+        // Preserve incomplete input rather than guessing its decimal convention.
+        error = 'm51AttributesInvalid';
+      }
+    }
+    _sizeLanguage = language;
     if (!_moneyLoaded && widget.product != null) {
+      size.text = widget.product!.attributes.sizeText(
+        Localizations.localeOf(context).languageCode,
+      );
       final codec = moneyCodec(context);
       price.text = codec.format(
         Money.fromStoredMinor(
@@ -104,6 +133,9 @@ class _ProductFormState extends State<ProductForm> {
       wholesale,
       packLabel,
       packSize,
+      size,
+      shelf,
+      note,
       cost,
       expiry,
     ]) {
@@ -152,6 +184,15 @@ class _ProductFormState extends State<ProductForm> {
         minStock: parseWholeQuantity(minimum.text),
         lowStockEnabled: low,
         expiryEnabled: tracking,
+        attributes: ProductAttributes(
+          sizeMilli: ProductAttributes.parseSize(
+            size.text,
+            language: Localizations.localeOf(context).languageCode,
+          ),
+          unit: sizeUnit,
+          shelf: shelf.text,
+          note: note.text,
+        ),
       );
       final product = widget.product;
       final entered = product == null ? stockInput.parse() : null;
@@ -232,6 +273,62 @@ class _ProductFormState extends State<ProductForm> {
           padding: const EdgeInsets.all(20),
           children: [
             field(name, tr(context, 'productName')),
+            ExpansionTile(
+              title: Text(tr(context, 'm51Attributes')),
+              children: [
+                ManagedTextField(
+                  controller: size,
+                  enabled: !busy,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: tr(context, 'm51Size'),
+                    helperText: tr(context, 'm51SizeHelp'),
+                  ),
+                ),
+                DropdownButtonFormField<String>(
+                  initialValue: sizeUnit,
+                  decoration: InputDecoration(
+                    labelText: tr(context, 'm51Unit'),
+                  ),
+                  items: [
+                    DropdownMenuItem<String>(
+                      value: null,
+                      child: Text(tr(context, 'm51NoUnit')),
+                    ),
+                    for (final unit in ProductAttributes.units)
+                      DropdownMenuItem(
+                        value: unit,
+                        child: Text(
+                          unit == 'l' ? tr(context, 'm51Liter') : unit,
+                        ),
+                      ),
+                  ],
+                  onChanged: busy
+                      ? null
+                      : (value) => setState(() => sizeUnit = value),
+                ),
+                ManagedTextField(
+                  controller: shelf,
+                  enabled: !busy,
+                  maxLength: 80,
+                  decoration: InputDecoration(
+                    labelText: tr(context, 'm51Shelf'),
+                  ),
+                ),
+                ManagedTextField(
+                  controller: note,
+                  enabled: !busy,
+                  maxLength: 1000,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    labelText: tr(context, 'm51Note'),
+                  ),
+                ),
+                Text(tr(context, 'm51AttributesHelp')),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: MoneyField(

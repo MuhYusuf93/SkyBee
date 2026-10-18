@@ -154,7 +154,13 @@ final class DriveRest {
     bool initialIdentity = false,
   }) async {
     if (!initialIdentity) await guard(policy, automatic: automatic);
-    _token ??= await tokens.token(policy);
+    try {
+      _token ??= await tokens.token(policy);
+    } on DriveAuthorizationRequired {
+      // SDK null (silent consent unavailable) and HTTP 401 need the same UI/
+      // scheduler status, without classifying other SDK failures as consent.
+      throw const DriveFailure('driveNeedsAuthorization');
+    }
     final request = http.Request(method, location)
       ..followRedirects = false
       ..headers.addAll({'Authorization': 'Bearer $_token', ...headers});

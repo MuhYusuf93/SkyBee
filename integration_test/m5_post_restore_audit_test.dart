@@ -66,19 +66,56 @@ void main() {
     'audit actual restored campaign and authenticate retained safety archive',
     () async {
       const name = 'm5_acceptance_1792150309449.db';
+      const source = String.fromEnvironment(
+        'M5_POST_RESTORE_SOURCE',
+        defaultValue: 'local',
+      );
+      expect(['local', 'drive'], contains(source));
+      const driveRestore = source == 'drive';
       expect(const bool.fromEnvironment('KASIR_INTEGRATION_TEST'), true);
       expect(DatabaseCoordinator.androidDatabaseName, name);
       final directory = await getDatabasesPath();
       expect(await databaseExists(p.join(directory, name)), true);
       final marker = File(
-        p.join(directory, 'm5_acceptance_audit_1792191568561.json'),
+        p.join(
+          directory,
+          driveRestore
+              ? 'm5_acceptance_audit_1792312363867.json'
+              : 'm5_acceptance_audit_1792191568561.json',
+        ),
       );
       expect(await marker.exists(), true);
       final original = jsonDecode(await marker.readAsString()) as Map;
+      Map? olderOriginal;
       final oldArchives = Map<String, dynamic>.from(
         original['localArchiveDigests'] as Map,
       );
-      expect(oldArchives.length, 2);
+      expect(oldArchives.length, driveRestore ? 4 : 2);
+      String? driveArchiveId;
+      if (driveRestore) {
+        final olderMarker = File(
+          p.join(directory, 'm5_acceptance_audit_1792191568561.json'),
+        );
+        expect(await olderMarker.exists(), true);
+        olderOriginal = jsonDecode(await olderMarker.readAsString()) as Map;
+        expect((olderOriginal['localArchiveDigests'] as Map).length, 2);
+        // The two strict pre/post-upload checkpoints identify the one actual
+        // uploaded archive without guessing from filenames or current sorting.
+        final preUpload = File(
+          p.join(directory, 'm5_acceptance_audit_1792309347903.json'),
+        );
+        expect(await preUpload.exists(), true);
+        final earlier = jsonDecode(await preUpload.readAsString()) as Map;
+        final earlierArchives = earlier['localArchiveDigests'] as Map;
+        expect(earlierArchives.length, 3);
+        expect(
+          oldArchives.keys.toSet().containsAll(earlierArchives.keys),
+          true,
+        );
+        driveArchiveId = oldArchives.keys.singleWhere(
+          (id) => !earlierArchives.containsKey(id),
+        );
+      }
       for (final pair in {
         'kasir_app.db':
             '556c6a5c472bf4c77edf80919eda1a58f76c415b2cb4c2bd5badfd442dfd103e',
@@ -158,7 +195,7 @@ void main() {
         expect(BackupService.normalizeCode(recovery).length, 64);
         final frozen = await db.read(DatabaseValidation.fingerprint);
         final rows = await app.backups.localHistory();
-        expect(rows.length, 3);
+        expect(rows.length, driveRestore ? 5 : 3);
         final newArchives = rows
             .where((r) => !oldArchives.containsKey(r['id']))
             .toList();
@@ -202,9 +239,25 @@ void main() {
             );
             try {
               final snapshot = await DatabaseValidation.fingerprint(incoming);
-              compareBusiness(snapshot, original);
-              if (digest ==
-                  '2bd806ac198f81db22a40c3174a5809a7a96e530761be1b72842ab598b3e6318') {
+              if (driveRestore) {
+                final oldSnapshot = id != safetyId && id != driveArchiveId;
+                // Retained archives precede the later cashier draft lifecycle.
+                // All 23 assertions remain exact against their own checkpoint;
+                // do not discard draft tables to force cross-era equality.
+                final expected = oldSnapshot ? olderOriginal! : original;
+                final hashes = snapshot['tables'] as Map;
+                final currentHashes = original['tables'] as Map;
+                debugPrint(
+                  'M5_DRIVE_ARCHIVE_PROVENANCE ${jsonEncode({'role': id == safetyId ? 'latestSafety' : (id == driveArchiveId ? 'uploadedDrive' : 'olderRetained'), 'businessDifferencesFromC27': businessTables.where((table) => hashes[table] != currentHashes[table]).toList(), 'matchesAssignedCheckpoint': businessTables.every((table) => hashes[table] == (expected['tables'] as Map)[table])})}',
+                );
+                compareBusiness(snapshot, expected);
+              } else {
+                compareBusiness(snapshot, original);
+              }
+              if (driveRestore
+                  ? id == driveArchiveId
+                  : digest ==
+                        '2bd806ac198f81db22a40c3174a5809a7a96e530761be1b72842ab598b3e6318') {
                 for (final table in [
                   'cart_drafts',
                   'cart_draft_items',
@@ -214,6 +267,16 @@ void main() {
                     (beforeAuth['tables'] as Map)[table],
                     (snapshot['tables'] as Map)[table],
                   );
+                }
+                if (driveRestore) {
+                  // The uploaded snapshot was captured while its run was in
+                  // progress. Restore must clear this device-local row, never
+                  // resume or implicitly upload it on the new installation.
+                  final runs = await incoming.query('backup_runs');
+                  expect(runs.length, 1);
+                  expect(runs.single['status'], 'running');
+                  expect(runs.single['remote_id'] == null, true);
+                  expect((await incoming.query('local_backups')).length, 3);
                 }
                 selectedSnapshotChecked = true;
               }
@@ -228,12 +291,28 @@ void main() {
                 );
                 // Safety retains the entire pre-swap queue, including earlier
                 // calibration jobs, not just the four sale-linked print jobs.
-                for (final table in ['printer_profiles', 'print_jobs']) {
+                for (final table in [
+                  'printer_profiles',
+                  'print_jobs',
+                  if (driveRestore) 'backup_runs',
+                  if (driveRestore) 'local_backups',
+                ]) {
                   expect(
                     (snapshot['tables'] as Map)[table],
                     (original['tables'] as Map)[table],
                     reason: 'Safety preserves pre-restore $table exactly',
                   );
+                }
+                if (driveRestore) {
+                  final runs = await incoming.query('backup_runs');
+                  expect(runs.length, 1);
+                  expect(runs.single['status'], 'success');
+                  expect(
+                    runs.single['remote_id'] is String &&
+                        (runs.single['remote_id'] as String).isNotEmpty,
+                    true,
+                  );
+                  expect((await incoming.query('local_backups')).length, 4);
                 }
               }
             } finally {
@@ -279,7 +358,9 @@ void main() {
         );
         compareBusiness(after, beforeAuth);
         debugPrint(
-          'M5_POST_RESTORE_AUDIT integrity/FK/cipher/reconcile/business23/receipts/threeArchivesAuthenticated/safetyBeforeSwap/logo/deviceDefaults/driveDisconnected/legacy PASS count=$authenticated',
+          driveRestore
+              ? 'M5_POST_DRIVE_RESTORE_AUDIT integrity/FK/cipher/reconcile/business23/receipts/fiveArchivesAuthenticated/selectedDriveSnapshot/safetyBeforeSwapAndSuccessfulRun/logo/deviceDefaults/driveDisconnected/legacy PASS count=$authenticated'
+              : 'M5_POST_RESTORE_AUDIT integrity/FK/cipher/reconcile/business23/receipts/threeArchivesAuthenticated/safetyBeforeSwap/logo/deviceDefaults/driveDisconnected/legacy PASS count=$authenticated',
         );
       } finally {
         app.management.lock();

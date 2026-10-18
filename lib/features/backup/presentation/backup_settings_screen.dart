@@ -154,15 +154,28 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                               ],
                             ),
                             if (s.generatedCode != null) ...[
-                              TextButton(
-                                onPressed: s.busy
-                                    ? null
-                                    : () {
-                                        s.hideCode();
-                                        confirmation.clear();
-                                        setState(() => codeSaved = false);
-                                      },
-                                child: Text(tr(context, 'm5HideCode')),
+                              Wrap(
+                                spacing: 8,
+                                children: [
+                                  OutlinedButton.icon(
+                                    key: const ValueKey(
+                                      'copy-backup-recovery-code',
+                                    ),
+                                    onPressed: s.busy ? null : s.copyCode,
+                                    icon: const Icon(Icons.copy),
+                                    label: Text(tr(context, 'm5CopyCode')),
+                                  ),
+                                  TextButton(
+                                    onPressed: s.busy
+                                        ? null
+                                        : () {
+                                            s.hideCode();
+                                            confirmation.clear();
+                                            setState(() => codeSaved = false);
+                                          },
+                                    child: Text(tr(context, 'm5HideCode')),
+                                  ),
+                                ],
                               ),
                               SelectableText(
                                 s.generatedCode!,
@@ -363,6 +376,32 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                               Text(
                                 '${tr(context, pair.$1)}: ${shopTime(s, s.overview[pair.$2] as int?)}',
                               ),
+                            if (s.automaticFailureMessage
+                                case final String message)
+                              Padding(
+                                key: const ValueKey('drive-automatic-failure'),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      tr(context, 'm5LastAutomaticFailure'),
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.titleSmall,
+                                    ),
+                                    Text(tr(context, message)),
+                                    Text(
+                                      tr(
+                                        context,
+                                        'm5AutomaticFailureHistoryHelp',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             if (s.policy?.email != null)
                               Text(
                                 '${tr(context, 'm5TargetAccount')}: ${s.policy!.email}',
@@ -419,6 +458,15 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                   ),
                                 ],
                               ),
+                              Text(
+                                tr(context, 'm5DriveArchiveList'),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              if (s.remoteLoaded && s.remote.isEmpty)
+                                Text(
+                                  tr(context, 'm5DriveArchiveEmpty'),
+                                  key: const ValueKey('drive-archive-empty'),
+                                ),
                               for (final row in s.remote)
                                 ListTile(
                                   title: Text(row['name'] as String? ?? ''),
@@ -440,8 +488,16 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                   child: Text(tr(context, 'm5NextPage')),
                                 ),
                             ],
+                            const Divider(),
+                            Text(
+                              tr(context, 'm5RunHistoryTitle'),
+                              key: const ValueKey('backup-run-history-heading'),
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(tr(context, 'm5RunHistoryHelp')),
                             for (final row in s.runs)
                               ListTile(
+                                key: ValueKey('backup-run-${row['id']}'),
                                 title: Text(
                                   '${tr(context, switch (row['status']) {
                                     'running' => 'm5RunRunning',
@@ -450,9 +506,23 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                     _ => 'm5RunUnknown',
                                   })} · ${shopTime(s, row['started_at'] as int)}',
                                 ),
-                                subtitle: row['error_code'] == null
-                                    ? null
-                                    : Text(tr(context, 'm5DriveFailed')),
+                                // Job records are local and outlive account
+                                // changes/remote retention. Attribute without
+                                // exposing stored account IDs or email values.
+                                subtitle: Text(
+                                  [
+                                    tr(context, switch (row['account_id']) {
+                                      null || '' => 'm5RunUnknownAccount',
+                                      final id
+                                          when s.policy?.connected == true &&
+                                              id == s.policy?.permissionId =>
+                                        'm5RunCurrentAccount',
+                                      _ => 'm5RunOtherAccount',
+                                    }),
+                                    if (row['error_code'] != null)
+                                      tr(context, 'm5DriveFailed'),
+                                  ].join('\n'),
+                                ),
                                 trailing: row['status'] == 'failed'
                                     ? TextButton(
                                         onPressed: s.busy

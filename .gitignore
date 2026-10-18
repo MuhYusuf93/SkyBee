@@ -44,3 +44,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/build/
+
+# Device-test artifacts stay local; preserve APK copies for closing restoration.
+# Existing tracked artifacts require a separate repository/history cleanup.
+/docs/evidence/**/*.apk
+/docs/evidence/**/*.aab
+/docs/evidence/**/*.kasirbackup
+/docs/evidence/**/*.db
+/docs/evidence/**/*.db-*
+/docs/evidence/**/*.sqlite
+/docs/evidence/**/*.sqlite3

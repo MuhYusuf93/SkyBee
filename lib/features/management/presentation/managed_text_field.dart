@@ -14,6 +14,7 @@ class ManagedTextField extends StatelessWidget {
     this.keyboardType,
     this.inputFormatters,
     this.maxLength,
+    this.maxLines = 1,
     this.onChanged,
     this.onSubmitted,
     this.enabled = true,
@@ -25,6 +26,7 @@ class ManagedTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
+  final int maxLines;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
   final bool enabled;
@@ -37,6 +39,7 @@ class ManagedTextField extends StatelessWidget {
     keyboardType: keyboardType,
     inputFormatters: inputFormatters,
     maxLength: maxLength,
+    maxLines: maxLines,
     enabled: enabled,
     obscureText: obscureText,
     onSubmitted: onSubmitted,

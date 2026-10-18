@@ -9,6 +9,7 @@ import 'package:kasir_app/app/app_services.dart';
 import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/data/database/database_gate.dart';
+import 'package:kasir_app/data/database/schema.dart';
 import 'package:kasir_app/data/database/database_validation.dart';
 import 'package:kasir_app/data/database/durable_promotion.dart';
 import 'package:kasir_app/data/database/encrypted_database.dart';
@@ -17,6 +18,7 @@ import 'package:kasir_app/features/cashier/domain/cashier_models.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/printer/application/store_logo_service.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:kasir_platform/kasir_platform.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +26,7 @@ void main() {
     'portable authenticated archive restores financial facts across different installation DB keys',
     () async {
       final nonce = DateTime.now().microsecondsSinceEpoch;
+      final platform = KasirPlatform(fixtureNamespace: 'test-m51-$nonce');
       final root = await getDatabasesPath();
       final sourceDirectory = Directory('$root/m5_backup_source_$nonce'),
           targetDirectory = Directory('$root/m5_backup_target_$nonce');
@@ -38,7 +41,11 @@ void main() {
             factory: databaseFactory,
             databasePath: path,
             gate: const AndroidDatabaseGate(),
-            encryption: EncryptedDatabase(path, keyName: key),
+            encryption: EncryptedDatabase(
+              path,
+              keyName: key,
+              platform: platform,
+            ),
           );
       final source = coordinator(sourcePath, 'test-backup-source-$nonce'),
           target = coordinator(targetPath, 'test-backup-target-$nonce');
@@ -50,6 +57,7 @@ void main() {
       final backup = BackupService(
             source,
             app.management,
+            platform: platform,
             testStage: (stage) async {
               if (stage == 'snapshotExported' && !snapshotReady.isCompleted) {
                 snapshotReady.complete();
@@ -60,6 +68,7 @@ void main() {
           restore = BackupService(
             target,
             other.management,
+            platform: platform,
             testStage: (stage) async {
               if (stage == 'safetyCreated' && !safetyReady.isCompleted) {
                 safetyReady.complete();
@@ -105,6 +114,12 @@ void main() {
         final product = await app.inventory.create(
           ProductInput(
             name: 'Synthetic portable goods',
+            attributes: ProductAttributes(
+              sizeMilli: 750,
+              unit: 'kg',
+              shelf: 'A-1',
+              note: 'Synthetic internal note',
+            ),
             sellingPrice: Money(12000, 'IDR', 0),
             wholesalePrice: Money(10000, 'IDR', 0),
             packSize: 40,
@@ -180,7 +195,7 @@ void main() {
         await checkingOut;
         expect((await app.inventory.detail(product)).quantity, 12);
         expect((await app.reports.reconcile()).consistent, true);
-        expect(archive.manifest.schema, 8);
+        expect(archive.manifest.schema, Schema.version);
         await other.management.configure(
           'Synthetic portable target',
           '0002',
@@ -218,6 +233,7 @@ void main() {
             target,
             other.management,
             availableBytes: (_) async => 0,
+            platform: platform,
           ).restore(incoming, confirmReplaceAndDrafts: true),
           throwsStateError,
         );
@@ -302,6 +318,25 @@ void main() {
           11000,
         );
         expect((await other.inventory.detail(product)).quantity, 11);
+        expect(
+          (await other.inventory.detail(product)).attributes.toRow(),
+          ProductAttributes(
+            sizeMilli: 750,
+            unit: 'kg',
+            shelf: 'A-1',
+            note: 'Synthetic internal note',
+          ).toRow(),
+        );
+        await target.read((db) async {
+          final items = await db.query('sale_transaction_items');
+          expect(items, isNotEmpty);
+          for (final item in items) {
+            expect(
+              ProductAttributes.fromRow(item, suffix: '_snapshot').sizeMilli,
+              750,
+            );
+          }
+        });
         final restoredSettings = await target.read(
           (db) => db.query('store_settings'),
         );

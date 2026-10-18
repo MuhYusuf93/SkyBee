@@ -1,6 +1,6 @@
 package com.example.kasir_app
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMethodCodec
@@ -9,7 +9,7 @@ import io.flutter.plugin.common.StandardMethodCodec
  * Mbed TLS performs the complete KDF in one native call, avoiding hundreds of
  * thousands of high-level HMAC calls on ARM32. No credentials are logged.
  */
-open class MainActivity : FlutterActivity() {
+open class MainActivity : FlutterFragmentActivity() {
     companion object {
         private val nativeAvailable: Boolean by lazy {
             try {

@@ -157,6 +157,8 @@ final class InventoryService {
       'wholesale_price_minor': input.wholesalePrice?.amountMinor,
       'pack_label': packLabel,
       'pack_size': input.packSize,
+      if (database.schemaVersion >= 9)
+        ...(input.attributes ?? ProductAttributes()).toRow(),
       ...await _currency(db),
       'min_stock': input.minStock,
       'low_stock_enabled': input.lowStockEnabled ? 1 : 0,

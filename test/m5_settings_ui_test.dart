@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:kasir_app/app/app_services.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
@@ -42,6 +45,52 @@ class SelectionGoogleFixture extends GoogleSignInPlatform {
   @override
   dynamic noSuchMethod(Invocation invocation) =>
       throw StateError('unexpectedGoogleFixtureCall');
+}
+
+/// Records scheduling requests without creating an OS job or uploading data.
+class ScheduleUiFixture extends WorkmanagerPlatform {
+  int registered = 0, canceled = 0;
+  @override
+  Future<void> registerOneOffTask(
+    String uniqueName,
+    String taskName, {
+    Map<String, dynamic>? inputData,
+    Duration? initialDelay,
+    Constraints? constraints,
+    ExistingWorkPolicy? existingWorkPolicy,
+    BackoffPolicy? backoffPolicy,
+    Duration? backoffPolicyDelay,
+    String? tag,
+    OutOfQuotaPolicy? outOfQuotaPolicy,
+    ForegroundServiceConfig? foregroundServiceConfig,
+    bool expedited = false,
+  }) async {
+    registered++;
+  }
+
+  @override
+  Future<void> cancelByTag(String tag) async {
+    canceled++;
+  }
+}
+
+/// Public synthetic identity only: tests route invalidation with the real Drive
+/// service/HTTP adapter without querying a real Google account or OS clipboard.
+class AccountChangeGoogleFixture extends GoogleSignInPlatform {
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw StateError('unexpectedAccountGoogleCall');
+  @override
+  Future<void> init(InitParameters params) async {}
+  @override
+  Stream<AuthenticationEvent> get authenticationEvents => const Stream.empty();
+  @override
+  Future<ClientAuthorizationTokenData?> clientAuthorizationTokensForScopes(
+    ClientAuthorizationTokensForScopesParameters params,
+  ) async =>
+      const ClientAuthorizationTokenData(accessToken: 'public-fixture-token');
+  @override
+  Future<void> disconnect(DisconnectParams params) async {}
 }
 
 void main() {
@@ -144,6 +193,595 @@ void m5SettingsUiSuite(
           const MethodChannel('kasir_app/platform'),
           null,
         );
+  }
+
+  testWidgets(
+    'Drive automatic schedule updates visible status without refresh',
+    (tester) async {
+      // Initialize the plugin singleton first, then replace its platform. No
+      // actual initialize/register/cancel, Google UI, token or HTTP call is made.
+      Workmanager();
+      final oldWorkmanager = WorkmanagerPlatform.instance;
+      final scheduler = ScheduleUiFixture();
+      WorkmanagerPlatform.instance = scheduler;
+      var policy = jsonEncode(
+        const DrivePolicy(
+          generation: 'synthetic-schedule',
+          accountId: 'synthetic-id',
+          email: 'schedule@example.invalid',
+          permissionId: 'synthetic-permission',
+        ).toJson(),
+      );
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(const MethodChannel('kasir_app/platform'), (
+            call,
+          ) async {
+            if (call.method == 'key' &&
+                call.arguments['name'] == 'drive-policy-v1') {
+              return policy;
+            }
+            if (call.method == 'key' &&
+                call.arguments['name'] == 'backup-master-v1') {
+              return 'ab' * 32;
+            }
+            if (call.method == 'saveSecret' &&
+                call.arguments['name'] == 'drive-policy-v1') {
+              policy = call.arguments['secret'] as String;
+              return true;
+            }
+            throw PlatformException(code: 'unexpected_schedule_fixture_call');
+          });
+      try {
+        await tester.pumpWidget(shell(const BackupSettingsScreen(), 1));
+        final state = tester
+            .element(find.byType(Consumer<BackupSettingsProvider>))
+            .read<BackupSettingsProvider>();
+        await drain(tester, () => state.loaded && !state.busy);
+        expect(state.overview['next_target'], isNull);
+        final before = await tester.runAsync(
+          () => db.read(DatabaseValidation.fingerprint),
+        );
+        await tester.runAsync(() => state.automatic(true));
+        await tester.pump();
+        final scheduled = await tester.runAsync(
+          () => db.read(
+            (sql) async =>
+                (await sql.query('backup_schedule')).single['next_target']
+                    as int?,
+          ),
+        );
+        expect(
+          scheduled,
+          isNotNull,
+          reason: 'The service persisted a scheduled target',
+        );
+        expect(state.policy!.enabled, true);
+        expect(state.message, 'm5SettingsSaved');
+        expect(scheduler.registered, 1);
+        expect(
+          state.overview['next_target'],
+          scheduled,
+          reason:
+              'Visible route must show the persisted schedule without manual refresh',
+        );
+        final time = app.management.clock.displayTime(
+          scheduled!,
+          state.overview['time_zone'] as String,
+        );
+        // The target row is lazy below recovery/local-backup controls. Reveal
+        // it by scrolling, without invoking the page's manual refresh action.
+        await tester.scrollUntilVisible(
+          find.textContaining(time),
+          300,
+          scrollable: find
+              .descendant(
+                of: find.byKey(const PageStorageKey('backup-settings-form')),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+          maxScrolls: 20,
+        );
+        await tester.pump();
+        expect(find.textContaining(time), findsOneWidget);
+        await tester.runAsync(() => state.automatic(false));
+        await tester.pump();
+        expect(state.policy!.enabled, false);
+        expect(scheduler.canceled, 1);
+        expect(
+          state.overview['next_target'],
+          isNull,
+          reason: 'Disabling must clear visible target without manual refresh',
+        );
+        expect(find.textContaining(time), findsNothing);
+        final after = await tester.runAsync(
+          () => db.read(DatabaseValidation.fingerprint),
+        );
+        final oldTables = Map.of(before!['tables'] as Map)
+          ..remove('backup_schedule');
+        final newTables = Map.of(after!['tables'] as Map)
+          ..remove('backup_schedule');
+        expect(
+          newTables,
+          oldTables,
+          reason: 'Scheduling must not mutate sales/stock or other tables',
+        );
+        expect(
+          await tester.runAsync(
+            () => db.read((sql) => sql.query('backup_runs')),
+          ),
+          isEmpty,
+        );
+      } finally {
+        WorkmanagerPlatform.instance = oldWorkmanager;
+        await cleanup(tester);
+      }
+    },
+    timeout: const Timeout(Duration(minutes: 3)),
+  );
+
+  for (final language in ['id', 'en']) {
+    testWidgets(
+      'Drive persisted automatic failure $language remains actionable after route reload',
+      (tester) async {
+        try {
+          await tester.runAsync(() => locale.selectLanguage(language));
+          for (final entry in const {
+            'driveNeedsAuthorization': 'm5DriveNeedsAuth',
+            'driveOffline': 'm5DriveOffline',
+            'driveRetryLimitReached': 'm5DriveFailed',
+            'public-unrecognized-code': 'm5DriveFailed',
+          }.entries) {
+            await tester.runAsync(
+              () => db.exclusive(
+                (sql) => sql.update('backup_schedule', {
+                  'last_attempt': 1792332300000,
+                  'error_code': entry.key,
+                }, where: 'id=1'),
+              ),
+            );
+            final before = await tester.runAsync(
+              () => db.read(DatabaseValidation.fingerprint),
+            );
+            if (find.byType(BackupSettingsScreen).evaluate().isEmpty) {
+              await tester.pumpWidget(shell(const BackupSettingsScreen(), 1));
+            }
+            final state = tester
+                .element(find.byType(Consumer<BackupSettingsProvider>))
+                .read<BackupSettingsProvider>();
+            if (state.loaded) await tester.runAsync(state.load);
+            await drain(tester, () => state.loaded && !state.busy);
+            await tester.pump();
+            expect(state.overview['error_code'], entry.key);
+            expect(
+              state.message,
+              isNull,
+              reason: 'No foreground action generated this failure',
+            );
+            final form = find
+                .descendant(
+                  of: find.byKey(const PageStorageKey('backup-settings-form')),
+                  matching: find.byType(Scrollable),
+                )
+                .first;
+            final context = tester.element(find.byType(BackupSettingsScreen));
+            await tester.scrollUntilVisible(
+              find.text(tr(context, 'm5ChooseAccount')),
+              250,
+              scrollable: form,
+              maxScrolls: 20,
+            );
+            await tester.pump();
+            final notice = find.byKey(
+              const ValueKey('drive-automatic-failure'),
+            );
+            expect(
+              notice,
+              findsOneWidget,
+              reason: 'Persisted worker failure must survive route load',
+            );
+            await Scrollable.ensureVisible(tester.element(notice));
+            await tester.pump();
+            expect(find.text(tr(context, entry.value)), findsOneWidget);
+            expect(
+              tr(context, 'm5LastAutomaticFailure'),
+              language == 'id'
+                  ? 'Kegagalan percobaan otomatis terakhir di perangkat ini'
+                  : 'Last automatic attempt failure on this device',
+            );
+            expect(
+              find.text(tr(context, 'm5AutomaticFailureHistoryHelp')),
+              findsOneWidget,
+            );
+            expect(
+              find.textContaining(entry.key),
+              findsNothing,
+              reason: 'Internal or unknown codes must not become UI text',
+            );
+            expect(
+              await tester.runAsync(
+                () => db.read(DatabaseValidation.fingerprint),
+              ),
+              before,
+            );
+          }
+          await tester.runAsync(
+            () => db.exclusive(
+              (sql) => sql.update('backup_schedule', {
+                'error_code': null,
+              }, where: 'id=1'),
+            ),
+          );
+          final state = tester
+              .element(find.byType(Consumer<BackupSettingsProvider>))
+              .read<BackupSettingsProvider>();
+          await tester.runAsync(state.load);
+          await tester.pump();
+          expect(
+            find.byKey(const ValueKey('drive-automatic-failure')),
+            findsNothing,
+          );
+          await tester.runAsync(
+            () => db.exclusive(
+              (sql) => sql.update('backup_schedule', {
+                'error_code': 'driveNeedsAuthorization',
+              }, where: 'id=1'),
+            ),
+          );
+          await tester.runAsync(state.load);
+          await tester.pump();
+          expect(
+            find.byKey(const ValueKey('drive-automatic-failure')),
+            findsOneWidget,
+          );
+          session.lock();
+          await tester.pump();
+          expect(
+            find.text(
+              tr(
+                tester.element(find.byType(BackupSettingsScreen)),
+                'm5DriveNeedsAuth',
+              ),
+            ),
+            findsNothing,
+          );
+        } finally {
+          await cleanup(tester);
+        }
+      },
+      timeout: const Timeout(Duration(minutes: 3)),
+    );
+
+    testWidgets(
+      'Drive history $language distinguishes local jobs from an empty destination account',
+      (tester) async {
+        final previousGoogle = GoogleSignInPlatform.instance;
+        GoogleSignInPlatform.instance = AccountChangeGoogleFixture();
+        const policy = DrivePolicy(
+          generation: 'public-history-b',
+          accountId: 'public-id-b',
+          email: 'b@example.invalid',
+          permissionId: 'public-permission-b',
+        );
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(
+              const MethodChannel('kasir_app/platform'),
+              (call) async {
+                if (call.method == 'key' &&
+                    call.arguments['name'] == 'drive-policy-v1') {
+                  return jsonEncode(policy.toJson());
+                }
+                if (call.method == 'key' &&
+                    call.arguments['name'] == 'backup-master-v1') {
+                  return 'ab' * 32;
+                }
+                throw PlatformException(
+                  code: 'unexpected_history_fixture_call',
+                );
+              },
+            );
+        try {
+          await tester.runAsync(() async {
+            await GoogleDriveAuthorization().initialize();
+            await locale.selectLanguage(language);
+            await db.exclusive((sql) async {
+              for (final entry in [
+                ('a', 'public-permission-a'),
+                ('b', 'public-permission-b'),
+                ('unknown', null),
+              ]) {
+                await sql.insert('backup_runs', {
+                  'id': 'public-history-${entry.$1}',
+                  'operation_key': 'public-key-${entry.$1}',
+                  'origin_id': 'public-origin',
+                  'account_id': entry.$2,
+                  'status': 'success',
+                  'started_at': 1000,
+                });
+              }
+            });
+          });
+          await tester.pumpWidget(shell(const BackupSettingsScreen(), 1));
+          final state = tester
+              .element(find.byType(Consumer<BackupSettingsProvider>))
+              .read<BackupSettingsProvider>();
+          await drain(tester, () => state.loaded && !state.busy);
+          expect(state.runs.length, 3);
+          final before = await tester.runAsync(
+            () => db.read(DatabaseValidation.fingerprint),
+          );
+          await tester.runAsync(
+            () => http.runWithClient(
+              state.versions,
+              () => MockClient((request) async {
+                if (request.url.path == '/drive/v3/about') {
+                  return http.Response(
+                    jsonEncode({
+                      'user': {
+                        'emailAddress': policy.email,
+                        'permissionId': policy.permissionId,
+                      },
+                    }),
+                    200,
+                  );
+                }
+                expect(request.url.path, '/drive/v3/files');
+                expect(request.url.queryParameters['spaces'], 'appDataFolder');
+                return http.Response('{"files":[]}', 200);
+              }),
+            ),
+          );
+          await tester.pump();
+          expect(state.remote, isEmpty);
+          expect(state.remoteLoaded, true);
+          expect(
+            state.runs.length,
+            3,
+            reason: 'A cloud list must not delete local history',
+          );
+          final form = find
+              .descendant(
+                of: find.byKey(const PageStorageKey('backup-settings-form')),
+                matching: find.byType(Scrollable),
+              )
+              .first;
+          final empty = find.byKey(const ValueKey('drive-archive-empty'));
+          final context = tester.element(find.byType(BackupSettingsScreen));
+          final versions = find.text(tr(context, 'm5DriveVersions'));
+          await tester.scrollUntilVisible(
+            versions,
+            300,
+            scrollable: form,
+            maxScrolls: 20,
+          );
+          await Scrollable.ensureVisible(
+            tester.element(versions),
+            alignment: 0,
+          );
+          await tester.pump();
+          expect(
+            empty,
+            findsOneWidget,
+            reason:
+                'An empty destination must be distinguished from retained local jobs',
+          );
+          expect(find.text(tr(context, 'm5DriveArchiveEmpty')), findsOneWidget);
+          expect(
+            tr(context, 'm5DriveArchiveEmpty'),
+            language == 'id'
+                ? 'Tidak ada arsip Drive pada halaman ini.'
+                : 'No Drive archives on this page.',
+          );
+          final heading = find.byKey(
+            const ValueKey('backup-run-history-heading'),
+          );
+          await tester.scrollUntilVisible(
+            heading,
+            200,
+            scrollable: form,
+            maxScrolls: 20,
+          );
+          expect(find.text(tr(context, 'm5RunHistoryTitle')), findsOneWidget);
+          expect(
+            tr(context, 'm5RunHistoryTitle'),
+            language == 'id'
+                ? 'Riwayat backup di perangkat ini'
+                : 'Backup history on this device',
+          );
+          final expectedLabels = language == 'id'
+              ? {
+                  'm5RunOtherAccount': 'Akun tujuan lain atau sebelumnya',
+                  'm5RunCurrentAccount': 'Akun tujuan saat ini',
+                  'm5RunUnknownAccount': 'Akun tujuan tidak tercatat',
+                }
+              : {
+                  'm5RunOtherAccount':
+                      'Another or previous destination account',
+                  'm5RunCurrentAccount': 'Current destination account',
+                  'm5RunUnknownAccount': 'Destination account not recorded',
+                };
+          for (final entry in [
+            ('a', 'm5RunOtherAccount'),
+            ('b', 'm5RunCurrentAccount'),
+            ('unknown', 'm5RunUnknownAccount'),
+          ]) {
+            final row = find.byKey(
+              ValueKey('backup-run-public-history-${entry.$1}'),
+            );
+            await tester.scrollUntilVisible(
+              row,
+              180,
+              scrollable: form,
+              maxScrolls: 20,
+            );
+            expect(
+              find.descendant(
+                of: row,
+                matching: find.text(expectedLabels[entry.$2]!),
+              ),
+              findsOneWidget,
+            );
+            final texts = tester
+                .widgetList<Text>(
+                  find.descendant(of: row, matching: find.byType(Text)),
+                )
+                .map((text) => text.data ?? '')
+                .join(' ');
+            expect(texts, isNot(contains('public-permission')));
+            expect(texts, isNot(contains('@example.invalid')));
+          }
+          expect(
+            await tester.runAsync(
+              () => db.read(DatabaseValidation.fingerprint),
+            ),
+            before,
+          );
+        } finally {
+          GoogleSignInPlatform.instance = previousGoogle;
+          await cleanup(tester);
+        }
+      },
+      timeout: const Timeout(Duration(minutes: 3)),
+    );
+  }
+
+  for (final operation in ['accept', 'disconnect']) {
+    testWidgets(
+      'Drive $operation clears previous account versions cursor and target',
+      (tester) async {
+        Workmanager();
+        final previousWorkmanager = WorkmanagerPlatform.instance;
+        final previousGoogle = GoogleSignInPlatform.instance;
+        WorkmanagerPlatform.instance = ScheduleUiFixture();
+        GoogleSignInPlatform.instance = AccountChangeGoogleFixture();
+        var policy = jsonEncode(
+          const DrivePolicy(
+            generation: 'public-account-a',
+            accountId: 'public-id-a',
+            email: 'a@example.invalid',
+            permissionId: 'public-permission-a',
+            enabled: true,
+          ).toJson(),
+        );
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(
+              const MethodChannel('kasir_app/platform'),
+              (call) async {
+                if (call.method == 'key' &&
+                    call.arguments['name'] == 'drive-policy-v1') {
+                  return policy;
+                }
+                if (call.method == 'key' &&
+                    call.arguments['name'] == 'backup-master-v1') {
+                  return 'ab' * 32;
+                }
+                if (call.method == 'saveSecret' &&
+                    call.arguments['name'] == 'drive-policy-v1') {
+                  policy = call.arguments['secret'] as String;
+                  return true;
+                }
+                throw PlatformException(
+                  code: 'unexpected_account_fixture_call',
+                );
+              },
+            );
+        try {
+          await tester.runAsync(() async {
+            await GoogleDriveAuthorization().initialize();
+            await db.exclusive(
+              (sql) => sql.update('backup_schedule', {
+                'next_target': 2000000000000,
+              }, where: 'id=1'),
+            );
+          });
+          final state = BackupSettingsProvider(app);
+          try {
+            await tester.runAsync(state.load);
+            expect(state.policy!.enabled, true);
+            expect(state.overview['next_target'], 2000000000000);
+            // Same route state produced by a prior successful versions page for A.
+            state.remote = [
+              {'id': 'public-file-a', 'name': 'Account A fixture archive'},
+            ];
+            state.nextRemote = 'public-cursor-a';
+            state.remoteLoaded = true;
+            state.pendingAccount = const DrivePolicy(
+              generation: 'public-pending-b',
+              accountId: 'public-id-b',
+              email: 'b@example.invalid',
+            );
+            final before = await tester.runAsync(
+              () => db.read(DatabaseValidation.fingerprint),
+            );
+            await tester.runAsync(
+              () => http.runWithClient(
+                () async {
+                  if (operation == 'accept') {
+                    await state.acceptAccount();
+                  } else {
+                    await state.disconnect();
+                  }
+                },
+                () => MockClient((request) async {
+                  expect(request.url.path, '/drive/v3/about');
+                  return http.Response(
+                    jsonEncode({
+                      'user': {
+                        'emailAddress': 'b@example.invalid',
+                        'permissionId': 'public-permission-b',
+                      },
+                    }),
+                    200,
+                  );
+                }),
+              ),
+            );
+            expect(
+              state.message,
+              operation == 'accept' ? 'm5AccountConnected' : 'm5Disconnected',
+            );
+            expect(state.policy!.enabled, false);
+            expect(state.policy!.connected, operation == 'accept');
+            expect(
+              state.remote,
+              isEmpty,
+              reason:
+                  'Never present account A files beneath the new destination',
+            );
+            expect(
+              state.nextRemote,
+              isNull,
+              reason: 'A cursor must not be submitted against another account',
+            );
+            expect(
+              state.remoteLoaded,
+              false,
+              reason: 'A new destination has not been queried yet',
+            );
+            expect(
+              state.overview['next_target'],
+              isNull,
+              reason:
+                  'Consent change cancels scheduling and its visible projection',
+            );
+            final after = await tester.runAsync(
+              () => db.read(DatabaseValidation.fingerprint),
+            );
+            final beforeHashes = Map.of(before!['tables'] as Map)
+              ..remove('backup_schedule');
+            final afterHashes = Map.of(after!['tables'] as Map)
+              ..remove('backup_schedule');
+            expect(afterHashes, beforeHashes);
+          } finally {
+            state.dispose();
+          }
+        } finally {
+          WorkmanagerPlatform.instance = previousWorkmanager;
+          GoogleSignInPlatform.instance = previousGoogle;
+          await cleanup(tester);
+        }
+      },
+      timeout: const Timeout(Duration(minutes: 3)),
+    );
   }
 
   for (final scenario in [
@@ -552,6 +1190,96 @@ void m5SettingsUiSuite(
     },
     timeout: const Timeout(Duration(minutes: 3)),
   );
+  for (final scenario in ['plain', 'grouped', 'invalid', 'platformFailure']) {
+    testWidgets('recovery clipboard $scenario is explicit and PIN protected', (
+      tester,
+    ) async {
+      // Public synthetic values only. Never read or replace the OS clipboard.
+      final canonical = 'abcd' * 16;
+      final shown = scenario == 'grouped'
+          ? '  ${List.filled(4, 'ABCD' * 4).join(' - \n')}  '
+          : scenario == 'invalid'
+          ? 'ab' * 31
+          : canonical;
+      String? copied;
+      var copyCalls = 0;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(const MethodChannel('kasir_app/platform'), (
+            call,
+          ) async {
+            if (call.method == 'key' &&
+                call.arguments['name'] == 'backup-master-v1') {
+              return shown;
+            }
+            if (call.method == 'key') {
+              throw PlatformException(code: 'key_missing');
+            }
+            if (call.method == 'copyRecoveryCode') {
+              copyCalls++;
+              if (scenario == 'platformFailure') {
+                throw PlatformException(
+                  code: 'clipboard_unavailable',
+                  message: 'synthetic upstream details must not be displayed',
+                );
+              }
+              copied = call.arguments['text'] as String;
+              return true;
+            }
+            throw PlatformException(code: 'unexpected_fixture_platform_call');
+          });
+      try {
+        await tester.pumpWidget(shell(const BackupSettingsScreen(), 1.3));
+        final state = tester
+            .element(find.byType(Consumer<BackupSettingsProvider>))
+            .read<BackupSettingsProvider>();
+        await drain(tester, () => state.loaded);
+        final copy = find.byKey(const ValueKey('copy-backup-recovery-code'));
+        expect(copy, findsNothing);
+        await tester.runAsync(state.reveal);
+        await tester.pump();
+        expect(copy, findsOneWidget);
+        await tester.scrollUntilVisible(
+          copy,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        final staleCopy = tester.widget<OutlinedButton>(copy).onPressed!;
+        final before = await tester.runAsync(
+          () => db.read(DatabaseValidation.fingerprint),
+        );
+        await tester.tap(copy);
+        await tester.pump();
+        await drain(tester, () => !state.busy);
+        final success = scenario == 'plain' || scenario == 'grouped';
+        expect(copyCalls, scenario == 'invalid' ? 0 : 1);
+        expect(copied, success ? canonical : null);
+        expect(state.generatedCode, shown);
+        expect(state.recoveryConfigured, isTrue);
+        expect(state.message, success ? 'm5CodeCopied' : 'm5CodeCopyFailed');
+        final context = tester.element(find.byType(BackupSettingsScreen));
+        expect(find.text(tr(context, state.message!)), findsOneWidget);
+        expect(
+          find.text('synthetic upstream details must not be displayed'),
+          findsNothing,
+        );
+        // An already queued tap must not bypass a subsequent management lock.
+        session.lock();
+        await tester.pump();
+        expect(copy, findsNothing);
+        staleCopy();
+        await tester.pump();
+        await drain(tester, () => !state.busy);
+        expect(copyCalls, scenario == 'invalid' ? 0 : 1);
+        await tester.runAsync(() async {
+          expect(await db.read(DatabaseValidation.fingerprint), before);
+        });
+        expect(tester.takeException(), isNull);
+      } finally {
+        await cleanup(tester);
+      }
+    });
+  }
+
   testWidgets(
     'backup recovery content hides at PIN relock and survives locale change without automatic Google or permission UI',
     (tester) async {
