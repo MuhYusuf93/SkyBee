@@ -25,11 +25,17 @@ final class StoreLogoService {
       p.dirname(database.databasePath),
       'm5_logo_${const Uuid().v4()}.input',
     );
-    final result = await platform.callNullable<String>('pickImport', {
-      'path': path,
-      'mime': 'image/*',
-      'maxBytes': 4194304,
-    });
+    final result = await access.systemInteraction(
+      () => platform.callNullable<String>('pickImport', {
+        'path': path,
+        'mime': 'image/*',
+        'maxBytes': 4194304,
+      }),
+      discard: (result) async {
+        if (result == path && await File(path).exists())
+          await File(path).delete();
+      },
+    );
     return result == null ? null : File(result);
   }
 

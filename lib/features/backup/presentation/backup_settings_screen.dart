@@ -6,6 +6,7 @@ import '../../../l10n/localization.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/management_session_provider.dart';
 import '../../management/presentation/managed_text_field.dart';
+import '../../management/presentation/fresh_authentication.dart';
 import 'backup_settings_provider.dart';
 import 'backup_export_name_dialog.dart';
 
@@ -75,6 +76,14 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
         );
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<ManagementSessionProvider>().service.isUnlocked ||
+        (state!.generatedCode != null &&
+            !state!.app.management.hasFresh('recovery'))) {
+      state!.hideCode(notify: false);
+      confirmation.clear();
+      code.clear();
+      codeSaved = false;
+    }
     if (context.watch<ManagementSessionProvider>().unlocked &&
         !state!.loaded &&
         !state!.busy) {
@@ -141,14 +150,27 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                               await confirm(
                                                 'm5CodeRotationWarning',
                                               )) {
-                                            await s.generate();
+                                            if (mounted &&
+                                                await freshAuthentication(
+                                                  context,
+                                                  'recovery',
+                                                ))
+                                              await s.generate();
                                           }
                                         },
                                   child: Text(tr(context, 'm5GenerateCode')),
                                 ),
                                 if (s.recoveryConfigured)
                                   TextButton(
-                                    onPressed: s.busy ? null : s.reveal,
+                                    onPressed: s.busy
+                                        ? null
+                                        : () async {
+                                            if (await freshAuthentication(
+                                              context,
+                                              'recovery',
+                                            ))
+                                              await s.reveal();
+                                          },
                                     child: Text(tr(context, 'm5ShowCode')),
                                   ),
                               ],
@@ -161,7 +183,19 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                     key: const ValueKey(
                                       'copy-backup-recovery-code',
                                     ),
-                                    onPressed: s.busy ? null : s.copyCode,
+                                    onPressed: s.busy
+                                        ? null
+                                        : () async {
+                                            if (!s.app.management.hasFresh(
+                                                  'recovery',
+                                                ) &&
+                                                !await freshAuthentication(
+                                                  context,
+                                                  'recovery',
+                                                ))
+                                              return;
+                                            await s.copyCode();
+                                          },
                                     icon: const Icon(Icons.copy),
                                     label: Text(tr(context, 'm5CopyCode')),
                                   ),
@@ -209,6 +243,14 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                 onPressed: s.busy || !codeSaved
                                     ? null
                                     : () async {
+                                        if (!s.app.management.hasFresh(
+                                              'recovery',
+                                            ) &&
+                                            !await freshAuthentication(
+                                              context,
+                                              'recovery',
+                                            ))
+                                          return;
                                         await s.confirm(confirmation.text);
                                         if (mounted &&
                                             s.generatedCode == null) {
@@ -353,10 +395,20 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                 onPressed: s.busy || !replaceConfirmed
                                     ? null
                                     : () async {
+                                        if (!await freshAuthentication(
+                                              context,
+                                              'restore',
+                                            ) ||
+                                            !mounted)
+                                          return;
                                         if (await confirm(
                                           'm5RestoreFinalConfirmation',
                                         )) {
                                           await s.restore();
+                                        } else {
+                                          s.app.management.clearFresh(
+                                            'restore',
+                                          );
                                         }
                                       },
                                 child: Text(tr(context, 'm5Restore')),

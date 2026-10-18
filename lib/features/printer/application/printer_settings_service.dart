@@ -17,7 +17,7 @@ final class PrinterSettingsService {
   final KasirPlatform platform;
   Future<bool> permission() async {
     access.requireAccess();
-    return platform.call<bool>('btPermissions');
+    return access.systemInteraction(() => platform.call<bool>('btPermissions'));
   }
 
   Future<List<Map<String, dynamic>>> paired() async {
@@ -67,7 +67,9 @@ final class PrinterSettingsService {
 
   Future<bool> pair(String device) async {
     access.requireAccess();
-    return platform.call<bool>('btPair', {'device': device});
+    return access.systemInteraction(
+      () => platform.call<bool>('btPair', {'device': device}),
+    );
   }
 
   Future<List<Map<String, Object?>>> profiles({String? after}) async {

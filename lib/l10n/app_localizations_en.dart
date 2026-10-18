@@ -1818,4 +1818,70 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m51AttributesInvalid =>
       'Enter a positive size with its unit (up to 3 decimals, no grouping). Check shelf 80 and note 1,000 character limits.';
+
+  @override
+  String get m51Security => 'Management security';
+
+  @override
+  String get m51FreshAuthentication => 'Fresh authentication required';
+
+  @override
+  String get m51FreshAuthenticationRequired =>
+      'Authenticate again to approve this sensitive action.';
+
+  @override
+  String get m51SystemOperationPending =>
+      'Complete or cancel the current system dialog.';
+
+  @override
+  String get m51UseAppPin => 'Use app PIN';
+
+  @override
+  String get m51UseBiometric => 'Use strong biometrics';
+
+  @override
+  String get m51BiometricUnavailable =>
+      'Class 3 biometrics are unavailable or not enrolled. Use the app PIN.';
+
+  @override
+  String get m51BiometricCancelled =>
+      'Biometric authentication cancelled. You can use the app PIN.';
+
+  @override
+  String get m51BiometricLockout =>
+      'Android has locked biometric authentication. Use the app PIN or try later.';
+
+  @override
+  String get m51BiometricInvalidated =>
+      'Biometric binding changed. Use the app PIN and enable it again if desired.';
+
+  @override
+  String get m51BiometricHelp =>
+      'Optional, Class 3 only. Every enrolled device biometric can authenticate; the app cannot identify individual owners or staff. App PIN remains available. Re-enable with PIN after enrollment changes or restore.';
+
+  @override
+  String get m51SessionPolicy => 'Management session policy';
+
+  @override
+  String get m51CurrentPolicy => 'Effective policy';
+
+  @override
+  String get m51LegacyPolicy =>
+      'Legacy default retained: lock on minimize, 5-minute idle limit.';
+
+  @override
+  String get m51SessionImmediate => 'Lock immediately on minimize';
+
+  @override
+  String get m51Session1 => '1 minute idle';
+
+  @override
+  String get m51Session5 => '5 minutes idle';
+
+  @override
+  String get m51Session15 => '15 minutes idle';
+
+  @override
+  String get m51SessionHelp =>
+      'Timed choices include background inactivity; returning does not extend the session. Immediate lock also has a 5-minute idle limit. App dialogs are bounded to 60 seconds; full file/account pickers may require PIN once on return. Screen lock, restart, manual lock, PIN changes and restore invalidate access. Cashier stays open. Grace is a convenience choice retaining temporary access.';
 }

@@ -10,9 +10,17 @@ import 'management_session_provider.dart';
 
 /// PIN setup/access/rotation form. No credentials or SQL in state/Provider.
 class PinScreen extends StatefulWidget {
-  const PinScreen({super.key, this.configure = false, this.rotate = false});
+  const PinScreen({
+    super.key,
+    this.configure = false,
+    this.rotate = false,
+    this.freshPurpose,
+    this.allowBiometrics = true,
+  });
   final bool configure;
   final bool rotate;
+  final String? freshPurpose;
+  final bool allowBiometrics;
   @override
   State<PinScreen> createState() => _PinScreenState();
 }
@@ -22,14 +30,68 @@ class _PinScreenState extends State<PinScreen> {
       _old = TextEditingController(),
       _pin = TextEditingController(),
       _confirm = TextEditingController();
+  final _pinFocus = FocusNode();
   bool _visible = false, _busy = false, _recovery = false;
   String? _error;
+  bool _biometricTried = false, _biometricAvailable = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_biometricTried &&
+        !widget.configure &&
+        !widget.rotate &&
+        widget.allowBiometrics) {
+      _biometricTried = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _tryBiometrics());
+    }
+  }
+
+  Future<void> _tryBiometrics({bool automatic = true}) async {
+    if (!mounted || _busy) return;
+    try {
+      final status = await context
+          .read<AppServices>()
+          .management
+          .biometricState();
+      if (!mounted || !status.enabled || !status.available) return;
+      setState(() {
+        _busy = true;
+        _biometricAvailable = true;
+        _error = null;
+      });
+      final state = context.read<ManagementSessionProvider>();
+      final title = tr(
+        context,
+        widget.freshPurpose == null
+            ? 'managementAccess'
+            : 'm51FreshAuthentication',
+      );
+      final alternative = tr(context, 'm51UseAppPin');
+      final result = await state.unlockBiometric(
+        title: title,
+        pinAlternative: alternative,
+        freshPurpose: widget.freshPurpose,
+      );
+      if (!mounted) return;
+      if (result) {
+        Navigator.pop(context, true);
+      } else {
+        setState(() => _error = state.error);
+      }
+    } catch (error) {
+      if (mounted && !automatic) setState(() => _error = safeError(error));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
   @override
   void dispose() {
     _name.dispose();
     _old.dispose();
     _pin.dispose();
     _confirm.dispose();
+    _pinFocus.dispose();
     super.dispose();
   }
 
@@ -85,7 +147,9 @@ class _PinScreenState extends State<PinScreen> {
         if (mounted) Navigator.pop(context, false);
       } else {
         final state = context.read<ManagementSessionProvider>();
-        final result = await state.unlock(_pin.text);
+        final result = widget.freshPurpose == null
+            ? await state.unlock(_pin.text)
+            : await state.reauthenticate(_pin.text, widget.freshPurpose!);
         _pin.clear();
         if (!mounted) return;
         if (result) {
@@ -106,6 +170,7 @@ class _PinScreenState extends State<PinScreen> {
     String label, {
     bool recovery = false,
   }) => ManagedTextField(
+    focusNode: identical(controller, _pin) ? _pinFocus : null,
     controller: controller,
     enabled: !_busy,
     obscureText: !_visible,
@@ -166,6 +231,19 @@ class _PinScreenState extends State<PinScreen> {
                   recovery: _recovery,
                 ),
                 const SizedBox(height: 16),
+              ],
+              if (_biometricAvailable) ...[
+                OutlinedButton.icon(
+                  onPressed: _busy
+                      ? null
+                      : () => _tryBiometrics(automatic: false),
+                  icon: const Icon(Icons.fingerprint),
+                  label: Text(tr(context, 'm51UseBiometric')),
+                ),
+                TextButton(
+                  onPressed: _busy ? null : () => _pinFocus.requestFocus(),
+                  child: Text(tr(context, 'm51UseAppPin')),
+                ),
               ],
               _pinField(
                 _pin,

@@ -3343,6 +3343,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter a positive size with its unit (up to 3 decimals, no grouping). Check shelf 80 and note 1,000 character limits.'**
   String get m51AttributesInvalid;
+
+  /// No description provided for @m51Security.
+  ///
+  /// In en, this message translates to:
+  /// **'Management security'**
+  String get m51Security;
+
+  /// No description provided for @m51FreshAuthentication.
+  ///
+  /// In en, this message translates to:
+  /// **'Fresh authentication required'**
+  String get m51FreshAuthentication;
+
+  /// No description provided for @m51FreshAuthenticationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate again to approve this sensitive action.'**
+  String get m51FreshAuthenticationRequired;
+
+  /// No description provided for @m51SystemOperationPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete or cancel the current system dialog.'**
+  String get m51SystemOperationPending;
+
+  /// No description provided for @m51UseAppPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Use app PIN'**
+  String get m51UseAppPin;
+
+  /// No description provided for @m51UseBiometric.
+  ///
+  /// In en, this message translates to:
+  /// **'Use strong biometrics'**
+  String get m51UseBiometric;
+
+  /// No description provided for @m51BiometricUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Class 3 biometrics are unavailable or not enrolled. Use the app PIN.'**
+  String get m51BiometricUnavailable;
+
+  /// No description provided for @m51BiometricCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric authentication cancelled. You can use the app PIN.'**
+  String get m51BiometricCancelled;
+
+  /// No description provided for @m51BiometricLockout.
+  ///
+  /// In en, this message translates to:
+  /// **'Android has locked biometric authentication. Use the app PIN or try later.'**
+  String get m51BiometricLockout;
+
+  /// No description provided for @m51BiometricInvalidated.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric binding changed. Use the app PIN and enable it again if desired.'**
+  String get m51BiometricInvalidated;
+
+  /// No description provided for @m51BiometricHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional, Class 3 only. Every enrolled device biometric can authenticate; the app cannot identify individual owners or staff. App PIN remains available. Re-enable with PIN after enrollment changes or restore.'**
+  String get m51BiometricHelp;
+
+  /// No description provided for @m51SessionPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Management session policy'**
+  String get m51SessionPolicy;
+
+  /// No description provided for @m51CurrentPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Effective policy'**
+  String get m51CurrentPolicy;
+
+  /// No description provided for @m51LegacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy default retained: lock on minimize, 5-minute idle limit.'**
+  String get m51LegacyPolicy;
+
+  /// No description provided for @m51SessionImmediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock immediately on minimize'**
+  String get m51SessionImmediate;
+
+  /// No description provided for @m51Session1.
+  ///
+  /// In en, this message translates to:
+  /// **'1 minute idle'**
+  String get m51Session1;
+
+  /// No description provided for @m51Session5.
+  ///
+  /// In en, this message translates to:
+  /// **'5 minutes idle'**
+  String get m51Session5;
+
+  /// No description provided for @m51Session15.
+  ///
+  /// In en, this message translates to:
+  /// **'15 minutes idle'**
+  String get m51Session15;
+
+  /// No description provided for @m51SessionHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Timed choices include background inactivity; returning does not extend the session. Immediate lock also has a 5-minute idle limit. App dialogs are bounded to 60 seconds; full file/account pickers may require PIN once on return. Screen lock, restart, manual lock, PIN changes and restore invalidate access. Cashier stays open. Grace is a convenience choice retaining temporary access.'**
+  String get m51SessionHelp;
 }
 
 class _AppLocalizationsDelegate

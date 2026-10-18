@@ -43,6 +43,7 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
     private ActivityPluginBinding activity;
     private PrinterBluetooth bluetooth;
     private StrongBiometricsBridge biometrics;
+    private final Set<String> protectedScreens = new HashSet<>();
     private final DocumentPicker picker=new DocumentPicker(IO);
     private MethodChannel.Result permissionResult;
     private static final ExecutorService IO = Executors.newCachedThreadPool();
@@ -70,6 +71,12 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         for (String token : owned) { try { release(token); } catch (Exception ignored) {} }
     }
     @Override public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        if(call.method.equals("protectedScreen")) {
+            String id=call.argument("id");
+            if(id==null||!id.matches("[0-9]{1,20}")){result.error("invalid_scope","Invalid screen scope.",null);return;}
+            if(Boolean.TRUE.equals(call.argument("active")))protectedScreens.add(id);else protectedScreens.remove(id);
+            applyScreenPrivacy();result.success(null);return;
+        }
         if(biometrics.handle(call,result))return;
         if(call.method.equals("copyRecoveryCode")){
             try {
@@ -187,7 +194,8 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         permissionResult.success(granted);permissionResult=null;return true;
     }
     @Override public boolean onActivityResult(int request,int code,Intent data){return picker.result(request,code,data);}
-    @Override public void onAttachedToActivity(ActivityPluginBinding binding){activity=binding;picker.attach(binding.getActivity());biometrics.attach(binding.getActivity());binding.addActivityResultListener(this);binding.addRequestPermissionsResultListener(this);}
+    private void applyScreenPrivacy(){if(activity!=null){if(protectedScreens.isEmpty())activity.getActivity().getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);else activity.getActivity().getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);}}
+    @Override public void onAttachedToActivity(ActivityPluginBinding binding){activity=binding;picker.attach(binding.getActivity());biometrics.attach(binding.getActivity());applyScreenPrivacy();binding.addActivityResultListener(this);binding.addRequestPermissionsResultListener(this);}
     @Override public void onDetachedFromActivityForConfigChanges(){detachActivity();}
     @Override public void onReattachedToActivityForConfigChanges(ActivityPluginBinding binding){onAttachedToActivity(binding);}
     @Override public void onDetachedFromActivity(){detachActivity();}

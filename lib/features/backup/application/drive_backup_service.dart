@@ -59,7 +59,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
 
   Future<DrivePolicy> chooseAccount() async {
     access.requireAccess();
-    final account = await authorization.connect();
+    final account = await access.systemInteraction(authorization.connect);
     // Not saved and not enabled; PIN is still required to accept this pending
     // identity after Android's activity transition has locked management.
     return DrivePolicy(

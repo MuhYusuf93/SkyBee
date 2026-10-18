@@ -106,7 +106,9 @@ class _AlertsScreenState extends State<AlertsScreen> {
                         );
                         final granted =
                             !enabled ||
-                            await app!.notifications.requestPermission();
+                            await app!.management.systemInteraction(
+                              app!.notifications.requestPermission,
+                            );
                         status = granted
                             ? 'm5SettingsSaved'
                             : 'm5PermissionDenied';

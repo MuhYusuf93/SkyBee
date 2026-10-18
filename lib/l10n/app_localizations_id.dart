@@ -1827,4 +1827,70 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m51AttributesInvalid =>
       'Isi ukuran positif beserta satuannya (maks. 3 desimal tanpa pemisah ribuan). Periksa batas rak 80 dan keterangan 1.000 karakter.';
+
+  @override
+  String get m51Security => 'Keamanan pengelolaan';
+
+  @override
+  String get m51FreshAuthentication => 'Autentikasi baru diperlukan';
+
+  @override
+  String get m51FreshAuthenticationRequired =>
+      'Masuk kembali untuk menyetujui tindakan sensitif ini.';
+
+  @override
+  String get m51SystemOperationPending =>
+      'Selesaikan atau batalkan dialog sistem yang sedang terbuka.';
+
+  @override
+  String get m51UseAppPin => 'Gunakan PIN aplikasi';
+
+  @override
+  String get m51UseBiometric => 'Gunakan biometrik kuat';
+
+  @override
+  String get m51BiometricUnavailable =>
+      'Biometrik Class 3 tidak tersedia atau belum terdaftar. Gunakan PIN aplikasi.';
+
+  @override
+  String get m51BiometricCancelled =>
+      'Biometrik dibatalkan. Anda dapat memakai PIN aplikasi.';
+
+  @override
+  String get m51BiometricLockout =>
+      'Biometrik dikunci Android sementara. Gunakan PIN aplikasi atau coba nanti.';
+
+  @override
+  String get m51BiometricInvalidated =>
+      'Binding biometrik berubah. Masuk dengan PIN dan aktifkan lagi jika diinginkan.';
+
+  @override
+  String get m51BiometricHelp =>
+      'Opsional, hanya biometrik Class 3. Semua biometrik yang terdaftar pada perangkat dapat dipakai; aplikasi tidak mengenali identitas pemilik/karyawan. PIN aplikasi tetap tersedia. Setelah enrollment berubah atau restore, aktifkan ulang melalui PIN.';
+
+  @override
+  String get m51SessionPolicy => 'Kebijakan sesi pengelolaan';
+
+  @override
+  String get m51CurrentPolicy => 'Kebijakan efektif';
+
+  @override
+  String get m51LegacyPolicy =>
+      'Default lama dipertahankan: kunci saat diminimalkan, batas diam 5 menit.';
+
+  @override
+  String get m51SessionImmediate => 'Kunci segera saat diminimalkan';
+
+  @override
+  String get m51Session1 => '1 menit tidak aktif';
+
+  @override
+  String get m51Session5 => '5 menit tidak aktif';
+
+  @override
+  String get m51Session15 => '15 menit tidak aktif';
+
+  @override
+  String get m51SessionHelp =>
+      'Pilihan waktu menghitung ketidakaktifan pengelolaan termasuk di latar belakang; kembali tidak memperpanjang sesi. Kunci segera juga memakai batas diam 5 menit. Dialog aplikasi dibatasi 60 detik; pemilih berkas/akun penuh dapat meminta PIN sekali saat kembali. Kunci layar, restart, kunci manual, perubahan PIN dan restore membatalkan sesi. Kasir tetap terbuka. Grace adalah pilihan kenyamanan dengan risiko akses sementara.';
 }

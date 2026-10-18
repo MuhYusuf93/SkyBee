@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/pin_screen.dart';
+import '../../management/presentation/security_settings_screen.dart';
 import 'settings_provider.dart';
 import 'currency_selector.dart';
 import '../../printer/presentation/printer_settings_screen.dart';
@@ -67,6 +68,18 @@ class _SettingsFormState extends State<_SettingsForm> {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
+              ListTile(
+                title: Text(tr(context, 'm51Security')),
+                leading: const Icon(Icons.security),
+                onTap: state.busy
+                    ? null
+                    : () => Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (_) => const SecuritySettingsScreen(),
+                        ),
+                      ),
+              ),
               if (state.busy)
                 LinearProgressIndicator(semanticsLabel: tr(context, 'loading')),
               const CurrencySelector(),

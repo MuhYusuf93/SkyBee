@@ -77,13 +77,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
 
   Future<void> load() => task(() async {
     policy = await app.drive.settings();
-    try {
-      await app.backups.recoveryCode();
-      recoveryConfigured = true;
-    } on PlatformException catch (error) {
-      if (error.code != 'key_missing') rethrow;
-      recoveryConfigured = false;
-    }
+    recoveryConfigured = await app.backups.hasRecoveryCode();
     await app.backups.recoverLocalCatalog();
     local = await app.backups.localHistory();
     runs = await app.drive.history();
@@ -91,7 +85,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
     loaded = true;
   });
   Future<void> generate() => task(() async {
-    app.management.requireAccess();
+    app.management.requireFresh('recovery');
     generatedCode = BackupService.newRecoveryCode();
   });
   Future<void> confirm(String confirmation) => task(() async {
@@ -119,9 +113,10 @@ final class BackupSettingsProvider extends ChangeNotifier {
       message = 'm5CodeCopyFailed';
     }
   });
-  void hideCode() {
+  void hideCode({bool notify = true}) {
     generatedCode = null;
-    _notify();
+    app.management.clearFresh('recovery');
+    if (notify) _notify();
   }
 
   Future<void> createLocal() => task(() async {
@@ -134,10 +129,12 @@ final class BackupSettingsProvider extends ChangeNotifier {
         ? null
         : BackupExportName.normalize(displayName);
     final file = await app.backups.localFile(id);
-    final result = await app.backups.platform.callNullable<bool>('pickExport', {
-      'path': file.path,
-      'displayName': ?name,
-    });
+    final result = await app.management.systemInteraction(
+      () => app.backups.platform.callNullable<bool>('pickExport', {
+        'path': file.path,
+        'displayName': ?name,
+      }),
+    );
     message = result == true ? 'm5ExportVerified' : 'm5Cancelled';
   });
   Future<void> chooseFile() => task(() async {
@@ -146,9 +143,14 @@ final class BackupSettingsProvider extends ChangeNotifier {
       p.dirname(app.database.databasePath),
       'm5_import_${const Uuid().v4()}.kasirbackup',
     );
-    final result = await app.backups.platform.callNullable<String>(
-      'pickImport',
-      {'path': location},
+    final result = await app.management.systemInteraction(
+      () => app.backups.platform.callNullable<String>('pickImport', {
+        'path': location,
+      }),
+      discard: (result) async {
+        if (result == location && await File(location).exists())
+          await File(location).delete();
+      },
     );
     if (result == null) {
       message = 'm5Cancelled';

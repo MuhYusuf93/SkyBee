@@ -59,20 +59,33 @@ final class BackupService {
   /// Generated at the backup screen, saved only after the user confirms an exact
   /// saved copy. The backup code is independent of both PIN and PIN recovery.
   Future<void> confirmRecovery(String shown, String confirmation) async {
-    access.requireAccess();
+    access.requireFresh('recovery');
     final code = normalizeCode(shown);
     if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code) ||
         normalizeCode(confirmation) != code) {
       throw const FormatException('backupCodeMismatch');
     }
     await platform.saveSecret('backup-master-v1', code);
+    access.requireFresh('recovery');
+  }
+
+  /// Status only, never an implicit reveal on route loading.
+  Future<bool> hasRecoveryCode() async {
     access.requireAccess();
+    try {
+      final value = await platform.key('backup-master-v1', allowCreate: false);
+      access.requireAccess();
+      return RegExp(r'^[a-f0-9]{64}$').hasMatch(value);
+    } on PlatformException catch (e) {
+      if (e.code != 'key_missing') rethrow;
+      return false;
+    }
   }
 
   Future<String> recoveryCode() async {
-    access.requireAccess();
+    access.requireFresh('recovery');
     final value = await platform.key('backup-master-v1', allowCreate: false);
-    access.requireAccess();
+    access.requireFresh('recovery');
     return value;
   }
 
@@ -80,7 +93,7 @@ final class BackupService {
   /// check. This does not rotate or confirm the code, inspect the clipboard, or
   /// persist another secret. Android marks the clip as sensitive metadata.
   Future<void> copyRecoveryCode(String shown) async {
-    access.requireAccess();
+    access.requireFresh('recovery');
     final code = normalizeCode(shown);
     if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
       throw const FormatException('backupCodeInvalid');
@@ -510,7 +523,7 @@ final class BackupService {
     BackupInspection incoming, {
     required bool confirmReplaceAndDrafts,
   }) async {
-    access.requireAccess();
+    access.requireFresh('restore');
     if (!confirmReplaceAndDrafts) {
       throw StateError('restoreConfirmationRequired');
     }

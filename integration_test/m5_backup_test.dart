@@ -175,6 +175,7 @@ void main() {
                 as Map;
         const code =
             'abababababababababababababababababababababababababababababababab';
+        await app.management.reauthenticate('0001', 'recovery');
         await backup.confirmRecovery(code, code);
         final creating = backup.create();
         await snapshotReady.future;
@@ -228,6 +229,7 @@ void main() {
         expect(await DurablePromotion.digest(File(targetPath)), originalHash);
         await corrupt.delete();
         incoming = await restore.inspect(archive.file, code);
+        await other.management.reauthenticate('0001', 'restore');
         await expectLater(
           BackupService(
             target,
