@@ -10,10 +10,12 @@ import 'package:kasir_app/data/database/encrypted_database.dart';
 import 'package:kasir_app/features/backup/application/backup_service.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:kasir_platform/kasir_platform.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   final nonce = DateTime.now().microsecondsSinceEpoch;
+  final platform = KasirPlatform(fixtureNamespace: 'test-m51-$nonce');
   late DatabaseCoordinator source;
   late AppServices sourceApp;
   late PortableBackup archive;
@@ -24,7 +26,10 @@ void main() {
         factory: databaseFactory,
         databasePath: path,
         gate: const AndroidDatabaseGate(),
-        encryption: EncryptedDatabase(path, keyName: key),
+        // BackupService resolves the live DB key through this same namespaced
+        // platform before safety/promotion. Mixing namespaces fails too early
+        // to exercise any of the requested interruption phases.
+        encryption: EncryptedDatabase(path, keyName: key, platform: platform),
       );
   setUpAll(() async {
     source = coordinator(
@@ -46,7 +51,12 @@ void main() {
       initialQuantity: 7,
       unitCost: CostAmount.fromMoney(Money(9000, 'IDR', 0)),
     );
-    final backup = BackupService(source, sourceApp.management);
+    final backup = BackupService(
+      source,
+      sourceApp.management,
+      platform: platform,
+    );
+    await sourceApp.management.reauthenticate('0001', 'recovery');
     await backup.confirmRecovery(code, code);
     archive = await backup.create();
   });
@@ -85,19 +95,30 @@ void main() {
           final before =
               (await target.read(DatabaseValidation.fingerprint))['tables']
                   as Map;
+          var faultReached = false;
           final restore = BackupService(
             target,
             app.management,
+            platform: platform,
+            pausePeripherals: app.printing.pauseForRestore,
+            resumePeripherals: app.printing.resumeAfterRestore,
             testStage: (stage) async {
               if (stage == 'promotion:$phase') {
+                faultReached = true;
                 throw StateError('Synthetic restore interruption');
               }
             },
           );
           inspection = await restore.inspect(archive.file, code);
+          await app.management.reauthenticate('0002', 'restore');
           await expectLater(
             restore.restore(inspection, confirmReplaceAndDrafts: true),
             throwsStateError,
+          );
+          expect(
+            faultReached,
+            true,
+            reason: 'Actual requested promotion phase reached',
           );
           await target.close();
           target = coordinator(path, keyName);

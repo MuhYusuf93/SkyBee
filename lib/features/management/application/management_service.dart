@@ -12,6 +12,14 @@ import '../../../data/database/installation_identity.dart';
 import '../domain/session_policy.dart';
 import 'strong_biometrics.dart';
 
+/// Opaque, single-operation authority. UI booleans or copied timestamps cannot
+/// manufacture a claim; the issuing service retains its identity until release.
+final class FreshActionProof {
+  FreshActionProof._(this.purpose, this.generation, this.deadline);
+  final String purpose;
+  final int generation, deadline;
+}
+
 /// Owns the authorization capability and persisted attempt limits. UI session
 /// state mirrors it; hiding buttons is never the authorization check.
 final class ManagementService {
@@ -37,6 +45,8 @@ final class ManagementService {
   Stream<int> get sessionChanges => _changes.stream;
   int get generation => _generation;
   final Map<String, (int, int)> _fresh = {};
+  final Set<FreshActionProof> _claims = {};
+  String? _authorizedEpoch;
   int? _expiresAt;
   int _generation = 0;
   static const sessionDuration = Duration(minutes: 5);
@@ -47,7 +57,9 @@ final class ManagementService {
   void lock() {
     _generation++;
     _expiresAt = null;
+    _authorizedEpoch = null;
     _fresh.clear();
+    _claims.clear();
     _interaction = null;
     _externalSuspended = false;
     _changes.add(_generation);
@@ -66,6 +78,28 @@ final class ManagementService {
     }
   }
 
+  /// Verify persisted credentials under the caller's DB lease, including before
+  /// commit. PIN rotation in another service/engine revokes stale capabilities.
+  Future<void> authorize(DatabaseExecutor db) async {
+    requireAccess();
+    final expected = _generation;
+    try {
+      final epoch = await _credentialEpochOn(db);
+      if (expected != _generation || epoch != _authorizedEpoch) {
+        throw const AppError('sessionLockedEnterPinAgain');
+      }
+      requireAccess();
+    } catch (_) {
+      lock();
+      rethrow;
+    }
+  }
+
+  Future<void> authorizeCurrent() async {
+    requireAccess();
+    await database.read(authorize);
+  }
+
   /// Fresh proofs are purpose-bound and short-lived, independent of idle grace.
   /// A reveal/copy flow may reuse its proof until hidden; print/restore have
   /// separate purposes and always start a new explicit authentication flow.
@@ -79,14 +113,40 @@ final class ManagementService {
 
   void requireFresh(String purpose) {
     requireAccess();
-    if (!hasFresh(purpose))
+    if (!hasFresh(purpose)) {
       throw const AppError('m51FreshAuthenticationRequired');
+    }
   }
 
   void clearFresh(String purpose) => _fresh.remove(purpose);
+  FreshActionProof claimFresh(String purpose) {
+    requireFresh(purpose);
+    final value = _fresh.remove(purpose)!;
+    final claim = FreshActionProof._(purpose, value.$1, value.$2);
+    _claims.add(claim);
+    return claim;
+  }
+
+  void requireClaim(FreshActionProof claim, String purpose) {
+    requireAccess();
+    if (!_claims.contains(claim) ||
+        claim.purpose != purpose ||
+        claim.generation != _generation ||
+        clock.elapsedMilliseconds >= claim.deadline) {
+      throw const AppError('m51FreshAuthenticationRequired');
+    }
+  }
+
+  void releaseClaim(FreshActionProof claim) => _claims.remove(claim);
   Future<void> reauthenticate(String pin, String purpose) async {
-    if (!['recovery', 'security', 'restore', 'recoveryPrint'].contains(purpose))
+    if (![
+      'recovery',
+      'security',
+      'restore',
+      'recoveryPrint',
+    ].contains(purpose)) {
       throw ArgumentError('Unknown authentication purpose');
+    }
     await unlock(pin);
     _fresh[purpose] = (
       _generation,
@@ -120,6 +180,7 @@ final class ManagementService {
     Future<T> Function() action, {
     Future<void> Function(T value)? discard,
   }) async {
+    await authorizeCurrent();
     final lease = beginSystemInteraction();
     try {
       final result = await action();
@@ -157,12 +218,15 @@ final class ManagementService {
       final screen = await biometrics.screenState();
       if (expected != _generation) return;
       if (screen.locked ||
-          screen.generation != _screenGeneration ||
-          (!_externalSuspended && _expiresAt != null && !isUnlocked))
+          ((_expiresAt != null || _externalSuspended) &&
+              screen.generation != _screenGeneration) ||
+          (!_externalSuspended && _expiresAt != null && !isUnlocked)) {
         lock();
+      }
       if (expected == _generation &&
           isUnlocked &&
           database.schemaVersion >= 10) {
+        await authorizeCurrent();
         final state = await biometrics.status(
           _bindingScope,
           await _credentialEpoch(),
@@ -189,10 +253,12 @@ final class ManagementService {
 
   Future<void> saveSessionPolicy(SessionPolicy value) async {
     requireFresh('security');
-    if (value == SessionPolicy.legacy || database.schemaVersion < 10)
+    if (value == SessionPolicy.legacy || database.schemaVersion < 10) {
       throw ArgumentError('Unsupported session policy');
+    }
     await database.transaction((dbTxn) async {
       requireFresh('security');
+      await authorize(dbTxn);
       await dbTxn.update('management_policy', {
         'session_policy': value.code,
       }, where: 'id=1');
@@ -209,16 +275,18 @@ final class ManagementService {
 
   String get _bindingScope =>
       sha256.convert(utf8.encode(database.databasePath)).toString();
-  Future<String> _credentialEpoch() => database.read((db) async {
+  Future<String> _credentialEpoch() => database.read(_credentialEpochOn);
+  Future<String> _credentialEpochOn(DatabaseExecutor db) async {
     final row = (await db.query('management_credentials')).single;
     final now = max(clock.milliseconds, row['last_attempt_at'] as int);
-    if ((row['blocked_until'] as int) > now)
+    if ((row['blocked_until'] as int) > now) {
       throw AppError(
         'retryAfterSeconds',
         arguments: {
           'count': ((row['blocked_until'] as int) - now + 999) ~/ 1000,
         },
       );
+    }
     String? installation;
     if (database.schemaVersion >= 8) {
       final rows = await db.query('active_installation');
@@ -228,12 +296,15 @@ final class ManagementService {
     }
     return sha256.convert([
       ...row['salt'] as List<int>,
+      ...row['pin_verifier'] as List<int>,
       ...utf8.encode(':${installation ?? 'legacy'}'),
     ]).toString();
-  });
+  }
+
   Future<BiometricState> biometricState() async {
-    if (database.schemaVersion < 10)
+    if (database.schemaVersion < 10) {
       return const BiometricState(available: false, enabled: false);
+    }
     final value = await biometrics.status(
       _bindingScope,
       await _credentialEpoch(),
@@ -247,6 +318,7 @@ final class ManagementService {
     required String title,
     required String pinAlternative,
   }) async {
+    await authorizeCurrent();
     requireFresh('security');
     if (!enabled) {
       await biometrics.clear(_bindingScope);
@@ -270,6 +342,9 @@ final class ManagementService {
         await biometrics.clear(_bindingScope);
         throw const AppError('sessionLockedEnterPinAgain');
       }
+    } on AppError catch (e) {
+      if (e.message == 'm51BiometricInvalidated') lock();
+      rethrow;
     } finally {
       if (identical(_interaction, lease)) _interaction = null;
       clearFresh('security');
@@ -286,8 +361,9 @@ final class ManagementService {
     try {
       final epoch = await _credentialEpoch();
       final state = await biometrics.status(_bindingScope, epoch);
-      if (!state.available || !state.enabled || state.invalidated)
+      if (!state.available || !state.enabled || state.invalidated) {
         throw const AppError('m51BiometricUnavailable');
+      }
       final screen = await biometrics.screenState();
       if (screen.locked) throw const AppError('sessionLockedEnterPinAgain');
       await biometrics.authenticate(
@@ -299,33 +375,56 @@ final class ManagementService {
       );
       if (!_valid(lease) ||
           expected != _generation ||
-          epoch != await _credentialEpoch())
+          epoch != await _credentialEpoch()) {
         throw const AppError('sessionLockedEnterPinAgain');
+      }
       final after = await biometrics.screenState();
-      if (after.locked || after.generation != screen.generation)
+      if (after.locked || after.generation != screen.generation) {
         throw const AppError('sessionLockedEnterPinAgain');
-      await _grant(expected);
-      if (freshPurpose != null)
+      }
+      await _grant(expected, expectedEpoch: epoch);
+      if (freshPurpose != null) {
         _fresh[freshPurpose] = (
           _generation,
           min(_expiresAt!, clock.elapsedMilliseconds + 60000),
         );
+      }
+    } on AppError catch (e) {
+      if (e.message == 'm51BiometricInvalidated') lock();
+      rethrow;
     } finally {
       if (identical(_interaction, lease)) _interaction = null;
     }
   }
 
-  Future<void> _grant(int expected) async {
+  Future<void> _grant(
+    int expected, {
+    String? verifiedSalt,
+    String? expectedEpoch,
+  }) async {
     await loadSessionPolicy();
     final screen = await biometrics.screenState();
-    if (expected != _generation || screen.locked)
+    if (expected != _generation || screen.locked) {
       throw const AppError('sessionLockedEnterPinAgain');
-    _screenGeneration = screen.generation;
-    _grantedDatabaseGeneration = database.generation;
-    _externalSuspended = false;
-    _interaction = null;
-    _expiresAt = clock.elapsedMilliseconds + _policy.idle.inMilliseconds;
-    _changes.add(_generation);
+    }
+    await database.read((db) async {
+      final epoch = await _credentialEpochOn(db);
+      final salt = base64Encode(
+        (await db.query('management_credentials')).single['salt'] as List<int>,
+      );
+      if (expected != _generation ||
+          (verifiedSalt != null && verifiedSalt != salt) ||
+          (expectedEpoch != null && expectedEpoch != epoch)) {
+        throw const AppError('sessionLockedEnterPinAgain');
+      }
+      _authorizedEpoch = epoch;
+      _screenGeneration = screen.generation;
+      _grantedDatabaseGeneration = database.generation;
+      _externalSuspended = false;
+      _interaction = null;
+      _expiresAt = clock.elapsedMilliseconds + _policy.idle.inMilliseconds;
+      _changes.add(_generation);
+    });
   }
 
   Future<bool> get isConfigured => database.read(
@@ -446,11 +545,11 @@ final class ManagementService {
 
   Future<void> unlock(String pin) async {
     final generation = _generation;
-    await _verify(pin);
+    final verifiedSalt = await _verify(pin);
     if (generation != _generation) {
       throw const AppError('sessionLockedEnterPinAgain');
     }
-    await _grant(generation);
+    await _grant(generation, verifiedSalt: verifiedSalt);
   }
 
   /// Changing PIN always checks the old secret (or strong recovery code), even

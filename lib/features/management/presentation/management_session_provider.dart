@@ -8,6 +8,7 @@ import '../application/management_service.dart';
 final class ManagementSessionProvider extends ChangeNotifier
     with WidgetsBindingObserver {
   ManagementSessionProvider(this.service) {
+    _unlocked = service.isUnlocked;
     WidgetsBinding.instance.addObserver(this);
     _changes = service.sessionChanges.listen((_) {
       _unlocked = service.isUnlocked;

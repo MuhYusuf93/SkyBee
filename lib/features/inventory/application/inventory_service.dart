@@ -50,9 +50,9 @@ final class InventoryService {
   static const _ids = IdGenerator();
   Future<T> _write<T>(Future<T> Function(Transaction dbTxn) operation) =>
       database.transaction((dbTxn) async {
-        access.requireAccess();
+        await access.authorize(dbTxn);
         final result = await operation(dbTxn);
-        access.requireAccess();
+        await access.authorize(dbTxn);
         access.touch();
         return result;
       }, inventoryChanged: true);
@@ -65,9 +65,9 @@ final class InventoryService {
   Future<T> _read<T>(Future<T> Function(Database db) operation) {
     access.requireAccess();
     return database.read((db) async {
-      access.requireAccess();
+      await access.authorize(db);
       final value = await operation(db);
-      access.requireAccess();
+      await access.authorize(db);
       return value;
     });
   }

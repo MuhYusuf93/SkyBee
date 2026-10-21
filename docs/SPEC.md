@@ -1,6 +1,24 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Addendum21 Oktober2026 — handoff demo terpisah yang diminta pengguna:
+`skybee kasir` memakai package debug `com.example.kasir_app.skybee`, toko
+`toko skybee`, PIN dummy pilihan pengguna,100barang dengan variasi kondisi dan
+fakta pendukung melalui service. Tidak mengganti identitas ordinary. Seed hanya
+sekali di sandbox baru, tidak menimpa data pengujian selanjutnya. Pengguna
+menguji mandiri; tidak menunggu laporan hasil atau menjadwalkan follow-up.
+[Kontrak/implementasi/bukti](SKYBEE_DEMO_HANDOFF_20261021.md).
+Bukan M5.2/M6 atau perubahan identitas rilis.
+
 ## Addendum aktif M5.1 / M5.2 — 19 Oktober 2026
+
+Klarifikasi printer20 Oktober2026: pengguna meminta ruang kosong agar footer
+mencapai area sobek/potong. Source default feed profil baru menjadi6baris;
+kalibrasi tersimpan tetap dipakai (saved3 tidak diubah diam-diam). Footer
+diagnostik terlihat setelah tambahan3LF, sebelumnya dilaporkan belum tercetak;
+posisi versus flush belum dipastikan. Regresi host/native feed6 kini PASS;
+build debug/release0.5.1+8 dan handoff ordinary Poco selesai21 Oktober2026.
+Paper baru default6 belum diuji. Lihat [laporan akhir](M51_FINAL_REPORT_20261021.md).
+Bukan redesign M5.2.
 
 Kebutuhan baru setelah acceptance M5: [kontrak lengkap A–G](decisions/M51_REQUEST_20261019.md).
 M5.1 mencakup metadata ukuran desimal eksak/rak/catatan (bukan penjualan timbang),
@@ -18,6 +36,50 @@ stok/harga/HPP tetap pcs. Snapshot nullable pada sale_transaction_items menjaga
 fakta lama; catatan/rak tidak masuk payload struk. Kontrak lain A–G tetap aktif
 meskipun belum diimplementasikan, lihat laporan checkpoint.
 
+
+Checkpoint B: schema10 management_policy legacy/1m/5m/15m/immediate.
+Upgrade menjaga kunci background+idle5menit; fresh install immediate+idle5menit.
+Timed grace memakai idle termasuk background, resume tidak memperpanjang;
+keyguard/manual lock/restart/PIN/restore tidak dilampaui. Fresh proof sensitif
+terikat purpose dan60detik, scoped dialog juga dibatasi generation/deadline.
+Class3 CryptoObject per-use/binding lokal terpisah dari SQLCipher/backup;
+PIN aplikasi tetap alternatif, tidak menerima weak face/device credential.
+Biometrik fisik belum diuji; kode/hasil otomatis dirinci pada checkpoint.
+
+
+Checkpoint C: cetak kode tersimpan opsional sesudah konfirmasi penyimpanan awal,
+melalui fresh auth dan konfirmasi printer/rahasia. Claim60detik satu operasi,
+antrean output satu dokumen tanpa persist payload recovery. Mutex output juga
+melindungi koneksi manual dan restore; tidak auto retry/fallback. Snapshot struk
+pelanggan tidak membawa kode. Key64hex/arsip M5 tetap kompatibel. UI catatan
+salinan tersimpan hanya event konfirmasi tanpa isi. QR/mnemonik belum dibuat.
+
+
+Checkpoint F: schema11 menambah transport profil default Bluetooth untuk data
+lama, cursor50 terfilter transport/BINARY. USB Host optional memakai printer
+class7/subclass1/protocol1/2/BULK_OUT, izin dan perangkat eksplisit, identitas
+attachment/serial unik yang tidak ambigu, output gate lintas engine dan tanpa
+retry/fallback otomatis pada hasil ambigu. Adapter di source; diagnostik USB DV
+81byte lulus otomatis dan lima baris kertas PASS dilaporkan pengguna. Raster
+41717byte/11chunk kemudian diterima; logo/barang/nominal sesuai reported,
+footer baru terlihat setelah tambahan3LF. Default6 hanya teruji otomatis;
+paper default6/fault fisik belum terverifikasi. Hasil DV0target lama tetap historis,
+bukan PASS cetak. Detail/bukti:
+[USB Android](M51_USB_ANDROID.md).
+
+Checkpoint D/E/G,20 Oktober2026: implementasi schema12/13 tersedia. D memakai
+numpad internal/raw canonical dan CashTender received/applied/change/debt;
+konfigurasi maksimum8nominal per currency, input kosong ditolak, tindakan hutang
+nol eksplisit. Tender immutable atomik bersama checkout, legacy tidak dibackfill.
+E mengekspor snapshot laporan M4 dalam satu read transaction, keyset100row,
+CSV UTF8BOM aman formula dan XLSX identifiers/uang sebagai text eksak. SAF laporan
+dua fase, PIN setelah pemilih lokasi lalu aksi Tulis eksplisit/readback digest;
+cancel mencapai native stream. G menunggu backup valid, idle+charging/delay6jam,
+lease backup-work→DB tanpa menunggu, threshold1024free pages/25%, cooldown7hari
+sukses/1hari attempt, ruang2×DB+32MiB. VACUUM tidak prune/rekey; checkpoint WAL
+tanpa menunggu reader dan ukuran berkas fisik diverifikasi. Status lokal/reset
+sesudah restore. Kontrak/bukti dan batas fisik pada
+[D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md); M5.2 tetap menunggu desain.
 
 Bangun proyek Flutter lengkap untuk aplikasi kasir, persediaan barang, dan pencatatan piutang pelanggan. Saya seorang programmer dan menggunakan Android Studio. Saya akan memakai aplikasi ini di toko pribadi, memperbaikinya berdasarkan penggunaan nyata, lalu mempertimbangkan rilis di Google Play.
 

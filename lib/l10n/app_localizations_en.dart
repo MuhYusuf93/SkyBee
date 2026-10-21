@@ -1884,4 +1884,214 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m51SessionHelp =>
       'Timed choices include background inactivity; returning does not extend the session. Immediate lock also has a 5-minute idle limit. App dialogs are bounded to 60 seconds; full file/account pickers may require PIN once on return. Screen lock, restart, manual lock, PIN changes and restore invalidate access. Cashier stays open. Grace is a convenience choice retaining temporary access.';
+
+  @override
+  String get m51PrintRecovery => 'Print recovery code';
+
+  @override
+  String get m51RecoveryPrintWarning =>
+      'The paper contains a secret that unlocks backups. Check that you own this destination, collect the paper and store it separately from archives/the device. Printer transport and memory are not guaranteed confidential. There is no automatic retry.';
+
+  @override
+  String get m51RecoveryPrintStoredOnly =>
+      'Prints the saved code. For a new or rotated code, confirm and save it first; printing is optional.';
+
+  @override
+  String get m51RecoveryPrinterRequired =>
+      'Select and save a printer profile in printer settings first.';
+
+  @override
+  String get m51RecoveryPrinterChanged =>
+      'The printer profile changed. Check and confirm the destination again.';
+
+  @override
+  String get m51RecoveryPrintSubmitted =>
+      'Print data submitted. Check the paper and all 64 characters; submitted bytes do not prove complete paper output.';
+
+  @override
+  String get m51RecoveryPrintNotSent =>
+      'The code was not sent. Check the printer/connection. Reprinting requires new authentication and confirmation.';
+
+  @override
+  String get m51RecoveryPrintUnknown =>
+      'Print outcome is uncertain; part of the code may be on paper. No automatic retry. Secure the paper, check the printer, then authenticate again if choosing to reprint.';
+
+  @override
+  String get m51RecoveryPaperStored =>
+      'I checked the entire code on paper and stored my copy privately.';
+
+  @override
+  String get m51ConfirmPaperStored => 'Record copy storage confirmation';
+
+  @override
+  String get m51RecoveryCopyStored =>
+      'Copy storage confirmation recorded without retaining its contents.';
+
+  @override
+  String get m51PrinterTitle => 'Bluetooth / USB printer';
+
+  @override
+  String get m51UsbHelp =>
+      'USB OTG needs USB Host, a data cable, power and an ESC/POS USB printer-class device. Select a device before granting access. Vendor USB serial is not supported. Avoid unplugging during output; failed delivery never retries automatically.';
+
+  @override
+  String get m51UsbLoad => 'Load USB devices';
+
+  @override
+  String get m51UsbEmpty =>
+      'No supported class 7/1 USB printer detected. Check OTG, data cable and power.';
+
+  @override
+  String get m51UsbSelect =>
+      'Select a USB printer, then Connect to request access to that device only.';
+
+  @override
+  String get m51UsbTemporary =>
+      'Temporary identity: a printer without a unique serial must be reselected after detach or app restart. An old profile never automatically connects to a similar printer.';
+
+  @override
+  String get m51UsbUnavailable =>
+      'USB Host unavailable. Cashier and Bluetooth remain usable.';
+
+  @override
+  String get m51UsbPermissionDenied =>
+      'USB permission was denied or interrupted. Re-enter the app PIN if locked. Use Retry USB permission only to request it explicitly.';
+
+  @override
+  String get m51UsbRetryPermission => 'Retry USB permission';
+
+  @override
+  String get m51UsbSelectAgain =>
+      'USB printer detached, changed identity or is ambiguous. Reload and reselect; no automatic reprint.';
+
+  @override
+  String get m51UsbBusy =>
+      'USB interface is busy or cannot be claimed without displacing a driver. Close other app connections, then retry explicitly.';
+
+  @override
+  String get m51UsbFailed =>
+      'USB operation failed. Check power, OTG, data cable, permission and printer compatibility. No automatic reprint.';
+
+  @override
+  String get m51Tender => 'Cash received';
+
+  @override
+  String get m51Applied => 'Payment applied';
+
+  @override
+  String get m51Change => 'Change';
+
+  @override
+  String get m51Numpad => 'Numpad';
+
+  @override
+  String get m51QuickCash => 'Quick cash';
+
+  @override
+  String get m51ExactCash => 'Exact amount';
+
+  @override
+  String get m51TenderRequired =>
+      'Enter cash received, choose Exact amount, or explicitly choose All debt.';
+
+  @override
+  String get m51Backspace => 'Backspace';
+
+  @override
+  String get m51ClearTender => 'Clear amount';
+
+  @override
+  String get m51ConfirmTender => 'Confirm amount';
+
+  @override
+  String get m51QuickSettings => 'Quick cash amounts';
+
+  @override
+  String get m51ResetQuick => 'Reset defaults';
+
+  @override
+  String get m51Export => 'Export report';
+
+  @override
+  String get m51ExportPolicy =>
+      'Export the full selected period and customer filter. Inventory and receivables are current snapshots, not historical positions. Files contain store data. UTF-8 CSV: import barcodes, IDs and amounts as text to preserve precision; formula-like text is prefixed with an apostrophe. Not an official tax form.';
+
+  @override
+  String get m51ExportRows => 'Rows prepared';
+
+  @override
+  String get m51ExportCreate => 'Prepare and choose destination';
+
+  @override
+  String get m51ExportSelected =>
+      'Destination selected. Re-enter PIN if requested, then press Write file. Destination expires in two minutes.';
+
+  @override
+  String get m51ExportWrite => 'Write file';
+
+  @override
+  String get m51ExportVerified =>
+      'Report written and verified by reading it back.';
+
+  @override
+  String get m51ExportFailed =>
+      'Export did not complete. Check PIN session, storage and destination. Select again if the destination expired.';
+
+  @override
+  String get m51MaintenancePolicy =>
+      'Space maintenance is scheduled after a valid backup, while idle and charging. It skips low benefit, busy operations or insufficient storage. History is never deleted.';
+
+  @override
+  String get m51MaintenanceStatus => 'Space maintenance';
+
+  @override
+  String get m51MaintenanceAttempt => 'Last attempt';
+
+  @override
+  String get m51MaintenanceSuccess => 'Last success';
+
+  @override
+  String get m51Space_databaseBusy =>
+      'Database is in use; maintenance was skipped.';
+
+  @override
+  String get m51Space_none => 'Not scheduled';
+
+  @override
+  String get m51Space_pending => 'Waiting for idle conditions';
+
+  @override
+  String get m51Space_running => 'Running';
+
+  @override
+  String get m51Space_success => 'Successful';
+
+  @override
+  String get m51Space_skipped => 'Skipped';
+
+  @override
+  String get m51Space_error => 'Did not complete';
+
+  @override
+  String get m51Space_cooldown => 'Maintenance cooldown is active.';
+
+  @override
+  String get m51Space_interrupted =>
+      'Previous process was interrupted; waiting for the next valid backup.';
+
+  @override
+  String get m51Space_lowBenefit => 'Reclaimable space is below the threshold.';
+
+  @override
+  String get m51Space_insufficientSpace => 'Insufficient temporary space.';
+
+  @override
+  String get m51Space_deviceInUse => 'Device is in use or not charging.';
+
+  @override
+  String get m51Space_compacted => 'Database compacted and integrity verified.';
+
+  @override
+  String get m51Space_maintenanceFailed =>
+      'Maintenance failed. The previous valid backup remains available.';
 }

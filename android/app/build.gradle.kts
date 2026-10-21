@@ -15,6 +15,13 @@ val isIntegrationFixture = project.findProperty("dart-defines")?.toString()
     ?.split(',')?.any {
         String(Base64.getDecoder().decode(it)) == "KASIR_INTEGRATION_TEST=true"
     } == true
+val isSkybeeDemo = project.findProperty("dart-defines")?.toString()
+    ?.split(',')?.any {
+        String(Base64.getDecoder().decode(it)) == "KASIR_SKYBEE_DEMO=true"
+    } == true
+if (isIntegrationFixture && isSkybeeDemo) {
+    throw GradleException("Skybee demo and integration fixture are separate sandboxes.")
+}
 
 // Flutter's packaging defaults retain all three supported ABIs even for a
 // --target-platform build. Compile our CMake library for exactly the requested
@@ -37,6 +44,15 @@ val entrypointPath = project.findProperty("target")?.toString() ?: "lib/main.dar
 val entrypointCandidate = File(entrypointPath)
 val entrypointFile = if (entrypointCandidate.isAbsolute) entrypointCandidate else
     project.rootProject.projectDir.parentFile.resolve(entrypointPath)
+val skybeeEntrypoint = project.rootProject.projectDir.parentFile.resolve("lib/main_skybee_demo.dart").canonicalFile
+if (isSkybeeDemo != (entrypointFile.canonicalFile == skybeeEntrypoint)) {
+    throw GradleException("Skybee demo requires its dedicated entrypoint and KASIR_SKYBEE_DEMO=true together.")
+}
+if (isSkybeeDemo && gradle.startParameter.taskNames.any {
+    it.contains("Release", ignoreCase = true) || it.contains("Profile", ignoreCase = true)
+}) {
+    throw GradleException("Skybee populated demo is debug-only.")
+}
 val fixtureDirectory = project.rootProject.projectDir.parentFile.resolve("integration_test").canonicalFile.toPath()
 if (!isIntegrationFixture && entrypointFile.canonicalFile.toPath().startsWith(fixtureDirectory)) {
     throw GradleException("Fixture entrypoints require KASIR_INTEGRATION_TEST=true. Use tools/test_android.ps1.")
@@ -52,6 +68,9 @@ if (!isIntegrationFixture && entrypointFile.isFile) {
 android {
     if (isIntegrationFixture) {
         sourceSets.getByName("main").java.srcDir("src/integrationFixture/kotlin")
+    }
+    if (isSkybeeDemo) {
+        sourceSets.getByName("main").java.srcDir("src/skybeeDemo/kotlin")
     }
     namespace = "com.example.kasir_app"
     compileSdk = flutter.compileSdkVersion
@@ -78,10 +97,21 @@ android {
             cmake { abiFilters.addAll(kdfTargetAbis) }
         }
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = if (isIntegrationFixture) "com.example.kasir_app.integration" else "com.example.kasir_app"
-        manifestPlaceholders["appLabel"] = if (isIntegrationFixture) "kasir_app tests" else "kasir_app"
-        manifestPlaceholders["launcherActivity"] = if (isIntegrationFixture)
-            "com.example.kasir_app.IntegrationActivity" else "com.example.kasir_app.MainActivity"
+        applicationId = when {
+            isIntegrationFixture -> "com.example.kasir_app.integration"
+            isSkybeeDemo -> "com.example.kasir_app.skybee"
+            else -> "com.example.kasir_app"
+        }
+        manifestPlaceholders["appLabel"] = when {
+            isIntegrationFixture -> "kasir_app tests"
+            isSkybeeDemo -> "skybee kasir"
+            else -> "kasir_app"
+        }
+        manifestPlaceholders["launcherActivity"] = when {
+            isIntegrationFixture -> "com.example.kasir_app.IntegrationActivity"
+            isSkybeeDemo -> "com.example.kasir_app.SkybeeDemoActivity"
+            else -> "com.example.kasir_app.MainActivity"
+        }
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

@@ -216,7 +216,7 @@ final class AlertService {
   Future<List<Map<String, Object?>>> page({int after = 0}) async {
     access!.requireAccess();
     return database.read((db) async {
-      access!.requireAccess();
+      await access!.authorize(db);
       final rows = await db.query(
         'alert_state',
         where: 'active=1 AND notification_id>?',
@@ -224,7 +224,7 @@ final class AlertService {
         orderBy: 'notification_id',
         limit: 50,
       );
-      access!.requireAccess();
+      await access!.authorize(db);
       return rows;
     });
   }
@@ -232,9 +232,9 @@ final class AlertService {
   Future<Map<String, Object?>> settings() async {
     access!.requireAccess();
     return database.read((db) async {
-      access!.requireAccess();
+      await access!.authorize(db);
       final rows = await db.query('m5_store', where: 'id=1');
-      access!.requireAccess();
+      await access!.authorize(db);
       return rows.isEmpty
           ? {'notifications_enabled': 0, 'expiry_warning_days': 5}
           : rows.single;
@@ -243,7 +243,7 @@ final class AlertService {
 
   Future<void> configure({required bool enabled, required int days}) =>
       database.transaction((dbTxn) async {
-        access!.requireAccess();
+        await access!.authorize(dbTxn);
         if (days < 0 || days > 365) {
           throw const FormatException('alertDaysInvalid');
         }

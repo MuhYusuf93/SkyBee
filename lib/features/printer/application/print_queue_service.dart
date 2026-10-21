@@ -11,6 +11,7 @@ import '../domain/printer_profile.dart';
 import 'printer_transport.dart';
 import 'receipt_layout.dart';
 import 'receipt_snapshots.dart';
+import 'printer_output_gate.dart';
 
 final class SalePrintPreview {
   const SalePrintPreview(this.layout, this.logo);
@@ -22,13 +23,22 @@ final class SalePrintPreview {
 /// a second tap/instance cannot send it twice. In-flight jobs become unknown on
 /// startup, are never automatically retried, and never call checkout or stock.
 final class PrintQueueService {
-  PrintQueueService(this.database, this.checkout, this.access, this.transport);
+  PrintQueueService(
+    this.database,
+    this.checkout,
+    this.access,
+    this.transport, {
+    PrinterOutputGate? outputGate,
+  }) : outputGate = outputGate ?? defaultPrinterOutputGate();
   final DatabaseCoordinator database;
   final CheckoutService checkout;
   final ManagementService access;
   final PrinterTransport transport;
+  final PrinterOutputGate outputGate;
+  PrinterOutputLease? _restoreLease;
   Future<void> _tail = Future.value();
   bool _suspended = false;
+  bool get suspended => _suspended;
   Future<void> pauseForRestore() async {
     _suspended = true;
     try {
@@ -37,16 +47,28 @@ final class PrintQueueService {
       /* an in-flight send remains ambiguous */
     }
     await _tail;
+    // Restore cannot promote data while another engine is printing. Acquire
+    // before the database maintenance lease to avoid printer→DB lock inversion.
+    _restoreLease = await outputGate.acquire();
   }
 
-  void resumeAfterRestore() {
+  Future<void> resumeAfterRestore() async {
+    final lease = _restoreLease;
+    _restoreLease = null;
+    await lease?.release();
     _suspended = false;
   }
 
   static const ids = Uuid();
-  Future<SalePrintPreview> preview(EntityId saleId, {bool copy = false}) async {
+  Future<SalePrintPreview> preview(
+    EntityId saleId, {
+    bool copy = false,
+    bool management = false,
+  }) async {
+    if (management) await access.authorizeCurrent();
     final receipt = await checkout.receipt(saleId);
     return database.transaction((dbTxn) async {
+      if (management) await access.authorize(dbTxn);
       final selected = await dbTxn.query(
         'printer_profiles',
         where: 'selected=1',
@@ -80,7 +102,7 @@ final class PrintQueueService {
         )).single;
         logo = row['bytes'] as Uint8List;
       }
-      return SalePrintPreview(
+      final preview = SalePrintPreview(
         ReceiptLayout.sale(
           {...snapshot, 'cancelled': cancelled},
           profile,
@@ -88,6 +110,8 @@ final class PrintQueueService {
         ),
         logo,
       );
+      if (management) await access.authorize(dbTxn);
+      return preview;
     });
   }
 
@@ -98,10 +122,19 @@ final class PrintQueueService {
       'updated_at': DateTime.now().millisecondsSinceEpoch,
     }, where: "status='sending'");
   });
-  Future<String> prepare(EntityId saleId, {bool copy = false}) async {
+
+  /// Cashier receipts/copies stay public. History explicitly supplies management
+  /// context so a late confirmation cannot bypass PIN revocation on that route.
+  Future<String> prepare(
+    EntityId saleId, {
+    bool copy = false,
+    bool management = false,
+  }) async {
+    if (management) await access.authorizeCurrent();
     // Service receipt existence is the commit boundary. No draft can be printed.
     final receipt = await checkout.receipt(saleId);
     return database.transaction((dbTxn) async {
+      if (management) await access.authorize(dbTxn);
       final chosen = await dbTxn.query(
         'printer_profiles',
         where: 'selected=1',
@@ -138,18 +171,21 @@ final class PrintQueueService {
         'created_at': now,
         'updated_at': now,
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
-      return (await dbTxn.query(
-            'print_jobs',
-            columns: ['id'],
-            where: 'operation_key=?',
-            whereArgs: [operation],
-          )).single['id']
-          as String;
+      final preparedId =
+          (await dbTxn.query(
+                'print_jobs',
+                columns: ['id'],
+                where: 'operation_key=?',
+                whereArgs: [operation],
+              )).single['id']
+              as String;
+      if (management) await access.authorize(dbTxn);
+      return preparedId;
     });
   }
 
   Future<String> prepareCalibration() => database.transaction((dbTxn) async {
-    access.requireAccess();
+    await access.authorize(dbTxn);
     final selected = await dbTxn.query(
       'printer_profiles',
       where: 'selected=1',
@@ -175,6 +211,7 @@ final class PrintQueueService {
       'created_at': now,
       'updated_at': now,
     });
+    await access.authorize(dbTxn);
     return id;
   });
   Future<Map<String, Object?>> job(String id) => database.read(
@@ -195,11 +232,16 @@ final class PrintQueueService {
           whereArgs: [id],
         );
       });
-  Future<String> send(String id) {
-    final operation = _tail.then((_) => _send(id));
+
+  /// Only closures, never a persistent secret payload. Sensitive operations
+  /// fetch their recovery material after owning this same whole-output lease.
+  Future<T> serialOutput<T>(Future<T> Function() action) {
+    final operation = _tail.then((_) => withPrinterOutput(outputGate, action));
     _tail = operation.then<void>((_) {}, onError: (Object _, StackTrace _) {});
     return operation;
   }
+
+  Future<String> send(String id) => serialOutput(() => _send(id));
 
   Future<String> _send(String id) async {
     if (_suspended) return 'cancelled';

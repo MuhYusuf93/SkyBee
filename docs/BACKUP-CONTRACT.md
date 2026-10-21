@@ -1,5 +1,16 @@
 # Kontrak backup/restore untuk M5
 
+Addendum M5.1 schema13,20 Oktober2026: arsip mempertahankan checkout_tenders,
+raw/mode/minor draft serta cash_quick_amounts per currency, selain metadata A.
+Import staging dimigrasikan dahulu lalu divalidasi type/currency/raw/minor,
+relasi tender/header/payment dan rekonsiliasi. Legacy tanpa tender tetap null,
+bukan dihitung dari master. Restore mengosongkan space_maintenance selain
+consent/binding/profil peripheral lokal. SQLCipher native portable lintas key
+Poco dan DV masing-masing1PASS pada suite terbaru; bukan klaim transfer fisik
+antar kedua perangkat. Maintenance hanya kandidat setelah arsip tervalidasi,
+tidak mengubah keberhasilan arsip bila maintenance skip/fail. Detail:
+[D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md).
+
 Kontrak aktif M5.1-A schema9: seluruh metadata nullable produk dan snapshot
 ukuran/rak/catatan sale items ikut snapshot SQLCipher/arsip portable. Arsip M5
 schema8 dimigrasikan aditif pada staging; kolom historis tetap null. Validasi

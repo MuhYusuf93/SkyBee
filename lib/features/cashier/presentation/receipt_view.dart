@@ -71,6 +71,15 @@ class ReceiptView extends StatelessWidget {
             ),
           ),
         Text('${tr(context, 'total')}: ${amount(receipt.total.amountMinor)}'),
+        if (receipt.cashTender != null) ...[
+          Text(
+            '${tr(context, 'm51Tender')}: ${amount(receipt.cashTender!.received.amountMinor)}',
+          ),
+          Text(
+            '${tr(context, 'm51Change')}: ${amount(receipt.cashTender!.change.amountMinor)}',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        ],
         Text('${tr(context, 'm3Paid')}: ${amount(receipt.paid.amountMinor)}'),
         Text(
           '${tr(context, 'm3RemainingDebt')}: ${amount(receipt.outstanding)}',

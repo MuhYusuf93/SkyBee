@@ -11,6 +11,7 @@ import '../../settings/presentation/language_button.dart';
 import '../domain/report_models.dart';
 import 'financial_filters.dart';
 import 'reports_provider.dart';
+import 'report_export_screen.dart';
 
 class ReportsScreen extends StatelessWidget {
   const ReportsScreen({super.key});
@@ -139,6 +140,16 @@ class _ReportsBodyState extends State<_ReportsBody> {
                   ),
                 ],
                 Text(tr(context, 'm4PeriodPolicy')),
+                if (filter != null)
+                  OutlinedButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => ReportExportScreen(filter: filter),
+                      ),
+                    ),
+                    icon: const Icon(Icons.file_download_outlined),
+                    label: Text(tr(context, 'm51Export')),
+                  ),
                 if (state.error != null) Text(tr(context, state.error!)),
                 Wrap(
                   spacing: 12,

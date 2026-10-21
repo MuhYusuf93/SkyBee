@@ -55,3 +55,6 @@ app.*.map.json
 /docs/evidence/**/*.db-*
 /docs/evidence/**/*.sqlite
 /docs/evidence/**/*.sqlite3
+
+# Nested plugin Gradle caches are local build metadata, never public sources.
+**/.gradle/

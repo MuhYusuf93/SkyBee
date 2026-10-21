@@ -2,6 +2,8 @@ package com.example.kasir_app
 
 import android.os.Bundle
 import android.content.ClipboardManager
+import android.app.NotificationManager
+import android.app.Notification
 import android.view.WindowManager
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -12,6 +14,34 @@ import io.flutter.plugin.common.MethodChannel
 class IntegrationActivity : MainActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        // Read-only fixture boundary: no screenshot, display configuration or
+        // data access. Confirms production protectedScreen applies its OS flag.
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger,
+            "kasir_app/window_probe").setMethodCallHandler { call, result ->
+            if (packageName != "com.example.kasir_app.integration") {
+                result.error("probe_unavailable", "Isolated fixture required.", null)
+            } else when (call.method) {
+                "secureFlag" -> result.success(window.attributes.flags and
+                    WindowManager.LayoutParams.FLAG_SECURE != 0)
+                "hasFocus" -> result.success(hasWindowFocus())
+                else -> result.notImplemented()
+            }
+        }
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger,
+            "kasir_app/notification_probe").setMethodCallHandler { call, result ->
+            val id = call.argument<Int>("id")
+            if (call.method != "metadata") result.notImplemented()
+            else if (packageName != "com.example.kasir_app.integration" || id == null ||
+                id !in 1777000000..1777999999) {
+                result.error("probe_unavailable", "Public fixture notification required.", null)
+            } else {
+                val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                val note = manager.activeNotifications.firstOrNull { it.id == id &&
+                    it.packageName == packageName }?.notification
+                result.success(mapOf("exists" to (note != null),
+                    "privateVisibility" to (note?.visibility == Notification.VISIBILITY_PRIVATE)))
+            }
+        }
         // Fixture-only diagnostic: never read an Item, text, URI, or secret.
         // The probe calls this only after explicitly copying its PUBLIC value
         // through the production plugin. Ordinary builds exclude this class.

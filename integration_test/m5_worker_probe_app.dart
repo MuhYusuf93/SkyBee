@@ -7,6 +7,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kasir_app/app/app_services.dart';
 import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
+import 'package:kasir_app/data/database/database_gate.dart';
+import 'package:kasir_app/data/database/encrypted_database.dart';
 import 'package:kasir_app/features/alerts/application/android_stock_notifications.dart';
 import 'package:kasir_app/features/backup/application/backup_service.dart';
 import 'package:kasir_app/features/backup/application/backup_retry_store.dart';
@@ -21,7 +23,7 @@ import 'package:workmanager/workmanager.dart';
 const nonce = String.fromEnvironment('M5_WORKER_NONCE');
 void validateNonce(String value) {
   if (!const bool.fromEnvironment('KASIR_INTEGRATION_TEST') ||
-      !RegExp(r'^[0-9]{1,20}$').hasMatch(value)) {
+      !RegExp(r'^[0-9]{10,20}$').hasMatch(value)) {
     throw StateError('isolatedWorkerOnly');
   }
 }
@@ -30,6 +32,32 @@ Future<File> marker(String value, String suffix) async =>
     File(p.join(await getDatabasesPath(), 'm5_worker_$value.$suffix.json'));
 String taskName(String value) => 'kasir-m5-probe-$value';
 
+/// One namespace spans all three engines. A retained manual campaign's root
+/// recovery, origin and retry budget must never be used by this disposable probe.
+KasirPlatform fixturePlatform(String value) {
+  validateNonce(value);
+  return KasirPlatform(fixtureNamespace: 'test-m51-$value');
+}
+
+Future<DatabaseCoordinator> openProbeDatabase(
+  String value, {
+  bool headless = false,
+}) async {
+  validateNonce(value);
+  final location = p.join(await getDatabasesPath(), 'm5_worker_$value.db');
+  return DatabaseCoordinator(
+    factory: databaseFactory,
+    databasePath: location,
+    gate: const AndroidDatabaseGate(),
+    closeAfterOperation: headless,
+    encryption: EncryptedDatabase(
+      location,
+      platform: fixturePlatform(value),
+      keyName: 'test-worker-db-$value',
+    ),
+  );
+}
+
 @pragma('vm:entry-point')
 void workerProbeDispatcher() {
   Workmanager().executeTask((task, input) async {
@@ -37,12 +65,9 @@ void workerProbeDispatcher() {
     final value = input?['nonce'] as String? ?? '';
     validateNonce(value);
     if (task != taskName(value)) return false;
-    final database = await DatabaseCoordinator.android(
-      headless: true,
-      databaseName: 'm5_worker_$value.db',
-    );
+    final database = await openProbeDatabase(value, headless: true);
     try {
-      const platform = KasirPlatform();
+      final platform = fixturePlatform(value);
       final code = await platform.key('test-worker-$value', allowCreate: false);
       if (sha256.convert(utf8.encode(code)).toString() != input!['codeHash']) {
         throw StateError('workerKeyMismatch');
@@ -53,16 +78,15 @@ void workerProbeDispatcher() {
       await notifications.initialize(() {});
       final app = AppServices(database);
       final retryAttempt = await database.exclusive(
-        (_) => const KeystoreBackupRetryStore().claim(
-          'worker-probe-$value',
-          int.parse(value),
-          3,
-        ),
+        (_) => KeystoreBackupRetryStore(
+          platform,
+        ).claim('worker-probe-$value', int.parse(value), 3),
       );
       if (retryAttempt != 2) throw StateError('workerRetryBudgetNotReopened');
       final backup = await BackupService(
         database,
         app.management,
+        platform: platform,
       ).create(headless: true, code: code);
       final version = await database.read(
         (db) => db.rawQuery('PRAGMA cipher_version'),
@@ -114,9 +138,7 @@ Future<void> main() async {
       ),
     ),
   );
-  final database = await DatabaseCoordinator.android(
-    databaseName: 'm5_worker_$nonce.db',
-  );
+  final database = await openProbeDatabase(nonce);
   try {
     final app = AppServices(database);
     await app.management.configure('Synthetic worker probe', '0001', '0001');
@@ -131,14 +153,12 @@ Future<void> main() async {
     }
     final code = BackupService.newRecoveryCode();
     final retryAttempt = await database.exclusive(
-      (_) => const KeystoreBackupRetryStore().claim(
-        'worker-probe-$nonce',
-        int.parse(nonce),
-        3,
-      ),
+      (_) => KeystoreBackupRetryStore(
+        fixturePlatform(nonce),
+      ).claim('worker-probe-$nonce', int.parse(nonce), 3),
     );
     if (retryAttempt != 1) throw StateError('workerRetryBudgetSetupFailed');
-    await const KasirPlatform().saveSecret('test-worker-$nonce', code);
+    await fixturePlatform(nonce).saveSecret('test-worker-$nonce', code);
     await Workmanager().initialize(workerProbeDispatcher);
     await Workmanager().registerOneOffTask(
       taskName(nonce),

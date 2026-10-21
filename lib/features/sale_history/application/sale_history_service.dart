@@ -25,7 +25,7 @@ final class SaleHistoryService {
     EntityId? customerId,
     SaleHistoryStatus status = SaleHistoryStatus.all,
   }) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final zone = await timeZone();
     return SaleHistoryFilter(
       start: access.clock.dayStart(from, zone),
@@ -36,7 +36,7 @@ final class SaleHistoryService {
   }
 
   Future<Map<String, Object?>?> reversal(EntityId id) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final rows = await database.read(
       (db) => db.query(
         'sale_transaction_reversals',
@@ -45,7 +45,7 @@ final class SaleHistoryService {
         limit: 1,
       ),
     );
-    access.requireAccess();
+    await access.authorizeCurrent();
     return rows.isEmpty ? null : Map.unmodifiable(rows.single);
   }
 
@@ -55,14 +55,14 @@ final class SaleHistoryService {
     SaleHistoryFilter filter, {
     SaleHistoryCursor? after,
   }) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final result = await repository.page(filter: filter, after: after);
-    access.requireAccess();
+    await access.authorizeCurrent();
     return result;
   }
 
   Future<(SaleReceipt, CostAmount)> detail(EntityId id) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final result = await database.read((db) async {
       final receipt = await store.receipt(db, id);
       final row = (await db.query(
@@ -80,7 +80,7 @@ final class SaleHistoryService {
         ),
       );
     });
-    access.requireAccess();
+    await access.authorizeCurrent();
     return result;
   }
 }

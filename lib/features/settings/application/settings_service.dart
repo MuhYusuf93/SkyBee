@@ -40,7 +40,7 @@ final class SettingsService {
   /// Every product has an explicit currency-bound price, including zero. Never
   /// retag it; only non-financial masters/empty draft headers permit a change.
   Future<void> setCurrency(String code) => database.transaction((dbTxn) async {
-    access.requireAccess();
+    await access.authorize(dbTxn);
     final policy = CurrencyPolicy.forCode(code);
     final settings = (await dbTxn.query('store_settings')).single;
     if (settings['currency_code'] == code) return;
@@ -64,18 +64,18 @@ final class SettingsService {
       });
     }
     await access.audit(dbTxn, 'currency_changed');
-    access.requireAccess();
+    await access.authorize(dbTxn);
     access.touch();
   });
   Future<Map<String, Object?>> load() async {
     access.requireAccess();
     return database.read((db) async {
       // The session may have been revoked while this read waited in queue.
-      access.requireAccess();
+      await access.authorize(db);
       final value = Map<String, Object?>.unmodifiable(
         (await db.query('store_settings')).single,
       );
-      access.requireAccess();
+      await access.authorize(db);
       return value;
     });
   }
@@ -92,7 +92,7 @@ final class SettingsService {
     String? contact,
     String? footer,
   }) => database.transaction((dbTxn) async {
-    access.requireAccess();
+    await access.authorize(dbTxn);
     if (name.trim().isEmpty) throw const AppError('storeNameIsRequired');
     try {
       access.clock.validateZone(zone.trim());
@@ -107,7 +107,7 @@ final class SettingsService {
       'receipt_footer': footer?.trim(),
     }, where: 'id=1');
     await access.audit(dbTxn, 'settings_changed');
-    access.requireAccess();
+    await access.authorize(dbTxn);
     access.touch();
   }, inventoryChanged: true);
 }

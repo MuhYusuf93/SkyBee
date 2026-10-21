@@ -45,57 +45,65 @@ class _ManagementGateState extends State<ManagementGate> {
   }
 
   @override
-  Widget build(
-    BuildContext context,
-  ) => Selector<ManagementSessionProvider, bool>(
-    selector: (_, state) => state.unlocked,
-    builder: (context, unlocked, _) {
-      if (unlocked) _opened = true;
-      return Stack(
-        fit: StackFit.expand,
-        children: [
-          if (_opened)
-            Offstage(
-              offstage: !unlocked,
-              child: TickerMode(
-                enabled: unlocked,
-                child: ExcludeSemantics(
-                  excluding: !unlocked,
-                  child: AbsorbPointer(
-                    absorbing: !unlocked,
-                    child: Listener(
-                      onPointerDown: (_) =>
-                          context.read<ManagementSessionProvider>().activity(),
-                      child: Focus(
-                        onKeyEvent: (_, _) {
-                          context.read<ManagementSessionProvider>().activity();
-                          return KeyEventResult.ignored;
-                        },
-                        child: widget.child,
+  Widget build(BuildContext context) =>
+      Selector<ManagementSessionProvider, bool>(
+        selector: (_, state) => state.unlocked,
+        builder: (context, unlocked, _) {
+          if (unlocked) _opened = true;
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              if (_opened)
+                Offstage(
+                  offstage: !unlocked,
+                  child: TickerMode(
+                    enabled: unlocked,
+                    child: ExcludeSemantics(
+                      excluding: !unlocked,
+                      child: ExcludeFocus(
+                        excluding: !unlocked,
+                        child: AbsorbPointer(
+                          absorbing: !unlocked,
+                          child: Listener(
+                            onPointerDown: (_) => context
+                                .read<ManagementSessionProvider>()
+                                .activity(),
+                            child: Focus(
+                              onKeyEvent: (_, _) {
+                                context
+                                    .read<ManagementSessionProvider>()
+                                    .activity();
+                                return KeyEventResult.ignored;
+                              },
+                              child: widget.child,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          if (!unlocked)
-            Scaffold(
-              appBar: AppBar(
-                actions: const [LanguageButton()],
-                title: Text(tr(context, 'managementLocked')),
-              ),
-              body: Center(
-                child: FilledButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute<bool>(builder: (_) => const PinScreen()),
+              if (!unlocked)
+                Scaffold(
+                  key: const ValueKey('management-locked'),
+                  appBar: AppBar(
+                    actions: const [LanguageButton()],
+                    title: Text(tr(context, 'managementLocked')),
                   ),
-                  child: Text(tr(context, 'enterPinAgain')),
+                  body: Center(
+                    child: FilledButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute<bool>(
+                          builder: (_) => const PinScreen(),
+                        ),
+                      ),
+                      child: Text(tr(context, 'enterPinAgain')),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-        ],
+            ],
+          );
+        },
       );
-    },
-  );
 }

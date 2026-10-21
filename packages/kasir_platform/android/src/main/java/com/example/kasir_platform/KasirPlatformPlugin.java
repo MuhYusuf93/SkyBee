@@ -42,9 +42,12 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
     private MethodChannel channel;
     private ActivityPluginBinding activity;
     private PrinterBluetooth bluetooth;
+    private PrinterUsb usb;
+    private volatile String activePrinter;
     private StrongBiometricsBridge biometrics;
     private final Set<String> protectedScreens = new HashSet<>();
     private final DocumentPicker picker=new DocumentPicker(IO);
+    private final ReportDocumentExport reportPicker=new ReportDocumentExport(IO);
     private MethodChannel.Result permissionResult;
     private static final ExecutorService IO = Executors.newCachedThreadPool();
     private static final Map<String,Semaphore> GATES = new ConcurrentHashMap<>();
@@ -58,13 +61,15 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
     @Override public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         context = binding.getApplicationContext();
         bluetooth=new PrinterBluetooth(context);
+        usb=new PrinterUsb(context,IO);
         biometrics=new StrongBiometricsBridge(context);
         channel = new MethodChannel(binding.getBinaryMessenger(), "kasir_app/platform");
         channel.setMethodCallHandler(this);
     }
     @Override public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         channel.setMethodCallHandler(null);
-        bluetooth.dispose();picker.detach();
+        bluetooth.dispose();picker.detach();reportPicker.detach();
+        usb.dispose();
         biometrics.dispose();
         // The engine owner drains DB work before detaching. Process death is
         // handled by the kernel, not by deleting a lock file or a database.
@@ -100,9 +105,20 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
             return;
         }
         if(call.method.equals("btPermissions")){requestBluetoothPermissions(result);return;}
+        if(call.method.equals("usbPermission")){
+            try{usb.permission(call.argument("device"),Boolean.TRUE.equals(call.argument("retry"))).whenComplete((answer,error)->main.post(()->{
+                if(error!=null)result.error("usb_permission_unavailable","USB permission unavailable.",null);else result.success(answer);
+            }));}catch(Exception error){result.error("usb_permission_unavailable","USB permission unavailable.",null);}return;
+        }
         if(call.method.equals("pickExport")||call.method.equals("pickImport")){
             try{Number max=call.argument("maxBytes");picker.pick(result,call.method.equals("pickExport"),privateFile(call.argument("path")),call.argument("mime"),max==null?null:max.longValue(),call.argument("displayName"));}
             catch(Exception error){result.error("document_path_invalid","Invalid private staging path.",null);}return;
+        }
+        if(call.method.equals("chooseReportExport")){reportPicker.choose(result,call.argument("displayName"),call.argument("mime"));return;}
+        if(call.method.equals("cancelReportExport")){reportPicker.cancel(call.argument("token"));result.success(true);return;}
+        if(call.method.equals("writeReportExport")){
+            try{reportPicker.write(result,call.argument("token"),privateFile(call.argument("path")));}
+            catch(Exception error){result.error("report_path_invalid","Invalid report staging path.",null);}return;
         }
         if(call.method.equals("btDiscover")){
             try{bluetooth.discover().whenComplete((answer,error)->main.post(()->{
@@ -116,6 +132,12 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
                     case "saveSecret" -> { synchronized (SECRETS) { writeSecret(call.argument("name"), call.argument("secret")); } yield true; }
                     case "securityInfo" -> { synchronized (SECRETS) { yield securityInfo(); } }
                     case "acquire" -> acquire(call.argument("name"));
+                    case "tryAcquire" -> tryAcquire(call.argument("name"));
+                    case "maintenanceConditions" -> {
+                        android.os.PowerManager power=(android.os.PowerManager)context.getSystemService(Context.POWER_SERVICE);
+                        android.os.BatteryManager battery=(android.os.BatteryManager)context.getSystemService(Context.BATTERY_SERVICE);
+                        yield Map.of("idle",!power.isInteractive(),"charging",battery.isCharging());
+                    }
                     case "release" -> { release(call.argument("token")); yield true; }
                     case "cryptFile" -> { crypt(call); yield true; }
                     case "packArchive" -> {
@@ -143,19 +165,47 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
                     case "btStatus" -> bluetooth.status();
                     case "btCancelDiscovery" -> {bluetooth.finishDiscovery(true,false);yield true;}
                     case "btPair" -> bluetooth.pair(call.argument("device"));
-                    case "btConnect" -> {bluetooth.connect(call.argument("device"));yield true;}
-                    case "btWrite" -> {bluetooth.write(call.argument("bytes"));yield true;}
-                    case "btDisconnect" -> {bluetooth.disconnect();yield true;}
+                    case "usbDevices" -> usb.devices();
+                    case "usbStatus" -> usb.status();
+                    case "usbIdentity" -> usb.identity(call.argument("device"));
+                    case "usbConnect" -> {connectPrinter(call.argument("device"));yield true;}
+                    case "printerConnect" -> {connectPrinter(call.argument("device"));yield true;}
+                    case "btConnect" -> {connectPrinter(call.argument("device"));yield true;}
+                    case "printerWrite" -> {
+                        byte[] bytes=call.argument("bytes");
+                        try{
+                            if("usb".equals(activePrinter))usb.write(bytes);
+                            else if("bluetooth".equals(activePrinter))bluetooth.write(bytes);
+                            else throw new IOException("Printer not connected");
+                        }finally{if(bytes!=null)Arrays.fill(bytes,(byte)0);}
+                        yield true;
+                    }
+                    case "btWrite" -> {
+                        byte[] bytes=call.argument("bytes");
+                        try{bluetooth.write(bytes);}
+                        finally{if(bytes!=null)Arrays.fill(bytes,(byte)0);}
+                        yield true;
+                    }
+                    case "printerDisconnect", "btDisconnect" -> {activePrinter=null;usb.disconnect();bluetooth.disconnect();yield true;}
                     default -> null;
                 };
-                if (answer == null) main.post(result::notImplemented);
+                if (answer == null && !call.method.equals("tryAcquire")) main.post(result::notImplemented);
                 else main.post(() -> result.success(answer));
             } catch (Exception error) {
-                String code = error instanceof FileNotFoundException ? "key_missing" :
+                String code = error instanceof IOException && error.getMessage()!=null && error.getMessage().matches("usb_[a-z_]{1,40}") ? error.getMessage() : error instanceof FileNotFoundException ? "key_missing" :
                     error instanceof GeneralSecurityException ? "authentication_failed" : "platform_io_failed";
                 main.post(() -> result.error(code, "Secure operation failed; existing data retained.", null));
             }
         });
+    }
+    private void connectPrinter(String device) throws Exception {
+        activePrinter=null;
+        if(device!=null&&device.startsWith("usb:")) {
+            bluetooth.disconnect();usb.connect(device);activePrinter="usb";
+        } else {
+            if(device==null||!device.matches("(?i)([0-9a-f]{2}:){5}[0-9a-f]{2}"))throw new IOException("Invalid printer identity");
+            usb.disconnect();bluetooth.connect(device);activePrinter="bluetooth";
+        }
     }
     private void requestBluetoothPermissions(MethodChannel.Result result){
         String[] required=Build.VERSION.SDK_INT>=31?new String[]{Manifest.permission.BLUETOOTH_SCAN,Manifest.permission.BLUETOOTH_CONNECT}:
@@ -193,13 +243,13 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         boolean granted=results.length>0;for(int r:results)granted&=r==PackageManager.PERMISSION_GRANTED;
         permissionResult.success(granted);permissionResult=null;return true;
     }
-    @Override public boolean onActivityResult(int request,int code,Intent data){return picker.result(request,code,data);}
+    @Override public boolean onActivityResult(int request,int code,Intent data){return reportPicker.result(request,code,data)||picker.result(request,code,data);}
     private void applyScreenPrivacy(){if(activity!=null){if(protectedScreens.isEmpty())activity.getActivity().getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);else activity.getActivity().getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);}}
-    @Override public void onAttachedToActivity(ActivityPluginBinding binding){activity=binding;picker.attach(binding.getActivity());biometrics.attach(binding.getActivity());applyScreenPrivacy();binding.addActivityResultListener(this);binding.addRequestPermissionsResultListener(this);}
+    @Override public void onAttachedToActivity(ActivityPluginBinding binding){activity=binding;picker.attach(binding.getActivity());reportPicker.attach(binding.getActivity());biometrics.attach(binding.getActivity());usb.attach(binding.getActivity());applyScreenPrivacy();binding.addActivityResultListener(this);binding.addRequestPermissionsResultListener(this);}
     @Override public void onDetachedFromActivityForConfigChanges(){detachActivity();}
     @Override public void onReattachedToActivityForConfigChanges(ActivityPluginBinding binding){onAttachedToActivity(binding);}
     @Override public void onDetachedFromActivity(){detachActivity();}
-    private void detachActivity(){biometrics.detach();if(activity!=null){activity.removeActivityResultListener(this);activity.removeRequestPermissionsResultListener(this);}activity=null;picker.detach();if(permissionResult!=null){permissionResult.error("permission_interrupted","Permission request interrupted.",null);permissionResult=null;}}
+    private void detachActivity(){biometrics.detach();usb.detach();if(activity!=null){activity.removeActivityResultListener(this);activity.removeRequestPermissionsResultListener(this);}activity=null;picker.detach();reportPicker.detach();if(permissionResult!=null){permissionResult.error("permission_interrupted","Permission request interrupted.",null);permissionResult=null;}}
     private File privateFile(String path) throws IOException {
         File file = new File(path).getCanonicalFile();
         String root = context.getDataDir().getCanonicalPath() + File.separator;
@@ -279,6 +329,20 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         if (!owned.remove(token)) throw new IOException("Lease ownership mismatch");
         Lease lease = LEASES.remove(token);
         try { lease.lock.release(); lease.file.close(); } finally { lease.gate.release(); }
+    }
+    /** No waiting: an occupied local semaphore OR cross-process lock skips. */
+    private String tryAcquire(String name) throws Exception {
+        if(name==null||!name.matches("[a-z-]{1,32}"))throw new IOException("Invalid lease name");
+        Semaphore gate=GATES.computeIfAbsent(name,ignored->new Semaphore(1,true));
+        if(!gate.tryAcquire())return null;
+        RandomAccessFile file=null;boolean leased=false;
+        try{
+            file=new RandomAccessFile(new File(context.getNoBackupFilesDir(),name+".gate"),"rw");
+            FileLock lock;
+            try{lock=file.getChannel().tryLock();}catch(java.nio.channels.OverlappingFileLockException busy){return null;}
+            if(lock==null)return null;
+            String token=UUID.randomUUID().toString();LEASES.put(token,new Lease(file,lock,gate));owned.add(token);leased=true;return token;
+        }finally{if(!leased){if(file!=null)file.close();gate.release();}}
     }
     private void crypt(MethodCall call) throws Exception {
         File input = privateFile(call.argument("input")), output = privateFile(call.argument("output"));

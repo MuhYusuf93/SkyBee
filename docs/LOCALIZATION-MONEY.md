@@ -1,5 +1,15 @@
 # Localization dan Money — pekerjaan terpisah sebelum M3
 
+Addendum M5.1-D/E,20 Oktober2026: TenderDigits memakai raw canonical bertitik,
+display ID/EN terpisah; IDR0pecahan, USD/MYR/EUR2pecahan. Tidak memakai double
+atau menghapus titik/koma seragam lintas currency. CashTender memisahkan tunai
+diterima/applied/change/debt; payment memakai applied. Numpad internal mengganti
+IME nominal; customer tetap keyboard biasa. Konfigurasi uang cepat per currency,
+label/status ID/EN. CSV/XLSX membawa currency/scale/minor/decimal eksak sebagai
+text, barcode/nol depan dan integer64bit tidak dikonversi ke floating point.
+Keterangan staging/snapshot/SAF ada pada
+[D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md). Paragraf M2 berikut adalah histori.
+
 Instruksi pengguna 12 Oktober 2026 memperluas bahasa dan mata uang setelah M2. Proyek tidak dibuat ulang. Driver tetap sqflite; implementasi aktual M2 tidak memakai SQLCipher maupun kunci enkripsi. PIN/KDF dan opt-out backup OS dipertahankan.
 
 ## Kepemilikan state dan localization

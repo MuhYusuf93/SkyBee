@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/painting.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 import '../../../core/money/money_codec.dart';
 import '../../../core/money/money.dart';
 import '../domain/printer_profile.dart';
@@ -37,6 +39,67 @@ final class ReceiptLayout {
     'right' => TextAlign.right,
     _ => TextAlign.left,
   };
+
+  /// Recovery has its own bounded template and is never a sale receipt. Key
+  /// fingerprint identifies a random 256-bit key version without printing PIN.
+  factory ReceiptLayout.recovery(
+    String code,
+    PrinterProfile profile, {
+    required String language,
+    required DateTime createdAt,
+  }) {
+    if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
+      throw const FormatException('backupCodeInvalid');
+    }
+    profile.validate();
+    final id = language == 'id';
+    final encoded = utf8.encode(code);
+    final fingerprint = sha256.convert(encoded).toString().substring(0, 12);
+    encoded.fillRange(0, encoded.length, 0);
+    return ReceiptLayout(profile, [
+      ReceiptLine(
+        id ? 'KODE PEMULIHAN BACKUP' : 'BACKUP RECOVERY CODE',
+        bold: true,
+        align: TextAlign.center,
+      ),
+      ReceiptLine(
+        id ? 'RAHASIA — BUKAN STRUK' : 'SECRET — NOT A RECEIPT',
+        bold: true,
+      ),
+      ReceiptLine('Hex256 / v1 / $fingerprint'),
+      ReceiptLine(createdAt.toUtc().toIso8601String()),
+      const ReceiptLine('--------------------------------'),
+      for (var at = 0; at < 64; at += 16)
+        ReceiptLine(
+          [
+            for (var part = at; part < at + 16; part += 4)
+              code.substring(part, part + 4),
+          ].join(' '),
+          bold: true,
+        ),
+      const ReceiptLine('--------------------------------'),
+      ReceiptLine(
+        id
+            ? 'Simpan terpisah dari arsip backup dan perangkat.'
+            : 'Store separately from backup archives and the device.',
+      ),
+      ReceiptLine(
+        id
+            ? 'Siapa pun yang memiliki kode dan arsip dapat membuka data.'
+            : 'Anyone with this code and an archive can read its data.',
+      ),
+      ReceiptLine(
+        id
+            ? 'Backup lama tetap membutuhkan kode saat dibuat. Ini bukan PIN aplikasi.'
+            : 'Old backups need their original code. This is not the app PIN.',
+      ),
+      ReceiptLine(
+        id
+            ? 'Periksa semua 64 karakter pada kertas sebelum menyimpannya.'
+            : 'Check all 64 characters on paper before storing it.',
+      ),
+    ]);
+  }
   factory ReceiptLayout.sale(
     Map<String, dynamic> receipt,
     PrinterProfile profile, {
@@ -99,6 +162,15 @@ final class ReceiptLayout {
       ],
       const ReceiptLine('--------------------------------'),
       ReceiptLine('Total: ${amount(receipt['total'])}', bold: true),
+      if (receipt['tender'] != null) ...[
+        ReceiptLine(
+          '${id ? 'Uang diterima' : 'Cash received'}: ${amount(receipt['tender'])}',
+        ),
+        ReceiptLine(
+          '${id ? 'Kembalian' : 'Change'}: ${amount(receipt['change'])}',
+          bold: true,
+        ),
+      ],
       ReceiptLine('${id ? 'Dibayar' : 'Paid'}: ${amount(receipt['paid'])}'),
       ReceiptLine(
         '${id ? 'Sisa hutang' : 'Remaining debt'}: ${amount(receipt['debt'])}',
@@ -275,7 +347,10 @@ final class ReceiptLayout {
 
   /// GS v 0 raster strips are supported by the declared ESC/POS profile only.
   /// No cutter/drawer or undocumented OpenLabel horizontal offset is emitted.
-  static Future<Uint8List> encodeTile(ui.Image image) async {
+  static Future<Uint8List> encodeTile(
+    ui.Image image, {
+    bool sensitive = false,
+  }) async {
     final rgba = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
     final width = (image.width + 7) ~/ 8, height = image.height;
     final result = Uint8List(8 + width * height);
@@ -289,17 +364,25 @@ final class ReceiptLayout {
       height & 255,
       height >> 8,
     ]);
-    for (var y = 0; y < height; y++) {
-      for (var x = 0; x < image.width; x++) {
-        final offset = (y * image.width + x) * 4;
-        if (rgba.getUint8(offset) +
-                rgba.getUint8(offset + 1) +
-                rgba.getUint8(offset + 2) <
-            384) {
-          result[8 + y * width + x ~/ 8] |= 128 >> (x % 8);
+    try {
+      for (var y = 0; y < height; y++) {
+        for (var x = 0; x < image.width; x++) {
+          final offset = (y * image.width + x) * 4;
+          if (rgba.getUint8(offset) +
+                  rgba.getUint8(offset + 1) +
+                  rgba.getUint8(offset + 2) <
+              384) {
+            result[8 + y * width + x ~/ 8] |= 128 >> (x % 8);
+          }
         }
       }
+      return result;
+    } finally {
+      if (sensitive) {
+        rgba.buffer
+            .asUint8List(rgba.offsetInBytes, rgba.lengthInBytes)
+            .fillRange(0, rgba.lengthInBytes, 0);
+      }
     }
-    return result;
   }
 }

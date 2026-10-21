@@ -127,6 +127,7 @@ void main() {
         await cart.add(EntityId(fixtureId(1)));
         await cart.pricing(EntityId(fixtureId(1)), PricingMode.wholesale);
         form.value = CheckoutProvider(cart, drafts, service);
+        await form.value!.exact();
         final saving = form.value!.submit();
         await entered.future;
         expect(cart.busy, isTrue);

@@ -1,6 +1,6 @@
 # Skema dan migration — M1–M4 + Localization/Money
 
-Versi implementasi aktif **9 (M5.1-A)**; paragraf versi7/6 di bawah adalah
+Versi implementasi aktif **13 (M5.1-A/B/D/F/G)**; paragraf versi7/6 di bawah adalah
 histori. V8 M5 menambah SQLCipher/bootstrap dan tabel peripheral/backup sesuai
 source schema.dart. V9 aditif, tanpa rewrite nominal/stok/HPP: products mendapat
 size_milli INTEGER nullable (1..999999999999, skala1000), size_unit nullable
@@ -8,6 +8,34 @@ size_milli INTEGER nullable (1..999999999999, skala1000), size_unit nullable
 nullable maks1000; sale_transaction_items memperoleh empat kolom dengan suffix
 _snapshot. Legacy tetap null, tidak dibackfill dari master. Barcode tetap TEXT.
 Migration dan CHECK menolak pasangan parsial; checkout snapshot atomik.
+
+## V12 — Tender tunai dan konfigurasi uang cepat
+
+`cart_drafts`: cash_input (0/1), tender_minor nullable/nonnegatif, tender_raw
+canonical maksimal24karakter, tender_input_mode numpad/quick. Raw dan minor
+divalidasi terhadap currency saat save dan import backup; input kosong berbeda
+dari tindakan hutang nol. Legacy tetap memakai kontrak sebelumnya.
+
+`checkout_tenders`: PK/FK sale_transaction_id RESTRICT; received_minor,
+applied_minor, change_minor, debt_minor integer nonnegatif, hubungan aritmetika
+CHECK dan trigger pencocokan header. Fakta immutable UPDATE/DELETE ditolak.
+Tidak backfill tender/kembalian pada transaksi lama. Payment/allocation memakai
+applied, bukan uang diserahkan. Snapshot struk baru menyimpan tender/change.
+
+`cash_quick_amounts`: konfigurasi per currency, maksimal8nilai positif unik
+integer minor dalam JSON. Reset menghapus konfigurasi sehingga kembali default;
+tidak mengubah mata uang/fakta transaksi. Service menormalisasi input konfigurasi,
+import backup menolak JSON/type/value yang tidak sah.
+
+## V13 — Pemeliharaan ruang lokal
+
+`space_maintenance` singleton: candidate_backup/at, last_attempt/success,
+status/reason, before_bytes/after_bytes/page_count/free_pages. Kandidat hanya
+sesudah arsip tervalidasi dan terindeks. Restore mengosongkan seluruh state ini;
+bukan izin/job portabel. Tidak ada penghapusan produk/ledger/arsip/transaksi.
+VACUUM memakai codec/key lama, lease nonblocking, checkpoint WAL dan pemeriksaan
+ukuran fisik/integritas/rekonsiliasi. Lihat
+[implementasi D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md).
 
 
 Versi aktif **7** (M4). V7 additive menambah `sale_transaction_reversals.payload_hash` dan `goods_returned` nullable (legacy attestation unknown), tabel immutable `checkout_payment_links`/`receivable_payment_links`, index period pembayaran/pembatalan dan guard provenance/reversal header/allocation. Backfill checkout hanya dengan exact checkout key, timestamp/currency/customer serta single allocation yang cocok; pelunasan hanya dari audit lama yang membuktikannya. Receipt lain tetap unknown. Tidak mengubah nominal/HPP/stok/snapshot lama. Runtime services menulis provenance setelah allocations dalam dbTxn yang sama. Pembalikan append-only tidak menghapus completed draft atau transaksi asli. Detail/test/upgrade aktual: [M4-NOTES](M4-NOTES.md), [VALIDATION-M4](VALIDATION-M4.md). Paragraf versi6 dan checkpoint di bawah bersifat historis.
@@ -67,3 +95,26 @@ Downgrade ditolak sebelum data diubah. Restore/integritas/checksum/backup WAL ti
 
 
 Migration fixtures lulus bukan bukti preservation package pada Flutter runner. INCIDENT-M31-ANDROID-TEST mengoreksi default-uninstall; native hanya melalui script package fixture dan --no-uninstall.
+
+
+## M5.1 V10 — kebijakan sesi (19 Oktober 2026)
+
+management_policy singleton(id1, session_policy legacy/1m/5m/15m/immediate).
+Upgrade mempertahankan legacy (idle5menit, kunci background); fresh install
+memilih immediate dengan idle5menit. Biometric proof/key hanya lokal Android
+Keystore/no_backup, bukan kolom DB/izin portable. Restore membatalkan capability
+RAM dan binding terikat active_installation. Backup staging menolak policy tidak
+terbaca/tidak dikenal sekalipun CHECK dari arsip dihapus. Tidak mengubah fakta
+keuangan V1–V9 atau KDF600k.
+
+## M5.1 V11 — profil transport printer
+
+Migration aditif `printer_profiles.transport TEXT NOT NULL DEFAULT 'bluetooth'`
+dengan CHECK `bluetooth`/`usb`. Profil lama tetap Bluetooth, tanpa mengubah
+kalibrasi atau pilihan tersimpan. Index `printer_profiles_transport_cursor`
+memakai `(transport, device_id COLLATE BINARY)` sesuai filter, ORDER BY dan
+cursor halaman50. `one_selected_printer` tetap satu pilihan lintas transport.
+Device ID USB berawalan `usb:`; identitas attachment sementara tidak dianggap
+identitas persisten perangkat. Tidak mengubah sale/HPP/stok/piutang atau job lama.
+Migration10→11 diuji SQLCipher Realme; bukti dan batas perangkat di
+[kontrak USB Android](M51_USB_ANDROID.md).

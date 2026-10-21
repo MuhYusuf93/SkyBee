@@ -69,6 +69,8 @@ void main() {
             target,
             other.management,
             platform: platform,
+            pausePeripherals: other.printing.pauseForRestore,
+            resumePeripherals: other.printing.resumeAfterRestore,
             testStage: (stage) async {
               if (stage == 'safetyCreated' && !safetyReady.isCompleted) {
                 safetyReady.complete();
@@ -143,9 +145,12 @@ void main() {
         await app.checkout.submit(
           draft.id,
           draft.revision,
-          const CheckoutInput(
+          CheckoutInput(
+            cash: true,
+            tender: Money(0, 'IDR', 0),
+            tenderRaw: '0',
             mode: PaymentMode.debt,
-            customer: CustomerChoice(name: 'Synthetic portable debtor'),
+            customer: const CustomerChoice(name: 'Synthetic portable debtor'),
           ),
         );
         final customer = (await app.receivables.customers()).items.single;
@@ -159,7 +164,11 @@ void main() {
         final returned = await app.checkout.submit(
           returnedDraft.id,
           returnedDraft.revision,
-          const CheckoutInput(mode: PaymentMode.paid),
+          CheckoutInput(
+            cash: true,
+            tender: Money(15000, 'IDR', 0),
+            tenderRaw: '15000',
+          ),
         );
         await app.corrections.cancelSale(
           returned.id,
@@ -170,6 +179,7 @@ void main() {
         );
         var queuedDraft = await app.cart.next(returnedDraft.id);
         queuedDraft = await app.cart.add(queuedDraft.id, product);
+        await app.quickCash.save('USD', [1550, 2000]);
         final before =
             (await source.read(DatabaseValidation.fingerprint))['tables']
                 as Map;
@@ -214,7 +224,7 @@ void main() {
         var oldDraft = await other.cart.open();
         oldDraft = await other.cart.add(oldDraft.id, oldProduct);
         expect(source.encryption!.key, isNot(target.encryption!.key));
-        final originalHash = await DurablePromotion.digest(File(targetPath));
+        var originalHash = await DurablePromotion.digest(File(targetPath));
         await expectLater(
           restore.inspect(archive.file, '00' * 32),
           throwsA(anything),
@@ -229,13 +239,16 @@ void main() {
         expect(await DurablePromotion.digest(File(targetPath)), originalHash);
         await corrupt.delete();
         incoming = await restore.inspect(archive.file, code);
-        await other.management.reauthenticate('0001', 'restore');
+        await other.management.reauthenticate('0002', 'restore');
+        originalHash = await DurablePromotion.digest(File(targetPath));
         await expectLater(
           BackupService(
             target,
             other.management,
             availableBytes: (_) async => 0,
             platform: platform,
+            pausePeripherals: other.printing.pauseForRestore,
+            resumePeripherals: other.printing.resumeAfterRestore,
           ).restore(incoming, confirmReplaceAndDrafts: true),
           throwsStateError,
         );
@@ -243,6 +256,8 @@ void main() {
         final staged = File('${incoming.directory.path}/database.db');
         final stageLength = await staged.length();
         await staged.writeAsBytes([0], mode: FileMode.append, flush: true);
+        await other.management.reauthenticate('0002', 'restore');
+        originalHash = await DurablePromotion.digest(File(targetPath));
         await expectLater(
           restore.restore(incoming, confirmReplaceAndDrafts: true),
           throwsStateError,
@@ -251,11 +266,14 @@ void main() {
         final stageHandle = await staged.open(mode: FileMode.append);
         await stageHandle.truncate(stageLength);
         await stageHandle.close();
+        await other.management.reauthenticate('0002', 'restore');
+        originalHash = await DurablePromotion.digest(File(targetPath));
         await expectLater(
           restore.restore(incoming, confirmReplaceAndDrafts: false),
           throwsStateError,
         );
         expect(await DurablePromotion.digest(File(targetPath)), originalHash);
+        await other.management.reauthenticate('0002', 'restore');
         final replacing = restore.restore(
           incoming,
           confirmReplaceAndDrafts: true,
@@ -304,6 +322,8 @@ void main() {
           'receivable_payment_links',
           'price_history',
           'receipt_assets',
+          'checkout_tenders',
+          'cash_quick_amounts',
         ]) {
           // Unlock changes attempt/session audit state; verifiers are tested by the
           // restored old PIN, not by pretending credential metadata is unchanged.
@@ -311,6 +331,13 @@ void main() {
             expect(after[table], before[table], reason: table);
           }
         }
+        expect(await other.quickCash.read('USD'), [1550, 2000]);
+        expect(
+          (await target.read(
+            (db) => db.query('space_maintenance'),
+          )).single['candidate_backup'],
+          isNull,
+        );
         expect(
           (await other.receivables.customers())
               .items

@@ -14,7 +14,7 @@ final class ReportsService {
   final ManagementService access;
   final SqliteReportsRepository repository;
   Future<String> timeZone() async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final value = await database.read(
       (db) async =>
           (await db.query(
@@ -24,7 +24,7 @@ final class ReportsService {
               )).single['time_zone']
               as String,
     );
-    access.requireAccess();
+    await access.authorizeCurrent();
     return value;
   }
 
@@ -54,10 +54,10 @@ final class ReportsService {
   }
 
   Future<T> _protected<T>(Future<T> Function() read) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     try {
       final value = await read();
-      access.requireAccess();
+      await access.authorizeCurrent();
       return value;
     } on DatabaseException catch (e) {
       if (e.toString().contains('integer overflow')) {

@@ -1893,4 +1893,216 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m51SessionHelp =>
       'Pilihan waktu menghitung ketidakaktifan pengelolaan termasuk di latar belakang; kembali tidak memperpanjang sesi. Kunci segera juga memakai batas diam 5 menit. Dialog aplikasi dibatasi 60 detik; pemilih berkas/akun penuh dapat meminta PIN sekali saat kembali. Kunci layar, restart, kunci manual, perubahan PIN dan restore membatalkan sesi. Kasir tetap terbuka. Grace adalah pilihan kenyamanan dengan risiko akses sementara.';
+
+  @override
+  String get m51PrintRecovery => 'Cetak kode pemulihan';
+
+  @override
+  String get m51RecoveryPrintWarning =>
+      'Kertas berisi rahasia untuk membuka backup. Pastikan printer tujuan ini milik Anda, ambil hasilnya dan simpan terpisah dari arsip/perangkat. Transport dan memori printer tidak dijamin rahasia. Tidak ada pengiriman ulang otomatis.';
+
+  @override
+  String get m51RecoveryPrintStoredOnly =>
+      'Mencetak kode tersimpan. Untuk kode baru atau rotasi, konfirmasikan dan simpan kode dahulu; cetak tetap opsional.';
+
+  @override
+  String get m51RecoveryPrinterRequired =>
+      'Pilih dan simpan profil printer melalui Pengaturan printer terlebih dahulu.';
+
+  @override
+  String get m51RecoveryPrinterChanged =>
+      'Profil printer berubah. Periksa dan konfirmasikan tujuan lagi.';
+
+  @override
+  String get m51RecoveryPrintSubmitted =>
+      'Data cetak dikirim. Periksa hasil kertas dan seluruh 64 karakter; bytes terkirim belum membuktikan kertas lengkap.';
+
+  @override
+  String get m51RecoveryPrintNotSent =>
+      'Kode belum dikirim. Periksa printer/koneksi. Cetak ulang memerlukan autentikasi dan konfirmasi baru.';
+
+  @override
+  String get m51RecoveryPrintUnknown =>
+      'Hasil cetak tidak pasti; sebagian kode mungkin sudah tercetak. Tidak diulang otomatis. Amankan kertas, periksa printer, lalu autentikasi baru jika memilih cetak ulang.';
+
+  @override
+  String get m51RecoveryPaperStored =>
+      'Saya memeriksa seluruh kode di kertas dan menyimpan salinan secara pribadi.';
+
+  @override
+  String get m51ConfirmPaperStored => 'Catat konfirmasi salinan disimpan';
+
+  @override
+  String get m51RecoveryCopyStored =>
+      'Konfirmasi salinan disimpan dicatat, tanpa menyimpan isi salinan.';
+
+  @override
+  String get m51PrinterTitle => 'Printer Bluetooth / USB';
+
+  @override
+  String get m51UsbHelp =>
+      'USB OTG memerlukan USB Host, kabel data, daya, dan printer ESC/POS kelas printer USB. Pilih perangkat sebelum meminta izin. USB serial vendor belum didukung. Jangan mencabut kabel saat mengirim; pengiriman gagal tidak dicetak ulang otomatis.';
+
+  @override
+  String get m51UsbLoad => 'Muat perangkat USB';
+
+  @override
+  String get m51UsbEmpty =>
+      'Tidak ada printer USB kelas 7/1 yang didukung terdeteksi. Periksa OTG, kabel data dan daya.';
+
+  @override
+  String get m51UsbSelect =>
+      'Pilih printer USB lalu tekan Hubungkan untuk meminta izin perangkat itu saja.';
+
+  @override
+  String get m51UsbTemporary =>
+      'Identitas sementara: printer tanpa nomor seri unik perlu dipilih kembali setelah kabel dilepas atau aplikasi dimulai ulang. Profil lama tidak dihubungkan otomatis ke printer yang mirip.';
+
+  @override
+  String get m51UsbUnavailable =>
+      'USB Host tidak tersedia. Kasir dan Bluetooth tetap dapat digunakan.';
+
+  @override
+  String get m51UsbPermissionDenied =>
+      'Izin USB belum diberikan atau proses izin terhenti. Masuk kembali melalui PIN jika terkunci. Gunakan Coba izin USB lagi hanya untuk meminta ulang secara sengaja.';
+
+  @override
+  String get m51UsbRetryPermission => 'Coba izin USB lagi';
+
+  @override
+  String get m51UsbSelectAgain =>
+      'Printer USB terlepas, identitas berubah atau tidak unik. Muat perangkat dan pilih kembali; tidak ada cetak ulang otomatis.';
+
+  @override
+  String get m51UsbBusy =>
+      'Interface printer USB sedang dipakai atau tidak dapat dibuka tanpa mengambil alih driver. Tutup koneksi aplikasi lain lalu coba secara eksplisit.';
+
+  @override
+  String get m51UsbFailed =>
+      'Operasi USB belum berhasil. Periksa daya, OTG, kabel data, izin dan kompatibilitas printer. Tidak ada cetak ulang otomatis.';
+
+  @override
+  String get m51Tender => 'Uang diterima';
+
+  @override
+  String get m51Applied => 'Pembayaran diterapkan';
+
+  @override
+  String get m51Change => 'Kembalian';
+
+  @override
+  String get m51Numpad => 'Numpad';
+
+  @override
+  String get m51QuickCash => 'Uang cepat';
+
+  @override
+  String get m51ExactCash => 'Uang pas';
+
+  @override
+  String get m51TenderRequired =>
+      'Isi uang diterima, pilih Uang pas, atau pilih Hutang seluruhnya.';
+
+  @override
+  String get m51Backspace => 'Hapus satu angka';
+
+  @override
+  String get m51ClearTender => 'Bersihkan nominal';
+
+  @override
+  String get m51ConfirmTender => 'Konfirmasi nominal';
+
+  @override
+  String get m51QuickSettings => 'Nominal uang cepat';
+
+  @override
+  String get m51ResetQuick => 'Reset nominal bawaan';
+
+  @override
+  String get m51Export => 'Ekspor laporan';
+
+  @override
+  String get m51ExportPolicy =>
+      'Ekspor seluruh periode dan filter pelanggan yang dipilih. Persediaan dan piutang adalah snapshot saat ini, bukan posisi historis. Berkas berisi data toko. CSV UTF-8: impor barcode, ID dan nominal sebagai teks agar presisi terjaga; teks berisiko formula diawali apostrof. Bukan formulir pajak resmi.';
+
+  @override
+  String get m51ExportRows => 'Baris disiapkan';
+
+  @override
+  String get m51ExportCreate => 'Siapkan dan pilih lokasi';
+
+  @override
+  String get m51ExportSelected =>
+      'Lokasi dipilih. Masuk kembali melalui PIN bila diminta, lalu tekan Tulis berkas. Lokasi berlaku dua menit.';
+
+  @override
+  String get m51ExportWrite => 'Tulis berkas';
+
+  @override
+  String get m51ExportVerified => 'Laporan ditulis dan diverifikasi kembali.';
+
+  @override
+  String get m51ExportFailed =>
+      'Ekspor belum selesai. Periksa sesi PIN, ruang penyimpanan dan lokasi. Pilih kembali bila lokasi kedaluwarsa.';
+
+  @override
+  String get m51MaintenancePolicy =>
+      'Pemeliharaan ruang dijadwalkan setelah backup valid, saat perangkat idle dan mengisi daya. Dilewati bila manfaat kecil, sibuk, atau ruang tidak cukup. Tidak menghapus riwayat.';
+
+  @override
+  String get m51MaintenanceStatus => 'Pemeliharaan ruang';
+
+  @override
+  String get m51MaintenanceAttempt => 'Percobaan terakhir';
+
+  @override
+  String get m51MaintenanceSuccess => 'Berhasil terakhir';
+
+  @override
+  String get m51Space_databaseBusy =>
+      'Database sedang digunakan; pemeliharaan dilewati.';
+
+  @override
+  String get m51Space_none => 'Belum dijadwalkan';
+
+  @override
+  String get m51Space_pending => 'Menunggu kondisi idle';
+
+  @override
+  String get m51Space_running => 'Sedang berjalan';
+
+  @override
+  String get m51Space_success => 'Berhasil';
+
+  @override
+  String get m51Space_skipped => 'Dilewati';
+
+  @override
+  String get m51Space_error => 'Belum berhasil';
+
+  @override
+  String get m51Space_cooldown => 'Masih dalam jeda pemeliharaan.';
+
+  @override
+  String get m51Space_interrupted =>
+      'Proses sebelumnya terhenti; menunggu backup valid berikutnya.';
+
+  @override
+  String get m51Space_lowBenefit =>
+      'Ruang kosong yang dapat direklamasi belum cukup besar.';
+
+  @override
+  String get m51Space_insufficientSpace => 'Ruang sementara tidak cukup.';
+
+  @override
+  String get m51Space_deviceInUse =>
+      'Perangkat sedang digunakan atau tidak mengisi daya.';
+
+  @override
+  String get m51Space_compacted =>
+      'Database dipadatkan dan integritas diverifikasi.';
+
+  @override
+  String get m51Space_maintenanceFailed =>
+      'Pemeliharaan gagal. Backup valid sebelumnya tetap tersedia.';
 }

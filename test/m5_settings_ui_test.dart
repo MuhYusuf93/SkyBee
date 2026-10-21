@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'support/m51_security_suite.dart';
+import 'package:kasir_app/features/printer/application/printer_output_gate.dart';
+import 'package:kasir_app/features/management/presentation/pin_screen.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
@@ -112,6 +115,11 @@ void m5SettingsUiSuite(
   late ManagementSessionProvider session;
   late LocaleProvider locale;
   final calls = <String>[];
+  // Android privacy lifecycle calls are expected even when a route must not
+  // start discovery, permission, Google, clipboard or file operations. Retain
+  // raw calls for diagnostics; exclude only this specific window flag action.
+  Iterable<String> operations() =>
+      calls.where((name) => name != 'protectedScreen');
   setUp(() async {
     root = await newDirectory();
     db = DatabaseCoordinator(
@@ -119,7 +127,11 @@ void m5SettingsUiSuite(
       databasePath:
           '${root.path}/m5_regression_${DateTime.now().microsecondsSinceEpoch}_0.db',
     );
-    app = AppServices(db);
+    app = AppServices(
+      db,
+      printerGate: const ProcessPrinterOutputGate(),
+      biometrics: SyntheticStrongBiometrics()..available = false,
+    );
     await app.management.configure('Synthetic M5 UI', '0001', '0001');
     session = ManagementSessionProvider(app.management);
     await session.unlock('0001');
@@ -138,6 +150,7 @@ void m5SettingsUiSuite(
           call,
         ) async {
           calls.add(call.method);
+          if (call.method == 'protectedScreen') return null;
           if (call.method == 'key' &&
               call.arguments['name'] == 'backup-master-v1') {
             return 'ab' * 32;
@@ -1190,6 +1203,117 @@ void m5SettingsUiSuite(
     },
     timeout: const Timeout(Duration(minutes: 3)),
   );
+  testWidgets(
+    'recovery print cancellation requires fresh PIN and persists no output',
+    (tester) async {
+      try {
+        await tester.pumpWidget(shell(const BackupSettingsScreen(), 1));
+        final state = tester
+            .element(find.byType(Consumer<BackupSettingsProvider>))
+            .read<BackupSettingsProvider>();
+        await drain(tester, () => state.loaded && !state.busy);
+        await tester.pump();
+        final before = await tester.runAsync(
+          () => db.read(DatabaseValidation.fingerprint),
+        );
+        calls.clear();
+        final print = find.byKey(const ValueKey('print-backup-recovery'));
+        await tester.ensureVisible(print);
+        await tester.tap(print);
+        await tester.pump(const Duration(milliseconds: 350));
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 30)),
+        );
+        await tester.pump();
+        expect(find.byType(PinScreen), findsOneWidget);
+        expect(calls, isEmpty, reason: 'No secret read before fresh PIN');
+        final pin = find.byWidgetPredicate(
+          (w) => w is TextField && w.decoration?.labelText == 'PIN',
+        );
+        await tester.enterText(pin, '0001');
+        await tester.ensureVisible(
+          find.widgetWithText(FilledButton, 'Open management'),
+        );
+        await tester.runAsync(
+          () =>
+              tester.tap(find.widgetWithText(FilledButton, 'Open management')),
+        );
+        await drain(tester, () => app.management.hasFresh('recoveryPrint'));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 350));
+        await tester.pump(const Duration(milliseconds: 350));
+        await drain(
+          tester,
+          () => find.byType(AlertDialog).evaluate().isNotEmpty,
+        );
+        final dialog = find.byType(AlertDialog);
+        expect(
+          find.descendant(
+            of: dialog,
+            matching: find.textContaining('Synthetic ESC/POS'),
+          ),
+          findsOneWidget,
+        );
+        expect(
+          calls,
+          isEmpty,
+          reason: 'Target confirmation precedes fetching the secret',
+        );
+        await tester.tap(
+          find.descendant(
+            of: dialog,
+            matching: find.widgetWithText(TextButton, 'Cancel'),
+          ),
+        );
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 350));
+        expect(app.management.hasFresh('recoveryPrint'), false);
+        expect(operations(), isEmpty);
+        final after = await tester.runAsync(
+          () => db.read(DatabaseValidation.fingerprint),
+        );
+        final beforeTables = Map.of(before!['tables'] as Map)
+          ..remove('management_credentials')
+          ..remove('audit_log');
+        final afterTables = Map.of(after!['tables'] as Map)
+          ..remove('management_credentials')
+          ..remove('audit_log');
+        expect(afterTables, beforeTables);
+        expect(tester.takeException(), isNull);
+      } finally {
+        await cleanup(tester);
+      }
+    },
+  );
+  testWidgets(
+    'unsaved recovery rotation cannot print the previous stored key',
+    (tester) async {
+      try {
+        await tester.pumpWidget(shell(const BackupSettingsScreen(), 1));
+        final state = tester
+            .element(find.byType(Consumer<BackupSettingsProvider>))
+            .read<BackupSettingsProvider>();
+        await drain(tester, () => state.loaded && !state.busy);
+        await tester.runAsync(
+          () => app.management.reauthenticate('0001', 'recovery'),
+        );
+        // Public presentation-only pending rotation, never saved or printed.
+        state.generatedCode = 'cd' * 32;
+        state.generatedUnsaved = true;
+        await state.task(() async {});
+        await tester.pump();
+        final button = tester.widget<OutlinedButton>(
+          find.byKey(const ValueKey('print-backup-recovery')),
+        );
+        expect(button.onPressed, isNull);
+        expect(calls, isNot(contains('btWrite')));
+        expect(calls, isNot(contains('printerWrite')));
+        expect(tester.takeException(), isNull);
+      } finally {
+        await cleanup(tester);
+      }
+    },
+  );
   for (final scenario in ['plain', 'grouped', 'invalid', 'platformFailure']) {
     testWidgets('recovery clipboard $scenario is explicit and PIN protected', (
       tester,
@@ -1209,7 +1333,7 @@ void m5SettingsUiSuite(
           ) async {
             if (call.method == 'key' &&
                 call.arguments['name'] == 'backup-master-v1') {
-              return shown;
+              return canonical;
             }
             if (call.method == 'key') {
               throw PlatformException(code: 'key_missing');
@@ -1236,13 +1360,33 @@ void m5SettingsUiSuite(
         final copy = find.byKey(const ValueKey('copy-backup-recovery-code'));
         expect(copy, findsNothing);
         await tester.runAsync(state.reveal);
+        expect(
+          state.generatedCode,
+          isNull,
+          reason: 'Session grace alone must not reveal recovery',
+        );
+        expect(copy, findsNothing);
+        await tester.runAsync(
+          () => app.management.reauthenticate('0001', 'recovery'),
+        );
+        await tester.runAsync(state.reveal);
+        state.generatedCode =
+            shown; // Public format/invalid-input fixture only.
         await tester.pump();
         expect(copy, findsOneWidget);
         await tester.scrollUntilVisible(
           copy,
           200,
-          scrollable: find.byType(Scrollable).first,
+          scrollable: find
+              .descendant(
+                of: find.byKey(const PageStorageKey('backup-settings-form')),
+                matching: find.byType(Scrollable),
+              )
+              .first,
         );
+        await tester.ensureVisible(copy);
+        await tester.pumpAndSettle();
+        expect(copy.hitTestable(), findsOneWidget);
         final staleCopy = tester.widget<OutlinedButton>(copy).onPressed!;
         final before = await tester.runAsync(
           () => db.read(DatabaseValidation.fingerprint),
@@ -1287,13 +1431,43 @@ void m5SettingsUiSuite(
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
+      Future<void> enterFreshPin() async {
+        await tester.pump(const Duration(milliseconds: 350));
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 50)),
+        );
+        await tester.pump();
+        debugPrint('M51_RECOVERY_UI phase=pin-route');
+        expect(find.byType(PinScreen), findsOneWidget);
+        final input = find.byWidgetPredicate(
+          (widget) =>
+              widget is TextField && widget.decoration?.labelText == 'PIN',
+        );
+        await tester.enterText(input, '0001');
+        await tester.ensureVisible(
+          find.widgetWithText(FilledButton, 'Open management'),
+        );
+        debugPrint('M51_RECOVERY_UI phase=submit-pin');
+        await tester.runAsync(
+          () =>
+              tester.tap(find.widgetWithText(FilledButton, 'Open management')),
+        );
+        await drain(tester, () => app.management.hasFresh('recovery'));
+        debugPrint('M51_RECOVERY_UI phase=fresh-granted');
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 350));
+        await tester.pump(const Duration(milliseconds: 350));
+        expect(find.byType(PinScreen), findsNothing);
+      }
+
       try {
         await tester.pumpWidget(shell(const BackupSettingsScreen(), 1.6));
         await tester.pump();
         final state = tester
             .element(find.byType(Consumer<BackupSettingsProvider>))
             .read<BackupSettingsProvider>();
-        await drain(tester, () => state.loaded);
+        await drain(tester, () => state.loaded && !state.busy);
+        await tester.pump();
         final show = find.text('Show saved code');
         await tester.scrollUntilVisible(
           show,
@@ -1303,8 +1477,11 @@ void m5SettingsUiSuite(
         await tester.ensureVisible(show);
         await tester.pump();
         expect(show.hitTestable(), findsOneWidget);
+        debugPrint(
+          'M51_RECOVERY_UI busy=${state.busy} enabled=${tester.widget<TextButton>(find.widgetWithText(TextButton, 'Show saved code')).onPressed != null}',
+        );
         await tester.tap(show);
-        await tester.pump();
+        await enterFreshPin();
         await drain(tester, () => state.generatedCode != null);
         await tester.scrollUntilVisible(
           find.byKey(const ValueKey('backup-recovery-code')),
@@ -1320,6 +1497,33 @@ void m5SettingsUiSuite(
         expect(find.text('Management locked'), findsOneWidget);
         await tester.runAsync(() => session.unlock('0001'));
         await tester.pump();
+        await tester.pump();
+        expect(
+          state.generatedCode,
+          isNull,
+          reason: 'Recovery text must be discarded on actual relock',
+        );
+        expect(
+          find.byKey(const ValueKey('backup-recovery-code')),
+          findsNothing,
+        );
+        final formScroll = find
+            .descendant(
+              of: find.byKey(const PageStorageKey('backup-settings-form')),
+              matching: find.byType(Scrollable),
+            )
+            .first;
+        tester.state<ScrollableState>(formScroll).position.jumpTo(0);
+        await tester.pump();
+        await tester.scrollUntilVisible(show, 150, scrollable: formScroll);
+        // Route/frame completion and notice reflow differ on a real ARM32 view.
+        // Ensure the actual control is reachable rather than tapping stale bounds.
+        await tester.pumpAndSettle();
+        await Scrollable.ensureVisible(tester.element(show), alignment: .5);
+        await tester.pumpAndSettle();
+        await tester.tap(show.hitTestable());
+        await enterFreshPin();
+        await drain(tester, () => state.generatedCode != null);
         await tester.scrollUntilVisible(
           find.byKey(const ValueKey('backup-recovery-code')),
           200,
@@ -1335,7 +1539,7 @@ void m5SettingsUiSuite(
           find.byKey(const ValueKey('backup-recovery-code')),
           findsOneWidget,
         );
-        expect(calls.every((name) => name == 'key'), true);
+        expect(operations().every((name) => name == 'key'), true);
         expect(tester.takeException(), isNull);
       } finally {
         await cleanup(tester);
@@ -1405,7 +1609,7 @@ void m5SettingsUiSuite(
           await tester.pump();
           expect(tester.takeException(), isNull);
         }
-        expect(calls, isEmpty);
+        expect(operations(), isEmpty);
       } finally {
         await cleanup(tester);
       }
@@ -1426,6 +1630,7 @@ void m5SettingsUiSuite(
               const MethodChannel('kasir_app/platform'),
               (call) async {
                 calls.add(call.method);
+                if (call.method == 'protectedScreen') return null;
                 if (call.method == 'btPermissions') return true;
                 if (call.method == 'btPaired') {
                   return [
@@ -1449,7 +1654,9 @@ void m5SettingsUiSuite(
         await tester.pump();
         expect(tester.widget<ListTile>(row).selected, true);
         expect(calls, isNot(contains('btConnect')));
+        expect(calls, isNot(contains('printerConnect')));
         expect(calls, isNot(contains('btWrite')));
+        expect(calls, isNot(contains('printerWrite')));
       } finally {
         await cleanup(tester);
       }
@@ -1480,7 +1687,7 @@ void m5SettingsUiSuite(
           scrollable: find.byType(Scrollable).first,
         );
         expect(find.text('Connect'), findsOneWidget);
-        expect(calls, isEmpty);
+        expect(operations(), isEmpty);
         final connected = Completer<void>();
         var socketOpen = false, permission = true, enabled = true, fail = false;
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -1488,6 +1695,7 @@ void m5SettingsUiSuite(
               const MethodChannel('kasir_app/platform'),
               (call) async {
                 calls.add(call.method);
+                if (call.method == 'protectedScreen') return null;
                 switch (call.method) {
                   case 'btPermissions':
                     return permission;
@@ -1542,6 +1750,7 @@ void m5SettingsUiSuite(
         expect(state.connectionStatus, 'm5ConnectionFailed');
         expect(state.busy, false);
         expect(calls, isNot(contains('btWrite')));
+        expect(calls, isNot(contains('printerWrite')));
         await tester.runAsync(() async {
           for (final table in [
             'print_jobs',
@@ -1564,6 +1773,117 @@ void m5SettingsUiSuite(
     },
     timeout: const Timeout(Duration(minutes: 3)),
   );
+  for (final language in ['id', 'en']) {
+    testWidgets(
+      'USB printer UI selects explicitly and retains denial feedback $language',
+      (tester) async {
+        await tester.runAsync(() => locale.selectLanguage(language));
+        tester.view.physicalSize = const Size(400, 850);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+        const id = 'usb:t:00000000-0000-0000-0000-000000000001:0';
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(
+              const MethodChannel('kasir_app/platform'),
+              (call) async {
+                calls.add(call.method);
+                if (call.method == 'protectedScreen') return null;
+                return switch (call.method) {
+                  'usbDevices' => [
+                    {
+                      'id': id,
+                      'name': 'PUBLIC USB fixture',
+                      'sessionOnly': true,
+                    },
+                  ],
+                  'usbStatus' => {
+                    'available': true,
+                    'enabled': true,
+                    'connected': false,
+                  },
+                  'usbPermission' => false,
+                  _ => throw PlatformException(code: 'unexpected_usb_ui_call'),
+                };
+              },
+            );
+        try {
+          await tester.pumpWidget(shell(const PrinterSettingsScreen(), 2));
+          final state = tester
+              .element(find.byType(Consumer<PrinterSettingsProvider>))
+              .read<PrinterSettingsProvider>();
+          await drain(tester, () => !state.busy);
+          await tester.tap(find.text('USB').hitTestable());
+          await drain(tester, () => state.usb && !state.busy);
+          final load = find.text(
+            language == 'id' ? 'Muat perangkat USB' : 'Load USB devices',
+          );
+          await tester.scrollUntilVisible(
+            load,
+            180,
+            scrollable: find.byType(Scrollable).first,
+          );
+          await tester.pumpAndSettle();
+          await Scrollable.ensureVisible(tester.element(load), alignment: .5);
+          await tester.pumpAndSettle();
+          await tester.tap(load.hitTestable());
+          await drain(tester, () => state.devices.isNotEmpty && !state.busy);
+          final row = find.text('PUBLIC USB fixture');
+          await tester.scrollUntilVisible(
+            row,
+            180,
+            scrollable: find.byType(Scrollable).first,
+          );
+          await tester.pumpAndSettle();
+          await Scrollable.ensureVisible(tester.element(row), alignment: .5);
+          await tester.pumpAndSettle();
+          await tester.tap(row.hitTestable());
+          await tester.pump();
+          expect(
+            calls.any((c) => c == 'usbPermission' || c.contains('Write')),
+            false,
+          );
+          final connect = find.text(language == 'id' ? 'Hubungkan' : 'Connect');
+          await tester.scrollUntilVisible(
+            connect,
+            300,
+            scrollable: find.byType(Scrollable).first,
+          );
+          await tester.pumpAndSettle();
+          await Scrollable.ensureVisible(
+            tester.element(connect),
+            alignment: .5,
+          );
+          await tester.pumpAndSettle();
+          await tester.tap(connect.hitTestable());
+          await drain(
+            tester,
+            () => state.message == 'm51UsbPermissionDenied' && !state.busy,
+          );
+          expect(
+            find.text(
+              language == 'id' ? 'Coba izin USB lagi' : 'Retry USB permission',
+            ),
+            findsOneWidget,
+          );
+          expect(calls.where((c) => c == 'usbPermission').length, 1);
+          expect(
+            calls.any(
+              (c) =>
+                  c == 'usbConnect' ||
+                  c.contains('Write') ||
+                  c.startsWith('bt'),
+            ),
+            false,
+          );
+          expect(tester.takeException(), isNull);
+        } finally {
+          await cleanup(tester);
+        }
+      },
+      timeout: const Timeout(Duration(minutes: 3)),
+    );
+  }
   testWidgets(
     'denied Bluetooth permission survives PIN relock with visible feedback beside paired devices',
     (tester) async {
@@ -1591,6 +1911,7 @@ void m5SettingsUiSuite(
               const MethodChannel('kasir_app/platform'),
               (call) async {
                 calls.add(call.method);
+                if (call.method == 'protectedScreen') return null;
                 if (call.method == 'btPaired' && grants) {
                   return [
                     {
@@ -1636,7 +1957,7 @@ void m5SettingsUiSuite(
           find.byKey(const ValueKey('printer-permission-notice')).hitTestable(),
           findsOneWidget,
         );
-        expect(calls, ['btPermissions', 'btPermissions']);
+        expect(operations(), ['btPermissions', 'btPermissions']);
         expect(state.devices, isEmpty);
         grants = true; // User restores the OS grant; no remembered PIN bypass.
         await tester.runAsync(state.paired);
@@ -1645,7 +1966,7 @@ void m5SettingsUiSuite(
         expect(state.permissionDenied, false);
         expect(state.connectionStatus, 'm5ConnectionNotChecked');
         expect(session.unlocked, true);
-        expect(calls, [
+        expect(operations(), [
           'btPermissions',
           'btPermissions',
           'btPermissions',
@@ -1670,6 +1991,9 @@ void m5SettingsUiSuite(
         // Presentation-only fixture: never open this file or save the generated
         // code; the human campaign's recovery key is not involved.
         state.selected = File('${root.path}/not-opened.kasirbackup');
+        await tester.runAsync(
+          () => app.management.reauthenticate('0001', 'recovery'),
+        );
         await tester.runAsync(state.generate);
         await tester.pump();
         for (final key in [
@@ -1722,6 +2046,7 @@ void m5SettingsUiSuite(
                   const MethodChannel('kasir_app/platform'),
                   (call) async {
                     calls.add(call.method);
+                    if (call.method == 'protectedScreen') return null;
                     if (call.method == 'freeBytes') return 268435456;
                     if (call.method == 'unpackArchive') {
                       expect(call.arguments['key'], 'a' * 64);
@@ -1733,7 +2058,10 @@ void m5SettingsUiSuite(
             state = BackupSettingsProvider(app)..selected = file;
             await state!.inspect('SALAH');
             expect(state!.message, 'm5ArchiveRejected');
-            expect(calls, isEmpty); // Invalid format never reaches native IO.
+            expect(
+              operations(),
+              isEmpty,
+            ); // Invalid format never reaches native IO.
             await state!.inspect(List.filled(4, 'a' * 16).join('-'));
             expect(state!.message, 'm5ArchiveRejected');
             expect(state!.inspection, isNull);
@@ -1830,7 +2158,7 @@ void m5SettingsUiSuite(
             0,
           );
         });
-        expect(calls, isEmpty);
+        expect(operations(), isEmpty);
       } finally {
         await cleanup(tester);
       }

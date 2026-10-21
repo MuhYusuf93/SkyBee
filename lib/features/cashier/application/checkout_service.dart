@@ -1,3 +1,4 @@
+import '../domain/cash_tender.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
@@ -25,6 +26,15 @@ final class CheckoutService {
 
   Future<String> _hash(EntityId draftId, int revision, CheckoutInput input) =>
       store.fingerprint([
+        if (input.cash) ...[
+          'cash-v1',
+          input.tender?.amountMinor,
+          input.tender?.currencyCode,
+          input.tender?.scale,
+          input.customer.id?.value,
+          input.customer.name.trim(),
+          input.customer.phone.trim(),
+        ],
         draftId.value,
         revision,
         input.mode.name,
@@ -134,7 +144,22 @@ final class CheckoutService {
         if (cart.unavailable) throw const AppError('insufficientSaleableStock');
         final total = cart.total;
         var paid = total;
-        if (input.mode != PaymentMode.paid) {
+        CashTender? cash;
+        if (input.cash) {
+          if (database.schemaVersion < 12 || input.tender == null) {
+            throw const AppError('m51TenderRequired');
+          }
+          if (input.tender!.currencyCode != currency.code ||
+              input.tender!.scale != currency.scale) {
+            throw const AppError('currencyMismatch');
+          }
+          cash = CashTender(total, input.tender!);
+          if (input.mode == PaymentMode.debt &&
+              input.tender!.amountMinor != 0) {
+            throw const AppError('m3InvalidPayment');
+          }
+          paid = cash.applied;
+        } else if (input.mode != PaymentMode.paid) {
           if (total.amountMinor == 0) throw const AppError('m3InvalidPayment');
           paid = input.mode == PaymentMode.debt
               ? Money(0, currency.code, currency.scale)
@@ -175,7 +200,7 @@ final class CheckoutService {
         await _stage('validated');
         EntityId? customerId;
         String? customerName, customerPhone;
-        if (input.mode != PaymentMode.paid) {
+        if (paid.amountMinor < total.amountMinor) {
           customerId = input.customer.id;
           if (customerId != null) {
             final records = await dbTxn.query(
@@ -220,6 +245,15 @@ final class CheckoutService {
           'payload_hash': hash,
           ...store.metadata(currency),
         });
+        if (cash != null) {
+          await dbTxn.insert('checkout_tenders', {
+            'sale_transaction_id': saleId.value,
+            'received_minor': cash.received.amountMinor,
+            'applied_minor': cash.applied.amountMinor,
+            'change_minor': cash.change.amountMinor,
+            'debt_minor': cash.debt.amountMinor,
+          });
+        }
         await _stage('sale');
         for (var index = 0; index < cart.lines.length; index++) {
           final line = cart.lines[index], product = products[index];
@@ -305,6 +339,14 @@ final class CheckoutService {
             'state': 'completed',
             'completed_sale_transaction_id': saleId.value,
             'updated_at': now,
+            if (database.schemaVersion >= 12) ...{
+              'cash_input': input.cash ? 1 : 0,
+              'tender_minor': input.tender?.amountMinor,
+              'tender_raw': input.tender == null
+                  ? ''
+                  : (TenderDigits(currency)..amount(input.tender!)).raw,
+              'tender_input_mode': input.quickMode ? 'quick' : 'numpad',
+            },
             'payment_mode': input.mode.name,
             'paid_minor': input.paid?.amountMinor,
             'customer_id': input.customer.id?.value,

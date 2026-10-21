@@ -64,7 +64,7 @@ final class CorrectionService {
       moneyHandled,
     ]);
     return database.transaction((dbTxn) async {
-      access.requireAccess();
+      await access.authorize(dbTxn);
       final prior = await dbTxn.query(
         'payments',
         where: 'operation_key=?',
@@ -97,7 +97,7 @@ final class CorrectionService {
       );
       await access.audit(dbTxn, 'payment_cancelled', entityId: id.value);
       await testStage?.call('audit');
-      access.requireAccess();
+      await access.authorize(dbTxn);
       return id;
     });
   }
@@ -198,7 +198,7 @@ final class CorrectionService {
       moneyHandled,
     ]);
     return database.transaction((dbTxn) async {
-      access.requireAccess();
+      await access.authorize(dbTxn);
       final prior = await dbTxn.query(
         'sale_transaction_reversals',
         where: 'operation_key=?',
@@ -386,7 +386,7 @@ final class CorrectionService {
       }
       await access.audit(dbTxn, 'sale_cancelled', entityId: reversalId.value);
       await testStage?.call('audit');
-      access.requireAccess();
+      await access.authorize(dbTxn);
       return reversalId;
     }, inventoryChanged: true);
   }

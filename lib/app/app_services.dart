@@ -1,7 +1,10 @@
+import '../features/cashier/application/quick_cash_service.dart';
+import '../features/reports/application/report_export_service.dart';
 import '../core/time/store_clock.dart';
 import '../data/database/database_coordinator.dart';
 import '../features/inventory/application/inventory_service.dart';
 import '../features/management/application/management_service.dart';
+import '../features/management/application/strong_biometrics.dart';
 import '../features/settings/application/settings_service.dart';
 import '../features/cashier/application/cashier_store.dart';
 import '../features/cashier/application/cart_service.dart';
@@ -14,6 +17,8 @@ import '../features/corrections/application/correction_service.dart';
 import '../features/printer/application/print_queue_service.dart';
 import '../features/printer/application/printer_settings_service.dart';
 import '../features/printer/application/printer_transport.dart';
+import '../features/printer/application/printer_output_gate.dart';
+import '../features/printer/application/recovery_print_service.dart';
 import '../features/backup/application/backup_service.dart';
 import '../features/backup/application/drive_backup_service.dart';
 import '../features/alerts/application/alert_service.dart';
@@ -22,8 +27,17 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 /// Dependency composition only, no shared cart/catalog/report state.
 final class AppServices {
-  AppServices(this.database, {StoreClock? clock}) {
-    management = ManagementService(database, clock ?? StoreClock());
+  AppServices(
+    this.database, {
+    StoreClock? clock,
+    StrongBiometrics? biometrics,
+    PrinterOutputGate? printerGate,
+  }) : printerGate = printerGate ?? defaultPrinterOutputGate() {
+    management = ManagementService(
+      database,
+      clock ?? StoreClock(),
+      biometrics: biometrics,
+    );
     inventory = InventoryService(database, management);
     settings = SettingsService(database, management);
     final cashierStore = CashierStore(management.clock);
@@ -36,6 +50,7 @@ final class AppServices {
     corrections = CorrectionService(database, management, cashierStore);
   }
   final DatabaseCoordinator database;
+  final PrinterOutputGate printerGate;
   late final ManagementService management;
   late final InventoryService inventory;
   late final SettingsService settings;
@@ -51,8 +66,15 @@ final class AppServices {
     checkout,
     management,
     const NativePrinterTransport(),
+    outputGate: printerGate,
   );
-  late final printers = PrinterSettingsService(database, management);
+  late final quickCash = QuickCashService(database, management);
+  late final reportExport = ReportExportService(database, management);
+  late final printers = PrinterSettingsService(
+    database,
+    management,
+    outputGate: printerGate,
+  );
   late final backups = BackupService(
     database,
     management,
@@ -60,6 +82,12 @@ final class AppServices {
     resumePeripherals: printing.resumeAfterRestore,
   );
   late final drive = DriveBackupService(database, management, backups);
+  late final recoveryPrinting = RecoveryPrintService(
+    database,
+    management,
+    backups,
+    printing,
+  );
   late final notifications = AndroidStockNotifications(
     FlutterLocalNotificationsPlugin(),
   );

@@ -20,7 +20,7 @@ final class StoreLogoService {
   final ManagementService access;
   final KasirPlatform platform;
   Future<File?> choose() async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final path = p.join(
       p.dirname(database.databasePath),
       'm5_logo_${const Uuid().v4()}.input',
@@ -32,8 +32,9 @@ final class StoreLogoService {
         'maxBytes': 4194304,
       }),
       discard: (result) async {
-        if (result == path && await File(path).exists())
+        if (result == path && await File(path).exists()) {
           await File(path).delete();
+        }
       },
     );
     return result == null ? null : File(result);
@@ -74,7 +75,7 @@ final class StoreLogoService {
   }
 
   Future<void> apply(File selected) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     if (await selected.length() > 4194304) {
       throw const FormatException('logoInvalid');
     }
@@ -86,7 +87,7 @@ final class StoreLogoService {
     await output.parent.create(recursive: true);
     if (!await output.exists()) await output.writeAsBytes(bytes, flush: true);
     await database.transaction((dbTxn) async {
-      access.requireAccess();
+      await access.authorize(dbTxn);
       await dbTxn.rawInsert(
         'INSERT OR IGNORE INTO receipt_assets(hash,bytes) VALUES(?,?)',
         [hash, bytes],
@@ -103,14 +104,14 @@ final class StoreLogoService {
   }
 
   Future<void> remove() => database.transaction((dbTxn) async {
-    access.requireAccess();
+    await access.authorize(dbTxn);
     await dbTxn.update('m5_store', {'logo_asset': null}, where: 'id=1');
     await dbTxn.update('store_settings', {'logo_path': null}, where: 'id=1');
   });
   Future<Uint8List?> current() async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     return database.read((db) async {
-      access.requireAccess();
+      await access.authorize(db);
       final rows = await db.rawQuery(
         'SELECT a.bytes FROM m5_store s JOIN receipt_assets a ON a.hash=s.logo_asset WHERE s.id=1',
       );

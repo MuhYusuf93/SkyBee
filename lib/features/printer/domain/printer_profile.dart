@@ -12,7 +12,7 @@ final class PrinterProfile {
     this.bold = false,
     this.headerAlign = 'center',
     this.footerAlign = 'center',
-    this.feed = 3,
+    this.feed = 6,
     this.logo = true,
     this.logoPercent = 100,
     this.lineGap = 6,

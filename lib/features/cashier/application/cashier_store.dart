@@ -6,6 +6,7 @@ import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../core/time/store_clock.dart';
 import '../domain/cashier_models.dart';
+import '../domain/cash_tender.dart';
 
 /// Shared SQL primitives, not screen state. All callers use their own dbTxn.
 final class CashierStore {
@@ -127,6 +128,12 @@ final class CashierStore {
                 currency.code,
                 currency.scale,
               ),
+        cash: row['cash_input'] == 1,
+        tender: row['tender_minor'] == null
+            ? null
+            : Money(row['tender_minor'] as int, currency.code, currency.scale),
+        tenderRaw: row['tender_raw'] as String? ?? '',
+        quickMode: row['tender_input_mode'] == 'quick',
         customer: CustomerChoice(
           id: row['customer_id'] == null
               ? null
@@ -202,7 +209,24 @@ final class CashierStore {
       whereArgs: [id.value],
       orderBy: 'id COLLATE BINARY',
     );
+    final tenderRows = schema < 12
+        ? <Map<String, Object?>>[]
+        : await db.query(
+            'checkout_tenders',
+            where: 'sale_transaction_id=?',
+            whereArgs: [id.value],
+          );
     return SaleReceipt(
+      cashTender: tenderRows.isEmpty
+          ? null
+          : CashTender(
+              Money(row['total_rupiah'] as int, currency.code, currency.scale),
+              Money(
+                tenderRows.single['received_minor'] as int,
+                currency.code,
+                currency.scale,
+              ),
+            ),
       id: id,
       createdAt: row['created_at'] as int,
       total: Money.fromStoredMinor(

@@ -1,4 +1,5 @@
 import '../../../core/domain/value_types.dart';
+import 'cash_tender.dart';
 import '../../../core/domain/pricing_mode.dart';
 import '../../inventory/domain/product_attributes.dart';
 export '../../../core/domain/pricing_mode.dart';
@@ -65,10 +66,17 @@ final class CheckoutInput {
   const CheckoutInput({
     this.mode = PaymentMode.paid,
     this.paid,
+    this.cash = false,
+    this.tender,
+    this.tenderRaw = '',
+    this.quickMode = false,
     this.customer = const CustomerChoice(),
   });
   final PaymentMode mode;
   final Money? paid;
+  final bool cash, quickMode;
+  final Money? tender;
+  final String tenderRaw;
   final CustomerChoice customer;
 }
 
@@ -120,6 +128,7 @@ final class SaleReceipt {
     this.customerName,
     this.customerPhone,
     this.reversed = false,
+    this.cashTender,
   });
   final EntityId id;
   final int createdAt;
@@ -129,6 +138,7 @@ final class SaleReceipt {
   final String? customerName;
   final String? customerPhone;
   final bool reversed;
+  final CashTender? cashTender;
   int get outstanding => reversed ? 0 : total.amountMinor - paid.amountMinor;
   String get number =>
       '${createdAt.toRadixString(36).toUpperCase()}-${id.value.substring(0, 8).toUpperCase()}';

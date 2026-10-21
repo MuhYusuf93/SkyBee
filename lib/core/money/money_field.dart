@@ -75,10 +75,12 @@ class MoneyField extends StatefulWidget {
     required this.controller,
     required this.label,
     this.enabled = true,
+    this.currency,
   });
   final TextEditingController controller;
   final String label;
   final bool enabled;
+  final CurrencyPolicy? currency;
   @override
   State<MoneyField> createState() => _MoneyFieldState();
 }
@@ -117,7 +119,10 @@ class _MoneyFieldState extends State<MoneyField> {
     if (widget.controller case final MoneyEditingController controller) {
       previous ??= controller.codec;
     }
-    final next = moneyCodec(context, currency: previous?.policy);
+    final next = moneyCodec(
+      context,
+      currency: widget.currency ?? previous?.policy,
+    );
     if (!widget.controller.value.composing.isCollapsed) {
       pending = next;
       previous ??= next;

@@ -2,6 +2,25 @@
 
 ## Evolusi M5.1 dan M5.2
 
+D/E/G,20 Oktober2026: CheckoutProvider hanya memiliki digit/mode/form/progress,
+CashTender dan CheckoutService menghitung integer serta commit tender/payment
+atomik. QuickCashService membaca konfigurasi bounded per currency. Bukan satu
+Provider global; layar konfigurasi mengikuti lifecycle route.
+
+ReportExportService memakai query/agregat ReportsRepository yang sama, satu
+snapshot SQL dan keyset100row, writer streaming CSV/XLSX di staging privat.
+ReportDestinationService menangani token SAF kosong lalu write setelah auth,
+tanpa network/provider I/O di lease DB. State route hanya handle/progress/cancel;
+cancel membatalkan token dan stream native, bukan sekadar indikator UI.
+
+SpaceMaintenanceService terpisah dari keberhasilan backup. Backup-work→DB
+nonblocking gates berurutan dengan snapshot/upload/restore; tryIdle tidak memicu
+generation replacement. WAL checkpoint/TRUNCATE memakai busy_timeout0 sementara
+dan memulihkan nilai semula; reader sibuk skip. Ukuran fisik, FK/integritas,
+HMAC/fingerprint/rekonsiliasi dicek, tanpa plaintext/rekey/hard delete. Scheduler
+worker headless tidak membuka permission/biometric dialog. Detail dan pengujian:
+[D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md).
+
 M5.1 aktif A–G, M5.2 planned menunggu desain, M6 tidak dimulai. Source M5 tetap
 tersimpan sebagai handoff ordinary 0.5.0+7. Checkpoint A memakai ProductAttributes
 untuk metadata integer thousandths, satu parser ID/EN dan view compact yang
@@ -85,3 +104,42 @@ ManagementService mengganti credential dengan compare-and-swap salt yang benar-b
 Hasil operasi keuangan yang sudah commit tetap sukses ketika Provider route disposed. Disposal menghentikan notifikasi/refresh UI, bukan mengubah hasil persistensi; idempotency dan rollback berada di service/SQL. ReceivablesProvider tetap hanya memiliki state route, tanpa memindahkan transaksi ke widget.
 
 Inventory/master memakai lazy slivers dan tab NestedScrollView supaya safe area, keyboard serta text scale berbagi viewport yang dapat digulir. Preview pembayaran memakai scroll untuk seluruh content dan viewport finite untuk daftar alokasi; actions tetap terpisah. Cursor/index/order/cache3halaman/150items dan full-range report aggregation tidak berubah. Tidak ada migration/aturan uang/HPP baru pada audit ini; tujuh file aplikasi diubah secara terbatas.
+
+
+## M5.1-B — otorisasi dan lifecycle
+
+ManagementService memiliki capability idle dan proof fresh purpose60detik,
+bukan Provider global. management_policy terpisah dengan migration10. Provider
+sesi hanya meredaksi presentation sampai evaluasi resume selesai; Offstage,
+ExcludeFocus/semantics dan FLAG_SECURE tidak menggantikan pemeriksaan service.
+Protected SQL membaca credential epoch pada lease DB yang sama, termasuk sebelum
+hasil/commit. Rotasi PIN dari service lain membatalkan protected read/write.
+Biometric binding AndroidX Class3+per-use Keystore alias terpisah dari database/
+backup; installed epoch memastikan restore/enrollment invalidation tidak menjadi
+izin portable. Headless backup tidak memerlukan prompt atau Activity. Scoped
+permission/SAF/account results tidak memberikan capability dan tidak merevive
+sesi. Capture input privat dibuang hanya bila dimiliki scope yang kadaluwarsa.
+
+
+## M5.1-C — kepemilikan output sensitif
+
+PrinterOutputGate menggunakan semaphore+file lease native yang sama lintas
+engine Android, terpisah dari database gate. Windows/test memakai FIFO isolate
+khusus output. PrintQueueService.serialOutput menyerialkan closure satu dokumen;
+recovery mengambil kode sesudah lease dan claim fresh, tidak melalui prepare,
+print_jobs atau ReceiptSnapshots. Koneksi manual memakai gate yang sama. Restore
+menyetop/drain output lalu memiliki lease sampai resume yang di-await, sebelum
+DB maintenance: urutan output→database mencegah lock inversion. Secret mutable
+chunks/rawRGBA dibersihkan best-effort; immutable String/spool/memori printer
+tidak dijanjikan terhapus. Kalibrasi dan konteks history memeriksa persisted PIN
+epoch; public cashier receipt/copy mempertahankan akses tanpa PIN.
+
+## M5.1-F — transport terarah
+
+PrinterSettingsService mengurus enumerasi/izin/profil terproteksi, Provider hanya
+state layar. NativePrinterTransport memilih USB/Bluetooth dari identitas eksplisit;
+native tidak mencoba transport lain saat gagal. UsbPermissionGate membatasi prompt
+per attachment; PrinterUsb memeriksa grant/session dan UsbPrinterIo menangani
+write/detach bounded tanpa retry ambigu. Output gate C tetap satu dokumen lintas
+engine. Profil keyset dibatasi transport dan index BINARY/schema11. Kontrak,
+bukti, allowlist dan kemampuan yang belum terbukti: [USB Android](M51_USB_ANDROID.md).

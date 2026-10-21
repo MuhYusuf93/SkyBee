@@ -7,6 +7,8 @@ import '../../../core/time/store_clock.dart';
 import '../../management/application/pin_hasher.dart';
 import '../domain/backup_manifest.dart';
 import '../../inventory/domain/product_attributes.dart';
+import '../../cashier/application/quick_cash_service.dart';
+import '../../cashier/domain/cash_tender.dart';
 
 /// Archive authentication is necessary but not a substitute for supported
 /// business metadata. Scan bounded rows, preserving all accepted legacy values.
@@ -56,7 +58,90 @@ final class BackupValidation {
     if (credentials.length != 1) {
       throw const FormatException('backupCredentialsInvalid');
     }
+    // Imported SQLite can remove CHECK constraints. Do not restore a policy
+    // which the authorizer cannot interpret, or any portable biometric grant.
+    if ((await db.rawQuery(
+      '''SELECT 1 FROM management_policy WHERE
+      typeof(session_policy)<>'text' OR length(session_policy)>9 LIMIT 1''',
+    )).isNotEmpty) {
+      throw const FormatException('backupSessionPolicyInvalid');
+    }
+    final policies = await db.rawQuery('''SELECT id,session_policy
+      FROM management_policy LIMIT 2''');
+    if (policies.length != 1 ||
+        policies.single['id'] != 1 ||
+        ![
+          'legacy',
+          '1m',
+          '5m',
+          '15m',
+          'immediate',
+        ].contains(policies.single['session_policy'])) {
+      throw const FormatException('backupSessionPolicyInvalid');
+    }
     final row = credentials.single;
+    if ((await db.rawQuery(
+      '''SELECT 1 FROM cart_drafts WHERE
+      typeof(cash_input)<>'integer' OR cash_input NOT IN (0,1)
+      OR typeof(tender_raw)<>'text' OR length(tender_raw)>24
+      OR typeof(tender_input_mode)<>'text' OR tender_input_mode NOT IN ('numpad','quick')
+      OR (tender_minor IS NOT NULL AND (typeof(tender_minor)<>'integer' OR tender_minor<0)) LIMIT 1''',
+    )).isNotEmpty) {
+      throw const FormatException('backupTenderDraftInvalid');
+    }
+    String? draftCursor;
+    while (true) {
+      final drafts = await db.rawQuery(
+        '''SELECT id,tender_raw,tender_minor FROM cart_drafts
+        WHERE cash_input=1 ${draftCursor == null ? '' : 'AND id COLLATE BINARY>?'}
+        ORDER BY id COLLATE BINARY LIMIT 100''',
+        [?draftCursor],
+      );
+      if (drafts.isEmpty) break;
+      for (final draft in drafts) {
+        if (TenderDigits(
+              currency,
+              draft['tender_raw'] as String,
+            ).money?.amountMinor !=
+            draft['tender_minor']) {
+          throw const FormatException('backupTenderDraftInvalid');
+        }
+      }
+      draftCursor = drafts.last['id'] as String;
+    }
+    // Revalidate even authenticated archives: their SQLite CHECK/triggers may
+    // have been removed. Tender is initial checkout only, never later revenue.
+    if ((await db.rawQuery('''SELECT 1 FROM checkout_tenders t
+      LEFT JOIN sale_transactions s ON s.id=t.sale_transaction_id WHERE s.id IS NULL
+      OR typeof(t.received_minor)<>'integer' OR t.received_minor<0
+      OR typeof(t.applied_minor)<>'integer' OR t.applied_minor<0
+      OR typeof(t.change_minor)<>'integer' OR t.change_minor<0
+      OR typeof(t.debt_minor)<>'integer' OR t.debt_minor<0
+      OR t.applied_minor<>MIN(t.received_minor,s.total_rupiah)
+      OR t.change_minor<>t.received_minor-t.applied_minor
+      OR t.debt_minor<>s.total_rupiah-t.applied_minor
+      OR (t.debt_minor>0 AND s.customer_id IS NULL)
+      OR t.applied_minor<>COALESCE((SELECT p.amount_rupiah FROM checkout_payment_links l
+        JOIN payments p ON p.id=l.payment_id WHERE l.sale_transaction_id=s.id),0)
+      LIMIT 1''')).isNotEmpty) {
+      throw const FormatException('backupTenderInvalid');
+    }
+    if ((await db.rawQuery(
+      'SELECT 1 FROM cash_quick_amounts WHERE typeof(amounts_json)<>\'text\' OR length(amounts_json)>512 LIMIT 1',
+    )).isNotEmpty) {
+      throw const FormatException('backupQuickCashInvalid');
+    }
+    final quickRows = await db.query('cash_quick_amounts', limit: 5);
+    if (quickRows.length > 4) {
+      throw const FormatException('backupQuickCashInvalid');
+    }
+    for (final quick in quickRows) {
+      final decoded = jsonDecode(quick['amounts_json'] as String);
+      if (decoded is! List || decoded.any((e) => e is! int || e <= 0)) {
+        throw const FormatException('backupQuickCashInvalid');
+      }
+      QuickCashService.validate(quick['currency_code'] as String, decoded);
+    }
     final parameters = jsonDecode(row['kdf_parameters'] as String) as Map;
     if (row['kdf_name'] != 'PBKDF2-HMAC-SHA256' ||
         parameters['bits'] != 256 ||
@@ -104,6 +189,24 @@ final class BackupValidation {
     // metadata before accepting the staged archive, never in a Provider.
     for (final table in ['products', 'sale_transaction_items']) {
       final suffix = table == 'products' ? '' : '_snapshot';
+      // Check lengths/types before fetching text. Even forged multi-megabyte
+      // notes never enter a paged Dart result just to be rejected there.
+      if ((await db.rawQuery(
+        '''SELECT 1 FROM $table WHERE
+        (size_milli$suffix IS NOT NULL AND
+          (typeof(size_milli$suffix)<>'integer' OR
+           size_milli$suffix NOT BETWEEN 1 AND 999999999999)) OR
+        (size_unit$suffix IS NOT NULL AND
+          (typeof(size_unit$suffix)<>'text' OR length(size_unit$suffix)>2)) OR
+        (shelf_location$suffix IS NOT NULL AND
+          (typeof(shelf_location$suffix)<>'text' OR
+           length(CAST(shelf_location$suffix AS BLOB))>320)) OR
+        (product_note$suffix IS NOT NULL AND
+          (typeof(product_note$suffix)<>'text' OR
+           length(CAST(product_note$suffix AS BLOB))>4000)) LIMIT 1''',
+      )).isNotEmpty) {
+        throw const FormatException('backupProductMetadataInvalid');
+      }
       String? cursor;
       while (true) {
         final rows = await db.rawQuery(

@@ -1,4 +1,6 @@
+import '../../../app/app_version.dart';
 import 'dart:convert';
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:cryptography/cryptography.dart';
@@ -8,6 +10,7 @@ import 'package:uuid/uuid.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/services.dart';
 import '../../../data/database/database_coordinator.dart';
+import '../../../data/database/database_gate.dart';
 import '../../../data/database/database_validation.dart';
 import '../../../data/database/durable_promotion.dart';
 import '../../../data/database/encrypted_database.dart';
@@ -18,6 +21,7 @@ import '../../management/application/management_service.dart';
 import '../domain/backup_manifest.dart';
 import 'drive_authorization.dart';
 import 'backup_validation.dart';
+import 'space_maintenance_service.dart';
 
 final class PortableBackup {
   const PortableBackup(this.file, this.manifest);
@@ -36,16 +40,22 @@ final class BackupService {
     this.testStage,
     this.pausePeripherals,
     this.resumePeripherals,
-  });
+    DatabaseGate? workGate,
+  }) : workGate =
+           workGate ??
+           (Platform.isAndroid
+               ? AndroidDatabaseGate(platform, 'backup-work')
+               : const DirectDatabaseGate());
   final DatabaseCoordinator database;
   final ManagementService access;
   final KasirPlatform platform;
+  final DatabaseGate workGate;
   final Future<int> Function(String directory)? availableBytes;
 
   /// Fixture-only barriers/faults; production supplies no delay or hook.
   final Future<void> Function(String stage)? testStage;
   final Future<void> Function()? pausePeripherals;
-  final void Function()? resumePeripherals;
+  final FutureOr<void> Function()? resumePeripherals;
   Future<int> _free(String directory) =>
       (availableBytes ?? platform.freeBytes)(directory);
   static const ids = Uuid();
@@ -59,6 +69,7 @@ final class BackupService {
   /// Generated at the backup screen, saved only after the user confirms an exact
   /// saved copy. The backup code is independent of both PIN and PIN recovery.
   Future<void> confirmRecovery(String shown, String confirmation) async {
+    await access.authorizeCurrent();
     access.requireFresh('recovery');
     final code = normalizeCode(shown);
     if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code) ||
@@ -66,15 +77,16 @@ final class BackupService {
       throw const FormatException('backupCodeMismatch');
     }
     await platform.saveSecret('backup-master-v1', code);
+    await access.authorizeCurrent();
     access.requireFresh('recovery');
   }
 
   /// Status only, never an implicit reveal on route loading.
   Future<bool> hasRecoveryCode() async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     try {
       final value = await platform.key('backup-master-v1', allowCreate: false);
-      access.requireAccess();
+      await access.authorizeCurrent();
       return RegExp(r'^[a-f0-9]{64}$').hasMatch(value);
     } on PlatformException catch (e) {
       if (e.code != 'key_missing') rethrow;
@@ -83,9 +95,28 @@ final class BackupService {
   }
 
   Future<String> recoveryCode() async {
+    await access.authorizeCurrent();
     access.requireFresh('recovery');
     final value = await platform.key('backup-master-v1', allowCreate: false);
+    await access.authorizeCurrent();
     access.requireFresh('recovery');
+    return value;
+  }
+
+  /// Explicit fresh print authorization is independent of revealing/copying.
+  /// Never passes the code to a job record, filesystem name or diagnostic.
+  Future<String> recoveryForPrint({FreshActionProof? claim}) async {
+    void fresh() => claim == null
+        ? access.requireFresh('recoveryPrint')
+        : access.requireClaim(claim, 'recoveryPrint');
+    await access.authorizeCurrent();
+    fresh();
+    final value = await platform.key('backup-master-v1', allowCreate: false);
+    await access.authorizeCurrent();
+    fresh();
+    if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(value)) {
+      throw const FormatException('backupCodeInvalid');
+    }
     return value;
   }
 
@@ -93,6 +124,7 @@ final class BackupService {
   /// check. This does not rotate or confirm the code, inspect the clipboard, or
   /// persist another secret. Android marks the clip as sensitive metadata.
   Future<void> copyRecoveryCode(String shown) async {
+    await access.authorizeCurrent();
     access.requireFresh('recovery');
     final code = normalizeCode(shown);
     if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
@@ -128,8 +160,26 @@ final class BackupService {
     String? code,
     Database? frozen,
     Future<void> Function()? checkAuthorization,
+    bool workLeaseHeld = false,
+  }) {
+    Future<PortableBackup> action() => _create(
+      headless: headless,
+      code: code,
+      frozen: frozen,
+      checkAuthorization: checkAuthorization,
+    );
+    return workLeaseHeld ? action() : workGate.run(action);
+  }
+
+  Future<PortableBackup> _create({
+    bool headless = false,
+    String? code,
+    Database? frozen,
+    Future<void> Function()? checkAuthorization,
   }) async {
-    if (!headless) access.requireAccess();
+    Future<void> authorizeSource() =>
+        frozen == null ? access.authorizeCurrent() : access.authorize(frozen);
+    if (!headless) await authorizeSource();
     final recovery =
         code ?? await platform.key('backup-master-v1', allowCreate: false);
     final id = ids.v4(), originId = await origin();
@@ -144,7 +194,7 @@ final class BackupService {
       final files = <String, String>{'database.db': exported.path};
       Future<void> snapshot(Database db) async {
         await checkAuthorization?.call();
-        if (!headless) access.requireAccess();
+        if (!headless) await access.authorize(db);
         await EncryptedDatabase.requireCipher(db);
         await DatabaseValidation.integrity(db);
         await db.rawInsert(
@@ -211,7 +261,7 @@ final class BackupService {
       final manifest = BackupManifest({
         'format': 1,
         'schema': Schema.version,
-        'appVersion': '0.5.0+7',
+        'appVersion': appVersion,
         'id': id,
         'storeId': storeId,
         'originId': originId,
@@ -243,7 +293,7 @@ final class BackupService {
       });
       await validateMembers(Directory(check), manifest);
       await Directory(check).delete(recursive: true);
-      if (!headless) access.requireAccess();
+      if (!headless) await authorizeSource();
       await checkAuthorization?.call();
       final complete = await File(
         partial,
@@ -271,6 +321,29 @@ final class BackupService {
           PortableBackup(complete, manifest),
           index['sha256'] as String,
         );
+      }
+      // The artifact is authenticated and indexed. Optional maintenance metadata
+      // or scheduler failure must not cause an upload retry of this valid backup.
+      try {
+        if (frozen == null) {
+          await database.exclusive(
+            (db) => SpaceMaintenanceService.candidate(
+              db,
+              manifest.id,
+              DateTime.now().toUtc().millisecondsSinceEpoch,
+            ),
+          );
+        } else {
+          await SpaceMaintenanceService.candidate(
+            frozen,
+            manifest.id,
+            DateTime.now().toUtc().millisecondsSinceEpoch,
+          );
+        }
+        // A persisted candidate survives registration failure for next startup.
+        await SpaceMaintenanceService.register();
+      } catch (_) {
+        /* No retry loop. */
       }
       return PortableBackup(complete, manifest);
     } catch (_) {
@@ -354,7 +427,7 @@ final class BackupService {
   }) async {
     access.requireAccess();
     return database.read((db) async {
-      access.requireAccess();
+      await access.authorize(db);
       final result = await db.query(
         'local_backups',
         where: before == null ? null : '(created_at,id COLLATE BINARY)<(?,?)',
@@ -362,7 +435,7 @@ final class BackupService {
         orderBy: 'created_at DESC,id COLLATE BINARY DESC',
         limit: 30,
       );
-      access.requireAccess();
+      await access.authorize(db);
       return result;
     });
   }
@@ -370,17 +443,21 @@ final class BackupService {
   Future<Map<String, Object?>> overview() async {
     access.requireAccess();
     return database.read((db) async {
-      access.requireAccess();
+      await access.authorize(db);
       final result = <String, Object?>{
         ...(await db.query(
           'store_settings',
           columns: ['name', 'time_zone', 'currency_code'],
         )).single,
         ...(await db.query('backup_schedule')).single,
+        'maintenance': (await db.query(
+          'space_maintenance',
+          where: 'id=1',
+        )).single,
       };
       final store = await db.query('m5_store', columns: ['store_id']);
       result['storeId'] = store.isEmpty ? null : store.single['store_id'];
-      access.requireAccess();
+      await access.authorize(db);
       return result;
     });
   }
@@ -388,7 +465,7 @@ final class BackupService {
   Future<File> localFile(String id) async {
     access.requireAccess();
     final row = await database.read((db) async {
-      access.requireAccess();
+      await access.authorize(db);
       return (await db.query(
         'local_backups',
         where: 'id=?',
@@ -436,7 +513,7 @@ final class BackupService {
   /// Decryption is a separate inspect step. Callers must show this metadata and
   /// obtain explicit replacement/draft confirmation before invoking restore.
   Future<BackupInspection> inspect(File archive, String enteredCode) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final code = normalizeCode(enteredCode);
     if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
       throw const FormatException('backupCodeInvalid');
@@ -498,7 +575,7 @@ final class BackupService {
       } finally {
         await validated.close();
       }
-      access.requireAccess();
+      await access.authorizeCurrent();
       return BackupInspection(
         directory,
         manifest,
@@ -522,7 +599,14 @@ final class BackupService {
   Future<PortableBackup> restore(
     BackupInspection incoming, {
     required bool confirmReplaceAndDrafts,
+  }) => workGate.run(
+    () => _restore(incoming, confirmReplaceAndDrafts: confirmReplaceAndDrafts),
+  );
+  Future<PortableBackup> _restore(
+    BackupInspection incoming, {
+    required bool confirmReplaceAndDrafts,
   }) async {
+    await access.authorizeCurrent();
     access.requireFresh('restore');
     if (!confirmReplaceAndDrafts) {
       throw StateError('restoreConfirmationRequired');
@@ -573,7 +657,11 @@ final class BackupService {
           await frozen.execute('PRAGMA foreign_keys=ON');
           await EncryptedDatabase.quiesce(frozen);
           await testStage?.call('beforeSafetySnapshot');
-          safety = await create(code: safetyCode, frozen: frozen);
+          safety = await create(
+            code: safetyCode,
+            frozen: frozen,
+            workLeaseHeld: true,
+          );
           await testStage?.call('safetyCreated');
         } finally {
           await frozen.close();
@@ -620,6 +708,18 @@ final class BackupService {
             await dbTxn.delete('alert_state');
             await dbTxn.delete('backup_runs');
             await dbTxn.delete('local_backups');
+            await dbTxn.update('space_maintenance', {
+              'candidate_backup': null,
+              'candidate_at': null,
+              'last_attempt': null,
+              'last_success': null,
+              'status': 'none',
+              'reason': null,
+              'before_bytes': null,
+              'after_bytes': null,
+              'page_count': null,
+              'free_pages': null,
+            }, where: 'id=1');
             await dbTxn.update('backup_schedule', {
               'next_target': null,
               'last_attempt': null,
@@ -687,7 +787,7 @@ final class BackupService {
       await recoverLocalCatalog();
       return safety;
     } finally {
-      resumePeripherals?.call();
+      await resumePeripherals?.call();
     }
   }
 }

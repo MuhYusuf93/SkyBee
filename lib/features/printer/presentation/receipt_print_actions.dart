@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/domain/value_types.dart';
+import '../../../core/domain/app_error.dart';
 import '../../../l10n/localization.dart';
 import 'receipt_preview.dart';
 
@@ -47,7 +48,11 @@ class _ReceiptPrintActionsState extends State<ReceiptPrintActions> {
         if (confirmed != true || !mounted) return;
       }
       final service = context.read<AppServices>().printing;
-      final id = await service.prepare(widget.saleId, copy: copy);
+      final id = await service.prepare(
+        widget.saleId,
+        copy: copy,
+        management: widget.history,
+      );
       final result = await service.send(id);
       if (mounted) {
         setState(
@@ -60,6 +65,8 @@ class _ReceiptPrintActionsState extends State<ReceiptPrintActions> {
           },
         );
       }
+    } on AppError catch (error) {
+      if (mounted) setState(() => status = error.message);
     } catch (_) {
       if (mounted) setState(() => status = 'm5PrintSetupRequired');
     } finally {
@@ -74,6 +81,7 @@ class _ReceiptPrintActionsState extends State<ReceiptPrintActions> {
       final result = await context.read<AppServices>().printing.preview(
         widget.saleId,
         copy: widget.history,
+        management: widget.history,
       );
       if (!mounted) return;
       await showDialog<void>(
@@ -102,6 +110,8 @@ class _ReceiptPrintActionsState extends State<ReceiptPrintActions> {
           ),
         ),
       );
+    } on AppError catch (error) {
+      if (mounted) setState(() => status = error.message);
     } catch (_) {
       if (mounted) setState(() => status = 'm5OperationFailed');
     } finally {

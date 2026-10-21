@@ -48,5 +48,5 @@ final class KasirPlatform {
   Future<int> freeBytes(String directory) =>
       call('freeBytes', {'path': directory});
   Future<void> send(Uint8List bytes) =>
-      channel.invokeMethod('btWrite', {'bytes': bytes});
+      channel.invokeMethod('printerWrite', {'bytes': bytes});
 }

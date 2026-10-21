@@ -1,5 +1,67 @@
 # Rencana milestone
 
+**21 Oktober2026 — tindak lanjut handoff demo selesai:** aplikasi debug
+Skybee terpisah dengan100barang dummy dan kondisi stok/expiry/penjualan/piutang
+sudah terpasang/dibuka Poco, PIN/toko sesuai permintaan. Seed sekali dan menolak
+overwrite; host/native startup/integrity/rekonsiliasi PASS,393hash package lama
+cocok. [Laporan](SKYBEE_DEMO_HANDOFF_20261021.md). Pengujian mandiri tidak
+memerlukan laporan atau pekerjaan menunggu. M5.2/M6 tidak dimulai.
+
+**21 Oktober2026 — M5.1 selesai pada cakupan implementasi/pemeriksaan tersedia
+dan handoff pengembangan:** host77PASS66s, migrasi8→13terarah1PASS terpisah,
+native feed6Poco1PASS16s/392hashcocok, formatter/analyze/reader independen PASS.
+Ordinary debug/release0.5.1+8 diverifikasi3ABI/16KiB/signature; debug dipasang
+in-place Poco dengan snapshot/key terjaga sebelum startup, dua startup kasir
+PASS. Kontrol Off. [Laporan akhir](M51_FINAL_REPORT_20261021.md) memuat batas
+paper default6, biometrik, SAF/OEM/natural worker/release runtime/manual PIN.
+Audit jeda ordinary berubah selaras konteks pengguna sempat memakai dummy;
+390/391hash lama cocok, tidak mengubah histori menjadi preservation penuh.
+M5.2 tetap PLANNED menunggu desain; M6 tidak dimulai. Checkpoint di bawah historis.
+
+**20 Oktober2026 — pindah chat:** lanjut M5.1 dari
+[checkpoint lengkap](NEXT_SESSION_M51.md). Kode A–G tersedia, final backup DV2PASS;
+USB struk/nominal sesuai reported dan footer terlihat sesudah3LF tambahan.
+Regresi default feed6, analyze, build debug/release, endpoint audit/handoff Poco
+masih tersisa. Kabel Poco/printer bergantian; jangan meminta keduanya sekaligus.
+M5.2 tetap PLANNED menunggu desain; M6 belum dimulai. Riwayat berikut dipertahankan.
+
+**19 Oktober2026 — cetak aplikasi USB DV PASS:**81/81byte sekali kirim melalui
+adapter produksi dalam package integration, native1PASS4s. Pengguna menjawab “ya”
+untuk lima baris cetakan baru yang jelas/utuh/tidak terpotong: **PASS manual
+reported**, terpisah dari byte accepted dan handoff native root sebelumnya.
+Izin Android normal, tanpa root; semua hash lama sama, awake pulih/readback exact,
+kontrol Off. Kabel boleh dipindah; selanjutnya Poco/M5.1 dari checklist A–C/F di
+source, D/E/G pending. Realme tetap pribadi/dijeda, worker nonce lama belum
+diaudit endpoint. M5.2 menunggu desain/M6 belum dimulai.
+[Laporan dan bukti](M51_DV_USB_APP_20261019.md).
+
+**19 Oktober2026 — adapter USB DV mengirim81/81byte:** probe aplikasi
+package integration debug0.5.1+8 melalui transport produksi1PASS4s; izin Android
+normal/UID10115, satu target/sekali write, tanpa root. Hash berkas lama sama dan
+awake pulih/readback exact; kontrol Off. **Paper masih menunggu verifikasi
+pengguna**, tidak dicetak ulang otomatis. Handoff native root100byte/paper PASS
+reported terpisah. Kesiapan window dan helper dialog diperbaiki tanpa melonggarkan
+guard aplikasi. [Laporan DV](M51_DV_USB_APP_20261019.md).
+Realme dijeda untuk penggunaan pribadi;98native unik PASS lintas run, worker
+nonce1792404362140 hasil/cleanup/audit endpoint belum terverifikasi karena ADB
+terputus. Setelah paper dikonfirmasi dan kabel dipindah, lanjut Poco/M5.1 dari
+checklist: A–C/F adapter di source, D/E/G pending. M5.2 menunggu desain/M6 belum
+dimulai. Riwayat sebelumnya dipertahankan.
+
+**19 Oktober2026 — titik berhenti Realme / beralih DV USB:**98kasus native unik
+mempunyai PASS lintas full run/focused retest, termasuk UI35, security11,
+recovery-output11, alert/notifikasi4 dan antrean cetak10. Host38PASS05:25 +39PASS02:22;
+denial1subsetPASS18s, analyzer final11,0s No issues. Kegagalan helper dipertahankan:
+namespace/mock/target hit-test/privacy-call dan immediate notification cancel.
+Semua hash lama dilindungi sama sampai completed print-queue run. Probe worker
+nonce1792404362140 sempat scheduled/PID3467, lalu ADB Realme hilang: hasil,
+cleanup dan audit endpoint BELUM TERVERIFIKASI. HP kini dipakai pribadi, antrean
+berhenti; jangan setup ulang sebelum audit nonce lama. [Checkpoint Realme](M5_REALME_CURRENT_AUTOMATED_20261019.md).
+Pengguna memberikan handoff cetak native USB DV100byte/paper PASS user-reported;
+jalur aplikasi Android biasa belum dibuktikan. Lanjut DV, lalu tunggu verifikasi
+kertas sebelum perpindahan kabel/Poco dan M5.1. D/E/G tetap pending; M5.2 menunggu
+desain/M6 belum dimulai. Riwayat di bawah dipertahankan.
+
 **M5 acceptance utama ditutup,19 Oktober2026:** C32 host58PASS159s/analyzer41.3s No issues; Poco2/DV2 UI native PASS. Audit before/after/final mengautentikasi13arsip,8snapshot worker/23tabel bisnis, strict interval seluruh tabel+policy+arsip sama, startup/alert metadata diperiksa. Disconnected/Off/targetnull; nol work M5 pending pada snapshot sesudah cleanup. Exact originalAPK6 fixture kembali tanpa launch; ordinary/legacy/campaign/ekspor hash terpelihara dan DV awake/APK asal pulih. Manual D-MAN17 dan pembatalan tambahan tetap reported, diverifikasi native terpisah. M5 selesai pada cakupan tersedia; natural21/reboot/Doze/revoke nyata/80mm/OEM/TalkBack dan batas lain tetap UNVERIFIED. M6 tidak dimulai. [Laporan akhir](M5_FINAL_REPORT_20261019.md).**
 
 **C32 host PASS,19 Oktober2026:** status error worker tersimpan belum dirender saat route dibuka kembali. Getter/pesan historis perangkat ID/EN ditambahkan tanpa mutasi SQL/policy. Repro final-helper2FAIL9s→focused2PASS10s/full58PASS159s, analyzer final41.3s No issues. First before/after lazy-finder failures disimpan, tidak disamakan dengan bug tambahan. Poco/DV terdeteksi ulang; native UI/build/audit13arsip/disconnected/closing sedang dijalankan, belum klaim lulus. D-MAN17 dan pembatalan pemilih tambahan tetap reported; jeda bukan baseline beku. M5 belum selesai/M6 tidak dimulai. [C32](M5_PERSISTED_WORKER_STATUS_C32.md), [context](evidence/m5-20261018/c32-update-context.json).**
@@ -277,6 +339,14 @@ Ruang lingkup: SQLCipher wajib, key instalasi dan migrasi plaintext tervalidasi/
 Validasi: printer gagal/ulang tidak mengubah transaksi; denial permission; deduplikasi notifikasi; backup/restore isi dan logo; arsip rusak; recovery restore; akun terputus dan backup belum diaktifkan. Pisahkan bukti logic/transport dari hasil hardware/OAuth nyata. Sisa uji hardware adalah pending/unverified, bukan lulus.
 
 ## M5.1 — Fitur operasional dan kemudahan penggunaan
+
+Penutupan21 Oktober2026: A–G memiliki implementasi nyata/schema13;
+verifikasi akhir dan handoff ordinary0.5.1+8 selesai pada cakupan tersedia.
+Debug terbaru sudah terpasang/dibuka Poco; release tersedia terpisah. Batas
+pengujian fisik/manual tetap eksplisit dalam [laporan akhir](M51_FINAL_REPORT_20261021.md).
+D/E/G, kegagalan awal dan retest pada
+[laporan D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md). QR/mnemonik tetap opsional
+ditunda; natural idle/biometrik nyata/OEM tidak dianggap lulus otomatis.
 
 Aktif berdasarkan permintaan 19 Oktober 2026, sesudah handoff M5. M5 historis
 tetap ditutup. Kerjakan checkpoint A–G: atribut produk eksak/null/snapshot;

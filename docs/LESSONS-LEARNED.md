@@ -173,3 +173,135 @@ tidak memerlukan dump semantics; tunggu suite selesai untuk UIAutomator/screensh
 82. Suite host yang dibagikan ke native harus memenuhi kontrak nama/path adapter SQLCipher. C31 memakai fixture.db sehingga guard fixturePathRequired menolak sebelum open; perbaiki nama disposable ke m5_regression_nonce.db, jangan melonggarkan adapter. Simpan3PASS/1FAIL awal beserta bukti ordinary hash/exact APK restoration; ulang host focused dan native. Fullhost sebelum koreksi nama tetap bukti source produksi yang sama, tetapi jelaskan perubahan helper/focused subset dan analyzer final agar tidak menjumlah retest sebagai kasus baru.
 
 83. Status error sebelum pembuatan backup_runs tetap perlu projection dari backup_schedule setelah route dimuat ulang. Jangan mengandalkan pesan foreground atau mengatribusikan error historis kepada akun baru. Pisahkan bug rendering dari finder lazy: pump/scroll ke anchor yang sudah ada, reproduksi omission dengan helper final, lalu pulihkan source sendiri byte-identik. Jeda/pemilih akun batal bukan baseline beku; tutup dengan baseline sesudah PIN, seluruh hash selama inspeksi, autentikasi arsip dan pemeriksaan work milik fixture saja.
+
+
+84. USB tersambung ke PC membuktikan jalur berbeda dari Android OTG. Catat
+SetupAPI instance, VID/PID, kelas dan driver lalu satu pengiriman publik terarah;
+bytes accepted tidak membuktikan kertas. Default probe read-only, one-shot marker
+sebelum write, timeout ambigu tanpa retry; jangan memasang driver/queue atau
+mengganti perangkat secara otomatis. Pengguna mengonfirmasi kertas terpisah.
+Bergantian kabel menjelaskan Poco hilang ADB, bukan otomatis gangguan debugging.
+
+85. Widget FakeAsync tidak boleh menyisakan database tail dari event saat cleanup
+real IO berjalan. setUp/tearDown real-async, scoped callbacks dan pump frame yang
+benar mengatasi helper timeout/reentrant dan stale visibility finder. Jangan
+menaikkan timeout atau melemahkan authorizer. Valid RAM grant juga harus diperiksa
+terhadap persisted credential epoch di lease DB; rotasi PIN service lain membatalkan
+protected reads/writes meskipun UI belum menerima notifikasi proses lain.
+
+86. Fixture Keystore harus konsisten di seluruh dependency dan PID. Restore-fault
+Realme key_missing mendahului fault yang diminta karena EncryptedDatabase memakai
+platform default sedangkan BackupService namespaced. Suntikkan platform yang sama,
+assert faultReached dan ulang keempat fase. Mock USB juga harus dilepas sebelum
+DB terenkripsi kedua dibuka. Jangan melonggarkan key guard atau menandai fault
+teruji dari exception yang ternyata terjadi lebih awal.
+
+87. Panggilan privacy window bukan permintaan Bluetooth. Helper native memasukkan
+protectedScreen ke raw calls sehingga empty/sequence assertion salah; tangani
+void lifecycle dan filter hanya operasi itu pada assertion printer, lalu baca
+FLAG_SECURE native terpisah. Retest terfokus bukan full final run. Cancel notifikasi
+mengirim perintah OS; baca metadata sampai absent dengan batas singkat, tanpa
+cancel ulang. Immediate-read fail/retest7ms absent bukan trace penyebab internal OS.
+
+88. Android TV API30 menaruh mCurrentFocus di dumpsys window displays; windows-only
+dump tidak cukup untuk watcher izin. UIAutomator exit137 dan screenshot hitam tidak
+membuktikan dialog hilang atau app crash. Dialog izin sendiri dapat diverifikasi
+melalui Activity view hierarchy dan posisi tombol positif resource button1 plus
+offset window; jangan menebak koordinat atau menekan checkbox/default. Catat grant
+UID sesuai package. Readiness probe harus menggambar frame dan membaca fokus
+native; guard aplikasi tidak dilemahkan. Keberhasilan native root USBFS adalah
+bukti berbeda dari adapter Android normal dan paper tetap perlu manusia.
+
+89. Saat pengguna mengambil perangkat pribadi, hentikan antrean baru dan catat
+interval yang belum ditutup. Realme worker nonce1792404362140 sempat scheduled,
+kemudian ADB hilang: hash sebelum bukan bukti endpoint preservation, setup marker
+bukan worker PASS, dan finally yang gagal terhubung bukan cleanup sukses. Saat
+tersedia lagi audit nonce lama sebelum setup baru, pertahankan namespace root
+recovery/retry serta hanya retire task sendiri. Jangan meminta reboot untuk
+kegagalan helper atau perangkat yang sengaja tidak tersedia.
+
+90. Widget FakeAsync yang membuka DB/IO nyata perlu mount dan drain tail melalui
+real-async yang tepat. Jangan meninggalkan save/load tail saat tearDown menutup
+DB, atau menganggap timeout helper sebagai kegagalan domain. Uji clipboard
+harus mengarah ke keyed form Scrollable, memastikan tombol hitTestable; sticky
+status dapat menjadi firstScrollable dan membuat tap di luar layar.
+
+91. Query ekspor baru harus memakai nama kolom skema aktual (base_unit_label),
+bukan label domain yang diasumsikan. Buktikan snapshot penuh/periode/filter,
+reversal dan presisi melalui pembaca CSV/XLSX independen; file dibuat bukan
+bukti nilainya benar. Money64bit/identifier sebagai text menghindari pembulatan
+Excel; CSV tetap perlu import kolom sebagai text karena tidak mempunyai tipe.
+
+92. SQLCipher cipher_page_size dapat dikembalikan TEXT oleh driver Android.
+Parser strict integer/power-of-two diperlukan, bukan cast int atau parse double.
+Metode tryAcquire yang dikenal dapat sah mengembalikan null untuk lease sibuk;
+jangan memetakannya ke MethodNotImplemented/MissingPlugin. Uji juga pelepasan
+lease dan retry berikutnya, bukan hanya jalur sukses pertama.
+
+93. VACUUM pada WAL dapat mengecilkan page_count tanpa langsung mengecilkan
+mainfile saat koneksi masih terbuka. Repro M5.1: status634880bytes, berkas17444864.
+Checkpoint/TRUNCATE sebelum/sesudah dan File.length sebelum close membuktikan
+reklamasi fisik. busy_timeout0 sementara mencegah menunggu reader eksternal,
+timeout/journal mode harus dipertahankan. Fixture reader memakai BEGIN DEFERRED;
+sqflite transaction(exclusive:false) masih dapat mengambil reservasi writer dan
+menghasilkan kegagalan setup, bukan bug checkpoint. Tidak menghapus WAL manual.
+
+94. Tombol Batal pada write SAF harus mencapai token/stream native, bukan hanya
+flag snapshot. Repro UI cancelCalls0→fixed; hasil setelah cancel tidak boleh
+menjadi ekspor terverifikasi. Pilih tujuan dan tulis data laporan terproteksi
+dipisah agar kembali dari pemilih sistem tidak melewati PIN/epoch. Digest
+readback dan timeout tetap diperlukan; provider/keyboard OEM nyata memerlukan
+bukti tersendiri.
+
+95. Pisahkan seluruh pekerjaan maintenance opsional, termasuk menulis kandidat,
+dari hasil backup yang sudah diautentikasi dan terindeks. Fault trigger SQLite
+pada UPDATE space_maintenance mereproduksi backup valid yang keliru dilaporkan
+gagal. Catch hanya tahap maintenance sesudah artifact/index selesai; jangan
+menelan kegagalan pembuatan/validasi/index backup. Hindari retry upload hanya
+karena metadata maintenance gagal, dan autentikasi kembali arsip pada retest.
+
+96. Poco dan printer memakai kabel USB bergantian. Catatan ini harus dibaca
+sebelum menafsirkan Poco hilang ADB sebagai gangguan atau meminta debug ulang.
+Urutan yang diminta pengguna: cetak DV→verifikasi kertas→pindah kabel Poco→audit
+endpoint/handoff. Tidak meminta kedua perangkat tersambung sekaligus. Hash awal
+yang belum ditutup karena kabel dipindah tetap unverified sampai endpoint ada.
+
+97. Probe printer harus mengikuti kontrak transport produksi, bukan melewati
+antrean lalu mengirim seluruh raster sebagai satu chunk. UsbPrinterIo membatasi
+4096bytes dan menolak usb_invalid_chunk sebelum Link.transfer; PrintQueueService
+sudah memotong4096. Probe awal gagal karena helper, bukan batas yang perlu
+dilonggarkan. Pertahankan marker percobaan lama, buktikan pre-transfer rejection,
+lalu gunakan marker revisi untuk satu dokumen berpotongan dalam satu output
+lease. Hitung attempted writes/accepted bytes terpisah dari kertas; hentikan
+tanpa retry pada error setelah transfer yang ambigu.
+
+98. Koreksi manusia mengalahkan dugaan posisi footer. Pengguna mula-mula menduga
+footer di dalam printer, lalu setelah3LF menyebut sebelumnya belum tercetak.
+Catat footer kini terlihat, tanpa menyimpulkan hidden-versus-buffering dari byte
+accepted. Default6 dapat diuji, saved calibration tetap. Log bernama final juga
+bisa stale: periksa timestamp/run/source, simpan failure lama, dan jangan klaim
+analyze/build sudah dijalankan jika pipeline berhenti lebih awal di formatter.
+Saat pindah chat simpan source/hasil/batas/marker/perintah benar dalam repository.
+
+99. Audit tertunda tidak boleh ditutup dengan asumsi baseline beku. Resume M5.1:
+390/391hash cocok, hanya ordinary DB berubah; pengguna mengonfirmasi sempat
+memakai dummy. Simpan late-after terpisah dan hasil BLOCKED lama, lalu gunakan
+baseline baru (392/392cocok) untuk interval native selanjutnya. Izin menghapus
+dummy bukan kewajiban reset. Handoff in-place memakai signature/version/hash
+APK aktual, closed snapshot/key sebelum install, lalu semantik kasir dan clean
+reopen yang menjalankan bootstrap integrity sesudah migrasi. Jangan menuntut
+DB byte-identik pascamigrasi, mengklaim readback SQL yang tidak dilakukan,
+akses PIN pribadi dari startup kasir, atau menyamakan snapshot Keystore lokal
+dengan arsip portable. Paper default6 tetap perlu bukti fisik meski host/native
+fake6LF lulus.
+
+100. Demo bernama lain memerlukan sandbox/applicationId sendiri, bukan sekadar
+label. Skybee memakai entrypoint+flag berpasangan, native activity khusus yang
+memverifikasi package/debuggable sebelum DB dibuka, dan seed lewat service pada
+DB kosong. Marker complete tidak memvalidasi ulang jumlah barang saat startup
+agar perubahan uji pengguna tidak ditimpa. Marker parsial tidak auto-reset.
+Bedakan setup aplikasi debug dari integration tests; safe runner integration
+tetap wajib. Simpan stdout/stderr installer gagal, periksa package dan hash APK
+sebelum resume; jangan mengarang sebab exit1 atau replay seed. Hash package lama
+ditutup pada kedua interval. Pengguna yang memilih uji mandiri tanpa laporan
+tidak diberi pekerjaan menunggu atau automation follow-up.

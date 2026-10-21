@@ -24,7 +24,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
       left = TextEditingController(text: '8'),
       right = TextEditingController(text: '8'),
       shift = TextEditingController(text: '0'),
-      feed = TextEditingController(text: '3');
+      feed = TextEditingController(text: '${const PrinterProfile().feed}');
   String? device;
   String name = '';
   int paper = 58, font = 24, logoPercent = 100, lineGap = 6;
@@ -103,12 +103,29 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
     child: ManagementGate(
       child: Consumer<PrinterSettingsProvider>(
         builder: (context, state, _) => Scaffold(
-          appBar: AppBar(title: Text(tr(context, 'm5Printer'))),
+          appBar: AppBar(title: Text(tr(context, 'm51PrinterTitle'))),
           body: SafeArea(
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                Text(tr(context, 'm5PrinterHelp')),
+                SegmentedButton<String>(
+                  segments: const [
+                    ButtonSegment(value: 'bluetooth', label: Text('Bluetooth')),
+                    ButtonSegment(value: 'usb', label: Text('USB')),
+                  ],
+                  selected: {state.transport},
+                  onSelectionChanged: state.busy
+                      ? null
+                      : (value) async {
+                          setState(() {
+                            device = null;
+                            name = '';
+                            outcome = null;
+                          });
+                          await state.selectTransport(value.single);
+                        },
+                ),
+                Text(tr(context, state.usb ? 'm51UsbHelp' : 'm5PrinterHelp')),
                 if (state.busy)
                   LinearProgressIndicator(
                     semanticsLabel: tr(context, 'loading'),
@@ -122,10 +139,15 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                   if (state.connectedDevice != null)
                     Text(state.connectedDevice!),
                 ],
-                Text(tr(context, 'm5BluetoothPermissionHelp')),
+                if (!state.usb) Text(tr(context, 'm5BluetoothPermissionHelp')),
                 Wrap(
                   spacing: 8,
                   children: [
+                    if (state.usb)
+                      OutlinedButton(
+                        onPressed: state.busy ? null : state.loadUsb,
+                        child: Text(tr(context, 'm51UsbLoad')),
+                      ),
                     OutlinedButton(
                       onPressed: state.busy ? null : state.chooseLogo,
                       child: Text(tr(context, 'm5ChooseLogo')),
@@ -144,14 +166,16 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                 Wrap(
                   spacing: 8,
                   children: [
-                    OutlinedButton(
-                      onPressed: state.busy ? null : state.paired,
-                      child: Text(tr(context, 'm5Paired')),
-                    ),
-                    OutlinedButton(
-                      onPressed: state.busy ? null : state.discover,
-                      child: Text(tr(context, 'm5Discover')),
-                    ),
+                    if (!state.usb)
+                      OutlinedButton(
+                        onPressed: state.busy ? null : state.paired,
+                        child: Text(tr(context, 'm5Paired')),
+                      ),
+                    if (!state.usb)
+                      OutlinedButton(
+                        onPressed: state.busy ? null : state.discover,
+                        child: Text(tr(context, 'm5Discover')),
+                      ),
                     if (state.scanning)
                       OutlinedButton(
                         onPressed: state.service.cancel,
@@ -173,7 +197,9 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                     subtitle: Text('${row['id']}'),
                     selected: device == row['id'],
                     onTap: state.busy ? null : () => choose(row),
-                    trailing: row['paired'] == true
+                    trailing: state.usb
+                        ? const Icon(Icons.usb)
+                        : row['paired'] == true
                         ? Tooltip(
                             message: tr(context, 'm5Paired'),
                             child: const Icon(Icons.link),
@@ -190,6 +216,9 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                             child: Text(tr(context, 'm5Pair')),
                           ),
                   ),
+                if (state.usb &&
+                    state.devices.any((row) => row['sessionOnly'] == true))
+                  Text(tr(context, 'm51UsbTemporary')),
                 const Divider(),
                 Text(tr(context, 'm5SavedPrinters')),
                 for (final row in state.saved)
@@ -363,7 +392,16 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                           FilledButton(
                             onPressed: state.busy
                                 ? null
-                                : () => state.connect(device!),
+                                : () async {
+                                    await state.connect(device!);
+                                    if (mounted &&
+                                        state.connectedDevice != null &&
+                                        state.usb) {
+                                      setState(
+                                        () => device = state.connectedDevice,
+                                      );
+                                    }
+                                  },
                             child: Text(tr(context, 'm5Connect')),
                           ),
                           Semantics(
@@ -375,6 +413,25 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                           if (outcome != null) Text(tr(context, outcome!)),
                         ],
                       ),
+                      if (state.usb &&
+                          state.message == 'm51UsbPermissionDenied')
+                        TextButton(
+                          onPressed: state.busy
+                              ? null
+                              : () async {
+                                  await state.connect(
+                                    device!,
+                                    retryUsbPermission: true,
+                                  );
+                                  if (mounted &&
+                                      state.connectedDevice != null) {
+                                    setState(
+                                      () => device = state.connectedDevice,
+                                    );
+                                  }
+                                },
+                          child: Text(tr(context, 'm51UsbRetryPermission')),
+                        ),
                       TextButton(
                         onPressed: state.busy ? null : state.checkConnection,
                         child: Text(tr(context, 'm5CheckConnection')),
@@ -383,7 +440,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                         onPressed: state.busy
                             ? null
                             : () => task(() async {
-                                await state.service.save(
+                                device = await state.service.save(
                                   device!,
                                   name,
                                   profile(),
@@ -443,7 +500,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                                 final printing = context
                                     .read<AppServices>()
                                     .printing;
-                                await state.service.save(
+                                device = await state.service.save(
                                   device!,
                                   name,
                                   profile(),

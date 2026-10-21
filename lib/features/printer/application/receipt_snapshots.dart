@@ -57,6 +57,10 @@ final class ReceiptSnapshots {
       'scale': receipt.total.scale,
       'total': receipt.total.amountMinor,
       'paid': originalPaid,
+      if (receipt.cashTender != null) ...{
+        'tender': receipt.cashTender!.received.amountMinor,
+        'change': receipt.cashTender!.change.amountMinor,
+      },
       'debt': originalPaid == null
           ? null
           : receipt.total.amountMinor - originalPaid,

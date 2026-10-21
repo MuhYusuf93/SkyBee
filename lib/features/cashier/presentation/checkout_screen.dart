@@ -1,10 +1,9 @@
 import 'dart:async';
+import 'cash_pad.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/money/money_field.dart';
-import '../../../core/money/money.dart';
 import '../../../l10n/localization.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/cashier_models.dart';
@@ -23,7 +22,8 @@ class CheckoutScreen extends StatelessWidget {
           cart,
           context.read<AppServices>().cart,
           context.read<AppServices>().checkout,
-        ),
+          quickCash: context.read<AppServices>().quickCash,
+        )..loadAmounts(),
       ),
     ],
     child: const _CheckoutForm(),
@@ -40,19 +40,9 @@ class _CheckoutFormState extends State<_CheckoutForm> {
   Timer? timer;
   int generation = 0;
   List<CustomerRecord> suggestions = const [];
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final form = context.read<CheckoutProvider>();
-    final saved = form.cart.snapshot!.input.paid;
-    if (form.paid.codec == null && saved != null && form.paid.text.isEmpty) {
-      form.paid.text = moneyCodec(context).format(saved, label: false);
-    }
-  }
-
   void search(String name) {
     final form = context.read<CheckoutProvider>();
-    form.selected = null;
+    form.newCustomer();
     timer?.cancel();
     final version = ++generation;
     setState(() => suggestions = const []);
@@ -100,43 +90,8 @@ class _CheckoutFormState extends State<_CheckoutForm> {
                 '${tr(context, 'total')}: ${moneyLabel(context, total.amountMinor)}',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              RadioGroup<PaymentMode>(
-                groupValue: form.mode,
-                onChanged: (value) {
-                  if (!form.submitting) form.selectMode(value!);
-                },
-                child: Column(
-                  children: [
-                    for (final mode in PaymentMode.values)
-                      RadioListTile<PaymentMode>(
-                        value: mode,
-                        enabled: !form.submitting,
-                        title: Text(
-                          tr(context, switch (mode) {
-                            PaymentMode.paid => 'm3PaidFull',
-                            PaymentMode.partial => 'm3PartialDebt',
-                            PaymentMode.debt => 'm3AllDebt',
-                          }),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              if (form.mode == PaymentMode.paid)
-                Text(tr(context, 'm3PaidExplanation')),
-              if (form.mode != PaymentMode.paid) ...[
-                if (form.mode == PaymentMode.partial) ...[
-                  MoneyField(
-                    controller: form.paid,
-                    label: tr(context, 'm3PaidAmount'),
-                    enabled: !form.submitting,
-                  ),
-                  _DebtPreview(controller: form.paid, total: total),
-                ],
-                if (form.mode == PaymentMode.debt)
-                  Text(
-                    '${tr(context, 'm3RemainingDebt')}: ${moneyLabel(context, total.amountMinor)}',
-                  ),
+              CashPad(form: form),
+              if (form.needsCustomer) ...[
                 TextField(
                   controller: form.name,
                   enabled: !form.submitting,
@@ -203,65 +158,6 @@ class _CheckoutFormState extends State<_CheckoutForm> {
           ),
         ),
       ),
-    );
-  }
-}
-
-/// MoneyField translates its controller while Localizations rebuilds. A
-/// sibling amount listener must defer its own rebuild until that frame ends.
-class _DebtPreview extends StatefulWidget {
-  const _DebtPreview({required this.controller, required this.total});
-  final MoneyEditingController controller;
-  final Money total;
-  @override
-  State<_DebtPreview> createState() => _DebtPreviewState();
-}
-
-class _DebtPreviewState extends State<_DebtPreview> {
-  bool queued = false;
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(changed);
-  }
-
-  void changed() {
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
-      if (queued) return;
-      queued = true;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        queued = false;
-        if (mounted) setState(() {});
-      });
-    } else if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant _DebtPreview oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.controller != widget.controller) {
-      oldWidget.controller.removeListener(changed);
-      widget.controller.addListener(changed);
-    }
-  }
-
-  @override
-  void dispose() {
-    widget.controller.removeListener(changed);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final paid = widget.controller.canonicalMoney;
-    final debt = paid == null || paid.amountMinor > widget.total.amountMinor
-        ? null
-        : widget.total - paid;
-    return Text(
-      '${tr(context, 'm3RemainingDebt')}: ${debt == null ? '—' : moneyLabel(context, debt.amountMinor)}',
     );
   }
 }

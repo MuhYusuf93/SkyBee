@@ -37,6 +37,7 @@ final class DatabaseCoordinator {
   Database? _database;
   Future<void> _tail = Future.value();
   bool _closed = false;
+  int _operations = 0;
   final _commits = StreamController<int>.broadcast();
   int _revision = 0;
   int _generation = 0;
@@ -108,9 +109,10 @@ final class DatabaseCoordinator {
       }
     }
 
-    final result = _tail.then(
-      (_) => gate == null ? perform() : gate!.run(perform),
-    );
+    _operations++;
+    final result = _tail
+        .then((_) => gate == null ? perform() : gate!.run(perform))
+        .whenComplete(() => _operations--);
     _tail = result.then<void>((_) {}, onError: (Object _, StackTrace _) {});
     return result;
   }
@@ -162,6 +164,40 @@ final class DatabaseCoordinator {
   /// maintenance. This is a boundary, not a backup implementation.
   Future<T> exclusive<T>(Future<T> Function(Database db) operation) =>
       read(operation);
+
+  /// Space maintenance must not queue behind checkout or wait for a worker's
+  /// file lease. It shares the exact process/file gate, without replacement or
+  /// generation events: compacting is not restoring a different database.
+  Future<T?> tryIdle<T>(Future<T> Function(Database db) operation) async {
+    if (_closed ||
+        _operations != 0 ||
+        (gate != null && gate is! TryDatabaseGate)) {
+      return null;
+    }
+    _operations++;
+    T? value;
+    Future<void> perform() async {
+      try {
+        value = await operation(await _open());
+      } finally {
+        if (closeAfterOperation) {
+          await _database?.close();
+          _database = null;
+        }
+      }
+    }
+
+    final result = gate == null
+        ? perform()
+        : (gate as TryDatabaseGate).tryRun(perform);
+    _tail = result.then<void>((_) {}, onError: (Object _, StackTrace _) {});
+    try {
+      await result;
+      return value;
+    } finally {
+      _operations--;
+    }
+  }
 
   /// Maintenance owns the gate after closing the live connection. The callback
   /// must use private staging connections and must not re-enter this coordinator.

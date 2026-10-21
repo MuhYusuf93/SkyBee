@@ -12,6 +12,7 @@ import 'package:kasir_app/features/cashier/presentation/cart_provider.dart';
 import 'package:kasir_app/features/cashier/presentation/cashier_screen.dart';
 import 'package:kasir_app/features/cashier/presentation/checkout_screen.dart';
 import 'package:kasir_app/features/cashier/presentation/checkout_provider.dart';
+import 'package:kasir_app/features/cashier/presentation/cash_pad.dart';
 import 'package:kasir_app/features/settings/presentation/locale_provider.dart';
 import 'package:kasir_app/l10n/localization.dart';
 import 'support/database_contract_suite.dart';
@@ -81,7 +82,10 @@ void main() {
         addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
         addTearDown(tester.view.resetViewInsets);
         final cart = CartProvider(services.cart)..snapshot = snapshot;
-        await tester.pumpWidget(app(CheckoutScreen(cart: cart), language));
+        await tester.runAsync(() async {
+          await tester.pumpWidget(app(CheckoutScreen(cart: cart), language));
+          await Future<void>.delayed(const Duration(milliseconds: 80));
+        });
         await tester.pumpAndSettle();
         expect(
           find.byType(TextField),
@@ -95,30 +99,25 @@ void main() {
           isNull,
         ); // Cart exists inside the payment flow, not at app root.
         final state = tester
-            .element(find.byType(RadioGroup<PaymentMode>))
+            .element(find.byType(CashPad))
             .read<CheckoutProvider>();
-        state.selectMode(PaymentMode.partial);
+        await tester.runAsync(() async {
+          for (final digit in ['1', '0', '0', '0']) {
+            await state.key(digit);
+          }
+        });
         await tester.pumpAndSettle();
-        final field = find.byType(MoneyField);
-        await tester.scrollUntilVisible(
-          field,
-          200,
-          scrollable: find.byType(Scrollable).first,
-        );
-        await tester.ensureVisible(field);
-        await tester.enterText(
-          find.descendant(of: field, matching: find.byType(TextField)),
-          '1000',
-        );
-        await tester.pump();
-        expect(state.paid.canonicalMoney!.amountMinor, 1000);
-        expect(state.paid.text, language == 'id' ? '1.000' : '1,000');
-        await tester.pumpWidget(
-          app(CheckoutScreen(cart: cart), language == 'id' ? 'en' : 'id'),
-        );
+        expect(state.tender!.amountMinor, 1000);
+        expect(find.byType(MoneyField), findsNothing);
+        await tester.runAsync(() async {
+          await tester.pumpWidget(
+            app(CheckoutScreen(cart: cart), language == 'id' ? 'en' : 'id'),
+          );
+          await Future<void>.delayed(const Duration(milliseconds: 80));
+        });
         await tester.pumpAndSettle();
-        expect(state.paid.canonicalMoney!.amountMinor, 1000);
-        expect(state.paid.text, language == 'id' ? '1,000' : '1.000');
+        expect(state.tender!.amountMinor, 1000);
+        expect(find.byKey(const ValueKey('cash-tender')), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.pumpWidget(const SizedBox());
         await tester.pumpAndSettle();

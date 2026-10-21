@@ -3457,6 +3457,372 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Timed choices include background inactivity; returning does not extend the session. Immediate lock also has a 5-minute idle limit. App dialogs are bounded to 60 seconds; full file/account pickers may require PIN once on return. Screen lock, restart, manual lock, PIN changes and restore invalidate access. Cashier stays open. Grace is a convenience choice retaining temporary access.'**
   String get m51SessionHelp;
+
+  /// No description provided for @m51PrintRecovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Print recovery code'**
+  String get m51PrintRecovery;
+
+  /// No description provided for @m51RecoveryPrintWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The paper contains a secret that unlocks backups. Check that you own this destination, collect the paper and store it separately from archives/the device. Printer transport and memory are not guaranteed confidential. There is no automatic retry.'**
+  String get m51RecoveryPrintWarning;
+
+  /// No description provided for @m51RecoveryPrintStoredOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Prints the saved code. For a new or rotated code, confirm and save it first; printing is optional.'**
+  String get m51RecoveryPrintStoredOnly;
+
+  /// No description provided for @m51RecoveryPrinterRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select and save a printer profile in printer settings first.'**
+  String get m51RecoveryPrinterRequired;
+
+  /// No description provided for @m51RecoveryPrinterChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'The printer profile changed. Check and confirm the destination again.'**
+  String get m51RecoveryPrinterChanged;
+
+  /// No description provided for @m51RecoveryPrintSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Print data submitted. Check the paper and all 64 characters; submitted bytes do not prove complete paper output.'**
+  String get m51RecoveryPrintSubmitted;
+
+  /// No description provided for @m51RecoveryPrintNotSent.
+  ///
+  /// In en, this message translates to:
+  /// **'The code was not sent. Check the printer/connection. Reprinting requires new authentication and confirmation.'**
+  String get m51RecoveryPrintNotSent;
+
+  /// No description provided for @m51RecoveryPrintUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Print outcome is uncertain; part of the code may be on paper. No automatic retry. Secure the paper, check the printer, then authenticate again if choosing to reprint.'**
+  String get m51RecoveryPrintUnknown;
+
+  /// No description provided for @m51RecoveryPaperStored.
+  ///
+  /// In en, this message translates to:
+  /// **'I checked the entire code on paper and stored my copy privately.'**
+  String get m51RecoveryPaperStored;
+
+  /// No description provided for @m51ConfirmPaperStored.
+  ///
+  /// In en, this message translates to:
+  /// **'Record copy storage confirmation'**
+  String get m51ConfirmPaperStored;
+
+  /// No description provided for @m51RecoveryCopyStored.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy storage confirmation recorded without retaining its contents.'**
+  String get m51RecoveryCopyStored;
+
+  /// No description provided for @m51PrinterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth / USB printer'**
+  String get m51PrinterTitle;
+
+  /// No description provided for @m51UsbHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'USB OTG needs USB Host, a data cable, power and an ESC/POS USB printer-class device. Select a device before granting access. Vendor USB serial is not supported. Avoid unplugging during output; failed delivery never retries automatically.'**
+  String get m51UsbHelp;
+
+  /// No description provided for @m51UsbLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Load USB devices'**
+  String get m51UsbLoad;
+
+  /// No description provided for @m51UsbEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No supported class 7/1 USB printer detected. Check OTG, data cable and power.'**
+  String get m51UsbEmpty;
+
+  /// No description provided for @m51UsbSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a USB printer, then Connect to request access to that device only.'**
+  String get m51UsbSelect;
+
+  /// No description provided for @m51UsbTemporary.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary identity: a printer without a unique serial must be reselected after detach or app restart. An old profile never automatically connects to a similar printer.'**
+  String get m51UsbTemporary;
+
+  /// No description provided for @m51UsbUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'USB Host unavailable. Cashier and Bluetooth remain usable.'**
+  String get m51UsbUnavailable;
+
+  /// No description provided for @m51UsbPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'USB permission was denied or interrupted. Re-enter the app PIN if locked. Use Retry USB permission only to request it explicitly.'**
+  String get m51UsbPermissionDenied;
+
+  /// No description provided for @m51UsbRetryPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry USB permission'**
+  String get m51UsbRetryPermission;
+
+  /// No description provided for @m51UsbSelectAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'USB printer detached, changed identity or is ambiguous. Reload and reselect; no automatic reprint.'**
+  String get m51UsbSelectAgain;
+
+  /// No description provided for @m51UsbBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'USB interface is busy or cannot be claimed without displacing a driver. Close other app connections, then retry explicitly.'**
+  String get m51UsbBusy;
+
+  /// No description provided for @m51UsbFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'USB operation failed. Check power, OTG, data cable, permission and printer compatibility. No automatic reprint.'**
+  String get m51UsbFailed;
+
+  /// No description provided for @m51Tender.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash received'**
+  String get m51Tender;
+
+  /// No description provided for @m51Applied.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment applied'**
+  String get m51Applied;
+
+  /// No description provided for @m51Change.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get m51Change;
+
+  /// No description provided for @m51Numpad.
+  ///
+  /// In en, this message translates to:
+  /// **'Numpad'**
+  String get m51Numpad;
+
+  /// No description provided for @m51QuickCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick cash'**
+  String get m51QuickCash;
+
+  /// No description provided for @m51ExactCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact amount'**
+  String get m51ExactCash;
+
+  /// No description provided for @m51TenderRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter cash received, choose Exact amount, or explicitly choose All debt.'**
+  String get m51TenderRequired;
+
+  /// No description provided for @m51Backspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Backspace'**
+  String get m51Backspace;
+
+  /// No description provided for @m51ClearTender.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear amount'**
+  String get m51ClearTender;
+
+  /// No description provided for @m51ConfirmTender.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm amount'**
+  String get m51ConfirmTender;
+
+  /// No description provided for @m51QuickSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick cash amounts'**
+  String get m51QuickSettings;
+
+  /// No description provided for @m51ResetQuick.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset defaults'**
+  String get m51ResetQuick;
+
+  /// No description provided for @m51Export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export report'**
+  String get m51Export;
+
+  /// No description provided for @m51ExportPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Export the full selected period and customer filter. Inventory and receivables are current snapshots, not historical positions. Files contain store data. UTF-8 CSV: import barcodes, IDs and amounts as text to preserve precision; formula-like text is prefixed with an apostrophe. Not an official tax form.'**
+  String get m51ExportPolicy;
+
+  /// No description provided for @m51ExportRows.
+  ///
+  /// In en, this message translates to:
+  /// **'Rows prepared'**
+  String get m51ExportRows;
+
+  /// No description provided for @m51ExportCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare and choose destination'**
+  String get m51ExportCreate;
+
+  /// No description provided for @m51ExportSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination selected. Re-enter PIN if requested, then press Write file. Destination expires in two minutes.'**
+  String get m51ExportSelected;
+
+  /// No description provided for @m51ExportWrite.
+  ///
+  /// In en, this message translates to:
+  /// **'Write file'**
+  String get m51ExportWrite;
+
+  /// No description provided for @m51ExportVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Report written and verified by reading it back.'**
+  String get m51ExportVerified;
+
+  /// No description provided for @m51ExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Export did not complete. Check PIN session, storage and destination. Select again if the destination expired.'**
+  String get m51ExportFailed;
+
+  /// No description provided for @m51MaintenancePolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Space maintenance is scheduled after a valid backup, while idle and charging. It skips low benefit, busy operations or insufficient storage. History is never deleted.'**
+  String get m51MaintenancePolicy;
+
+  /// No description provided for @m51MaintenanceStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Space maintenance'**
+  String get m51MaintenanceStatus;
+
+  /// No description provided for @m51MaintenanceAttempt.
+  ///
+  /// In en, this message translates to:
+  /// **'Last attempt'**
+  String get m51MaintenanceAttempt;
+
+  /// No description provided for @m51MaintenanceSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Last success'**
+  String get m51MaintenanceSuccess;
+
+  /// No description provided for @m51Space_databaseBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Database is in use; maintenance was skipped.'**
+  String get m51Space_databaseBusy;
+
+  /// No description provided for @m51Space_none.
+  ///
+  /// In en, this message translates to:
+  /// **'Not scheduled'**
+  String get m51Space_none;
+
+  /// No description provided for @m51Space_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for idle conditions'**
+  String get m51Space_pending;
+
+  /// No description provided for @m51Space_running.
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get m51Space_running;
+
+  /// No description provided for @m51Space_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Successful'**
+  String get m51Space_success;
+
+  /// No description provided for @m51Space_skipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get m51Space_skipped;
+
+  /// No description provided for @m51Space_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Did not complete'**
+  String get m51Space_error;
+
+  /// No description provided for @m51Space_cooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance cooldown is active.'**
+  String get m51Space_cooldown;
+
+  /// No description provided for @m51Space_interrupted.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous process was interrupted; waiting for the next valid backup.'**
+  String get m51Space_interrupted;
+
+  /// No description provided for @m51Space_lowBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Reclaimable space is below the threshold.'**
+  String get m51Space_lowBenefit;
+
+  /// No description provided for @m51Space_insufficientSpace.
+  ///
+  /// In en, this message translates to:
+  /// **'Insufficient temporary space.'**
+  String get m51Space_insufficientSpace;
+
+  /// No description provided for @m51Space_deviceInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Device is in use or not charging.'**
+  String get m51Space_deviceInUse;
+
+  /// No description provided for @m51Space_compacted.
+  ///
+  /// In en, this message translates to:
+  /// **'Database compacted and integrity verified.'**
+  String get m51Space_compacted;
+
+  /// No description provided for @m51Space_maintenanceFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance failed. The previous valid backup remains available.'**
+  String get m51Space_maintenanceFailed;
 }
 
 class _AppLocalizationsDelegate

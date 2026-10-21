@@ -51,14 +51,14 @@ final class DriveBackupService implements ScheduledDriveBackup {
   final DatabaseGate workGate;
   late final DriveRest Function() _transport;
   Future<DrivePolicy> settings() async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final result = await policies.read();
-    access.requireAccess();
+    await access.authorizeCurrent();
     return result;
   }
 
   Future<DrivePolicy> chooseAccount() async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final account = await access.systemInteraction(authorization.connect);
     // Not saved and not enabled; PIN is still required to accept this pending
     // identity after Android's activity transition has locked management.
@@ -70,13 +70,13 @@ final class DriveBackupService implements ScheduledDriveBackup {
   }
 
   Future<void> acceptAccount(DrivePolicy pending) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final transport = _transport();
     try {
       final user = await transport.identify(pending, initial: true);
-      access.requireAccess();
-      await database.exclusive((_) async {
-        access.requireAccess();
+      await access.authorizeCurrent();
+      await database.exclusive((db) async {
+        await access.authorize(db);
         await policies.write(
           DrivePolicy(
             generation: const Uuid().v4(),
@@ -92,15 +92,17 @@ final class DriveBackupService implements ScheduledDriveBackup {
   }
 
   Future<void> automatic(bool value) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final old = await policies.read();
     if (value) {
       if (!old.connected) throw const DriveFailure('driveNotConnected');
-      await backups.recoveryCode();
+      if (!await backups.hasRecoveryCode()) {
+        throw const DriveFailure('backupRecoveryRequired');
+      }
     }
-    access.requireAccess();
-    await database.exclusive((_) async {
-      access.requireAccess();
+    await access.authorizeCurrent();
+    await database.exclusive((db) async {
+      await access.authorize(db);
       if ((await policies.read()).generation != old.generation) {
         throw const DriveFailure('driveConsentChanged');
       }
@@ -117,22 +119,22 @@ final class DriveBackupService implements ScheduledDriveBackup {
   }
 
   Future<void> disconnect() async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     // Revoke local consent FIRST, even if Google's network revocation fails.
-    await database.exclusive((_) async {
-      access.requireAccess();
+    await database.exclusive((db) async {
+      await access.authorize(db);
       await policies.write(DrivePolicy(generation: const Uuid().v4()));
     });
     await authorization.disconnect();
   }
 
   Future<DrivePage> versions({String? pageToken}) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final policy = await policies.read(), transport = _transport();
     try {
       await transport.identify(policy);
       final result = await transport.list(policy, pageToken: pageToken);
-      access.requireAccess();
+      await access.authorizeCurrent();
       return result;
     } finally {
       transport.close();
@@ -149,7 +151,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
     bool headless = false,
     int? notBeforeTarget,
   }) async {
-    if (!headless) access.requireAccess();
+    if (!headless) await access.authorizeCurrent();
     return workGate.run(() async {
       final policy = await policies.read();
       if (!policy.connected || (headless && !policy.enabled)) {
@@ -230,6 +232,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
           }
         });
         archive ??= await backups.create(
+          workLeaseHeld: true,
           headless: headless,
           checkAuthorization: () =>
               transport.guard(policy, automatic: headless),
@@ -310,7 +313,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
   }
 
   Future<File> download(String id) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     final policy = await policies.read(), transport = _transport();
     final destination = File(
       p.join(
@@ -330,7 +333,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
         destination,
         byteBudget: budget,
       );
-      access.requireAccess();
+      await access.authorizeCurrent();
       return result;
     } catch (_) {
       if (await destination.exists()) await destination.delete();
@@ -344,9 +347,9 @@ final class DriveBackupService implements ScheduledDriveBackup {
     int? before,
     String? beforeId,
   }) async {
-    access.requireAccess();
+    await access.authorizeCurrent();
     return database.read((db) async {
-      access.requireAccess();
+      await access.authorize(db);
       final rows = await db.query(
         'backup_runs',
         where: before == null ? null : '(started_at,id COLLATE BINARY)<(?,?)',
@@ -354,7 +357,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
         orderBy: 'started_at DESC,id COLLATE BINARY DESC',
         limit: 30,
       );
-      access.requireAccess();
+      await access.authorize(db);
       return rows;
     });
   }

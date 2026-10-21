@@ -13,6 +13,7 @@ import 'drive_backup_service.dart';
 import 'drive_authorization.dart';
 import 'drive_rest.dart';
 import 'backup_retry_store.dart';
+import 'space_maintenance_service.dart';
 
 /// Pure calendar policy: coalesce missed days to the latest local 21:00 target,
 /// construct the next day in the shop zone (including DST), never add 24h blindly.
@@ -95,6 +96,7 @@ final class BackupScheduler {
       backoffPolicyDelay: const Duration(minutes: 15),
     );
     await refresh();
+    await SpaceMaintenanceService.schedulePending(database);
   }
 
   Future<DailyBackupTarget?> refresh() async {
@@ -246,6 +248,10 @@ void m5BackgroundDispatcher() {
           notification = AndroidStockNotifications(
             FlutterLocalNotificationsPlugin(),
           );
+      if (task == SpaceMaintenanceService.task) {
+        await SpaceMaintenanceService(database).run();
+        return true; // A skipped/error maintenance never starts a backup loop.
+      }
       await notification.initialize(() {});
       final alerts = AlertService(database, app.management.clock, notification);
       final backup = BackupService(database, app.management);

@@ -1,5 +1,13 @@
 # Backup portable dan restore M5
 
+Addendum M5.1 schema13: tender/applied/change/debt immutable dan konfigurasi uang
+cepat dipulihkan sebagai data, tanpa merekayasa tender pada sale lama. Draft raw
+currency divalidasi setelah migration staging. space_maintenance dan kandidat
+lokal dikosongkan saat restore; izin Google/biometrik/printer/notifikasi tetap
+tidak dipulihkan sebagai otorisasi baru. Native backup suite terbaru membawa
+tender overpay, config USD, metadata produk dan fakta lengkap pada Poco/DV;
+lihat [bukti D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md).
+
 Status: implementasi/pemeriksaan berlangsung; lihat M5_TEST_REPORT. Google Drive adalah transport opsional, bukan sinkronisasi. Satu perangkat aktif per toko tetap berlaku.
 
 ## Recovery dan format

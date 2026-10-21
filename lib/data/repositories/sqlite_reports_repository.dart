@@ -150,32 +150,36 @@ final class SqliteReportsRepository {
   /// SQL aggregates the entire range, independently of events/cache/page size.
   /// One serialized read prevents interleaved app writes between aggregates.
   Future<ReportSummary> summary(ReportFilter filter, String today) =>
-      database.read((db) async {
-        if (filter.start.milliseconds >= filter.end.milliseconds) {
-          throw ArgumentError('Invalid report period');
-        }
-        final settings = (await db.query(
-          'store_settings',
-          where: 'id=1',
-        )).single;
-        final currency = CurrencyPolicy.forCode(
-          settings['currency_code'] as String,
-        );
-        final periodArgs = [
-          filter.start.milliseconds,
-          filter.end.milliseconds,
-          if (filter.customerId != null) filter.customerId!.value,
-        ];
-        final salesQuery = reportSalesTotalsQuery(filter, currency);
-        final sales = (await db.rawQuery(
-          salesQuery.sql,
-          salesQuery.arguments,
-        )).single;
-        final paymentCustomer = filter.customerId == null
-            ? ''
-            : 'AND p.customer_id=?';
-        final payments = (await db.rawQuery(
-          '''WITH events AS (
+      database.read((db) => summaryDatabase(db, filter, today));
+
+  /// Shared frozen read for exports; never opens another coordinator lease.
+  static Future<ReportSummary> summaryDatabase(
+    DatabaseExecutor db,
+    ReportFilter filter,
+    String today,
+  ) async {
+    if (filter.start.milliseconds >= filter.end.milliseconds) {
+      throw ArgumentError('Invalid report period');
+    }
+    final settings = (await db.query('store_settings', where: 'id=1')).single;
+    final currency = CurrencyPolicy.forCode(
+      settings['currency_code'] as String,
+    );
+    final periodArgs = [
+      filter.start.milliseconds,
+      filter.end.milliseconds,
+      if (filter.customerId != null) filter.customerId!.value,
+    ];
+    final salesQuery = reportSalesTotalsQuery(filter, currency);
+    final sales = (await db.rawQuery(
+      salesQuery.sql,
+      salesQuery.arguments,
+    )).single;
+    final paymentCustomer = filter.customerId == null
+        ? ''
+        : 'AND p.customer_id=?';
+    final payments = (await db.rawQuery(
+      '''WITH events AS (
       SELECT CASE p.kind WHEN 'receipt' THEN p.amount_rupiah ELSE -p.amount_rupiah END AS amount,
         $_paymentOrigin AS origin,p.currency_code,p.currency_scale FROM payments p
         WHERE p.kind IN ('receipt','reversal') AND p.created_at>=? AND p.created_at<? $paymentCustomer)
@@ -184,53 +188,53 @@ final class SqliteReportsRepository {
         COALESCE(SUM(CASE WHEN origin='repayment' THEN amount ELSE 0 END),0) AS repayment,
         COALESCE(SUM(CASE WHEN origin='unknown' THEN amount ELSE 0 END),0) AS unknown,
         COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch FROM events''',
-          [...periodArgs, currency.code, currency.scale],
-        )).single;
-        final debt = (await db.rawQuery(
-          '''WITH debts AS (${CashierStore.debtSql})
+      [...periodArgs, currency.code, currency.scale],
+    )).single;
+    final debt = (await db.rawQuery(
+      '''WITH debts AS (${CashierStore.debtSql})
       SELECT COALESCE(SUM(outstanding),0) AS balance,
       COALESCE(SUM(currency_code<>? OR currency_scale<>? OR outstanding<0),0) AS mismatch
       FROM debts ${filter.customerId == null ? '' : 'WHERE customer_id=?'}''',
-          [
-            currency.code,
-            currency.scale,
-            if (filter.customerId != null) filter.customerId!.value,
-          ],
-        )).single;
-        final inventory = (await db.rawQuery(
-          '''SELECT COUNT(*) AS products,
+      [
+        currency.code,
+        currency.scale,
+        if (filter.customerId != null) filter.customerId!.value,
+      ],
+    )).single;
+    final inventory = (await db.rawQuery(
+      '''SELECT COUNT(*) AS products,
       COALESCE(SUM(stock_quantity),0) AS quantity,COALESCE(SUM(inventory_value_micros),0) AS value,
       COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch FROM products''',
-          [currency.code, currency.scale],
-        )).single;
-        final expired =
-            (await db.rawQuery(
-                  '''SELECT COALESCE(SUM(b.remaining_quantity),0) AS quantity
+      [currency.code, currency.scale],
+    )).single;
+    final expired =
+        (await db.rawQuery(
+              '''SELECT COALESCE(SUM(b.remaining_quantity),0) AS quantity
       FROM stock_batches b JOIN products p ON p.id=b.product_id
       WHERE p.expiry_enabled=1 AND b.expiry_date<=?''',
-                  [today],
-                )).single['quantity']
-                as int;
-        if ([sales, payments, debt, inventory].any((r) => r['mismatch'] != 0)) {
-          throw const AppError('m4InconsistentData');
-        }
-        return ReportSummary(
-          currency: currency,
-          salesMinor: sales['revenue'] as int,
-          costMicros: sales['cost'] as int,
-          saleCount: sales['sales'] as int,
-          returnCount: sales['returns'] as int,
-          paymentsMinor: payments['amount'] as int,
-          checkoutPaymentsMinor: payments['checkout'] as int,
-          repaymentsMinor: payments['repayment'] as int,
-          unknownPaymentsMinor: payments['unknown'] as int,
-          receivablesMinor: debt['balance'] as int,
-          inventoryQuantity: inventory['quantity'] as int,
-          inventoryMicros: inventory['value'] as int,
-          expiredQuantity: expired,
-          productCount: inventory['products'] as int,
-        );
-      });
+              [today],
+            )).single['quantity']
+            as int;
+    if ([sales, payments, debt, inventory].any((r) => r['mismatch'] != 0)) {
+      throw const AppError('m4InconsistentData');
+    }
+    return ReportSummary(
+      currency: currency,
+      salesMinor: sales['revenue'] as int,
+      costMicros: sales['cost'] as int,
+      saleCount: sales['sales'] as int,
+      returnCount: sales['returns'] as int,
+      paymentsMinor: payments['amount'] as int,
+      checkoutPaymentsMinor: payments['checkout'] as int,
+      repaymentsMinor: payments['repayment'] as int,
+      unknownPaymentsMinor: payments['unknown'] as int,
+      receivablesMinor: debt['balance'] as int,
+      inventoryQuantity: inventory['quantity'] as int,
+      inventoryMicros: inventory['value'] as int,
+      expiredQuantity: expired,
+      productCount: inventory['products'] as int,
+    );
+  }
 
   /// Whole-dataset checks diagnose drift; they never "fix" immutable records.
   Future<ReconciliationResult> reconcile() => database.read(reconcileDatabase);

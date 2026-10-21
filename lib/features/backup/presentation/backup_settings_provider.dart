@@ -11,6 +11,8 @@ import '../application/backup_service.dart';
 import '../application/drive_authorization.dart';
 import '../application/drive_rest.dart';
 import '../domain/backup_export_name.dart';
+import '../../printer/application/recovery_print_service.dart';
+import '../../../core/domain/app_error.dart';
 
 /// Only route state and pending external selections live here. Account consent,
 /// archive validation, SQL, encryption and uploads remain service-owned.
@@ -26,6 +28,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
       recoveryConfigured = false,
       _disposed = false;
   String? message, generatedCode, lastManualKey;
+  bool generatedUnsaved = false, recoveryPrinted = false;
   DrivePolicy? policy, pendingAccount;
   File? selected;
   bool selectedTemporary = false;
@@ -48,6 +51,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
     'driveApiNotEnabled' => 'm5DriveApiNotEnabled',
     'driveForbiddenOrNotConfigured' => 'm5DriveForbidden',
     'driveOffline' || 'driveNetworkTimeout' => 'm5DriveOffline',
+    'backupRecoveryRequired' => 'm5RecoveryRequired',
     _ => 'm5DriveFailed',
   };
   List<Map<String, dynamic>> remote = [];
@@ -87,15 +91,50 @@ final class BackupSettingsProvider extends ChangeNotifier {
   Future<void> generate() => task(() async {
     app.management.requireFresh('recovery');
     generatedCode = BackupService.newRecoveryCode();
+    generatedUnsaved = true;
   });
   Future<void> confirm(String confirmation) => task(() async {
     await app.backups.confirmRecovery(generatedCode!, confirmation);
     generatedCode = null;
+    generatedUnsaved = false;
     recoveryConfigured = true;
     message = 'm5CodeSaved';
   });
   Future<void> reveal() => task(() async {
     generatedCode = await app.backups.recoveryCode();
+    generatedUnsaved = false;
+  });
+  Future<RecoveryPrintTarget?> recoveryTarget() async {
+    RecoveryPrintTarget? target;
+    await task(() async {
+      try {
+        target = await app.recoveryPrinting.target();
+      } on AppError catch (error) {
+        message = error.message;
+      }
+    });
+    return target;
+  }
+
+  Future<void> printRecovery(RecoveryPrintTarget target, String language) =>
+      task(() async {
+        final outcome = await app.recoveryPrinting.print(
+          target,
+          confirmed: true,
+          language: language,
+        );
+        recoveryPrinted = outcome == RecoveryPrintOutcome.submitted;
+        message = switch (outcome) {
+          RecoveryPrintOutcome.submitted => 'm51RecoveryPrintSubmitted',
+          RecoveryPrintOutcome.notSent => 'm51RecoveryPrintNotSent',
+          RecoveryPrintOutcome.unknown => 'm51RecoveryPrintUnknown',
+        };
+      });
+  Future<void> confirmPrintedCopy() => task(() async {
+    if (!recoveryPrinted) return;
+    await app.recoveryPrinting.acknowledgeStoredCopy();
+    recoveryPrinted = false;
+    message = 'm51RecoveryCopyStored';
   });
   Future<void> copyCode() => task(() async {
     app.management.requireAccess();
@@ -115,6 +154,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
   });
   void hideCode({bool notify = true}) {
     generatedCode = null;
+    generatedUnsaved = false;
     app.management.clearFresh('recovery');
     if (notify) _notify();
   }
@@ -123,6 +163,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
     await app.backups.create();
     local = await app.backups.localHistory();
     message = 'm5LocalBackupReady';
+    overview = await app.backups.overview();
   });
   Future<void> export(String id, {String? displayName}) => task(() async {
     final name = displayName == null
@@ -148,8 +189,9 @@ final class BackupSettingsProvider extends ChangeNotifier {
         'path': location,
       }),
       discard: (result) async {
-        if (result == location && await File(location).exists())
+        if (result == location && await File(location).exists()) {
           await File(location).delete();
+        }
       },
     );
     if (result == null) {

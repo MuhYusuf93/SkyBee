@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 10;
+  static const version = 13;
 
   static Future<void> migrate(
     Database db,
@@ -25,13 +25,18 @@ final class Schema {
         8 => _peripheralsAndBackup,
         9 => _productAttributes,
         10 => _managementPolicy,
+        11 => _printerTransports,
+        12 => _cashTender,
+        13 => _spaceMaintenance,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
       }
     }
     if (oldVersion == 0 && newVersion >= 10) {
-      await db.execute("UPDATE management_policy SET session_policy='immediate' WHERE id=1");
+      await db.execute(
+        "UPDATE management_policy SET session_policy='immediate' WHERE id=1",
+      );
     }
     if (newVersion == version) {
       if ((await db.rawQuery('PRAGMA foreign_key_check')).isNotEmpty ||
@@ -47,10 +52,51 @@ final class Schema {
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
 
+  /// Local scheduling evidence only, never authority portable across restore.
+  static const _spaceMaintenance = [
+    '''CREATE TABLE space_maintenance(id INTEGER PRIMARY KEY CHECK(id=1),
+      candidate_backup TEXT, candidate_at INTEGER, last_attempt INTEGER,
+      last_success INTEGER, status TEXT NOT NULL DEFAULT 'none'
+        CHECK(status IN ('none','pending','running','success','skipped','error')),
+      reason TEXT, before_bytes INTEGER, after_bytes INTEGER,
+      page_count INTEGER, free_pages INTEGER)''',
+    "INSERT INTO space_maintenance(id) VALUES(1)",
+  ];
+
+  /// New cash facts are separate/nullable for legacy sales, never inferred.
+  static const _cashTender = [
+    'ALTER TABLE cart_drafts ADD COLUMN cash_input INTEGER NOT NULL DEFAULT 0 CHECK(cash_input IN (0,1))',
+    'ALTER TABLE cart_drafts ADD COLUMN tender_minor INTEGER CHECK(tender_minor IS NULL OR (typeof(tender_minor)=\'integer\' AND tender_minor>=0))',
+    'ALTER TABLE cart_drafts ADD COLUMN tender_raw TEXT NOT NULL DEFAULT \'\' CHECK(length(tender_raw)<=24)',
+    "ALTER TABLE cart_drafts ADD COLUMN tender_input_mode TEXT NOT NULL DEFAULT 'numpad' CHECK(tender_input_mode IN ('numpad','quick'))",
+    """CREATE TABLE checkout_tenders(sale_transaction_id TEXT PRIMARY KEY NOT NULL REFERENCES sale_transactions(id) ON DELETE RESTRICT,
+      received_minor INTEGER NOT NULL CHECK(typeof(received_minor)='integer' AND received_minor>=0),
+      applied_minor INTEGER NOT NULL CHECK(typeof(applied_minor)='integer' AND applied_minor>=0),
+      change_minor INTEGER NOT NULL CHECK(typeof(change_minor)='integer' AND change_minor>=0),
+      debt_minor INTEGER NOT NULL CHECK(typeof(debt_minor)='integer' AND debt_minor>=0),
+      CHECK(applied_minor<=received_minor AND change_minor=received_minor-applied_minor))""",
+    """CREATE TRIGGER checkout_tenders_insert_guard BEFORE INSERT ON checkout_tenders WHEN NOT EXISTS(
+      SELECT 1 FROM sale_transactions s WHERE s.id=NEW.sale_transaction_id
+      AND NEW.applied_minor=MIN(NEW.received_minor,s.total_rupiah)
+      AND NEW.debt_minor=s.total_rupiah-NEW.applied_minor)
+      BEGIN SELECT RAISE(ABORT,'invalid_tender'); END""",
+    "CREATE TRIGGER checkout_tenders_no_update BEFORE UPDATE ON checkout_tenders BEGIN SELECT RAISE(ABORT,'immutable_fact'); END",
+    "CREATE TRIGGER checkout_tenders_no_delete BEFORE DELETE ON checkout_tenders BEGIN SELECT RAISE(ABORT,'immutable_fact'); END",
+    """CREATE TABLE cash_quick_amounts(currency_code TEXT PRIMARY KEY CHECK(currency_code IN ('IDR','USD','MYR','EUR')),
+      amounts_json TEXT NOT NULL CHECK(length(amounts_json)<=512))""",
+  ];
+
   static const _managementPolicy = [
     '''CREATE TABLE management_policy(id INTEGER PRIMARY KEY CHECK(id=1),
       session_policy TEXT NOT NULL CHECK(session_policy IN ('legacy','1m','5m','15m','immediate')))''',
     "INSERT INTO management_policy(id,session_policy) VALUES(1,'legacy')",
+  ];
+
+  /// Legacy MAC profiles remain Bluetooth. An explicit transport and cursor
+  /// index prevent a USB selection from borrowing another transport's profile.
+  static const _printerTransports = [
+    "ALTER TABLE printer_profiles ADD COLUMN transport TEXT NOT NULL DEFAULT 'bluetooth' CHECK(transport IN ('bluetooth','usb'))",
+    'CREATE INDEX printer_profiles_transport_cursor ON printer_profiles(transport,device_id COLLATE BINARY)',
   ];
 
   /// Additive nullable metadata: old sale facts must never inherit master edits.

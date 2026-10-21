@@ -1,3 +1,4 @@
+import '../domain/cash_tender.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
@@ -256,9 +257,24 @@ final class CartService {
             input.paid!.scale != policy.scale)) {
       throw const AppError('currencyMismatch');
     }
+    if (input.cash) {
+      final digits = TenderDigits(policy, input.tenderRaw);
+      if (input.tender != null &&
+          (input.tender!.currencyCode != policy.code ||
+              input.tender!.scale != policy.scale ||
+              digits.money?.amountMinor != input.tender!.amountMinor)) {
+        throw const AppError('m3InvalidPayment');
+      }
+    }
     await dbTxn.update(
       'cart_drafts',
       {
+        if (database.schemaVersion >= 12) ...{
+          'cash_input': input.cash ? 1 : 0,
+          'tender_minor': input.tender?.amountMinor,
+          'tender_raw': input.tenderRaw,
+          'tender_input_mode': input.quickMode ? 'quick' : 'numpad',
+        },
         'payment_mode': input.mode.name,
         'paid_minor': input.paid?.amountMinor,
         'customer_id': input.customer.id?.value,

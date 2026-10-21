@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
-import '../../../core/money/money_field.dart';
+import '../domain/cash_tender.dart';
+import '../application/quick_cash_service.dart';
 import '../application/cart_service.dart';
 import '../application/checkout_service.dart';
 import '../domain/cashier_models.dart';
@@ -9,17 +10,112 @@ import 'cart_provider.dart';
 
 /// Owns payment form only. Basket stays in CartProvider; SQL/math stays service.
 final class CheckoutProvider extends ChangeNotifier {
-  CheckoutProvider(this.cart, this.drafts, this.service) {
+  CheckoutProvider(this.cart, this.drafts, this.service, {this.quickCash}) {
     final input = cart.snapshot!.input;
-    mode = input.mode;
+    digits = TenderDigits(
+      cart.snapshot!.currency,
+      input.cash ? input.tenderRaw : '',
+    );
+    if (!input.cash && input.paid != null) digits.amount(input.paid!);
+    quickMode = input.quickMode;
+    mode = input.cash ? input.mode : PaymentMode.paid;
     selected = input.customer.id;
     name.text = input.customer.name;
     phone.text = input.customer.phone;
+    _updateMode();
+    name.addListener(_customerEdited);
+    phone.addListener(_customerEdited);
   }
   final CartProvider cart;
   final CartService drafts;
   final CheckoutService service;
-  final paid = MoneyEditingController();
+  final QuickCashService? quickCash;
+  late final TenderDigits digits;
+  bool quickMode = false;
+  List<int> amounts = [];
+  Future<void> _saveTail = Future.value();
+  Money? get tender => digits.money;
+  CashTender? get settlement =>
+      tender == null ? null : CashTender(cart.snapshot!.total, tender!);
+  bool get needsCustomer =>
+      settlement != null && settlement!.debt.amountMinor > 0;
+  CheckoutInput get input => CheckoutInput(
+    cash: true,
+    mode: mode,
+    tender: tender,
+    tenderRaw: digits.raw,
+    quickMode: quickMode,
+    customer: CustomerChoice(id: selected, name: name.text, phone: phone.text),
+  );
+  Future<void> loadAmounts() async {
+    final code = cart.snapshot!.currency.code;
+    try {
+      amounts = await quickCash?.read(code) ?? QuickCashService.defaults(code);
+    } on Object {
+      amounts = QuickCashService.defaults(code);
+      error = 'm3OperationFailed';
+    }
+    if (!_disposed) notifyListeners();
+  }
+
+  void _customerEdited() {
+    if (!submitting && !_disposed) persist();
+  }
+
+  Future<void> persist() {
+    final snapshot = cart.snapshot!;
+    final saved = input;
+    final generation = service.database.generation;
+    return _saveTail = _saveTail
+        .then((_) {
+          if (generation != service.database.generation) {
+            throw const AppError('m3OperationFailed');
+          }
+          return drafts.saveInput(snapshot.id, snapshot.revision, saved);
+        })
+        .catchError((Object e) {
+          error = e is AppError ? e.message : 'm3OperationFailed';
+          if (!_disposed) notifyListeners();
+        });
+  }
+
+  Future<void> key(String value) async {
+    if (submitting) return;
+    try {
+      digits.key(value);
+      error = null;
+      _updateMode();
+      await persist();
+    } on Object {
+      error = 'm3InvalidPayment';
+    }
+    if (!_disposed) notifyListeners();
+  }
+
+  void _updateMode() {
+    mode = tender == null || !needsCustomer
+        ? PaymentMode.paid
+        : tender!.amountMinor == 0
+        ? PaymentMode.debt
+        : PaymentMode.partial;
+  }
+
+  Future<void> receive(Money amount) async {
+    if (submitting) return;
+    digits.amount(amount);
+    _updateMode();
+    error = null;
+    await persist();
+    if (!_disposed) notifyListeners();
+  }
+
+  Future<void> exact() => receive(cart.snapshot!.total);
+  Future<void> useQuick(bool value) async {
+    quickMode = value;
+    await persist();
+    if (!_disposed) notifyListeners();
+  }
+
   final name = TextEditingController();
   final phone = TextEditingController();
   late PaymentMode mode;
@@ -29,6 +125,11 @@ final class CheckoutProvider extends ChangeNotifier {
   String? error;
   void selectMode(PaymentMode value) {
     mode = value;
+    if (value == PaymentMode.debt) {
+      receive(
+        Money(0, cart.snapshot!.currency.code, cart.snapshot!.currency.scale),
+      );
+    }
     error = null;
     notifyListeners();
   }
@@ -37,11 +138,13 @@ final class CheckoutProvider extends ChangeNotifier {
     selected = value.id;
     name.text = value.name;
     phone.text = value.phone ?? '';
+    persist();
     notifyListeners();
   }
 
   void newCustomer() {
     selected = null;
+    persist();
     notifyListeners();
   }
 
@@ -57,25 +160,17 @@ final class CheckoutProvider extends ChangeNotifier {
         throw const AppError('m3OperationFailed');
       }
       final snapshot = cart.snapshot!;
-      final input = CheckoutInput(
-        mode: mode,
-        paid: mode == PaymentMode.partial
-            ? paid.parseMoney(finish: true)
-            : null,
-        customer: CustomerChoice(
-          id: selected,
-          name: name.text,
-          phone: phone.text,
-        ),
-      );
-      await drafts.saveInput(snapshot.id, snapshot.revision, input);
+      await _saveTail;
+      if (tender == null) throw const AppError('m51TenderRequired');
+      final savedInput = input;
+      await drafts.saveInput(snapshot.id, snapshot.revision, savedInput);
       if (generation != service.database.generation) {
         throw const AppError('m3OperationFailed');
       }
       final result = await service.submit(
         snapshot.id,
         snapshot.revision,
-        input,
+        savedInput,
       );
       await cart.refresh();
       return result;
@@ -99,7 +194,8 @@ final class CheckoutProvider extends ChangeNotifier {
   @override
   void dispose() {
     _disposed = true;
-    paid.dispose();
+    name.removeListener(_customerEdited);
+    phone.removeListener(_customerEdited);
     name.dispose();
     phone.dispose();
     super.dispose();

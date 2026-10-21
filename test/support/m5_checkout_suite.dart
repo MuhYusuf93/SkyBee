@@ -41,7 +41,10 @@ void m5CheckoutSuite(
         await cart.open();
         await cart.add(product);
         final draft = cart.snapshot!;
-        const input = CheckoutInput(
+        final input = CheckoutInput(
+          cash: true,
+          tender: Money(0, 'IDR', 0),
+          tenderRaw: '0',
           mode: PaymentMode.debt,
           customer: CustomerChoice(name: 'Synthetic M5 debtor'),
         );

@@ -1,3 +1,5 @@
+import '../../cashier/presentation/quick_cash_settings_screen.dart';
+import '../../../app/app_version.dart';
 import 'package:kasir_app/l10n/localized_notice.dart';
 import 'package:kasir_app/features/settings/presentation/language_button.dart';
 import 'package:kasir_app/l10n/localization.dart';
@@ -84,6 +86,7 @@ class _SettingsFormState extends State<_SettingsForm> {
                 LinearProgressIndicator(semanticsLabel: tr(context, 'loading')),
               const CurrencySelector(),
               for (final destination in [
+                (const QuickCashSettingsScreen(), 'm51QuickSettings'),
                 (const PrinterSettingsScreen(), 'm5Printer'),
                 (const AlertsScreen(), 'm5Alerts'),
                 (const BackupSettingsScreen(), 'm5Backup'),
@@ -145,7 +148,7 @@ class _SettingsFormState extends State<_SettingsForm> {
                 onPressed: () => showLicensePage(
                   context: context,
                   applicationName: 'kasir_app',
-                  applicationVersion: '0.5.0+7',
+                  applicationVersion: appVersion,
                 ),
                 child: Text(tr(context, 'm5OpenSourceLicenses')),
               ),

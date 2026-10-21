@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import '../../../core/domain/app_error.dart';
 import '../application/printer_settings_service.dart';
 import '../application/store_logo_service.dart';
 
@@ -39,6 +41,8 @@ final class PrinterSettingsProvider extends ChangeNotifier {
     message = 'm5SettingsSaved';
   });
   bool busy = false, scanning = false, _disposed = false;
+  String transport = 'bluetooth';
+  bool get usb => transport == 'usb';
   String? message;
   bool get permissionDenied => message == 'm5PrinterPermissionDenied';
 
@@ -65,7 +69,9 @@ final class PrinterSettingsProvider extends ChangeNotifier {
         ? value['device'] as String?
         : null;
     connectionStatus = value['available'] != true
-        ? 'm5BluetoothUnavailable'
+        ? usb
+              ? 'm51UsbUnavailable'
+              : 'm5BluetoothUnavailable'
         : value['enabled'] != true
         ? 'm5BluetoothDisabled'
         : value['connected'] == true
@@ -74,17 +80,32 @@ final class PrinterSettingsProvider extends ChangeNotifier {
     return value['available'] == true && value['enabled'] == true;
   }
 
-  Future<void> connect(String device) => run(() async {
-    if (!await _permission()) return;
+  Future<void> connect(
+    String device, {
+    bool retryUsbPermission = false,
+  }) => run(() async {
+    if (usb) {
+      if (!await service.usbPermission(device, retry: retryUsbPermission)) {
+        message = connectionStatus = 'm51UsbPermissionDenied';
+        connectedDevice = null;
+        return;
+      }
+    } else if (!await _permission()) {
+      return;
+    }
     try {
-      if (!_showConnection(await service.connection())) return;
+      if (!_showConnection(await service.connection(transport: transport))) {
+        return;
+      }
       connectionStatus = 'm5Connecting';
       connectedDevice = null;
       _notify();
       await service.connect(device);
-      final current = await service.connection();
+      final current = await service.connection(transport: transport);
       _showConnection(current);
-      if (current['connected'] != true || current['device'] != device) {
+      // USB may become a serial-hash identity after selected-device permission.
+      if (current['connected'] != true ||
+          (!usb && current['device'] != device)) {
         throw StateError('printerConnectionNotConfirmed');
       }
     } catch (_) {
@@ -95,8 +116,8 @@ final class PrinterSettingsProvider extends ChangeNotifier {
   });
 
   Future<void> checkConnection() => run(() async {
-    if (!await _permission()) return;
-    _showConnection(await service.connection());
+    if (!usb && !await _permission()) return;
+    _showConnection(await service.connection(transport: transport));
   });
 
   Future<void> disconnect() => run(() async {
@@ -117,8 +138,21 @@ final class PrinterSettingsProvider extends ChangeNotifier {
     _notify();
     try {
       await action();
+    } on AppError catch (error) {
+      message = error.message;
+    } on PlatformException catch (error) {
+      message = usb
+          ? switch (error.code) {
+              'usb_permission_denied' ||
+              'usb_permission_unavailable' => 'm51UsbPermissionDenied',
+              'usb_device_missing' ||
+              'usb_device_ambiguous' => 'm51UsbSelectAgain',
+              'usb_interface_busy' => 'm51UsbBusy',
+              _ => 'm51UsbFailed',
+            }
+          : 'm5OperationFailed';
     } catch (_) {
-      message = 'm5OperationFailed';
+      message = usb ? 'm51UsbFailed' : 'm5OperationFailed';
     } finally {
       busy = false;
       _notify();
@@ -126,8 +160,21 @@ final class PrinterSettingsProvider extends ChangeNotifier {
   }
 
   Future<void> load({String? after}) => run(() async {
-    saved = await service.profiles(after: after);
+    saved = await service.profiles(after: after, transport: transport);
     currentLogo = await logos.current();
+  });
+  Future<void> selectTransport(String value) => run(() async {
+    if (!['bluetooth', 'usb'].contains(value)) return;
+    transport = value;
+    devices = [];
+    connectedDevice = null;
+    connectionStatus = 'm5ConnectionNotChecked';
+    saved = await service.profiles(transport: value);
+  });
+  Future<void> loadUsb() => run(() async {
+    devices = await service.usbDevices();
+    _showConnection(await service.connection(transport: 'usb'));
+    message = devices.isEmpty ? 'm51UsbEmpty' : 'm51UsbSelect';
   });
   Future<void> discover() => run(() async {
     if (!await _permission()) return;

@@ -25,7 +25,8 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
   );
   BackupSettingsProvider? state;
   final confirmation = TextEditingController(), code = TextEditingController();
-  bool codeSaved = false, replaceConfirmed = false;
+  bool codeSaved = false, replaceConfirmed = false, printedCopyStored = false;
+  bool _paperFlow = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -65,6 +66,55 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
     );
     if (mounted && name != null) {
       await state!.export(id, displayName: name);
+    }
+  }
+
+  Future<void> printRecovery() async {
+    if (_paperFlow) return;
+    setState(() => _paperFlow = true);
+    try {
+      final s = state!;
+      if (!await freshAuthentication(context, 'recoveryPrint')) return;
+      final target = await s.recoveryTarget();
+      if (!mounted || target == null) {
+        s.app.management.clearFresh('recoveryPrint');
+        return;
+      }
+      final accepted =
+          await showDialog<bool>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(tr(context, 'm51PrintRecovery')),
+              content: SingleChildScrollView(
+                child: Text(
+                  '${tr(context, 'm51RecoveryPrintWarning')}\n\n${target.name}\n${target.deviceId}',
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: Text(tr(context, 'cancel')),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: Text(tr(context, 'm51PrintRecovery')),
+                ),
+              ],
+            ),
+          ) ??
+          false;
+      if (!mounted || !accepted) {
+        s.app.management.clearFresh('recoveryPrint');
+        return;
+      }
+      setState(() => printedCopyStored = false);
+      await s.printRecovery(
+        target,
+        Localizations.localeOf(context).languageCode,
+      );
+    } finally {
+      state!.app.management.clearFresh('recoveryPrint');
+      if (mounted) setState(() => _paperFlow = false);
     }
   }
 
@@ -134,6 +184,28 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                           padding: const EdgeInsets.all(16),
                           children: [
                             Text(tr(context, 'm5BackupHelp')),
+                            Text(tr(context, 'm51MaintenancePolicy')),
+                            if (s.overview['maintenance']
+                                case final Map maintenance) ...[
+                              Text(
+                                '${tr(context, 'm51MaintenanceStatus')}: ${tr(context, 'm51Space_${maintenance['status']}')}',
+                              ),
+                              if (maintenance['reason'] != null)
+                                Text(
+                                  tr(
+                                    context,
+                                    'm51Space_${maintenance['reason']}',
+                                  ),
+                                ),
+                              if (maintenance['last_attempt'] case final int at)
+                                Text(
+                                  '${tr(context, 'm51MaintenanceAttempt')}: ${s.app.management.clock.displayTime(at, s.overview['time_zone'] as String)}',
+                                ),
+                              if (maintenance['last_success'] case final int at)
+                                Text(
+                                  '${tr(context, 'm51MaintenanceSuccess')}: ${s.app.management.clock.displayTime(at, s.overview['time_zone'] as String)}',
+                                ),
+                            ],
                             Text(
                               s.recoveryConfigured
                                   ? tr(context, 'm5RecoveryConfigured')
@@ -150,12 +222,13 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                               await confirm(
                                                 'm5CodeRotationWarning',
                                               )) {
-                                            if (mounted &&
+                                            if (context.mounted &&
                                                 await freshAuthentication(
                                                   context,
                                                   'recovery',
-                                                ))
+                                                )) {
                                               await s.generate();
+                                            }
                                           }
                                         },
                                   child: Text(tr(context, 'm5GenerateCode')),
@@ -168,13 +241,48 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                             if (await freshAuthentication(
                                               context,
                                               'recovery',
-                                            ))
+                                            )) {
                                               await s.reveal();
+                                            }
                                           },
                                     child: Text(tr(context, 'm5ShowCode')),
                                   ),
                               ],
                             ),
+                            OutlinedButton.icon(
+                              key: const ValueKey('print-backup-recovery'),
+                              onPressed:
+                                  s.busy ||
+                                      _paperFlow ||
+                                      !s.recoveryConfigured ||
+                                      s.generatedUnsaved
+                                  ? null
+                                  : printRecovery,
+                              icon: const Icon(Icons.print),
+                              label: Text(tr(context, 'm51PrintRecovery')),
+                            ),
+                            Text(tr(context, 'm51RecoveryPrintStoredOnly')),
+                            if (s.recoveryPrinted) ...[
+                              CheckboxListTile(
+                                value: printedCopyStored,
+                                title: Text(
+                                  tr(context, 'm51RecoveryPaperStored'),
+                                ),
+                                onChanged: s.busy
+                                    ? null
+                                    : (v) => setState(
+                                        () => printedCopyStored = v ?? false,
+                                      ),
+                              ),
+                              OutlinedButton(
+                                onPressed: s.busy || !printedCopyStored
+                                    ? null
+                                    : s.confirmPrintedCopy,
+                                child: Text(
+                                  tr(context, 'm51ConfirmPaperStored'),
+                                ),
+                              ),
+                            ],
                             if (s.generatedCode != null) ...[
                               Wrap(
                                 spacing: 8,
@@ -192,8 +300,9 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                                 !await freshAuthentication(
                                                   context,
                                                   'recovery',
-                                                ))
+                                                )) {
                                               return;
+                                            }
                                             await s.copyCode();
                                           },
                                     icon: const Icon(Icons.copy),
@@ -249,8 +358,9 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                             !await freshAuthentication(
                                               context,
                                               'recovery',
-                                            ))
+                                            )) {
                                           return;
+                                        }
                                         await s.confirm(confirmation.text);
                                         if (mounted &&
                                             s.generatedCode == null) {
@@ -399,8 +509,9 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                               context,
                                               'restore',
                                             ) ||
-                                            !mounted)
+                                            !mounted) {
                                           return;
+                                        }
                                         if (await confirm(
                                           'm5RestoreFinalConfirmation',
                                         )) {
