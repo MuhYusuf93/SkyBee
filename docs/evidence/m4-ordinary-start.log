@@ -1,7 +1,0 @@
-Starting: Intent { cmp=com.example.kasir_app/.MainActivity }
-Status: ok
-LaunchState: COLD
-Activity: com.example.kasir_app/.MainActivity
-TotalTime: 1815
-WaitTime: 1820
-Complete

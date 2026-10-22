@@ -1,0 +1,2205 @@
+{
+  "scope": "274 index-only removals plus one previously untracked OS dump excluded by ignore; 275 local copies unchanged; historical Git blobs retained",
+  "files": [
+    {
+      "path": "android/build/reports/problems/problems-report.html",
+      "bytes": 129908,
+      "sha256": "d0a7a633f3b815d518b17c46d0f3728cfd4b9ca371a12824313d6cd85e90cc0f",
+      "category": "generated-cache",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/dv8910-20261014/debug-draft.png",
+      "bytes": 66509,
+      "sha256": "2d53bfa283d876a3e4fc6c355781afbe76222e05cf6a8d32a7fd10e1b2081bbd",
+      "category": "raw-capture",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/dv8910-20261014/main-back.png",
+      "bytes": 66603,
+      "sha256": "bc218b910f6d059605e98fcfd06c245395346f6bba7fcd52a27854cf3f008e2e",
+      "category": "raw-capture",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/dv8910-20261014/main-startup.png",
+      "bytes": 56712,
+      "sha256": "427874d8dd6fe3802c8c39465e8ef116d1ccd2ef08a977e537ad9930e3219027",
+      "category": "raw-capture",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/dv8910-20261014/release-cashier.png",
+      "bytes": 151432,
+      "sha256": "0ce18143c4d5cfcacb9e68bde26a2e93115d385d7aa340d7793ef6d1a1534293",
+      "category": "raw-capture",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-analyze.log",
+      "bytes": 799,
+      "sha256": "ec4f525e8e829299b17e58877081e1f2d773763cb66eea4d2380af10b3d171b9",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-android-sql.log",
+      "bytes": 2041,
+      "sha256": "8b76b4ad2f7dedecd2ead5da2fa0ba1eece1f2902fa4550bdd19d07c29b1a7e3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-android-ui-final.log",
+      "bytes": 1999,
+      "sha256": "c6296103bef3ddd9751c680fd6385a69a0b2f98fa57009a83d1ccdd39401d562",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-android-ui.log",
+      "bytes": 1163,
+      "sha256": "a6549d2d0c77d43c3afc91040a8e9ba3bd219e82f565cc7bee6f98244df9bee9",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-audit.log",
+      "bytes": 127,
+      "sha256": "7d8f02288840c14c7e17d3ae638a957946a76b250d1bdc3f1f90d2559b0683dc",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-build-debug.log",
+      "bytes": 830,
+      "sha256": "d0b476938413d544c520c201e251cea1ca94a495e37300fae01004637cd9ff0f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-doctor.log",
+      "bytes": 2044,
+      "sha256": "fa832dddb9a84e2c120bd049818a323207370873a5930d04f6570c14441be019",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-format.log",
+      "bytes": 49,
+      "sha256": "43b3d559113436a82d34901764716320c802967b098de6a825bb000ca2da0430",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-gen.log",
+      "bytes": 165,
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-layout.log",
+      "bytes": 1366,
+      "sha256": "91e90884d985da7ca2967ca691eda88808b8d2bc68182206bb0be96a814e76f7",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-m2-android-sql.log",
+      "bytes": 2460,
+      "sha256": "90ebf84e9e3e98f08901f15530391fd1dfbb7aa0307aa1a75073456913642c30",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-m2-android-ui.log",
+      "bytes": 1166,
+      "sha256": "b031646187019c129518d2a063b12483910e7c258434472ddc8741f71efb1c4a",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-sql.log",
+      "bytes": 1372,
+      "sha256": "2047fdeae8da72b855b77882518fb889fa09a6d21ed4e341edcf4e8aa687c9a4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-tests-initial.log",
+      "bytes": 18604,
+      "sha256": "71a9b478403cc6d447294954fac5310c17f7be9ec5c9e519922eb4e859eac1fc",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-tests.log",
+      "bytes": 17236,
+      "sha256": "efb076cf1b1b43fb2082852a7240da9f07821fb997e03036e53c01af2f3acfb2",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-unit-initial.log",
+      "bytes": 12225,
+      "sha256": "62770f8dd6e162845c9b29e146d0006c0807bdce455549241ee0fb3ab4d9196c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/locale-unit.log",
+      "bytes": 3796,
+      "sha256": "36e542fbbbf5144007a31cfeea27d10d7c47c6115cdcf23d515051b5a2046110",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m1-analyze.log",
+      "bytes": 98,
+      "sha256": "0b675350582f5ea3edc69c846c0e95fd5d57822355edb600f08db5d2b0e0d71d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m1-android-tests.log",
+      "bytes": 2610,
+      "sha256": "d236aa507e2cd8644d4e4e026500afbddf5ddb8bd885ce0c05fae85458105fa1",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m1-build-debug.log",
+      "bytes": 129,
+      "sha256": "59f870f8005ecf71a251b17156c199c2cec82b8752350f6d8cecc60d53763ce7",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m1-doctor.log",
+      "bytes": 2116,
+      "sha256": "6ae931e3afa941b0f566053a6e95ad710dc472dce9cf4d1a4cab36387925376a",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m1-format.log",
+      "bytes": 49,
+      "sha256": "d9f45dffde4f7f8da3b8ed67dbf71c6cdc7bf01e31374bb8ae3ee3a8efa0d9d2",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m1-tests.log",
+      "bytes": 5633,
+      "sha256": "03acc192f5ff5b1ed767d8cf18cfefb17a602e3409fac6acc1dbd194420100b4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m2-analyze.log",
+      "bytes": 98,
+      "sha256": "8f836d384eadd28cb5567201875f6f8b57f0d1d03f028269f17dfe1c7b4f2b8d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m2-android-sql.log",
+      "bytes": 2426,
+      "sha256": "9d1ba8572da99a23d3f697cf30146e2055efdcc6deb6702b24dff600514dc9cc",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m2-android-ui.log",
+      "bytes": 465,
+      "sha256": "d08c0a1ca9aa3f4d2456172da52175d4b9f43b633b9ff460e3feda0e2ebb2a2c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m2-build-debug.log",
+      "bytes": 129,
+      "sha256": "2045549452fa29ea1144b9d21846f8a1f652dfb0fc01803af8eca9b627428cd0",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m2-doctor.log",
+      "bytes": 2043,
+      "sha256": "537de2f982b6854afa105cd60c06639591c259154e8e0d2e2875ccdca6a01d1d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m2-format.log",
+      "bytes": 49,
+      "sha256": "cae73d56589c0efb1ed18dca058f7b748208c61d5203fb0ab2f4ef0c179d32f1",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m2-locale-layouts.log",
+      "bytes": 1352,
+      "sha256": "3f177916e878b69ee5de4219d97f0163c75ee1275017c783aad1782999892476",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m2-tests.log",
+      "bytes": 9154,
+      "sha256": "b3cc3ea34627fcbf289ba958cd3fbcefd545ffadd55faef61d2edcbc68df0f05",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-analyze.log",
+      "bytes": 799,
+      "sha256": "e7654011bc4fecc6bd74b12141b7516a0e489d1fffb1ef7ecbc3c350b3cf18ac",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-android-final.log",
+      "bytes": 24231,
+      "sha256": "d72a0e0d808919eb961e1705f09745c0589037cefa8e538ddb3e5d5cd217dc9d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-android-regression-ui.log",
+      "bytes": 1999,
+      "sha256": "3feed5254a1493453a9f2247b9774662502e28c2aa8005c6a0c6ea0ed45e257a",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-android-ui-final.log",
+      "bytes": 1257,
+      "sha256": "1359c069f16ce2133ade058a1873ee17f66ed3d06d63c199ce45d31fbdcee013",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-android-ui-initial.log",
+      "bytes": 6318,
+      "sha256": "bd7534cc52da7749fc4a655b69555fa6d4dedeb7df644c7c46465987a80b9d7c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-android-ui.log",
+      "bytes": 3991,
+      "sha256": "a7b7c28f9ba9afe7d03d5070fadd1cf4301f5c12526a1455a09ebbd56b64f43c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-android.log",
+      "bytes": 8137,
+      "sha256": "fad8720fc0b2264c1d611b91922e1cabbed78df852d9a91384f8e21118ea5cc5",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-audit.log",
+      "bytes": 127,
+      "sha256": "e9ea4a9117ab3666ba815a0e5076fdab29df50832e0676a69d7a67902650cbaa",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-build-debug.log",
+      "bytes": 830,
+      "sha256": "f85f5d1e8f492bbf25e202d0bda84ab8ce09b992c35aef7fcd512f42d399b853",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-dart-fix.log",
+      "bytes": 56,
+      "sha256": "cb8a6166aa15b6008cae4c7a2539fbf04d4133e588b76c0139760458fc6013e6",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-devices.log",
+      "bytes": 627,
+      "sha256": "476e808af47e641be95197fc116f0b0ac6f34b77517e8e2d4b2922cd08fdf7be",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-doctor.log",
+      "bytes": 1992,
+      "sha256": "2763313972fcc2fd215b93dbe1791653cc4bce35c4e3361b01ce5e2b96024b3b",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-format.log",
+      "bytes": 49,
+      "sha256": "a713216f859c7024aceeab64a62c64ce7140744c49299ae71f0bd7a9466cf27a",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-gen.log",
+      "bytes": 165,
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-install-debug.log",
+      "bytes": 38,
+      "sha256": "c4aa470acafcf8576c15b0f0b5ae7e852d1ec5413372d0e6a9272e788e1306d3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-installed-version.log",
+      "bytes": 65,
+      "sha256": "5d6b23317bc60cd21f6af2b01d4e37ed1533e1df02604018ef2180b6cb3a900d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-launch-debug.log",
+      "bytes": 62,
+      "sha256": "2523e14aa14220ee926d25b15f53a2bde4b252e2ab484a9728d907cad68b22be",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-layout-diagnostic.log",
+      "bytes": 6373,
+      "sha256": "aad7709c94cd733886a23f8932fb42c00d8eb4f64e010e752adfc164586f0764",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-logcat-app-final.log",
+      "bytes": 36396,
+      "sha256": "df1e4a8da9eecda46dce5c11ebfb2f3255305117c567677ca8d572e4dd48792a",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-logcat-ui.log",
+      "bytes": 88636,
+      "sha256": "b54a23129897c0948e144896497ae9631c8f6eae654886a8774dddda4e3d928e",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-sql-windows.log",
+      "bytes": 3950,
+      "sha256": "47b8f7e977fe559a377046009ca6d4ecbeaa0e9a7b781217de6fc89a56f98177",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-targeted-final.log",
+      "bytes": 9139,
+      "sha256": "f46eaccf5c66b27c292a65acc5b8fd099c850ef7bf8ea0e705b203160e96076f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-tests-windows.log",
+      "bytes": 22247,
+      "sha256": "df48bfcff3d5e793d95f3623e0250b58115ada4498cd65c4ffb323817170fab6",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-ui-diagnostic.png",
+      "bytes": 157446,
+      "sha256": "2e9da871cc1ba92a2e5a3eb314207ca431011d1edc1d179a269fa81e70dd72e5",
+      "category": "raw-capture",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-ui-locale-initial.log",
+      "bytes": 3991,
+      "sha256": "a7b7c28f9ba9afe7d03d5070fadd1cf4301f5c12526a1455a09ebbd56b64f43c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m3-ui-windows.log",
+      "bytes": 2486,
+      "sha256": "502d9f5a7af1aa6f816f4e4d153ea5e533cefe16916ef0bf1b7fdca01f19218d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-analyze-final.log",
+      "bytes": 98,
+      "sha256": "0b675350582f5ea3edc69c846c0e95fd5d57822355edb600f08db5d2b0e0d71d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-analyze-initial.log",
+      "bytes": 2427,
+      "sha256": "c3b2cbfd5ab12250ec4cebcad798824d7e6e83c71ab2f82fd697319db9864f13",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-analyze-physical-final.log",
+      "bytes": 98,
+      "sha256": "5d6c39bce39738292dc7ff579fb4d833653d1ced9843cbb7c5c79a1635bacbf6",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-analyze.log",
+      "bytes": 99,
+      "sha256": "bc547d3134a030d6f584067d0c9f29f2316d1a33cf59bac31cb49b1571f996cb",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-android-initial.log",
+      "bytes": 8114,
+      "sha256": "6817c89781dbd6e5b47acc083e5e3859b7cd9615c7cd097a10f48bc19a6c544f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-android-isolated.log",
+      "bytes": 7835,
+      "sha256": "219378af20c6c0231facd051e85d93b17a9d68a628551479f522ea92a702f2b5",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-android-regression.log",
+      "bytes": 11962,
+      "sha256": "7216dbee70c670884087180a6d817ba2027e418c063957fa76bccff624ef5df3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-android-safe.log",
+      "bytes": 2986,
+      "sha256": "273b333d41a6cb448dea8db3e3accf47e3c67a5538001eff518f4c0bc2c31444",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-android-ui-final.log",
+      "bytes": 3497,
+      "sha256": "c12b8917ea2471256e5228542c92fb9190069d530f1d0090aa502c7b5b5be625",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-android-ui-retest.log",
+      "bytes": 3707,
+      "sha256": "9629393beed52c82000c9dfba7302db581f0b457ca6501425a93af6ec3c3d324",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-android-ui-success.log",
+      "bytes": 1181,
+      "sha256": "dde66729e9fba01f315c35ea519d94f2fe962a112fbd3d84625a60e95aebb517",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-audit-final.log",
+      "bytes": 127,
+      "sha256": "fb4befbc686de474edaef1a1dc10dcdfc64dc540d3f9689b005f05a3de8885f4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-audit.log",
+      "bytes": 127,
+      "sha256": "fb4befbc686de474edaef1a1dc10dcdfc64dc540d3f9689b005f05a3de8885f4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-build-debug-final.log",
+      "bytes": 129,
+      "sha256": "c058b5afef4f515ccfe9bfa8e2773e8bd1021394ecbb6b3b3859af0d461c12df",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-build-debug.log",
+      "bytes": 129,
+      "sha256": "4484c52a9cacbba44a90269653901e0d96db5b6092d621eae9be6bbdf2d110b4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-build-isolated-verified.log",
+      "bytes": 129,
+      "sha256": "b961b7959d885bd70456c2cababa80b9a519ccc508e03c1b4c2295085b2e4813",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-build-isolated.log",
+      "bytes": 1330,
+      "sha256": "ab9751f862f09aa8af4be52e753304d73a044147affe15a53799d005616ff237",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-build-normal-after-isolation.log",
+      "bytes": 129,
+      "sha256": "3d46d8ec3e77cab245a40d53b034015ad989567ec7cd170e3c5ba5bfc6c97b2b",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-devices.log",
+      "bytes": 627,
+      "sha256": "476e808af47e641be95197fc116f0b0ac6f34b77517e8e2d4b2922cd08fdf7be",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-fix.log",
+      "bytes": 393,
+      "sha256": "df98fde03b5cb324bb3f269d76afcc1ec800c512ac2cb98ae20a5996059a51f2",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-fixture-exit-info.log",
+      "bytes": 1040,
+      "sha256": "ca3f0eddb8e2f8555156e0d1fbfbfc4c9580c798646dc19162949fbf0359d546",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-format-final.log",
+      "bytes": 50,
+      "sha256": "9755901603f64574b63d40f5a768c4726f3f0ddef9848efb72a1bbb3a431bb60",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-format-initial.log",
+      "bytes": 928,
+      "sha256": "026676e333f90210999d4ce6e2a9664a3d0b595721b26f2b71d30da4e275053d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-format-native-fix.log",
+      "bytes": 47,
+      "sha256": "56d314280a92aac617eeeacbfee28ae9d98c01fb997840fdb15f112fcf773615",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-format-physical-final.log",
+      "bytes": 50,
+      "sha256": "5d435fe10e15a5bbab5d33824940cf80f1bb8e02e69ae2df46473bf1f1fd4aaa",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-format.log",
+      "bytes": 105,
+      "sha256": "b3236147fa8de0248bbe105d116f5c6c360b162fcba456bf988d6a29532f8cf5",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-gen.log",
+      "bytes": 165,
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-install-normal-no-launch.log",
+      "bytes": 38,
+      "sha256": "c4aa470acafcf8576c15b0f0b5ae7e852d1ec5413372d0e6a9272e788e1306d3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-installed-normal-identity.log",
+      "bytes": 115,
+      "sha256": "85f466821ca966957f2a2f87095c3e2a00d9411eb7d739a9f5f2e9ec74a5709f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-isolated-apk-identity.log",
+      "bytes": 320,
+      "sha256": "921549d57eaccfac50e36b34fc0ac35fce739cdaa9627f80ab82626e762b8f40",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-isolation-guard-negative.log",
+      "bytes": 739,
+      "sha256": "19eee853a966265f4c0fa6d6aaec5feb1364bf5b5a74010bad863e839ce66d72",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-logcat-safe-ui.log",
+      "bytes": 174314,
+      "sha256": "b7c6b7b0956648151f8b9559f2d798595794ef6225bd972bf63da531afbf89f9",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-normal-apk-identity.log",
+      "bytes": 302,
+      "sha256": "b20c3ca692c818a4185dbf6d853a4fe2e80b77edc41feed0d7862f60bc8a45da",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-operational-db-after-install-no-launch.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-operational-db-presence.log",
+      "bytes": 55,
+      "sha256": "3c5e4897ddb9b8b6436db425267c684400dd162d8bbf4f034f270f09ddc48a72",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-adb-final.log",
+      "bytes": 28,
+      "sha256": "bbfcc7239a6f1be3544814ebdc6bcc9b66bf5b1f0b03baa3340808f19265a630",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-analyze-final.log",
+      "bytes": 99,
+      "sha256": "14c5d82f3a4ae721f1aa3e154a43baad482bf71eef0a10ab9706094e37046fb3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-analyze.log",
+      "bytes": 98,
+      "sha256": "c21288e9298a7b57dd18e96f91709080bd6f390f25d527107d1d0e725d3a3e02",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-android-all.log",
+      "bytes": 23220,
+      "sha256": "df41a31625d53f345d06269ae92d8235d027b60737400a109c9745818aeb806f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-build-debug-final.log",
+      "bytes": 868,
+      "sha256": "1cd417bcd322ac5a581d4628232b9ea0949cb9775cd52cced77350a130fca34d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-build-debug.log",
+      "bytes": 868,
+      "sha256": "763fe29b1e78dd0b085c32457659c422890e73aab4fbb6ef9692a768c634154f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-build-release-fixture.log",
+      "bytes": 1712,
+      "sha256": "16e0287c1992b65aa76c5034c88ec5b69cea86e793ae202b61963a95d8eb0e5c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-build-release-retry.log",
+      "bytes": 841,
+      "sha256": "ebea94965e9e16aed8af438c03b9da8e0140a7103659534f292b9806c08a3e85",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-build-release.log",
+      "bytes": 1567,
+      "sha256": "42cbbdbdb5ba5fe10a462a4668e7d2810646cbf239ca8cebf158ef2da17a9627",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-devices-final-discovery.log",
+      "bytes": 530,
+      "sha256": "005c76fdb1ea8520c4153fa29b92a2cf90ba2e32dbf8aa77b2507daeabb77ffd",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-devices-ready.log",
+      "bytes": 530,
+      "sha256": "005c76fdb1ea8520c4153fa29b92a2cf90ba2e32dbf8aa77b2507daeabb77ffd",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-devices-reconnected.log",
+      "bytes": 627,
+      "sha256": "476e808af47e641be95197fc116f0b0ac6f34b77517e8e2d4b2922cd08fdf7be",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-devices.log",
+      "bytes": 530,
+      "sha256": "005c76fdb1ea8520c4153fa29b92a2cf90ba2e32dbf8aa77b2507daeabb77ffd",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-doctor.log",
+      "bytes": 1884,
+      "sha256": "dbb3a4d867b9c789ea4f0dccc35144480184f230773e6fed247655c2168a64e5",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-fixture-exit-info.log",
+      "bytes": 5063,
+      "sha256": "481f78330e24c79de3983179587022380c342bd4b07d6ce060fd1e265663b5d8",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-fixture-installed-identity.log",
+      "bytes": 215,
+      "sha256": "9803d47b6a0ec131cd6539b0b1aa8730145dd98bb14957d3eba4c5c1fe1cbcbe",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-format-final.log",
+      "bytes": 50,
+      "sha256": "adae1d5069f32804a85fbb2fe6a24ff41b2b443de3c600c3472da8d27c9f4d61",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-format-gaps.log",
+      "bytes": 95,
+      "sha256": "3fc04fd7d0ebf63f4fced6bfe4f1166a8b958d0cda367121afd71eb84fd90c74",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-format-initial.log",
+      "bytes": 1222,
+      "sha256": "3f84e41257f7762d970fef41e0edf143d67c0954415c998e764d6fb62c8fc38f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-format.log",
+      "bytes": 50,
+      "sha256": "96d8334a859587cc4887d86e5af479b7cd1ea1360da67f72ed3090bf9d71b547",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-fresh-db.log",
+      "bytes": 1060,
+      "sha256": "5414e9ac33b3171f1e97ff7c25ee18c5be4da943897ba113212c709fb1b2cc3b",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-fresh-startup-logcat.log",
+      "bytes": 25491,
+      "sha256": "5dd37adb45e2e1505e324590f96be1c08be44412b5434343fee2778e261acee3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-gaps-initial.log",
+      "bytes": 2563,
+      "sha256": "a34bc4b88af1f2a6ebd1ac1176f44f58426962e128147f90fc13acafa123b21f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-gaps.log",
+      "bytes": 523,
+      "sha256": "618d4dc990d079f24463a45a2d66909f6581a966954bfa80fe5fb298a20499de",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-install-normal-final.log",
+      "bytes": 406,
+      "sha256": "00224da7c1fbeadc189883a06fbecbad6184550319a09c95fd31ea0b65cce224",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-install-reset.log",
+      "bytes": 714,
+      "sha256": "6112c6723f65ca57223995a6089cd077bc4d8cab3ce7e6cc7b3d6668c0cc2b4c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-normal-final-pid.log",
+      "bytes": 125,
+      "sha256": "45b810f93ee230d9d88ee3b5ea4acf7fae6db84aedcbb9db2c683d0d1c384c32",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-normal-reopen-logcat.log",
+      "bytes": 25959,
+      "sha256": "cdf9f9ba1ea2cac6f971ee20c65eba579e110aa751e1d619b70abdf4125317c2",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-normal-reopen.log",
+      "bytes": 561,
+      "sha256": "942cd0aabb5391636296d13d08512e199d496ab878b7d644fdabe9b4859654d6",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-release-logcat.log",
+      "bytes": 23102,
+      "sha256": "a9fbf3bb196516418bb60e395c546c31052a37a5bc78bd09df388b3e27c44194",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-release-runtime-initial.log",
+      "bytes": 218,
+      "sha256": "eca1aa8707e988a1c325f69d0f1a1b8a7e40213b555e1490046da1b7f09c590d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-release-runtime.log",
+      "bytes": 430,
+      "sha256": "10533356b861cec41ff59362a0d1bed6b646a8e9b7f9d656ac4921e6eb829a17",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-release-smoke.log",
+      "bytes": 457,
+      "sha256": "8d3c32f00100aacb328522a36cf6a21cb6ef46d73920b8800eb2591145918728",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-ui-logcat.log",
+      "bytes": 11126,
+      "sha256": "8bab65153771fc39f3d6348c87f357e5beff63339f297621bb3660a50c4b6224",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-usb-final.log",
+      "bytes": 483,
+      "sha256": "6d2dd6ebaac471652a62da385544a0bdd7abcaf4991034a266f3c7448cd8f3de",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-recheck-windows.log",
+      "bytes": 29718,
+      "sha256": "d2f1133d38aa93eb5a9315c15c162497f4dff2016fb5f70ce8360c5c21edaa04",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-safe-installed-identity.log",
+      "bytes": 171,
+      "sha256": "dc47db58009133353dae630d36a94fd7e2c4bf7368a068d2ef6bec5fb91b044f",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-targeted-final.log",
+      "bytes": 4893,
+      "sha256": "aa7c38435a6509165e3926fe1e2f701a5d42ed14e1ce62ad1d1333caf1f9aeb0",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-targeted-initial.log",
+      "bytes": 22627,
+      "sha256": "7fd1139938c4be79f858db616534f609ede27211ca6008356531e0c0d3fd9194",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-targeted-retest.log",
+      "bytes": 7744,
+      "sha256": "02d92bc8210095c607723378167e71c115bd9195b97aa7da2ab62651f2efc052",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-tests-windows-final.log",
+      "bytes": 26557,
+      "sha256": "17415ffec419e4add0d57d9cf8f1a2f6cfaf083f2ff94b7f7d419c66def8a130",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-tests-windows-initial.log",
+      "bytes": 32129,
+      "sha256": "7a0c4a24b3c7d94cb3eaf6454cc898f67a201a1a1e0927c78142f58c7c7c63af",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m31-tests-windows.log",
+      "bytes": 26387,
+      "sha256": "5e77ce9f5c2e3280e9ccfaee63acf397fc1af37b07af3a4c7c01117842e8afbb",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-analyze-expanded.log",
+      "bytes": 3045,
+      "sha256": "42ec735b34751f57e89f9284daa0dedc75f9bc9952ac6b0131543e804034df92",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-analyze-final-pass.log",
+      "bytes": 98,
+      "sha256": "bf7b84ad3daa5ddd5b277b4c76897a19342c4e392f71c305387d3ad1d5d9c243",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-analyze-final.log",
+      "bytes": 286,
+      "sha256": "a7c005fe100c368d33540ee342f05d30ebb307c689cb323f02577fdb9a77a2f6",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-analyze-initial.log",
+      "bytes": 6094,
+      "sha256": "ec356b926eb94609875ad2d05ac252982aeee2b1f5e8a100f008e18bf8e60d1e",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-benchmark-windows-final.log",
+      "bytes": 4809,
+      "sha256": "3849c42d403d2b120d098c14f306786c03f78aa62d104916171715a7d696d319",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-benchmark-windows-initial.log",
+      "bytes": 1027,
+      "sha256": "7a0c671bc615be34287765cb5fbb007a03ed17a14cd1a394033b4389dff7bb5d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-benchmark-windows-retest.log",
+      "bytes": 4826,
+      "sha256": "202904f403257efc8db82a61a698b363b18a59b77e4b4bf2880c7ee11eee68a8",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-benchmark-windows-seek.log",
+      "bytes": 4823,
+      "sha256": "545164f5719d9e7efb739831a7ebb57fb81e48d35dff98133921e6d8f9fad75b",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-build-debug-final.log",
+      "bytes": 1128,
+      "sha256": "cf2a35eb6ce4874f59e36097f8d154915520aeb2e1d41763b84c1ecd7d5f3935",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-build-debug.log",
+      "bytes": 1128,
+      "sha256": "ebc5857a28873feef6bb97b40fc3dc0e1f4a5d39d11f87b1abc5daaa727ce898",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-build-release.log",
+      "bytes": 1417,
+      "sha256": "35ca1fd731f7045a462a7c2ffa811a37566897c71e87ef20342f6c03b042f5f0",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-dart-fix-final.log",
+      "bytes": 45,
+      "sha256": "0b32d5ce9c856d7b7ebc745be7677f9746adf6ca83c9a2ed7ac02a344d8079c3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-dart-fix-tests.log",
+      "bytes": 603,
+      "sha256": "1b67417cfdb522bc2a10910994b159f212c53ead8de8043845a36725ea2a347e",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-dart-fix.log",
+      "bytes": 776,
+      "sha256": "1611a864ddac58f756442a7e9c2cddd25974dd39d51a2248e726e426b4f8ac8d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-debug-final-identity.log",
+      "bytes": 306,
+      "sha256": "4e8e23e4e0bb4d836262a063c3961b647d79385a73e8ea35357a00ff879b424b",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-debug-identity.log",
+      "bytes": 306,
+      "sha256": "4e8e23e4e0bb4d836262a063c3961b647d79385a73e8ea35357a00ff879b424b",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-devices.log",
+      "bytes": 627,
+      "sha256": "476e808af47e641be95197fc116f0b0ac6f34b77517e8e2d4b2922cd08fdf7be",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-doctor.log",
+      "bytes": 1988,
+      "sha256": "3314222e6a86a2280bbba399ed757c1279f2b6166a60f0900be2af0b41c41ce5",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-format-expanded.log",
+      "bytes": 763,
+      "sha256": "986bb2dd39a04277be65452cc9386e607eeb7e3fca9db95bb4bd90016c3cea23",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-format-final.log",
+      "bytes": 50,
+      "sha256": "65a2d19931ffccd5d63aae30588fb18a8fa9dd63ad11dc9355381d95ca1c125d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-format-initial.log",
+      "bytes": 1409,
+      "sha256": "4bb37bae1f12738b6089cba184ddb954b4219cb1c4e89f6452fa1749cad4b89a",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-format-precheck.log",
+      "bytes": 192,
+      "sha256": "34418be85985c5c0edfdbc02b1f611119408f8a3f35bbd987b6991089f8b4dee",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-format-sql.log",
+      "bytes": 217,
+      "sha256": "67175938e23095715d573fda4b39ff04ae46418f63228ac4aaef27a137c8f466",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-format-targeted.log",
+      "bytes": 50,
+      "sha256": "ac9c89d1ccf1e7a27b23b92d9103b99b84bb593f8a4d1bcb4ef647d9d64afecd",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-gen-initial.log",
+      "bytes": 165,
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-localization-audit-final.log",
+      "bytes": 127,
+      "sha256": "421bfce2b8a41a91e1ef9ce2269194aabcad4dc8b58cc2d2a418f8cedfa96851",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-localization-audit.log",
+      "bytes": 127,
+      "sha256": "421bfce2b8a41a91e1ef9ce2269194aabcad4dc8b58cc2d2a418f8cedfa96851",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-native-all.log",
+      "bytes": 40877,
+      "sha256": "f6a83d32378bcc9802f795d8f7a1d2f1dad61cfee43daae8d2a6dea288d13331",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-native-benchmark-log.log",
+      "bytes": 25479,
+      "sha256": "a6bbbe8224f9b3d97fd2d3f0d3de3b7aee779748afe78ca364a0797bf222a304",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-native-exit-info.log",
+      "bytes": 3461,
+      "sha256": "e249ba1928ca3fd9d246818faf516b5228fa0abb1330cf621dc66950f395b095",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-native-installed-identity.log",
+      "bytes": 131,
+      "sha256": "118916a747fb7658c4b4b57f8cb1f3c0fb59bc1923fd5f4ea031225f847c5937",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-native-locale-log.log",
+      "bytes": 26651,
+      "sha256": "b9a8ad5245bd561fb0fd8134071ebf6d26c9da3d2838017dd196e6447fefddc6",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-native-log-snapshot.log",
+      "bytes": 26392,
+      "sha256": "fb9bc74af057f8d3163b54a669339b7b9310711602ea483b2588f454b650755c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-native-ui-log.log",
+      "bytes": 31868,
+      "sha256": "4339e70f0bf5bfcea0261ebb48cf2d81f34efd0b3896d8bc891c8c739cbfe18c",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ordinary-final-identity.log",
+      "bytes": 119,
+      "sha256": "b05499bdf482bda9871c5f6cc74f4026e256ecc18c5742e8369ad69bbd4323ce",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ordinary-final-pid.log",
+      "bytes": 7,
+      "sha256": "5136ad9add50b78de64e69027da0eb08fd9bda0c3d1e34180298d79f3676dd2b",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ordinary-install.log",
+      "bytes": 38,
+      "sha256": "c4aa470acafcf8576c15b0f0b5ae7e852d1ec5413372d0e6a9272e788e1306d3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ordinary-reopen.log",
+      "bytes": 366,
+      "sha256": "552febf550904d45df79982b8585b5af96c577c780a085be6de589bc10290ceb",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ordinary-start.log",
+      "bytes": 183,
+      "sha256": "213099ed0a82627be8c7ff44d83f9991d86c17d2329231ee478ed9912f0019a6",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ordinary-startup-log.log",
+      "bytes": 26190,
+      "sha256": "9f398ebca9b54e8879e2fc86a32eb0bef97f98f236d0967bfa568d19d1bfc2c1",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-release-identity.log",
+      "bytes": 224,
+      "sha256": "c89dab44e3e2d63a8e4bf9a40f0e977cd830c1131cd0bc26304cdf8aa2bea413",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-sql-initial.log",
+      "bytes": 7843,
+      "sha256": "62e50b331e778ce876c4334fcd093875983b5e3d3643288bcccbaa78db2ba360",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-sql-retest.log",
+      "bytes": 2518,
+      "sha256": "e4899e88de4f7a6ff4730e4b007b5659d0bf20fb7a03e3d2dce858f0e9df900d",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-storage-ui-initial.log",
+      "bytes": 5737,
+      "sha256": "b371dd24fa7298854ebf64fcbf76489ae281fe3f85f6e3eb7fa5dafab5d9d909",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-storage-ui-retest.log",
+      "bytes": 3877,
+      "sha256": "47c09937382f0f130e2ed1f16a79f4edecf7971a848cf3a4a54bb1321832c1bf",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ui-format.log",
+      "bytes": 88,
+      "sha256": "ac95a5bb5c7dcd57b6355a0538b2dad0ac8d77ca553e97acbf29d09640de0fd4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ui-format2.log",
+      "bytes": 88,
+      "sha256": "ac95a5bb5c7dcd57b6355a0538b2dad0ac8d77ca553e97acbf29d09640de0fd4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ui-format3.log",
+      "bytes": 88,
+      "sha256": "ac95a5bb5c7dcd57b6355a0538b2dad0ac8d77ca553e97acbf29d09640de0fd4",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ui-narrow-retest.log",
+      "bytes": 3055,
+      "sha256": "fff546a749c12bc675ae59bbd529809eb0df7b3e9b13fc11c40f3a035b33a9f9",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ui-narrow-retest2.log",
+      "bytes": 235,
+      "sha256": "ae22a5cd20825778da4a4357b18e81cde1cd72de68665800c26eca533395381b",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ui-retest.log",
+      "bytes": 10038,
+      "sha256": "36800e01d90cb4a7cdb3f7bcc824465acf9d0d9a5391ad113d19d4b936911770",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-ui-retest2.log",
+      "bytes": 206,
+      "sha256": "90cece4c8f2670c878dc9401cfad2a94212949a9a65c47c18a7d5a69340f0dd2",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-windows-all-final.log",
+      "bytes": 36532,
+      "sha256": "f5e8d1cb55fbcb9d9ef51f68d5d70904422a2b27779223eae8bb569fd883839a",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m4-windows-all.log",
+      "bytes": 38966,
+      "sha256": "acd7330d540e9c69c525271126d1addcd31987325a4f01405ec5498f987fb747",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/M5-synthetic-logo.png",
+      "bytes": 160,
+      "sha256": "a43ce4284e01099977ed30cbe3191e382c8ead80676de8d5bbf24d9e71171064",
+      "category": "raw-capture",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/cross-transfer-1792150309449/archive.kasirbackup",
+      "bytes": 607195,
+      "sha256": "2a375c059a5399164186d681f12658e2782d0bbe9bbd6876b396182562d3219d",
+      "category": "private-database-or-backup",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/dv-c24-release-after-20261017-071325/prior.apk",
+      "bytes": 70742952,
+      "sha256": "5dc43c69bf4b5b02c61ca5a203fd1699977a7621d8ab1bd2a8799e0a3aab0ea1",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/dv-c24-release-after-20261017-071325/probe.apk",
+      "bytes": 49309123,
+      "sha256": "5791d013341b453618f133c47a73943ef6ef0b6ff16daac577595bd4ed88133b",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/dv-c24-release-after-20261017-071325/restored.apk",
+      "bytes": 70742952,
+      "sha256": "5dc43c69bf4b5b02c61ca5a203fd1699977a7621d8ab1bd2a8799e0a3aab0ea1",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/dv-release-smoke-20261016-191717/original-fixture.apk",
+      "bytes": 68655920,
+      "sha256": "275f736369d23a8f3b8bb7c841117f0976b6170d705416a541958be7935c8e8b",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-archive-update-1792181574653/prior-c22-release.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-arm64-pin-cipher-financial-20261016-150136/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-arm64-pin-cipher-retest-20261016-150635/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c20-after-1792174330020-20261017-012902/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c20-before-1792174330020-20261017-011210/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "c8f086885212e49e25e155f178179ea5c9a9f3f3b6571b9796d049682bf3640d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c20-settings-1792174330020-20261017-011544/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "c8f086885212e49e25e155f178179ea5c9a9f3f3b6571b9796d049682bf3640d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-after-1792178476161-20261017-024222/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-before-1792178476161-20261017-022116/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-ime-diagnostic-20261017-022704/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-ime-final-20261017-023003/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-settings-1792178476161-20261017-022337/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-settings-final-20261017-023323/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-after-1792181574653-20261017-055222/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-before-1792181574653-20261017-031614/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-before-rejection-20261017-030851/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-before-rejection-fixed-helper-20261017-030918/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-export-before-lock-diagnostic-20261017-053928/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-export-unlock-diagnostic-20261017-053722/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-metadata-explanation-20261017-055611/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-metadata-explanation-timing-20261017-055755/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-quiescent-1792191568561/installed.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-quiescent-1792191568561/prior-installed.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-quiescent-after-1792191568561-20261017-060056/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-quiescent-before-1792191568561-20261017-055928/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-regression-1792181574653-20261017-031736/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-regression-final-1792181574653-20261017-054225/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-after-1792195919961-20261017-071621/original-fixture.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-before-1792195919961-20261017-071458/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-post-restore-1792195919961-20261017-071754/original-fixture.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-post-restore-final-1792195919961-20261017-072030/original-fixture.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-release-after-20261017-070723/prior.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-release-after-20261017-070723/probe.apk",
+      "bytes": 49309123,
+      "sha256": "5791d013341b453618f133c47a73943ef6ef0b6ff16daac577595bd4ed88133b",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-release-before-20261017-070314/prior.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-release-before-20261017-070314/probe.apk",
+      "bytes": 49308627,
+      "sha256": "ac8ec12981e92fd7d48a43b63c7d5030df6b24837c06e71c536dc56e2d0fa157",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c25-after-1792226124001-20261017-154842/original-fixture.apk",
+      "bytes": 66513819,
+      "sha256": "02fbf81f16b07bd535b59425b35238fd8692c41d4e4ad8440d25636dcf02c687",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c25-before-1792226124001-20261017-154711/original-fixture.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c25-ui-1792226124001-20261017-153524/original-fixture.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-cipher-backup-ui-final-20261016-184610/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-cross-device-target-1792150309449-20261016-183453/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-export-update-1792178476161/installed-c20-release.apk",
+      "bytes": 66513323,
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-export-update-1792178476161/prior-c20-release.apk",
+      "bytes": 66496939,
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-google-cancel-update-1792226124001/dv-prior.apk",
+      "bytes": 70742952,
+      "sha256": "5dc43c69bf4b5b02c61ca5a203fd1699977a7621d8ab1bd2a8799e0a3aab0ea1",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-google-cancel-update-1792226124001/dv-restored.apk",
+      "bytes": 70742952,
+      "sha256": "5dc43c69bf4b5b02c61ca5a203fd1699977a7621d8ab1bd2a8799e0a3aab0ea1",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-google-cancel-update-1792226124001/installed-c25.apk",
+      "bytes": 66513819,
+      "sha256": "02fbf81f16b07bd535b59425b35238fd8692c41d4e4ad8440d25636dcf02c687",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-google-cancel-update-1792226124001/prior-c24.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-locale-after-disconnect-20261016-184240/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-manual-20261016-191759/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-manual-update-after-1792156485701-20261016-201639/original-fixture.apk",
+      "bytes": 66496939,
+      "sha256": "c8f086885212e49e25e155f178179ea5c9a9f3f3b6571b9796d049682bf3640d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-manual-update-before-1792156485701-20261016-201446/original-fixture.apk",
+      "bytes": 66480555,
+      "sha256": "987c534c975ac3e148be6c0da69fbc99d42907eae79f47423f874eccd554ed3b",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-native-management-lifecycle-final-20261016-185741/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-notification-update-1792195919961/before-safety-retry.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-notification-update-1792195919961/final-installed.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-notification-update-1792195919961/installed-c24-release.apk",
+      "bytes": 66513819,
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-notification-update-1792195919961/prior-c23-release.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-permission-update-1792174330020/installed-c20-release.apk",
+      "bytes": 66496939,
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-permission-update-1792174330020/prior-c19-release.apk",
+      "bytes": 66496939,
+      "sha256": "c8f086885212e49e25e155f178179ea5c9a9f3f3b6571b9796d049682bf3640d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-post-restore-audit-20261017-065816/original-fixture.apk",
+      "bytes": 66513323,
+      "sha256": "fba00b55a3a0fc0345722a78ac9ce6c028944d09a541b761fe6fdd1510fc56b0",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-printer-layout-reveal-final-20261016-190522/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-printer-ui-diagnostic-20261016-185451/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-reports-after-disconnect-20261016-183711/original-fixture.apk",
+      "bytes": 98599918,
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/realme-after-reboot-cipher-domains-20261016-141530/original-fixture.apk",
+      "bytes": 17022097,
+      "sha256": "969bccdda9605a2e82d137957316f1dbb848075f314532eb479befca21f709f7",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/realme-encrypted-regression-20261016-134024/original-fixture.apk",
+      "bytes": 17022097,
+      "sha256": "969bccdda9605a2e82d137957316f1dbb848075f314532eb479befca21f709f7",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/realme-portable-cipher-final-20261016-145027/original-fixture.apk",
+      "bytes": 17022097,
+      "sha256": "969bccdda9605a2e82d137957316f1dbb848075f314532eb479befca21f709f7",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261016/realme-stable-cipher-regression-20261016-134816/original-fixture.apk",
+      "bytes": 17022097,
+      "sha256": "969bccdda9605a2e82d137957316f1dbb848075f314532eb479befca21f709f7",
+      "category": "generated-apk",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-build-debug.log",
+      "bytes": 830,
+      "sha256": "831cad9da36a5356ca2122fb33fd30572306a99145f47a9661ef221613eaf7e5",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-devices.log",
+      "bytes": 627,
+      "sha256": "476e808af47e641be95197fc116f0b0ac6f34b77517e8e2d4b2922cd08fdf7be",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-doc-audit.log",
+      "bytes": 127,
+      "sha256": "7d8f02288840c14c7e17d3ae638a957946a76b250d1bdc3f1f90d2559b0683dc",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-install-debug.log",
+      "bytes": 38,
+      "sha256": "c4aa470acafcf8576c15b0f0b5ae7e852d1ec5413372d0e6a9272e788e1306d3",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-integration.log",
+      "bytes": 11182,
+      "sha256": "55a3082d18da830ebbc6965ea2a5e4efb0e4069ba5e40d660c9514fb67043338",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-logcat-locale.log",
+      "bytes": 24707,
+      "sha256": "3bd10d7ebb682f4930d958915fa48dd95ae0c57112f24d6553a1c872cf056e53",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-logcat-m2.log",
+      "bytes": 33471,
+      "sha256": "22c974de53ab0642764b3872e7fdf5ed07f48408dcfe8cd8c120e7474f1ad942",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-logcat-ui-m2.log",
+      "bytes": 90976,
+      "sha256": "fe988df86447f8d32a4acfe9f8ccb35f8973e5912727c861db938b2f8047c716",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/physical-logcat-ui.log",
+      "bytes": 61139,
+      "sha256": "e5d660ce1f56a5c271f24987bc54e409dd95608fa765e46d0d399f2c3ff46996",
+      "category": "raw-log",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/realme-c11-20261015/cashier-release-ready.png",
+      "bytes": 62919,
+      "sha256": "b1356c0afab092ab3ee12faa15de8e6d220b2f7369a9563055d4746cf7202d33",
+      "category": "raw-capture",
+      "localPreserved": true,
+      "indexAction": "removedFromIndex"
+    },
+    {
+      "path": "docs/evidence/m5-20261018/live-drive-1792327725515/jobscheduler-scoped.txt",
+      "bytes": 6771,
+      "sha256": "ac15d9d9fded597b9dc0599bf5f4bd273c9e6694a2a5873783122405f2f8df56",
+      "category": "raw-os-dump",
+      "localPreserved": true,
+      "indexAction": "excludedBeforeTracking"
+    }
+  ]
+}

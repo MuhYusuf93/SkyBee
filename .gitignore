@@ -1,7 +1,6 @@
 # Miscellaneous
 *.class
 *.log
-!docs/evidence/*.log
 *.pyc
 *.swp
 .DS_Store
@@ -58,3 +57,24 @@ app.*.map.json
 
 # Nested plugin Gradle caches are local build metadata, never public sources.
 **/.gradle/
+
+# M5.2 audit: generated/private artifacts stay available locally, outside Git.
+# Curated JSON/Markdown/hash manifests, repro scripts and JUnit XML stay tracked.
+*.apk
+*.aab
+*.kasirbackup
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.jks
+*.keystore
+*.hprof
+**/local.properties
+/docs/evidence/**/*.png
+/docs/evidence/**/*.jpg
+/docs/evidence/**/*.jpeg
+/docs/evidence/**/*.webp
+/docs/evidence/**/*.mp4
+/docs/evidence/**/*.webm
+/docs/evidence/**/jobscheduler*.txt

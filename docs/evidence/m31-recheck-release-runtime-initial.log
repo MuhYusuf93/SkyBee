@@ -1,3 +1,0 @@
-Traceback (most recent call last):
-  File "<stdin>", line 13, in <module>
-AssertionError: ['Toko saya\nID', 'Hutang', 'Kelola', 'Bersihkan pencarian', 'Daftar belanja\nBelum ada barang.', 'Total', 'IDR 0', 'Bayar']

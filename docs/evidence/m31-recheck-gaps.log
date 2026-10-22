@@ -1,8 +1,0 @@
-00:00 +0: loading C:/Users/ACER/Documents/Proyek/kasir_app/codex-kasir-kit/test/m31_ui_gaps_test.dart
-00:00 +0: (setUpAll)
-00:02 +0: wholesale above retail warning cancel/confirm preserves chosen price
-00:09 +1: wholesale below exact inventory cost warning cancel/confirm preserves chosen price
-00:12 +2: removed wholesale draft blocks Pay until explicit retail correction
-00:15 +3: changed wholesale draft cancel/accept preserves mode and does not create a sale
-00:17 +4: (tearDownAll)
-00:17 +4: All tests passed!
