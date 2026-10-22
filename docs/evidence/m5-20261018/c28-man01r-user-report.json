@@ -1,0 +1,8 @@
+{
+  "id": "C28-MAN01R",
+  "date": "2026-10-18",
+  "source": "user clarification/manual report",
+  "status": "PASS",
+  "scope": "Corrected distinction between static help and target row: OFF settings saved/switch off/target not scheduled; ON target18Oct2026 21:00 without refresh. Final automatic switch ON.",
+  "limits": "Earlier static-help observation ambiguous, not failure. During limit gap user reports only one OFF and one ON, no other app actions; does not freeze audit/PIN/alert metadata or prove no scheduled worker activity. No actual21delivery proof."
+}

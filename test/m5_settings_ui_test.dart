@@ -1373,7 +1373,8 @@ void m5SettingsUiSuite(
         state.generatedCode =
             shown; // Public format/invalid-input fixture only.
         await tester.pump();
-        expect(copy, findsOneWidget);
+        // The battery help can place this lazy child outside the viewport.
+        // Reveal must still require fresh auth; scroll before asserting layout.
         await tester.scrollUntilVisible(
           copy,
           200,
@@ -1386,6 +1387,7 @@ void m5SettingsUiSuite(
         );
         await tester.ensureVisible(copy);
         await tester.pumpAndSettle();
+        expect(copy, findsOneWidget);
         expect(copy.hitTestable(), findsOneWidget);
         final staleCopy = tester.widget<OutlinedButton>(copy).onPressed!;
         final before = await tester.runAsync(

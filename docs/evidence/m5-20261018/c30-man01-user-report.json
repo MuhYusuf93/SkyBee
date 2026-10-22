@@ -1,0 +1,8 @@
+{
+  "id": "C30-MAN01",
+  "date": "2026-10-18",
+  "status": "PASS reported scoped",
+  "source": "user physical manual report on Poco C30",
+  "actual": "Destination Drive archive section explicitly empty; local device history has8 Verified complete/date rows, all labelled another/previous destination account.",
+  "limits": "Help paragraph not quoted separately. No new SQL/API audit or OS-job cancellation evidence from this human step. B/automaticOFF last native checkpoint kept; no fresh native policy assertion here."
+}

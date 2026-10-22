@@ -1,5 +1,33 @@
 # Rencana milestone
 
+Keputusan kalibrasi22 Oktober2026: pengguna memilih feed3terbaik setelah tiga
+sampel Iware58 Bluetooth (6/2/3) terkirim masing-masing sekali. Opsi coba Iware
+di form menjadi3baris; nilai profil lain dan default umum6tetap. M5.2 menutup
+build final, repository dan handoff; tidak membuka tahap berikutnya.
+
+Checkpoint22 Oktober2026 sesudah limit: implementasi A–H M5.2 dan regresi host
+tersedia; lanjut acceptance DV/Poco, printer sintetis terarah, audit repository,
+commit/push biasa dan update Skybee in-place. DV sudah authorized dan wajib
+selesai diuji dahulu. [Checkpoint aktif](CURRENT_HANDOFF.md). M5.3–M6 tetap planned.
+
+TambahanM5.2D dari pengguna22 Oktober2026: tautan outputphone ke WhatsApp dan
+outputwebsite ke browser, hanya sesudah tap; input tetap editor. Dikerjakan
+dalam pemeriksaan M5.2, tanpa mengaktifkan tahap berikutnya.
+
+Urutan handoff M5.2 sesuai instruksi terbaru pengguna22 Oktober2026: selesaikan
+implementasi/pemeriksaan, **uji DV8910**, baru commit/push dan upgrade debug
+Skybee terpisah. Tunggu koneksi DV diperbaiki; pemeriksaan host/Poco berlanjut.
+
+**22 Oktober2026 — M5.2 AKTIF berdasarkan instruksi unggahan pengguna:**
+M5.2 kini perbaikan operasional A–H, bukan redesign. M5.3 planned/scope belum
+ditetapkan, M5.4 masukan penggunaan nyata, M5.5 desain visual, M6 rilis/legal.
+Kontrak lengkap [M52_REQUEST](decisions/M52_REQUEST_20261022.md), checkpoint
+[CURRENT_HANDOFF](CURRENT_HANDOFF.md). Data eksplorasi `.skybee` dipertahankan;
+input jumlahawal kosong menyimpan999+flag untracked, biaya acuan snapshot, promo
+quantity hanya retail. Commit/push biasa origin/main dan update Skybee setelah
+pemeriksaan diotorisasi; tidak force-push/reset/reseed. Checkpoint lama tentang
+M5.2 menunggu desain dipertahankan sebagai histori.
+
 **21 Oktober2026 — tindak lanjut handoff demo selesai:** aplikasi debug
 Skybee terpisah dengan100barang dummy dan kondisi stok/expiry/penjualan/piutang
 sudah terpasang/dibuka Poco, PIN/toko sesuai permintaan. Seed sekali dan menolak
@@ -356,12 +384,30 @@ pemeliharaan SQLCipher setelah backup valid saat idle. Implementasi/pengujian
 dan batas per requirement: [laporan M5.1](M51_IMPLEMENTATION_REPORT.md).
 QR/mnemonik recovery opsional, tidak diklaim tersedia sebelum dibuat/diuji.
 
-## M5.2 — Perombakan UI sesuai arahan pengguna
+## M5.2 — Perbaikan operasional A–H
 
-**PLANNED — menunggu arahan desain pengguna**, setelah fungsi M5.1 stabil.
-Scope dan inventaris: [UI_REDESIGN_BRIEF](UI_REDESIGN_BRIEF.md). Prototype
-ditinjau sebelum rollout; tidak ada desain final atau redesign menyeluruh pada
-tugas M5.1. Bukan blocker M5.1. M6 tetap bernomor sama.
+**AKTIF22 Oktober2026.** Kontrak22request ada di
+[M52_REQUEST](decisions/M52_REQUEST_20261022.md); implementasi/pemetaan dan bukti
+di [M52_REPORT](M52_REPORT.md). Kalender bawaan Flutter, kontak, promo retail,
+stok999fiktif/HPPacuan, form/fokus/PIN, printer publik dan bantuan backup.
+Selesaikan native DV/Poco, audit repository, commit/push biasa dan upgrade
+Skybee in-place yang mempertahankan data. DV wajib diuji sebelum commit/push/
+install. Tidak menunggu laporan eksplorasi mandiri umum.
+
+## M5.3 — Planned, scope belum ditetapkan
+
+Tidak diimplementasikan dalam M5.2; menunggu command/scope pengguna terpisah.
+
+## M5.4 — Planned, masukan pemakaian nyata
+
+Masukan pengujian teman ditangani setelah ada command pengguna, bukan pekerjaan
+otomatis atau kewajiban pengguna melaporkan hasil eksplorasi sekarang.
+
+## M5.5 — Planned, desain visual
+
+Perombakan visual dipindah ke tahap ini. Inventaris awal
+[UI_REDESIGN_BRIEF](UI_REDESIGN_BRIEF.md) tetap referensi; belum ada rollout
+redesign pada M5.2. Tidak dikerjakan dalam sesi ini.
 
 ## M6 — Penyiapan pertama, dokumen legal, dan validasi rilis
 

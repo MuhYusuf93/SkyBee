@@ -1,0 +1,60 @@
+{
+  "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\app\\outputs\\flutter-apk\\app-debug.apk",
+  "sha256": "0d9ca264532993af532805125b6064fddd8e6f2f3c81c961750d64b096dab82a",
+  "package": "com.example.kasir_app.integration",
+  "min_sdk": 24,
+  "notification_icon_present": true,
+  "native": {
+    "lib/arm64-v8a/libVkLayer_khronos_validation.so": {
+      "bytes": 15240080,
+      "sha256": "ae445f7e74d402e3a367adb230b1edd9841899fcb3310166e5cc96a09ad37a3f",
+      "class": "ELF64",
+      "load_alignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    "lib/arm64-v8a/libflutter.so": {
+      "bytes": 37584608,
+      "sha256": "4462eb296612496f21cc4c439f2f60453f850f15d6f87729bd40bc3e2bed451a",
+      "class": "ELF64",
+      "load_alignments": [
+        65536,
+        65536,
+        65536
+      ]
+    },
+    "lib/arm64-v8a/libkasir_pin_kdf.so": {
+      "bytes": 14352,
+      "sha256": "264b5896fff73c005df3c844fc1aac8bb1881196314893975431cb4571b14435",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384
+      ]
+    },
+    "lib/arm64-v8a/libsqlcipher.so": {
+      "bytes": 2100672,
+      "sha256": "32d4c1bb89a90b59a3d6be950bbc36c133f8762f627b333a3512205c8037a48b",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/arm64-v8a/libsqlite3.so": {
+      "bytes": 1732360,
+      "sha256": "081df67ee9ab852daea6a0679427e90fc89a0245d06f93dafe2309875c609c5c",
+      "class": "ELF64",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    }
+  },
+  "installed_by_this_check": false,
+  "zipalign_16k_pass": true
+}

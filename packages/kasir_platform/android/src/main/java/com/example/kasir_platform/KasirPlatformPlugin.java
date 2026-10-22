@@ -76,6 +76,41 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         for (String token : owned) { try { release(token); } catch (Exception ignored) {} }
     }
     @Override public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        if(call.method.equals("openContactUrl")) {
+            try {
+                String url=call.argument("url");
+                boolean phone=Boolean.TRUE.equals(call.argument("phone"));
+                if(activity==null||!activity.getActivity().hasWindowFocus()||url==null||url.length()>2048)throw new IllegalStateException();
+                java.net.URI parsed=new java.net.URI(url);
+                if(!Set.of("http","https").contains(parsed.getScheme())||parsed.getHost()==null||parsed.getRawUserInfo()!=null)throw new IllegalArgumentException();
+                if(phone&&!url.matches("https://wa[.]me/[1-9][0-9]{6,14}"))throw new IllegalArgumentException();
+                Intent intent=new Intent(Intent.ACTION_VIEW,android.net.Uri.parse(url));
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                boolean opened=false;
+                if(phone) {
+                    for(String target:List.of("com.whatsapp","com.whatsapp.w4b")) {
+                        try {activity.getActivity().startActivity(new Intent(intent).setPackage(target));opened=true;break;}
+                        catch(android.content.ActivityNotFoundException unavailable) { /* Try the other installed WhatsApp variant. */ }
+                    }
+                }
+                if(!opened)activity.getActivity().startActivity(intent);
+                // Opens a destination only: no message text or automatic send.
+                result.success(true);
+            } catch(Exception error) {result.error("contact_url_unavailable","Contact destination unavailable.",null);}
+            return;
+        }
+        if(call.method.equals("openAppSettings")) {
+            try {
+                // Explicit foreground help only. The user owns any OS change;
+                // no optimization whitelist, exact alarm or OEM private intent.
+                if(activity==null||!activity.getActivity().hasWindowFocus())throw new IllegalStateException();
+                Intent intent=new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    android.net.Uri.fromParts("package",context.getPackageName(),null));
+                activity.getActivity().startActivity(intent);
+                result.success(true);
+            } catch(Exception error) { result.error("app_settings_unavailable","App settings unavailable.",null); }
+            return;
+        }
         if(call.method.equals("protectedScreen")) {
             String id=call.argument("id");
             if(id==null||!id.matches("[0-9]{1,20}")){result.error("invalid_scope","Invalid screen scope.",null);return;}

@@ -305,3 +305,40 @@ tetap wajib. Simpan stdout/stderr installer gagal, periksa package dan hash APK
 sebelum resume; jangan mengarang sebab exit1 atau replay seed. Hash package lama
 ditutup pada kedua interval. Pengguna yang memilih uji mandiri tanpa laporan
 tidak diberi pekerjaan menunggu atau automation follow-up.
+
+101. Injeksi `WidgetTester.enterText` pada integration_test dapat bersaing dengan
+IME asli. DV M5.2: sesudah dialog, hanya field nama berbeda dari nilai yang
+diinjeksi; dirty guard benar menolak keluar. Dokumentasi TestTextInput lokal
+memperingatkan kondisi ini. Daftarkan keyboard tes untuk suite injeksi deterministik,
+pertahankan assertion nilai/dirty/Back, dan catat OEM keyboard sebagai scope
+terpisah. Native final24PASS membuktikan perbaikan harness, bukan klaim bug IME
+produksi sudah direproduksi/diperbaiki.
+
+102. `pumpAndSettle` tidak menggantikan penantian IO database nyata. Indikator
+loading yang menunggu IO dapat menghabiskan waktu virtual, sedangkan pump0ms
+tidak menyelesaikan animasi route. Helper bounded memakai runAsync untuk IO dan
+frame16ms untuk transisi; tunggu Provider daftar yang benar-benar selesai reload,
+bukan nama pada route lama yang masih keluar. Finder `.first` melempar saat belum
+ada elemen, sehingga uji readiness pada finder asal sebelum mengambil first.
+Regresi form publik mempertahankan saldo8500 dan assert stay/discard/root.
+
+103. Windows1224 dapat menolak truncate formatter pada berkas yang dipetakan.
+Jangan menghapus berkas atau menyatakan format sukses dari tulisan “Formatted”.
+Gunakan output format non-writing lalu patch, pertahankan Unicode melalui JSON
+ASCII-escaped saat melewati shell/codepage, dan ulangi `--output=none
+--set-exit-if-changed`. M5.2 receivables akhirnya0changed; source tidak diganti
+dengan keluaran shell yang sudah merusak karakter.
+
+104. Audit lokalisasi lama juga perlu diverifikasi terhadap baseline aktual:
+HEAD sudah245requirement unik, bukan konstanta244 yang tertinggal di script.
+Tidak menghapus requirement agar count cocok. Literal parser tidak boleh
+menangkap potongan interpolasi status maintenance sebagai kunci statis.
+Deskripsi144pesan dilengkapi dan tiga kunci UI/error yang benar-benar hilang
+ditambah beserta mapping. Gen-l10n/format/audit/analyze diulang; jangan menyebut
+build sudah berjalan jika pipeline berhenti lebih dulu pada audit.
+
+105. Bedakan file dikeluarkan index dari file yang memang belum pernah tracked.
+Manifest M5.2 mencakup275artefak lokal, tetapi274deletion index+1dump baru yang
+di-ignore. Verifikasi `git ls-tree HEAD` dan diff index, bukan menyimpulkan
+force-remove sukses berarti file tadinya tracked. Hash seluruh salinan lokal
+tetap diperiksa; cleanup normal tidak menghapus history atau file pengguna.

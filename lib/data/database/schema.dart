@@ -1,9 +1,10 @@
 import 'package:sqflite/sqflite.dart';
+import '../../core/domain/value_types.dart';
 
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 13;
+  static const version = 14;
 
   static Future<void> migrate(
     Database db,
@@ -28,9 +29,55 @@ final class Schema {
         11 => _printerTransports,
         12 => _cashTender,
         13 => _spaceMaintenance,
+        14 => _operational,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
+      }
+      if (target == 14) {
+        // Retain original labels, use normalized stable relations for future
+        // edits; immutable sale labels are deliberately not rewritten.
+        String? cursor;
+        while (true) {
+          final rows = await db.query(
+            'products',
+            columns: ['id', 'shelf_location'],
+            where:
+                "shelf_location IS NOT NULL AND trim(shelf_location)<>'' ${cursor == null ? '' : 'AND id COLLATE BINARY>?'}",
+            whereArgs: [?cursor],
+            orderBy: 'id COLLATE BINARY',
+            limit: 100,
+          );
+          if (rows.isEmpty) break;
+          for (final row in rows) {
+            final name = (row['shelf_location'] as String).trim();
+            final normalized = normalizeName(name);
+            final old = await db.query(
+              'shelves',
+              columns: ['id'],
+              where: 'normalized_name=?',
+              whereArgs: [normalized],
+            );
+            final id = old.isEmpty
+                ? const IdGenerator().next().value
+                : old.single['id'] as String;
+            if (old.isEmpty) {
+              await db.insert('shelves', {
+                'id': id,
+                'name': name,
+                'normalized_name': normalized,
+                'created_at': 0,
+              });
+            }
+            await db.update(
+              'products',
+              {'shelf_id': id},
+              where: 'id=?',
+              whereArgs: [row['id']],
+            );
+          }
+          cursor = rows.last['id'] as String;
+        }
       }
     }
     if (oldVersion == 0 && newVersion >= 10) {
@@ -51,6 +98,48 @@ final class Schema {
 
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
+
+  /// Legacy products/sales remain tracked. Placeholder999 exists only alongside
+  /// the explicit flag and zero physical valuation; it is never backfilled by
+  /// guessing a product's old quantity. All financial extensions are additive.
+  static List<String> get _operational => [
+    'ALTER TABLE suppliers ADD COLUMN email TEXT CHECK(email IS NULL OR length(email)<=254)',
+    'ALTER TABLE suppliers ADD COLUMN website TEXT CHECK(website IS NULL OR length(website)<=2048)',
+    "ALTER TABLE store_settings ADD COLUMN phone_region TEXT NOT NULL DEFAULT 'ID'",
+    '''CREATE TABLE shelves(${_id('id')},name TEXT NOT NULL CHECK(length(name) BETWEEN 1 AND 80),
+      normalized_name TEXT NOT NULL UNIQUE, is_deleted INTEGER NOT NULL DEFAULT 0 CHECK(is_deleted=0), created_at INTEGER NOT NULL)''',
+    'CREATE INDEX shelves_cursor ON shelves(normalized_name COLLATE BINARY,id COLLATE BINARY)',
+    'ALTER TABLE products ADD COLUMN shelf_id TEXT REFERENCES shelves(id) ON DELETE RESTRICT',
+    'ALTER TABLE products ADD COLUMN stock_tracking_enabled INTEGER NOT NULL DEFAULT 1 CHECK(stock_tracking_enabled IN (0,1))',
+    "ALTER TABLE products ADD COLUMN reference_cost_micros INTEGER CHECK(reference_cost_micros IS NULL OR (typeof(reference_cost_micros)='integer' AND reference_cost_micros>=0))",
+    'ALTER TABLE products ADD COLUMN reference_expiry_date TEXT',
+    '''CREATE TRIGGER products_untracked_insert BEFORE INSERT ON products WHEN NEW.stock_tracking_enabled=0 AND
+      (NEW.stock_quantity<>999 OR NEW.inventory_value_micros<>0 OR NEW.reference_cost_micros IS NULL)
+      BEGIN SELECT RAISE(ABORT,'invalid_untracked_stock'); END''',
+    '''CREATE TRIGGER products_untracked_update BEFORE UPDATE ON products WHEN NEW.stock_tracking_enabled=0 AND
+      (NEW.stock_quantity<>999 OR NEW.inventory_value_micros<>0 OR NEW.reference_cost_micros IS NULL)
+      BEGIN SELECT RAISE(ABORT,'invalid_untracked_stock'); END''',
+    '''CREATE TABLE quantity_promotions(${_id('id')},product_id TEXT NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
+      name TEXT NOT NULL CHECK(length(name) BETWEEN 1 AND 100), normalized_name TEXT NOT NULL, minimum_quantity INTEGER NOT NULL CHECK(typeof(minimum_quantity)='integer' AND minimum_quantity>0),
+      basis_points INTEGER NOT NULL CHECK(typeof(basis_points)='integer' AND basis_points BETWEEN 1 AND 10000),
+      active INTEGER NOT NULL CHECK(active IN (0,1)), is_deleted INTEGER NOT NULL DEFAULT 0 CHECK(is_deleted IN (0,1)),
+      revision INTEGER NOT NULL DEFAULT 1, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL)''',
+    'CREATE UNIQUE INDEX quantity_promotion_active ON quantity_promotions(product_id) WHERE active=1 AND is_deleted=0',
+    'CREATE INDEX quantity_promotions_cursor ON quantity_promotions(is_deleted,normalized_name COLLATE BINARY,id COLLATE BINARY)',
+    '''CREATE TABLE reference_cost_history(${_id('id')},product_id TEXT NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
+      before_micros INTEGER,after_micros INTEGER NOT NULL CHECK(after_micros>=0),created_at INTEGER NOT NULL)''',
+    "CREATE TRIGGER reference_cost_no_update BEFORE UPDATE ON reference_cost_history BEGIN SELECT RAISE(ABORT,'immutable_fact'); END",
+    "CREATE TRIGGER reference_cost_no_delete BEFORE DELETE ON reference_cost_history BEGIN SELECT RAISE(ABORT,'immutable_fact'); END",
+    'ALTER TABLE cart_draft_items ADD COLUMN accepted_promo_json TEXT',
+    'ALTER TABLE sale_transaction_items ADD COLUMN promo_snapshot_json TEXT',
+    'ALTER TABLE sale_transaction_items ADD COLUMN gross_minor INTEGER CHECK(gross_minor IS NULL OR gross_minor>=0)',
+    'ALTER TABLE sale_transaction_items ADD COLUMN discount_minor INTEGER NOT NULL DEFAULT 0 CHECK(discount_minor>=0)',
+    'ALTER TABLE sale_transaction_items ADD COLUMN stock_tracking_snapshot INTEGER NOT NULL DEFAULT 1 CHECK(stock_tracking_snapshot IN (0,1))',
+    'ALTER TABLE sale_transaction_items ADD COLUMN reference_cost_micros_snapshot INTEGER CHECK(reference_cost_micros_snapshot IS NULL OR reference_cost_micros_snapshot>=0)',
+    '''CREATE TABLE low_price_preferences(currency_code TEXT PRIMARY KEY CHECK(currency_code IN ('IDR','USD','MYR','EUR')),
+      threshold_minor INTEGER NOT NULL CHECK(typeof(threshold_minor)='integer' AND threshold_minor>=0),
+      suppressed INTEGER NOT NULL DEFAULT 0 CHECK(suppressed IN (0,1)))''',
+  ];
 
   /// Local scheduling evidence only, never authority portable across restore.
   static const _spaceMaintenance = [

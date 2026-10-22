@@ -1,0 +1,7 @@
+{
+  "tests": 11,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "scope": "Existing JVM plugin regressions/Java compilation; actual Android clipboard not exercised"
+}

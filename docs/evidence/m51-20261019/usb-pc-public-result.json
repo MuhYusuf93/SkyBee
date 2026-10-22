@@ -1,0 +1,19 @@
+{
+  "timeUtc": "2026-10-18T23:10:17.835839+00:00",
+  "devices": [
+    {
+      "instance": "USB\\VID_0483&PID_5720\\USB001",
+      "confirmedTarget": true
+    }
+  ],
+  "state": "submitted",
+  "payload": "fixed_public_sample",
+  "paper": "PASS_USER_REPORTED",
+  "androidOtg": "NOT_TESTED; Poco and printer share one cable, separate cable expected later",
+  "automaticRetry": false,
+  "bytesExpected": 81,
+  "bytesWritten": 81,
+  "winError": 0,
+  "manualObservation": "User confirmed paper, all five expected lines legible and complete.",
+  "windowsDriver": "usbprint; problemCode 0; class07/subclass01/protocol02"
+}

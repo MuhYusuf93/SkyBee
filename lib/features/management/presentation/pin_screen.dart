@@ -1,3 +1,4 @@
+import 'pin_boxes.dart';
 import 'package:kasir_app/features/settings/presentation/language_button.dart';
 import 'package:kasir_app/l10n/localization.dart';
 import 'managed_text_field.dart';
@@ -33,16 +34,39 @@ class _PinScreenState extends State<PinScreen> {
   final _pinFocus = FocusNode();
   bool _visible = false, _busy = false, _recovery = false;
   String? _error;
+  bool _focusScheduled = false;
+  String? _submittedPin;
+  bool get _ordinaryGate =>
+      !widget.configure && !widget.rotate && widget.freshPurpose == null;
+  void _focusPin() {
+    if (mounted && !_busy && (ModalRoute.of(context)?.isCurrent ?? false)) {
+      _pinFocus.requestFocus();
+    }
+  }
+
+  void _cancelGate() {
+    context.read<ManagementSessionProvider>().lock();
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
   bool _biometricTried = false, _biometricAvailable = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (!_focusScheduled) {
+      _focusScheduled = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!widget.configure && !widget.rotate && widget.allowBiometrics) {
+          await _tryBiometrics();
+        }
+        _focusPin();
+      });
+    }
     if (!_biometricTried &&
         !widget.configure &&
         !widget.rotate &&
         widget.allowBiometrics) {
       _biometricTried = true;
-      WidgetsBinding.instance.addPostFrameCallback((_) => _tryBiometrics());
     }
   }
 
@@ -161,6 +185,7 @@ class _PinScreenState extends State<PinScreen> {
     } catch (error) {
       if (mounted) setState(() => _error = safeError(error));
     } finally {
+      _submittedPin = null;
       if (mounted) setState(() => _busy = false);
     }
   }
@@ -169,130 +194,158 @@ class _PinScreenState extends State<PinScreen> {
     TextEditingController controller,
     String label, {
     bool recovery = false,
-  }) => ManagedTextField(
-    focusNode: identical(controller, _pin) ? _pinFocus : null,
-    controller: controller,
-    enabled: !_busy,
-    obscureText: !_visible,
-    keyboardType: recovery ? TextInputType.text : TextInputType.number,
-    maxLength: recovery ? 32 : 4,
-    inputFormatters: recovery ? null : [FilteringTextInputFormatter.digitsOnly],
-    decoration: InputDecoration(
-      labelText: label,
-      border: const OutlineInputBorder(),
-    ),
-    onSubmitted: (_) {
-      if (!widget.configure && !widget.rotate) _submit();
-    },
-  );
+  }) => !widget.configure && !widget.rotate && identical(controller, _pin)
+      ? PinBoxes(
+          controller: controller,
+          focusNode: _pinFocus,
+          label: label,
+          enabled: !_busy,
+          visible: _visible,
+          onChanged: (value) {
+            context.read<ManagementSessionProvider>().activity();
+            if (value.length < 4) _submittedPin = null;
+            if (value.length == 4 && !_busy && _submittedPin != value) {
+              _submittedPin = value;
+              _submit();
+            }
+          },
+          onSubmitted: (_) => _submit(),
+        )
+      : ManagedTextField(
+          focusNode: identical(controller, _pin) ? _pinFocus : null,
+          controller: controller,
+          enabled: !_busy,
+          obscureText: !_visible,
+          keyboardType: recovery ? TextInputType.text : TextInputType.number,
+          maxLength: recovery ? 32 : 4,
+          inputFormatters: recovery
+              ? null
+              : [FilteringTextInputFormatter.digitsOnly],
+          decoration: InputDecoration(
+            labelText: label,
+            border: const OutlineInputBorder(),
+          ),
+          onSubmitted: (_) {
+            if (!widget.configure && !widget.rotate) _submit();
+          },
+        );
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      actions: const [LanguageButton()],
-      title: Text(
-        widget.configure
-            ? tr(context, 'createManagementPin')
-            : widget.rotate
-            ? tr(context, 'changePinOrRecovery')
-            : tr(context, 'managementAccess'),
+  Widget build(BuildContext context) => PopScope(
+    canPop: !_ordinaryGate,
+    onPopInvokedWithResult: (didPop, _) {
+      if (!didPop && _ordinaryGate) _cancelGate();
+    },
+    child: Scaffold(
+      appBar: AppBar(
+        leading: _ordinaryGate ? BackButton(onPressed: _cancelGate) : null,
+        actions: const [LanguageButton()],
+        title: Text(
+          widget.configure
+              ? tr(context, 'createManagementPin')
+              : widget.rotate
+              ? tr(context, 'changePinOrRecovery')
+              : tr(context, 'managementAccess'),
+        ),
       ),
-    ),
-    body: SafeArea(
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 560),
-          child: ListView(
-            padding: const EdgeInsets.all(20),
-            children: [
-              if (widget.configure) ...[
-                Text(tr(context, 'createAPinForInventoryAndSettings')),
-                const SizedBox(height: 12),
-                ManagedTextField(
-                  controller: _name,
-                  decoration: InputDecoration(
-                    labelText: tr(context, 'storeName'),
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 560),
+            child: ListView(
+              padding: const EdgeInsets.all(20),
+              children: [
+                if (widget.configure) ...[
+                  Text(tr(context, 'createAPinForInventoryAndSettings')),
+                  const SizedBox(height: 12),
+                  ManagedTextField(
+                    controller: _name,
+                    decoration: InputDecoration(
+                      labelText: tr(context, 'storeName'),
+                    ),
                   ),
+                  const SizedBox(height: 16),
+                ],
+                if (widget.rotate) ...[
+                  SwitchListTile(
+                    title: Text(tr(context, 'useRecoveryCode')),
+                    value: _recovery,
+                    onChanged: _busy
+                        ? null
+                        : (value) => setState(() => _recovery = value),
+                  ),
+                  _pinField(
+                    _old,
+                    _recovery
+                        ? tr(context, 'recoveryCode')
+                        : tr(context, 'oldPin'),
+                    recovery: _recovery,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                if (_biometricAvailable) ...[
+                  OutlinedButton.icon(
+                    onPressed: _busy
+                        ? null
+                        : () => _tryBiometrics(automatic: false),
+                    icon: const Icon(Icons.fingerprint),
+                    label: Text(tr(context, 'm51UseBiometric')),
+                  ),
+                  TextButton(
+                    onPressed: _busy ? null : () => _pinFocus.requestFocus(),
+                    child: Text(tr(context, 'm51UseAppPin')),
+                  ),
+                ],
+                _pinField(
+                  _pin,
+                  widget.configure || widget.rotate
+                      ? tr(context, 'newPin')
+                      : tr(context, 'pin'),
                 ),
-                const SizedBox(height: 16),
-              ],
-              if (widget.rotate) ...[
-                SwitchListTile(
-                  title: Text(tr(context, 'useRecoveryCode')),
-                  value: _recovery,
+                if (widget.configure || widget.rotate) ...[
+                  const SizedBox(height: 16),
+                  _pinField(_confirm, tr(context, 'confirmNewPin')),
+                ],
+                CheckboxListTile(
+                  value: _visible,
                   onChanged: _busy
                       ? null
-                      : (value) => setState(() => _recovery = value),
+                      : (value) => setState(() => _visible = value ?? false),
+                  title: Text(tr(context, 'showPin')),
                 ),
-                _pinField(
-                  _old,
-                  _recovery
-                      ? tr(context, 'recoveryCode')
-                      : tr(context, 'oldPin'),
-                  recovery: _recovery,
-                ),
+                if (_error != null)
+                  Text(
+                    message(context, _error!),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
                 const SizedBox(height: 16),
-              ],
-              if (_biometricAvailable) ...[
-                OutlinedButton.icon(
-                  onPressed: _busy
-                      ? null
-                      : () => _tryBiometrics(automatic: false),
-                  icon: const Icon(Icons.fingerprint),
-                  label: Text(tr(context, 'm51UseBiometric')),
+                FilledButton(
+                  onPressed: _busy ? null : _submit,
+                  child: Text(
+                    _busy
+                        ? tr(context, 'checking')
+                        : widget.configure || widget.rotate
+                        ? tr(context, 'save')
+                        : tr(context, 'openManagement'),
+                  ),
                 ),
-                TextButton(
-                  onPressed: _busy ? null : () => _pinFocus.requestFocus(),
-                  child: Text(tr(context, 'm51UseAppPin')),
-                ),
-              ],
-              _pinField(
-                _pin,
-                widget.configure || widget.rotate
-                    ? tr(context, 'newPin')
-                    : tr(context, 'pin'),
-              ),
-              if (widget.configure || widget.rotate) ...[
-                const SizedBox(height: 16),
-                _pinField(_confirm, tr(context, 'confirmNewPin')),
-              ],
-              CheckboxListTile(
-                value: _visible,
-                onChanged: _busy
-                    ? null
-                    : (value) => setState(() => _visible = value ?? false),
-                title: Text(tr(context, 'showPin')),
-              ),
-              if (_error != null)
-                Text(
-                  message(context, _error!),
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
-                ),
-              const SizedBox(height: 16),
-              FilledButton(
-                onPressed: _busy ? null : _submit,
-                child: Text(
-                  _busy
-                      ? tr(context, 'checking')
-                      : widget.configure || widget.rotate
-                      ? tr(context, 'save')
-                      : tr(context, 'openManagement'),
-                ),
-              ),
-              if (!widget.configure && !widget.rotate)
-                TextButton(
-                  onPressed: _busy
-                      ? null
-                      : () => Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (_) => const PinScreen(rotate: true),
+                if (!widget.configure && !widget.rotate)
+                  TextButton(
+                    onPressed: _busy
+                        ? null
+                        : () => Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (_) => const PinScreen(rotate: true),
+                            ),
                           ),
-                        ),
-                  child: Text(tr(context, 'forgotPinOrChangeRecoveryCode')),
-                ),
-              const SizedBox(height: 16),
-              Text(tr(context, 'theFourDigitPinRestrictsAccessWithin')),
-            ],
+                    child: Text(tr(context, 'forgotPinOrChangeRecoveryCode')),
+                  ),
+                const SizedBox(height: 16),
+                Text(tr(context, 'theFourDigitPinRestrictsAccessWithin')),
+              ],
+            ),
           ),
         ),
       ),

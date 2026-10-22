@@ -1,0 +1,32 @@
+{
+  "nonce": "1792345948116",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "state": "M5 primary acceptance closed; exact original v6 verified restored; documented unverified scenarios remain",
+  "automaticDeviceControlActive": false,
+  "originalV6Restoration": "verified complete without launch",
+  "dv": "native persisted-worker-status UI completed; exact prior APK and default sandbox hashes restored/equal; awake proof in native wrapper",
+  "artifactsJson": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\release-artifacts-20261019-005702/artifacts.json",
+  "priorApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-worker-status-update-1792345948116/prior-c31.apk",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261019-005702\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261019-005702\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "fixtureSha256": "1e5b1cd057199ed8b45f882c1e8a337d6285e2bad3ecf90f45be5fbe45dc66dd",
+  "beforeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c32-before-1792345948116-20261019-005933",
+  "afterEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c32-after-1792345948116-20261019-010157",
+  "finalEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c32-final-1792345948116-20261019-010415",
+  "originalV6Restored": true,
+  "originalV6Sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+  "manualStep": "M5 primary acceptance and available validation closed; exact original v6 fixture restored without launch, ordinary/legacy/campaign/exports retained. No automatic device control. Review M5_FINAL_REPORT_20261019; unverified scenarios explicitly remain; M6 not started.",
+  "nativePocoEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c32-ui-1792345948116-20261019-005230",
+  "nativeDvEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\c32-ui-1792345948116-20261019-005454",
+  "closingAuditPending": false,
+  "sourceSha256": {
+    "lib/features/backup/presentation/backup_settings_provider.dart": "b50829292d3e2827123f160af87c5058a46d93c7f94e3cee8b040a58f1e4a1cd",
+    "lib/features/backup/presentation/backup_settings_screen.dart": "db115884ce953f8cbb23299242428d66ea080f33cdeb44a564fda8d199a47d0c",
+    "lib/l10n/app_id.arb": "e3bc9c98f5063fdc1f2bb93f63c73b73980167c5a9f27463e71f81f3dd915fc4",
+    "lib/l10n/app_en.arb": "268d1747800fe6294ff00c5396fa2bc0c08a2a301aab484d8df3e6cf5eff339d",
+    "lib/l10n/localization.dart": "0ec0c570ddee400ccdc2772f061e351ee2480597034b196bd3cabda3535a915c",
+    "test/m5_settings_ui_test.dart": "1483285e2a806879a7da0ff3b8ef3b0499094bfb609b454b19446ca06acba385",
+    "integration_test/m5_closing_audit_test.dart": "d8f32da0d9bc8f6bf5e4c8ea3bcbb00ea5b8c1c18fbf54dcc79a4fc5d6230d26",
+    "tools/inspect_m5_closing_work.py": "929aea3d869560852ee7728e2c386fa59fa659bdffaa4bb17170a77ab4646177"
+  }
+}

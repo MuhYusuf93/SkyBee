@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN12",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "After actual restore and native audit, reconnected same private test account via choose/accept destination; connected status correct, privately correct account, automatic backup switch remains off",
+  "automaticEvidence": false,
+  "limits": "No new upload, automatic consent/scheduling/background run or second-account isolation verified by this step; conditional OAuth/PIN dialog not assumed observed."
+}

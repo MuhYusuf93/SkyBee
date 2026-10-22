@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN14",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya semua sesuai kecuali label zona waktu toko, bukan zona Asia/Jakarta",
+  "status": "PASS",
+  "scope": "Explicit automatic consent confirmed; settings saved, switch on, expected18Oct2026 21:00 target reported. UI label zona waktu toko is expected, not literal zone identifier. Fixture zone known AsiaJakarta from earlier validation.",
+  "automaticEvidence": false,
+  "limits": "UI target only; not real 21:00 delivery, background upload or native job proof. Independent host stale-overview bug reproduced on another state path, not attributed as failure to this phone run."
+}

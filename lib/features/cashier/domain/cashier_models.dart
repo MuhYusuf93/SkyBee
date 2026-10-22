@@ -1,5 +1,6 @@
 import '../../../core/domain/value_types.dart';
 import 'cash_tender.dart';
+import 'quantity_promotion.dart';
 import '../../../core/domain/pricing_mode.dart';
 import '../../inventory/domain/product_attributes.dart';
 export '../../../core/domain/pricing_mode.dart';
@@ -26,6 +27,9 @@ final class CashierProduct {
         );
   int get revision => row['revision'] as int;
   bool get archived => row['is_deleted'] == 1;
+  bool get stockTracked => row['stock_tracking_enabled'] != 0;
+  QuantityPromotion? get promotion =>
+      QuantityPromotion.parse(row['promotion_json'] as String?);
   ProductAttributes get attributes => ProductAttributes.fromRow(row);
 }
 
@@ -35,21 +39,37 @@ final class CartLine {
     this.quantity,
     this.acceptedPrice, {
     this.pricingMode = PricingMode.retail,
+    this.acceptedPromoJson,
   });
   final CashierProduct product;
   final int quantity;
   final Money acceptedPrice;
   final PricingMode pricingMode;
+  final String? acceptedPromoJson;
   Money? get currentPrice => pricingMode == PricingMode.wholesale
       ? product.wholesalePrice
       : product.price;
   bool get missingWholesale =>
       pricingMode == PricingMode.wholesale && product.wholesalePrice == null;
-  Money get total => acceptedPrice.times(Quantity.positive(quantity));
+  Money get gross => acceptedPrice.times(Quantity.positive(quantity));
+  QuantityPromotion? get currentPromotion =>
+      pricingMode == PricingMode.retail &&
+          product.promotion != null &&
+          quantity >= product.promotion!.minimum
+      ? product.promotion
+      : null;
+  QuantityPromotion? get acceptedPromotion => pricingMode == PricingMode.retail
+      ? QuantityPromotion.parse(acceptedPromoJson)
+      : null;
+  int get discountMinor => acceptedPromotion?.discount(gross.amountMinor) ?? 0;
+  Money get total =>
+      Money(gross.amountMinor - discountMinor, gross.currencyCode, gross.scale);
   bool get priceChanged =>
       currentPrice == null ||
-      acceptedPrice.amountMinor != currentPrice!.amountMinor;
-  bool get unavailable => product.archived || quantity > product.saleable;
+      acceptedPrice.amountMinor != currentPrice!.amountMinor ||
+      currentPromotion?.snapshot != acceptedPromoJson;
+  bool get unavailable =>
+      product.archived || (product.stockTracked && quantity > product.saleable);
 }
 
 enum PaymentMode { paid, partial, debt }

@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN07R",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "On restored C27, reselected same Drive archive; new Copy button -> Hide -> Paste -> Validate authenticated archive and expected synthetic store/2 products/2 sales/schema8/IDR/AsiaJakarta metadata",
+  "automaticEvidence": false,
+  "limits": "UI authentication/metadata PASS reported; no full Drive restore yet, no independent post-download payload audit; no recovery code collected; Android overlay redaction remains UNVERIFIED"
+}

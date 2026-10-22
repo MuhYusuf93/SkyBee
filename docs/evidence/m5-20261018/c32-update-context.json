@@ -1,0 +1,20 @@
+{
+  "stage": "M5 primary acceptance closed; exact original v6 verified restored; documented unverified scenarios remain",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-worker-status-update-1792345948116\\update.json",
+  "automaticDeviceControlActive": false,
+  "installedCheckpoint": "exact original fixture v6, not launched",
+  "installedSha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+  "lastTestedM5Apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261019-005702\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "originalV6RestorationPending": false,
+  "closingPending": false,
+  "m6Started": false,
+  "unverified": [
+    "Natural21/reboot/Doze/force-stop background delivery unverified",
+    "Real revoked-consent condition/in-flight account switch/other-origin real Drive preservation unverified",
+    "Real cross-device Drive not exercised; encrypted portable DV-to-Poco proof remains separate",
+    "80mm/paper-out/actual ambiguous partial write physical tests unverified",
+    "OEM clipboard preview masking/lockscreen notification content/TalkBack physical unverified",
+    "Realme unavailable for C31/C32; historical results retained separately",
+    "No recovery claim for historical ISSUE-M31-DATA; no M6 release signing/publication"
+  ]
+}

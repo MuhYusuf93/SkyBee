@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-20",
+  "milestone": "M5.1 INCOMPLETE; new chat handoff",
+  "runs": [
+    {
+      "evidenceDirectory": "m51-backup-final-dv-20261020-022651",
+      "device": "192.168.0.102:5555",
+      "test": "integration_test/m51_backup_final_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "awakeRestored": true
+    },
+    {
+      "evidenceDirectory": "m51-usb-raster-v2-20261020-022418",
+      "device": "192.168.0.102:5555",
+      "test": "integration_test/m51_usb_cash_raster_probe_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "awakeRestored": true
+    },
+    {
+      "evidenceDirectory": "m51-usb-feed-only-20261020-023132",
+      "device": "192.168.0.102:5555",
+      "test": "integration_test/m51_usb_cash_raster_probe_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "awakeRestored": true
+    }
+  ],
+  "paperUserReported": {
+    "logoItemsAmounts": "MATCHED",
+    "footerInitially": "Not visible; later clarified as not printed",
+    "footerAfterThreeLF": "Visible",
+    "exactLatestReply": "ya terlihat namun footer sebelumnya tidak tercetak sama sekali",
+    "cause": "UNVERIFIED: position versus buffering/flush"
+  },
+  "sourceChangePendingFinalChecks": {
+    "newProfileFeedLines": 6,
+    "existingExplicitFeed3": "PRESERVED"
+  },
+  "latestAdbInventory": "NO DEVICES; do not infer live connection from earlier runs",
+  "ordinaryM51BuildAndHandoff": "NOT DONE",
+  "resumeDocument": "docs/NEXT_SESSION_M51.md"
+}

@@ -48,8 +48,9 @@ final class SettingsProvider extends ChangeNotifier {
     String zone,
     String address,
     String contact,
-    String footer,
-  ) async {
+    String footer, [
+    String? phoneRegion,
+  ]) async {
     if (busy) return false;
     busy = true;
     error = null;
@@ -61,6 +62,7 @@ final class SettingsProvider extends ChangeNotifier {
         address: address,
         contact: contact,
         footer: footer,
+        phoneRegion: phoneRegion,
       );
       return true;
     } catch (e) {

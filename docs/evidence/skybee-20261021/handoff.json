@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-21 Asia/Jakarta",
+  "request": "Separate debug demo for independent user testing; no report required, no follow-up waiting",
+  "version": "0.5.1+8",
+  "artifact": "build/skybee-demo-20261021-002649/skybee-kasir-0.5.1-debug.apk",
+  "verification": {
+    "package": "com.example.kasir_app.skybee",
+    "sha256": "52b6a4819e07287821902e8e99c96f56cee261106d2d9be3f7379899d1971d6d",
+    "launcher": "com.example.kasir_app.SkybeeDemoActivity",
+    "signing_certificate_sha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+    "zipalign_16k_pass": true,
+    "android_debug_certificate": true
+  },
+  "hostSeedTest": {
+    "passed": 1,
+    "seconds": 7
+  },
+  "analyze": "No issues found; 7.1s",
+  "demoBuildSeconds": 23.7,
+  "ordinaryRegressionBuildSeconds": 13.1,
+  "ordinaryPackage": "com.example.kasir_app",
+  "initialInstall": {
+    "status": "EXIT1; package absent; reason not captured",
+    "protectedHashesMatch": true
+  },
+  "retryInstall": "Success; same APK; no reset or uninstall",
+  "handoff": {
+    "package": "com.example.kasir_app.skybee",
+    "device": "7f0edea0",
+    "label": "skybee kasir",
+    "installed": true,
+    "automaticDeviceControlActive": false,
+    "reset": false,
+    "uninstall": false,
+    "apkSha256": "52b6a4819e07287821902e8e99c96f56cee261106d2d9be3f7379899d1971d6d",
+    "resumedAfterSeparateSuccessfulInstall": true,
+    "installedApkHashMatches": true,
+    "launch": "Starting: Intent { cmp=com.example.kasir_app.skybee/com.example.kasir_app.SkybeeDemoActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app.skybee/com.example.kasir_app.SkybeeDemoActivity\r\nTotalTime: 2639\r\nWaitTime: 2654\r\nComplete",
+    "seed": {
+      "seedVersion": 1,
+      "status": "complete",
+      "schema": 13,
+      "seededAt": "2026-10-20T17:31:43.687483Z",
+      "counts": {
+        "products": 100,
+        "categories": 8,
+        "suppliers": 4,
+        "customers": 10,
+        "sale_transactions": 20,
+        "sale_transaction_reversals": 2,
+        "payments": 14,
+        "stock_receipts": 110,
+        "activeProducts": 95
+      },
+      "integrityAndForeignKeys": "PASS",
+      "businessReconciliation": "PASS",
+      "pinConfiguredAndVerified": true
+    },
+    "cashier": {
+      "toko skybee": true,
+      "Daftar belanja": true,
+      "Bayar": true,
+      "Kelola": true
+    },
+    "secondCashier": {
+      "toko skybee": true,
+      "Daftar belanja": true,
+      "Bayar": true,
+      "Kelola": true
+    },
+    "seedMarkerUnchangedAfterReopen": true,
+    "pidLog": {
+      "pid": 23027,
+      "fatalUnhandledAnrMarkers": 0,
+      "flutterErrorMarkers": 0
+    },
+    "status": "PASS",
+    "protectedPreExistingFiles": 393,
+    "allProtectedHashesMatch": true
+  },
+  "M52": "Not started",
+  "M6": "Not started"
+}

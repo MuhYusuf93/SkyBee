@@ -1,0 +1,8 @@
+{
+  "id": "D-MAN15a",
+  "date": "2026-10-18",
+  "status": "PASS",
+  "source": "user manual report: ya",
+  "scope": "C29 Poco: automatic left ON; Versions backup Drive displays7archive rows with Select for recovery buttons.",
+  "limits": "UI observation only; no new upload/download/restore or account B selection. Conditional PIN prompt not assumed. Independent real retention/native audit evidence remains separate."
+}

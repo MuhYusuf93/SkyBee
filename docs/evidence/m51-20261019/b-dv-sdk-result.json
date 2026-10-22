@@ -1,0 +1,14 @@
+{
+  "device": "192.168.0.102:5555",
+  "test": "integration_test/m51_security_test.dart",
+  "nameFilter": "native Class3 status",
+  "automaticDeviceControlActive": false,
+  "tests": "PASS",
+  "isolation": "Every pre-existing protected file hash unchanged",
+  "downgrade": false,
+  "reset": false,
+  "cases": 1,
+  "elapsed": "00:17",
+  "physicalBiometricAuthentication": "NOT_TESTED",
+  "awake": "Original settings restored and read back exactly"
+}

@@ -1,0 +1,1587 @@
+{
+  "device": "7f0edea0",
+  "package": "com.example.kasir_app.integration",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "fixtureApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-manual-20261016-191759\\original-fixture.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261019-005702\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "originalApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-manual-20261016-191759\\original-fixture.apk",
+  "ordinaryHashesUnchanged": true,
+  "sandboxDefaultAfterRelease": "Verified endpoint hashes match original handover via read-only native before+after audit; not opening legacy database",
+  "manualResults": "IN PROGRESS. B-MAN01–18 stated scopes PASS; N-MAN01–06/08 PASS reported, N-MAN07 lockscreen not visible/unverified. D-MAN01 original cancel feedback FAIL retained; C25 regressions/preservation PASS; D-MAN01R real cancel feedback PASS user report. OAuth/API/upload UNVERIFIED. D-MAN02 real pending account selection PASS user report; destination not accepted yet. D-MAN03 accept destination FAIL reported on two test accounts; cause unknown; no API/upload success. D-MAN03R saved destination/autoOff PASS reported on unchanged C25 after API enable; upload unverified. Browsing during limit reported; no full DB equality assumption. C26 host/native/build/connected-policy preservation/startup PASS; Drive upload/list/download/restore pending. D-MAN04 real manual upload UI/status/history PASS user report; listing/download/restore still pending. D-MAN05 real listing of one archive PASS user report; download/restore pending. D-MAN06 download/selected status and empty recovery entry PASS user report; authentication/restore pending. D-MAN07 authenticated downloaded Drive archive metadata PASS reported; restore pending. C27 copy feature requested for ordinary app. C27 production Copy feature host/native mock/build/preservation PASS; actual copy/paste and Drive restore pending. C27-MAN01 copy/paste PASS reported; Android overlay readable FAIL reported, cause unresolved (not keyboard/input). C27 public probe three flags true (user and own-PID metadata); user clarified visible code was in app after Reveal. Earlier overlay FAIL attribution superseded: redaction UNVERIFIED, no privacy bug proven. Exact C27 restored; raw12 DB/sidecar hashes equal. D-MAN07R new Copy -> Paste -> Validate on downloaded Drive archive PASS user report; expected metadata matches, no restore yet. D-MAN08 restore completion/cashier return PASS reported; management PIN gate and post-restore invariants pending, not a proven bug. D-MAN08R post-Drive-restore management PIN gate PASS reported; facts/safety audit pending. D-MAN09 backup PIN accepted and restored financial/inventory expected UI totals PASS user report; safety/reset/native audit pending. D-MAN10 five local cards/schema8/IDR and disconnected Drive controls PASS user report; archive/policy independent verification pending. D-MAN11 saved printers empty and alerts off/days5/stock2-min5 PASS user report; native audit next. Post-Drive-restore native1PASS25s/5archives; first comparator FAIL retained/corrected using archive provenance, no app bug. Exact C27/ordinary/exports preserved; originalV6 still pending. D-MAN12 reconnect same private test destination after restore PASS reported; automatic still OFF, no new upload instructed. D-MAN13 explicit automatic consent dialog/cancel leaves OFF PASS reported. D-MAN14 explicit enable/settings saved/21:00 target PASS reported, generic store-zone label correct. C28 stale overview bug independently reproduced host, not this manual phone failure. C28 host/native schedule UI/build/strict5archive connected-autoON preservation/startup PASS; physical OFF/ON refresh retest pending. C28-MAN01R OFF/not-scheduled and ON/18Oct21:00 PASS clarified; final ON, gap only two switch actions reported, not frozen DB baseline. D-AUTO-LIVE01 real controlled headless8uploads/retention7 PASS; C29 host50/native2per device/build/strict13archive preservation/startup PASS. Real second-account test pending. D-MAN15a seven Drive archive rows with restore-selection buttons PASS user-reported; account B not selected yet. D-MAN15b different account B pending/unsaved/use-account UI PASS user-reported; acceptance and isolation not yet tested. D-MAN15c account B accepted/automatic OFF/target cleared/old7remote rows cleared without refresh PASS user-reported; B listing/cloud isolation still pending. D-MAN16 B cloud list empty,8local history rows reported; source confirms separate local history stream. C30 UI clarity repro pending. D-AUTO-ACCOUNT-B01 B0files/Aidentity distinct/Afile unavailable/autoOFF rejects run/read-only all tables stable PASS; C30 host52/native7per device/build/strict13archive preservation/startup PASS; physical labels pending. C30-MAN01 destination empty/local8other-account labels PASS reported by user. C31 host56/native4per device/build3/strict13archive and ordinary-default-public preservation/startup PASS; human C30 labels PASS. D-MAN17 disconnect and closing pending. D-MAN17 disconnect PASS reported; extra chooser canceled/no connection, native closing pending. C32 host58/native2per device/build3/13archive authentication/3-role closing/data+work cleanup PASS; exact original v6 restored/no launch; available M5 acceptance closed with documented limits.",
+  "restoreOriginalPending": false,
+  "startupConfirmed": true,
+  "automaticDeviceControlActive": false,
+  "manualStep": "M5 primary acceptance and available validation closed; exact original v6 fixture restored without launch, ordinary/legacy/campaign/exports retained. No automatic device control. Review M5_FINAL_REPORT_20261019; unverified scenarios explicitly remain; M6 not started.",
+  "closingAuditPending": false,
+  "manualEvidence": [
+    {
+      "id": "P-MAN01",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "RPP02N muncul",
+      "status": "PASS",
+      "scope": "target visible; paired vs discovery unspecified; no permission/pairing/SPP/paper claim"
+    },
+    {
+      "id": "P-MAN02",
+      "date": "2026-10-16",
+      "source": "user-provided screenshot bluetooth.png",
+      "status": "PASS",
+      "scope": "app status connected, matching RPP02N address; not paper proof; no other paired device identifiers copied"
+    },
+    {
+      "id": "P-MAN03",
+      "date": "2026-10-16",
+      "source": "user report and typed paper transcription",
+      "status": "PARTIAL: basic paper PASS; exact glyphs/digits pending",
+      "profile": {
+        "paperMm": 58,
+        "dots": 384,
+        "dpi": 203,
+        "left": 8,
+        "right": 8,
+        "shift": 0
+      },
+      "transcription": "58mm / 384 dots /203 dpi\nL=8= R=8 shift=0\n|123456789ABCDEFGHIJKLMN\nOPQRSTUVWXYZ|\nIDR 120.000 / USD 1,234.56 /\n-12.34 E",
+      "scope": "configuration not physical DPI measurement; do not infer missing glyph vs transcription error"
+    },
+    {
+      "id": "P-MAN03-detail",
+      "date": "2026-10-16",
+      "source": "user rechecks same physical paper",
+      "answer": "ketiganya sesuai",
+      "status": "PASS",
+      "scope": "title UJI COBA, complete1234567890 and -12,34 €; earlier typed transcription differs, no renderer bug established"
+    },
+    {
+      "id": "P-MAN04",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, profil tetap ada dan tampilan sesuai",
+      "status": "PASS",
+      "scope": "saved RPP02N retained; row selection active; Connected beside Connect; no print"
+    },
+    {
+      "id": "P-MAN05",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "M5 hitam putih muncul",
+      "status": "PASS",
+      "scope": "synthetic SAF selection/apply/monochrome preview; initial button lookup difficulty resolved; actual PIN prompt not reported; not paper"
+    },
+    {
+      "id": "P-MAN06",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, logo dan teks tercetak sesuai",
+      "status": "PASS",
+      "scope": "one physical calibration with synthetic logo/current default58 profile; complete logo and text; not all sizes/profiles"
+    },
+    {
+      "id": "P-MAN07",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, teks lebih besar dan tetap lengkap",
+      "status": "PASS",
+      "scope": "font32 only-change on configured58 profile; larger clear complete paper text, not all fonts/models"
+    },
+    {
+      "id": "P-MAN08",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, jumlah 3 dan total 30.000 sesuai",
+      "status": "PASS",
+      "scope": "wholesale synthetic cart qty3/total30000; instructed18dot Save, not physical font18; not financial commit"
+    },
+    {
+      "id": "P-MAN09",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, total/pembayaran/sisa hutang sesuai",
+      "status": "PASS",
+      "scope": "partial-debt form30000/10000/20000; not commit/stock/debt persistence"
+    },
+    {
+      "id": "P-MAN10",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, penjualan tersimpan dan rinciannya sesuai",
+      "status": "PASS",
+      "scope": "reported saved receipt number/customer/wholesale3×10000/total30000/paid10000/debt20000 after instructed Save1x; not SQL/HPP/stock or physical doubletap"
+    },
+    {
+      "id": "P-MAN11",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, struk dan ukuran teks sesuai",
+      "status": "PASS",
+      "scope": "physical first sale receipt/logo/same number/customer/wholesale3×10000/total30000/paid10000/debt20000/complete readable font18; no SQL audit"
+    },
+    {
+      "id": "P-MAN12",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, tidak mencetak lagi dan ringkasan tetap",
+      "status": "PASS",
+      "scope": "completed first-print repeat/no additional paper/unchanged30000/10000/20000; not simultaneous doubletap or SQL audit"
+    },
+    {
+      "id": "P-MAN13",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, satu penjualan dan detailnya sesuai",
+      "status": "PASS",
+      "scope": "all-time history one sale30000/customer and detailHPP27000/paid10000/debt20000; UI not SQL/stock audit"
+    },
+    {
+      "id": "P-MAN14",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, batal tanpa cetakan dan detail tetap",
+      "status": "PASS",
+      "scope": "copy-warning cancel/no new paper/unchanged30000/10000/20000; SQL job/financial counts not yet queried"
+    },
+    {
+      "id": "P-MAN15",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, satu salinan sesuai dan HPP tidak tercetak",
+      "status": "PASS",
+      "scope": "one explicit history SALINAN/same number/logo/customer/grosir/30000/10000/20000/no private HPP on paper; not SQL conservation"
+    },
+    {
+      "id": "P-MAN16",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, semua nilai keuangan sesuai",
+      "status": "PASS",
+      "scope": "report UI sales30000/HPP27000/profit3000/pay10000/debt20000/count1/cancel0; not new SQL audit"
+    },
+    {
+      "id": "P-MAN17",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, stok dan nilai persediaan sesuai",
+      "status": "PASS",
+      "scope": "report UI globalstock19/expired0/value159000; includes17main+2secondary, not real goods count"
+    },
+    {
+      "id": "P-MAN18",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, printer mati dan keranjang 1 barang/12.000",
+      "status": "PASS",
+      "scope": "physical printer off/new retailqty1/12000 cart; not checkout/print failure proof"
+    },
+    {
+      "id": "P-MAN19",
+      "date": "2026-10-16",
+      "source": "user report/clarification",
+      "answer": "semua sesuai; nomor struk baru tidak dapat dibandingkan karena tidak mengingat nomor lama; tidak ada tulisan printer error",
+      "status": "PASS save/totals; distinct-number UNVERIFIED",
+      "components": {
+        "saveWhilePrinterOff": "PASS reported",
+        "totalPaidDebt": "12000/12000/0 confirmed",
+        "distinctReceiptNumber": "UNVERIFIED, user cannot recall prior number; history/SQL follow-up required",
+        "literalPrinterErrorLabel": "not a required label, criterion clarified"
+      },
+      "scope": "post-save UI not SQL/log-wide guarantee"
+    },
+    {
+      "id": "P-MAN20",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "ringkasan tetap; data belum terkirim. periksa printer dan koneksinya",
+      "status": "PASS expected negative scenario",
+      "scope": "powered-off first-print unavailable/status handled/saved12000/12000/0 retained in UI; not partial send/SQL audit"
+    },
+    {
+      "id": "P-MAN21",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, terhubung kembali tanpa cetakan otomatis",
+      "status": "PASS",
+      "scope": "power-on/explicit saved RPP02N Connect and requested observation windows/no automatic receipt; not indefinite guarantee"
+    },
+    {
+      "id": "P-MAN22",
+      "date": "2026-10-16",
+      "source": "user report",
+      "answer": "Ya, salinan penjualan 12.000 sesuai",
+      "status": "PASS",
+      "scope": "explicit recovery SALINAN/same screen number/retail1×12000/paid12000/debt0/noGrosir/noHPP9000; distinct number vs30000 sale not compared"
+    },
+    {
+      "id": "P-MAN23",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "Ya, semua nilai keuangan sesuai",
+      "status": "PASS",
+      "scope": "Report UI: sales42000/HPP36000/profit6000/payments22000/receivables20000/sales2/reversals0; not SQL audit",
+      "observationTime": "not independently recorded"
+    },
+    {
+      "id": "P-MAN24",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "Ya, stok dan nilai persediaan sesuai",
+      "status": "PASS",
+      "scope": "Report UI: globalStock18/main16/secondary2/expired0/inventoryValue150000; not real goods count or SQL audit",
+      "observationTime": "not independently recorded"
+    },
+    {
+      "id": "P-MAN25",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya; kedepannya ya jika sesuai kondisi yang diharapkan",
+      "status": "PASS",
+      "scope": "explicit discovery cancellation stops scanning/loading; paired button usable; no fresh pairing/scan timeout/permission claim"
+    },
+    {
+      "id": "P-MAN26",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Bluetooth disabled message on Check connection; loading finishes; no checkout or broader transport claims"
+    },
+    {
+      "id": "P-MAN27",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "cashier opens normally with Bluetooth OFF/no cart or sale changes; user restores Bluetooth ON and explicitly reconnects RPP02N/no automatic paper during requested observation"
+    },
+    {
+      "id": "P-MAN28",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "status": "FAIL",
+      "answer": "Tombol Perangkat berpasangan mengulang PIN setiap percobaan setelah izin ditolak",
+      "scope": "Permission-denial UX; no data corruption/financial failure inferred"
+    },
+    {
+      "id": "P-MAN28-recovery",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "status": "PASS pre-patch recovery",
+      "answer": "ya",
+      "scope": "Android permission restored, paired list opens without repeated PIN; not C20 patch retest"
+    },
+    {
+      "id": "P-MAN29-stage3",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "Paired button pressed twice, no action; permission not granted message; saved RPP02N remains",
+      "status": "PARTIAL: denial feedback observed; no-repeat-PIN/regrant confirmation pending",
+      "scope": "Visible permission denial and saved profile, not enumerated paired devices or full C20 acceptance"
+    },
+    {
+      "id": "P-MAN29",
+      "recordedDate": "2026-10-17",
+      "source": "user report/follow-up confirmation",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "No repeated PIN on two paired-button attempts after denial; permission guidance displayed (stage3 report); user restores Nearby Allow and paired devices list returns. Not all OEMs/permission scenarios."
+    },
+    {
+      "id": "B-MAN01",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "Kode recovery backup sudah disiapkan.",
+      "status": "PASS status UI",
+      "scope": "Configured recovery shown; not possession/export/restore proof; existing code retained, no rotation requested"
+    },
+    {
+      "id": "B-MAN02",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Existing recovery revealed, user retains private copy outside Poco, code hidden afterward; no recovery value collected; not backup/restore proof"
+    },
+    {
+      "id": "B-MAN03-partial",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "No success message seen; backup ID/time/schema8/IDR card appears; accidentally clicked create a second time, total two backups",
+      "status": "PARTIAL: two local catalog cards observed; success-message location unresolved",
+      "scope": "UI only; not crypto/export/restore proof; extra action user-reported, not duplicate sale or proven concurrent-submit bug"
+    },
+    {
+      "id": "B-MAN03",
+      "recordedDate": "2026-10-17",
+      "source": "user report/follow-up top-of-page inspection",
+      "answer": "ya",
+      "status": "PASS manual creation/status UI; C21 feedback usability finding",
+      "scope": "Validated-local message seen after scrolling top, two backup cards metadata8/IDR; not independent archive validation/export/restore proof"
+    },
+    {
+      "id": "B-MAN03-clarification",
+      "recordedDate": "2026-10-17",
+      "source": "user clarification",
+      "answer": "Expected a dialog, inline message may already have appeared but not read",
+      "status": "clarification",
+      "scope": "Earlier manual offscreen diagnosis is not established. Automatic scroll-feedback repro is separate; no claim backup operation failed."
+    },
+    {
+      "id": "B-MAN04",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Cancel Android export picker; inline Dibatalkan/no export-success message/two cards retained. Not actual export or independent shared-storage filesystem audit."
+    },
+    {
+      "id": "B-MAN05",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya semua sesuai; renamed as suggested but system filename UI covered by keyboard",
+      "status": "PASS export/status/list; C22 keyboard usability reported",
+      "scope": "Actual user SAF save/verified status and both cards retained. Rename input occlusion reported in Android picker; native hash/restore not yet independently validated."
+    },
+    {
+      "id": "B-MAN06",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "App export filename and input visible above actual Poco keyboard without closing it; stopped before Lanjut. Not native picker prefill/save or restore proof."
+    },
+    {
+      "id": "B-MAN07",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Native picker prefilled M5_poco_keyboard_20261017_02.kasirbackup, Download save, verified inline status and two local cards retained. Not independently observed file digest/restore."
+    },
+    {
+      "id": "B-MAN08",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Android archive import picker cancelled, inline Cancelled/two local backup cards retained; no restore/validation performed"
+    },
+    {
+      "id": "B-MAN09-initial",
+      "recordedDate": "2026-10-17",
+      "source": "user report plus explicit shape confirmation",
+      "status": "PARTIAL: generic failure observed, exact root cause unverified",
+      "scope": "4x16 a dummy code, brief delay and generic operation-failed status; not proof accepted archive or data replacement"
+    },
+    {
+      "id": "B-MAN09R",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Visible dummy recovery input, wrong-code archive rejection status, no validated preview/loading hang. Not actual DB audit after manual or restore proof."
+    },
+    {
+      "id": "B-MAN10-attempt1",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "status": "NOT PASSED: rejection observed; input provenance/completeness not verified",
+      "scope": "No correct-key authentication/preview or restore proof. Submitted value intentionally omitted from repository and logs."
+    },
+    {
+      "id": "B-MAN10-source-clarification",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "status": "Source section identified; full input validity unresolved",
+      "scope": "User cites backup recovery help; no value copied. Not authentication or restore proof."
+    },
+    {
+      "id": "B-MAN10",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS validation/preview",
+      "scope": "Full private copy/paste of existing recovery authenticates selected exported _02, expected synthetic store/products2/sales2/schema8/IDR/AsiaJakarta summary. Not restore proof; initial rejected attempt retained; no secret value logged."
+    },
+    {
+      "id": "B-MAN11",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Final restore confirmation cancelled, preview remains/no restore-complete message, removing checkbox disables Restore. Not DB replacement or safety archive proof."
+    },
+    {
+      "id": "B-MAN12",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS restore result UI/PIN gate",
+      "scope": "One confirmed actual restore; complete message and management PIN required again. Backup PIN success/safety archive/reconciliation/device-local resets still pending."
+    },
+    {
+      "id": "B-MAN13",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Backup PIN unlock and current-month all-customer financial report42000/36000/6000/22000/20000/count2/cancel0 after restore; not raw DB audit."
+    },
+    {
+      "id": "B-MAN14",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Post-restore stock report18/expired0/value150000; not actual goods count or DB audit."
+    },
+    {
+      "id": "B-MAN15",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS catalog UI",
+      "scope": "3 local backup cards/schema8/IDR, one newer near restore; safety-file role/hash/authentication not independently verified."
+    },
+    {
+      "id": "B-MAN16",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS disconnected Drive UI",
+      "scope": "Choose-account visible; target account/upload/disconnect/automatic switch absent after restore. Not real OAuth/API/system account removal proof."
+    },
+    {
+      "id": "B-MAN17",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Saved printer section empty after restore; no OS pairing/removal or physical connection claim."
+    },
+    {
+      "id": "B-MAN18",
+      "recordedDate": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Notifications preference OFF/expiry days5 and in-app low-stock fixture2/min5 after restore. Not OS permission/delivery proof."
+    },
+    {
+      "id": "N-MAN01",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Android notification denial, expected inline message, busy ended, low-stock item2/min5 retained",
+      "pinReentry": "conditional instruction; actual occurrence not independently established",
+      "automaticEvidence": false,
+      "osDelivery": "UNVERIFIED",
+      "notificationTapPin": "UNVERIFIED"
+    },
+    {
+      "id": "N-MAN02",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Allow in active Android notification dialog; saved inline feedback/busy ended; one generic notification with expected title/body and no product/customer/debt details",
+      "settingsGrantPath": "not established; final allow was the active Android dialog",
+      "automaticEvidence": false,
+      "notificationTapPin": "UNVERIFIED",
+      "coldStartDedup": "UNVERIFIED",
+      "lockscreen": "UNVERIFIED"
+    },
+    {
+      "id": "N-MAN03",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Home/background then tap notification once showed management PIN gate before inventory warning details",
+      "unlock": "not yet attempted",
+      "coldLaunch": "UNVERIFIED",
+      "lockscreen": "UNVERIFIED",
+      "automaticEvidence": false
+    },
+    {
+      "id": "N-MAN04",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Public fixture PIN unlock after warm notification tap showed alerts page,5days,notificationsOn,stock2/min5 and no failure message",
+      "savedAgain": false,
+      "newTransaction": false,
+      "automaticEvidence": false,
+      "coldLaunch": "UNVERIFIED",
+      "lockscreen": "UNVERIFIED",
+      "dedup": "UNVERIFIED"
+    },
+    {
+      "id": "N-MAN05",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Two sequential Muat awal refreshes, unchanged condition, approximately10s wait, tapped notification did not reappear",
+      "automaticEvidence": false,
+      "coldStartDedup": "UNVERIFIED",
+      "thresholdRearm": "UNVERIFIED",
+      "expiryDelivery": "UNVERIFIED"
+    },
+    {
+      "id": "N-MAN06",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Off/save then On/save completed, low-stock card2/min5 and5day setting retained, one new generic notification after opt-in",
+      "additionalPermissionPinDialogs": "conditional instructions, occurrence not established",
+      "pendingNotificationCancel": "NOT YET TESTED",
+      "thresholdRearm": "UNVERIFIED",
+      "automaticEvidence": false
+    },
+    {
+      "id": "N-MAN07",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "Notifikasi tidak terlihat",
+      "status": "OBSERVED; lockscreen content UNVERIFIED",
+      "scope": "No fixture notification visible on locked screen; no content assessment possible",
+      "cause": "NOT ESTABLISHED",
+      "systemSettingsChanged": false,
+      "automaticEvidence": false
+    },
+    {
+      "id": "N-MAN08",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya semuanya sesuai",
+      "status": "PASS",
+      "scope": "Notification present in unlocked shade before action; app notificationsOff/save removed pending notification without manual deletion, warning2/min5 retained",
+      "additionalUserInformation": "Lockscreen notification permission for fixture app is enabled",
+      "lockscreenContent": "N-MAN07 UNVERIFIED, absent despite reported permission; cause unknown",
+      "finalAppNotificationsEnabled": false,
+      "osNotificationPermission": "not revoked by app switch",
+      "automaticEvidence": false
+    },
+    {
+      "id": "D-MAN01-before",
+      "date": "2026-10-17",
+      "source": "user report",
+      "status": "PARTIAL; cancellation feedback FAIL",
+      "picker": "opened and cancelled by user",
+      "message": "Operasi belum berhasil. Periksa izin, koneksi, atau masuk kembali melalui PIN",
+      "scheduleRows": "last attempt/last success/next target all belum terjadwal reported",
+      "accountControls": "not established from report",
+      "actualSdkExceptionCode": "not captured",
+      "realGoogleDriveApi": "UNVERIFIED",
+      "automaticDeviceControlActive": false
+    },
+    {
+      "id": "D-MAN01R",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Real Google account picker canceled on patched Poco fixture APK; inline Dibatalkan and choose/change account button still available below schedule rows",
+      "automaticEvidence": false,
+      "actualGoogleApi": "UNVERIFIED",
+      "limits": "No account selection, consent, saved destination, API or upload proven. Conditional PIN prompt not established."
+    },
+    {
+      "id": "D-MAN02",
+      "date": "2026-10-17",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Real Google account selection returned pending-account status, privately correct account, Pilihan akun belum disimpan and Gunakan akun ini button on Poco fixture app",
+      "automaticEvidence": false,
+      "limits": "Account not yet accepted as saved destination; Drive identify/API/upload not yet verified. Conditional consent or PIN dialogs are not independently established."
+    },
+    {
+      "id": "D-MAN03",
+      "date": "2026-10-17",
+      "source": "user report",
+      "status": "FAIL",
+      "statusText": "Operasi Drive belum selesai. Periksa jaringan, otorisasi, dan konfigurasi akun.",
+      "scope": "Accept selected Google destination failed with generic Drive feedback on two accounts; user states both belong to OAuth test audience",
+      "automaticEvidence": false,
+      "rootCause": "UNDETERMINED; selected account does not prove Drive API readiness or successful identity request",
+      "privacy": "Account addresses excluded",
+      "next": "Pause manual retries; inspect sanitized error classification and verify Drive API enabled status"
+    },
+    {
+      "id": "D-CONFIG01",
+      "date": "2026-10-17",
+      "source": "user report",
+      "status": "CONFIGURATION ISSUE CONFIRMED",
+      "scope": "User checked Google Cloud project and reports Google Drive API not enabled; opening enable led to API library",
+      "activation": "PENDING, instructions supplied for Google Drive API by Google in skybee-cf8b9",
+      "limits": "Exact D-MAN03 HTTP status/reason not observed; configuration is a credible cause requiring retest after enable. Account addresses omitted."
+    },
+    {
+      "id": "D-MAN03R",
+      "recordedDate": "2026-10-18",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "After Google Drive API enabled, destination accepted on unchanged C25 APK; saved-account status, privately correct destination and automatic backup Off reported",
+      "automaticEvidence": false,
+      "limits": "Successful identify/save flow reported; no captured HTTP transaction or independent policy audit. Upload/list/download/restore/scheduled execution unverified."
+    },
+    {
+      "id": "RESUME-20261018",
+      "recordedDate": "2026-10-18",
+      "source": "user report",
+      "scope": "User browsed features during interruption and reports no database changes, printing, backup or restore",
+      "limits": "Not an all-table equality proof; metadata/audit can change during viewing or PIN use. Use fresh quiescent baseline for future update interval; preserve old baseline history."
+    },
+    {
+      "id": "D-MAN04",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "On C26 Poco fixture, correct test destination and autoOff retained; one press manual Drive backup completed with Upload arsip Drive sudah diverifikasi, one new Berhasil diverifikasi history entry and loading ended",
+      "automaticEvidence": false,
+      "limits": "UI-reported verified upload only; no independent HTTP/server/archive audit. Remote listing/download/restore/automatic schedule/retention not yet verified."
+    },
+    {
+      "id": "D-MAN05",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "One press Versi backup Drive returned one archive row with filename, creation time, nonzero byte size and Pilih untuk pemulihan button; distinct from success history",
+      "automaticEvidence": false,
+      "limits": "UI-reported real listing only; archive bytes, download, authentication and restore not yet verified. No account/remote file identifiers collected."
+    },
+    {
+      "id": "D-MAN06",
+      "date": "2026-10-18",
+      "source": "user report",
+      "status": "PASS",
+      "answerSummary": "Selected-archive status matches; recovery input and validate button available; recovery input empty",
+      "scope": "Real Drive download/selection flow reported by its completed UI status and available restore controls; blank initial recovery entry is expected, no autofill requested",
+      "automaticEvidence": false,
+      "limits": "No recovery authentication, preview or restore yet; exact bytes/server verification not independently audited. Conditional PIN prompt unspecified."
+    },
+    {
+      "id": "D-MAN07",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya sesuai",
+      "status": "PASS",
+      "scope": "Downloaded Drive archive authenticated and validated in UI; synthetic store/2 products/2 sales/schema8/IDR/AsiaJakarta metadata matches",
+      "automaticEvidence": false,
+      "limits": "No full restore or independent post-download archive audit yet; recovery not collected"
+    },
+    {
+      "id": "C27-MAN01",
+      "date": "2026-10-18",
+      "source": "user report, clarified",
+      "status": "PARTIAL",
+      "copyPaste": "PASS reported: canonical code copied by button and pasted without manual text selection; expected inline success",
+      "preview": "FAIL reported: code readable in small Android overlay immediately after Copy, not keyboard panel or fixture input",
+      "rootCause": "UNDETERMINED; production source sets official sensitive flag; need public-value native metadata reproduction",
+      "limits": "No clipboard payload, recovery code, screenshots or UI dump collected; no new validation/restore; automated device control remains off"
+    },
+    {
+      "id": "C27-PUBLIC-PROBE-MAN01",
+      "date": "2026-10-18",
+      "source": "user report",
+      "metadataReported": {
+        "ownLabel": true,
+        "sensitive": true,
+        "plainTextMime": true
+      },
+      "preview": "UNVERIFIED: user did not compare/observe Android popup text",
+      "clarification": "Earlier readable text was the 64 hexadecimal characters below Copy in the app; not reliable evidence of Android overlay disclosure",
+      "conclusion": "Copy/paste stays PASS reported; earlier preview FAIL attribution superseded, no clipboard privacy bug proven",
+      "secretCollected": false,
+      "restorePerformed": false,
+      "nativeEvidence": {
+        "metadataOnly": "docs/evidence/m5-20261018/c27-public-preview-1792313866375/metadata-only.json",
+        "threeFlags": true,
+        "clipboardPayloadRead": false,
+        "raw12DatabaseSidecarsEqual": true,
+        "priorC27ApkExact": true
+      }
+    },
+    {
+      "id": "D-MAN07R",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "On restored C27, reselected same Drive archive; new Copy button -> Hide -> Paste -> Validate authenticated archive and expected synthetic store/2 products/2 sales/schema8/IDR/AsiaJakarta metadata",
+      "automaticEvidence": false,
+      "limits": "UI authentication/metadata PASS reported; no full Drive restore yet, no independent post-download payload audit; no recovery code collected; Android overlay redaction remains UNVERIFIED"
+    },
+    {
+      "id": "D-MAN08",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya sesuai; no PIN prompt because returned directly to cashier outside management",
+      "status": "PARTIAL",
+      "scope": "Full restore completion reported; app returned to cashier as expected from navigator/session reset",
+      "pending": "Open Kelola and verify PIN gate before protected data; user has not clearly reported this action yet. Post-restore financial/stock values, safety archive integrity and reset policy not yet verified for this Drive restore.",
+      "automaticEvidence": false,
+      "limits": "Not a proven PIN bug: cashier itself does not require management PIN. No new device automation or independent restore audit; no recovery collected."
+    },
+    {
+      "id": "D-MAN08R",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "From cashier after actual Drive restore, tapping Kelola requires locked management/PIN before protected menu or data. PIN not entered in this step.",
+      "automaticEvidence": false,
+      "limits": "Manual gate result only; restored financial/stock values, safety archive integrity and reset policies still pending independent checks."
+    },
+    {
+      "id": "D-MAN09",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answers": {
+        "financial": "ya",
+        "inventory": "ya"
+      },
+      "status": "PASS",
+      "scope": "After actual Drive restore, backup fixture PIN0001 accepted; reports Month/All customers show expected sales42000/cost36000/profit6000/paid22000/debt20000/count2/reversal0 and physical stock18/expired0/value150000",
+      "automaticEvidence": false,
+      "limits": "Reported UI totals only, not independent DB/receipt/cipher/FK audit or safety archive authentication. No new transactions, stock changes or print requested."
+    },
+    {
+      "id": "D-MAN10",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answers": {
+        "fiveLocalCards": "ya",
+        "driveDisconnectedControls": "ya"
+      },
+      "status": "PASS",
+      "scope": "After Drive restore, 5 local archive cards schema8/IDR including latest near restore; Drive shows choose-account only, without saved destination/upload/disconnect/auto switch",
+      "automaticEvidence": false,
+      "limits": "UI presence/state only; safety archive integrity/authentication and policy/token/native DB state not independently audited yet. No new backup/account selection or restore requested."
+    },
+    {
+      "id": "D-MAN11",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answers": {
+        "savedPrintersEmpty": "ya",
+        "alertsDisabledDays5LowStock2min5": "ya"
+      },
+      "status": "PASS",
+      "scope": "After Drive restore, no saved RPP02N profile; app notifications switch off, days5, fixture low-stock2/min5 remain visible",
+      "automaticEvidence": false,
+      "limits": "UI only, not proof that previously active profiles/notifications were reset by this particular restore (already off/empty before it); native archive/policy audit next. No connect/print/save requested."
+    },
+    {
+      "id": "D-AUTO-RESTORE01",
+      "date": "2026-10-18",
+      "status": "PASS",
+      "source": "isolated native Poco F6 7f0edea0",
+      "uniqueCases": 1,
+      "runner": "1PASS25s; first wrong-checkpoint attempt1FAIL16s retained, same case retested",
+      "scope": "All5 retained archives authenticated; business23/receipts/integrity/FK/SQLCipher/envelope/reconcile; uploaded snapshot running/3catalog vs latest safety success/4catalog; active state defaults/Drive disconnected, logo/canonical containment, all live table hashes unchanged after documented fixture auth during inspections",
+      "finding": "TEST-DRIVE-RESTORE01: three older archives match historical checkpoint exactly; only draft tables differ from later C27 checkpoint. Comparator fixed, no application/data fix.",
+      "limits": "Legacy baseline hash checked at test entry, ordinary/sidecar hashes before-after and two public exports equal; exact C27 APK restored. No whole-table snapshot taken immediately before human restore; safety stable tables checked against C27 checkpoint, not every PIN/audit/alert field across human interval. No server transport audit or physical power-loss/Doze/reboot/OEM-preview proof.",
+      "ledger": "docs/evidence/m5-20261018/drive-restore-audit-1792315770227/ledger.json",
+      "firstFailureLedger": "docs/evidence/m5-20261018/drive-restore-audit-1792315519574/ledger.json",
+      "ordinaryCodeChanged": false,
+      "automaticDeviceControlActive": false,
+      "originalV6ClosingStillPending": true
+    },
+    {
+      "id": "D-MAN12",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "After actual restore and native audit, reconnected same private test account via choose/accept destination; connected status correct, privately correct account, automatic backup switch remains off",
+      "automaticEvidence": false,
+      "limits": "No new upload, automatic consent/scheduling/background run or second-account isolation verified by this step; conditional OAuth/PIN dialog not assumed observed."
+    },
+    {
+      "id": "D-MAN13",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya",
+      "status": "PASS",
+      "scope": "Automatic Drive switch shows explicit encrypted-store-upload consent with Batal/Konfirmasi; Batal closes dialog and switch remains off",
+      "automaticEvidence": false,
+      "limits": "Cancellation only; not enabled, scheduled, uploaded or background execution proof."
+    },
+    {
+      "id": "D-MAN14",
+      "date": "2026-10-18",
+      "source": "user report",
+      "answer": "ya semua sesuai kecuali label zona waktu toko, bukan zona Asia/Jakarta",
+      "status": "PASS",
+      "scope": "Explicit automatic consent confirmed; settings saved, switch on, expected18Oct2026 21:00 target reported. UI label zona waktu toko is expected, not literal zone identifier. Fixture zone known AsiaJakarta from earlier validation.",
+      "automaticEvidence": false,
+      "limits": "UI target only; not real 21:00 delivery, background upload or native job proof. Independent host stale-overview bug reproduced on another state path, not attributed as failure to this phone run."
+    },
+    {
+      "id": "C28-AUTO",
+      "date": "2026-10-18",
+      "source": "host/native/build/fresh strict update checks",
+      "status": "PASS",
+      "host": "48PASS133s, focused1 subset",
+      "poco": "1PASS schedule UI mock",
+      "dv": "1PASS schedule UI mock; exact prior APK/default hashes and awake restored/read back",
+      "analyzer": "7.2s No issues",
+      "strictUpdate": "before1PASS/after1PASS, all tables/5archives/policy digest equal; real account connected and autoON, target21 persisted, no backup_runs/new uploads",
+      "build": "ordinary/fixture/bridge universal verified min24/16KiB/icon/licenses/signature/negative guard; ordinary not installed",
+      "limits": "D-MAN14 original phone UI PASS reported; stale-overview bug reproduced separately host. Native UI uses fake Keystore/WorkManager only; actual21delivery/headlessGoogle/reboot/Doze/OEM preview not proven",
+      "startup": {
+        "package": "com.example.kasir_app.integration",
+        "pid": 19101,
+        "synthetic_screen_visible": true,
+        "startup_error_markers": 0,
+        "scope": "startup only; not printer, Google, restore or full release acceptance"
+      },
+      "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-schedule-ui-update-1792317053346\\update.json"
+    },
+    {
+      "id": "C28-MAN01R",
+      "date": "2026-10-18",
+      "source": "user clarification/manual report",
+      "status": "PASS",
+      "scope": "Corrected distinction between static help and target row: OFF settings saved/switch off/target not scheduled; ON target18Oct2026 21:00 without refresh. Final automatic switch ON.",
+      "limits": "Earlier static-help observation ambiguous, not failure. During limit gap user reports only one OFF and one ON, no other app actions; does not freeze audit/PIN/alert metadata or prove no scheduled worker activity. No actual21delivery proof."
+    },
+    {
+      "id": "D-AUTO-LIVE01",
+      "date": "2026-10-18",
+      "status": "PASS scoped",
+      "source": "real Poco headless worker controlled dispatch and Google HTTP",
+      "result": {
+        "nonce": "1792327725515",
+        "workerPid": 26905,
+        "setupPid": 12588,
+        "verifiedUploads": 8,
+        "duplicateCallCoalesced": true,
+        "initialRemoteCount": 1,
+        "initialScopedCount": 1,
+        "otherScopeCount": 0,
+        "retainedCount": 7,
+        "localArchivesBefore": 5,
+        "localArchivesAfter": 13,
+        "oldLocalArchivesUnchanged": true,
+        "businessTablesUnchanged": true,
+        "policyUnchanged": true,
+        "changedTables": [
+          "backup_runs",
+          "local_backups"
+        ],
+        "steps": [
+          {
+            "upload": 1,
+            "retained": 2,
+            "expected": 2,
+            "otherScopesUnchanged": true
+          },
+          {
+            "upload": 2,
+            "retained": 3,
+            "expected": 3,
+            "otherScopesUnchanged": true
+          },
+          {
+            "upload": 3,
+            "retained": 4,
+            "expected": 4,
+            "otherScopesUnchanged": true
+          },
+          {
+            "upload": 4,
+            "retained": 5,
+            "expected": 5,
+            "otherScopesUnchanged": true
+          },
+          {
+            "upload": 5,
+            "retained": 6,
+            "expected": 6,
+            "otherScopesUnchanged": true
+          },
+          {
+            "upload": 6,
+            "retained": 7,
+            "expected": 7,
+            "otherScopesUnchanged": true
+          },
+          {
+            "upload": 7,
+            "retained": 7,
+            "expected": 7,
+            "otherScopesUnchanged": true
+          },
+          {
+            "upload": 8,
+            "retained": 7,
+            "expected": 7,
+            "otherScopesUnchanged": true
+          }
+        ],
+        "automaticCalendarDeliveryProven": false
+      },
+      "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\live-drive-1792327725515\\ledger.json",
+      "limits": "run -s own nonce job; not natural21. No other origin in baseline, not proof of cross-origin preservation. Two same-key callers headless in one worker, not manual and OS worker in separate processes."
+    },
+    {
+      "id": "C29-AUTO",
+      "date": "2026-10-18",
+      "status": "PASS",
+      "source": "host/native mocks/build/strict update",
+      "host": "50PASS; focused2 subset",
+      "poco": "2PASS account UI mocks",
+      "dv": "2PASS account UI mocks; exact prior APK/default hashes/awake restored and read back",
+      "analyzer": "8.9s No issues",
+      "strictUpdate": "before1PASS/after1PASS; all tables/13archives/policy unchanged;8success/8unique remote IDs; connected/automaticON",
+      "build": "ordinary/fixture/bridge universal min24/16KiB/icon/licenses/signature/negative guard verified; ordinary not installed",
+      "startup": {
+        "package": "com.example.kasir_app.integration",
+        "pid": 5679,
+        "synthetic_screen_visible": true,
+        "startup_error_markers": 0,
+        "scope": "startup only; not printer, Google, restore or full release acceptance"
+      },
+      "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-account-ui-update-1792328869099\\update.json",
+      "limits": "Account B OAuth not yet tested; native cases fake SDK/HTTP/WorkManager. Natural21/reboot/Doze/other origin cloud preservation unverified."
+    },
+    {
+      "id": "D-MAN15a",
+      "date": "2026-10-18",
+      "status": "PASS",
+      "source": "user manual report: ya",
+      "scope": "C29 Poco: automatic left ON; Versions backup Drive displays7archive rows with Select for recovery buttons.",
+      "limits": "UI observation only; no new upload/download/restore or account B selection. Conditional PIN prompt not assumed. Independent real retention/native audit evidence remains separate."
+    },
+    {
+      "id": "D-MAN15b",
+      "date": "2026-10-18",
+      "status": "PASS",
+      "source": "user manual report: ya",
+      "scope": "Different test account B privately checked by user; pending unsaved selection and Use this account visible on C29 Poco.",
+      "limits": "Not yet accepted/stored. No second-account list, upload, download, restore or isolation proof. Conditional Google consent and PIN prompts not assumed to have appeared. No identity/token logged."
+    },
+    {
+      "id": "D-MAN15c",
+      "date": "2026-10-18",
+      "status": "PASS",
+      "source": "user manual report: ya",
+      "scope": "C29 Poco: account B accepted once, destination privately correct, saved/automatic-off status, switch OFF, target not scheduled, pending controls gone and previous7Drive rows cleared without refresh.",
+      "limits": "Actual acceptance and UI invalidation reported; not yet a request for account B versions or proof of cloud isolation/job cancellation/unchanged SQL. No upload, automatic opt-in or restore performed in this step."
+    },
+    {
+      "id": "D-MAN16",
+      "date": "2026-10-18",
+      "status": "PASS reported scoped; UI ambiguity under investigation",
+      "source": "user manual report",
+      "actual": "Account B Drive archive list empty;8 Verified complete/date rows below it, also seen for prior account.",
+      "sourceInspection": "Provider.load reads runs from local DriveBackupService.history/backup_runs without account filtering; screen renders s.runs separately from s.remote. Eight rows consistent with earlier8real uploads, not8cloud archives on B.",
+      "limits": "No independent native B identity/list or business audit in this step. No cloud mixing established. History lacks an explicit local/cross-account section heading; prepare C30 UI repro, no data deletion/filtering."
+    },
+    {
+      "id": "D-AUTO-ACCOUNT-B01",
+      "date": "2026-10-18",
+      "status": "PASS scoped",
+      "source": "real Poco accepted B account; API read-only and disabled-run guard",
+      "actual": "B permission identity distinct from8A records; B namespace empty; prior verified A archive ID unavailable through B; headless operation rejected while autoOFF, no new run/archive; whole DB unchanged after public PIN metadata baseline",
+      "pinMetadata": "Fixture0001 auth changed only credential/audit tables; all business hashes unchanged. No secret/identity payload reported.",
+      "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-history-ui-update-1792331546910\\update.json",
+      "evidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c30-before-1792331546910-20261018-210016\\runner.log",
+      "limits": "Not a concurrent positive readback on A or cross-device Google test. Does not prove Android OS job cancellation, Doze/reboot or in-flight account change."
+    },
+    {
+      "id": "C30-AUTO",
+      "date": "2026-10-18",
+      "status": "PASS",
+      "source": "host/native UI mocks/build/fresh strict update",
+      "host": "52PASS146s; focused7 strengthened-language/state cases subset",
+      "poco": "7PASS Drive/history UI mocks",
+      "dv": "7PASS Drive/history UI mocks; exact prior APK/default hashes/awake restored/read back",
+      "analyzer": "6.7s No issues",
+      "strictUpdate": "before1PASS/after1PASS; all tables/13archives/policy identical after documented fixture PIN metadata baseline; account B connected/autoOFF;8A-run identities distinct from B",
+      "build": "ordinary/fixture/bridge universal min24/16KiB/icon/licenses/signature/negative guard verified; ordinary not installed",
+      "startup": {
+        "package": "com.example.kasir_app.integration",
+        "pid": 23989,
+        "synthetic_screen_visible": true,
+        "startup_error_markers": 0,
+        "scope": "startup only; not printer, Google, restore or full release acceptance"
+      },
+      "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-history-ui-update-1792331546910\\update.json",
+      "limits": "Physical C30 label retest pending. Natural21/reboot/Doze/other-origin cloud preservation/OS-job cancellation/in-flight-account-change remain unverified."
+    },
+    {
+      "id": "C30-MAN01",
+      "date": "2026-10-18",
+      "status": "PASS reported scoped",
+      "source": "user physical manual report on Poco C30",
+      "actual": "Destination Drive archive section explicitly empty; local device history has8 Verified complete/date rows, all labelled another/previous destination account.",
+      "limits": "Help paragraph not quoted separately. No new SQL/API audit or OS-job cancellation evidence from this human step. B/automaticOFF last native checkpoint kept; no fresh native policy assertion here."
+    },
+    {
+      "id": "C31-AUTO",
+      "date": "2026-10-18",
+      "status": "PASS scoped",
+      "host": "56PASS150s on final production source; final fixture-filename helper4PASS2s subset; analyzer8.2s No issues",
+      "poco": "4PASS synthetic SDK/HTTP authorization with ARM64 SQLCipher",
+      "dv": "4PASS SDK/HTTP authorization fixtures on ARM32 SQLCipher; exact prior APK/default hashes/awake restored/read back",
+      "strictUpdate": "before1/after1PASS; all tables/13archives/policy equal after documented fixture PIN metadata baseline; real B connected/autoOff/targetnull,8A jobs retained",
+      "build": "ordinary/fixture/bridge universal/min24/16KiB/icon/license/signature/negative guard verified, ordinary not installed",
+      "startup": {
+        "package": "com.example.kasir_app.integration",
+        "pid": 7861,
+        "synthetic_screen_visible": true,
+        "startup_error_markers": 0,
+        "scope": "startup only; not printer, Google, restore or full release acceptance"
+      },
+      "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-silent-auth-update-1792333169315\\update.json",
+      "limits": "SDK-null failure is simulated; real revoked-consent behavior not tested. Natural21/reboot/Doze/in-flight change/OS-job cancellation/other-origin cloud preservation remain unverified. C30-MAN01 labels PASS reported separately. OriginalAPK6 restoration/closing pending."
+    },
+    {
+      "id": "D-MAN17",
+      "date": "2026-10-18",
+      "status": "PASS reported scoped",
+      "source": "user physical manual report on Poco C31",
+      "actual": "Disconnect status/choose-account only/no account-upload-versions-auto controls/next unscheduled/local8history all matched before extra interaction.",
+      "additionalInteraction": "User accidentally reopened account selection and returned/canceled without connecting an account.",
+      "limits": "Current status text after the extra cancellation was not quoted. Do not treat interval as frozen or infer native policy/OS job cancellation; independent closing audit pending."
+    },
+    {
+      "id": "C32-CLOSING",
+      "date": "2026-10-19",
+      "status": "PASS available scope; M5 implementation/primary acceptance closed; M6 not started",
+      "host": "58PASS159s including focused2 subset; no sum of retries/language vectors/native reuse",
+      "analyzer": "No issues41.3s",
+      "poco": "2PASS21s persistent worker status UI with native SQLCipher",
+      "dv": "2PASS43s UI/SQLCipher ARM32; exact prior APK/default hashes/awake restored/read back",
+      "nativeClosing": "One audit testcase in3roles: before13archives authenticated/8worker business23 snapshots; after strict all-table/archive/policy equality; final after release startup alert metadata accounted and own M5 work cancellation requested",
+      "data": "2products/2sales; revenue42000/HPP36000/payment22000/debt20000; stock18/value150000; old13archive digests intact; disconnected/autoOff/nextnull",
+      "build": "3 universal artifacts verified; ordinary built only, not installed; development signing",
+      "restoration": {
+        "ordinaryHashesSame": true,
+        "originalSha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+        "originalNotLaunched": true,
+        "campaignClosedHashesSame": true,
+        "finalNativeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c32-final-1792345948116-20261019-010415",
+        "publicExportsSame": true,
+        "legacyHashesSame": true,
+        "originalV6Restored": true
+      },
+      "ownM5Work": {
+        "device": "7f0edea0",
+        "package": "com.example.kasir_app.integration",
+        "nonce": "1792345948116",
+        "closedWorkMetadataIntegrity": true,
+        "originalMetadataHashesUnchanged": true,
+        "m5WorkCount": 5,
+        "pendingOrUnknownStateCount": 0,
+        "succeededCount": 1,
+        "failedCount": 0,
+        "canceledCount": 4,
+        "scope": "Drive-tag, alert unique work and fixture live probes only; no identifiers/payloads retained",
+        "limits": "Snapshot after cleanup; not proof of prior live job cancellation, natural21, reboot or Doze"
+      },
+      "releaseStartup": {
+        "package": "com.example.kasir_app.integration",
+        "pid": 18447,
+        "synthetic_screen_visible": true,
+        "startup_error_markers": 0,
+        "scope": "startup only; not printer, Google, restore or full release acceptance"
+      },
+      "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-worker-status-update-1792345948116\\update.json",
+      "limits": [
+        "Natural21/reboot/Doze/force-stop background delivery unverified",
+        "Real revoked-consent condition/in-flight account switch/other-origin real Drive preservation unverified",
+        "Real cross-device Drive not exercised; encrypted portable DV-to-Poco proof remains separate",
+        "80mm/paper-out/actual ambiguous partial write physical tests unverified",
+        "OEM clipboard preview masking/lockscreen notification content/TalkBack physical unverified",
+        "Realme unavailable for C31/C32; historical results retained separately",
+        "No recovery claim for historical ISSUE-M31-DATA; no M6 release signing/publication"
+      ]
+    }
+  ],
+  "sourcePatchC19": "Fixed Windows14/nativeDV7/analyzer/release update+native preservation audit; user manual UI P-MAN04 PASS",
+  "independentDvTestsActive": false,
+  "updateEvidence": "poco-manual-update-1792156485701",
+  "legacyDefaultVerifiedBeforeUpdate": "native before audit PASS; endpoint hashes match original handover; old DB never opened",
+  "apkHistory": [
+    {
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261016-191327\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "sha256": "987c534c975ac3e148be6c0da69fbc99d42907eae79f47423f874eccd554ed3b",
+      "scope": "initial calibration/manual P-MAN01..03"
+    },
+    {
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261016-200823\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "sha256": "c8f086885212e49e25e155f178179ea5c9a9f3f3b6571b9796d049682bf3640d",
+      "scope": "C19 manual P04..28, preserved prior update"
+    },
+    {
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-export-update-1792178476161\\prior-c20-release.apk",
+      "sha256": "49fb5e293909bc98f7d2cef2714e0f05ef3fbc6d3759c49ee65b868a2f8b411a",
+      "scope": "C20 manual through B-MAN05, retained before C21+C22 update"
+    },
+    {
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-archive-update-1792181574653\\prior-c22-release.apk",
+      "sha256": "592e089427a05dcf1ea3d5cd77914b5169eef9f012fb491bab316baa138d4869",
+      "scope": "C22 manual B-MAN06..09 initial; retained before C23 update"
+    },
+    {
+      "checkpoint": "C24",
+      "date": "2026-10-17",
+      "sha256": "cdbefe1e1fde5581680d49a1bb51b9158d500ad05990ca9bdfd2aa074c7a0aa9",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-071200\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "scope": "notification release icon/startup recovery; strict install audit and post-restore safety PASS"
+    },
+    {
+      "checkpoint": "C25",
+      "date": "2026-10-17",
+      "sha256": "02fbf81f16b07bd535b59425b35238fd8692c41d4e4ad8440d25636dcf02c687",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261017-154438\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "scope": "Google cancellation feedback; native SDK mocks, strict data audit and startup; real cancel retest pending"
+    },
+    {
+      "checkpoint": "C26",
+      "date": "2026-10-18",
+      "sha256": "58cbd652096ff1289689d7b806de74e97fb59bc437d5051f4b5215111a20f7e0",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-145231\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "scope": "Specific sanitized Drive configuration feedback, connected policy preservation; no real upload"
+    },
+    {
+      "checkpoint": "C27",
+      "date": "2026-10-18",
+      "sha256": "0ec0734a306d177ecd329d74274ed3938bef7debcdfa4bd7d05fd017d3a6e3e1",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-153754\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "scope": "Production recovery Copy feature; actual OS clipboard still pending manual"
+    },
+    {
+      "checkpoint": "C28",
+      "date": "2026-10-18",
+      "sha256": "2c64c2ff8819602be01c6315000bbf876f56eeb9951c375ad2b3d7c4da09de14",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-165445\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "scope": "Refresh schedule projection after switch; no business change; physical retest pending"
+    },
+    {
+      "checkpoint": "C29",
+      "date": "2026-10-18",
+      "sha256": "2f114edc869e4466aae6a9788e1b7bb6cda78c90b0528cce0e8a4981ab34cf6e",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-201139\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "scope": "Clear remote account page/cursor and reload target after accept/disconnect; no business change"
+    },
+    {
+      "checkpoint": "C30",
+      "date": "2026-10-18",
+      "sha256": "928bb4515fec95f6453335c4dabf56812ae976b4a2832138fa7c548a424bb1d4",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-205731\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "scope": "Separate cloud archive list/empty-page and local cross-account upload history, ID/EN context labels; no history deletion/business changes"
+    },
+    {
+      "checkpoint": "C31",
+      "date": "2026-10-18",
+      "sha256": "ab00a7e191f354707a5cf847c04de620ffc6576231cf19ef197b2e6f99620641",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-212252\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "scope": "SDK silent-null maps to typed needs-auth failure; no account/business/rule changes"
+    },
+    {
+      "checkpoint": "C32 tested",
+      "date": "2026-10-19",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261019-005702\\kasir-app-0.5.0-m5-isolated-release.apk",
+      "sha256": "1e5b1cd057199ed8b45f882c1e8a337d6285e2bad3ecf90f45be5fbe45dc66dd"
+    },
+    {
+      "checkpoint": "Exact original v6 restored; no launch",
+      "date": "2026-10-19",
+      "apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-manual-20261016-191759\\original-fixture.apk",
+      "sha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d"
+    }
+  ],
+  "updateAudit": "before1PASS2s/after1PASS2s; all table fingerprints equal; finance0; selected profile+submitted calibration exist; ordinary hashes unchanged",
+  "testLogo": "/sdcard/Download/M5_logo_1792156485701.png",
+  "testLogoCleanupPending": true,
+  "closingAuditNote": "Calibration finance0 and C20 update all-table equality are historical checkpoints. B-MAN03 now reports2 local backups, so catalog/domain metadata legitimately changed afterward. Later restore may sanitize jobs/installation; final audit must follow actual intended actions, not compare all tables blindly against C20 snapshot. C23 original baseline crossed human PIN activity: historical strict FAIL explained in metadata probe. New strict quiescent baseline/roundtrip proves only new controlled interval. Never compare post-restore sanitization blindly to this two-sale/two-backup snapshot. B-MAN12 restore planned: original two sale/finance facts should remain; print jobs/profiles, Drive/alerts consent and installation metadata sanitized by design; safety archive should be new. Use post_restore-specific assertions, not old strict table equality.",
+  "syntheticScenarioExpectedAfterReportedCommit": {
+    "wholesaleQty": 3,
+    "unitPriceMinor": 10000,
+    "saleTotalMinor": 30000,
+    "plannedPaidMinor": 10000,
+    "plannedDebtMinor": 20000,
+    "plannedHppMinor": 27000,
+    "plannedMainStockAfterCommit": 17,
+    "status": "Expected model after user-reported saved receipt; SQL financial/stock/HPP counts still require actual audit"
+  },
+  "expectedReportBeforeFailureTests": {
+    "sales": 30000,
+    "hpp": 27000,
+    "profit": 3000,
+    "payments": 10000,
+    "debt": 20000,
+    "salesCount": 1,
+    "reversals": 0,
+    "globalStock": 19,
+    "mainStock": 17,
+    "secondaryStock": 2,
+    "expired": 0,
+    "inventoryValue": 159000,
+    "status": "PASS user-reported report UI; still not actual SQL final audit"
+  },
+  "plannedPrinterOffSecondSale": {
+    "quantity": 1,
+    "pricing": "retail",
+    "total": 12000,
+    "paid": 12000,
+    "debt": 0,
+    "futureAggregate": {
+      "sales": 42000,
+      "hpp": 36000,
+      "profit": 6000,
+      "payments": 22000,
+      "debt": 20000,
+      "saleCount": 2,
+      "mainStock": 16,
+      "globalStock": 18,
+      "inventoryValue": 150000
+    },
+    "status": "Manual financial/print/reconnect/report results PASS on recorded scopes; C20 native before+after audits now verify distinct receipt numbers, financial/stock/job facts. Further closing after remaining M5 scenarios still pending."
+  },
+  "manualAnswerConvention": "User confirms yes means all conditions in the specific question match; discrepancies will be explained. No inference beyond asked scope.",
+  "bluetoothRestoreRequired": false,
+  "bluetoothRestorationEvidence": "P-MAN27 user yes confirms Bluetooth restored ON and explicit printer reconnect, not ADB measurement",
+  "nearbyPermissionRestore": "P-MAN29 yes confirms restored Allow and paired list; user-reported, not ADB inspection",
+  "c20UpdateContext": "docs/evidence/m5-20261017/c20-update-context.json",
+  "sourcePatchC20": "Fixed; Windows15/JVM3+6/Poco8/DV8/analyzer/release/update+before-after data audits/startup PASS; P29 physical Poco denial/retry/regrant PASS reported",
+  "fixtureSha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+  "c20UpdateEvidence": "poco-permission-update-1792174330020",
+  "c20Audit": "Before and after phases of one audit case; two sales distinct receipt numbers, financial/stock/print facts as intended; all-table hashes equal, default legacy and ordinary endpoints baseline; not a backup restore",
+  "backupRecoveryStatus": "B-MAN01 configured + B-MAN02 reveal/private external copy/hide PASS user-reported; code unchanged, no secret value recorded",
+  "localBackupManualCheckpoint": {
+    "reportedBackupCount": 2,
+    "origin": "B-MAN03 two clicks, second accidental",
+    "message": "Validated-local inline message confirmed; user expected dialog, initial viewport/offscreen cause NOT established",
+    "export": "B-MAN04 cancel/B-MAN05 original export/B-MAN07 named export PASS user-reported",
+    "manualRestore": "B-MAN12 result/PIN + B-MAN13/14 finance/stock PASS user-reported; safety/native audit pending",
+    "cleanup": "retain both; no deletion authorized/requested",
+    "exportFile": "Read-only exact public file SHA2562bd806ac198f81db22a40c3174a5809a7a96e530761be1b72842ab598b3e6318 unchanged across update; private two archive digests match catalog before/after",
+    "additionalExportFile": "Download/M5_poco_keyboard_20261017_02.kasirbackup independently SHA2bd806ac198f81db22a40c3174a5809a7a96e530761be1b72842ab598b3e6318; equal to _01; both unchanged through fresh update audit",
+    "reportedBackupCountAfterRestore": 3
+  },
+  "sourcePatchC21": "Included in C22 release, Windows/native tests PASS; actual pinned-feedback retest pending",
+  "c21ReleaseBuild": {
+    "state": "completed verified build-only, NOT installed",
+    "artifacts": "docs/evidence/m5-20261016/release-artifacts-20261017-020454/artifacts.json",
+    "supersededBy": "C22 source changes; do not deploy C21-only APK for C22 retest"
+  },
+  "sourcePatchC22": "Automated/build/preservation/startup PASS; B-MAN06 actual Poco app-dialog keyboard and B-MAN07 native prefill/SAF save PASS user-reported. System DocumentsUI unchanged.",
+  "c22UpdateContext": "docs\\evidence\\m5-20261017\\c22-update-context.json",
+  "c22UpdateEvidence": "docs\\evidence\\m5-20261016\\poco-export-update-1792178476161",
+  "c22Audit": "post_backup before1PASS3s and after1PASS; all-table fingerprints and both private archive digests equal; financial/stock/print/integrity/FK facts verified; ordinary+legacy hashes equal; exact public export unchanged. Not a restore test.",
+  "startupNote": "Own C23 release cold start482ms, PID471/banner visible, no startup error markers in inspected own PID buffer; not full release acceptance",
+  "sourcePatchC23": "Automated/native/build/audits/startup PASS within recorded scope; B-MAN09R physical Poco rejection/visible input PASS user-reported. Original FAIL and metadata-explained comparison history retained.",
+  "c23UpdateEvidence": "docs\\evidence\\m5-20261016\\poco-archive-update-1792181574653",
+  "c23QuiescentAudit": "docs\\evidence\\m5-20261016\\poco-c23-quiescent-1792191568561",
+  "c23MetadataExplanation": "docs/evidence/m5-20261017/c23-metadata-explanation.json",
+  "priorStartupEvidence": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 676,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "c23PreservationScope": "All non-metadata original-interval table hashes equal; four metadata tables explained exactly by two successful PIN entries/last_attempt_at and alert generation35→38. Original FAIL retained. Fresh new nonce strict all-table and two archive hashes before/after equal; ordinary/default/public endpoints unchanged. Never rewrote earlier DB/credentials/baseline.",
+  "recoveryInputVisibility": "B-MAN09R user confirms ordinary text in isolated build only; ordinary masking tested automatically; no real code collected",
+  "startupEvidence": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 471,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "recoveryPrivacyNote": "User included a value in chat at B-MAN10; do not copy value into evidence or capture device UI/clipboard while recovery visible.",
+  "postRestoreAuditRequired": true,
+  "postRestoreSanitizationExpected": "Print jobs/profiles reset, alerts notification opt-in off, Drive disconnected/auto off, legal/installation state reset by documented restore. Financial facts two sales preserved. Fresh safety archive expected; do not use post_backup phase.",
+  "driveAfterRestore": "B-MAN16 disconnected controls PASS reported; Keystore policy/native audit pending",
+  "c24Audit": {
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-notification-update-1792195919961\\update.json",
+    "postRestoreEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c24-post-restore-final-1792195919961-20261017-072030",
+    "archivesAuthenticated": 3,
+    "businessTablesPreserved": 23,
+    "startupSetupErrorCleared": true,
+    "deviceDefaultsVerified": true,
+    "strictInstallAllTablesAndThreeArchivesEqual": true,
+    "recoveryValueCaptured": false,
+    "startup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 25745,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    },
+    "notificationOsDelivery": "N-MAN02 PASS user-reported single generic notification; tap/cold/rearm/lockscreen unverified",
+    "realGoogleDrive": "UNVERIFIED",
+    "notificationTapPinManual": "N-MAN03 gate and N-MAN04 unlock/page PASS user-reported after Home/warm tap; cold/lockscreen unverified",
+    "notificationRefreshDedupManual": "N-MAN05 PASS user-reported two refreshes/no repost; not cold/reboot/threshold rearm",
+    "lockscreenNotificationManual": "N-MAN07 absent/content unverified; N-MAN08 user reports lockscreen permission enabled, cause not established",
+    "notificationCancelManual": "N-MAN08 PASS reported baseline-present thenOff/save removes pending notification; app notifications nowOff"
+  },
+  "manualPausedByUser": false,
+  "lastResumeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261017\\manual-resume-20261017-142357/state.json",
+  "c25ActiveLedger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-google-cancel-update-1792226124001\\update.json",
+  "c25Audit": {
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-google-cancel-update-1792226124001\\update.json",
+    "host": "43PASS97s",
+    "poco": "18PASS",
+    "dv": "18PASS; exact prior APK/default sandbox hashes and awake restored",
+    "strictInstallAllTablesAndThreeArchivesEqual": true,
+    "localDrivePolicyDisconnected": true,
+    "ordinaryDefaultAndPublicExports": "unchanged on declared checkpoints",
+    "actualGoogleRetest": "PASS user report D-MAN01R: real cancellation feedback and choose button",
+    "actualGoogleApi": "Identity acceptance PASS user report D-MAN03R; HTTP/policy not independently captured; uploads unverified",
+    "startup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 31137,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    },
+    "actualGoogleAccountSelection": "PASS user report D-MAN02 pending candidate only"
+  },
+  "sourceOnlyC26": "C26 installed and verified; no longer source-only",
+  "c26Audit": {
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-drive-config-update-1792309347903\\update.json",
+    "host": "34PASS128s",
+    "analyzer": "No issues6.6s final audit phase; prior resumed37.9s",
+    "poco": "20PASS",
+    "dv": "20PASS; exact prior APK/default sandbox hashes and awake restored/read back",
+    "strictUpdateAllTablesAndThreeArchivesEqual": true,
+    "savedDrivePolicyConnectedAutoOffAndDigestEqual": true,
+    "baselineScope": "Fresh quiescent update interval after reported browsing; not equality across human session",
+    "ordinaryDefaultAndPublicExports": "endpoint hashes unchanged on declared checkpoints",
+    "realIdentityAcceptance": "D-MAN03R PASS user report on C25, confirmed local connected/autoOff in native audit",
+    "realUploadListDownloadRestore": "D-MAN04–07 upload/list/download/authenticated preview PASS reported; actual restore UNVERIFIED; original strict update audit pre-upload",
+    "startup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 933,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    }
+  },
+  "postUploadAuditNote": "C27 post_drive_upload before/after independently checked4archives and1success run; old phases still historical. No restore performed.",
+  "c27Audit": {
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-recovery-copy-update-1792312363867\\update.json",
+    "host": "38PASS124s; focused4 subset",
+    "analyzer": "No issues22.3s",
+    "jvm": "11PASS, compilation/existing plugin regressions",
+    "poco": "6PASS focused recovery UI",
+    "dv": "6PASS focused recovery UI; prior APK/default hashes and awake restored/read back",
+    "clipboardScope": "Automatic tests use mock sink only; actual Android clipboard and OEM preview pending manual proof",
+    "ordinaryFeature": "Copy button unconditional; ordinary flag=false host tests and verified ordinary release build; not installed",
+    "strictUpdateAllTablesAndFourArchivesEqual": true,
+    "oneSuccessfulRunSameAccountAndConnectedAutoOffPolicyDigestEqual": true,
+    "baselineScope": "Fresh post-upload quiescent update interval; not equality across human session",
+    "ordinaryDefaultAndPublicExports": "unchanged on declared endpoints; DV ordinary absent",
+    "realDrive": "D-MAN04–07 upload/list/download/authenticated preview PASS reported before update; local successful run independently checked; actual restore pending",
+    "startup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 17947,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    }
+  },
+  "temporaryClipboardProbe": {
+    "state": "C27 restored; raw hashes equal",
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c27-public-preview-1792313866375\\ledger.json",
+    "noDatabaseOpen": true,
+    "priorC27RestorePending": false
+  },
+  "clipboardPreviewStatus": "UNVERIFIED; earlier disclosure attribution corrected, not a proven app/OEM bug",
+  "postDriveRestoreNativeAudit": {
+    "state": "PASS: five archives authenticated, business23/cipher/FK/reconcile/safety pre-swap/Drive snapshot/device defaults verified",
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\drive-restore-audit-1792315770227/ledger.json",
+    "originalV6StillPending": true
+  },
+  "pendingC28Update": {
+    "state": "C28 native regression/build/strict preservation/startup PASS; manual handover not finalized",
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-schedule-ui-update-1792317053346/update.json"
+  },
+  "c28Audit": {
+    "id": "C28-AUTO",
+    "date": "2026-10-18",
+    "source": "host/native/build/fresh strict update checks",
+    "status": "PASS",
+    "host": "48PASS133s, focused1 subset",
+    "poco": "1PASS schedule UI mock",
+    "dv": "1PASS schedule UI mock; exact prior APK/default hashes and awake restored/read back",
+    "analyzer": "7.2s No issues",
+    "strictUpdate": "before1PASS/after1PASS, all tables/5archives/policy digest equal; real account connected and autoON, target21 persisted, no backup_runs/new uploads",
+    "build": "ordinary/fixture/bridge universal verified min24/16KiB/icon/licenses/signature/negative guard; ordinary not installed",
+    "limits": "D-MAN14 original phone UI PASS reported; stale-overview bug reproduced separately host. Native UI uses fake Keystore/WorkManager only; actual21delivery/headlessGoogle/reboot/Doze/OEM preview not proven",
+    "startup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 19101,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    },
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-schedule-ui-update-1792317053346\\update.json"
+  },
+  "liveDriveProbe": {
+    "state": "controlled headless Drive and retention PASS; closure pending",
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\live-drive-1792327725515/ledger.json"
+  },
+  "pendingC29Update": {
+    "state": "C29 native regression/build/strict preservation/startup PASS; manual handover not finalized",
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-account-ui-update-1792328869099/update.json"
+  },
+  "c29Audit": {
+    "id": "C29-AUTO",
+    "date": "2026-10-18",
+    "status": "PASS",
+    "source": "host/native mocks/build/strict update",
+    "host": "50PASS; focused2 subset",
+    "poco": "2PASS account UI mocks",
+    "dv": "2PASS account UI mocks; exact prior APK/default hashes/awake restored and read back",
+    "analyzer": "8.9s No issues",
+    "strictUpdate": "before1PASS/after1PASS; all tables/13archives/policy unchanged;8success/8unique remote IDs; connected/automaticON",
+    "build": "ordinary/fixture/bridge universal min24/16KiB/icon/licenses/signature/negative guard verified; ordinary not installed",
+    "startup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 5679,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    },
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-account-ui-update-1792328869099\\update.json",
+    "limits": "Account B OAuth not yet tested; native cases fake SDK/HTTP/WorkManager. Natural21/reboot/Doze/other origin cloud preservation unverified."
+  },
+  "pendingC30Update": {
+    "state": "C30 native regression/build/strict preservation/startup PASS; manual handover not finalized",
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-history-ui-update-1792331546910/update.json"
+  },
+  "c30Audit": {
+    "id": "C30-AUTO",
+    "date": "2026-10-18",
+    "status": "PASS",
+    "source": "host/native UI mocks/build/fresh strict update",
+    "host": "52PASS146s; focused7 strengthened-language/state cases subset",
+    "poco": "7PASS Drive/history UI mocks",
+    "dv": "7PASS Drive/history UI mocks; exact prior APK/default hashes/awake restored/read back",
+    "analyzer": "6.7s No issues",
+    "strictUpdate": "before1PASS/after1PASS; all tables/13archives/policy identical after documented fixture PIN metadata baseline; account B connected/autoOFF;8A-run identities distinct from B",
+    "build": "ordinary/fixture/bridge universal min24/16KiB/icon/licenses/signature/negative guard verified; ordinary not installed",
+    "startup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 23989,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    },
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-history-ui-update-1792331546910\\update.json",
+    "limits": "Physical C30 label retest pending. Natural21/reboot/Doze/other-origin cloud preservation/OS-job cancellation/in-flight-account-change remain unverified."
+  },
+  "c31HostAudit": {
+    "id": "C31-HOST",
+    "date": "2026-10-18",
+    "status": "PASS host scope",
+    "before": "2PASS/2FAIL2s: SDK null StateError and generic UI; scheduler assertion not reached before patch",
+    "focusedAfter": "4PASS2s; real transport/source/provider/scheduler with synthetic SDK/HTTP and fresh FFI DB",
+    "regression": "56PASS02:30; focused4 is a subset, not extra cases",
+    "analyzer": "No issues 9.3s",
+    "deviceControl": false,
+    "installedCheckpoint": "C30",
+    "remaining": "C30-MAN01 physical labels pending; C31 native Poco/DV/build/deployment/strict data audit pending. Real Google revoked-consent behavior unverified. OriginalAPK6 restoration/closing pending."
+  },
+  "sourceValidationContext": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c32-update-context.json",
+  "pendingC31Update": {
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-silent-auth-update-1792333169315/update.json",
+    "state": "C31 native regression/build/strict preservation/startup PASS; manual handover not finalized"
+  },
+  "c31Audit": {
+    "id": "C31-AUTO",
+    "date": "2026-10-18",
+    "status": "PASS scoped",
+    "host": "56PASS150s on final production source; final fixture-filename helper4PASS2s subset; analyzer8.2s No issues",
+    "poco": "4PASS synthetic SDK/HTTP authorization with ARM64 SQLCipher",
+    "dv": "4PASS SDK/HTTP authorization fixtures on ARM32 SQLCipher; exact prior APK/default hashes/awake restored/read back",
+    "strictUpdate": "before1/after1PASS; all tables/13archives/policy equal after documented fixture PIN metadata baseline; real B connected/autoOff/targetnull,8A jobs retained",
+    "build": "ordinary/fixture/bridge universal/min24/16KiB/icon/license/signature/negative guard verified, ordinary not installed",
+    "startup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 7861,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    },
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-silent-auth-update-1792333169315\\update.json",
+    "limits": "SDK-null failure is simulated; real revoked-consent behavior not tested. Natural21/reboot/Doze/in-flight change/OS-job cancellation/other-origin cloud preservation remain unverified. C30-MAN01 labels PASS reported separately. OriginalAPK6 restoration/closing pending."
+  },
+  "pendingC32Update": {
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-worker-status-update-1792345948116\\update.json",
+    "state": "completed; see closingCompletionEvidence",
+    "completed": true
+  },
+  "restoredOriginalApkVerified": true,
+  "lastTestedM5Apk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261019-005702\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "lastTestedM5Sha256": "1e5b1cd057199ed8b45f882c1e8a337d6285e2bad3ecf90f45be5fbe45dc66dd",
+  "closingCompletionEvidence": {
+    "id": "C32-CLOSING",
+    "date": "2026-10-19",
+    "status": "PASS available scope; M5 implementation/primary acceptance closed; M6 not started",
+    "host": "58PASS159s including focused2 subset; no sum of retries/language vectors/native reuse",
+    "analyzer": "No issues41.3s",
+    "poco": "2PASS21s persistent worker status UI with native SQLCipher",
+    "dv": "2PASS43s UI/SQLCipher ARM32; exact prior APK/default hashes/awake restored/read back",
+    "nativeClosing": "One audit testcase in3roles: before13archives authenticated/8worker business23 snapshots; after strict all-table/archive/policy equality; final after release startup alert metadata accounted and own M5 work cancellation requested",
+    "data": "2products/2sales; revenue42000/HPP36000/payment22000/debt20000; stock18/value150000; old13archive digests intact; disconnected/autoOff/nextnull",
+    "build": "3 universal artifacts verified; ordinary built only, not installed; development signing",
+    "restoration": {
+      "ordinaryHashesSame": true,
+      "originalSha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+      "originalNotLaunched": true,
+      "campaignClosedHashesSame": true,
+      "finalNativeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c32-final-1792345948116-20261019-010415",
+      "publicExportsSame": true,
+      "legacyHashesSame": true,
+      "originalV6Restored": true
+    },
+    "ownM5Work": {
+      "device": "7f0edea0",
+      "package": "com.example.kasir_app.integration",
+      "nonce": "1792345948116",
+      "closedWorkMetadataIntegrity": true,
+      "originalMetadataHashesUnchanged": true,
+      "m5WorkCount": 5,
+      "pendingOrUnknownStateCount": 0,
+      "succeededCount": 1,
+      "failedCount": 0,
+      "canceledCount": 4,
+      "scope": "Drive-tag, alert unique work and fixture live probes only; no identifiers/payloads retained",
+      "limits": "Snapshot after cleanup; not proof of prior live job cancellation, natural21, reboot or Doze"
+    },
+    "releaseStartup": {
+      "package": "com.example.kasir_app.integration",
+      "pid": 18447,
+      "synthetic_screen_visible": true,
+      "startup_error_markers": 0,
+      "scope": "startup only; not printer, Google, restore or full release acceptance"
+    },
+    "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-worker-status-update-1792345948116\\update.json",
+    "limits": [
+      "Natural21/reboot/Doze/force-stop background delivery unverified",
+      "Real revoked-consent condition/in-flight account switch/other-origin real Drive preservation unverified",
+      "Real cross-device Drive not exercised; encrypted portable DV-to-Poco proof remains separate",
+      "80mm/paper-out/actual ambiguous partial write physical tests unverified",
+      "OEM clipboard preview masking/lockscreen notification content/TalkBack physical unverified",
+      "Realme unavailable for C31/C32; historical results retained separately",
+      "No recovery claim for historical ISSUE-M31-DATA; no M6 release signing/publication"
+    ]
+  }
+}

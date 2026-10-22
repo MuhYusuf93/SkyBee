@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN13",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "Automatic Drive switch shows explicit encrypted-store-upload consent with Batal/Konfirmasi; Batal closes dialog and switch remains off",
+  "automaticEvidence": false,
+  "limits": "Cancellation only; not enabled, scheduled, uploaded or background execution proof."
+}

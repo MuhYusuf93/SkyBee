@@ -2537,7 +2537,7 @@ abstract class AppLocalizations {
   /// M5 printer, alerts or backup interface: m5PrintSetupRequired.
   ///
   /// In en, this message translates to:
-  /// **'Printer is not ready. Check printer settings in Management. The sale remains saved.'**
+  /// **'Printer is not ready. Open Printer settings. The sale remains saved.'**
   String get m5PrintSetupRequired;
 
   /// M5 printer, alerts or backup interface: m5ScanCancelled.
@@ -3284,545 +3284,887 @@ abstract class AppLocalizations {
   /// **'Destination account not recorded'**
   String get m5RunUnknownAccount;
 
-  /// No description provided for @m51Attributes.
+  /// M5.1 management, printer or inventory interface. English meaning: Optional product attributes
   ///
   /// In en, this message translates to:
   /// **'Optional product attributes'**
   String get m51Attributes;
 
-  /// No description provided for @m51Size.
+  /// M5.1 management, printer or inventory interface. English meaning: Weight / volume
   ///
   /// In en, this message translates to:
   /// **'Weight / volume'**
   String get m51Size;
 
-  /// No description provided for @m51SizeHelp.
+  /// M5.1 management, printer or inventory interface. English meaning: Up to 3 decimals, no grouping. Example: 0.5
   ///
   /// In en, this message translates to:
   /// **'Up to 3 decimals, no grouping. Example: 0.5'**
   String get m51SizeHelp;
 
-  /// No description provided for @m51Unit.
+  /// M5.1 management, printer or inventory interface. English meaning: Size unit
   ///
   /// In en, this message translates to:
   /// **'Size unit'**
   String get m51Unit;
 
-  /// No description provided for @m51NoUnit.
+  /// M5.1 management, printer or inventory interface. English meaning: No unit
   ///
   /// In en, this message translates to:
   /// **'No unit'**
   String get m51NoUnit;
 
-  /// No description provided for @m51Liter.
+  /// M5.1 management, printer or inventory interface. English meaning: liter
   ///
   /// In en, this message translates to:
   /// **'liter'**
   String get m51Liter;
 
-  /// No description provided for @m51Shelf.
+  /// M5.1 management, printer or inventory interface. English meaning: Shelf location
   ///
   /// In en, this message translates to:
   /// **'Shelf location'**
   String get m51Shelf;
 
-  /// No description provided for @m51Note.
+  /// M5.1 management, printer or inventory interface. English meaning: Product note
   ///
   /// In en, this message translates to:
   /// **'Product note'**
   String get m51Note;
 
-  /// No description provided for @m51AttributesHelp.
+  /// M5.1 management, printer or inventory interface. English meaning: Size is descriptive; stock stays in pcs. Shelf: 80 characters; note: 1,000. Clear both value and unit to remove size.
   ///
   /// In en, this message translates to:
   /// **'Size is descriptive; stock stays in pcs. Shelf: 80 characters; note: 1,000. Clear both value and unit to remove size.'**
   String get m51AttributesHelp;
 
-  /// No description provided for @m51AttributesInvalid.
+  /// M5.1 management, printer or inventory interface. English meaning: Enter a positive size with its unit (up to 3 decimals, no grouping). Check shelf 80 and note 1,000 character limits.
   ///
   /// In en, this message translates to:
   /// **'Enter a positive size with its unit (up to 3 decimals, no grouping). Check shelf 80 and note 1,000 character limits.'**
   String get m51AttributesInvalid;
 
-  /// No description provided for @m51Security.
+  /// M5.1 management, printer or inventory interface. English meaning: Management security
   ///
   /// In en, this message translates to:
   /// **'Management security'**
   String get m51Security;
 
-  /// No description provided for @m51FreshAuthentication.
+  /// M5.1 management, printer or inventory interface. English meaning: Fresh authentication required
   ///
   /// In en, this message translates to:
   /// **'Fresh authentication required'**
   String get m51FreshAuthentication;
 
-  /// No description provided for @m51FreshAuthenticationRequired.
+  /// M5.1 management, printer or inventory interface. English meaning: Authenticate again to approve this sensitive action.
   ///
   /// In en, this message translates to:
   /// **'Authenticate again to approve this sensitive action.'**
   String get m51FreshAuthenticationRequired;
 
-  /// No description provided for @m51SystemOperationPending.
+  /// M5.1 management, printer or inventory interface. English meaning: Complete or cancel the current system dialog.
   ///
   /// In en, this message translates to:
   /// **'Complete or cancel the current system dialog.'**
   String get m51SystemOperationPending;
 
-  /// No description provided for @m51UseAppPin.
+  /// M5.1 management, printer or inventory interface. English meaning: Use app PIN
   ///
   /// In en, this message translates to:
   /// **'Use app PIN'**
   String get m51UseAppPin;
 
-  /// No description provided for @m51UseBiometric.
+  /// M5.1 management, printer or inventory interface. English meaning: Use strong biometrics
   ///
   /// In en, this message translates to:
   /// **'Use strong biometrics'**
   String get m51UseBiometric;
 
-  /// No description provided for @m51BiometricUnavailable.
+  /// M5.1 management, printer or inventory interface. English meaning: Class 3 biometrics are unavailable or not enrolled. Use the app PIN.
   ///
   /// In en, this message translates to:
   /// **'Class 3 biometrics are unavailable or not enrolled. Use the app PIN.'**
   String get m51BiometricUnavailable;
 
-  /// No description provided for @m51BiometricCancelled.
+  /// M5.1 management, printer or inventory interface. English meaning: Biometric authentication cancelled. You can use the app PIN.
   ///
   /// In en, this message translates to:
   /// **'Biometric authentication cancelled. You can use the app PIN.'**
   String get m51BiometricCancelled;
 
-  /// No description provided for @m51BiometricLockout.
+  /// M5.1 management, printer or inventory interface. English meaning: Android has locked biometric authentication. Use the app PIN or try later.
   ///
   /// In en, this message translates to:
   /// **'Android has locked biometric authentication. Use the app PIN or try later.'**
   String get m51BiometricLockout;
 
-  /// No description provided for @m51BiometricInvalidated.
+  /// M5.1 management, printer or inventory interface. English meaning: Biometric binding changed. Use the app PIN and enable it again if desired.
   ///
   /// In en, this message translates to:
   /// **'Biometric binding changed. Use the app PIN and enable it again if desired.'**
   String get m51BiometricInvalidated;
 
-  /// No description provided for @m51BiometricHelp.
+  /// M5.1 management, printer or inventory interface. English meaning: Optional, Class 3 only. Every enrolled device biometric can authenticate; the app cannot identify individual owners or staff. App PIN remains available. Re-enable with PIN after enrollment changes or restore.
   ///
   /// In en, this message translates to:
   /// **'Optional, Class 3 only. Every enrolled device biometric can authenticate; the app cannot identify individual owners or staff. App PIN remains available. Re-enable with PIN after enrollment changes or restore.'**
   String get m51BiometricHelp;
 
-  /// No description provided for @m51SessionPolicy.
+  /// M5.1 management, printer or inventory interface. English meaning: Management session policy
   ///
   /// In en, this message translates to:
   /// **'Management session policy'**
   String get m51SessionPolicy;
 
-  /// No description provided for @m51CurrentPolicy.
+  /// M5.1 management, printer or inventory interface. English meaning: Effective policy
   ///
   /// In en, this message translates to:
   /// **'Effective policy'**
   String get m51CurrentPolicy;
 
-  /// No description provided for @m51LegacyPolicy.
+  /// M5.1 management, printer or inventory interface. English meaning: Legacy default retained: lock on minimize, 5-minute idle limit.
   ///
   /// In en, this message translates to:
   /// **'Legacy default retained: lock on minimize, 5-minute idle limit.'**
   String get m51LegacyPolicy;
 
-  /// No description provided for @m51SessionImmediate.
+  /// M5.1 management, printer or inventory interface. English meaning: Lock immediately on minimize
   ///
   /// In en, this message translates to:
   /// **'Lock immediately on minimize'**
   String get m51SessionImmediate;
 
-  /// No description provided for @m51Session1.
+  /// M5.1 management, printer or inventory interface. English meaning: 1 minute idle
   ///
   /// In en, this message translates to:
   /// **'1 minute idle'**
   String get m51Session1;
 
-  /// No description provided for @m51Session5.
+  /// M5.1 management, printer or inventory interface. English meaning: 5 minutes idle
   ///
   /// In en, this message translates to:
   /// **'5 minutes idle'**
   String get m51Session5;
 
-  /// No description provided for @m51Session15.
+  /// M5.1 management, printer or inventory interface. English meaning: 15 minutes idle
   ///
   /// In en, this message translates to:
   /// **'15 minutes idle'**
   String get m51Session15;
 
-  /// No description provided for @m51SessionHelp.
+  /// M5.1 management, printer or inventory interface. English meaning: Timed choices include background inactivity; returning does not extend the session. Immediate lock also has a 5-minute idle limit. App dialogs are bounded to 60 seconds; full file/account pickers may require PIN once on return. Screen lock, restart, manual lock, PIN changes and restore invalidate access. Cashier stays open. Grace is a convenience choice retaining temporary access.
   ///
   /// In en, this message translates to:
   /// **'Timed choices include background inactivity; returning does not extend the session. Immediate lock also has a 5-minute idle limit. App dialogs are bounded to 60 seconds; full file/account pickers may require PIN once on return. Screen lock, restart, manual lock, PIN changes and restore invalidate access. Cashier stays open. Grace is a convenience choice retaining temporary access.'**
   String get m51SessionHelp;
 
-  /// No description provided for @m51PrintRecovery.
+  /// M5.1 management, printer or inventory interface. English meaning: Print recovery code
   ///
   /// In en, this message translates to:
   /// **'Print recovery code'**
   String get m51PrintRecovery;
 
-  /// No description provided for @m51RecoveryPrintWarning.
+  /// M5.1 management, printer or inventory interface. English meaning: The paper contains a secret that unlocks backups. Check that you own this destination, collect the paper and store it separately from archives/the device. Printer transport and memory are not guaranteed confidential. There is no automatic retry.
   ///
   /// In en, this message translates to:
   /// **'The paper contains a secret that unlocks backups. Check that you own this destination, collect the paper and store it separately from archives/the device. Printer transport and memory are not guaranteed confidential. There is no automatic retry.'**
   String get m51RecoveryPrintWarning;
 
-  /// No description provided for @m51RecoveryPrintStoredOnly.
+  /// M5.1 management, printer or inventory interface. English meaning: Prints the saved code. For a new or rotated code, confirm and save it first; printing is optional.
   ///
   /// In en, this message translates to:
   /// **'Prints the saved code. For a new or rotated code, confirm and save it first; printing is optional.'**
   String get m51RecoveryPrintStoredOnly;
 
-  /// No description provided for @m51RecoveryPrinterRequired.
+  /// M5.1 management, printer or inventory interface. English meaning: Select and save a printer profile in printer settings first.
   ///
   /// In en, this message translates to:
   /// **'Select and save a printer profile in printer settings first.'**
   String get m51RecoveryPrinterRequired;
 
-  /// No description provided for @m51RecoveryPrinterChanged.
+  /// M5.1 management, printer or inventory interface. English meaning: The printer profile changed. Check and confirm the destination again.
   ///
   /// In en, this message translates to:
   /// **'The printer profile changed. Check and confirm the destination again.'**
   String get m51RecoveryPrinterChanged;
 
-  /// No description provided for @m51RecoveryPrintSubmitted.
+  /// M5.1 management, printer or inventory interface. English meaning: Print data submitted. Check the paper and all 64 characters; submitted bytes do not prove complete paper output.
   ///
   /// In en, this message translates to:
   /// **'Print data submitted. Check the paper and all 64 characters; submitted bytes do not prove complete paper output.'**
   String get m51RecoveryPrintSubmitted;
 
-  /// No description provided for @m51RecoveryPrintNotSent.
+  /// M5.1 management, printer or inventory interface. English meaning: The code was not sent. Check the printer/connection. Reprinting requires new authentication and confirmation.
   ///
   /// In en, this message translates to:
   /// **'The code was not sent. Check the printer/connection. Reprinting requires new authentication and confirmation.'**
   String get m51RecoveryPrintNotSent;
 
-  /// No description provided for @m51RecoveryPrintUnknown.
+  /// M5.1 management, printer or inventory interface. English meaning: Print outcome is uncertain; part of the code may be on paper. No automatic retry. Secure the paper, check the printer, then authenticate again if choosing to reprint.
   ///
   /// In en, this message translates to:
   /// **'Print outcome is uncertain; part of the code may be on paper. No automatic retry. Secure the paper, check the printer, then authenticate again if choosing to reprint.'**
   String get m51RecoveryPrintUnknown;
 
-  /// No description provided for @m51RecoveryPaperStored.
+  /// M5.1 management, printer or inventory interface. English meaning: I checked the entire code on paper and stored my copy privately.
   ///
   /// In en, this message translates to:
   /// **'I checked the entire code on paper and stored my copy privately.'**
   String get m51RecoveryPaperStored;
 
-  /// No description provided for @m51ConfirmPaperStored.
+  /// M5.1 management, printer or inventory interface. English meaning: Record copy storage confirmation
   ///
   /// In en, this message translates to:
   /// **'Record copy storage confirmation'**
   String get m51ConfirmPaperStored;
 
-  /// No description provided for @m51RecoveryCopyStored.
+  /// M5.1 management, printer or inventory interface. English meaning: Copy storage confirmation recorded without retaining its contents.
   ///
   /// In en, this message translates to:
   /// **'Copy storage confirmation recorded without retaining its contents.'**
   String get m51RecoveryCopyStored;
 
-  /// No description provided for @m51PrinterTitle.
+  /// M5.1 management, printer or inventory interface. English meaning: Bluetooth / USB printer
   ///
   /// In en, this message translates to:
   /// **'Bluetooth / USB printer'**
   String get m51PrinterTitle;
 
-  /// No description provided for @m51UsbHelp.
+  /// M5.1 management, printer or inventory interface. English meaning: USB OTG needs USB Host, a data cable, power and an ESC/POS USB printer-class device. Select a device before granting access. Vendor USB serial is not supported. Avoid unplugging during output; failed delivery never retries automatically.
   ///
   /// In en, this message translates to:
   /// **'USB OTG needs USB Host, a data cable, power and an ESC/POS USB printer-class device. Select a device before granting access. Vendor USB serial is not supported. Avoid unplugging during output; failed delivery never retries automatically.'**
   String get m51UsbHelp;
 
-  /// No description provided for @m51UsbLoad.
+  /// M5.1 management, printer or inventory interface. English meaning: Load USB devices
   ///
   /// In en, this message translates to:
   /// **'Load USB devices'**
   String get m51UsbLoad;
 
-  /// No description provided for @m51UsbEmpty.
+  /// M5.1 management, printer or inventory interface. English meaning: No supported class 7/1 USB printer detected. Check OTG, data cable and power.
   ///
   /// In en, this message translates to:
   /// **'No supported class 7/1 USB printer detected. Check OTG, data cable and power.'**
   String get m51UsbEmpty;
 
-  /// No description provided for @m51UsbSelect.
+  /// M5.1 management, printer or inventory interface. English meaning: Select a USB printer, then Connect to request access to that device only.
   ///
   /// In en, this message translates to:
   /// **'Select a USB printer, then Connect to request access to that device only.'**
   String get m51UsbSelect;
 
-  /// No description provided for @m51UsbTemporary.
+  /// M5.1 management, printer or inventory interface. English meaning: Temporary identity: a printer without a unique serial must be reselected after detach or app restart. An old profile never automatically connects to a similar printer.
   ///
   /// In en, this message translates to:
   /// **'Temporary identity: a printer without a unique serial must be reselected after detach or app restart. An old profile never automatically connects to a similar printer.'**
   String get m51UsbTemporary;
 
-  /// No description provided for @m51UsbUnavailable.
+  /// M5.1 management, printer or inventory interface. English meaning: USB Host unavailable. Cashier and Bluetooth remain usable.
   ///
   /// In en, this message translates to:
   /// **'USB Host unavailable. Cashier and Bluetooth remain usable.'**
   String get m51UsbUnavailable;
 
-  /// No description provided for @m51UsbPermissionDenied.
+  /// M5.1 management, printer or inventory interface. English meaning: USB permission was denied or interrupted. Re-enter the app PIN if locked. Use Retry USB permission only to request it explicitly.
   ///
   /// In en, this message translates to:
   /// **'USB permission was denied or interrupted. Re-enter the app PIN if locked. Use Retry USB permission only to request it explicitly.'**
   String get m51UsbPermissionDenied;
 
-  /// No description provided for @m51UsbRetryPermission.
+  /// M5.1 management, printer or inventory interface. English meaning: Retry USB permission
   ///
   /// In en, this message translates to:
   /// **'Retry USB permission'**
   String get m51UsbRetryPermission;
 
-  /// No description provided for @m51UsbSelectAgain.
+  /// M5.1 management, printer or inventory interface. English meaning: USB printer detached, changed identity or is ambiguous. Reload and reselect; no automatic reprint.
   ///
   /// In en, this message translates to:
   /// **'USB printer detached, changed identity or is ambiguous. Reload and reselect; no automatic reprint.'**
   String get m51UsbSelectAgain;
 
-  /// No description provided for @m51UsbBusy.
+  /// M5.1 management, printer or inventory interface. English meaning: USB interface is busy or cannot be claimed without displacing a driver. Close other app connections, then retry explicitly.
   ///
   /// In en, this message translates to:
   /// **'USB interface is busy or cannot be claimed without displacing a driver. Close other app connections, then retry explicitly.'**
   String get m51UsbBusy;
 
-  /// No description provided for @m51UsbFailed.
+  /// M5.1 management, printer or inventory interface. English meaning: USB operation failed. Check power, OTG, data cable, permission and printer compatibility. No automatic reprint.
   ///
   /// In en, this message translates to:
   /// **'USB operation failed. Check power, OTG, data cable, permission and printer compatibility. No automatic reprint.'**
   String get m51UsbFailed;
 
-  /// No description provided for @m51Tender.
+  /// M5.1 management, printer or inventory interface. English meaning: Cash received
   ///
   /// In en, this message translates to:
   /// **'Cash received'**
   String get m51Tender;
 
-  /// No description provided for @m51Applied.
+  /// M5.1 management, printer or inventory interface. English meaning: Payment applied
   ///
   /// In en, this message translates to:
   /// **'Payment applied'**
   String get m51Applied;
 
-  /// No description provided for @m51Change.
+  /// M5.1 management, printer or inventory interface. English meaning: Change
   ///
   /// In en, this message translates to:
   /// **'Change'**
   String get m51Change;
 
-  /// No description provided for @m51Numpad.
+  /// M5.1 management, printer or inventory interface. English meaning: Numpad
   ///
   /// In en, this message translates to:
   /// **'Numpad'**
   String get m51Numpad;
 
-  /// No description provided for @m51QuickCash.
+  /// M5.1 management, printer or inventory interface. English meaning: Quick cash
   ///
   /// In en, this message translates to:
   /// **'Quick cash'**
   String get m51QuickCash;
 
-  /// No description provided for @m51ExactCash.
+  /// M5.1 management, printer or inventory interface. English meaning: Exact amount
   ///
   /// In en, this message translates to:
   /// **'Exact amount'**
   String get m51ExactCash;
 
-  /// No description provided for @m51TenderRequired.
+  /// M5.1 management, printer or inventory interface. English meaning: Enter cash received, choose Exact amount, or explicitly choose All debt.
   ///
   /// In en, this message translates to:
   /// **'Enter cash received, choose Exact amount, or explicitly choose All debt.'**
   String get m51TenderRequired;
 
-  /// No description provided for @m51Backspace.
+  /// M5.1 management, printer or inventory interface. English meaning: Backspace
   ///
   /// In en, this message translates to:
   /// **'Backspace'**
   String get m51Backspace;
 
-  /// No description provided for @m51ClearTender.
+  /// M5.1 management, printer or inventory interface. English meaning: Clear amount
   ///
   /// In en, this message translates to:
   /// **'Clear amount'**
   String get m51ClearTender;
 
-  /// No description provided for @m51ConfirmTender.
+  /// M5.1 management, printer or inventory interface. English meaning: Confirm amount
   ///
   /// In en, this message translates to:
   /// **'Confirm amount'**
   String get m51ConfirmTender;
 
-  /// No description provided for @m51QuickSettings.
+  /// M5.1 management, printer or inventory interface. English meaning: Quick cash amounts
   ///
   /// In en, this message translates to:
   /// **'Quick cash amounts'**
   String get m51QuickSettings;
 
-  /// No description provided for @m51ResetQuick.
+  /// M5.1 management, printer or inventory interface. English meaning: Reset defaults
   ///
   /// In en, this message translates to:
   /// **'Reset defaults'**
   String get m51ResetQuick;
 
-  /// No description provided for @m51Export.
+  /// M5.1 management, printer or inventory interface. English meaning: Export report
   ///
   /// In en, this message translates to:
   /// **'Export report'**
   String get m51Export;
 
-  /// No description provided for @m51ExportPolicy.
+  /// M5.1 management, printer or inventory interface. English meaning: Export the full selected period and customer filter. Inventory and receivables are current snapshots, not historical positions. Files contain store data. UTF-8 CSV: import barcodes, IDs and amounts as text to preserve precision; formula-like text is prefixed with an apostrophe. Not an official tax form.
   ///
   /// In en, this message translates to:
   /// **'Export the full selected period and customer filter. Inventory and receivables are current snapshots, not historical positions. Files contain store data. UTF-8 CSV: import barcodes, IDs and amounts as text to preserve precision; formula-like text is prefixed with an apostrophe. Not an official tax form.'**
   String get m51ExportPolicy;
 
-  /// No description provided for @m51ExportRows.
+  /// M5.1 management, printer or inventory interface. English meaning: Rows prepared
   ///
   /// In en, this message translates to:
   /// **'Rows prepared'**
   String get m51ExportRows;
 
-  /// No description provided for @m51ExportCreate.
+  /// M5.1 management, printer or inventory interface. English meaning: Prepare and choose destination
   ///
   /// In en, this message translates to:
   /// **'Prepare and choose destination'**
   String get m51ExportCreate;
 
-  /// No description provided for @m51ExportSelected.
+  /// M5.1 management, printer or inventory interface. English meaning: Destination selected. Re-enter PIN if requested, then press Write file. Destination expires in two minutes.
   ///
   /// In en, this message translates to:
   /// **'Destination selected. Re-enter PIN if requested, then press Write file. Destination expires in two minutes.'**
   String get m51ExportSelected;
 
-  /// No description provided for @m51ExportWrite.
+  /// M5.1 management, printer or inventory interface. English meaning: Write file
   ///
   /// In en, this message translates to:
   /// **'Write file'**
   String get m51ExportWrite;
 
-  /// No description provided for @m51ExportVerified.
+  /// M5.1 management, printer or inventory interface. English meaning: Report written and verified by reading it back.
   ///
   /// In en, this message translates to:
   /// **'Report written and verified by reading it back.'**
   String get m51ExportVerified;
 
-  /// No description provided for @m51ExportFailed.
+  /// M5.1 management, printer or inventory interface. English meaning: Export did not complete. Check PIN session, storage and destination. Select again if the destination expired.
   ///
   /// In en, this message translates to:
   /// **'Export did not complete. Check PIN session, storage and destination. Select again if the destination expired.'**
   String get m51ExportFailed;
 
-  /// No description provided for @m51MaintenancePolicy.
+  /// M5.1 management, printer or inventory interface. English meaning: Space maintenance is scheduled after a valid backup, while idle and charging. It skips low benefit, busy operations or insufficient storage. History is never deleted.
   ///
   /// In en, this message translates to:
   /// **'Space maintenance is scheduled after a valid backup, while idle and charging. It skips low benefit, busy operations or insufficient storage. History is never deleted.'**
   String get m51MaintenancePolicy;
 
-  /// No description provided for @m51MaintenanceStatus.
+  /// M5.1 management, printer or inventory interface. English meaning: Space maintenance
   ///
   /// In en, this message translates to:
   /// **'Space maintenance'**
   String get m51MaintenanceStatus;
 
-  /// No description provided for @m51MaintenanceAttempt.
+  /// M5.1 management, printer or inventory interface. English meaning: Last attempt
   ///
   /// In en, this message translates to:
   /// **'Last attempt'**
   String get m51MaintenanceAttempt;
 
-  /// No description provided for @m51MaintenanceSuccess.
+  /// M5.1 management, printer or inventory interface. English meaning: Last success
   ///
   /// In en, this message translates to:
   /// **'Last success'**
   String get m51MaintenanceSuccess;
 
-  /// No description provided for @m51Space_databaseBusy.
+  /// Database space-maintenance status or outcome. English meaning: Database is in use; maintenance was skipped.
   ///
   /// In en, this message translates to:
   /// **'Database is in use; maintenance was skipped.'**
   String get m51Space_databaseBusy;
 
-  /// No description provided for @m51Space_none.
+  /// Database space-maintenance status or outcome. English meaning: Not scheduled
   ///
   /// In en, this message translates to:
   /// **'Not scheduled'**
   String get m51Space_none;
 
-  /// No description provided for @m51Space_pending.
+  /// Database space-maintenance status or outcome. English meaning: Waiting for idle conditions
   ///
   /// In en, this message translates to:
   /// **'Waiting for idle conditions'**
   String get m51Space_pending;
 
-  /// No description provided for @m51Space_running.
+  /// Database space-maintenance status or outcome. English meaning: Running
   ///
   /// In en, this message translates to:
   /// **'Running'**
   String get m51Space_running;
 
-  /// No description provided for @m51Space_success.
+  /// Database space-maintenance status or outcome. English meaning: Successful
   ///
   /// In en, this message translates to:
   /// **'Successful'**
   String get m51Space_success;
 
-  /// No description provided for @m51Space_skipped.
+  /// Database space-maintenance status or outcome. English meaning: Skipped
   ///
   /// In en, this message translates to:
   /// **'Skipped'**
   String get m51Space_skipped;
 
-  /// No description provided for @m51Space_error.
+  /// Database space-maintenance status or outcome. English meaning: Did not complete
   ///
   /// In en, this message translates to:
   /// **'Did not complete'**
   String get m51Space_error;
 
-  /// No description provided for @m51Space_cooldown.
+  /// Database space-maintenance status or outcome. English meaning: Maintenance cooldown is active.
   ///
   /// In en, this message translates to:
   /// **'Maintenance cooldown is active.'**
   String get m51Space_cooldown;
 
-  /// No description provided for @m51Space_interrupted.
+  /// Database space-maintenance status or outcome. English meaning: Previous process was interrupted; waiting for the next valid backup.
   ///
   /// In en, this message translates to:
   /// **'Previous process was interrupted; waiting for the next valid backup.'**
   String get m51Space_interrupted;
 
-  /// No description provided for @m51Space_lowBenefit.
+  /// Database space-maintenance status or outcome. English meaning: Reclaimable space is below the threshold.
   ///
   /// In en, this message translates to:
   /// **'Reclaimable space is below the threshold.'**
   String get m51Space_lowBenefit;
 
-  /// No description provided for @m51Space_insufficientSpace.
+  /// Database space-maintenance status or outcome. English meaning: Insufficient temporary space.
   ///
   /// In en, this message translates to:
   /// **'Insufficient temporary space.'**
   String get m51Space_insufficientSpace;
 
-  /// No description provided for @m51Space_deviceInUse.
+  /// Database space-maintenance status or outcome. English meaning: Device is in use or not charging.
   ///
   /// In en, this message translates to:
   /// **'Device is in use or not charging.'**
   String get m51Space_deviceInUse;
 
-  /// No description provided for @m51Space_compacted.
+  /// Database space-maintenance status or outcome. English meaning: Database compacted and integrity verified.
   ///
   /// In en, this message translates to:
   /// **'Database compacted and integrity verified.'**
   String get m51Space_compacted;
 
-  /// No description provided for @m51Space_maintenanceFailed.
+  /// Database space-maintenance status or outcome. English meaning: Maintenance failed. The previous valid backup remains available.
   ///
   /// In en, this message translates to:
   /// **'Maintenance failed. The previous valid backup remains available.'**
   String get m51Space_maintenanceFailed;
+
+  /// M5.2 operational form or validation. English meaning: Pay full balance
+  ///
+  /// In en, this message translates to:
+  /// **'Pay full balance'**
+  String get m52PayAll;
+
+  /// M5.2 operational form or validation. English meaning: Invalid phone number for this country. Use digits and an optional leading +.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number for this country. Use digits and an optional leading +.'**
+  String get m52PhoneInvalid;
+
+  /// M5.2 operational form or validation. English meaning: Invalid email format.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email format.'**
+  String get m52EmailInvalid;
+
+  /// M5.2 operational form or validation. English meaning: Enter a domain or http/https URL with a valid host.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a domain or http/https URL with a valid host.'**
+  String get m52WebsiteInvalid;
+
+  /// M5.2 operational form or validation. English meaning: Initial quantity must be 0–999999 base units, at most six digits.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial quantity must be 0–999999 base units, at most six digits.'**
+  String get m52InitialQuantityLimit;
+
+  /// M5.2 operational form or validation. English meaning: Purchase cost per unit must not exceed the retail selling price.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase cost per unit must not exceed the retail selling price.'**
+  String get m52PurchaseAboveRetail;
+
+  /// M5.2 operational form or validation. English meaning: Wholesale price must not exceed the retail selling price.
+  ///
+  /// In en, this message translates to:
+  /// **'Wholesale price must not exceed the retail selling price.'**
+  String get m52WholesaleAboveRetail;
+
+  /// M5.2 operational form or validation. English meaning: Enter the reference purchase cost per unit, including an explicit zero if free.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the reference purchase cost per unit, including an explicit zero if free.'**
+  String get m52ReferenceCostRequired;
+
+  /// M5.2 operational form or validation. English meaning: This shelf name/code already exists.
+  ///
+  /// In en, this message translates to:
+  /// **'This shelf name/code already exists.'**
+  String get m52ShelfDuplicate;
+
+  /// M5.2 operational form or validation. English meaning: Unsaved changes
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved changes'**
+  String get m52UnsavedTitle;
+
+  /// M5.2 operational form or validation. English meaning: There are unsaved changes. Going back now will discard changes to this form. Continue?
+  ///
+  /// In en, this message translates to:
+  /// **'There are unsaved changes. Going back now will discard changes to this form. Continue?'**
+  String get m52UnsavedBody;
+
+  /// M5.2 operational form or validation. English meaning: Continue editing
+  ///
+  /// In en, this message translates to:
+  /// **'Continue editing'**
+  String get m52KeepEditing;
+
+  /// M5.2 operational form or validation. English meaning: Go back without saving
+  ///
+  /// In en, this message translates to:
+  /// **'Go back without saving'**
+  String get m52Discard;
+
+  /// M5.2 operational form or validation. English meaning: Select a product and name, a positive minimum quantity and a discount of 0.01–100%.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a product and name, a positive minimum quantity and a discount of 0.01–100%.'**
+  String get m52PromoInvalid;
+
+  /// M5.2 operational form or validation. English meaning: This product already has an active promotion. Disable the old promotion first.
+  ///
+  /// In en, this message translates to:
+  /// **'This product already has an active promotion. Disable the old promotion first.'**
+  String get m52PromoConflict;
+
+  /// M5.2 operational form or validation. English meaning: 999 — Fictitious stock (not tracked)
+  ///
+  /// In en, this message translates to:
+  /// **'999 — Fictitious stock (not tracked)'**
+  String get m52Untracked;
+
+  /// M5.2 operational form or validation. English meaning: Initial quantity is empty. The system will store fictitious stock 999 because this product is not tracked. This is not a real quantity and is excluded from inventory value.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial quantity is empty. The system will store fictitious stock 999 because this product is not tracked. This is not a real quantity and is excluded from inventory value.'**
+  String get m52UntrackedNote;
+
+  /// M5.2 operational form or validation. English meaning: Physical inventory operations require stock tracking.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical inventory operations require stock tracking.'**
+  String get m52StockOperationRequiresTracking;
+
+  /// M5.2 operational form or validation. English meaning: Reconcile physical stock and batches before changing tracking mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconcile physical stock and batches before changing tracking mode.'**
+  String get m52StockTransition;
+
+  /// M5.2 operational form or validation. English meaning: Reference purchase cost per unit (not tracked)
+  ///
+  /// In en, this message translates to:
+  /// **'Reference purchase cost per unit (not tracked)'**
+  String get m52ReferenceCost;
+
+  /// M5.2 operational form or validation. English meaning: Stock tracked
+  ///
+  /// In en, this message translates to:
+  /// **'Stock tracked'**
+  String get m52Tracked;
+
+  /// M5.2 operational form or validation. English meaning: Cost basis
+  ///
+  /// In en, this message translates to:
+  /// **'Cost basis'**
+  String get m52CostSource;
+
+  /// M5.2 operational form or validation. English meaning: Retail quantity promotion
+  ///
+  /// In en, this message translates to:
+  /// **'Retail quantity promotion'**
+  String get m52Promo;
+
+  /// M5.2 operational form or validation. English meaning: Promotion name
+  ///
+  /// In en, this message translates to:
+  /// **'Promotion name'**
+  String get m52PromoName;
+
+  /// M5.2 operational form or validation. English meaning: Minimum base-unit quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum base-unit quantity'**
+  String get m52PromoMinimum;
+
+  /// M5.2 operational form or validation. English meaning: Discount (%)
+  ///
+  /// In en, this message translates to:
+  /// **'Discount (%)'**
+  String get m52PromoPercent;
+
+  /// M5.2 operational form or validation. English meaning: Active
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get m52PromoActive;
+
+  /// M5.2 operational form or validation. English meaning: Archive this promotion?
+  ///
+  /// In en, this message translates to:
+  /// **'Archive this promotion?'**
+  String get m52PromoArchive;
+
+  /// M5.2 operational form or validation. English meaning: Gross amount
+  ///
+  /// In en, this message translates to:
+  /// **'Gross amount'**
+  String get m52Gross;
+
+  /// M5.2 operational form or validation. English meaning: Discount
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get m52Discount;
+
+  /// M5.2 operational form or validation. English meaning: The promoted price is below cost. Review the margin before enabling it.
+  ///
+  /// In en, this message translates to:
+  /// **'The promoted price is below cost. Review the margin before enabling it.'**
+  String get m52PromoLoss;
+
+  /// M5.2 operational form or validation. English meaning: Shelf (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf (optional)'**
+  String get m52Shelf;
+
+  /// M5.2 operational form or validation. English meaning: Add / edit shelves
+  ///
+  /// In en, this message translates to:
+  /// **'Add / edit shelves'**
+  String get m52Shelves;
+
+  /// M5.2 operational form or validation. English meaning: Shelf code/name
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf code/name'**
+  String get m52ShelfName;
+
+  /// M5.2 operational form or validation. English meaning: Email (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Email (optional)'**
+  String get m52Email;
+
+  /// M5.2 operational form or validation. English meaning: Website (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Website (optional)'**
+  String get m52Website;
+
+  /// M5.2 operational form or validation. English meaning: Local phone region (ISO code, e.g. ID)
+  ///
+  /// In en, this message translates to:
+  /// **'Local phone region (ISO code, e.g. ID)'**
+  String get m52PhoneRegion;
+
+  /// M5.2 operational form or validation. English meaning: A new date must be tomorrow or later in the device calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'A new date must be tomorrow or later in the device calendar.'**
+  String get m52DateTomorrow;
+
+  /// M5.2 operational form or validation. English meaning: Review low price
+  ///
+  /// In en, this message translates to:
+  /// **'Review low price'**
+  String get m52LowPriceTitle;
+
+  /// M5.2 operational form or validation. English meaning: This price is low for this currency. Review the amount. Save anyway?
+  ///
+  /// In en, this message translates to:
+  /// **'This price is low for this currency. Review the amount. Save anyway?'**
+  String get m52LowPriceBody;
+
+  /// M5.2 operational form or validation. English meaning: Review again
+  ///
+  /// In en, this message translates to:
+  /// **'Review again'**
+  String get m52Review;
+
+  /// M5.2 operational form or validation. English meaning: Save anyway
+  ///
+  /// In en, this message translates to:
+  /// **'Save anyway'**
+  String get m52SaveAnyway;
+
+  /// M5.2 operational form or validation. English meaning: Do not show the low-price warning again for this currency in this shop
+  ///
+  /// In en, this message translates to:
+  /// **'Do not show the low-price warning again for this currency in this shop'**
+  String get m52SuppressLowPrice;
+
+  /// M5.2 operational form or validation. English meaning: Low-price warning preferences
+  ///
+  /// In en, this message translates to:
+  /// **'Low-price warning preferences'**
+  String get m52LowPriceSettings;
+
+  /// M5.2 operational form or validation. English meaning: Low-price threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Low-price threshold'**
+  String get m52Threshold;
+
+  /// M5.2 operational form or validation. English meaning: Paper width
+  ///
+  /// In en, this message translates to:
+  /// **'Paper width'**
+  String get m52PaperWidth;
+
+  /// M5.2 operational form or validation. English meaning: Try Iware 58: 3 feed lines (this profile only)
+  ///
+  /// In en, this message translates to:
+  /// **'Try Iware 58: 3 feed lines (this profile only)'**
+  String get m52IwareFeed;
+
+  /// M5.2 operational form or validation. English meaning: Adjust feed after the footer. Inspect paper before saving calibration; old profiles retain their values.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust feed after the footer. Inspect paper before saving calibration; old profiles retain their values.'**
+  String get m52FeedHelp;
+
+  /// M5.2 operational form or validation. English meaning: 21:00 backup is a best-effort target. Battery/background restrictions can delay it. On HyperOS, No restrictions (if available) may help without guaranteeing timing. Scheduling cannot be relied on after force-stop.
+  ///
+  /// In en, this message translates to:
+  /// **'21:00 backup is a best-effort target. Battery/background restrictions can delay it. On HyperOS, No restrictions (if available) may help without guaranteeing timing. Scheduling cannot be relied on after force-stop.'**
+  String get m52BatteryHelp;
+
+  /// M5.2 operational form or validation. English meaning: Open App info / battery settings
+  ///
+  /// In en, this message translates to:
+  /// **'Open App info / battery settings'**
+  String get m52AppSettings;
+
+  /// M5.2 operational form or validation. English meaning: Products without stock tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Products without stock tracking'**
+  String get m52UntrackedCount;
+
+  /// M5.2 operational form or validation. English meaning: Change stock tracking mode
+  ///
+  /// In en, this message translates to:
+  /// **'Change stock tracking mode'**
+  String get m52TrackingChange;
+
+  /// M5.2 operational form or validation. English meaning: Enable tracking with an actual opening quantity (enter 0 if empty) and purchase cost per unit. Past sales retain their original mode and cost.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable tracking with an actual opening quantity (enter 0 if empty) and purchase cost per unit. Past sales retain their original mode and cost.'**
+  String get m52TrackedOpening;
+
+  /// M5.2 operational form or validation. English meaning: Cannot open this destination. Check the number/address and the device's WhatsApp/browser app.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open this destination. Check the number/address and the device\'s WhatsApp/browser app.'**
+  String get m52ContactOpenFailed;
+
+  /// Action to add a row or item.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// Action to remove an editable quick-cash amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// Validation error when saving a negative per-currency low-price threshold.
+  ///
+  /// In en, this message translates to:
+  /// **'The low-price threshold must not be negative.'**
+  String get m52LowPriceThreshold;
 }
 
 class _AppLocalizationsDelegate

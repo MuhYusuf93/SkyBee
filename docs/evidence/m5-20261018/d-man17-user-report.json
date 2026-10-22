@@ -1,0 +1,9 @@
+{
+  "id": "D-MAN17",
+  "date": "2026-10-18",
+  "status": "PASS reported scoped",
+  "source": "user physical manual report on Poco C31",
+  "actual": "Disconnect status/choose-account only/no account-upload-versions-auto controls/next unscheduled/local8history all matched before extra interaction.",
+  "additionalInteraction": "User accidentally reopened account selection and returned/canceled without connecting an account.",
+  "limits": "Current status text after the extra cancellation was not quoted. Do not treat interval as frozen or infer native policy/OS job cancellation; independent closing audit pending."
+}

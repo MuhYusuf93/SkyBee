@@ -1602,7 +1602,7 @@
   "m5DeliveryUnknown": "Delivery is uncertain. Check the printer first; print SALINAN only if needed.",
   "m5NotSent": "Data was not sent. Check the printer and connection.",
   "m5PrintPrepared": "Print job prepared.",
-  "m5PrintSetupRequired": "Printer is not ready. Check printer settings in Management. The sale remains saved.",
+  "m5PrintSetupRequired": "Printer is not ready. Open Printer settings. The sale remains saved.",
   "m5ScanCancelled": "Discovery cancelled.",
   "m5ScanTimedOut": "Discovery timed out; discovered devices are shown.",
   "m5ScanFinished": "Discovery finished.",
@@ -2308,5 +2308,503 @@
   "m51Space_insufficientSpace": "Insufficient temporary space.",
   "m51Space_deviceInUse": "Device is in use or not charging.",
   "m51Space_compacted": "Database compacted and integrity verified.",
-  "m51Space_maintenanceFailed": "Maintenance failed. The previous valid backup remains available."
+  "m51Space_maintenanceFailed": "Maintenance failed. The previous valid backup remains available.",
+  "m52PayAll": "Pay full balance",
+  "m52PhoneInvalid": "Invalid phone number for this country. Use digits and an optional leading +.",
+  "m52EmailInvalid": "Invalid email format.",
+  "m52WebsiteInvalid": "Enter a domain or http/https URL with a valid host.",
+  "m52InitialQuantityLimit": "Initial quantity must be 0–999999 base units, at most six digits.",
+  "m52PurchaseAboveRetail": "Purchase cost per unit must not exceed the retail selling price.",
+  "m52WholesaleAboveRetail": "Wholesale price must not exceed the retail selling price.",
+  "m52ReferenceCostRequired": "Enter the reference purchase cost per unit, including an explicit zero if free.",
+  "m52ShelfDuplicate": "This shelf name/code already exists.",
+  "m52UnsavedTitle": "Unsaved changes",
+  "m52UnsavedBody": "There are unsaved changes. Going back now will discard changes to this form. Continue?",
+  "m52KeepEditing": "Continue editing",
+  "m52Discard": "Go back without saving",
+  "m52PromoInvalid": "Select a product and name, a positive minimum quantity and a discount of 0.01–100%.",
+  "m52PromoConflict": "This product already has an active promotion. Disable the old promotion first.",
+  "m52Untracked": "999 — Fictitious stock (not tracked)",
+  "m52UntrackedNote": "Initial quantity is empty. The system will store fictitious stock 999 because this product is not tracked. This is not a real quantity and is excluded from inventory value.",
+  "m52StockOperationRequiresTracking": "Physical inventory operations require stock tracking.",
+  "m52StockTransition": "Reconcile physical stock and batches before changing tracking mode.",
+  "m52ReferenceCost": "Reference purchase cost per unit (not tracked)",
+  "m52Tracked": "Stock tracked",
+  "m52CostSource": "Cost basis",
+  "m52Promo": "Retail quantity promotion",
+  "m52PromoName": "Promotion name",
+  "m52PromoMinimum": "Minimum base-unit quantity",
+  "m52PromoPercent": "Discount (%)",
+  "m52PromoActive": "Active",
+  "m52PromoArchive": "Archive this promotion?",
+  "m52Gross": "Gross amount",
+  "m52Discount": "Discount",
+  "m52PromoLoss": "The promoted price is below cost. Review the margin before enabling it.",
+  "m52Shelf": "Shelf (optional)",
+  "m52Shelves": "Add / edit shelves",
+  "m52ShelfName": "Shelf code/name",
+  "m52Email": "Email (optional)",
+  "m52Website": "Website (optional)",
+  "m52PhoneRegion": "Local phone region (ISO code, e.g. ID)",
+  "m52DateTomorrow": "A new date must be tomorrow or later in the device calendar.",
+  "m52LowPriceTitle": "Review low price",
+  "m52LowPriceBody": "This price is low for this currency. Review the amount. Save anyway?",
+  "m52Review": "Review again",
+  "m52SaveAnyway": "Save anyway",
+  "m52SuppressLowPrice": "Do not show the low-price warning again for this currency in this shop",
+  "m52LowPriceSettings": "Low-price warning preferences",
+  "m52Threshold": "Low-price threshold",
+  "m52PaperWidth": "Paper width",
+  "m52IwareFeed": "Try Iware 58: 3 feed lines (this profile only)",
+  "m52FeedHelp": "Adjust feed after the footer. Inspect paper before saving calibration; old profiles retain their values.",
+  "m52BatteryHelp": "21:00 backup is a best-effort target. Battery/background restrictions can delay it. On HyperOS, No restrictions (if available) may help without guaranteeing timing. Scheduling cannot be relied on after force-stop.",
+  "m52AppSettings": "Open App info / battery settings",
+  "m52UntrackedCount": "Products without stock tracking",
+  "m52TrackingChange": "Change stock tracking mode",
+  "m52TrackedOpening": "Enable tracking with an actual opening quantity (enter 0 if empty) and purchase cost per unit. Past sales retain their original mode and cost.",
+  "m52ContactOpenFailed": "Cannot open this destination. Check the number/address and the device's WhatsApp/browser app.",
+  "@m51Attributes": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Optional product attributes"
+  },
+  "@m51Size": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Weight / volume"
+  },
+  "@m51SizeHelp": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Up to 3 decimals, no grouping. Example: 0.5"
+  },
+  "@m51Unit": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Size unit"
+  },
+  "@m51NoUnit": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: No unit"
+  },
+  "@m51Liter": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: liter"
+  },
+  "@m51Shelf": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Shelf location"
+  },
+  "@m51Note": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Product note"
+  },
+  "@m51AttributesHelp": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Size is descriptive; stock stays in pcs. Shelf: 80 characters; note: 1,000. Clear both value and unit to remove size."
+  },
+  "@m51AttributesInvalid": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Enter a positive size with its unit (up to 3 decimals, no grouping). Check shelf 80 and note 1,000 character limits."
+  },
+  "@m51Security": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Management security"
+  },
+  "@m51FreshAuthentication": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Fresh authentication required"
+  },
+  "@m51FreshAuthenticationRequired": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Authenticate again to approve this sensitive action."
+  },
+  "@m51SystemOperationPending": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Complete or cancel the current system dialog."
+  },
+  "@m51UseAppPin": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Use app PIN"
+  },
+  "@m51UseBiometric": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Use strong biometrics"
+  },
+  "@m51BiometricUnavailable": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Class 3 biometrics are unavailable or not enrolled. Use the app PIN."
+  },
+  "@m51BiometricCancelled": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Biometric authentication cancelled. You can use the app PIN."
+  },
+  "@m51BiometricLockout": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Android has locked biometric authentication. Use the app PIN or try later."
+  },
+  "@m51BiometricInvalidated": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Biometric binding changed. Use the app PIN and enable it again if desired."
+  },
+  "@m51BiometricHelp": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Optional, Class 3 only. Every enrolled device biometric can authenticate; the app cannot identify individual owners or staff. App PIN remains available. Re-enable with PIN after enrollment changes or restore."
+  },
+  "@m51SessionPolicy": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Management session policy"
+  },
+  "@m51CurrentPolicy": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Effective policy"
+  },
+  "@m51LegacyPolicy": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Legacy default retained: lock on minimize, 5-minute idle limit."
+  },
+  "@m51SessionImmediate": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Lock immediately on minimize"
+  },
+  "@m51Session1": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: 1 minute idle"
+  },
+  "@m51Session5": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: 5 minutes idle"
+  },
+  "@m51Session15": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: 15 minutes idle"
+  },
+  "@m51SessionHelp": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Timed choices include background inactivity; returning does not extend the session. Immediate lock also has a 5-minute idle limit. App dialogs are bounded to 60 seconds; full file/account pickers may require PIN once on return. Screen lock, restart, manual lock, PIN changes and restore invalidate access. Cashier stays open. Grace is a convenience choice retaining temporary access."
+  },
+  "@m51PrintRecovery": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Print recovery code"
+  },
+  "@m51RecoveryPrintWarning": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: The paper contains a secret that unlocks backups. Check that you own this destination, collect the paper and store it separately from archives/the device. Printer transport and memory are not guaranteed confidential. There is no automatic retry."
+  },
+  "@m51RecoveryPrintStoredOnly": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Prints the saved code. For a new or rotated code, confirm and save it first; printing is optional."
+  },
+  "@m51RecoveryPrinterRequired": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Select and save a printer profile in printer settings first."
+  },
+  "@m51RecoveryPrinterChanged": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: The printer profile changed. Check and confirm the destination again."
+  },
+  "@m51RecoveryPrintSubmitted": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Print data submitted. Check the paper and all 64 characters; submitted bytes do not prove complete paper output."
+  },
+  "@m51RecoveryPrintNotSent": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: The code was not sent. Check the printer/connection. Reprinting requires new authentication and confirmation."
+  },
+  "@m51RecoveryPrintUnknown": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Print outcome is uncertain; part of the code may be on paper. No automatic retry. Secure the paper, check the printer, then authenticate again if choosing to reprint."
+  },
+  "@m51RecoveryPaperStored": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: I checked the entire code on paper and stored my copy privately."
+  },
+  "@m51ConfirmPaperStored": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Record copy storage confirmation"
+  },
+  "@m51RecoveryCopyStored": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Copy storage confirmation recorded without retaining its contents."
+  },
+  "@m51PrinterTitle": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Bluetooth / USB printer"
+  },
+  "@m51UsbHelp": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: USB OTG needs USB Host, a data cable, power and an ESC/POS USB printer-class device. Select a device before granting access. Vendor USB serial is not supported. Avoid unplugging during output; failed delivery never retries automatically."
+  },
+  "@m51UsbLoad": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Load USB devices"
+  },
+  "@m51UsbEmpty": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: No supported class 7/1 USB printer detected. Check OTG, data cable and power."
+  },
+  "@m51UsbSelect": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Select a USB printer, then Connect to request access to that device only."
+  },
+  "@m51UsbTemporary": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Temporary identity: a printer without a unique serial must be reselected after detach or app restart. An old profile never automatically connects to a similar printer."
+  },
+  "@m51UsbUnavailable": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: USB Host unavailable. Cashier and Bluetooth remain usable."
+  },
+  "@m51UsbPermissionDenied": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: USB permission was denied or interrupted. Re-enter the app PIN if locked. Use Retry USB permission only to request it explicitly."
+  },
+  "@m51UsbRetryPermission": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Retry USB permission"
+  },
+  "@m51UsbSelectAgain": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: USB printer detached, changed identity or is ambiguous. Reload and reselect; no automatic reprint."
+  },
+  "@m51UsbBusy": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: USB interface is busy or cannot be claimed without displacing a driver. Close other app connections, then retry explicitly."
+  },
+  "@m51UsbFailed": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: USB operation failed. Check power, OTG, data cable, permission and printer compatibility. No automatic reprint."
+  },
+  "@m51Tender": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Cash received"
+  },
+  "@m51Applied": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Payment applied"
+  },
+  "@m51Change": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Change"
+  },
+  "@m51Numpad": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Numpad"
+  },
+  "@m51QuickCash": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Quick cash"
+  },
+  "@m51ExactCash": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Exact amount"
+  },
+  "@m51TenderRequired": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Enter cash received, choose Exact amount, or explicitly choose All debt."
+  },
+  "@m51Backspace": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Backspace"
+  },
+  "@m51ClearTender": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Clear amount"
+  },
+  "@m51ConfirmTender": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Confirm amount"
+  },
+  "@m51QuickSettings": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Quick cash amounts"
+  },
+  "@m51ResetQuick": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Reset defaults"
+  },
+  "@m51Export": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Export report"
+  },
+  "@m51ExportPolicy": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Export the full selected period and customer filter. Inventory and receivables are current snapshots, not historical positions. Files contain store data. UTF-8 CSV: import barcodes, IDs and amounts as text to preserve precision; formula-like text is prefixed with an apostrophe. Not an official tax form."
+  },
+  "@m51ExportRows": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Rows prepared"
+  },
+  "@m51ExportCreate": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Prepare and choose destination"
+  },
+  "@m51ExportSelected": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Destination selected. Re-enter PIN if requested, then press Write file. Destination expires in two minutes."
+  },
+  "@m51ExportWrite": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Write file"
+  },
+  "@m51ExportVerified": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Report written and verified by reading it back."
+  },
+  "@m51ExportFailed": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Export did not complete. Check PIN session, storage and destination. Select again if the destination expired."
+  },
+  "@m51MaintenancePolicy": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Space maintenance is scheduled after a valid backup, while idle and charging. It skips low benefit, busy operations or insufficient storage. History is never deleted."
+  },
+  "@m51MaintenanceStatus": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Space maintenance"
+  },
+  "@m51MaintenanceAttempt": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Last attempt"
+  },
+  "@m51MaintenanceSuccess": {
+    "description": "M5.1 management, printer or inventory interface. English meaning: Last success"
+  },
+  "@m51Space_databaseBusy": {
+    "description": "Database space-maintenance status or outcome. English meaning: Database is in use; maintenance was skipped."
+  },
+  "@m51Space_none": {
+    "description": "Database space-maintenance status or outcome. English meaning: Not scheduled"
+  },
+  "@m51Space_pending": {
+    "description": "Database space-maintenance status or outcome. English meaning: Waiting for idle conditions"
+  },
+  "@m51Space_running": {
+    "description": "Database space-maintenance status or outcome. English meaning: Running"
+  },
+  "@m51Space_success": {
+    "description": "Database space-maintenance status or outcome. English meaning: Successful"
+  },
+  "@m51Space_skipped": {
+    "description": "Database space-maintenance status or outcome. English meaning: Skipped"
+  },
+  "@m51Space_error": {
+    "description": "Database space-maintenance status or outcome. English meaning: Did not complete"
+  },
+  "@m51Space_cooldown": {
+    "description": "Database space-maintenance status or outcome. English meaning: Maintenance cooldown is active."
+  },
+  "@m51Space_interrupted": {
+    "description": "Database space-maintenance status or outcome. English meaning: Previous process was interrupted; waiting for the next valid backup."
+  },
+  "@m51Space_lowBenefit": {
+    "description": "Database space-maintenance status or outcome. English meaning: Reclaimable space is below the threshold."
+  },
+  "@m51Space_insufficientSpace": {
+    "description": "Database space-maintenance status or outcome. English meaning: Insufficient temporary space."
+  },
+  "@m51Space_deviceInUse": {
+    "description": "Database space-maintenance status or outcome. English meaning: Device is in use or not charging."
+  },
+  "@m51Space_compacted": {
+    "description": "Database space-maintenance status or outcome. English meaning: Database compacted and integrity verified."
+  },
+  "@m51Space_maintenanceFailed": {
+    "description": "Database space-maintenance status or outcome. English meaning: Maintenance failed. The previous valid backup remains available."
+  },
+  "@m52PayAll": {
+    "description": "M5.2 operational form or validation. English meaning: Pay full balance"
+  },
+  "@m52PhoneInvalid": {
+    "description": "M5.2 operational form or validation. English meaning: Invalid phone number for this country. Use digits and an optional leading +."
+  },
+  "@m52EmailInvalid": {
+    "description": "M5.2 operational form or validation. English meaning: Invalid email format."
+  },
+  "@m52WebsiteInvalid": {
+    "description": "M5.2 operational form or validation. English meaning: Enter a domain or http/https URL with a valid host."
+  },
+  "@m52InitialQuantityLimit": {
+    "description": "M5.2 operational form or validation. English meaning: Initial quantity must be 0–999999 base units, at most six digits."
+  },
+  "@m52PurchaseAboveRetail": {
+    "description": "M5.2 operational form or validation. English meaning: Purchase cost per unit must not exceed the retail selling price."
+  },
+  "@m52WholesaleAboveRetail": {
+    "description": "M5.2 operational form or validation. English meaning: Wholesale price must not exceed the retail selling price."
+  },
+  "@m52ReferenceCostRequired": {
+    "description": "M5.2 operational form or validation. English meaning: Enter the reference purchase cost per unit, including an explicit zero if free."
+  },
+  "@m52ShelfDuplicate": {
+    "description": "M5.2 operational form or validation. English meaning: This shelf name/code already exists."
+  },
+  "@m52UnsavedTitle": {
+    "description": "M5.2 operational form or validation. English meaning: Unsaved changes"
+  },
+  "@m52UnsavedBody": {
+    "description": "M5.2 operational form or validation. English meaning: There are unsaved changes. Going back now will discard changes to this form. Continue?"
+  },
+  "@m52KeepEditing": {
+    "description": "M5.2 operational form or validation. English meaning: Continue editing"
+  },
+  "@m52Discard": {
+    "description": "M5.2 operational form or validation. English meaning: Go back without saving"
+  },
+  "@m52PromoInvalid": {
+    "description": "M5.2 operational form or validation. English meaning: Select a product and name, a positive minimum quantity and a discount of 0.01–100%."
+  },
+  "@m52PromoConflict": {
+    "description": "M5.2 operational form or validation. English meaning: This product already has an active promotion. Disable the old promotion first."
+  },
+  "@m52Untracked": {
+    "description": "M5.2 operational form or validation. English meaning: 999 — Fictitious stock (not tracked)"
+  },
+  "@m52UntrackedNote": {
+    "description": "M5.2 operational form or validation. English meaning: Initial quantity is empty. The system will store fictitious stock 999 because this product is not tracked. This is not a real quantity and is excluded from inventory value."
+  },
+  "@m52StockOperationRequiresTracking": {
+    "description": "M5.2 operational form or validation. English meaning: Physical inventory operations require stock tracking."
+  },
+  "@m52StockTransition": {
+    "description": "M5.2 operational form or validation. English meaning: Reconcile physical stock and batches before changing tracking mode."
+  },
+  "@m52ReferenceCost": {
+    "description": "M5.2 operational form or validation. English meaning: Reference purchase cost per unit (not tracked)"
+  },
+  "@m52Tracked": {
+    "description": "M5.2 operational form or validation. English meaning: Stock tracked"
+  },
+  "@m52CostSource": {
+    "description": "M5.2 operational form or validation. English meaning: Cost basis"
+  },
+  "@m52Promo": {
+    "description": "M5.2 operational form or validation. English meaning: Retail quantity promotion"
+  },
+  "@m52PromoName": {
+    "description": "M5.2 operational form or validation. English meaning: Promotion name"
+  },
+  "@m52PromoMinimum": {
+    "description": "M5.2 operational form or validation. English meaning: Minimum base-unit quantity"
+  },
+  "@m52PromoPercent": {
+    "description": "M5.2 operational form or validation. English meaning: Discount (%)"
+  },
+  "@m52PromoActive": {
+    "description": "M5.2 operational form or validation. English meaning: Active"
+  },
+  "@m52PromoArchive": {
+    "description": "M5.2 operational form or validation. English meaning: Archive this promotion?"
+  },
+  "@m52Gross": {
+    "description": "M5.2 operational form or validation. English meaning: Gross amount"
+  },
+  "@m52Discount": {
+    "description": "M5.2 operational form or validation. English meaning: Discount"
+  },
+  "@m52PromoLoss": {
+    "description": "M5.2 operational form or validation. English meaning: The promoted price is below cost. Review the margin before enabling it."
+  },
+  "@m52Shelf": {
+    "description": "M5.2 operational form or validation. English meaning: Shelf (optional)"
+  },
+  "@m52Shelves": {
+    "description": "M5.2 operational form or validation. English meaning: Add / edit shelves"
+  },
+  "@m52ShelfName": {
+    "description": "M5.2 operational form or validation. English meaning: Shelf code/name"
+  },
+  "@m52Email": {
+    "description": "M5.2 operational form or validation. English meaning: Email (optional)"
+  },
+  "@m52Website": {
+    "description": "M5.2 operational form or validation. English meaning: Website (optional)"
+  },
+  "@m52PhoneRegion": {
+    "description": "M5.2 operational form or validation. English meaning: Local phone region (ISO code, e.g. ID)"
+  },
+  "@m52DateTomorrow": {
+    "description": "M5.2 operational form or validation. English meaning: A new date must be tomorrow or later in the device calendar."
+  },
+  "@m52LowPriceTitle": {
+    "description": "M5.2 operational form or validation. English meaning: Review low price"
+  },
+  "@m52LowPriceBody": {
+    "description": "M5.2 operational form or validation. English meaning: This price is low for this currency. Review the amount. Save anyway?"
+  },
+  "@m52Review": {
+    "description": "M5.2 operational form or validation. English meaning: Review again"
+  },
+  "@m52SaveAnyway": {
+    "description": "M5.2 operational form or validation. English meaning: Save anyway"
+  },
+  "@m52SuppressLowPrice": {
+    "description": "M5.2 operational form or validation. English meaning: Do not show the low-price warning again for this currency in this shop"
+  },
+  "@m52LowPriceSettings": {
+    "description": "M5.2 operational form or validation. English meaning: Low-price warning preferences"
+  },
+  "@m52Threshold": {
+    "description": "M5.2 operational form or validation. English meaning: Low-price threshold"
+  },
+  "@m52PaperWidth": {
+    "description": "M5.2 operational form or validation. English meaning: Paper width"
+  },
+  "@m52IwareFeed": {
+    "description": "M5.2 operational form or validation. English meaning: Try Iware 58: 3 feed lines (this profile only)"
+  },
+  "@m52FeedHelp": {
+    "description": "M5.2 operational form or validation. English meaning: Adjust feed after the footer. Inspect paper before saving calibration; old profiles retain their values."
+  },
+  "@m52BatteryHelp": {
+    "description": "M5.2 operational form or validation. English meaning: 21:00 backup is a best-effort target. Battery/background restrictions can delay it. On HyperOS, No restrictions (if available) may help without guaranteeing timing. Scheduling cannot be relied on after force-stop."
+  },
+  "@m52AppSettings": {
+    "description": "M5.2 operational form or validation. English meaning: Open App info / battery settings"
+  },
+  "@m52UntrackedCount": {
+    "description": "M5.2 operational form or validation. English meaning: Products without stock tracking"
+  },
+  "@m52TrackingChange": {
+    "description": "M5.2 operational form or validation. English meaning: Change stock tracking mode"
+  },
+  "@m52TrackedOpening": {
+    "description": "M5.2 operational form or validation. English meaning: Enable tracking with an actual opening quantity (enter 0 if empty) and purchase cost per unit. Past sales retain their original mode and cost."
+  },
+  "@m52ContactOpenFailed": {
+    "description": "M5.2 operational form or validation. English meaning: Cannot open this destination. Check the number/address and the device's WhatsApp/browser app."
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Action to add a row or item."
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Action to remove an editable quick-cash amount."
+  },
+  "m52LowPriceThreshold": "The low-price threshold must not be negative.",
+  "@m52LowPriceThreshold": {
+    "description": "Validation error when saving a negative per-currency low-price threshold."
+  }
 }

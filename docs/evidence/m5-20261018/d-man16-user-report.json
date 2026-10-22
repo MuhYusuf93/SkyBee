@@ -1,0 +1,9 @@
+{
+  "id": "D-MAN16",
+  "date": "2026-10-18",
+  "status": "PASS reported scoped; UI ambiguity under investigation",
+  "source": "user manual report",
+  "actual": "Account B Drive archive list empty;8 Verified complete/date rows below it, also seen for prior account.",
+  "sourceInspection": "Provider.load reads runs from local DriveBackupService.history/backup_runs without account filtering; screen renders s.runs separately from s.remote. Eight rows consistent with earlier8real uploads, not8cloud archives on B.",
+  "limits": "No independent native B identity/list or business audit in this step. No cloud mixing established. History lacks an explicit local/cross-account section heading; prepare C30 UI repro, no data deletion/filtering."
+}

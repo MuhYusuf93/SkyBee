@@ -1,0 +1,12 @@
+{
+  "id": "D-MAN08",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya sesuai; no PIN prompt because returned directly to cashier outside management",
+  "status": "PARTIAL",
+  "scope": "Full restore completion reported; app returned to cashier as expected from navigator/session reset",
+  "pending": "Open Kelola and verify PIN gate before protected data; user has not clearly reported this action yet. Post-restore financial/stock values, safety archive integrity and reset policy not yet verified for this Drive restore.",
+  "automaticEvidence": false,
+  "limits": "Not a proven PIN bug: cashier itself does not require management PIN. No new device automation or independent restore audit; no recovery collected.",
+  "followUp": "D-MAN08R confirms management gate PASS reported; earlier cashier/no immediate PIN is expected route, not failure."
+}

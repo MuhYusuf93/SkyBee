@@ -1,0 +1,8 @@
+{
+  "id": "D-MAN15c",
+  "date": "2026-10-18",
+  "status": "PASS",
+  "source": "user manual report: ya",
+  "scope": "C29 Poco: account B accepted once, destination privately correct, saved/automatic-off status, switch OFF, target not scheduled, pending controls gone and previous7Drive rows cleared without refresh.",
+  "limits": "Actual acceptance and UI invalidation reported; not yet a request for account B versions or proof of cloud isolation/job cancellation/unchanged SQL. No upload, automatic opt-in or restore performed in this step."
+}

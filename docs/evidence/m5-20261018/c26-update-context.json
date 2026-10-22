@@ -1,0 +1,11 @@
+{
+  "stage": "Manual real upload/list/download reported PASS; D-MAN07 authentication pending",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-drive-config-update-1792309347903\\update.json",
+  "automaticDeviceControlActive": false,
+  "manualStep": "D-MAN07 privately paste stored backup recovery and validate downloaded Drive archive once; inspect metadata only; no restore confirmation",
+  "installedSha256": "58cbd652096ff1289689d7b806de74e97fb59bc437d5051f4b5215111a20f7e0",
+  "originalV6RestorationPending": true,
+  "closingPending": true,
+  "supersededBy": "docs/evidence/m5-20261018/c27-update-context.json",
+  "historicalContextOnly": true
+}

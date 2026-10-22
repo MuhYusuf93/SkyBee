@@ -1,0 +1,10 @@
+{
+  "stage": "C28 replaced by C29; follow superseding context",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-schedule-ui-update-1792317053346\\update.json",
+  "automaticDeviceControlActive": false,
+  "manualStep": "C28-MAN01: inspect active auto schedule, switch OFF verify status target clears without refresh; ON/confirm verify target21 returns without refresh; no manual upload. Do not claim actual job execution.",
+  "installedSha256": "2c64c2ff8819602be01c6315000bbf876f56eeb9951c375ad2b3d7c4da09de14",
+  "originalV6RestorationPending": true,
+  "closingPending": true,
+  "supersededBy": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c29-update-context.json"
+}

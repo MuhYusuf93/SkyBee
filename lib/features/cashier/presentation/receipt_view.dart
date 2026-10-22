@@ -3,8 +3,10 @@ import '../../inventory/presentation/product_attributes_view.dart';
 import '../../inventory/domain/product_attributes.dart';
 import '../../../core/money/money_field.dart';
 import '../../../core/money/money.dart';
+import '../../../core/presentation/contact_output_link.dart';
 import '../../../l10n/localization.dart';
 import '../domain/cashier_models.dart';
+import '../domain/quantity_promotion.dart';
 import '../../printer/presentation/receipt_print_actions.dart';
 
 /// Read-only post-commit receipt. No printing transport or stock writes here.
@@ -46,7 +48,8 @@ class ReceiptView extends StatelessWidget {
         Text(time),
         if (receipt.customerName != null)
           Text('${tr(context, 'm3Customer')}: ${receipt.customerName}'),
-        if (receipt.customerPhone != null) Text(receipt.customerPhone!),
+        if (receipt.customerPhone != null)
+          ContactOutputLink.phone(receipt.customerPhone!),
         const Divider(),
         for (final item in receipt.items)
           Padding(
@@ -56,6 +59,7 @@ class ReceiptView extends StatelessWidget {
               children: [
                 Text(item['product_name_snapshot'] as String),
                 ProductAttributesView(
+                  currency: currency,
                   attributes: ProductAttributes.fromRow(
                     item,
                     suffix: '_snapshot',
@@ -67,6 +71,19 @@ class ReceiptView extends StatelessWidget {
                   '${item['quantity']} × ${amount(item['unit_price_rupiah'] as int)}',
                 ),
                 Text(amount(item['total_rupiah'] as int)),
+                if (item['promo_snapshot_json'] != null) ...[
+                  Text(
+                    QuantityPromotion.parse(
+                      item['promo_snapshot_json'] as String,
+                    )!.name,
+                  ),
+                  Text(
+                    '${tr(context, 'm52Gross')}: ${amount(item['gross_minor'] as int)}',
+                  ),
+                  Text(
+                    '${tr(context, 'm52Discount')}: ${amount(item['discount_minor'] as int)}',
+                  ),
+                ],
               ],
             ),
           ),

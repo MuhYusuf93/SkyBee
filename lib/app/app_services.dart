@@ -1,4 +1,5 @@
 import '../features/cashier/application/quick_cash_service.dart';
+import '../features/cashier/application/quantity_promotion_service.dart';
 import '../features/reports/application/report_export_service.dart';
 import '../core/time/store_clock.dart';
 import '../data/database/database_coordinator.dart';
@@ -69,11 +70,18 @@ final class AppServices {
     outputGate: printerGate,
   );
   late final quickCash = QuickCashService(database, management);
+  late final promotions = QuantityPromotionService(database, management);
   late final reportExport = ReportExportService(database, management);
   late final printers = PrinterSettingsService(
     database,
     management,
     outputGate: printerGate,
+  );
+  late final cashierPrinters = PrinterSettingsService(
+    database,
+    management,
+    outputGate: printerGate,
+    publicAccess: true,
   );
   late final backups = BackupService(
     database,

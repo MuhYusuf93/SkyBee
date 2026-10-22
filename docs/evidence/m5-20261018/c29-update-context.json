@@ -1,0 +1,12 @@
+{
+  "stage": "C29 replaced by C30; follow superseding context",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-account-ui-update-1792328869099\\update.json",
+  "automaticDeviceControlActive": false,
+  "manualStep": "Manual paused: C30 host repro/labels for local backup job history versus destination cloud list. Leave account B connected/automatic OFF; no uploads/restore. Device automation not active until explicit test phase.",
+  "installedSha256": "2f114edc869e4466aae6a9788e1b7bb6cda78c90b0528cce0e8a4981ab34cf6e",
+  "originalV6RestorationPending": true,
+  "closingPending": true,
+  "latestManualEvidence": "docs/evidence/m5-20261018/d-man16-user-report.json",
+  "reportedPolicyState": "account B connected, automatic OFF; native state not yet audited",
+  "supersededBy": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c30-update-context.json"
+}

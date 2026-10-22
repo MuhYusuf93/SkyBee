@@ -6,6 +6,7 @@ import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
 import '../domain/inventory_models.dart';
 import 'master_list.dart';
+import 'shelves_screen.dart';
 
 /// Bounded dropdown: RawAutocomplete owns transient options, parent owns the
 /// selected relation ID. No table is loaded into widget state.
@@ -112,14 +113,18 @@ class _RelationFieldState extends State<RelationField> {
               focusNode: focus,
               enabled: widget.enabled,
               decoration: InputDecoration(
-                labelText: widget.kind == MasterKind.category
-                    ? tr(context, 'categoryOptional')
-                    : tr(context, 'supplierOptional'),
+                labelText: tr(context, switch (widget.kind) {
+                  MasterKind.category => 'categoryOptional',
+                  MasterKind.supplier => 'supplierOptional',
+                  MasterKind.shelf => 'm52Shelf',
+                }),
                 hintText: tr(context, 'typeANamePrefixThenSelect'),
                 helperText: widget.value == null
                     ? (widget.kind == MasterKind.category
                           ? tr(context, 'uncategorized')
-                          : tr(context, 'noSupplier'))
+                          : widget.kind == MasterKind.supplier
+                          ? tr(context, 'noSupplier')
+                          : '—')
                     : null,
                 border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
@@ -145,7 +150,18 @@ class _RelationFieldState extends State<RelationField> {
       TextButton.icon(
         onPressed: widget.enabled
             ? () async {
-                final result = await pickMaster(context, widget.kind);
+                final result = widget.kind == MasterKind.shelf
+                    ? await Navigator.push<MasterRecord>(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ShelvesScreen(
+                            prefill: _controller.text,
+                            picker: true,
+                          ),
+                        ),
+                      )
+                    : await pickMaster(context, widget.kind);
+                _generation++;
                 if (result != null && mounted) widget.onChanged(result);
               }
             : null,
@@ -153,7 +169,9 @@ class _RelationFieldState extends State<RelationField> {
         label: Text(
           widget.kind == MasterKind.category
               ? tr(context, 'searchOrAddCategory')
-              : tr(context, 'searchOrAddSupplier'),
+              : widget.kind == MasterKind.supplier
+              ? tr(context, 'searchOrAddSupplier')
+              : tr(context, 'm52Shelves'),
         ),
       ),
     ],

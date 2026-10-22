@@ -1,0 +1,13 @@
+{
+  "id": "D-MAN09",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answers": {
+    "financial": "ya",
+    "inventory": "ya"
+  },
+  "status": "PASS",
+  "scope": "After actual Drive restore, backup fixture PIN0001 accepted; reports Month/All customers show expected sales42000/cost36000/profit6000/paid22000/debt20000/count2/reversal0 and physical stock18/expired0/value150000",
+  "automaticEvidence": false,
+  "limits": "Reported UI totals only, not independent DB/receipt/cipher/FK audit or safety archive authentication. No new transactions, stock changes or print requested."
+}

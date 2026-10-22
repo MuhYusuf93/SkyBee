@@ -75,6 +75,7 @@ class _ReportsBodyState extends State<_ReportsBody> {
           codec.formatSignedCost(BigInt.from(summary.inventoryMicros)),
         ),
         ('m4PhysicalStock', '${summary.inventoryQuantity}'),
+        ('m52UntrackedCount', '${summary.untrackedProductCount}'),
         ('m4ExpiredStock', '${summary.expiredQuantity}'),
         ('m4SalesCount', '${summary.saleCount}'),
         ('m4ReturnsCount', '${summary.returnCount}'),

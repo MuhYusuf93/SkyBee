@@ -1,0 +1,16 @@
+{
+  "id": "D-AUTO-RESTORE01",
+  "date": "2026-10-18",
+  "status": "PASS",
+  "source": "isolated native Poco F6 7f0edea0",
+  "uniqueCases": 1,
+  "runner": "1PASS25s; first wrong-checkpoint attempt1FAIL16s retained, same case retested",
+  "scope": "All5 retained archives authenticated; business23/receipts/integrity/FK/SQLCipher/envelope/reconcile; uploaded snapshot running/3catalog vs latest safety success/4catalog; active state defaults/Drive disconnected, logo/canonical containment, all live table hashes unchanged after documented fixture auth during inspections",
+  "finding": "TEST-DRIVE-RESTORE01: three older archives match historical checkpoint exactly; only draft tables differ from later C27 checkpoint. Comparator fixed, no application/data fix.",
+  "limits": "Legacy baseline hash checked at test entry, ordinary/sidecar hashes before-after and two public exports equal; exact C27 APK restored. No whole-table snapshot taken immediately before human restore; safety stable tables checked against C27 checkpoint, not every PIN/audit/alert field across human interval. No server transport audit or physical power-loss/Doze/reboot/OEM-preview proof.",
+  "ledger": "docs/evidence/m5-20261018/drive-restore-audit-1792315770227/ledger.json",
+  "firstFailureLedger": "docs/evidence/m5-20261018/drive-restore-audit-1792315519574/ledger.json",
+  "ordinaryCodeChanged": false,
+  "automaticDeviceControlActive": false,
+  "originalV6ClosingStillPending": true
+}

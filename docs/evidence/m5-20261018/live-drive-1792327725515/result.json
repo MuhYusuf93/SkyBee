@@ -1,0 +1,71 @@
+{
+  "nonce": "1792327725515",
+  "workerPid": 26905,
+  "setupPid": 12588,
+  "verifiedUploads": 8,
+  "duplicateCallCoalesced": true,
+  "initialRemoteCount": 1,
+  "initialScopedCount": 1,
+  "otherScopeCount": 0,
+  "retainedCount": 7,
+  "localArchivesBefore": 5,
+  "localArchivesAfter": 13,
+  "oldLocalArchivesUnchanged": true,
+  "businessTablesUnchanged": true,
+  "policyUnchanged": true,
+  "changedTables": [
+    "backup_runs",
+    "local_backups"
+  ],
+  "steps": [
+    {
+      "upload": 1,
+      "retained": 2,
+      "expected": 2,
+      "otherScopesUnchanged": true
+    },
+    {
+      "upload": 2,
+      "retained": 3,
+      "expected": 3,
+      "otherScopesUnchanged": true
+    },
+    {
+      "upload": 3,
+      "retained": 4,
+      "expected": 4,
+      "otherScopesUnchanged": true
+    },
+    {
+      "upload": 4,
+      "retained": 5,
+      "expected": 5,
+      "otherScopesUnchanged": true
+    },
+    {
+      "upload": 5,
+      "retained": 6,
+      "expected": 6,
+      "otherScopesUnchanged": true
+    },
+    {
+      "upload": 6,
+      "retained": 7,
+      "expected": 7,
+      "otherScopesUnchanged": true
+    },
+    {
+      "upload": 7,
+      "retained": 7,
+      "expected": 7,
+      "otherScopesUnchanged": true
+    },
+    {
+      "upload": 8,
+      "retained": 7,
+      "expected": 7,
+      "otherScopesUnchanged": true
+    }
+  ],
+  "automaticCalendarDeliveryProven": false
+}

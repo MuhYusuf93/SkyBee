@@ -1,0 +1,21 @@
+{
+  "scope": "Available logcat buffer restricted to setup/worker PIDs; no raw logs retained. Zero markers is not proof of all runtime behavior.",
+  "pids": [
+    {
+      "pid": 12588,
+      "readExit": 0,
+      "lineCount": 29,
+      "fatalMarkers": 0,
+      "flutterUnhandledMarkers": 0,
+      "anrMarkers": 0
+    },
+    {
+      "pid": 26905,
+      "readExit": 0,
+      "lineCount": 158,
+      "fatalMarkers": 0,
+      "flutterUnhandledMarkers": 0,
+      "anrMarkers": 0
+    }
+  ]
+}

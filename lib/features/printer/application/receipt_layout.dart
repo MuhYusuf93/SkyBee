@@ -195,6 +195,7 @@ final class ReceiptLayout {
         ReceiptLine(
           'L=${profile.left} R=${profile.right} shift=${profile.shift}',
         ),
+        ReceiptLine('Feed=${profile.feed} lines'),
         const ReceiptLine('|1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZ|'),
         const ReceiptLine('IDR 120.000 / USD 1,234.56 / -12,34 €'),
         const ReceiptLine('--------------------------------'),

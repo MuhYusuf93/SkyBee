@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN05",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "One press Versi backup Drive returned one archive row with filename, creation time, nonzero byte size and Pilih untuk pemulihan button; distinct from success history",
+  "automaticEvidence": false,
+  "limits": "UI-reported real listing only; archive bytes, download, authentication and restore not yet verified. No account/remote file identifiers collected."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "C29-AUTO",
+  "date": "2026-10-18",
+  "status": "PASS",
+  "source": "host/native mocks/build/strict update",
+  "host": "50PASS; focused2 subset",
+  "poco": "2PASS account UI mocks",
+  "dv": "2PASS account UI mocks; exact prior APK/default hashes/awake restored and read back",
+  "analyzer": "8.9s No issues",
+  "strictUpdate": "before1PASS/after1PASS; all tables/13archives/policy unchanged;8success/8unique remote IDs; connected/automaticON",
+  "build": "ordinary/fixture/bridge universal min24/16KiB/icon/licenses/signature/negative guard verified; ordinary not installed",
+  "startup": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 5679,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-account-ui-update-1792328869099\\update.json",
+  "limits": "Account B OAuth not yet tested; native cases fake SDK/HTTP/WorkManager. Natural21/reboot/Doze/other origin cloud preservation unverified."
+}

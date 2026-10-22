@@ -41,10 +41,14 @@ final class AlertService {
             .add(Duration(days: options['expiry_warning_days'] as int))
             .toIso8601String()
             .substring(0, 10);
+        final modern =
+            (await dbTxn.rawQuery('PRAGMA user_version')).single.values.single
+                as int >=
+            14;
         String? cursor;
         while (true) {
           final rows = await dbTxn.rawQuery(
-            '''SELECT p.id,p.name,p.stock_quantity,p.min_stock,p.low_stock_enabled,p.expiry_enabled,
+            '''SELECT p.id,p.name,p.stock_quantity,p.min_stock,p.low_stock_enabled,p.expiry_enabled, ${modern ? 'p.stock_tracking_enabled,p.reference_expiry_date,' : '1 AS stock_tracking_enabled,NULL AS reference_expiry_date,'}
             COALESCE((SELECT SUM(b.remaining_quantity) FROM stock_batches b WHERE b.product_id=p.id AND b.expiry_date<=? AND b.remaining_quantity>0),0) AS expired,
             COALESCE((SELECT SUM(b.remaining_quantity) FROM stock_batches b WHERE b.product_id=p.id AND b.expiry_date<=? AND b.remaining_quantity>0),0) AS due,
             (SELECT MIN(b.expiry_date) FROM stock_batches b WHERE b.product_id=p.id AND b.expiry_date<=? AND b.remaining_quantity>0) AS first_due
@@ -54,14 +58,21 @@ final class AlertService {
           );
           if (rows.isEmpty) break;
           for (final row in rows) {
+            final untrackedDue =
+                row['stock_tracking_enabled'] == 0 &&
+                row['reference_expiry_date'] != null &&
+                (row['reference_expiry_date'] as String).compareTo(through) <=
+                    0;
             final saleable =
                 (row['stock_quantity'] as int) -
                 (row['expiry_enabled'] == 1 ? row['expired'] as int : 0);
             for (final kind in ['low_stock', 'expiry']) {
               final active = kind == 'low_stock'
-                  ? row['low_stock_enabled'] == 1 &&
+                  ? row['stock_tracking_enabled'] != 0 &&
+                        row['low_stock_enabled'] == 1 &&
                         saleable < (row['min_stock'] as int)
-                  : row['expiry_enabled'] == 1 && (row['due'] as int) > 0;
+                  : row['expiry_enabled'] == 1 &&
+                        ((row['due'] as int) > 0 || untrackedDue);
               final key = '$kind:${row['id']}';
               final previous = await dbTxn.query(
                 'alert_state',
@@ -73,8 +84,14 @@ final class AlertService {
                 'name': row['name'],
                 'saleable': saleable,
                 'minimum': row['min_stock'],
-                if (kind == 'expiry') 'quantity': row['due'],
-                if (kind == 'expiry') 'firstDate': row['first_due'],
+                if (kind == 'expiry')
+                  'quantity': row['stock_tracking_enabled'] == 0
+                      ? null
+                      : row['due'],
+                if (kind == 'expiry')
+                  'firstDate': row['stock_tracking_enabled'] == 0
+                      ? row['reference_expiry_date']
+                      : row['first_due'],
               });
               // The fingerprint intentionally has no timestamp; startup/checkout
               // with identical conditions cannot generate a new notification.

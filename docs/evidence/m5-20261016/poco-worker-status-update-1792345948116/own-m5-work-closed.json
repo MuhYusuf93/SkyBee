@@ -1,0 +1,14 @@
+{
+  "device": "7f0edea0",
+  "package": "com.example.kasir_app.integration",
+  "nonce": "1792345948116",
+  "closedWorkMetadataIntegrity": true,
+  "originalMetadataHashesUnchanged": true,
+  "m5WorkCount": 5,
+  "pendingOrUnknownStateCount": 0,
+  "succeededCount": 1,
+  "failedCount": 0,
+  "canceledCount": 4,
+  "scope": "Drive-tag, alert unique work and fixture live probes only; no identifiers/payloads retained",
+  "limits": "Snapshot after cleanup; not proof of prior live job cancellation, natural21, reboot or Doze"
+}

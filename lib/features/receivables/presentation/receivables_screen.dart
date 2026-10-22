@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
+import '../../../core/presentation/contact_output_link.dart';
+import '../../../core/presentation/form_exit_guard.dart';
+import '../../management/presentation/managed_text_field.dart';
 import '../../../core/money/money_field.dart';
 import '../../../l10n/localization.dart';
 import '../../cashier/domain/cashier_models.dart';
@@ -33,7 +36,7 @@ class _DebtList extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            TextField(
+            ManagedTextField(
               onSubmitted: (query) => state.load(search: query),
               decoration: InputDecoration(
                 labelText: tr(context, 'm3SearchCustomers'),
@@ -47,8 +50,15 @@ class _DebtList extends StatelessWidget {
             for (final customer in state.customers)
               ListTile(
                 title: Text(customer.name),
-                subtitle: Text(
-                  '${customer.phone ?? tr(context, 'm3NoPhone')} · ${moneyLabel(context, customer.balance.amountMinor)}',
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (customer.phone != null)
+                      ContactOutputLink.phone(customer.phone!)
+                    else
+                      Text(tr(context, 'm3NoPhone')),
+                    Text(moneyLabel(context, customer.balance.amountMinor)),
+                  ],
                 ),
                 onTap: () async {
                   await Navigator.push(
@@ -248,69 +258,99 @@ class _DebtDetailState extends State<_DebtDetail> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text(widget.customer.name),
-      actions: const [LanguageButton()],
-    ),
-    body: SafeArea(
-      child: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          if (widget.customer.phone != null) Text(widget.customer.phone!),
-          Text(
-            '${tr(context, 'm3RemainingDebt')}: ${moneyLabel(context, balance ?? widget.customer.balance.amountMinor)}',
-          ),
-          if (processing) const LinearProgressIndicator(),
-          MoneyField(
-            controller: amount,
-            label: tr(context, 'm3RepaymentAmount'),
-            enabled: !busy,
-          ),
-          FilledButton(
-            onPressed: busy || balance == 0 ? null : pay,
-            child: Text(tr(context, 'm3RecordPayment')),
-          ),
-          if (error != null)
-            Text(
-              tr(context, error!),
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
-          for (final receipt in transactions)
-            ListTile(
-              title: Text(receipt.number),
-              subtitle: Text(
-                '${tr(context, 'm3RemainingDebt')}: ${moneyLabel(context, receipt.outstanding)}',
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: amount,
+    builder: (context, _) => FormExitGuard(
+      managementProtected: false,
+      dirty: amount.text.isNotEmpty,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.customer.name),
+          actions: const [LanguageButton()],
+        ),
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              if (widget.customer.phone != null)
+                ContactOutputLink.phone(widget.customer.phone!),
+              Text(
+                '${tr(context, 'm3RemainingDebt')}: ${moneyLabel(context, balance ?? widget.customer.balance.amountMinor)}',
               ),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (_) => Scaffold(
-                    appBar: AppBar(title: Text(tr(context, 'm3ReceiptNumber'))),
-                    body: SafeArea(
-                      child: ReceiptView(
-                        receipt: receipt,
-                        time: context
+              if (processing) const LinearProgressIndicator(),
+              MoneyField(
+                controller: amount,
+                label: tr(context, 'm3RepaymentAmount'),
+                enabled: !busy,
+              ),
+              OutlinedButton(
+                key: const ValueKey('repayment-all'),
+                onPressed: busy || (balance ?? 0) <= 0
+                    ? null
+                    : () async {
+                        final current = await context
                             .read<AppServices>()
-                            .management
-                            .clock
-                            .displayTime(receipt.createdAt, zone),
+                            .receivables
+                            .balance(widget.customer.id);
+                        if (!context.mounted) return;
+                        setState(() {
+                          balance = current.amountMinor;
+                          plan = null;
+                        });
+                        amount.text = moneyCodec(
+                          context,
+                        ).format(current, label: false);
+                      },
+                child: Text(tr(context, 'm52PayAll')),
+              ),
+              FilledButton(
+                onPressed: busy || balance == 0 ? null : pay,
+                child: Text(tr(context, 'm3RecordPayment')),
+              ),
+              if (error != null)
+                Text(
+                  tr(context, error!),
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
+              for (final receipt in transactions)
+                ListTile(
+                  title: Text(receipt.number),
+                  subtitle: Text(
+                    '${tr(context, 'm3RemainingDebt')}: ${moneyLabel(context, receipt.outstanding)}',
+                  ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => Scaffold(
+                        appBar: AppBar(
+                          title: Text(tr(context, 'm3ReceiptNumber')),
+                        ),
+                        body: SafeArea(
+                          child: ReceiptView(
+                            receipt: receipt,
+                            time: context
+                                .read<AppServices>()
+                                .management
+                                .clock
+                                .displayTime(receipt.createdAt, zone),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
+              if (cursor != null)
+                OutlinedButton(
+                  onPressed: busy ? null : () => load(more: true),
+                  child: Text(tr(context, 'm3LoadMore')),
+                ),
+              OutlinedButton(
+                onPressed: busy ? null : load,
+                child: Text(tr(context, 'tryAgain')),
               ),
-            ),
-          if (cursor != null)
-            OutlinedButton(
-              onPressed: busy ? null : () => load(more: true),
-              child: Text(tr(context, 'm3LoadMore')),
-            ),
-          OutlinedButton(
-            onPressed: busy ? null : load,
-            child: Text(tr(context, 'tryAgain')),
+            ],
           ),
-        ],
+        ),
       ),
     ),
   );

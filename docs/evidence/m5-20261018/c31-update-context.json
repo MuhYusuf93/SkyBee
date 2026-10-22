@@ -1,0 +1,14 @@
+{
+  "stage": "C31 superseded by C32 closing; follow completion context",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-silent-auth-update-1792333169315\\update.json",
+  "automaticDeviceControlActive": false,
+  "manualStep": "D-MAN17 disconnected PASS reported; extra Google picker canceled without connection. Manual finished for now; leave fixture untouched for C32 native regression/closing audit/originalAPK6 restoration. Host-only validation in progress; no device control yet.",
+  "installedCheckpoint": "C31",
+  "installedSha256": "ab00a7e191f354707a5cf847c04de620ffc6576231cf19ef197b2e6f99620641",
+  "reportedAndAuditedPolicy": "B connected/autoOFF",
+  "originalV6RestorationPending": true,
+  "closingPending": true,
+  "latestManualEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\d-man17-user-report.json",
+  "newerSourceValidation": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c32-update-context.json",
+  "supersededBy": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c32-update-context.json"
+}

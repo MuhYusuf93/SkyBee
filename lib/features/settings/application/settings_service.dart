@@ -1,4 +1,5 @@
 import '../../../core/domain/app_error.dart';
+import 'package:dlibphonenumber/dlibphonenumber.dart';
 import '../../../core/money/money.dart';
 import '../../../data/database/database_coordinator.dart';
 import '../../management/application/management_service.dart';
@@ -8,6 +9,54 @@ final class SettingsService {
   const SettingsService(this.database, this.access);
   final DatabaseCoordinator database;
   final ManagementService access;
+
+  /// Public phone entry metadata only, independent of UI language/currency.
+  Future<String> phoneRegion() => database.read(
+    (db) async => database.schemaVersion < 14
+        ? 'ID'
+        : (await db.query(
+                'store_settings',
+                columns: ['phone_region'],
+              )).single['phone_region']
+              as String,
+  );
+
+  Future<({int threshold, bool suppressed})> lowPricePreference(
+    String currency,
+  ) => database.read((db) async {
+    await access.authorize(db);
+    CurrencyPolicy.forCode(currency);
+    final rows = await db.query(
+      'low_price_preferences',
+      where: 'currency_code=?',
+      whereArgs: [currency],
+    );
+    await access.authorize(db);
+    return (
+      threshold: rows.isEmpty
+          ? (currency == 'IDR' ? 100 : 1)
+          : rows.single['threshold_minor'] as int,
+      suppressed: rows.isNotEmpty && rows.single['suppressed'] == 1,
+    );
+  });
+
+  Future<void> saveLowPricePreference(
+    String currency,
+    int threshold, {
+    bool suppressed = false,
+  }) => database.transaction((dbTxn) async {
+    await access.authorize(dbTxn);
+    CurrencyPolicy.forCode(currency);
+    if (threshold < 0) throw const AppError('m52LowPriceThreshold');
+    await dbTxn.rawInsert(
+      '''INSERT INTO low_price_preferences(currency_code,threshold_minor,suppressed)
+      VALUES(?,?,?) ON CONFLICT(currency_code) DO UPDATE SET threshold_minor=excluded.threshold_minor,suppressed=excluded.suppressed''',
+      [currency, threshold, suppressed ? 1 : 0],
+    );
+    await access.audit(dbTxn, 'low_price_preference_changed');
+    await access.authorize(dbTxn);
+    access.touch();
+  });
 
   /// Public receipt/header presentation; no protected financial/settings write.
   Future<Map<String, Object?>> cashierInfo() => database.read(
@@ -91,9 +140,15 @@ final class SettingsService {
     String? address,
     String? contact,
     String? footer,
+    String? phoneRegion,
   }) => database.transaction((dbTxn) async {
     await access.authorize(dbTxn);
     if (name.trim().isEmpty) throw const AppError('storeNameIsRequired');
+    final region = phoneRegion?.trim().toUpperCase();
+    if (region != null &&
+        !PhoneNumberUtil.instance.supportedRegions.contains(region)) {
+      throw const AppError('m52PhoneRegion');
+    }
     try {
       access.clock.validateZone(zone.trim());
     } catch (_) {
@@ -105,6 +160,8 @@ final class SettingsService {
       'address': address?.trim(),
       'contact_number': contact?.trim(),
       'receipt_footer': footer?.trim(),
+      if (region != null && database.schemaVersion >= 14)
+        'phone_region': region,
     }, where: 'id=1');
     await access.audit(dbTxn, 'settings_changed');
     await access.authorize(dbTxn);

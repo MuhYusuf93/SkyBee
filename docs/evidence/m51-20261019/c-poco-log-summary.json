@@ -1,0 +1,18 @@
+{
+  "device": "7f0edea0",
+  "pid": 13837,
+  "scope": "available recorded own-PID buffer only, not system-wide ANR monitoring",
+  "nativeErrorLines": 11,
+  "fatalOrUnhandledMarkers": 0,
+  "flutterErrorLines": 0,
+  "tags": {
+    "AHardwareBuffer": 2,
+    "ashmem": 1,
+    "FramePredict": 1,
+    "Gralloc4": 2,
+    "GraphicBufferAllocator": 2,
+    "MiuiPreloadClassImpl": 1,
+    "Zygote": 2
+  },
+  "classification": "Native OEM/startup/graphics tags observed; no test failure correlated. No claim that every native error is fixed or harmless."
+}

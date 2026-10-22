@@ -1,0 +1,16 @@
+{
+  "id": "C27-MAN01",
+  "date": "2026-10-18",
+  "source": "user report, clarified",
+  "status": "PARTIAL",
+  "copyPaste": "PASS reported: canonical code copied by button and pasted without manual text selection; expected inline success",
+  "preview": "FAIL reported: code readable in small Android overlay immediately after Copy, not keyboard panel or fixture input",
+  "rootCause": "UNDETERMINED; production source sets official sensitive flag; need public-value native metadata reproduction",
+  "limits": "No clipboard payload, recovery code, screenshots or UI dump collected; no new validation/restore; automated device control remains off",
+  "laterClarification": {
+    "date": "2026-10-18",
+    "supersedes": "preview FAIL attribution only",
+    "currentStatus": "Android overlay redaction UNVERIFIED; visible app recovery after Reveal is expected",
+    "evidence": "c27-public-preview-user-report.json"
+  }
+}

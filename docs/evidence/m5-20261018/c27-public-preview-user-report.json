@@ -1,0 +1,22 @@
+{
+  "id": "C27-PUBLIC-PROBE-MAN01",
+  "date": "2026-10-18",
+  "source": "user report",
+  "metadataReported": {
+    "ownLabel": true,
+    "sensitive": true,
+    "plainTextMime": true
+  },
+  "preview": "UNVERIFIED: user did not compare/observe Android popup text",
+  "clarification": "Earlier readable text was the 64 hexadecimal characters below Copy in the app; not reliable evidence of Android overlay disclosure",
+  "conclusion": "Copy/paste stays PASS reported; earlier preview FAIL attribution superseded, no clipboard privacy bug proven",
+  "secretCollected": false,
+  "restorePerformed": false,
+  "nativeEvidence": {
+    "metadataOnly": "docs/evidence/m5-20261018/c27-public-preview-1792313866375/metadata-only.json",
+    "threeFlags": true,
+    "clipboardPayloadRead": false,
+    "raw12DatabaseSidecarsEqual": true,
+    "priorC27ApkExact": true
+  }
+}

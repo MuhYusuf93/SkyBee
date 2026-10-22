@@ -1,0 +1,14 @@
+{
+  "device": "192.168.0.102:5555",
+  "test": "integration_test/m51_recovery_print_test.dart",
+  "nameFilter": "calibration reads credential epoch",
+  "automaticDeviceControlActive": false,
+  "tests": "PASS",
+  "isolation": "Every pre-existing protected file hash unchanged",
+  "downgrade": false,
+  "reset": false,
+  "cases": 1,
+  "elapsed": "00:24",
+  "scope": "Credential epoch calibration only; public fixture; no physical output",
+  "awake": "Original settings restored and read back exactly"
+}

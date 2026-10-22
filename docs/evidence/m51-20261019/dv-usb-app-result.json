@@ -1,0 +1,29 @@
+{
+  "device": "DV8910 / AX810 / DV8947-KIX",
+  "package": "com.example.kasir_app.integration",
+  "version": "0.5.1+8",
+  "abi": "armeabi-v7a",
+  "androidUsbHost": true,
+  "supportedTargets": 1,
+  "targetVidPid": "0483:5720",
+  "permission": "Normal visible Android dialog, UID10115 matches isolated app",
+  "rootUsed": false,
+  "writes": 1,
+  "bytesAccepted": 81,
+  "test": "1 PASS / 4 seconds",
+  "paper": "PASS_USER_REPORTED",
+  "isolation": "Every pre-existing protected hash unchanged",
+  "awake": "Original values restored and read back exactly, including separate dialog session",
+  "automaticControl": "OFF",
+  "installedApkSha256": "51f1bb9c55e6d40cf55d53b11e925d866afa5391ae3d6dc5649bd6eefa21598f",
+  "buildHashMatchesInstalled": true,
+  "automaticRetry": false,
+  "priorFailures": [
+    "Permission unavailable before fixture readiness instrumented: exact branch unproven",
+    "Focused probe permission deadline: SKIPPED/0 bytes",
+    "windows-only dump misses focus on API30 TV; UIAutomator137, capture black, internal causes not determined"
+  ],
+  "nativeRootHandoff": "100 bytes and paper PASS reported by user separately; not application proof",
+  "paperEvidence": "User answered yes to new five-line application diagnostic: clear, complete, not clipped",
+  "paperAutomaticVerification": false
+}

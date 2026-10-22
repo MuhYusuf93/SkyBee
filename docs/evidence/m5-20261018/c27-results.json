@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-18",
+  "host": "38PASS124s, focused4 subset",
+  "jvm": "11PASS, compile/existing native plugin regressions",
+  "nativePoco": "6PASS31s recovery UI mock sink",
+  "nativeDV": "6PASS82s recovery UI mock sink; exact priorAPK/defaultDB/awake restored",
+  "analyzer": "No issues22.3s",
+  "strictUpdate": "before1PASS3s/after1PASS3s; all tables/4 archives/policy digest same; one successful run same account,2sale/stocks/HPP correct",
+  "ordinary": "Copy feature in default code/build, verified but not installed",
+  "clipboardOS": "Manual Copy/Paste PASS reported; PUBLIC probe production native handler ownLabel/sensitive/plainTextMime true in own-PID log. Actual Android preview UNVERIFIED; earlier FAIL attribution corrected to visible in-app code after Reveal.",
+  "fixtureSha256": "0ec0734a306d177ecd329d74274ed3938bef7debcdfa4bd7d05fd017d3a6e3e1",
+  "deviceControl": false,
+  "gitDiffWhitespaceCheck": 0,
+  "sourceHashesMatch": true,
+  "closingOriginalV6Pending": true,
+  "publicProbeClosure": "Exact C27 APK restored; raw12 DB/sidecar endpoint hashes equal; no DB opened or clipboard payload read; automated control off."
+}

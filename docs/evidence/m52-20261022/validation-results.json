@@ -1,0 +1,190 @@
+{
+  "milestone": "M5.2",
+  "sourceVersion": "0.5.2+9",
+  "schema": 14,
+  "runsOverlap": true,
+  "native": [
+    {
+      "run": "m52-acceptance-dv-20261022-065527",
+      "entrypoint": "integration_test/m52_acceptance_test.dart",
+      "device": "192.168.0.102:5555",
+      "pass": 24,
+      "protectedFiles": 400,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "ca7f2c03626bdc22ec6c031ff13e75470961b44451a456a10b5b7af10c56af5d",
+      "runnerSha256": "2d5f8936d2fd3ed28bfadd5a931660808c78b330a79542099fed70dd66696d3c",
+      "awakeRestoredExactly": true
+    },
+    {
+      "run": "m52-public-form-final-dv-20261022-071105",
+      "entrypoint": "integration_test/m52_forms_test.dart",
+      "device": "192.168.0.102:5555",
+      "pass": 2,
+      "protectedFiles": 424,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "cba955580aed7144cfb5ac50c6e8c261fa3cb72036a9ca9c095f254f7cadcc71",
+      "runnerSha256": "d114cfd2dfd6ed2a7aa8d3542999f9ecdcdee964ada65a443bdb8ffa482e69de",
+      "awakeRestoredExactly": true
+    },
+    {
+      "run": "m52-acceptance-poco-20261022-071345",
+      "entrypoint": "integration_test/m52_acceptance_test.dart",
+      "device": "7f0edea0",
+      "pass": 25,
+      "protectedFiles": 402,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "3582a881e7a5d39e04d37b17cf3f7dfbff0569ad294124b34c0d4e4ddc20692b",
+      "runnerSha256": "f238e0d717cf5ccf15f7e6b5ee840331a79ae227a065691881e15b869514b334"
+    },
+    {
+      "run": "m52-upgrade-proof-dv-retest-20261022-072716",
+      "entrypoint": "integration_test/m52_skybee_upgrade_test.dart",
+      "device": "192.168.0.102:5555",
+      "pass": 3,
+      "protectedFiles": 426,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "9a9b04c960e5e1bba96daff711230535e1d1519b3d65f0525e50aaf82d2d0c86",
+      "runnerSha256": "fca0e7cc398d6027ebc5d25b5cd941646bd9150da5dba031ada9eb8d75cab9e4",
+      "awakeRestoredExactly": true
+    },
+    {
+      "run": "m52-upgrade-proof-poco-20261022-073022",
+      "entrypoint": "integration_test/m52_skybee_upgrade_test.dart",
+      "device": "7f0edea0",
+      "pass": 3,
+      "protectedFiles": 427,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "c7d0ffd91f01f250f12a76095536bf3ceda40b39a8a596aac52a899bcd57be82",
+      "runnerSha256": "451a01573d7ae3aa05d367a63758da9805614991cb7c290c67bc5f0621b51b3d"
+    }
+  ],
+  "printer": {
+    "device": "Poco F6",
+    "transport": "Bluetooth",
+    "hardware": "Iware58",
+    "run": "m52-bt-calibration-poco-20261022-073314",
+    "pass": 1,
+    "documents": [
+      {
+        "feed": 6,
+        "transportOutcome": "submitted"
+      },
+      {
+        "feed": 2,
+        "transportOutcome": "submitted"
+      }
+    ],
+    "automaticRetry": false,
+    "existingHashesUnchanged": true,
+    "protectedFiles": 430,
+    "automaticDeviceControlActive": false,
+    "paper": {
+      "status": "PASS_USER_REPORTED",
+      "userReport": "Keduanya utuh; feed 2 tepat garis putus-putus pada tempat sobekan kertas.",
+      "scope": "Only these two synthetic diagnostics on this Iware58; not 80mm or all receipt lengths"
+    },
+    "resultSha256": "51a546fc83782d076dda6b78db005ad013c7d5f5d3b822c116a41ddbf477407c",
+    "runnerSha256": "3c98fe4c8d5b25a56d130092b0309e9c42338a6db5cd2535824951f02a243588"
+  },
+  "host": [
+    {
+      "log": "test-public-form-final-repair3.log",
+      "pass": 17,
+      "sha256": "ec021ad86767600a593dde95ca19c972fea215511bef7bbb08c756a0d504969e"
+    },
+    {
+      "log": "test-resume-output.log",
+      "pass": 26,
+      "sha256": "f310ed6d4409fd6cbf2b1ed268f21d97700d7a19c0f517ea11be4cc394d84a29"
+    },
+    {
+      "log": "test-quantity-decision-final.log",
+      "pass": 5,
+      "sha256": "a85c2fac76f398869bcfd802d93bbe4fdd977db474aaa1d5eecfa1840a69a457"
+    }
+  ],
+  "checks": {
+    "format-feed3.log": {
+      "status": "PASS",
+      "sha256": "af39def93a2a1f3d17a4a5ddb55a5b671c4e2aaa55e33d081b960efb47282683"
+    },
+    "localization-feed3.log": {
+      "status": "PASS",
+      "sha256": "3628377cc0a32475aab05189a3cd4a96d4de066695f1b4c38f69732370e0179f"
+    },
+    "analyze-feed3.log": {
+      "status": "PASS",
+      "sha256": "632db42f831f0e980ed98f9f29fcaa94cae094acf87f8ff40e414ce66b67dd67"
+    }
+  },
+  "ordinaryBuilds": [
+    {
+      "mode": "debug",
+      "artifact": "build/m52-ordinary-20261022-075001/kasir-app-0.5.2-ordinary-debug.apk",
+      "package": "com.example.kasir_app",
+      "version": "0.5.2+9",
+      "sha256": "6b85385260882dcb1c67c613203eaa7718f36da49a85818088249f523aa75bae",
+      "nativeAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "zipalign16kPass": true,
+      "certificateSha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "androidDebugCertificate": true,
+      "installed": false
+    },
+    {
+      "mode": "release",
+      "artifact": "build/m52-ordinary-20261022-075001/kasir-app-0.5.2-ordinary-release.apk",
+      "package": "com.example.kasir_app",
+      "version": "0.5.2+9",
+      "sha256": "5f1751901081e47e059972dc31e285a73a8543cb788adc6fe073d1e435947a0f",
+      "nativeAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "zipalign16kPass": true,
+      "certificateSha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "androidDebugCertificate": true,
+      "installed": false
+    }
+  ],
+  "printerFeed3": {
+    "run": "m52-bt-feed3-poco-20261022-074220",
+    "pass": 1,
+    "documents": [
+      {
+        "feed": 3,
+        "transportOutcome": "submitted"
+      }
+    ],
+    "automaticRetry": false,
+    "protectedFiles": 432,
+    "existingHashesUnchanged": true,
+    "automaticDeviceControlActive": false,
+    "paper": {
+      "status": "PASS_USER_REPORTED",
+      "userReport": "feed 3 yang terbaik",
+      "selectedFeed": 3
+    },
+    "resultSha256": "51a546fc83782d076dda6b78db005ad013c7d5f5d3b822c116a41ddbf477407c",
+    "runnerSha256": "2f0a37741b9bf8937efd7311af6d48d6d84e36576d2408f4e7083e835fef270b"
+  },
+  "candidateSecretScan": {
+    "tool": "Gitleaks8.30.1",
+    "files": 1568,
+    "excludedOver8MB": 0,
+    "bytesScanned": 10580007,
+    "findings": 10,
+    "confirmedCredentials": 0,
+    "classification": "3 vendor provenance SHA256, 5 source SHA256, 1 prose Keystore/SQLCipher, 1 synthetic fixture source-key digest; unchanged from prior classification",
+    "historyComprehensivelyAudited": false
+  }
+}

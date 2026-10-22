@@ -1,0 +1,14 @@
+{
+  "device": "7f0edea0",
+  "test": "integration_test/m51_recovery_print_test.dart",
+  "nameFilter": "",
+  "automaticDeviceControlActive": false,
+  "tests": "PASS",
+  "isolation": "Every pre-existing protected file hash unchanged",
+  "downgrade": false,
+  "reset": false,
+  "cases": 10,
+  "elapsed": "01:15",
+  "physicalRecoveryPaper": "NOT_TESTED",
+  "printerPayload": "PUBLIC_SYNTHETIC_FAKE"
+}

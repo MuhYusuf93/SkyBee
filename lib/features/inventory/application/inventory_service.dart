@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../../core/domain/contact_validation.dart';
 import 'package:cryptography/cryptography.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../core/domain/app_error.dart';
@@ -12,6 +13,7 @@ import '../../management/application/management_service.dart';
 import '../domain/inventory_models.dart';
 import '../domain/stock_rules.dart';
 import '../domain/stock_input.dart';
+import '../domain/product_entry_rules.dart';
 import '../domain/change_record.dart';
 
 /// Protected master/stock use cases. Every write runs in one dbTxn and checks
@@ -116,6 +118,10 @@ final class InventoryService {
     }
     Quantity(input.minStock);
     await _money(db, input.sellingPrice);
+    if (input.wholesalePrice != null &&
+        input.wholesalePrice!.amountMinor > input.sellingPrice.amountMinor) {
+      throw const AppError('m52WholesaleAboveRetail');
+    }
     if (input.wholesalePrice != null) {
       await _money(db, input.wholesalePrice!);
       if (input.wholesalePrice!.amountMinor <= 0) {
@@ -128,6 +134,9 @@ final class InventoryService {
     }
     if (input.packSize != null) Quantity.positive(input.packSize!);
     await _relation(db, 'categories', input.categoryId);
+    if (database.schemaVersion >= 14) {
+      await _relation(db, 'shelves', input.shelfId);
+    }
     final sku =
         _optional(input.sku) ?? 'BRG-${_ids.next().value.toUpperCase()}';
     final barcode = _optional(input.barcode);
@@ -159,6 +168,17 @@ final class InventoryService {
       'pack_size': input.packSize,
       if (database.schemaVersion >= 9)
         ...(input.attributes ?? ProductAttributes()).toRow(),
+      if (database.schemaVersion >= 14) 'shelf_id': input.shelfId?.value,
+      // A master rename can happen while this draft is open. Resolve its stable
+      // ID inside the write transaction instead of restoring a stale UI label.
+      if (database.schemaVersion >= 14 && input.shelfId != null)
+        'shelf_location': (await db.query(
+          'shelves',
+          columns: ['name'],
+          where: 'id=?',
+          whereArgs: [input.shelfId!.value],
+          limit: 1,
+        )).single['name'],
       ...await _currency(db),
       'min_stock': input.minStock,
       'low_stock_enabled': input.lowStockEnabled ? 1 : 0,
@@ -195,7 +215,13 @@ final class InventoryService {
     StockPurchase? initialPurchase,
     CostAmount? unitCost,
     CalendarDate? expiry,
+    bool stockTracking = true,
+    CostAmount? referenceCost,
+    bool suppressLowPriceWarning = false,
   }) => _write((dbTxn) async {
+    if (database.schemaVersion >= 14) {
+      validateNewExpiry(expiry, access.clock.now);
+    }
     if (initialPurchase != null) {
       if (initialQuantity != 0 || unitCost != null) {
         throw const AppError('m31ConflictingInput');
@@ -205,6 +231,25 @@ final class InventoryService {
       await _costCurrency(dbTxn, initialPurchase.costPerInput);
     }
     Quantity(initialQuantity);
+    if (initialQuantity > 999999) {
+      throw const AppError('m52InitialQuantityLimit');
+    }
+    if (!stockTracking) {
+      if (database.schemaVersion < 14 ||
+          initialQuantity != 0 ||
+          initialPurchase != null ||
+          referenceCost == null) {
+        throw const AppError('m52ReferenceCostRequired');
+      }
+      await _costCurrency(dbTxn, referenceCost);
+    }
+    final effectiveCost = stockTracking ? unitCost : referenceCost;
+    final priceErrors = masterPriceErrors(
+      retail: input.sellingPrice,
+      costMicros: initialPurchase?.totalMicros ?? effectiveCost?.micros,
+      costQuantity: initialPurchase?.input.quantityBase ?? 1,
+    );
+    if (priceErrors.isNotEmpty) throw AppError(priceErrors.first);
     if (initialQuantity > 0 && unitCost == null) {
       throw const AppError('purchasePriceIsRequiredForInitialStock');
     }
@@ -213,11 +258,26 @@ final class InventoryService {
     await dbTxn.insert('products', {
       'id': id.value,
       ...await _input(dbTxn, input),
+      if (database.schemaVersion >= 14) ...{
+        'stock_tracking_enabled': stockTracking ? 1 : 0,
+        'stock_quantity': stockTracking ? 0 : 999,
+        'reference_cost_micros': referenceCost?.micros,
+        'reference_expiry_date': stockTracking ? null : expiry?.iso,
+      },
       'created_at': now,
       'updated_at': now,
     });
     await _aliases(dbTxn, id, input.aliases);
-    if (initialQuantity > 0) {
+    if (!stockTracking) {
+      await dbTxn.insert('reference_cost_history', {
+        'id': _ids.next().value,
+        'product_id': id.value,
+        'before_micros': null,
+        'after_micros': referenceCost!.micros,
+        'created_at': now,
+      });
+    }
+    if (stockTracking && initialQuantity > 0) {
       await _receive(
         dbTxn,
         id,
@@ -241,14 +301,21 @@ final class InventoryService {
       );
     }
     await access.audit(dbTxn, 'product_created', entityId: id.value);
+    if (suppressLowPriceWarning) {
+      await _suppressLowPrice(dbTxn, input.sellingPrice.currencyCode);
+    }
     return id;
   });
 
   Future<UndoToken?> edit(
     EntityId id,
     ProductInput input,
-    int expectedRevision,
-  ) => _write((dbTxn) async {
+    int expectedRevision, {
+    CostAmount? referenceCost,
+    bool suppressLowPriceWarning = false,
+    CalendarDate? referenceExpiry,
+    bool updateReferenceExpiry = false,
+  }) => _write((dbTxn) async {
     final old = await _product(dbTxn, id);
     if (old['expiry_enabled'] == 1 &&
         !input.expiryEnabled &&
@@ -266,6 +333,41 @@ final class InventoryService {
       throw const AppError('productChangedReloadBeforeSaving');
     }
     final values = await _input(dbTxn, input, exclude: id);
+    if (old['stock_tracking_enabled'] != 0 &&
+        (old['stock_quantity'] as int) > 0) {
+      final errors = masterPriceErrors(
+        retail: input.sellingPrice,
+        costMicros: old['inventory_value_micros'] as int,
+        costQuantity: old['stock_quantity'] as int,
+      );
+      if (errors.isNotEmpty) throw AppError(errors.first);
+    }
+    if (old['stock_tracking_enabled'] == 0) {
+      if (updateReferenceExpiry &&
+          referenceExpiry?.iso != old['reference_expiry_date']) {
+        validateNewExpiry(referenceExpiry, access.clock.now);
+        values['reference_expiry_date'] = referenceExpiry?.iso;
+      }
+      final reference =
+          referenceCost?.micros ?? old['reference_cost_micros'] as int?;
+      if (reference == null) throw const AppError('m52ReferenceCostRequired');
+      if (referenceCost != null) await _costCurrency(dbTxn, referenceCost);
+      if (BigInt.from(reference) >
+          BigInt.from(input.sellingPrice.amountMinor) * BigInt.from(1000000)) {
+        throw const AppError('m52PurchaseAboveRetail');
+      }
+      values['reference_cost_micros'] = reference;
+      if (reference != old['reference_cost_micros']) {
+        await dbTxn.insert('reference_cost_history', {
+          'id': _ids.next().value,
+          'product_id': id.value,
+          'before_micros': old['reference_cost_micros'],
+          'after_micros': reference,
+          'created_at': access.clock.milliseconds,
+        });
+      }
+    }
+
     final next = expectedRevision + 1;
     final now = access.clock.milliseconds;
     await dbTxn.update(
@@ -312,8 +414,92 @@ final class InventoryService {
       );
     }
     await access.audit(dbTxn, 'product_edited', entityId: id.value);
+    if (suppressLowPriceWarning) {
+      await _suppressLowPrice(dbTxn, input.sellingPrice.currencyCode);
+    }
     return undo;
   });
+
+  /// Remember only inside the successful product transaction: a cancelled
+  /// dialog or failed product write can never suppress later warnings.
+  Future<void> _suppressLowPrice(DatabaseExecutor db, String currency) async {
+    if (database.schemaVersion < 14) return;
+    await db.rawInsert(
+      '''INSERT INTO low_price_preferences(currency_code,threshold_minor,suppressed)
+      VALUES(?,?,1) ON CONFLICT(currency_code) DO UPDATE SET suppressed=1''',
+      [currency, currency == 'IDR' ? 100 : 1],
+    );
+  }
+
+  /// Explicit mode transition: no physical value/batch is discarded. Historical
+  /// sale mode/cost snapshots remain authoritative when reversing a sale later.
+  Future<void> changeStockTracking(
+    EntityId id,
+    int expectedRevision, {
+    required bool tracked,
+    required CostAmount cost,
+    int initialQuantity = 0,
+  }) => _write((dbTxn) async {
+    final old = await _product(dbTxn, id);
+    if (old['revision'] != expectedRevision) {
+      throw const AppError('productChangedReloadBeforeSaving');
+    }
+    await _costCurrency(dbTxn, cost);
+    if (BigInt.from(cost.micros) >
+        BigInt.from(old['selling_price_rupiah'] as int) *
+            BigInt.from(1000000)) {
+      throw const AppError('m52PurchaseAboveRetail');
+    }
+    final wasTracked = old['stock_tracking_enabled'] != 0;
+    if (wasTracked == tracked) throw const AppError('m52StockTransition');
+    if (!tracked &&
+        ((old['stock_quantity'] as int) != 0 ||
+            (old['inventory_value_micros'] as int) != 0 ||
+            (await dbTxn.query(
+              'stock_batches',
+              columns: ['id'],
+              where: 'product_id=? AND remaining_quantity>0',
+              whereArgs: [id.value],
+              limit: 1,
+            )).isNotEmpty)) {
+      throw const AppError('m52StockTransition');
+    }
+    if (initialQuantity < 0 || initialQuantity > 999999) {
+      throw const AppError('m52InitialQuantityLimit');
+    }
+    await dbTxn.update(
+      'products',
+      {
+        'stock_tracking_enabled': tracked ? 1 : 0,
+        'stock_quantity': tracked ? 0 : 999,
+        'inventory_value_micros': 0,
+        'reference_cost_micros': tracked ? null : cost.micros,
+        'revision': expectedRevision + 1,
+        'updated_at': access.clock.milliseconds,
+      },
+      where: 'id=?',
+      whereArgs: [id.value],
+    );
+    if (tracked && initialQuantity > 0) {
+      await _receive(
+        dbTxn,
+        id,
+        initialQuantity,
+        cost,
+        operationKey: 'tracking-${id.value}-${expectedRevision + 1}',
+        initial: true,
+      );
+    }
+    await dbTxn.insert('reference_cost_history', {
+      'id': _ids.next().value,
+      'product_id': id.value,
+      'before_micros': old['reference_cost_micros'],
+      'after_micros': cost.micros,
+      'created_at': access.clock.milliseconds,
+    });
+    await access.audit(dbTxn, 'stock_tracking_changed', entityId: id.value);
+  });
+
   Future<void> _priceHistory(
     DatabaseExecutor db,
     EntityId id,
@@ -348,7 +534,9 @@ final class InventoryService {
     if (old['revision'] != expectedRevision) {
       throw const AppError('productChangedReloadFirst');
     }
-    if (!restore && (old['stock_quantity'] as int) > 0) {
+    if (!restore &&
+        old['stock_tracking_enabled'] != 0 &&
+        (old['stock_quantity'] as int) > 0) {
       throw const AppError('stockRemainsHandleBeforeArchive');
     }
     final now = access.clock.milliseconds;
@@ -381,8 +569,32 @@ final class InventoryService {
       throw const AppError('cannotUndoTheTimeLimitPassedOr');
     }
     final revision = token.expectedRevision + 1;
-    if (token.previousDeleted == true && (row['stock_quantity'] as int) > 0) {
+    if (token.previousDeleted == true &&
+        row['stock_tracking_enabled'] != 0 &&
+        (row['stock_quantity'] as int) > 0) {
       throw const AppError('stockRemainsArchivingIsRefused');
+    }
+    if (token.previousPrice != null || token.wholesaleChanged) {
+      final retail = token.previousPrice ?? row['selling_price_rupiah'] as int;
+      final wholesale = token.wholesaleChanged
+          ? token.previousWholesale
+          : row['wholesale_price_minor'] as int?;
+      Money amount(int value) => Money.fromStoredMinor(
+        value,
+        row['currency_code'] as String,
+        row['currency_scale'] as int,
+      );
+      final errors = masterPriceErrors(
+        retail: amount(retail),
+        wholesale: wholesale == null ? null : amount(wholesale),
+        costMicros: row['stock_tracking_enabled'] == 0
+            ? row['reference_cost_micros'] as int?
+            : row['inventory_value_micros'] as int,
+        costQuantity: row['stock_tracking_enabled'] == 0
+            ? 1
+            : row['stock_quantity'] as int,
+      );
+      if (errors.isNotEmpty) throw AppError(errors.first);
     }
     await dbTxn.update(
       'products',
@@ -531,6 +743,22 @@ final class InventoryService {
     final retry = await _retry(dbTxn, operationKey, hash);
     if (retry != null) return EntityId(retry['stock_receipt_id'] as String);
     final old = await _product(dbTxn, id);
+    if (old['stock_tracking_enabled'] == 0) {
+      throw const AppError('m52StockOperationRequiresTracking');
+    }
+    if (database.schemaVersion >= 14) {
+      validateNewExpiry(expiry, access.clock.now);
+      final errors = masterPriceErrors(
+        retail: Money.fromStoredMinor(
+          old['selling_price_rupiah'] as int,
+          old['currency_code'] as String,
+          old['currency_scale'] as int,
+        ),
+        costMicros: purchase?.totalMicros ?? unitCost.micros,
+        costQuantity: purchase?.input.quantityBase ?? 1,
+      );
+      if (errors.isNotEmpty) throw AppError(errors.first);
+    }
     await _relation(dbTxn, 'suppliers', supplierId);
     if (expiry != null && old['expiry_enabled'] != 1) {
       throw const AppError('enableExpiryTrackingBeforeRecordingDates');
@@ -720,6 +948,9 @@ final class InventoryService {
     final source = rows.single,
         product = EntityId(rows.single['product_id'] as String);
     final old = await _product(dbTxn, product);
+    if (old['stock_tracking_enabled'] == 0) {
+      throw const AppError('m52StockOperationRequiresTracking');
+    }
     if (old['stock_revision'] != source['stock_revision_after']) {
       throw const AppError('stockDependencyBlocksReversal');
     }
@@ -814,6 +1045,9 @@ final class InventoryService {
     ]);
     if (await _retry(dbTxn, operationKey, hash) != null) return;
     final old = await _product(dbTxn, id);
+    if (old['stock_tracking_enabled'] == 0) {
+      throw const AppError('m52StockOperationRequiresTracking');
+    }
     final quantity = old['stock_quantity'] as int,
         value = old['inventory_value_micros'] as int;
     final delta = counted - quantity;
@@ -940,6 +1174,9 @@ final class InventoryService {
           dbTxn,
           EntityId(rows.single['product_id'] as String),
         );
+    if (old['stock_tracking_enabled'] == 0) {
+      throw const AppError('m52StockOperationRequiresTracking');
+    }
     final cost = removalCost(
       quantity: old['stock_quantity'] as int,
       valueMicros: old['inventory_value_micros'] as int,
@@ -1107,13 +1344,42 @@ final class InventoryService {
     String name, {
     String? contact,
     EntityId? id,
+    String? email,
+    String? website,
   }) => _write((dbTxn) async {
     if (name.trim().isEmpty) throw const AppError('nameIsRequired');
     final target = id ?? _ids.next();
+    String? normalizedContact, normalizedEmail, normalizedWebsite;
+    if (kind == MasterKind.supplier) {
+      final region = database.schemaVersion >= 14
+          ? (await dbTxn.query('store_settings')).single['phone_region']
+                as String
+          : 'ID';
+      normalizedContact = ContactValidation.phone(contact, region: region);
+      normalizedEmail = ContactValidation.email(email);
+      normalizedWebsite = ContactValidation.website(website);
+    }
+    if (kind == MasterKind.shelf) {
+      if (name.trim().runes.length > 80) {
+        throw const AppError('m51AttributesInvalid');
+      }
+      final duplicate = await dbTxn.query(
+        'shelves',
+        columns: ['id'],
+        where: 'normalized_name=? ${id == null ? '' : 'AND id<>?'}',
+        whereArgs: [normalizeName(name), ?id?.value],
+        limit: 1,
+      );
+      if (duplicate.isNotEmpty) throw const AppError('m52ShelfDuplicate');
+    }
     final values = {
       'name': name.trim(),
       'normalized_name': normalizeName(name),
-      if (kind == MasterKind.supplier) 'contact_number': _optional(contact),
+      if (kind == MasterKind.supplier) 'contact_number': normalizedContact,
+      if (kind == MasterKind.supplier && database.schemaVersion >= 14) ...{
+        'email': normalizedEmail,
+        'website': normalizedWebsite,
+      },
     };
     if (id == null) {
       await dbTxn.insert(kind.table, {
@@ -1130,6 +1396,14 @@ final class InventoryService {
       );
       if (changed != 1) {
         throw const AppError('recordUnavailableReload');
+      }
+      if (kind == MasterKind.shelf) {
+        // Only current labels follow a rename. Immutable sale snapshots retain
+        // their original shelf text and legacy unmatched labels remain intact.
+        await dbTxn.rawUpdate(
+          'UPDATE products SET shelf_location=?,revision=revision+1,updated_at=? WHERE shelf_id=?',
+          [name.trim(), access.clock.milliseconds, target.value],
+        );
       }
     }
     await access.audit(dbTxn, 'master_saved', entityId: target.value);
@@ -1279,6 +1553,8 @@ final class InventoryService {
               name: row['name'] as String,
               contact: row['contact_number'] as String?,
               isDeleted: row['is_deleted'] == 1,
+              email: row['email'] as String?,
+              website: row['website'] as String?,
             ),
           )
           .toList();

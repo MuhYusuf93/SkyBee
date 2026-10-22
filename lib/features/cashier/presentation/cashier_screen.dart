@@ -1,9 +1,12 @@
+import '../../printer/presentation/printer_settings_screen.dart';
+import '../../management/presentation/managed_text_field.dart';
 import 'package:flutter/material.dart';
 import '../../inventory/presentation/product_attributes_view.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/money/money_field.dart';
+import '../../../core/money/money.dart';
 import '../../../l10n/localization.dart';
 import '../../../l10n/localized_notice.dart';
 import '../../management/presentation/pin_screen.dart';
@@ -48,6 +51,29 @@ class _CashierBodyState extends State<_CashierBody> {
   bool receiptWasRecovered = false;
   String? receiptError;
   bool recovering = false;
+  bool _initialFocusScheduled = false;
+  final searchFocus = FocusNode();
+  void _focusSearch() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted &&
+          (ModalRoute.of(context)?.isCurrent ?? false) &&
+          receipt == null) {
+        final focused = FocusManager.instance.primaryFocus;
+        if (focused == null ||
+            focused is FocusScopeNode ||
+            identical(focused, searchFocus)) {
+          searchFocus.requestFocus();
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    searchFocus.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -85,6 +111,7 @@ class _CashierBodyState extends State<_CashierBody> {
     if (mounted) {
       await _preferences();
       if (mounted) await context.read<CartProvider>().refresh();
+      _focusSearch();
     }
   }
 
@@ -120,6 +147,16 @@ class _CashierBodyState extends State<_CashierBody> {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         const LanguageButton(),
+        OutlinedButton.icon(
+          onPressed: () => Navigator.push<void>(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const PrinterSettingsScreen(publicAccess: true),
+            ),
+          ),
+          icon: const Icon(Icons.print_outlined),
+          label: Text(tr(context, 'm51PrinterTitle')),
+        ),
         OutlinedButton(
           onPressed: () => Navigator.push(
             context,
@@ -192,6 +229,10 @@ class _CashierBodyState extends State<_CashierBody> {
         ),
       );
     }
+    if (snapshot != null && !_initialFocusScheduled) {
+      _initialFocusScheduled = true;
+      _focusSearch();
+    }
     return Scaffold(
       body: SafeArea(
         child: snapshot == null
@@ -222,7 +263,10 @@ class _CashierBodyState extends State<_CashierBody> {
                               children: [
                                 Expanded(
                                   child: ListView(
-                                    children: [header(), const _SearchPane()],
+                                    children: [
+                                      header(),
+                                      _SearchPane(focusNode: searchFocus),
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 24),
@@ -239,7 +283,7 @@ class _CashierBodyState extends State<_CashierBody> {
                           padding: const EdgeInsets.all(16),
                           children: [
                             header(),
-                            const _SearchPane(),
+                            _SearchPane(focusNode: searchFocus),
                             const SizedBox(height: 16),
                             _Basket(snapshot),
                           ],
@@ -390,14 +434,15 @@ class _CashierBodyState extends State<_CashierBody> {
 }
 
 class _SearchPane extends StatefulWidget {
-  const _SearchPane();
+  const _SearchPane({required this.focusNode});
+  final FocusNode focusNode;
   @override
   State<_SearchPane> createState() => _SearchPaneState();
 }
 
 class _SearchPaneState extends State<_SearchPane> {
   final input = TextEditingController();
-  final focus = FocusNode();
+  FocusNode get focus => widget.focusNode;
   String? addError;
   Future<void> add(CashierProduct product, {int? version}) async {
     final cart = context.read<CartProvider>();
@@ -417,7 +462,6 @@ class _SearchPaneState extends State<_SearchPane> {
   @override
   void dispose() {
     input.dispose();
-    focus.dispose();
     super.dispose();
   }
 
@@ -427,9 +471,10 @@ class _SearchPaneState extends State<_SearchPane> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextField(
+        ManagedTextField(
           controller: input,
           focusNode: focus,
+          onTapOutside: (_) => focus.unfocus(),
           autocorrect: false,
           textInputAction: TextInputAction.search,
           onChanged: (value) {
@@ -479,7 +524,7 @@ class _SearchPaneState extends State<_SearchPane> {
                 return ListTile(
                   title: Text(product.name),
                   subtitle: Text(
-                    '${moneyLabel(context, product.price.amountMinor)} · ${tr(context, 'm3Available')}: ${product.saleable}',
+                    '${moneyLabel(context, product.price.amountMinor)} · ${product.stockTracked ? '${tr(context, 'm3Available')}: ${product.saleable}' : tr(context, 'm52Untracked')}',
                   ),
                   enabled: product.saleable > 0,
                   onTap: product.saleable > 0 ? () => add(product) : null,
@@ -559,106 +604,125 @@ class _Basket extends StatelessWidget {
             for (final line in cart.lines)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      line.product.name,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    ProductAttributesView(attributes: line.product.attributes),
-                    Text(
-                      '${moneyLabel(context, line.acceptedPrice.amountMinor)} × ${line.quantity} = ${moneyLabel(context, line.total.amountMinor)}',
-                    ),
-                    if (line.product.wholesalePrice != null)
-                      CheckboxListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: Text(tr(context, 'm31Wholesale')),
-                        subtitle: Text(tr(context, 'm31WholesalePerBase')),
-                        value: line.pricingMode == PricingMode.wholesale,
-                        onChanged: provider.busy
-                            ? null
-                            : (value) => provider.pricing(
-                                line.product.id,
-                                value == true
-                                    ? PricingMode.wholesale
-                                    : PricingMode.retail,
-                              ),
-                      ),
-                    if (line.missingWholesale) ...[
-                      Text(tr(context, 'm31WholesaleUnavailable')),
-                      TextButton(
-                        onPressed: provider.busy
-                            ? null
-                            : () => provider.pricing(
-                                line.product.id,
-                                PricingMode.retail,
-                              ),
-                        child: Text(tr(context, 'm31UseRetail')),
-                      ),
-                    ] else if (line.priceChanged)
+                child: InkWell(
+                  key: ValueKey('cart-row-${line.product.id.value}'),
+                  onTap: provider.busy
+                      ? null
+                      : () => provider.add(line.product.id),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        '${tr(context, 'm3PricesChanged')}: ${moneyLabel(context, line.currentPrice!.amountMinor)}',
+                        line.product.name,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                    if (line.unavailable)
-                      Text(tr(context, 'insufficientSaleableStock')),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        IconButton(
-                          tooltip: tr(context, 'm3Decrease'),
-                          onPressed: provider.busy
-                              ? null
-                              : () {
-                                  if (line.quantity == 1) {
-                                    remove(line: line);
-                                  } else {
-                                    provider.quantity(
-                                      line.product.id,
-                                      line.quantity - 1,
-                                    );
-                                  }
-                                },
-                          icon: const Icon(Icons.remove),
+                      ProductAttributesView(
+                        currency: CurrencyPolicy.forCode(
+                          line.acceptedPrice.currencyCode,
                         ),
+                        attributes: line.product.attributes,
+                      ),
+                      Text(
+                        '${moneyLabel(context, line.acceptedPrice.amountMinor)} × ${line.quantity} = ${moneyLabel(context, line.total.amountMinor)}',
+                      ),
+                      if (line.acceptedPromotion != null) ...[
+                        Text(
+                          '${tr(context, 'm52Promo')}: ${line.acceptedPromotion!.name}',
+                        ),
+                        Text(
+                          '${tr(context, 'm52Gross')}: ${moneyLabel(context, line.gross.amountMinor)} · ${tr(context, 'm52Discount')}: ${moneyLabel(context, line.discountMinor)}',
+                        ),
+                      ],
+                      if (line.product.wholesalePrice != null)
+                        CheckboxListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(tr(context, 'm31Wholesale')),
+                          subtitle: Text(tr(context, 'm31WholesalePerBase')),
+                          value: line.pricingMode == PricingMode.wholesale,
+                          onChanged: provider.busy
+                              ? null
+                              : (value) => provider.pricing(
+                                  line.product.id,
+                                  value == true
+                                      ? PricingMode.wholesale
+                                      : PricingMode.retail,
+                                ),
+                        ),
+                      if (line.missingWholesale) ...[
+                        Text(tr(context, 'm31WholesaleUnavailable')),
                         TextButton(
                           onPressed: provider.busy
                               ? null
-                              : () async {
-                                  final value = await showDialog<int>(
-                                    context: context,
-                                    builder: (_) =>
-                                        _QuantityDialog(line.quantity),
-                                  );
-                                  if (value != null) {
-                                    await provider.quantity(
-                                      line.product.id,
-                                      value,
-                                    );
-                                  }
-                                },
-                          child: Text(line.quantity.toString()),
-                        ),
-                        IconButton(
-                          tooltip: tr(context, 'm3Increase'),
-                          onPressed: provider.busy
-                              ? null
-                              : () => provider.quantity(
+                              : () => provider.pricing(
                                   line.product.id,
-                                  line.quantity + 1,
+                                  PricingMode.retail,
                                 ),
-                          icon: const Icon(Icons.add),
+                          child: Text(tr(context, 'm31UseRetail')),
                         ),
-                        IconButton(
-                          tooltip: tr(context, 'm3RemoveItem'),
-                          onPressed: provider.busy
-                              ? null
-                              : () => remove(line: line),
-                          icon: const Icon(Icons.delete_outline),
+                      ] else if (line.priceChanged)
+                        Text(
+                          '${tr(context, 'm3PricesChanged')}: ${moneyLabel(context, line.currentPrice!.amountMinor)}',
                         ),
-                      ],
-                    ),
-                  ],
+                      if (line.unavailable)
+                        Text(tr(context, 'insufficientSaleableStock')),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          IconButton(
+                            tooltip: tr(context, 'm3Decrease'),
+                            onPressed: provider.busy
+                                ? null
+                                : () {
+                                    if (line.quantity == 1) {
+                                      remove(line: line);
+                                    } else {
+                                      provider.quantity(
+                                        line.product.id,
+                                        line.quantity - 1,
+                                      );
+                                    }
+                                  },
+                            icon: const Icon(Icons.remove),
+                          ),
+                          TextButton(
+                            onPressed: provider.busy
+                                ? null
+                                : () async {
+                                    final value = await showDialog<int>(
+                                      context: context,
+                                      builder: (_) =>
+                                          _QuantityDialog(line.quantity),
+                                    );
+                                    if (value != null) {
+                                      await provider.quantity(
+                                        line.product.id,
+                                        value,
+                                      );
+                                    }
+                                  },
+                            child: Text(line.quantity.toString()),
+                          ),
+                          IconButton(
+                            tooltip: tr(context, 'm3Increase'),
+                            onPressed: provider.busy
+                                ? null
+                                : () => provider.quantity(
+                                    line.product.id,
+                                    line.quantity + 1,
+                                  ),
+                            icon: const Icon(Icons.add),
+                          ),
+                          IconButton(
+                            tooltip: tr(context, 'm3RemoveItem'),
+                            onPressed: provider.busy
+                                ? null
+                                : () => remove(line: line),
+                            icon: const Icon(Icons.delete_outline),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
           ],
@@ -689,7 +753,7 @@ class _QuantityDialogState extends State<_QuantityDialog> {
   @override
   Widget build(BuildContext context) => AlertDialog(
     title: Text(tr(context, 'm3Quantity')),
-    content: TextField(
+    content: ManagedTextField(
       controller: controller,
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],

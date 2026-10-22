@@ -1,0 +1,170 @@
+{
+  "milestone": "M5.1",
+  "completedAt": "2026-10-21 Asia/Jakarta",
+  "scope": "Implementation, available automated verification, ordinary development handoff; physical gaps explicit",
+  "version": "0.5.1+8",
+  "schemaTarget": 13,
+  "sourceSha256": "1e12a80cbd4641f62bb4dbf12f15823e308b2152fb0802d1a68e88327cc9a86f",
+  "head": "b975fe303d98615d2df96f2dc1f3bbecc4cd732e",
+  "format": {
+    "files": 275,
+    "changed": 0,
+    "log": "build/m51-resume-20261020-format.log"
+  },
+  "analyze": {
+    "status": "No issues found",
+    "seconds": 98.2,
+    "repeatSeconds": 7.0
+  },
+  "host": {
+    "passed": 77,
+    "seconds": 66,
+    "log": "build/m51-resume-20261020-host.log"
+  },
+  "focusedMigration8to13": {
+    "passed": 1,
+    "includedInHost77": false,
+    "log": "build/m51-resume-20261021-migration8to13.log"
+  },
+  "exportIndependent": {
+    "csv": "PASS",
+    "openpyxl": "PASS",
+    "rows": 129,
+    "exact64BitAndBarcodeAndFormula": "PASS"
+  },
+  "nativeFeed6": {
+    "passed": 1,
+    "seconds": 16,
+    "device": "7f0edea0",
+    "protectedFileCount": 392,
+    "allPreExistingHashesMatch": true,
+    "automaticDeviceControlActive": false,
+    "directory": "build/m51-resume-feed6-poco-20261020-235708"
+  },
+  "lateInterval": {
+    "preExistingFiles": 391,
+    "matched": 390,
+    "changed": 1,
+    "changedRole": "ordinary database",
+    "wrappedKeysAndFixtureMatch": true,
+    "userConfirmedOrdinaryDummyUseDuringGap": true,
+    "historicalResultUnchanged": true,
+    "resetUsed": false
+  },
+  "apks": {
+    "debug": {
+      "sha256": "fdb5de9397d66bb0ffb972cbdabf4936adfbbe28b880f92279a242cd1c8ef7f5",
+      "package": "com.example.kasir_app",
+      "version_code": 8,
+      "version_name": "0.5.1",
+      "launcher": "com.example.kasir_app.MainActivity",
+      "signing_certificate_sha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "android_debug_certificate": true,
+      "notification_icon_present": true,
+      "zipalign_16k_pass": true,
+      "path": "build/m51-final-handoff-20261021-000031/kasir-app-0.5.1-ordinary-debug.apk",
+      "abis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "nativeLibraries": 13
+    },
+    "release": {
+      "sha256": "3240de00de558e8e5279065143de466d83474a26c4d042d3d89dbdb599fe091e",
+      "package": "com.example.kasir_app",
+      "version_code": 8,
+      "version_name": "0.5.1",
+      "launcher": "com.example.kasir_app.MainActivity",
+      "signing_certificate_sha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "android_debug_certificate": true,
+      "notification_icon_present": true,
+      "zipalign_16k_pass": true,
+      "path": "build/m51-final-handoff-20261021-000031/kasir-app-0.5.1-ordinary-release.apk",
+      "abis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "nativeLibraries": 12
+    }
+  },
+  "handoff": {
+    "installed": true,
+    "device": "7f0edea0",
+    "priorVersion": "0.5.0+7",
+    "currentVersion": "0.5.1+8",
+    "mode": "debug development",
+    "sameInstallClosedSnapshot": true,
+    "portableBackupCreated": false,
+    "closedHashesMatchBeforeLaunch": true,
+    "installedApkHashMatches": true,
+    "reset": false,
+    "uninstall": false,
+    "forcedDowngrade": false,
+    "automaticDeviceControlActive": false
+  },
+  "startup": {
+    "device": "7f0edea0",
+    "package": "com.example.kasir_app",
+    "schemaTarget": 13,
+    "schemaReadback": "No external SQL query; production coordinator open required for cashier",
+    "managementPrivatePin": "UNVERIFIED",
+    "automaticDeviceControlActive": false,
+    "firstCashier": {
+      "ownPackageVisible": true,
+      "shoppingList": true,
+      "payAction": true,
+      "manageAction": true
+    },
+    "firstLog": {
+      "pid": 8524,
+      "fatalUnhandledAnrMarkers": 0,
+      "flutterErrorMarkers": 0,
+      "scope": "Available PID log buffer only"
+    },
+    "allWrappedSecretsUnchanged": true,
+    "wrappedSecretFiles": 1,
+    "databaseStillEncryptedHeader": true,
+    "secondLaunch": "Starting: Intent { cmp=com.example.kasir_app/.MainActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.example.kasir_app/.MainActivity\r\nTotalTime: 1960\r\nWaitTime: 1972\r\nComplete",
+    "secondCashier": {
+      "ownPackageVisible": true,
+      "shoppingList": true,
+      "payAction": true,
+      "manageAction": true
+    },
+    "secondLog": {
+      "pid": 8525,
+      "fatalUnhandledAnrMarkers": 0,
+      "flutterErrorMarkers": 0,
+      "scope": "Available PID log buffer only"
+    },
+    "productionBootstrapReopen": "PASS; startup requires integrity/FK/HMAC/cipher checks",
+    "status": "PASS"
+  },
+  "dvAwakeReadback": {
+    "screensaver_enabled": "1",
+    "screen_off_timeout": "900000",
+    "stay_on_while_plugged_in": "0",
+    "matchesPriorRestoredSnapshot": true,
+    "changedThisSession": false
+  },
+  "notVerified": [
+    "Physical receipt using new default feed6",
+    "Physical recovery-code paper output",
+    "Physical biometric authentication/enrollment change",
+    "Ordinary protected management screens using private PIN",
+    "Real SAF report provider/OEM flow",
+    "Poco USB/80mm and physical fault tests",
+    "Natural idle/reboot/Doze worker",
+    "Latest ordinary release runtime",
+    "TalkBack",
+    "Realme historical worker nonce1792404362140 endpoint"
+  ],
+  "optionalNotImplemented": [
+    "Recovery QR",
+    "Recovery mnemonic"
+  ],
+  "M52": "PLANNED; awaiting user design; not started",
+  "M6": "Not started"
+}

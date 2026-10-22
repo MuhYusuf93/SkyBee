@@ -1,0 +1,24 @@
+{
+  "nonce": "1792317053346",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "state": "C28 checks/preservation PASS; manual schedule handover ready",
+  "automaticDeviceControlActive": false,
+  "originalV6Restoration": "pending in original handover, never overwrite original pointer",
+  "dv": "1PASS schedule UI mock; exact prior APK/default hashes and awake restored/read back",
+  "artifactsJson": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\release-artifacts-20261018-165445/artifacts.json",
+  "priorApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-schedule-ui-update-1792317053346/prior-c27.apk",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-165445\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-165445\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "fixtureSha256": "2c64c2ff8819602be01c6315000bbf876f56eeb9951c375ad2b3d7c4da09de14",
+  "beforeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c28-before-1792317053346-20261018-165725",
+  "afterEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c28-after-1792317053346-20261018-165945",
+  "manualStep": "C28-MAN01: inspect active auto schedule, switch OFF verify status target clears without refresh; ON/confirm verify target21 returns without refresh; no manual upload. Do not claim actual job execution.",
+  "nativePocoEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c28-ui-1792317053346-20261018-165055",
+  "nativeDvEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\c28-ui-1792317053346-20261018-165253",
+  "sourceSha256": {
+    "lib/features/backup/presentation/backup_settings_provider.dart": "bb3fede6379ed2711b845657063afc4900c5a9800baf7061bc735a4243c10224",
+    "test/m5_settings_ui_test.dart": "7be334c787cc3b52f972786f774a728b5e18d65fc67f1ab302ac7709a241fabd",
+    "integration_test/m5_acceptance_audit_test.dart": "1ab413f6f781a58733db529d9c12b2f6d54613999ebc9b649f1b9dd10064f19c",
+    "android/app/src/integrationFixture/kotlin/com/example/kasir_app/IntegrationActivity.kt": "02f2ef213a63de78b3d9f2024d6ca89c87dedb7cfd1b102e6545dabf09d3e292"
+  }
+}

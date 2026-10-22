@@ -1,0 +1,13 @@
+{
+  "id": "D-MAN11",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answers": {
+    "savedPrintersEmpty": "ya",
+    "alertsDisabledDays5LowStock2min5": "ya"
+  },
+  "status": "PASS",
+  "scope": "After Drive restore, no saved RPP02N profile; app notifications switch off, days5, fixture low-stock2/min5 remain visible",
+  "automaticEvidence": false,
+  "limits": "UI only, not proof that previously active profiles/notifications were reset by this particular restore (already off/empty before it); native archive/policy audit next. No connect/print/save requested."
+}

@@ -1,0 +1,27 @@
+{
+  "Model": "AX810",
+  "Restored": true,
+  "Entries": [
+    {
+      "Name": "screensaver_enabled",
+      "Value": "1",
+      "Namespace": "secure",
+      "Temporary": "0"
+    },
+    {
+      "Name": "screen_off_timeout",
+      "Value": "900000",
+      "Namespace": "system",
+      "Temporary": "2147483647"
+    },
+    {
+      "Name": "stay_on_while_plugged_in",
+      "Value": "0",
+      "Namespace": "global",
+      "Temporary": "7"
+    }
+  ],
+  "Device": "192.168.0.102:5555",
+  "SavedAt": "2026-10-19T00:54:55.0418567+07:00",
+  "RestoredAt": "2026-10-19T00:56:46.5666493+07:00"
+}

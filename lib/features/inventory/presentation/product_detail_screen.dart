@@ -15,6 +15,7 @@ import '../domain/inventory_models.dart';
 import '../domain/stock_rules.dart';
 import '../domain/stock_input.dart';
 import 'stock_input_fields.dart';
+import 'expiry_date_field.dart';
 import 'product_detail_provider.dart';
 import 'product_form.dart';
 import 'relation_field.dart';
@@ -36,6 +37,98 @@ class ProductDetailScreen extends StatelessWidget {
 
 class _DetailBody extends StatelessWidget {
   const _DetailBody();
+  Future<void> _tracking(
+    BuildContext parent,
+    ProductDetailProvider state,
+  ) async {
+    final product = state.product!;
+    final tracked = !product.stockTracked;
+    final count = TextEditingController(),
+        cost = MoneyEditingController()..codec = moneyCodec(parent);
+    bool busy = false;
+    String? error;
+    await showManagedDialog<void>(
+      context: parent,
+      builder: (dialog) => StatefulBuilder(
+        builder: (context, update) => ProtectedDialog(
+          child: AlertDialog(
+            title: Text(tr(context, 'm52TrackingChange')),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    tr(
+                      context,
+                      tracked ? 'm52TrackedOpening' : 'm52StockTransition',
+                    ),
+                  ),
+                  if (tracked)
+                    ManagedTextField(
+                      controller: count,
+                      enabled: !busy,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: const [WholeQuantityFormatter()],
+                      decoration: InputDecoration(
+                        labelText: tr(context, 'initialQuantity'),
+                      ),
+                    ),
+                  MoneyField(
+                    controller: cost,
+                    enabled: !busy,
+                    label: tr(
+                      context,
+                      tracked ? 'purchasePricePerUnit' : 'm52ReferenceCost',
+                    ),
+                  ),
+                  if (error != null) Text(message(context, error!)),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: busy ? null : () => Navigator.pop(dialog),
+                child: Text(tr(context, 'cancel')),
+              ),
+              FilledButton(
+                onPressed: busy
+                    ? null
+                    : () async {
+                        update(() => busy = true);
+                        final success = await state.run(
+                          () => state.service.changeStockTracking(
+                            product.id,
+                            product.revision,
+                            tracked: tracked,
+                            cost: CostAmount.fromMoney(
+                              cost.parseMoney(finish: true),
+                            ),
+                            initialQuantity: tracked
+                                ? parseWholeQuantity(count.text)
+                                : 0,
+                          ),
+                        );
+                        if (dialog.mounted) {
+                          if (success) {
+                            Navigator.pop(dialog);
+                          } else {
+                            update(() => error = state.error);
+                          }
+                          if (dialog.mounted) update(() => busy = false);
+                        }
+                      },
+                child: Text(tr(context, 'save')),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    count.dispose();
+    cost.dispose();
+    if (parent.mounted) await state.load();
+  }
+
   Future<void> _operation(
     BuildContext parent,
     ProductDetailProvider state,
@@ -110,12 +203,7 @@ class _DetailBody extends StatelessWidget {
                     ),
                   if (kind == 'receive') ...[
                     if (state.product!.expiryEnabled)
-                      ManagedTextField(
-                        controller: expiry,
-                        decoration: InputDecoration(
-                          labelText: tr(context, 'expiryYyyyMmDdOptional'),
-                        ),
-                      ),
+                      ExpiryDateField(controller: expiry, enabled: !busy),
                     RelationField(
                       kind: MasterKind.supplier,
                       value: supplier,
@@ -239,7 +327,12 @@ class _DetailBody extends StatelessWidget {
                   child: Text(tr(context, 'tryAgain')),
                 ),
               if (product != null) ...[
-                ProductAttributesView(attributes: product.attributes),
+                ProductAttributesView(
+                  attributes: product.attributes,
+                  currency: CurrencyPolicy.forCode(
+                    product.row['currency_code'] as String,
+                  ),
+                ),
                 Text(
                   AppLocalizations.of(context)!.sellingPriceAmount(
                     moneyLabel(
@@ -252,7 +345,9 @@ class _DetailBody extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${tr(context, 'm31BaseStock')}: ${product.quantity} ${product.baseUnit}',
+                  product.stockTracked
+                      ? '${tr(context, 'm31BaseStock')}: ${product.quantity} ${product.baseUnit}'
+                      : tr(context, 'm52Untracked'),
                 ),
                 if (product.wholesaleMinor != null)
                   Text(
@@ -275,26 +370,38 @@ class _DetailBody extends StatelessWidget {
                   product.valueMicros,
                 ))
                   Text(tr(context, warning)),
-                Text(
-                  AppLocalizations.of(context)!.stockSummary(
-                    product.quantity,
-                    product.saleable,
-                    product.expired,
+                if (product.stockTracked)
+                  Text(
+                    AppLocalizations.of(context)!.stockSummary(
+                      product.quantity,
+                      product.saleable,
+                      product.expired,
+                    ),
                   ),
-                ),
                 if (product.undated > 0)
                   Text(tr(context, 'someStockHasNoRecordedExpiryDate')),
-                Text(
-                  AppLocalizations.of(context)!.averageCostAmount(
-                    moneyCostLabel(
-                      context,
-                      averageCost(product.quantity, product.valueMicros),
-                      currency: CurrencyPolicy.forCode(
-                        product.row['currency_code'] as String,
+                if (product.stockTracked)
+                  Text(
+                    AppLocalizations.of(context)!.averageCostAmount(
+                      moneyCostLabel(
+                        context,
+                        averageCost(product.quantity, product.valueMicros),
+                        currency: CurrencyPolicy.forCode(
+                          product.row['currency_code'] as String,
+                        ),
                       ),
                     ),
                   ),
-                ),
+                if (!product.stockTracked) ...[
+                  Text('${tr(context, 'm4InventoryValue')}: —'),
+                  Text(
+                    '${tr(context, 'm52ReferenceCost')}: ${moneyCostLabel(context, product.referenceCostMicros!, currency: CurrencyPolicy.forCode(product.row['currency_code'] as String))}',
+                  ),
+                  if (product.row['reference_expiry_date'] != null)
+                    Text(
+                      '${tr(context, 'trackExpiry')}: ${product.row['reference_expiry_date']}',
+                    ),
+                ],
                 Text(AppLocalizations.of(context)!.storeCodeValue(product.sku)),
                 if (product.barcode != null)
                   Text(
@@ -308,14 +415,20 @@ class _DetailBody extends StatelessWidget {
                   runSpacing: 12,
                   children: [
                     if (!product.isDeleted) ...[
-                      FilledButton(
+                      OutlinedButton(
                         onPressed: state.busy
+                            ? null
+                            : () => _tracking(context, state),
+                        child: Text(tr(context, 'm52TrackingChange')),
+                      ),
+                      FilledButton(
+                        onPressed: state.busy || !product.stockTracked
                             ? null
                             : () => _operation(context, state, 'receive'),
                         child: Text(tr(context, 'receiveStock')),
                       ),
                       OutlinedButton(
-                        onPressed: state.busy
+                        onPressed: state.busy || !product.stockTracked
                             ? null
                             : () => _operation(context, state, 'count'),
                         child: Text(tr(context, 'stockCount')),

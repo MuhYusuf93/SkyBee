@@ -1,0 +1,8 @@
+{
+  "id": "C27",
+  "date": "2026-10-18",
+  "source": "explicit user request",
+  "requirement": "Copy backup recovery to clipboard, normalize whitespace and hyphens; feature belongs to ordinary application as well as test build",
+  "scope": "PIN-protected displayed new/stored code; no automatic rotation, save, restore or clipboard reading; no recovery values in logs",
+  "state": "implementation started; not deployed"
+}

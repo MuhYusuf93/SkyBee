@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
+import '../../../core/domain/contact_validation.dart';
+import '../../../core/presentation/contact_output_link.dart';
 import '../../../core/pagination/paged_controller.dart';
 import '../domain/inventory_models.dart';
 import '../../management/presentation/management_gate.dart';
@@ -43,13 +45,39 @@ class _MasterBody extends StatelessWidget {
   final bool picker;
   Future<void> _edit(BuildContext context, {MasterRecord? record}) async {
     final name = TextEditingController(text: record?.name),
-        contact = TextEditingController(text: record?.contact);
+        contact = TextEditingController(text: record?.contact),
+        email = TextEditingController(text: record?.email),
+        website = TextEditingController(text: record?.website);
     final paging = context
         .read<PagedController<MasterRecord, MasterCursor, MasterFilter>>();
     String? error;
     final routeContext = context;
     bool busy = false;
     final services = context.read<AppServices>();
+    final region = await services.settings.phoneRegion();
+    String? invalid(String key) {
+      if (kind != MasterKind.supplier) return null;
+      try {
+        switch (key) {
+          case 'phone':
+            ContactValidation.phone(contact.text, region: region);
+          case 'email':
+            ContactValidation.email(email.text);
+          case 'website':
+            ContactValidation.website(website.text);
+        }
+        return null;
+      } catch (e) {
+        return safeError(e);
+      }
+    }
+
+    if (!context.mounted) {
+      for (final c in [name, contact, email, website]) {
+        c.dispose();
+      }
+      return;
+    }
     await showManagedDialog<void>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
@@ -71,16 +99,50 @@ class _MasterBody extends StatelessWidget {
                 children: [
                   ManagedTextField(
                     controller: name,
+                    enabled: !busy,
+                    onChanged: (_) => setState(() {}),
                     decoration: InputDecoration(labelText: tr(context, 'name')),
                   ),
                   if (kind == MasterKind.supplier)
                     ManagedTextField(
                       controller: contact,
+                      enabled: !busy,
+                      onChanged: (_) => setState(() {}),
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         labelText: tr(context, 'contactNumberOptional'),
+                        errorText: invalid('phone') == null
+                            ? null
+                            : tr(context, invalid('phone')!),
                       ),
                     ),
+                  if (kind == MasterKind.supplier) ...[
+                    ManagedTextField(
+                      controller: email,
+                      enabled: !busy,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (_) => setState(() {}),
+                      decoration: InputDecoration(
+                        labelText: tr(context, 'm52Email'),
+                        errorText: invalid('email') == null
+                            ? null
+                            : tr(context, invalid('email')!),
+                      ),
+                    ),
+                    ManagedTextField(
+                      controller: website,
+                      enabled: !busy,
+                      keyboardType: TextInputType.url,
+                      onChanged: (_) => setState(() {}),
+                      decoration: InputDecoration(
+                        labelText: tr(context, 'm52Website'),
+                        helperText: 'example.com → https://example.com',
+                        errorText: invalid('website') == null
+                            ? null
+                            : tr(context, invalid('website')!),
+                      ),
+                    ),
+                  ],
                   if (error != null) Text(message(context, error!)),
                 ],
               ),
@@ -92,7 +154,14 @@ class _MasterBody extends StatelessWidget {
                 child: Text(tr(context, 'cancel')),
               ),
               FilledButton(
-                onPressed: busy
+                onPressed:
+                    busy ||
+                        name.text.trim().isEmpty ||
+                        [
+                          'phone',
+                          'email',
+                          'website',
+                        ].any((key) => invalid(key) != null)
                     ? null
                     : () async {
                         setState(() => busy = true);
@@ -103,6 +172,8 @@ class _MasterBody extends StatelessWidget {
                             kind,
                             enteredName,
                             contact: enteredContact,
+                            email: email.text,
+                            website: website.text,
                             id: record?.id,
                           );
                           if (dialogContext.mounted) {
@@ -139,6 +210,8 @@ class _MasterBody extends StatelessWidget {
     );
     name.dispose();
     contact.dispose();
+    email.dispose();
+    website.dispose();
   }
 
   @override
@@ -207,9 +280,22 @@ class _MasterBody extends StatelessWidget {
                 final record = state.items[index];
                 return ListTile(
                   title: Text(record.name),
-                  subtitle: record.contact == null
-                      ? null
-                      : Text(record.contact!),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (record.contact != null)
+                        ContactOutputLink.phone(
+                          record.contact!,
+                          managementProtected: true,
+                        ),
+                      if (record.email != null) Text(record.email!),
+                      if (record.website != null)
+                        ContactOutputLink.website(
+                          record.website!,
+                          managementProtected: true,
+                        ),
+                    ],
+                  ),
                   onTap: picker
                       ? () => Navigator.pop(context, record)
                       : record.isDeleted

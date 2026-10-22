@@ -1,0 +1,14 @@
+{
+  "com.example.kasir_app.integration/databases/kasir_app.db": "556c6a5c472bf4c77edf80919eda1a58f76c415b2cb4c2bd5badfd442dfd103e",
+  "com.example.kasir_app.integration/databases/kasir_app.db-wal": "ABSENT",
+  "com.example.kasir_app.integration/databases/kasir_app.db-shm": "ABSENT",
+  "com.example.kasir_app.integration/databases/kasir_app.db-journal": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
+  "com.example.kasir_app.integration/databases/m5_acceptance_1792150309449.db": "ccf4ad39ff596059a4f57a4293800695deacb63d180d42b7e3bd7c40cdaaff49",
+  "com.example.kasir_app.integration/databases/m5_acceptance_1792150309449.db-wal": "ABSENT",
+  "com.example.kasir_app.integration/databases/m5_acceptance_1792150309449.db-shm": "ABSENT",
+  "com.example.kasir_app.integration/databases/m5_acceptance_1792150309449.db-journal": "ABSENT",
+  "com.example.kasir_app/databases/kasir_app.db": "989aa556a59063e7c5b0faa92d19a9263a86c103cb2ef44838c9a1f419e76e22",
+  "com.example.kasir_app/databases/kasir_app.db-wal": "ABSENT",
+  "com.example.kasir_app/databases/kasir_app.db-shm": "ABSENT",
+  "com.example.kasir_app/databases/kasir_app.db-journal": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560"
+}

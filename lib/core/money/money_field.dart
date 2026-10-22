@@ -76,11 +76,15 @@ class MoneyField extends StatefulWidget {
     required this.label,
     this.enabled = true,
     this.currency,
+    this.errorText,
+    this.focusNode,
   });
   final TextEditingController controller;
   final String label;
   final bool enabled;
   final CurrencyPolicy? currency;
+  final String? errorText;
+  final FocusNode? focusNode;
   @override
   State<MoneyField> createState() => _MoneyFieldState();
 }
@@ -88,7 +92,7 @@ class MoneyField extends StatefulWidget {
 class _MoneyFieldState extends State<MoneyField> {
   MoneyCodec? previous;
   MoneyCodec? pending;
-  final focus = FocusNode();
+  late final focus = widget.focusNode ?? FocusNode();
   @override
   void initState() {
     super.initState();
@@ -178,7 +182,7 @@ class _MoneyFieldState extends State<MoneyField> {
   @override
   void dispose() {
     focus.removeListener(normalize);
-    focus.dispose();
+    if (widget.focusNode == null) focus.dispose();
     super.dispose();
   }
 
@@ -199,6 +203,7 @@ class _MoneyFieldState extends State<MoneyField> {
     onSubmitted: (_) => normalize(),
     decoration: InputDecoration(
       labelText: '${widget.label} (${previous!.policy.code})',
+      errorText: widget.errorText,
       border: const OutlineInputBorder(),
     ),
   );

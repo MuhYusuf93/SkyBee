@@ -85,7 +85,7 @@ final class CartService {
           whereArgs: [draftId.value, productId.value],
         );
         final quantity = (rows.firstOrNull?['quantity'] as int? ?? 0) + 1;
-        if (quantity > product.saleable) {
+        if (product.stockTracked && quantity > product.saleable) {
           throw const AppError('insufficientSaleableStock');
         }
         if (rows.isEmpty) {
@@ -104,6 +104,7 @@ final class CartService {
             whereArgs: [draftId.value, productId.value],
           );
         }
+        await store.acceptLinePromo(dbTxn, draftId, productId);
         await _changed(dbTxn, draftId, draft['revision'] as int);
         final result = await store.cart(dbTxn, draftId);
         result.total; // Validate cap/metadata before committing the mutation.
@@ -117,7 +118,8 @@ final class CartService {
     Quantity.positive(quantity);
     final draft = await store.draft(dbTxn, draftId);
     final product = await store.product(dbTxn, productId);
-    if (product.archived || quantity > product.saleable) {
+    if (product.archived ||
+        (product.stockTracked && quantity > product.saleable)) {
       throw const AppError('insufficientSaleableStock');
     }
     final changed = await dbTxn.update(
@@ -127,6 +129,7 @@ final class CartService {
       whereArgs: [draftId.value, productId.value],
     );
     if (changed != 1) throw const AppError('m3DraftChanged');
+    await store.acceptLinePromo(dbTxn, draftId, productId);
     await _changed(dbTxn, draftId, draft['revision'] as int);
     final result = await store.cart(dbTxn, draftId);
     result.total;
@@ -157,6 +160,7 @@ final class CartService {
       whereArgs: [draftId.value, productId.value],
     );
     if (changed != 1) throw const AppError('m3DraftChanged');
+    await store.acceptLinePromo(dbTxn, draftId, productId);
     await _changed(dbTxn, draftId, draft['revision'] as int);
     final result = await store.cart(dbTxn, draftId);
     result.total;
@@ -233,6 +237,7 @@ final class CartService {
             where: 'draft_id=? AND product_id=?',
             whereArgs: [id.value, line.product.id.value],
           );
+          await store.acceptLinePromo(dbTxn, id, line.product.id);
         }
         await _changed(dbTxn, id, expectedRevision);
         final result = await store.cart(dbTxn, id);

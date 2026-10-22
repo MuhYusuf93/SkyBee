@@ -1,0 +1,11 @@
+{
+  "id": "D-AUTO-ACCOUNT-B01",
+  "date": "2026-10-18",
+  "status": "PASS scoped",
+  "source": "real Poco accepted B account; API read-only and disabled-run guard",
+  "actual": "B permission identity distinct from8A records; B namespace empty; prior verified A archive ID unavailable through B; headless operation rejected while autoOFF, no new run/archive; whole DB unchanged after public PIN metadata baseline",
+  "pinMetadata": "Fixture0001 auth changed only credential/audit tables; all business hashes unchanged. No secret/identity payload reported.",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-history-ui-update-1792331546910\\update.json",
+  "evidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c30-before-1792331546910-20261018-210016\\runner.log",
+  "limits": "Not a concurrent positive readback on A or cross-device Google test. Does not prove Android OS job cancellation, Doze/reboot or in-flight account change."
+}

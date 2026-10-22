@@ -7,6 +7,7 @@ import '../../../core/domain/value_types.dart';
 import '../../../core/time/store_clock.dart';
 import '../domain/cashier_models.dart';
 import '../domain/cash_tender.dart';
+import '../domain/quantity_promotion.dart';
 
 /// Shared SQL primitives, not screen state. All callers use their own dbTxn.
 final class CashierStore {
@@ -63,14 +64,26 @@ final class CashierStore {
           'shelf_location',
           'product_note',
         ],
+        if (schema >= 14) 'stock_tracking_enabled',
       ],
       where: 'id=?',
       whereArgs: [id.value],
     );
     if (rows.isEmpty) throw const AppError('productNotFound');
-    final row = rows.single;
+    final row = Map<String, Object?>.from(rows.single);
+    if (schema >= 14) {
+      final promo = await db.query(
+        'quantity_promotions',
+        where: 'product_id=? AND active=1 AND is_deleted=0',
+        whereArgs: [id.value],
+        limit: 1,
+      );
+      row['promotion_json'] = promo.isEmpty
+          ? null
+          : QuantityPromotion.fromRow(promo.single).snapshot;
+    }
     var saleable = row['stock_quantity'] as int;
-    if (row['expiry_enabled'] == 1) {
+    if (row['stock_tracking_enabled'] != 0 && row['expiry_enabled'] == 1) {
       final today = clock
           .today((await settings(db))['time_zone'] as String)
           .iso;
@@ -108,6 +121,7 @@ final class CashierStore {
           pricingMode: PricingMode.values.byName(
             item['pricing_mode'] as String,
           ),
+          acceptedPromoJson: item['accepted_promo_json'] as String?,
         ),
       );
     }
@@ -148,6 +162,40 @@ final class CashierStore {
   Future<String> fingerprint(Object payload) async => (await Sha256().hash(
     utf8.encode(jsonEncode(payload)),
   )).bytes.map((value) => value.toRadixString(16).padLeft(2, '0')).join();
+
+  /// Explicit quantity/mode changes accept the newly displayed line promo.
+  /// A passive refresh never updates this snapshot: checkout still requires
+  /// acceptance if a rule changed while the basket was open.
+  Future<void> acceptLinePromo(
+    DatabaseExecutor db,
+    EntityId draftId,
+    EntityId productId,
+  ) async {
+    if ((await db.rawQuery('PRAGMA user_version')).single.values.single as int <
+        14) {
+      return;
+    }
+    final rows = await db.query(
+      'cart_draft_items',
+      where: 'draft_id=? AND product_id=?',
+      whereArgs: [draftId.value, productId.value],
+    );
+    if (rows.isEmpty) return;
+    final row = rows.single;
+    final productNow = await product(db, productId);
+    final promo =
+        row['pricing_mode'] == 'retail' &&
+            productNow.promotion != null &&
+            (row['quantity'] as int) >= productNow.promotion!.minimum
+        ? productNow.promotion
+        : null;
+    await db.update(
+      'cart_draft_items',
+      {'accepted_promo_json': promo?.snapshot},
+      where: 'draft_id=? AND product_id=?',
+      whereArgs: [draftId.value, productId.value],
+    );
+  }
 
   /// Cashier audit contains installation/action only, no PIN/customer payload.
   Future<void> audit(DatabaseExecutor db, String action, String entity) async {
@@ -203,6 +251,12 @@ final class CashierStore {
           'size_unit_snapshot',
           'shelf_location_snapshot',
           'product_note_snapshot',
+        ],
+        if (schema >= 14) ...[
+          'promo_snapshot_json',
+          'gross_minor',
+          'discount_minor',
+          'stock_tracking_snapshot',
         ],
       ],
       where: 'sale_transaction_id=?',

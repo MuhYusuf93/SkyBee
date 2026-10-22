@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../management/presentation/management_gate.dart';
+import '../../management/presentation/managed_text_field.dart';
 import 'inventory_provider.dart';
 import 'master_list.dart';
+import 'shelves_screen.dart';
+import 'promotions_screen.dart';
 import 'product_form.dart';
 import 'product_detail_screen.dart';
 import '../domain/inventory_models.dart';
@@ -38,6 +41,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       (0, tr(context, 'products')),
                       (1, tr(context, 'categories')),
                       (2, tr(context, 'suppliers')),
+                      (3, tr(context, 'm52Shelves')),
+                      (4, tr(context, 'm52Promo')),
                     ])
                       Padding(
                         padding: const EdgeInsets.all(8),
@@ -63,10 +68,12 @@ class _InventoryScreenState extends State<InventoryScreen> {
               key: ValueKey('category'),
               kind: MasterKind.category,
             ),
-            _ => const MasterList(
+            2 => const MasterList(
               key: ValueKey('supplier'),
               kind: MasterKind.supplier,
             ),
+            3 => const ShelvesScreen(),
+            _ => const PromotionsScreen(),
           },
         ),
       ),
@@ -89,7 +96,7 @@ class _Products extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
-                  TextField(
+                  ManagedTextField(
                     decoration: InputDecoration(
                       labelText: tr(context, 'searchProductNamePrefix'),
                       prefixIcon: Icon(Icons.search),
@@ -100,8 +107,10 @@ class _Products extends StatelessWidget {
                   SwitchListTile(
                     title: Text(tr(context, 'showArchived')),
                     value: paging.filter.isDeleted,
-                    onChanged: (value) =>
-                        state.filter(paging.filter.namePrefix, value),
+                    onChanged: (value) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      state.filter(paging.filter.namePrefix, value);
+                    },
                   ),
                   Wrap(
                     spacing: 12,
@@ -156,7 +165,7 @@ class _Products extends StatelessWidget {
               return ListTile(
                 title: Text(product.name),
                 subtitle: Text(
-                  '${AppLocalizations.of(context)!.productSummary(moneyLabel(context, product.priceMinor), product.quantity, product.saleable)}${warnings.isEmpty ? '' : '\n${warnings.join(' • ')}'}',
+                  '${product.stockTracked ? AppLocalizations.of(context)!.productSummary(moneyLabel(context, product.priceMinor), product.quantity, product.saleable) : '${moneyLabel(context, product.priceMinor)}\n${tr(context, 'm52Untracked')}'}${warnings.isEmpty ? '' : '\n${warnings.join(' • ')}'}',
                 ),
                 isThreeLine: warnings.isNotEmpty,
                 onTap: () async {

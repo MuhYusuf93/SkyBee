@@ -1,0 +1,53 @@
+{
+  "id": "C32-CLOSING",
+  "date": "2026-10-19",
+  "status": "PASS available scope; M5 implementation/primary acceptance closed; M6 not started",
+  "host": "58PASS159s including focused2 subset; no sum of retries/language vectors/native reuse",
+  "analyzer": "No issues41.3s",
+  "poco": "2PASS21s persistent worker status UI with native SQLCipher",
+  "dv": "2PASS43s UI/SQLCipher ARM32; exact prior APK/default hashes/awake restored/read back",
+  "nativeClosing": "One audit testcase in3roles: before13archives authenticated/8worker business23 snapshots; after strict all-table/archive/policy equality; final after release startup alert metadata accounted and own M5 work cancellation requested",
+  "data": "2products/2sales; revenue42000/HPP36000/payment22000/debt20000; stock18/value150000; old13archive digests intact; disconnected/autoOff/nextnull",
+  "build": "3 universal artifacts verified; ordinary built only, not installed; development signing",
+  "restoration": {
+    "ordinaryHashesSame": true,
+    "originalSha256": "22364501e4c00e4b829365858dca1e54ab0341c8ebbc1fc5b8649f9fa891264d",
+    "originalNotLaunched": true,
+    "campaignClosedHashesSame": true,
+    "finalNativeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c32-final-1792345948116-20261019-010415",
+    "publicExportsSame": true,
+    "legacyHashesSame": true,
+    "originalV6Restored": true
+  },
+  "ownM5Work": {
+    "device": "7f0edea0",
+    "package": "com.example.kasir_app.integration",
+    "nonce": "1792345948116",
+    "closedWorkMetadataIntegrity": true,
+    "originalMetadataHashesUnchanged": true,
+    "m5WorkCount": 5,
+    "pendingOrUnknownStateCount": 0,
+    "succeededCount": 1,
+    "failedCount": 0,
+    "canceledCount": 4,
+    "scope": "Drive-tag, alert unique work and fixture live probes only; no identifiers/payloads retained",
+    "limits": "Snapshot after cleanup; not proof of prior live job cancellation, natural21, reboot or Doze"
+  },
+  "releaseStartup": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 18447,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-worker-status-update-1792345948116\\update.json",
+  "limits": [
+    "Natural21/reboot/Doze/force-stop background delivery unverified",
+    "Real revoked-consent condition/in-flight account switch/other-origin real Drive preservation unverified",
+    "Real cross-device Drive not exercised; encrypted portable DV-to-Poco proof remains separate",
+    "80mm/paper-out/actual ambiguous partial write physical tests unverified",
+    "OEM clipboard preview masking/lockscreen notification content/TalkBack physical unverified",
+    "Realme unavailable for C31/C32; historical results retained separately",
+    "No recovery claim for historical ISSUE-M31-DATA; no M6 release signing/publication"
+  ]
+}

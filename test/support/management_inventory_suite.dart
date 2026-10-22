@@ -216,7 +216,7 @@ void managementInventorySuite(
       final supplier = await inventory.saveMaster(
         MasterKind.supplier,
         'Pemasok',
-        contact: '00123',
+        contact: '081234567890',
       );
       final first = await inventory.create(
         input(barcode: '000009', category: category),
@@ -289,7 +289,7 @@ void managementInventorySuite(
         null,
         isDeleted: true,
       );
-      expect(records.items.single.contact, '00123');
+      expect(records.items.single.contact, '+6281234567890');
       await expectLater(
         inventory.create(input(), initialQuantity: 1),
         throwsA(isA<AppError>()),
@@ -437,6 +437,9 @@ void managementInventorySuite(
   test(
     'expiry calendar, undated, FEFO and expired stock remains physical until disposal',
     () async {
+      // Enter the dated batches before they expire, then advance the clock.
+      // M5.2 forbids entering an already expired new batch through the service.
+      now = DateTime.utc(2026, 10, 10, 17);
       await unlock();
       final id = await inventory.create(input(expiry: true));
       await inventory.receive(
@@ -454,6 +457,8 @@ void managementInventorySuite(
         expiry: CalendarDate('2026-10-15'),
       );
       await inventory.receive(id, 4, CostAmount(100), operationKey: 'undated');
+      now = DateTime.utc(2026, 10, 12, 17);
+      await unlock();
       // UTC 17:00 Oct 12 is midnight Oct 13 in Jakarta.
       var product = await inventory.detail(id);
       expect(product.expired, 2);

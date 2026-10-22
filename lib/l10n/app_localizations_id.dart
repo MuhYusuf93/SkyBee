@@ -1372,7 +1372,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m5PrintSetupRequired =>
-      'Printer belum siap. Periksa pengaturan printer melalui Kelola. Penjualan tetap tersimpan.';
+      'Printer belum siap. Buka Pengaturan printer. Penjualan tetap tersimpan.';
 
   @override
   String get m5ScanCancelled => 'Pencarian dibatalkan.';
@@ -2105,4 +2105,195 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m51Space_maintenanceFailed =>
       'Pemeliharaan gagal. Backup valid sebelumnya tetap tersedia.';
+
+  @override
+  String get m52PayAll => 'Lunas semua';
+
+  @override
+  String get m52PhoneInvalid =>
+      'Nomor telepon tidak valid untuk negara tersebut. Gunakan digit dan + di awal saja.';
+
+  @override
+  String get m52EmailInvalid => 'Format email tidak valid.';
+
+  @override
+  String get m52WebsiteInvalid =>
+      'Masukkan domain atau URL http/https dengan host yang valid.';
+
+  @override
+  String get m52InitialQuantityLimit =>
+      'Jumlah awal maksimal 6 digit (0–999999 pcs).';
+
+  @override
+  String get m52PurchaseAboveRetail =>
+      'Harga beli per pcs tidak boleh melebihi harga jual eceran.';
+
+  @override
+  String get m52WholesaleAboveRetail =>
+      'Harga grosir tidak boleh melebihi harga jual eceran.';
+
+  @override
+  String get m52ReferenceCostRequired =>
+      'Isi harga beli acuan per pcs, termasuk 0 bila memang tanpa biaya.';
+
+  @override
+  String get m52ShelfDuplicate => 'Rak dengan nama/kode ini sudah ada.';
+
+  @override
+  String get m52UnsavedTitle => 'Perubahan belum disimpan';
+
+  @override
+  String get m52UnsavedBody =>
+      'Perubahan belum disimpan. Jika kembali sekarang, perubahan pada formulir ini akan dibuang. Tetap kembali?';
+
+  @override
+  String get m52KeepEditing => 'Lanjutkan mengedit';
+
+  @override
+  String get m52Discard => 'Kembali tanpa menyimpan';
+
+  @override
+  String get m52PromoInvalid =>
+      'Isi produk, nama, minimum pcs positif dan diskon 0,01–100%.';
+
+  @override
+  String get m52PromoConflict =>
+      'Produk ini sudah mempunyai promo aktif. Nonaktifkan promo lama dahulu.';
+
+  @override
+  String get m52Untracked => '999 — Stok fiktif (tidak dilacak)';
+
+  @override
+  String get m52UntrackedNote =>
+      'Jumlah awal tidak diisi. Sistem akan menyimpan stok fiktif 999 karena stok barang ini tidak dilacak. Angka ini bukan jumlah barang sebenarnya dan tidak dihitung dalam nilai persediaan.';
+
+  @override
+  String get m52StockOperationRequiresTracking =>
+      'Operasi stok fisik hanya tersedia untuk barang dengan pelacakan stok.';
+
+  @override
+  String get m52StockTransition =>
+      'Selesaikan stok dan batch nyata sebelum mengubah mode pelacakan.';
+
+  @override
+  String get m52ReferenceCost => 'Harga beli acuan per pcs (tanpa pelacakan)';
+
+  @override
+  String get m52Tracked => 'Stok dilacak';
+
+  @override
+  String get m52CostSource => 'Dasar HPP';
+
+  @override
+  String get m52Promo => 'Promo quantity eceran';
+
+  @override
+  String get m52PromoName => 'Nama promo';
+
+  @override
+  String get m52PromoMinimum => 'Minimum quantity pcs';
+
+  @override
+  String get m52PromoPercent => 'Diskon (%)';
+
+  @override
+  String get m52PromoActive => 'Aktif';
+
+  @override
+  String get m52PromoArchive => 'Hapus/arsip promo ini?';
+
+  @override
+  String get m52Gross => 'Sebelum diskon';
+
+  @override
+  String get m52Discount => 'Diskon';
+
+  @override
+  String get m52PromoLoss =>
+      'Harga setelah promo berada di bawah biaya. Periksa margin sebelum mengaktifkan.';
+
+  @override
+  String get m52Shelf => 'Rak (opsional)';
+
+  @override
+  String get m52Shelves => 'Tambah / edit rak';
+
+  @override
+  String get m52ShelfName => 'Kode/nama rak';
+
+  @override
+  String get m52Email => 'Email (opsional)';
+
+  @override
+  String get m52Website => 'Website (opsional)';
+
+  @override
+  String get m52PhoneRegion => 'Negara nomor lokal (kode ISO, mis. ID)';
+
+  @override
+  String get m52DateTomorrow =>
+      'Tanggal baru paling awal besok berdasarkan kalender perangkat.';
+
+  @override
+  String get m52LowPriceTitle => 'Periksa harga rendah';
+
+  @override
+  String get m52LowPriceBody =>
+      'Harga yang dimasukkan tergolong rendah untuk mata uang ini. Periksa kembali nominalnya. Tetap simpan?';
+
+  @override
+  String get m52Review => 'Periksa kembali';
+
+  @override
+  String get m52SaveAnyway => 'Tetap simpan';
+
+  @override
+  String get m52SuppressLowPrice =>
+      'Jangan tampilkan peringatan harga rendah lagi untuk mata uang ini di toko ini';
+
+  @override
+  String get m52LowPriceSettings => 'Preferensi peringatan harga rendah';
+
+  @override
+  String get m52Threshold => 'Ambang harga rendah';
+
+  @override
+  String get m52PaperWidth => 'Lebar kertas';
+
+  @override
+  String get m52IwareFeed => 'Coba Iware 58: feed 3 baris (profil ini saja)';
+
+  @override
+  String get m52FeedHelp =>
+      'Atur feed sesudah footer. Periksa kertas sebelum menyimpan hasil kalibrasi; profil lama tetap memakai nilainya.';
+
+  @override
+  String get m52BatteryHelp =>
+      'Backup pukul 21.00 adalah target best effort. Pembatasan baterai/background dapat menundanya. Di HyperOS, pilihan Tidak ada pembatasan (jika tersedia) dapat membantu, tanpa menjamin waktu. Aplikasi yang di-force-stop tidak bisa diandalkan menjalankan jadwal.';
+
+  @override
+  String get m52AppSettings => 'Buka Info aplikasi / pengaturan baterai';
+
+  @override
+  String get m52UntrackedCount => 'Jumlah produk tanpa pelacakan stok';
+
+  @override
+  String get m52TrackingChange => 'Ubah mode pelacakan stok';
+
+  @override
+  String get m52TrackedOpening =>
+      'Aktifkan pelacakan dengan jumlah awal nyata (isi 0 bila kosong) dan harga beli per pcs. Riwayat lama tetap memakai mode dan HPP saat penjualan.';
+
+  @override
+  String get m52ContactOpenFailed =>
+      'Tidak dapat membuka tujuan. Periksa nomor/alamat dan aplikasi WhatsApp/browser pada perangkat.';
+
+  @override
+  String get add => 'Tambah';
+
+  @override
+  String get delete => 'Hapus';
+
+  @override
+  String get m52LowPriceThreshold => 'Ambang harga rendah tidak boleh negatif.';
 }

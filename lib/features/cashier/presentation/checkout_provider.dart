@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/domain/app_error.dart';
+import '../../../core/domain/contact_validation.dart';
 import '../../../core/domain/value_types.dart';
 import '../domain/cash_tender.dart';
 import '../application/quick_cash_service.dart';
@@ -10,7 +11,13 @@ import 'cart_provider.dart';
 
 /// Owns payment form only. Basket stays in CartProvider; SQL/math stays service.
 final class CheckoutProvider extends ChangeNotifier {
-  CheckoutProvider(this.cart, this.drafts, this.service, {this.quickCash}) {
+  CheckoutProvider(
+    this.cart,
+    this.drafts,
+    this.service, {
+    this.quickCash,
+    this.phoneRegion,
+  }) {
     final input = cart.snapshot!.input;
     digits = TenderDigits(
       cart.snapshot!.currency,
@@ -30,6 +37,18 @@ final class CheckoutProvider extends ChangeNotifier {
   final CartService drafts;
   final CheckoutService service;
   final QuickCashService? quickCash;
+  final Future<String> Function()? phoneRegion;
+  String region = 'ID';
+  String? get phoneError {
+    if (!needsCustomer || selected != null) return null;
+    try {
+      ContactValidation.phone(phone.text, region: region);
+      return null;
+    } catch (e) {
+      return safeError(e);
+    }
+  }
+
   late final TenderDigits digits;
   bool quickMode = false;
   List<int> amounts = [];
@@ -50,6 +69,7 @@ final class CheckoutProvider extends ChangeNotifier {
   Future<void> loadAmounts() async {
     final code = cart.snapshot!.currency.code;
     try {
+      region = await phoneRegion?.call() ?? 'ID';
       amounts = await quickCash?.read(code) ?? QuickCashService.defaults(code);
     } on Object {
       amounts = QuickCashService.defaults(code);
@@ -155,6 +175,7 @@ final class CheckoutProvider extends ChangeNotifier {
     error = null;
     notifyListeners();
     try {
+      if (phoneError != null) throw AppError(phoneError!);
       await cart.beginCheckout();
       if (generation != service.database.generation) {
         throw const AppError('m3OperationFailed');

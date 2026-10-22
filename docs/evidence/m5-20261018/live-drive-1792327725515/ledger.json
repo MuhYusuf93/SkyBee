@@ -1,0 +1,16 @@
+{
+  "nonce": "1792327725515",
+  "state": "controlled headless Drive and retention PASS; closure pending",
+  "device": "7f0edea0",
+  "package": "com.example.kasir_app.integration",
+  "campaign": "m5_acceptance_1792150309449.db",
+  "automaticDeviceControlActive": false,
+  "originalV6RestorationPending": true,
+  "calendar21DeliveryProven": false,
+  "setupProcessExited": true,
+  "ordinaryHashesEqual": true,
+  "legacyHashesEqual": true,
+  "publicBackupHashesEqual": true,
+  "exactC28Restored": true,
+  "productionStartupRequested": true
+}

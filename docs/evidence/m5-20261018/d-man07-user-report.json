@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN07",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya sesuai",
+  "status": "PASS",
+  "scope": "Downloaded Drive archive authenticated and validated in UI; synthetic store/2 products/2 sales/schema8/IDR/AsiaJakarta metadata matches",
+  "automaticEvidence": false,
+  "limits": "No full restore or independent post-download archive audit yet; recovery not collected"
+}

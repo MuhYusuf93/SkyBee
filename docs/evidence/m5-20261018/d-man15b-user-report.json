@@ -1,0 +1,8 @@
+{
+  "id": "D-MAN15b",
+  "date": "2026-10-18",
+  "status": "PASS",
+  "source": "user manual report: ya",
+  "scope": "Different test account B privately checked by user; pending unsaved selection and Use this account visible on C29 Poco.",
+  "limits": "Not yet accepted/stored. No second-account list, upload, download, restore or isolation proof. Conditional Google consent and PIN prompts not assumed to have appeared. No identity/token logged."
+}

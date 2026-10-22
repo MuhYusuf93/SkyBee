@@ -64,7 +64,9 @@ final class ReportSummary {
     required this.inventoryMicros,
     required this.expiredQuantity,
     required this.productCount,
+    this.untrackedProductCount = 0,
   });
+  final int untrackedProductCount;
   final CurrencyPolicy currency;
   final int salesMinor,
       costMicros,

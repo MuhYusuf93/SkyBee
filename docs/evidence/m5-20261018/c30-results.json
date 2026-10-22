@@ -1,0 +1,21 @@
+{
+  "id": "C30-AUTO",
+  "date": "2026-10-18",
+  "status": "PASS",
+  "source": "host/native UI mocks/build/fresh strict update",
+  "host": "52PASS146s; focused7 strengthened-language/state cases subset",
+  "poco": "7PASS Drive/history UI mocks",
+  "dv": "7PASS Drive/history UI mocks; exact prior APK/default hashes/awake restored/read back",
+  "analyzer": "6.7s No issues",
+  "strictUpdate": "before1PASS/after1PASS; all tables/13archives/policy identical after documented fixture PIN metadata baseline; account B connected/autoOFF;8A-run identities distinct from B",
+  "build": "ordinary/fixture/bridge universal min24/16KiB/icon/licenses/signature/negative guard verified; ordinary not installed",
+  "startup": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 23989,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-history-ui-update-1792331546910\\update.json",
+  "limits": "Physical C30 label retest pending. Natural21/reboot/Doze/other-origin cloud preservation/OS-job cancellation/in-flight-account-change remain unverified."
+}

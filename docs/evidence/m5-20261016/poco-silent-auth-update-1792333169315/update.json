@@ -1,0 +1,24 @@
+{
+  "nonce": "1792333169315",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "state": "C31 native/build/strict preservation/startup PASS; manual disconnect handover ready",
+  "automaticDeviceControlActive": false,
+  "originalV6Restoration": "pending in original handover, never overwrite original pointer",
+  "dv": "4PASS SDK/HTTP authorization fixtures on ARM32 SQLCipher; exact prior APK/default hashes/awake restored/read back",
+  "artifactsJson": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\release-artifacts-20261018-212252/artifacts.json",
+  "priorApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-silent-auth-update-1792333169315/prior-c30.apk",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-212252\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-212252\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "fixtureSha256": "ab00a7e191f354707a5cf847c04de620ffc6576231cf19ef197b2e6f99620641",
+  "beforeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c31-before-1792333169315-20261018-212535",
+  "afterEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c31-after-1792333169315-20261018-212728",
+  "manualStep": "D-MAN17: account B remains connected/automaticOFF. Press Putuskan once, verify disconnected status/choose-account only/no upload-auto controls, next target unscheduled, local history8 preserved. No uploads/restore/new accounts. Automatic device control OFF.",
+  "nativePocoEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c31-ui-1792333169315-20261018-211931",
+  "nativeDvEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\c31-ui-1792333169315-20261018-212111",
+  "sourceSha256": {
+    "lib/features/backup/application/drive_authorization.dart": "4eb390f49a9d28d2a5425cbf3cf80b80b7c545a20e72bcce5c94cc6a5033b22c",
+    "lib/features/backup/application/drive_rest.dart": "54165bb9db7313b95d9535be19a7f61f4a9b4d76b1e12eb230423230d40ab990",
+    "test/m5_drive_authorization_test.dart": "c2116371a6e19d100123d0eddb36958e1f2d9b4ed0e20d605febedbe1ae22c83",
+    "integration_test/m5_drive_authorization_test.dart": "5b4cba8fa42e4b5a1d805d627ebc53d25b579d59e556beb3bac24ebc8b2239d9"
+  }
+}

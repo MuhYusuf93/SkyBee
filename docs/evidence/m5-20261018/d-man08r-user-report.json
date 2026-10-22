@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN08R",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "From cashier after actual Drive restore, tapping Kelola requires locked management/PIN before protected menu or data. PIN not entered in this step.",
+  "automaticEvidence": false,
+  "limits": "Manual gate result only; restored financial/stock values, safety archive integrity and reset policies still pending independent checks."
+}

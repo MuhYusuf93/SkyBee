@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-18",
+  "host": {
+    "casesPassed": 34,
+    "elapsedSeconds": 128,
+    "scope": "3 error classifier + 11 Drive transport + 20 settings UI; mocked SDK/HTTP"
+  },
+  "nativePoco": {
+    "casesPassed": 20,
+    "elapsedSeconds": 122,
+    "scope": "Encrypted isolated UI fixtures; original C25 restored by wrapper before controlled C26 update"
+  },
+  "nativeDV": {
+    "casesPassed": 20,
+    "elapsedSeconds": 246,
+    "scope": "SDK mock UI; own prior APK restored, default sandbox raw hashes unchanged; ordinary package absent; awake restored/read back"
+  },
+  "strictPocoUpdate": {
+    "beforeCasesPassed": 1,
+    "afterCasesPassed": 1,
+    "eachElapsedSeconds": 3,
+    "phase": "post_drive_connected",
+    "allTablesEqual": true,
+    "threeArchivesEqual": true,
+    "connectedPolicyDigestEqual": true,
+    "automaticBackupEnabled": false,
+    "scope": "Fresh quiescent install interval; no equality assertion across human browsing"
+  },
+  "analyzer": "No issues; final audit phase 6.6s",
+  "build": "ordinary/fixture/debug bridge verified; ordinary not installed; existing development signing",
+  "fixtureSha256": "58cbd652096ff1289689d7b806de74e97fb59bc437d5051f4b5215111a20f7e0",
+  "startup": "cashier visible/zero marker in inspected own PID buffer; startup only",
+  "realDrive": "Identity acceptance reported D-MAN03R plus local policy independently audited; upload/list/download/restore UNVERIFIED",
+  "deviceControlActive": false,
+  "closingOriginalV6Pending": true
+}

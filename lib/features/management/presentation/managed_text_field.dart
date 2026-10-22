@@ -19,6 +19,10 @@ class ManagedTextField extends StatelessWidget {
     this.onSubmitted,
     this.enabled = true,
     this.obscureText = false,
+    this.onTapOutside,
+    this.autofocus = false,
+    this.autocorrect = true,
+    this.textInputAction,
   });
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -31,6 +35,10 @@ class ManagedTextField extends StatelessWidget {
   final ValueChanged<String>? onSubmitted;
   final bool enabled;
   final bool obscureText;
+  final TapRegionCallback? onTapOutside;
+  final bool autofocus;
+  final bool autocorrect;
+  final TextInputAction? textInputAction;
   @override
   Widget build(BuildContext context) => TextField(
     controller: controller,
@@ -42,6 +50,11 @@ class ManagedTextField extends StatelessWidget {
     maxLines: maxLines,
     enabled: enabled,
     obscureText: obscureText,
+    autofocus: autofocus,
+    autocorrect: autocorrect,
+    textInputAction: textInputAction,
+    onTapOutside:
+        onTapOutside ?? (_) => FocusManager.instance.primaryFocus?.unfocus(),
     onSubmitted: onSubmitted,
     onChanged: (text) {
       context.read<ManagementSessionProvider?>()?.activity();

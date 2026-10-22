@@ -1,0 +1,21 @@
+{
+  "id": "C28-AUTO",
+  "date": "2026-10-18",
+  "source": "host/native/build/fresh strict update checks",
+  "status": "PASS",
+  "host": "48PASS133s, focused1 subset",
+  "poco": "1PASS schedule UI mock",
+  "dv": "1PASS schedule UI mock; exact prior APK/default hashes and awake restored/read back",
+  "analyzer": "7.2s No issues",
+  "strictUpdate": "before1PASS/after1PASS, all tables/5archives/policy digest equal; real account connected and autoON, target21 persisted, no backup_runs/new uploads",
+  "build": "ordinary/fixture/bridge universal verified min24/16KiB/icon/licenses/signature/negative guard; ordinary not installed",
+  "limits": "D-MAN14 original phone UI PASS reported; stale-overview bug reproduced separately host. Native UI uses fake Keystore/WorkManager only; actual21delivery/headlessGoogle/reboot/Doze/OEM preview not proven",
+  "startup": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 19101,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-schedule-ui-update-1792317053346\\update.json"
+}

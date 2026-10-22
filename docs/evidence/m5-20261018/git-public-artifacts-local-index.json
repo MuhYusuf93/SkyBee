@@ -1,0 +1,285 @@
+{
+  "date": "2026-10-18",
+  "source": "local git index only; remote not fetched",
+  "trackedFiles": 1361,
+  "trackedArtifacts": [
+    {
+      "path": "docs/evidence/m5-20261016/cross-transfer-1792150309449/archive.kasirbackup",
+      "bytes": 607195
+    },
+    {
+      "path": "docs/evidence/m5-20261016/dv-c24-release-after-20261017-071325/prior.apk",
+      "bytes": 70742952
+    },
+    {
+      "path": "docs/evidence/m5-20261016/dv-c24-release-after-20261017-071325/probe.apk",
+      "bytes": 49309123
+    },
+    {
+      "path": "docs/evidence/m5-20261016/dv-c24-release-after-20261017-071325/restored.apk",
+      "bytes": 70742952
+    },
+    {
+      "path": "docs/evidence/m5-20261016/dv-release-smoke-20261016-191717/original-fixture.apk",
+      "bytes": 68655920
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-archive-update-1792181574653/prior-c22-release.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-arm64-pin-cipher-financial-20261016-150136/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-arm64-pin-cipher-retest-20261016-150635/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c20-after-1792174330020-20261017-012902/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c20-before-1792174330020-20261017-011210/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c20-settings-1792174330020-20261017-011544/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-after-1792178476161-20261017-024222/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-before-1792178476161-20261017-022116/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-ime-diagnostic-20261017-022704/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-ime-final-20261017-023003/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-settings-1792178476161-20261017-022337/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c22-settings-final-20261017-023323/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-after-1792181574653-20261017-055222/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-before-1792181574653-20261017-031614/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-before-rejection-20261017-030851/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-before-rejection-fixed-helper-20261017-030918/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-export-before-lock-diagnostic-20261017-053928/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-export-unlock-diagnostic-20261017-053722/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-metadata-explanation-20261017-055611/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-metadata-explanation-timing-20261017-055755/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-quiescent-1792191568561/installed.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-quiescent-1792191568561/prior-installed.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-quiescent-after-1792191568561-20261017-060056/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-quiescent-before-1792191568561-20261017-055928/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-regression-1792181574653-20261017-031736/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c23-regression-final-1792181574653-20261017-054225/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-after-1792195919961-20261017-071621/original-fixture.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-before-1792195919961-20261017-071458/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-post-restore-1792195919961-20261017-071754/original-fixture.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-post-restore-final-1792195919961-20261017-072030/original-fixture.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-release-after-20261017-070723/prior.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-release-after-20261017-070723/probe.apk",
+      "bytes": 49309123
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-release-before-20261017-070314/prior.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c24-release-before-20261017-070314/probe.apk",
+      "bytes": 49308627
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c25-after-1792226124001-20261017-154842/original-fixture.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c25-before-1792226124001-20261017-154711/original-fixture.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-c25-ui-1792226124001-20261017-153524/original-fixture.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-cipher-backup-ui-final-20261016-184610/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-cross-device-target-1792150309449-20261016-183453/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-export-update-1792178476161/installed-c20-release.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-export-update-1792178476161/prior-c20-release.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-google-cancel-update-1792226124001/dv-prior.apk",
+      "bytes": 70742952
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-google-cancel-update-1792226124001/dv-restored.apk",
+      "bytes": 70742952
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-google-cancel-update-1792226124001/installed-c25.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-google-cancel-update-1792226124001/prior-c24.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-locale-after-disconnect-20261016-184240/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-manual-20261016-191759/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-manual-update-after-1792156485701-20261016-201639/original-fixture.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-manual-update-before-1792156485701-20261016-201446/original-fixture.apk",
+      "bytes": 66480555
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-native-management-lifecycle-final-20261016-185741/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-notification-update-1792195919961/before-safety-retry.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-notification-update-1792195919961/final-installed.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-notification-update-1792195919961/installed-c24-release.apk",
+      "bytes": 66513819
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-notification-update-1792195919961/prior-c23-release.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-permission-update-1792174330020/installed-c20-release.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-permission-update-1792174330020/prior-c19-release.apk",
+      "bytes": 66496939
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-post-restore-audit-20261017-065816/original-fixture.apk",
+      "bytes": 66513323
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-printer-layout-reveal-final-20261016-190522/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-printer-ui-diagnostic-20261016-185451/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/poco-reports-after-disconnect-20261016-183711/original-fixture.apk",
+      "bytes": 98599918
+    },
+    {
+      "path": "docs/evidence/m5-20261016/realme-after-reboot-cipher-domains-20261016-141530/original-fixture.apk",
+      "bytes": 17022097
+    },
+    {
+      "path": "docs/evidence/m5-20261016/realme-encrypted-regression-20261016-134024/original-fixture.apk",
+      "bytes": 17022097
+    },
+    {
+      "path": "docs/evidence/m5-20261016/realme-portable-cipher-final-20261016-145027/original-fixture.apk",
+      "bytes": 17022097
+    },
+    {
+      "path": "docs/evidence/m5-20261016/realme-stable-cipher-regression-20261016-134816/original-fixture.apk",
+      "bytes": 17022097
+    }
+  ],
+  "originCredentialsStripped": "github.com/MuhYusuf93/SkyBee.git",
+  "limits": "File classification only, not a contents/secret or remote-history audit; no file deleted, index change, commit or push."
+}

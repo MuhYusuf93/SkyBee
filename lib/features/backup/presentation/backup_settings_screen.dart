@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:kasir_platform/kasir_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
@@ -184,6 +185,36 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                           padding: const EdgeInsets.all(16),
                           children: [
                             Text(tr(context, 'm5BackupHelp')),
+                            Text(tr(context, 'm52BatteryHelp')),
+                            OutlinedButton.icon(
+                              onPressed: s.busy
+                                  ? null
+                                  : () async {
+                                      try {
+                                        s.app.management.requireAccess();
+                                        await const KasirPlatform().channelCall(
+                                          'openAppSettings',
+                                        );
+                                      } catch (_) {
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                tr(
+                                                  context,
+                                                  'm3OperationFailed',
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                    },
+                              icon: const Icon(Icons.settings),
+                              label: Text(tr(context, 'm52AppSettings')),
+                            ),
                             Text(tr(context, 'm51MaintenancePolicy')),
                             if (s.overview['maintenance']
                                 case final Map maintenance) ...[

@@ -1,0 +1,16 @@
+{
+  "device": "192.168.0.102:5555",
+  "model": "AX810 / DV8947-KIX",
+  "usbHost": true,
+  "supportedUsbPrinters": 0,
+  "targetMatches": 0,
+  "writes": 0,
+  "bytes": 0,
+  "physicalResult": "BLOCKED_NO_USB_TARGET",
+  "paper": "NOT_VERIFIED",
+  "testHarness": "All tests skipped; generic old runner PASS label is not a physical PASS",
+  "isolation": "All protected pre-existing hashes unchanged",
+  "awake": "Original settings restored and read back exactly",
+  "afterPortChange": "ADB read-only recheck still root hubs only; host num_connects=0",
+  "adbTransient": "One client daemon-connect timeout; subsequent bounded inspection succeeded"
+}

@@ -1,0 +1,23 @@
+{
+  "device": "Realme C11 / RMX3231",
+  "uniqueNativeCasesWithPassAcrossRuns": 98,
+  "fullFinalSingleRun": false,
+  "host": {
+    "uiAndAlerts": 38,
+    "additionalM5": 39,
+    "focusedDenialSubset": 1
+  },
+  "isolation": "Every protected pre-existing hash unchanged through completed print queue run only",
+  "worker": {
+    "nonce": "1792404362140",
+    "setupPid": 3467,
+    "setup": "scheduled",
+    "result": "BLOCKED_DEVICE_DISCONNECTED",
+    "postAudit": "UNVERIFIED",
+    "cleanup": "UNVERIFIED"
+  },
+  "automaticHostControl": "OFF",
+  "realmePause": "Personal use; no new tests",
+  "physicalManual": "NOT_PERFORMED",
+  "sourceVersion": "0.5.1+8 / schema11"
+}

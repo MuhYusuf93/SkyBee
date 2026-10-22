@@ -1,0 +1,7 @@
+{
+  "id": "D-MAN17",
+  "status": "PENDING",
+  "automaticDeviceControlActive": false,
+  "step": "D-MAN17: account B remains connected/automaticOFF. Press Putuskan once, verify disconnected status/choose-account only/no upload-auto controls, next target unscheduled, local history8 preserved. No uploads/restore/new accounts. Automatic device control OFF.",
+  "installedSha256": "ab00a7e191f354707a5cf847c04de620ffc6576231cf19ef197b2e6f99620641"
+}

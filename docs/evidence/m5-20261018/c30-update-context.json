@@ -1,0 +1,13 @@
+{
+  "stage": "C30 replaced by C31; human C30-MAN01 labels PASS reported; follow superseding context",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-history-ui-update-1792331546910\\update.json",
+  "automaticDeviceControlActive": false,
+  "manualStep": "C30-MAN01 labels/empty state PASS reported. Manual paused for C31 native4 per device/build/fresh B strict audit. No human fixture interaction during automatic queue; no uploads/restore/reset.",
+  "installedSha256": "928bb4515fec95f6453335c4dabf56812ae976b4a2832138fa7c548a424bb1d4",
+  "reportedAndAuditedPolicy": "B connected/automaticOFF",
+  "originalV6RestorationPending": true,
+  "closingPending": true,
+  "newerSourceValidation": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c31-update-context.json",
+  "latestManualEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c30-man01-user-report.json",
+  "supersededBy": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c31-update-context.json"
+}

@@ -1,0 +1,4 @@
+ae853ac4507fae86a75115980032eacd55a6433eec1a1477e52a8137d1363cf0  databases/kasir_app.db
+kasir_app.db-wal ABSENT
+kasir_app.db-shm ABSENT
+kasir_app.db-journal ABSENT

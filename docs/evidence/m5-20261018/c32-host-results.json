@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-19",
+  "host": "58PASS159s; focused2PASS10s subset",
+  "before": "final-helper omitted-rendering2FAIL9s; earlier lazy-finder failures retained separately",
+  "analyzer": "No issues41.3s",
+  "nativeBuildClosing": "pending; see current pipeline context",
+  "report": "docs/M5_PERSISTED_WORKER_STATUS_C32.md"
+}

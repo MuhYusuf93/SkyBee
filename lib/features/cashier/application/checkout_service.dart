@@ -1,3 +1,4 @@
+import '../../../core/domain/contact_validation.dart';
 import '../domain/cash_tender.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../core/domain/app_error.dart';
@@ -187,11 +188,19 @@ final class CheckoutService {
               product['currency_scale'] != currency.scale) {
             throw const AppError('currencyMismatch');
           }
-          final cost = removalCost(
-            quantity: product['stock_quantity'] as int,
-            valueMicros: product['inventory_value_micros'] as int,
-            remove: line.quantity,
-          );
+          final cost = product['stock_tracking_enabled'] == 0
+              ? checkedNonNegative(
+                  BigInt.from(
+                        product['reference_cost_micros'] as int? ??
+                            (throw const AppError('m52ReferenceCostRequired')),
+                      ) *
+                      BigInt.from(line.quantity),
+                )
+              : removalCost(
+                  quantity: product['stock_quantity'] as int,
+                  valueMicros: product['inventory_value_micros'] as int,
+                  remove: line.quantity,
+                );
           totalCost += BigInt.from(cost);
           products.add(product);
           costs.add(cost);
@@ -213,9 +222,12 @@ final class CheckoutService {
             customerPhone = records.single['phone_number'] as String?;
           } else {
             customerName = input.customer.name.trim();
-            customerPhone = input.customer.phone.trim().isEmpty
-                ? null
-                : input.customer.phone.trim();
+            customerPhone = ContactValidation.phone(
+              input.customer.phone,
+              region:
+                  (await store.settings(dbTxn))['phone_region'] as String? ??
+                  'ID',
+            );
             if (customerName.isEmpty) {
               throw const AppError('m3CustomerRequired');
             }
@@ -257,24 +269,26 @@ final class CheckoutService {
         await _stage('sale');
         for (var index = 0; index < cart.lines.length; index++) {
           final line = cart.lines[index], product = products[index];
-          final quantity = product['stock_quantity'] as int;
-          final value = product['inventory_value_micros'] as int;
-          final changed = await dbTxn.update(
-            'products',
-            {
-              'stock_quantity': quantity - line.quantity,
-              'inventory_value_micros': value - costs[index],
-              'stock_revision': (product['stock_revision'] as int) + 1,
-              'updated_at': now,
-            },
-            where: 'id=? AND stock_revision=? AND stock_quantity>=?',
-            whereArgs: [
-              product['id'],
-              product['stock_revision'],
-              line.quantity,
-            ],
-          );
-          if (changed != 1) throw const AppError('m3StockChanged');
+          if (product['stock_tracking_enabled'] != 0) {
+            final quantity = product['stock_quantity'] as int;
+            final value = product['inventory_value_micros'] as int;
+            final changed = await dbTxn.update(
+              'products',
+              {
+                'stock_quantity': quantity - line.quantity,
+                'inventory_value_micros': value - costs[index],
+                'stock_revision': (product['stock_revision'] as int) + 1,
+                'updated_at': now,
+              },
+              where: 'id=? AND stock_revision=? AND stock_quantity>=?',
+              whereArgs: [
+                product['id'],
+                product['stock_revision'],
+                line.quantity,
+              ],
+            );
+            if (changed != 1) throw const AppError('m3StockChanged');
+          }
           await _stage('stock');
           final itemId = CashierStore.ids.next();
           await dbTxn.insert('sale_transaction_items', {
@@ -291,22 +305,32 @@ final class CheckoutService {
             'pricing_mode': line.pricingMode.name,
             'total_rupiah': line.total.amountMinor,
             'cost_micros': costs[index],
+            if (database.schemaVersion >= 14) ...{
+              'promo_snapshot_json': line.acceptedPromoJson,
+              'gross_minor': line.gross.amountMinor,
+              'discount_minor': line.discountMinor,
+              'stock_tracking_snapshot': line.product.stockTracked ? 1 : 0,
+              'reference_cost_micros_snapshot':
+                  product['reference_cost_micros'],
+            },
           });
           await _stage('items');
-          await _batches(dbTxn, product, line.quantity, itemId);
-          await _stage('batches');
-          await dbTxn.insert('stock_history', {
-            'id': CashierStore.ids.next().value,
-            'product_id': product['id'],
-            'sale_transaction_id': saleId.value,
-            'kind': 'sale',
-            'quantity_delta': -line.quantity,
-            'value_delta_micros': -costs[index],
-            'created_at': now,
-            'reason': 'sale',
-            'reason_key': 'm3SaleMovement',
-            ...store.metadata(currency),
-          });
+          if (product['stock_tracking_enabled'] != 0) {
+            await _batches(dbTxn, product, line.quantity, itemId);
+            await _stage('batches');
+            await dbTxn.insert('stock_history', {
+              'id': CashierStore.ids.next().value,
+              'product_id': product['id'],
+              'sale_transaction_id': saleId.value,
+              'kind': 'sale',
+              'quantity_delta': -line.quantity,
+              'value_delta_micros': -costs[index],
+              'created_at': now,
+              'reason': 'sale',
+              'reason_key': 'm3SaleMovement',
+              ...store.metadata(currency),
+            });
+          }
           await _stage('history');
         }
         if (paid.amountMinor > 0) {

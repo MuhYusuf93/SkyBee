@@ -1,3 +1,4 @@
+import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import 'package:kasir_platform/kasir_platform.dart';
 import '../../../data/database/database_coordinator.dart';
@@ -14,27 +15,42 @@ final class PrinterSettingsService {
     this.access, {
     this.platform = const KasirPlatform(),
     this.outputGate,
+    this.publicAccess = false,
   });
+
+  /// Public capability is limited to this service's peripheral operations.
+  /// It never issues a management grant and cannot read store/security/backup.
+  final bool publicAccess;
+  Future<void> _authorizeCurrent() async {
+    if (!publicAccess) await access.authorizeCurrent();
+  }
+
+  Future<void> _authorize(DatabaseExecutor db) async {
+    if (!publicAccess) await access.authorize(db);
+  }
+
+  Future<T> _interaction<T>(Future<T> Function() action) =>
+      publicAccess ? action() : access.systemInteraction(action);
   final DatabaseCoordinator database;
   final ManagementService access;
   final KasirPlatform platform;
   final PrinterOutputGate? outputGate;
   Future<bool> permission() async {
-    await access.authorizeCurrent();
-    return access.systemInteraction(() => platform.call<bool>('btPermissions'));
+    await _authorizeCurrent();
+    return _interaction(() => platform.call<bool>('btPermissions'));
   }
 
   Future<List<Map<String, dynamic>>> paired() async {
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     final rows = await platform.call<List<dynamic>>('btPaired');
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     return rows.map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 
   Future<Map<String, dynamic>> discover() async {
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     final result = await platform.call<Map<Object?, Object?>>('btDiscover');
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     return Map<String, dynamic>.from(result);
   }
 
@@ -42,19 +58,19 @@ final class PrinterSettingsService {
 
   /// Enumeration does not ask permission or open/send to a USB interface.
   Future<List<Map<String, dynamic>>> usbDevices() async {
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     final rows = await platform.call<List<dynamic>>('usbDevices');
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     return rows.map((row) => Map<String, dynamic>.from(row as Map)).toList();
   }
 
   Future<bool> usbPermission(String device, {bool retry = false}) async {
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     if (!PrinterDevice.valid(device) ||
         PrinterDevice.transport(device) != 'usb') {
       throw const FormatException('printerDeviceInvalid');
     }
-    return access.systemInteraction(
+    return _interaction(
       () => platform.call<bool>('usbPermission', {
         'device': device,
         'retry': retry,
@@ -67,7 +83,7 @@ final class PrinterSettingsService {
   /// grant management access when the dialog/socket operation returns.
   Future<void> connect(String device) =>
       withPrinterOutput(outputGate ?? defaultPrinterOutputGate(), () async {
-        await access.authorizeCurrent();
+        await _authorizeCurrent();
         if (!PrinterDevice.valid(device)) {
           throw const FormatException('printerDeviceInvalid');
         }
@@ -76,7 +92,7 @@ final class PrinterSettingsService {
           {'device': device},
         );
         try {
-          await access.authorizeCurrent();
+          await _authorizeCurrent();
         } catch (_) {
           await platform.channelCall('btDisconnect');
           rethrow;
@@ -85,24 +101,24 @@ final class PrinterSettingsService {
 
   Future<void> disconnect() =>
       withPrinterOutput(outputGate ?? defaultPrinterOutputGate(), () async {
-        await access.authorizeCurrent();
+        await _authorizeCurrent();
         await platform.channelCall('btDisconnect');
       });
 
   Future<Map<String, dynamic>> connection({
     String transport = 'bluetooth',
   }) async {
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     final result = await platform.call<Map<Object?, Object?>>(
       transport == 'usb' ? 'usbStatus' : 'btStatus',
     );
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     return Map<String, dynamic>.from(result);
   }
 
   Future<bool> pair(String device) async {
-    await access.authorizeCurrent();
-    return access.systemInteraction(
+    await _authorizeCurrent();
+    return _interaction(
       () => platform.call<bool>('btPair', {'device': device}),
     );
   }
@@ -111,9 +127,9 @@ final class PrinterSettingsService {
     String? after,
     String? transport,
   }) async {
-    access.requireAccess();
+    if (!publicAccess) access.requireAccess();
     return database.read((db) async {
-      await access.authorize(db);
+      await _authorize(db);
       // Legacy host fixtures may deliberately open an older schema. USB is
       // available only after migration; old Bluetooth profiles remain readable.
       final modern =
@@ -134,7 +150,7 @@ final class PrinterSettingsService {
         orderBy: 'device_id COLLATE BINARY',
         limit: 50,
       );
-      await access.authorize(db);
+      await _authorize(db);
       return rows;
     });
   }
@@ -144,7 +160,7 @@ final class PrinterSettingsService {
     String name,
     PrinterProfile profile,
   ) async {
-    await access.authorizeCurrent();
+    await _authorizeCurrent();
     if (!PrinterDevice.valid(device) ||
         name.runes.length > 200 ||
         name.contains('\u0000')) {
@@ -161,7 +177,7 @@ final class PrinterSettingsService {
       throw const FormatException('printerDeviceInvalid');
     }
     return database.transaction((dbTxn) async {
-      await access.authorize(dbTxn);
+      await _authorize(dbTxn);
       profile.validate();
       final modern =
           (await dbTxn.rawQuery('PRAGMA user_version')).single.values.single
@@ -196,13 +212,13 @@ final class PrinterSettingsService {
           whereArgs: [identity],
         );
       }
-      await access.authorize(dbTxn);
+      await _authorize(dbTxn);
       return identity;
     });
   }
 
   Future<void> forget(String device) => database.transaction((dbTxn) async {
-    await access.authorize(dbTxn);
+    await _authorize(dbTxn);
     await dbTxn.delete(
       'printer_profiles',
       where: 'device_id=?',

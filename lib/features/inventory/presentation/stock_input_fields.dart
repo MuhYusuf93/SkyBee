@@ -38,11 +38,13 @@ class StockInputFields extends StatelessWidget {
     required this.onUnitChanged,
     required this.quantityLabel,
     this.enabled = true,
+    this.errorText,
   });
   final StockInputController controller;
   final VoidCallback onUnitChanged;
   final String quantityLabel;
   final bool enabled;
+  final String? errorText;
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,6 +84,7 @@ class StockInputFields extends StatelessWidget {
               ? quantityLabel
               : tr(context, 'm31PackCount'),
           helperText: tr(context, 'm31DigitsHelp'),
+          errorText: errorText,
         ),
       ),
       if (controller.unit == StockInputUnit.pack) ...[

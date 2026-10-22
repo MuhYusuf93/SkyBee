@@ -1,0 +1,13 @@
+{
+  "device": "7f0edea0",
+  "test": "integration_test/m51_recovery_print_test.dart",
+  "nameFilter": "calibration reads credential epoch",
+  "automaticDeviceControlActive": false,
+  "tests": "PASS",
+  "isolation": "Every pre-existing protected file hash unchanged",
+  "downgrade": false,
+  "reset": false,
+  "cases": 1,
+  "elapsed": "00:14",
+  "scope": "Credential epoch calibration only; public fixture; no physical output"
+}

@@ -1,0 +1,13 @@
+{
+  "device": "7f0edea0",
+  "test": "integration_test/m51_security_test.dart",
+  "nameFilter": "",
+  "automaticDeviceControlActive": false,
+  "tests": "PASS",
+  "isolation": "Every pre-existing protected file hash unchanged",
+  "downgrade": false,
+  "reset": false,
+  "cases": 10,
+  "elapsed": "01:31",
+  "physicalBiometricAuthentication": "NOT_TESTED"
+}

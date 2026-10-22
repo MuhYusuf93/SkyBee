@@ -1366,7 +1366,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m5PrintSetupRequired =>
-      'Printer is not ready. Check printer settings in Management. The sale remains saved.';
+      'Printer is not ready. Open Printer settings. The sale remains saved.';
 
   @override
   String get m5ScanCancelled => 'Discovery cancelled.';
@@ -2094,4 +2094,197 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m51Space_maintenanceFailed =>
       'Maintenance failed. The previous valid backup remains available.';
+
+  @override
+  String get m52PayAll => 'Pay full balance';
+
+  @override
+  String get m52PhoneInvalid =>
+      'Invalid phone number for this country. Use digits and an optional leading +.';
+
+  @override
+  String get m52EmailInvalid => 'Invalid email format.';
+
+  @override
+  String get m52WebsiteInvalid =>
+      'Enter a domain or http/https URL with a valid host.';
+
+  @override
+  String get m52InitialQuantityLimit =>
+      'Initial quantity must be 0–999999 base units, at most six digits.';
+
+  @override
+  String get m52PurchaseAboveRetail =>
+      'Purchase cost per unit must not exceed the retail selling price.';
+
+  @override
+  String get m52WholesaleAboveRetail =>
+      'Wholesale price must not exceed the retail selling price.';
+
+  @override
+  String get m52ReferenceCostRequired =>
+      'Enter the reference purchase cost per unit, including an explicit zero if free.';
+
+  @override
+  String get m52ShelfDuplicate => 'This shelf name/code already exists.';
+
+  @override
+  String get m52UnsavedTitle => 'Unsaved changes';
+
+  @override
+  String get m52UnsavedBody =>
+      'There are unsaved changes. Going back now will discard changes to this form. Continue?';
+
+  @override
+  String get m52KeepEditing => 'Continue editing';
+
+  @override
+  String get m52Discard => 'Go back without saving';
+
+  @override
+  String get m52PromoInvalid =>
+      'Select a product and name, a positive minimum quantity and a discount of 0.01–100%.';
+
+  @override
+  String get m52PromoConflict =>
+      'This product already has an active promotion. Disable the old promotion first.';
+
+  @override
+  String get m52Untracked => '999 — Fictitious stock (not tracked)';
+
+  @override
+  String get m52UntrackedNote =>
+      'Initial quantity is empty. The system will store fictitious stock 999 because this product is not tracked. This is not a real quantity and is excluded from inventory value.';
+
+  @override
+  String get m52StockOperationRequiresTracking =>
+      'Physical inventory operations require stock tracking.';
+
+  @override
+  String get m52StockTransition =>
+      'Reconcile physical stock and batches before changing tracking mode.';
+
+  @override
+  String get m52ReferenceCost =>
+      'Reference purchase cost per unit (not tracked)';
+
+  @override
+  String get m52Tracked => 'Stock tracked';
+
+  @override
+  String get m52CostSource => 'Cost basis';
+
+  @override
+  String get m52Promo => 'Retail quantity promotion';
+
+  @override
+  String get m52PromoName => 'Promotion name';
+
+  @override
+  String get m52PromoMinimum => 'Minimum base-unit quantity';
+
+  @override
+  String get m52PromoPercent => 'Discount (%)';
+
+  @override
+  String get m52PromoActive => 'Active';
+
+  @override
+  String get m52PromoArchive => 'Archive this promotion?';
+
+  @override
+  String get m52Gross => 'Gross amount';
+
+  @override
+  String get m52Discount => 'Discount';
+
+  @override
+  String get m52PromoLoss =>
+      'The promoted price is below cost. Review the margin before enabling it.';
+
+  @override
+  String get m52Shelf => 'Shelf (optional)';
+
+  @override
+  String get m52Shelves => 'Add / edit shelves';
+
+  @override
+  String get m52ShelfName => 'Shelf code/name';
+
+  @override
+  String get m52Email => 'Email (optional)';
+
+  @override
+  String get m52Website => 'Website (optional)';
+
+  @override
+  String get m52PhoneRegion => 'Local phone region (ISO code, e.g. ID)';
+
+  @override
+  String get m52DateTomorrow =>
+      'A new date must be tomorrow or later in the device calendar.';
+
+  @override
+  String get m52LowPriceTitle => 'Review low price';
+
+  @override
+  String get m52LowPriceBody =>
+      'This price is low for this currency. Review the amount. Save anyway?';
+
+  @override
+  String get m52Review => 'Review again';
+
+  @override
+  String get m52SaveAnyway => 'Save anyway';
+
+  @override
+  String get m52SuppressLowPrice =>
+      'Do not show the low-price warning again for this currency in this shop';
+
+  @override
+  String get m52LowPriceSettings => 'Low-price warning preferences';
+
+  @override
+  String get m52Threshold => 'Low-price threshold';
+
+  @override
+  String get m52PaperWidth => 'Paper width';
+
+  @override
+  String get m52IwareFeed => 'Try Iware 58: 3 feed lines (this profile only)';
+
+  @override
+  String get m52FeedHelp =>
+      'Adjust feed after the footer. Inspect paper before saving calibration; old profiles retain their values.';
+
+  @override
+  String get m52BatteryHelp =>
+      '21:00 backup is a best-effort target. Battery/background restrictions can delay it. On HyperOS, No restrictions (if available) may help without guaranteeing timing. Scheduling cannot be relied on after force-stop.';
+
+  @override
+  String get m52AppSettings => 'Open App info / battery settings';
+
+  @override
+  String get m52UntrackedCount => 'Products without stock tracking';
+
+  @override
+  String get m52TrackingChange => 'Change stock tracking mode';
+
+  @override
+  String get m52TrackedOpening =>
+      'Enable tracking with an actual opening quantity (enter 0 if empty) and purchase cost per unit. Past sales retain their original mode and cost.';
+
+  @override
+  String get m52ContactOpenFailed =>
+      'Cannot open this destination. Check the number/address and the device\'s WhatsApp/browser app.';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get m52LowPriceThreshold =>
+      'The low-price threshold must not be negative.';
 }

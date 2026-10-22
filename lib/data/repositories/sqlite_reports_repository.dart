@@ -161,6 +161,10 @@ final class SqliteReportsRepository {
     if (filter.start.milliseconds >= filter.end.milliseconds) {
       throw ArgumentError('Invalid report period');
     }
+    final modern =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single
+            as int >=
+        14;
     final settings = (await db.query('store_settings', where: 'id=1')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,
@@ -203,7 +207,8 @@ final class SqliteReportsRepository {
     )).single;
     final inventory = (await db.rawQuery(
       '''SELECT COUNT(*) AS products,
-      COALESCE(SUM(stock_quantity),0) AS quantity,COALESCE(SUM(inventory_value_micros),0) AS value,
+      COALESCE(SUM(${modern ? 'CASE WHEN stock_tracking_enabled=1 THEN stock_quantity ELSE 0 END' : 'stock_quantity'}),0) AS quantity,COALESCE(SUM(inventory_value_micros),0) AS value,
+      ${modern ? 'COALESCE(SUM(stock_tracking_enabled=0),0)' : '0'} AS untracked,
       COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch FROM products''',
       [currency.code, currency.scale],
     )).single;
@@ -233,6 +238,7 @@ final class SqliteReportsRepository {
       inventoryMicros: inventory['value'] as int,
       expiredQuantity: expired,
       productCount: inventory['products'] as int,
+      untrackedProductCount: inventory['untracked'] as int,
     );
   }
 
@@ -244,20 +250,27 @@ final class SqliteReportsRepository {
   static Future<ReconciliationResult> reconcileDatabase(
     DatabaseExecutor db,
   ) async {
+    final modern =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single
+            as int >=
+        14;
     final queries = <String, String>{
       'm4StockCheck':
-          '''SELECT COUNT(*) AS n FROM products p WHERE p.stock_quantity<>
+          '''SELECT COUNT(*) AS n FROM products p WHERE (${modern ? 'p.stock_tracking_enabled=1 AND ' : ''}(p.stock_quantity<>
         COALESCE((SELECT SUM(h.quantity_delta) FROM stock_history h WHERE h.product_id=p.id),0)
-        OR p.stock_quantity<>COALESCE((SELECT SUM(b.remaining_quantity) FROM stock_batches b WHERE b.product_id=p.id),0)''',
+        OR p.stock_quantity<>COALESCE((SELECT SUM(b.remaining_quantity) FROM stock_batches b WHERE b.product_id=p.id),0)))
+        ${modern ? '''OR (p.stock_tracking_enabled=0 AND (p.stock_quantity<>999 OR p.inventory_value_micros<>0
+          OR typeof(p.reference_cost_micros)<>'integer' OR p.reference_cost_micros<0
+          OR EXISTS(SELECT 1 FROM stock_batches b WHERE b.product_id=p.id AND b.remaining_quantity>0)))''' : ''}''',
       'm4ValueCheck':
-          '''SELECT COUNT(*) AS n FROM products p WHERE p.inventory_value_micros<>
+          '''SELECT COUNT(*) AS n FROM products p WHERE ${modern ? 'p.stock_tracking_enabled=1 AND ' : ''}p.inventory_value_micros<>
         COALESCE((SELECT SUM(h.value_delta_micros) FROM stock_history h WHERE h.product_id=p.id),0)''',
       'm4SaleCheck': '''SELECT COUNT(*) AS n FROM sale_transactions s WHERE
         NOT EXISTS(SELECT 1 FROM sale_transaction_items i WHERE i.sale_transaction_id=s.id)
         OR s.total_rupiah<>(SELECT COALESCE(SUM(i.total_rupiah),0) FROM sale_transaction_items i WHERE i.sale_transaction_id=s.id)
         OR s.cost_micros<>(SELECT COALESCE(SUM(i.cost_micros),0) FROM sale_transaction_items i WHERE i.sale_transaction_id=s.id)''',
       'm4BatchCheck':
-          '''SELECT COUNT(*) AS n FROM sale_transaction_items i WHERE i.quantity<>
+          '''SELECT COUNT(*) AS n FROM sale_transaction_items i WHERE ${modern ? 'i.stock_tracking_snapshot=1 AND ' : ''}i.quantity<>
         (SELECT COALESCE(SUM(a.quantity),0) FROM sale_batch_allocations a WHERE a.sale_transaction_item_id=i.id)''',
       'm4PaymentCheck':
           '''SELECT COUNT(*) AS n FROM payments p WHERE p.amount_rupiah<>
@@ -270,7 +283,7 @@ final class SqliteReportsRepository {
       'm4ReturnCheck':
           '''SELECT COUNT(*) AS n FROM sale_transaction_reversals r WHERE
         EXISTS(SELECT 1 FROM sale_transaction_items i WHERE i.sale_transaction_id=r.sale_transaction_id
-          AND (i.quantity<>(SELECT COALESCE(SUM(h.quantity_delta),0) FROM stock_history h
+          AND ${modern ? 'i.stock_tracking_snapshot=1 AND ' : ''}(i.quantity<>(SELECT COALESCE(SUM(h.quantity_delta),0) FROM stock_history h
             WHERE h.sale_transaction_reversal_id=r.id AND h.product_id=i.product_id)
           OR i.cost_micros<>(SELECT COALESCE(SUM(h.value_delta_micros),0) FROM stock_history h
             WHERE h.sale_transaction_reversal_id=r.id AND h.product_id=i.product_id)))''',

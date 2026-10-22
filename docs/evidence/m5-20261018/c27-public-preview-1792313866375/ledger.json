@@ -1,0 +1,14 @@
+{
+  "state": "C27 restored; raw hashes equal",
+  "automaticDeviceControlActive": false,
+  "noDatabaseOpen": true,
+  "prior": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-153754\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "priorSha256": "0ec0734a306d177ecd329d74274ed3938bef7debcdfa4bd7d05fd017d3a6e3e1",
+  "bridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-153754\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "probe": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c27-public-preview-1792313866375\\public-preview-release.apk",
+  "probeSha256": "fb6502e08a1393c3585895e9f2bdd937b39fe3b981e0ab054bd1d001b4384806",
+  "recoveryOrClipboardPayloadRead": false,
+  "publicCopyRequiresUserTap": true,
+  "rawFilesEqual": true,
+  "priorC27RestoredExact": true
+}

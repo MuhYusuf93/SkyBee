@@ -1,0 +1,15 @@
+{
+  "device": "192.168.0.102:5555",
+  "test": "integration_test/m51_recovery_print_test.dart",
+  "nameFilter": "",
+  "automaticDeviceControlActive": false,
+  "tests": "PASS",
+  "isolation": "Every pre-existing protected file hash unchanged",
+  "downgrade": false,
+  "reset": false,
+  "cases": 10,
+  "elapsed": "01:29",
+  "physicalRecoveryPaper": "NOT_TESTED",
+  "printerPayload": "PUBLIC_SYNTHETIC_FAKE",
+  "awake": "Original settings restored and read back exactly"
+}

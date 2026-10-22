@@ -140,6 +140,48 @@ void main() {
           supplierId: supplier,
           operationKey: 'm5-restock-$nonce',
         );
+        final shelf = await app.inventory.saveMaster(
+          MasterKind.shelf,
+          'PUBLIC M52 shelf',
+        );
+        await app.inventory.saveMaster(
+          MasterKind.supplier,
+          'PUBLIC M52 contact',
+          contact: '081234567890',
+          email: 'public@example.com',
+          website: 'example.com',
+        );
+        final untracked = await app.inventory.create(
+          ProductInput(
+            name: 'PUBLIC M52 untracked',
+            sellingPrice: Money(10000, 'IDR', 0),
+            shelfId: shelf,
+            attributes: ProductAttributes(
+              sizeMilli: 750,
+              unit: 'kg',
+              shelf: 'PUBLIC M52 shelf',
+            ),
+          ),
+          stockTracking: false,
+          referenceCost: CostAmount.fromMoney(Money(6000, 'IDR', 0)),
+        );
+        final promotion = await app.promotions.save(
+          product: untracked,
+          name: 'PUBLIC M52 promo',
+          minimum: 3,
+          basisPoints: 1250,
+          active: true,
+        );
+        var promoCart = await app.cart.open();
+        promoCart = await app.cart.add(promoCart.id, untracked);
+        promoCart = await app.cart.quantity(promoCart.id, untracked, 3);
+        final promoSale = await app.checkout.submit(
+          promoCart.id,
+          promoCart.revision,
+          const CheckoutInput(mode: PaymentMode.paid),
+        );
+        await app.cart.next(promoCart.id);
+        await app.settings.saveLowPricePreference('IDR', 75, suppressed: true);
         var draft = await app.cart.open();
         draft = await app.cart.add(draft.id, product);
         await app.checkout.submit(
@@ -324,6 +366,10 @@ void main() {
           'receipt_assets',
           'checkout_tenders',
           'cash_quick_amounts',
+          'shelves',
+          'quantity_promotions',
+          'reference_cost_history',
+          'low_price_preferences',
         ]) {
           // Unlock changes attempt/session audit state; verifiers are tested by the
           // restored old PIN, not by pretending credential metadata is unchanged.
@@ -332,6 +378,22 @@ void main() {
           }
         }
         expect(await other.quickCash.read('USD'), [1550, 2000]);
+        expect((await other.inventory.detail(untracked)).quantity, 999);
+        expect((await other.inventory.detail(untracked)).stockTracked, false);
+        expect(
+          (await other.checkout.receipt(promoSale.id)).total.amountMinor,
+          26250,
+        );
+        expect(
+          (await other.checkout.receipt(
+            promoSale.id,
+          )).items.single['promo_snapshot_json'],
+          contains(promotion.value),
+        );
+        expect(await other.settings.lowPricePreference('IDR'), (
+          threshold: 75,
+          suppressed: true,
+        ));
         expect(
           (await target.read(
             (db) => db.query('space_maintenance'),

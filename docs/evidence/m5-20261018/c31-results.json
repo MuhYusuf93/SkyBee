@@ -1,0 +1,19 @@
+{
+  "id": "C31-AUTO",
+  "date": "2026-10-18",
+  "status": "PASS scoped",
+  "host": "56PASS150s on final production source; final fixture-filename helper4PASS2s subset; analyzer8.2s No issues",
+  "poco": "4PASS synthetic SDK/HTTP authorization with ARM64 SQLCipher",
+  "dv": "4PASS SDK/HTTP authorization fixtures on ARM32 SQLCipher; exact prior APK/default hashes/awake restored/read back",
+  "strictUpdate": "before1/after1PASS; all tables/13archives/policy equal after documented fixture PIN metadata baseline; real B connected/autoOff/targetnull,8A jobs retained",
+  "build": "ordinary/fixture/bridge universal/min24/16KiB/icon/license/signature/negative guard verified, ordinary not installed",
+  "startup": {
+    "package": "com.example.kasir_app.integration",
+    "pid": 7861,
+    "synthetic_screen_visible": true,
+    "startup_error_markers": 0,
+    "scope": "startup only; not printer, Google, restore or full release acceptance"
+  },
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-silent-auth-update-1792333169315\\update.json",
+  "limits": "SDK-null failure is simulated; real revoked-consent behavior not tested. Natural21/reboot/Doze/in-flight change/OS-job cancellation/other-origin cloud preservation remain unverified. C30-MAN01 labels PASS reported separately. OriginalAPK6 restoration/closing pending."
+}

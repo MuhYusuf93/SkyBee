@@ -1,0 +1,24 @@
+{
+  "nonce": "1792328869099",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "state": "C29 checks/preservation PASS; second-account manual handover ready",
+  "automaticDeviceControlActive": false,
+  "originalV6Restoration": "pending in original handover, never overwrite original pointer",
+  "dv": "2PASS account UI mocks; exact prior APK/default hashes/awake restored and read back",
+  "artifactsJson": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\release-artifacts-20261018-201139/artifacts.json",
+  "priorApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-account-ui-update-1792328869099/prior-c28.apk",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-201139\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-201139\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "fixtureSha256": "2f114edc869e4466aae6a9788e1b7bb6cda78c90b0528cce0e8a4981ab34cf6e",
+  "beforeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c29-before-1792328869099-20261018-201426",
+  "afterEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c29-after-1792328869099-20261018-201617",
+  "manualStep": "D-MAN15a: leave automatic ON, load current account A Drive versions and inspect7rows without upload/restore. Next D-MAN15b/c choose a different registered test account B and accept after PIN if prompted; verify old consent drops OFF, page/cursor and target cleared. Human Google selection only, no automatic input.",
+  "nativePocoEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c29-ui-1792328869099-20261018-200751",
+  "nativeDvEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\c29-ui-1792328869099-20261018-200945",
+  "sourceSha256": {
+    "lib/features/backup/presentation/backup_settings_provider.dart": "d4c97a136e9223f8319bd984d88c7eb8338ed4f81ed0ff93e656bdc2e58184bb",
+    "test/m5_settings_ui_test.dart": "a7d49d044bce410d05a3672098e1a54a8954b7b53da0673808c4874976de99cc",
+    "integration_test/m5_acceptance_audit_test.dart": "86d2ddf11a0f8cfc4132ed79ec9c11df56c89f6e0c0eaad8366fd876e643a12c",
+    "integration_test/m5_live_drive_probe_app.dart": "dc68ec89cedc2b23c7b8ef73d3587a8eab93e6d7724d12f44b9b10a2e2309beb"
+  }
+}

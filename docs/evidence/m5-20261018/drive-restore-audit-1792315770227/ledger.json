@@ -1,0 +1,11 @@
+{
+  "state": "PASS: five archives authenticated, business23/cipher/FK/reconcile/safety pre-swap/Drive snapshot/device defaults verified",
+  "automaticDeviceControlActive": false,
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "expectedArchives": 5,
+  "source": "actual Drive restore",
+  "originalV6RestorationPending": true,
+  "auditSourceSha256": "2afaa2500dacee4b72ab5220658853ac55e3adfc67bf6a7d24af6c05aa3b4271",
+  "nativeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-drive-restore-1792315770227-20261018-162932",
+  "exactC27Restored": true
+}

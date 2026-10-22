@@ -1,0 +1,8 @@
+{
+  "nonce": "1792332954413",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "state": "Poco native regression",
+  "automaticDeviceControlActive": false,
+  "originalV6Restoration": "pending in original handover, never overwrite original pointer",
+  "failure": "Pipeline failed; retain logs and inspect installed APK/state before manual work. No reset/uninstall."
+}

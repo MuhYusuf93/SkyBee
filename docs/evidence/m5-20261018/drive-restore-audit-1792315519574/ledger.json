@@ -1,0 +1,9 @@
+{
+  "state": "FAIL or BLOCKED: inspect retained runner evidence; do not weaken checks or reset database",
+  "automaticDeviceControlActive": false,
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "expectedArchives": 5,
+  "source": "actual Drive restore",
+  "originalV6RestorationPending": true,
+  "exactC27Restored": true
+}

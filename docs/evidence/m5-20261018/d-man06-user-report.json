@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN06",
+  "date": "2026-10-18",
+  "source": "user report",
+  "status": "PASS",
+  "answerSummary": "Selected-archive status matches; recovery input and validate button available; recovery input empty",
+  "scope": "Real Drive download/selection flow reported by its completed UI status and available restore controls; blank initial recovery entry is expected, no autofill requested",
+  "automaticEvidence": false,
+  "limits": "No recovery authentication, preview or restore yet; exact bytes/server verification not independently audited. Conditional PIN prompt unspecified."
+}

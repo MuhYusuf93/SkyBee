@@ -274,88 +274,95 @@ final class CorrectionService {
               product['currency_scale'] != sale['currency_scale']) {
             throw const AppError('currencyMismatch');
           }
-          final ledger = await dbTxn.query(
-            'stock_history',
-            where: "sale_transaction_id=? AND product_id=? AND kind='sale'",
-            whereArgs: [saleId.value, item['product_id']],
-          );
-          if (ledger.length != 1 ||
-              ledger.single['quantity_delta'] != -quantity ||
-              ledger.single['value_delta_micros'] != -snapshotCost) {
-            throw const AppError('m4InconsistentData');
-          }
-          var allocated = 0;
-          String? batchCursor;
-          while (true) {
-            final allocations = await dbTxn.query(
-              'sale_batch_allocations',
-              where:
-                  'sale_transaction_item_id=? ${batchCursor == null ? '' : 'AND id COLLATE BINARY>?'}',
-              whereArgs: [item['id'], ?batchCursor],
-              orderBy: 'id COLLATE BINARY',
-              limit: 100,
-            );
-            if (allocations.isEmpty) break;
-            for (final allocation in allocations) {
-              final batch = (await dbTxn.query(
-                'stock_batches',
-                where: 'id=?',
-                whereArgs: [allocation['stock_batch_id']],
-              )).single;
-              final restored = checkedNonNegative(
-                BigInt.from(batch['remaining_quantity'] as int) +
-                    BigInt.from(allocation['quantity'] as int),
-              );
-              if (batch['product_id'] != item['product_id'] ||
-                  restored > (batch['received_quantity'] as int)) {
-                throw const AppError('m4InconsistentData');
-              }
-              await dbTxn.update(
-                'stock_batches',
-                {'remaining_quantity': restored},
-                where: 'id=?',
-                whereArgs: [batch['id']],
-              );
-              allocated += allocation['quantity'] as int;
-              await testStage?.call('batch');
+          if (item['stock_tracking_snapshot'] != 0) {
+            if (product['stock_tracking_enabled'] == 0) {
+              throw const AppError('m52StockTransition');
             }
-            batchCursor = allocations.last['id'] as String;
+            final ledger = await dbTxn.query(
+              'stock_history',
+              where: "sale_transaction_id=? AND product_id=? AND kind='sale'",
+              whereArgs: [saleId.value, item['product_id']],
+            );
+            if (ledger.length != 1 ||
+                ledger.single['quantity_delta'] != -quantity ||
+                ledger.single['value_delta_micros'] != -snapshotCost) {
+              throw const AppError('m4InconsistentData');
+            }
+            var allocated = 0;
+            String? batchCursor;
+            while (true) {
+              final allocations = await dbTxn.query(
+                'sale_batch_allocations',
+                where:
+                    'sale_transaction_item_id=? ${batchCursor == null ? '' : 'AND id COLLATE BINARY>?'}',
+                whereArgs: [item['id'], ?batchCursor],
+                orderBy: 'id COLLATE BINARY',
+                limit: 100,
+              );
+              if (allocations.isEmpty) break;
+              for (final allocation in allocations) {
+                final batch = (await dbTxn.query(
+                  'stock_batches',
+                  where: 'id=?',
+                  whereArgs: [allocation['stock_batch_id']],
+                )).single;
+                final restored = checkedNonNegative(
+                  BigInt.from(batch['remaining_quantity'] as int) +
+                      BigInt.from(allocation['quantity'] as int),
+                );
+                if (batch['product_id'] != item['product_id'] ||
+                    restored > (batch['received_quantity'] as int)) {
+                  throw const AppError('m4InconsistentData');
+                }
+                await dbTxn.update(
+                  'stock_batches',
+                  {'remaining_quantity': restored},
+                  where: 'id=?',
+                  whereArgs: [batch['id']],
+                );
+                allocated += allocation['quantity'] as int;
+                await testStage?.call('batch');
+              }
+              batchCursor = allocations.last['id'] as String;
+            }
+            if (allocated != quantity) {
+              throw const AppError('m4InconsistentData');
+            }
+            await dbTxn.update(
+              'products',
+              {
+                'stock_quantity': checkedNonNegative(
+                  BigInt.from(product['stock_quantity'] as int) +
+                      BigInt.from(quantity),
+                ),
+                'inventory_value_micros': checkedNonNegative(
+                  BigInt.from(product['inventory_value_micros'] as int) +
+                      BigInt.from(snapshotCost),
+                ),
+                'stock_revision': checkedNonNegative(
+                  BigInt.from(product['stock_revision'] as int) + BigInt.one,
+                ),
+                'updated_at': now,
+              },
+              where: 'id=?',
+              whereArgs: [product['id']],
+            );
+            await testStage?.call('stock');
+            await dbTxn.insert('stock_history', {
+              'id': CashierStore.ids.next().value,
+              'product_id': item['product_id'],
+              'sale_transaction_id': saleId.value,
+              'sale_transaction_reversal_id': reversalId.value,
+              'reverses_history_id': ledger.single['id'],
+              'kind': 'reversal',
+              'quantity_delta': quantity,
+              'value_delta_micros': snapshotCost,
+              'created_at': now,
+              'reason': reason.trim(),
+              'currency_code': sale['currency_code'],
+              'currency_scale': sale['currency_scale'],
+            });
           }
-          if (allocated != quantity) throw const AppError('m4InconsistentData');
-          await dbTxn.update(
-            'products',
-            {
-              'stock_quantity': checkedNonNegative(
-                BigInt.from(product['stock_quantity'] as int) +
-                    BigInt.from(quantity),
-              ),
-              'inventory_value_micros': checkedNonNegative(
-                BigInt.from(product['inventory_value_micros'] as int) +
-                    BigInt.from(snapshotCost),
-              ),
-              'stock_revision': checkedNonNegative(
-                BigInt.from(product['stock_revision'] as int) + BigInt.one,
-              ),
-              'updated_at': now,
-            },
-            where: 'id=?',
-            whereArgs: [product['id']],
-          );
-          await testStage?.call('stock');
-          await dbTxn.insert('stock_history', {
-            'id': CashierStore.ids.next().value,
-            'product_id': item['product_id'],
-            'sale_transaction_id': saleId.value,
-            'sale_transaction_reversal_id': reversalId.value,
-            'reverses_history_id': ledger.single['id'],
-            'kind': 'reversal',
-            'quantity_delta': quantity,
-            'value_delta_micros': snapshotCost,
-            'created_at': now,
-            'reason': reason.trim(),
-            'currency_code': sale['currency_code'],
-            'currency_scale': sale['currency_scale'],
-          });
           total += BigInt.from(item['total_rupiah'] as int);
           cost += BigInt.from(snapshotCost);
           await testStage?.call('history');

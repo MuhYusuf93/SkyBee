@@ -36,10 +36,14 @@ final class InventoryProduct {
   int? get packSize => row['pack_size'] as int?;
   String get baseUnit => row['base_unit_label'] as String? ?? 'pcs';
   bool get isDeleted => row['is_deleted'] == 1;
+  bool get stockTracked => row['stock_tracking_enabled'] != 0;
+  int? get referenceCostMicros => row['reference_cost_micros'] as int?;
   ProductAttributes get attributes => ProductAttributes.fromRow(row);
   bool get expiryEnabled => row['expiry_enabled'] == 1;
   bool get lowStock =>
-      row['low_stock_enabled'] == 1 && saleable < (row['min_stock'] as int);
+      stockTracked &&
+      row['low_stock_enabled'] == 1 &&
+      saleable < (row['min_stock'] as int);
 }
 
 final class ProductInput {
@@ -57,6 +61,7 @@ final class ProductInput {
     this.lowStockEnabled = true,
     this.expiryEnabled = false,
     this.attributes,
+    this.shelfId,
   });
   final String name;
   final Money sellingPrice;
@@ -71,12 +76,17 @@ final class ProductInput {
   final bool lowStockEnabled;
   final bool expiryEnabled;
   final ProductAttributes? attributes;
+  final EntityId? shelfId;
 }
 
-enum MasterKind { category, supplier }
+enum MasterKind { category, supplier, shelf }
 
 extension MasterKindTable on MasterKind {
-  String get table => this == MasterKind.category ? 'categories' : 'suppliers';
+  String get table => switch (this) {
+    MasterKind.category => 'categories',
+    MasterKind.supplier => 'suppliers',
+    MasterKind.shelf => 'shelves',
+  };
 }
 
 final class MasterRecord {
@@ -85,11 +95,14 @@ final class MasterRecord {
     required this.name,
     this.contact,
     this.isDeleted = false,
+    this.email,
+    this.website,
   });
   final EntityId id;
   final String name;
   final String? contact;
   final bool isDeleted;
+  final String? email, website;
 }
 
 final class MasterCursor {

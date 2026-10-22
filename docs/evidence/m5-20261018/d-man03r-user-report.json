@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN03R",
+  "recordedDate": "2026-10-18",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "After Google Drive API enabled, destination accepted on unchanged C25 APK; saved-account status, privately correct destination and automatic backup Off reported",
+  "automaticEvidence": false,
+  "limits": "Successful identify/save flow reported; no captured HTTP transaction or independent policy audit. Upload/list/download/restore/scheduled execution unverified."
+}

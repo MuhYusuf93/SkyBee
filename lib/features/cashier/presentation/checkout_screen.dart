@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'cash_pad.dart';
+import '../../management/presentation/managed_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/money/money_field.dart';
+import '../../../core/presentation/contact_output_link.dart';
 import '../../../l10n/localization.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/cashier_models.dart';
@@ -23,6 +25,7 @@ class CheckoutScreen extends StatelessWidget {
           context.read<AppServices>().cart,
           context.read<AppServices>().checkout,
           quickCash: context.read<AppServices>().quickCash,
+          phoneRegion: context.read<AppServices>().settings.phoneRegion,
         )..loadAmounts(),
       ),
     ],
@@ -92,7 +95,7 @@ class _CheckoutFormState extends State<_CheckoutForm> {
               ),
               CashPad(form: form),
               if (form.needsCustomer) ...[
-                TextField(
+                ManagedTextField(
                   controller: form.name,
                   enabled: !form.submitting,
                   onChanged: search,
@@ -100,13 +103,16 @@ class _CheckoutFormState extends State<_CheckoutForm> {
                     labelText: tr(context, 'm3CustomerName'),
                   ),
                 ),
-                TextField(
+                ManagedTextField(
                   controller: form.phone,
                   enabled: !form.submitting,
                   onChanged: (_) => form.newCustomer(),
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     labelText: tr(context, 'm3PhoneOptional'),
+                    errorText: form.phoneError == null
+                        ? null
+                        : tr(context, form.phoneError!),
                   ),
                 ),
                 if (form.selected != null)
@@ -116,7 +122,9 @@ class _CheckoutFormState extends State<_CheckoutForm> {
                   for (final person in suggestions)
                     ListTile(
                       title: Text(person.name),
-                      subtitle: Text(person.phone ?? tr(context, 'm3NoPhone')),
+                      subtitle: person.phone == null
+                          ? Text(tr(context, 'm3NoPhone'))
+                          : ContactOutputLink.phone(person.phone!),
                       onTap: form.submitting
                           ? null
                           : () {
@@ -141,7 +149,10 @@ class _CheckoutFormState extends State<_CheckoutForm> {
               const SizedBox(height: 16),
               FilledButton(
                 onPressed:
-                    form.submitting || cart.priceChanged || cart.unavailable
+                    form.submitting ||
+                        cart.priceChanged ||
+                        cart.unavailable ||
+                        form.phoneError != null
                     ? null
                     : () async {
                         FocusScope.of(context).unfocus();

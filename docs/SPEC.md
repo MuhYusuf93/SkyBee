@@ -1,5 +1,37 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Keputusan kalibrasi22 Oktober2026: setelah sampel Iware58 Bluetooth feed6/2
+utuh dan feed3dicetak sekali atas permintaan tambahan, pengguna memilih **feed3
+yang terbaik**. Opsi coba pada profil58mm menjadi Iware58/3baris; perubahan
+hanya mengisi form profil saat diketuk, tetap memerlukan Simpan. Default aman6
+untuk profil umum dan seluruh saved profile tidak dimigrasikan otomatis.
+
+Catatan implementasi M5.2: nama rak diselesaikan melalui ID stabil saat write;
+rename menaikkan revision produk agar draft lama tidak menimpa label baru.
+Migrasi13→14 tetap aditif, label/snapshot historis tidak dinormalisasi ulang.
+Calendar memakai `showDatePicker` bawaan Flutter (tanpa plugin kalender baru).
+Output telepon mencakup detail piutang; input kontak tetap editor. Lihat
+[laporan dan batas pemeriksaan](M52_REPORT.md).
+
+Tambahan langsung pengguna22 Oktober2026: output nomor telepon dapat diketuk
+untuk membuka WhatsApp pada nomor kanonik; outputwebsite membuka browser pada
+URLhttp/https tervalidasi. Input tetap editor, tanpa membuka app/website saat
+mengetik. Hanya tap eksplisit membuka tujuan, tidak mengirim pesan otomatis.
+
+Syarat handoff terbaru22 Oktober2026: uji DV8910 sebelum commit/push dan
+pemasangan update debug Skybee terpisah. Pengguna memperbaiki otorisasi DV;
+implementasi serta pemeriksaan host/Poco dapat berlanjut.
+
+**22 Oktober2026 — M5.2 AKTIF berdasarkan instruksi unggahan pengguna:**
+M5.2 kini perbaikan operasional A–H, bukan redesign. M5.3 planned/scope belum
+ditetapkan, M5.4 masukan penggunaan nyata, M5.5 desain visual, M6 rilis/legal.
+Kontrak lengkap [M52_REQUEST](decisions/M52_REQUEST_20261022.md), checkpoint
+[CURRENT_HANDOFF](CURRENT_HANDOFF.md). Data eksplorasi `.skybee` dipertahankan;
+input jumlahawal kosong menyimpan999+flag untracked, biaya acuan snapshot, promo
+quantity hanya retail. Commit/push biasa origin/main dan update Skybee setelah
+pemeriksaan diotorisasi; tidak force-push/reset/reseed. Checkpoint lama tentang
+M5.2 menunggu desain dipertahankan sebagai histori.
+
 Addendum21 Oktober2026 — handoff demo terpisah yang diminta pengguna:
 `skybee kasir` memakai package debug `com.example.kasir_app.skybee`, toko
 `toko skybee`, PIN dummy pilihan pengguna,100barang dengan variasi kondisi dan
@@ -24,7 +56,8 @@ Kebutuhan baru setelah acceptance M5: [kontrak lengkap A–G](decisions/M51_REQU
 M5.1 mencakup metadata ukuran desimal eksak/rak/catatan (bukan penjualan timbang),
 biometrik Class3 dan kebijakan sesi, cetak recovery nonpersisten, numpad/tender/
 kembalian, ekspor CSV/XLSX, transport USB Host, dan maintenance SQLCipher saat
-idle setelah backup valid. M5.2 PLANNED menunggu arahan desain; M6 tetap rilis/
+idle setelah backup valid. Pada19Oktober M5.2 masih planned; kontrak22Oktober
+mengaktifkan operasional A–H dan memindahkan desain ke M5.5. M6 tetap rilis/
 legal/identitas/Play. Aturan baru menggantikan bagian lama hanya dalam cakupan
 tersebut. M5 tidak dibuka kembali atau dinyatakan gagal oleh kebutuhan baru.
 
@@ -79,7 +112,8 @@ lease backup-work→DB tanpa menunggu, threshold1024free pages/25%, cooldown7har
 sukses/1hari attempt, ruang2×DB+32MiB. VACUUM tidak prune/rekey; checkpoint WAL
 tanpa menunggu reader dan ukuran berkas fisik diverifikasi. Status lokal/reset
 sesudah restore. Kontrak/bukti dan batas fisik pada
-[D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md); M5.2 tetap menunggu desain.
+[D/E/G](M51_CASH_REPORT_EXPORT_MAINTENANCE.md). Catatan saat itu M5.2 menunggu
+desain; scope aktif22Oktober mengikuti kontrak operasional di atas.
 
 Bangun proyek Flutter lengkap untuk aplikasi kasir, persediaan barang, dan pencatatan piutang pelanggan. Saya seorang programmer dan menggunakan Android Studio. Saya akan memakai aplikasi ini di toko pribadi, memperbaikinya berdasarkan penggunaan nyata, lalu mempertimbangkan rilis di Google Play.
 

@@ -1,3 +1,4 @@
+import 'printer_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
@@ -128,6 +129,19 @@ class _ReceiptPrintActionsState extends State<ReceiptPrintActions> {
       Wrap(
         spacing: 8,
         children: [
+          OutlinedButton.icon(
+            onPressed: busy
+                ? null
+                : () => Navigator.push<void>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          const PrinterSettingsScreen(publicAccess: true),
+                    ),
+                  ),
+            icon: const Icon(Icons.settings_outlined),
+            label: Text(tr(context, 'm51PrinterTitle')),
+          ),
           OutlinedButton(
             onPressed: busy ? null : preview,
             child: Text(tr(context, 'm5ReceiptPreview')),

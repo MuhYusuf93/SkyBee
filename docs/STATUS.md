@@ -1,5 +1,57 @@
 # Status proyek
 
+**22 Oktober2026,07:41WIB — M5.2 validasi utama PASS, handoff berjalan:**
+DV24+publicform2/Poco25; helper upgrade SQLCipher nyata DV3/Poco3 PASS.
+Seluruh hash berkas lama terlindungi cocok pada setiap interval, DV awake pulih
+exact/controlOff. Iware58 Bluetooth feed6dan2masing-masing submitted sekali;
+pengguna mengonfirmasi keduanya utuh, feed2tepat area sobek. Satu sampel feed3
+tambahan diminta dan menunggu job SDK selesai. Format301/0changed,
+lokalisasi678pesan/245requirement asli PASS; tiga pesan belum terpetakan
+diperbaiki, analyzer65,2s Noissues. Ordinarydebug verified3ABI/16KiB;
+release build masih berjalan. Belum commit/push/installSkybee.
+[Laporan](M52_REPORT.md), [bukti terkurasi](evidence/m52-20261022/validation-results.json).
+Bagian di bawah adalah riwayat checkpoint; M5.3–M6 belum dimulai.
+
+**22 Oktober2026,07:09WIB — acceptance DV M5.2 lulus24/24 (304s):** restore
+cross-key/promo/untracked ikut lulus;400hash lama sama, awake pulih exact/controlOff.
+Host output26PASS59s/reader CSV-XLSX20row performat PASS/analyze10,7s bersih.
+Audit menambah unfocus search Gudang/piutang dan dirty guard form pelunasan;
+fullformhost/DVterarah/Pocofull sedang diperiksa sesudah perbaikan helperIO/
+animasi. Belum commit/push/installSkybee. [Checkpoint aktif](CURRENT_HANDOFF.md).
+
+**22 Oktober 2026 — sesi dilanjutkan sesudah limit:** M5.2 masih aktif, belum
+commit/push/upgrade Skybee. Host terbaru26PASS116s; form+metadata18PASS69s dan
+analyzer bersih116,1s. Native DV lama10PASS1FAIL (revert nama) dipersempit ke
+konflik helper input dengan IME; assertion tidak dilemahkan, keyboard tes native
+didaftarkan dan acceptance gabungan DV sedang disiapkan/dijalankan. Hash lama
+seluruh interval tersebut cocok, awake pulih exact/controlOff. Urutan DV dahulu
+tetap wajib. [Checkpoint terbaru](CURRENT_HANDOFF.md), [laporan M5.2](M52_REPORT.md).
+M5.3–M6 belum dimulai. Status lama di bawah tetap histori.
+
+**22 Oktober2026 — koneksi DV pulih dan tes awal M5.2 DV lulus:** kedua device
+authorized; native domainoperasional5PASS87s, semua hash lama terlindungi cocok,
+awakeDV pulih/readback exact dan kontrolOff. Bukti privat
+`build/m52-operations-dv-20261022-031128/`. Form/kalender/rak/promo/contact
+diteruskan sesudah run; belum finalM5.2/commit/push/upgradeSkybee. Kalender
+bawaan Flutter sesuai permintaan pengguna mencakup barang dan penerimaan stok;
+host boundary/cancel/confirm PASS, satu helperlabel dirty diperbaiki/retestpending.
+
+**Syarat handoff terbaru22 Oktober2026:** pengguna meminta DV8910 diuji terlebih
+dahulu sebelum commit/push dan pemasangan update debug Skybee terpisah. DV masih
+menunggu perbaikan otorisasi oleh pengguna. Host/Poco dapat dilanjutkan; hasilnya
+tidak menggantikan pengujian DV. Native operasional Poco PASS dengan hash berkas
+lama terlindungi tetap sama (`m52-operations-poco-20261022-024000`).
+
+**22 Oktober2026 — M5.2 AKTIF berdasarkan instruksi unggahan pengguna:**
+M5.2 kini perbaikan operasional A–H, bukan redesign. M5.3 planned/scope belum
+ditetapkan, M5.4 masukan penggunaan nyata, M5.5 desain visual, M6 rilis/legal.
+Kontrak lengkap [M52_REQUEST](decisions/M52_REQUEST_20261022.md), checkpoint
+[CURRENT_HANDOFF](CURRENT_HANDOFF.md). Data eksplorasi `.skybee` dipertahankan;
+input jumlahawal kosong menyimpan999+flag untracked, biaya acuan snapshot, promo
+quantity hanya retail. Commit/push biasa origin/main dan update Skybee setelah
+pemeriksaan diotorisasi; tidak force-push/reset/reseed. Checkpoint lama tentang
+M5.2 menunggu desain dipertahankan sebagai histori.
+
 **21 Oktober2026 — Skybee demo mandiri terpasang:** permintaan baru pengguna
 untuk aplikasi debug terpisah dipenuhi pada Poco. `skybee kasir`, package
 `com.example.kasir_app.skybee`,0.5.1+8/schema13, toko `toko skybee`, PIN dummy

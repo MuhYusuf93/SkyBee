@@ -1,0 +1,29 @@
+[
+  {
+    "device": "7f0edea0",
+    "test": "integration_test/m5_backup_test.dart",
+    "automaticDeviceControlActive": false,
+    "tests": "FAILED_OR_BLOCKED",
+    "isolation": "NOT CHECKED",
+    "downgrade": false,
+    "reset": false
+  },
+  {
+    "device": "7f0edea0",
+    "test": "integration_test/m5_backup_test.dart",
+    "automaticDeviceControlActive": false,
+    "tests": "PASS",
+    "isolation": "Every pre-existing protected file hash unchanged",
+    "downgrade": false,
+    "reset": false
+  },
+  {
+    "device": "192.168.0.102:5555",
+    "test": "integration_test/m5_backup_test.dart",
+    "automaticDeviceControlActive": false,
+    "tests": "PASS",
+    "isolation": "Every pre-existing protected file hash unchanged",
+    "downgrade": false,
+    "reset": false
+  }
+]

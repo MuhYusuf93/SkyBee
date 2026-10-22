@@ -1,0 +1,100 @@
+[
+  {
+    "folder": "poco-manual-20261016-191759",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-manual-update-1792156485701",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-permission-update-1792174330020",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-export-update-1792178476161",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-archive-update-1792181574653",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-notification-update-1792195919961",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-google-cancel-update-1792226124001",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-drive-config-update-1792309347903",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-recovery-copy-update-1792312363867",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-schedule-ui-update-1792317053346",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-account-ui-update-1792328869099",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-history-ui-update-1792331546910",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-silent-auth-update-1792333169315",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  },
+  {
+    "folder": "poco-worker-status-update-1792345948116",
+    "control": false,
+    "originalPending": false,
+    "closingPending": false,
+    "originalRestored": true
+  }
+]

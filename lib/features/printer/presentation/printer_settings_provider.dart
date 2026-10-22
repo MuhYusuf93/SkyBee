@@ -161,7 +161,7 @@ final class PrinterSettingsProvider extends ChangeNotifier {
 
   Future<void> load({String? after}) => run(() async {
     saved = await service.profiles(after: after, transport: transport);
-    currentLogo = await logos.current();
+    if (!service.publicAccess) currentLogo = await logos.current();
   });
   Future<void> selectTransport(String value) => run(() async {
     if (!['bluetooth', 'usb'].contains(value)) return;

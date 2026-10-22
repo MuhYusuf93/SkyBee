@@ -184,36 +184,39 @@ final class PrintQueueService {
     });
   }
 
-  Future<String> prepareCalibration() => database.transaction((dbTxn) async {
-    await access.authorize(dbTxn);
-    final selected = await dbTxn.query(
-      'printer_profiles',
-      where: 'selected=1',
-      limit: 1,
-    );
-    if (selected.isEmpty) throw StateError('printerNotConfigured');
-    final id = ids.v4(), now = DateTime.now().millisecondsSinceEpoch;
-    final shop = await dbTxn.query(
-      'm5_store',
-      columns: ['logo_asset'],
-      where: 'id=1',
-    );
-    await dbTxn.insert('print_jobs', {
-      'id': id,
-      'operation_key': 'test:$id',
-      'device_id': selected.single['device_id'],
-      'profile_json': selected.single['settings_json'],
-      'snapshot_json': jsonEncode({
-        'test': true,
-        'logoHash': shop.firstOrNull?['logo_asset'],
-      }),
-      'status': 'prepared',
-      'created_at': now,
-      'updated_at': now,
-    });
-    await access.authorize(dbTxn);
-    return id;
-  });
+  Future<String> prepareCalibration({bool publicPrinter = false}) =>
+      database.transaction((dbTxn) async {
+        if (!publicPrinter) await access.authorize(dbTxn);
+        final selected = await dbTxn.query(
+          'printer_profiles',
+          where: 'selected=1',
+          limit: 1,
+        );
+        if (selected.isEmpty) throw StateError('printerNotConfigured');
+        final id = ids.v4(), now = DateTime.now().millisecondsSinceEpoch;
+        final shop = publicPrinter
+            ? <Map<String, Object?>>[]
+            : await dbTxn.query(
+                'm5_store',
+                columns: ['logo_asset'],
+                where: 'id=1',
+              );
+        await dbTxn.insert('print_jobs', {
+          'id': id,
+          'operation_key': 'test:$id',
+          'device_id': selected.single['device_id'],
+          'profile_json': selected.single['settings_json'],
+          'snapshot_json': jsonEncode({
+            'test': true,
+            'logoHash': publicPrinter ? null : shop.firstOrNull?['logo_asset'],
+          }),
+          'status': 'prepared',
+          'created_at': now,
+          'updated_at': now,
+        });
+        if (!publicPrinter) await access.authorize(dbTxn);
+        return id;
+      });
   Future<Map<String, Object?>> job(String id) => database.read(
     (db) async => Map.unmodifiable(
       (await db.query('print_jobs', where: 'id=?', whereArgs: [id])).single,

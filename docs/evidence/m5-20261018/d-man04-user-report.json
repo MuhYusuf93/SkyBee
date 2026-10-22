@@ -1,0 +1,10 @@
+{
+  "id": "D-MAN04",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answer": "ya",
+  "status": "PASS",
+  "scope": "On C26 Poco fixture, correct test destination and autoOff retained; one press manual Drive backup completed with Upload arsip Drive sudah diverifikasi, one new Berhasil diverifikasi history entry and loading ended",
+  "automaticEvidence": false,
+  "limits": "UI-reported verified upload only; no independent HTTP/server/archive audit. Remote listing/download/restore/automatic schedule/retention not yet verified."
+}

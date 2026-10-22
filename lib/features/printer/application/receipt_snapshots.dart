@@ -82,6 +82,9 @@ final class ReceiptSnapshots {
               'price': e['unit_price_rupiah'],
               'total': e['total_rupiah'],
               'wholesale': e['pricing_mode'] == 'wholesale',
+              'promo': e['promo_snapshot_json'],
+              'gross': e['gross_minor'],
+              'discount': e['discount_minor'],
             },
           )
           .toList(),

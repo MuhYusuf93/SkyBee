@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-20",
+  "caseCountsArePerRunNotUniqueTotal": true,
+  "realme": "PAUSED; historical worker endpoint unverified",
+  "runs": [
+    {
+      "evidenceDirectory": "m51-deg-dv-final-20261019-221306",
+      "device": "192.168.0.102:5555",
+      "test": "integration_test/m51_operations_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "passedCases": 17,
+      "testElapsed": "05:02",
+      "dvAwakeRestoredExact": true
+    },
+    {
+      "evidenceDirectory": "m51-backup-dv-final-20261019-222002",
+      "device": "192.168.0.102:5555",
+      "test": "integration_test/m5_backup_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "passedCases": 1,
+      "testElapsed": "01:20",
+      "dvAwakeRestoredExact": true
+    },
+    {
+      "evidenceDirectory": "m51-backup-poco-final-20261019-222320",
+      "device": "7f0edea0",
+      "test": "integration_test/m5_backup_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "passedCases": 1,
+      "testElapsed": "01:00",
+      "dvAwakeRestoredExact": null
+    },
+    {
+      "evidenceDirectory": "m51-wal-poco-final-20261020-020633",
+      "device": "7f0edea0",
+      "test": "integration_test/m51_operations_test.dart",
+      "nameFilter": "reclaimable",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "passedCases": 2,
+      "testElapsed": "00:42",
+      "dvAwakeRestoredExact": null
+    },
+    {
+      "evidenceDirectory": "m51-wal-dv-final-20261020-020921",
+      "device": "192.168.0.102:5555",
+      "test": "integration_test/m51_operations_test.dart",
+      "nameFilter": "reclaimable",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "passedCases": 2,
+      "testElapsed": "01:00",
+      "dvAwakeRestoredExact": true
+    }
+  ]
+}

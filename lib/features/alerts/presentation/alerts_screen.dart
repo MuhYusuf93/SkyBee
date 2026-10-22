@@ -146,7 +146,7 @@ class _AlertsScreenState extends State<AlertsScreen> {
                         title: Text(body['name'] as String),
                         subtitle: Text(
                           row['kind'] == 'expiry'
-                              ? '${tr(context, 'm5Expiry')}: ${body['quantity']} · ${body['firstDate']}'
+                              ? '${tr(context, 'm5Expiry')}: ${body['quantity'] ?? '—'} · ${body['firstDate']}'
                               : '${tr(context, 'm5Saleable')}: ${body['saleable']} · ${tr(context, 'm5Minimum')}: ${body['minimum']}',
                         ),
                       ),

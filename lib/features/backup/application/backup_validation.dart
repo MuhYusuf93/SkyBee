@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:dlibphonenumber/dlibphonenumber.dart';
+import '../../../core/domain/contact_validation.dart';
+import '../../../core/domain/value_types.dart' show CalendarDate, normalizeName;
 import '../../../core/money/money.dart';
 import '../../../core/time/store_clock.dart';
 import '../../management/application/pin_hasher.dart';
@@ -9,6 +12,7 @@ import '../domain/backup_manifest.dart';
 import '../../inventory/domain/product_attributes.dart';
 import '../../cashier/application/quick_cash_service.dart';
 import '../../cashier/domain/cash_tender.dart';
+import '../../cashier/domain/quantity_promotion.dart';
 
 /// Archive authentication is necessary but not a substitute for supported
 /// business metadata. Scan bounded rows, preserving all accepted legacy values.
@@ -184,6 +188,11 @@ final class BackupValidation {
       }
       cursor = rows.single['hash'] as String;
     }
+    if ((await db.rawQuery('PRAGMA user_version')).single.values.single
+            as int >=
+        14) {
+      await _operational(db);
+    }
     final shop = await db.query('m5_store');
     // Imported SQLite may have forged away CHECK constraints. Validate bounded
     // metadata before accepting the staged archive, never in a Provider.
@@ -247,5 +256,171 @@ final class BackupValidation {
       )).single['n'];
     }
     return result;
+  }
+
+  /// Archives may have forged away SQLite constraints. Validate the physical
+  /// versus reference-cost distinction and exact line arithmetic independently,
+  /// without loading full tables or trusting the current promotion master.
+  static Future<void> _operational(DatabaseExecutor db) async {
+    final region = (await db.query(
+      'store_settings',
+      columns: ['phone_region'],
+      limit: 2,
+    )).single['phone_region'];
+    if (region is! String ||
+        !PhoneNumberUtil.instance.supportedRegions.contains(region)) {
+      throw const FormatException('backupPhoneRegionInvalid');
+    }
+    if ((await db.rawQuery(
+          '''SELECT 1 FROM low_price_preferences WHERE
+      currency_code NOT IN ('IDR','USD','MYR','EUR') OR typeof(threshold_minor)<>'integer'
+      OR threshold_minor<0 OR typeof(suppressed)<>'integer' OR suppressed NOT IN(0,1) LIMIT 1''',
+        )).isNotEmpty ||
+        (await db.rawQuery(
+          '''SELECT 1 FROM reference_cost_history WHERE
+      (before_micros IS NOT NULL AND (typeof(before_micros)<>'integer' OR before_micros<0))
+      OR typeof(after_micros)<>'integer' OR after_micros<0 LIMIT 1''',
+        )).isNotEmpty) {
+      throw const FormatException('backupOperationalMetadataInvalid');
+    }
+    for (final table in ['suppliers', 'shelves', 'products']) {
+      final predicate = switch (table) {
+        'suppliers' =>
+          '''(email IS NOT NULL AND (typeof(email)<>'text' OR length(CAST(email AS BLOB))>1016))
+          OR (website IS NOT NULL AND (typeof(website)<>'text' OR length(CAST(website AS BLOB))>8192))''',
+        'shelves' =>
+          '''typeof(name)<>'text' OR length(name) NOT BETWEEN 1 AND 80
+          OR typeof(normalized_name)<>'text' OR length(normalized_name)>320 OR is_deleted<>0''',
+        _ =>
+          '''reference_expiry_date IS NOT NULL AND (typeof(reference_expiry_date)<>'text' OR length(reference_expiry_date)<>10)''',
+      };
+      if ((await db.rawQuery(
+        'SELECT 1 FROM $table WHERE $predicate LIMIT 1',
+      )).isNotEmpty) {
+        throw const FormatException('backupOperationalMetadataInvalid');
+      }
+      String? after;
+      while (true) {
+        final columns = switch (table) {
+          'suppliers' => 'id,email,website',
+          'shelves' => 'id,name,normalized_name',
+          _ => 'id,reference_expiry_date',
+        };
+        final rows = await db.rawQuery(
+          '''SELECT $columns FROM $table
+          ${after == null ? '' : 'WHERE id COLLATE BINARY>?'} ORDER BY id COLLATE BINARY LIMIT 100''',
+          [?after],
+        );
+        if (rows.isEmpty) break;
+        try {
+          for (final row in rows) {
+            if (table == 'suppliers') {
+              // Legacy phone values are retained; these nullable fields first
+              // appeared in v14 and must satisfy their own service contract.
+              ContactValidation.email(row['email'] as String?);
+              ContactValidation.website(row['website'] as String?);
+            } else if (table == 'shelves') {
+              if (normalizeName(row['name'] as String) !=
+                  row['normalized_name']) {
+                throw const FormatException('shelfName');
+              }
+            } else if (row['reference_expiry_date'] != null) {
+              CalendarDate(row['reference_expiry_date'] as String);
+            }
+          }
+        } catch (_) {
+          throw const FormatException('backupOperationalMetadataInvalid');
+        }
+        after = rows.last['id'] as String;
+      }
+    }
+    if ((await db.rawQuery(
+      '''SELECT 1 FROM products p WHERE
+      typeof(stock_tracking_enabled)<>'integer' OR stock_tracking_enabled NOT IN(0,1) OR
+      (stock_tracking_enabled=0 AND (stock_quantity<>999 OR inventory_value_micros<>0 OR
+      typeof(reference_cost_micros)<>'integer' OR reference_cost_micros<0 OR
+      EXISTS(SELECT 1 FROM stock_batches b WHERE b.product_id=p.id AND remaining_quantity>0))) LIMIT 1''',
+    )).isNotEmpty) {
+      throw const FormatException('backupUntrackedInvalid');
+    }
+    if ((await db.rawQuery('''SELECT 1 FROM quantity_promotions WHERE
+      typeof(name)<>'text' OR length(name) NOT BETWEEN 1 AND 100 OR
+      typeof(minimum_quantity)<>'integer' OR minimum_quantity<=0 OR
+      typeof(basis_points)<>'integer' OR basis_points NOT BETWEEN 1 AND 10000 OR
+      typeof(active)<>'integer' OR active NOT IN(0,1) OR
+      typeof(is_deleted)<>'integer' OR is_deleted NOT IN(0,1) OR
+      typeof(revision)<>'integer' OR revision<1 LIMIT 1''')).isNotEmpty ||
+        (await db.rawQuery(
+          '''SELECT product_id FROM quantity_promotions WHERE active=1 AND is_deleted=0
+        GROUP BY product_id HAVING COUNT(*)>1 LIMIT 1''',
+        )).isNotEmpty) {
+      throw const FormatException('backupPromotionInvalid');
+    }
+    for (final table in ['sale_transaction_items', 'cart_draft_items']) {
+      final column = table == 'sale_transaction_items'
+          ? 'promo_snapshot_json'
+          : 'accepted_promo_json';
+      if ((await db.rawQuery(
+        '''SELECT 1 FROM $table WHERE $column IS NOT NULL AND
+        (typeof($column)<>'text' OR length(CAST($column AS BLOB))>4096) LIMIT 1''',
+      )).isNotEmpty) {
+        throw const FormatException('backupPromotionSnapshotInvalid');
+      }
+      // Composite draft keys are product_id/draft_id; stable bounded iteration
+      // mirrors that full ordering rather than OFFSET on a live UI dataset.
+      List<Object?>? cursor;
+      final key = table == 'sale_transaction_items'
+          ? 'id'
+          : 'draft_id,product_id';
+      while (true) {
+        final rows = await db.rawQuery(
+          '''SELECT * FROM $table
+          ${cursor == null ? '' : 'WHERE ($key)>(${List.filled(cursor.length, '?').join(',')})'}
+          ORDER BY $key LIMIT 100''',
+          [...?cursor],
+        );
+        if (rows.isEmpty) break;
+        for (final row in rows) {
+          try {
+            final promo = QuantityPromotion.parse(row[column] as String?);
+            final quantity = row['quantity'] as int;
+            if (promo != null &&
+                (quantity < promo.minimum || row['pricing_mode'] != 'retail')) {
+              throw const FormatException('promotionThreshold');
+            }
+            if (table == 'sale_transaction_items') {
+              if (![0, 1].contains(row['stock_tracking_snapshot'])) {
+                throw const FormatException('stockMode');
+              }
+              if (row['stock_tracking_snapshot'] == 0) {
+                final reference = row['reference_cost_micros_snapshot'];
+                if (reference is! int ||
+                    reference < 0 ||
+                    BigInt.from(reference) * BigInt.from(quantity) !=
+                        BigInt.from(row['cost_micros'] as int)) {
+                  throw const FormatException('referenceCost');
+                }
+              }
+              if (row['gross_minor'] != null) {
+                final gross = row['gross_minor'] as int,
+                    discount = row['discount_minor'] as int;
+                if (BigInt.from(row['unit_price_rupiah'] as int) *
+                            BigInt.from(quantity) !=
+                        BigInt.from(gross) ||
+                    discount != (promo?.discount(gross) ?? 0) ||
+                    gross - discount != row['total_rupiah']) {
+                  throw const FormatException('lineArithmetic');
+                }
+              }
+            }
+          } catch (_) {
+            throw const FormatException('backupPromotionSnapshotInvalid');
+          }
+        }
+        cursor = table == 'sale_transaction_items'
+            ? [rows.last['id']]
+            : [rows.last['draft_id'], rows.last['product_id']];
+      }
+    }
   }
 }

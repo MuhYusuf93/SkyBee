@@ -1,0 +1,13 @@
+{
+  "id": "D-MAN10",
+  "date": "2026-10-18",
+  "source": "user report",
+  "answers": {
+    "fiveLocalCards": "ya",
+    "driveDisconnectedControls": "ya"
+  },
+  "status": "PASS",
+  "scope": "After Drive restore, 5 local archive cards schema8/IDR including latest near restore; Drive shows choose-account only, without saved destination/upload/disconnect/auto switch",
+  "automaticEvidence": false,
+  "limits": "UI presence/state only; safety archive integrity/authentication and policy/token/native DB state not independently audited yet. No new backup/account selection or restore requested."
+}

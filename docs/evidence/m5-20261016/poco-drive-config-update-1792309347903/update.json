@@ -1,0 +1,28 @@
+{
+  "nonce": "1792309347903",
+  "fixtureDatabase": "m5_acceptance_1792150309449.db",
+  "state": "C26 checks and preservation PASS; manual handover ready",
+  "automaticDeviceControlActive": false,
+  "originalV6Restoration": "pending in original handover, never overwrite original pointer",
+  "dv": "20PASS; exact prior APK/default sandbox hashes and awake restored/read back",
+  "artifactsJson": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\release-artifacts-20261018-145231/artifacts.json",
+  "priorApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-drive-config-update-1792309347903/prior-c25.apk",
+  "newApk": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-145231\\kasir-app-0.5.0-m5-isolated-release.apk",
+  "restoreBridge": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\build\\m5-acceptance-20261018-145231\\kasir-app-0.5.0-m5-restore-bridge-debug.apk",
+  "fixtureSha256": "58cbd652096ff1289689d7b806de74e97fb59bc437d5051f4b5215111a20f7e0",
+  "beforeEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c26-before-1792309347903-20261018-145517",
+  "afterEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c26-after-1792309347903-20261018-145657",
+  "manualStep": "D-MAN04 one manual Drive backup on confirmed test account; automatic switch remains Off; report status, no restore",
+  "nativePocoEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-c26-ui-1792309347903-20261018-144230",
+  "nativeDvEvidence": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\c26-ui-1792309347903-20261018-144651",
+  "sourceSha256": {
+    "lib/features/backup/application/drive_rest.dart": "540400e7fb4c9b41fff24aa5c2b7fed301e4c463e34b82a2a2399515af3d8177",
+    "lib/features/backup/presentation/backup_settings_provider.dart": "98b08e36df44f7b069b5e8be85488c9fbf17c6e35b90baa412b77604df76138b",
+    "lib/l10n/app_en.arb": "4298f846259e28b03835f5a27490c1eca4e0127f28f6a1ba6938a3eebf9c00fb",
+    "lib/l10n/app_id.arb": "ad364bf47e2486e22e38e95bd3483e67df34e9ebe924844522454416f5bf984f",
+    "lib/l10n/localization.dart": "477abc98bbcdcc4082b8f22427e694ebf2720b8b1c0b07d3eb48429e2c423445",
+    "test/m5_drive_failure_test.dart": "98a363656e092a1000d3ca63982ea218c353363e3e896363cae834752cb9e108",
+    "test/m5_settings_ui_test.dart": "1ccf308730353f4c3a90b1f397eba29467d85af1a42c52fb81924f036898975b",
+    "integration_test/m5_acceptance_audit_test.dart": "27dc12fcee998aff3e81527c9bb944ff0bea82153e2d34ea3e5284c5033106f7"
+  }
+}

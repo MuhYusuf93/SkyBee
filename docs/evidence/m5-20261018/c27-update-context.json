@@ -1,0 +1,11 @@
+{
+  "stage": "C27 replaced by C28; follow superseding context for current handover",
+  "ledger": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261016\\poco-recovery-copy-update-1792312363867\\update.json",
+  "automaticDeviceControlActive": false,
+  "manualStep": "D-MAN14: turn automatic switch ON and confirm explicit consent once; verify settings saved/switch ON/next target21:00 AsiaJakarta; report exact schedule only, no manual backup or assumption of actual delivery.",
+  "installedSha256": "0ec0734a306d177ecd329d74274ed3938bef7debcdfa4bd7d05fd017d3a6e3e1",
+  "originalV6RestorationPending": true,
+  "closingPending": true,
+  "postDriveRestoreAudit": "docs/evidence/m5-20261018/drive-restore-audit-1792315770227/ledger.json",
+  "supersededBy": "C:\\Users\\ACER\\Documents\\Proyek\\kasir_app\\codex-kasir-kit\\docs\\evidence\\m5-20261018\\c28-update-context.json"
+}
