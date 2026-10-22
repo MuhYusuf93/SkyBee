@@ -148,6 +148,21 @@ final class DatabaseCoordinator {
   Future<T> read<T>(Future<T> Function(Database db) operation) =>
       _serialize(() async => operation(await _open()));
 
+  /// Retain the same process/file lease across an unopened-file preflight,
+  /// migration and verification. Releasing it between those steps lets a
+  /// headless worker migrate/write before the foreground proof is complete.
+  /// Callbacks must not re-enter this coordinator or acquire its gate again.
+  Future<T> openWithPreflight<T>({
+    required Future<void> Function() beforeOpen,
+    required Future<T> Function(Database db) afterOpen,
+  }) => _serialize(() async {
+    if (_closed || _database != null || _bootstrapped) {
+      throw StateError('databasePreflightRequiresUnopened');
+    }
+    await beforeOpen();
+    return afterOpen(await _open());
+  });
+
   /// Errors rollback all SQL in the callback; no device/network work inside.
   Future<T> transaction<T>(
     Future<T> Function(Transaction dbTxn) operation, {

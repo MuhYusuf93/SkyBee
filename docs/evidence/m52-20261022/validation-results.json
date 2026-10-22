@@ -61,6 +61,52 @@
       "automaticDeviceControlActive": false,
       "resultSha256": "c7d0ffd91f01f250f12a76095536bf3ceda40b39a8a596aac52a899bcd57be82",
       "runnerSha256": "451a01573d7ae3aa05d367a63758da9805614991cb7c290c67bc5f0621b51b3d"
+    },
+    {
+      "run": "m52-populated-upgrade-dv-20261022-080355",
+      "entrypoint": "integration_test/m52_skybee_upgrade_test.dart",
+      "device": "192.168.0.102:5555",
+      "pass": 3,
+      "protectedFiles": 431,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "9a9b04c960e5e1bba96daff711230535e1d1519b3d65f0525e50aaf82d2d0c86",
+      "runnerSha256": "288e8195e76ab897a574ff7b136dd1c8b3bad537fe34c41863166a775927aa41",
+      "awakeRestoredExactly": true
+    },
+    {
+      "run": "m52-populated-upgrade-poco-20261022-080855",
+      "entrypoint": "integration_test/m52_skybee_upgrade_test.dart",
+      "device": "7f0edea0",
+      "pass": 3,
+      "protectedFiles": 435,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "c7d0ffd91f01f250f12a76095536bf3ceda40b39a8a596aac52a899bcd57be82",
+      "runnerSha256": "2fcbf69d275fc86d62e141f50077ef7d220c5cc388757173418ecbef6f534ff7"
+    },
+    {
+      "run": "m52-atomic-upgrade-dv-20261022-135436",
+      "entrypoint": "integration_test/m52_skybee_upgrade_test.dart",
+      "device": "192.168.0.102:5555",
+      "pass": 5,
+      "protectedFiles": 434,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "9a9b04c960e5e1bba96daff711230535e1d1519b3d65f0525e50aaf82d2d0c86",
+      "runnerSha256": "bec7a734a7d7c41f203eecf6748bfbc94ef58810973ba669781d543e4b8bbfb4",
+      "awakeRestoredExactly": true
+    },
+    {
+      "run": "m52-atomic-upgrade-poco-20261022-140037",
+      "entrypoint": "integration_test/m52_skybee_upgrade_test.dart",
+      "device": "7f0edea0",
+      "pass": 5,
+      "protectedFiles": 438,
+      "existingHashesUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "resultSha256": "c7d0ffd91f01f250f12a76095536bf3ceda40b39a8a596aac52a899bcd57be82",
+      "runnerSha256": "e4ef8769aec9ec54d78b726e550bfd70d634ff93cfa302b161ecacf7d6cd2034"
     }
   ],
   "printer": {
@@ -106,6 +152,11 @@
       "log": "test-quantity-decision-final.log",
       "pass": 5,
       "sha256": "a85c2fac76f398869bcfd802d93bbe4fdd977db474aaa1d5eecfa1840a69a457"
+    },
+    {
+      "log": "test-atomic-recovery.log",
+      "pass": 10,
+      "sha256": "b986393dab3003729baa33684a010d5590e93e19f96505341b5b98d869ae13a8"
     }
   ],
   "checks": {
@@ -120,6 +171,22 @@
     "analyze-feed3.log": {
       "status": "PASS",
       "sha256": "632db42f831f0e980ed98f9f29fcaa94cae094acf87f8ff40e414ce66b67dd67"
+    },
+    "format-atomic.log": {
+      "status": "PASS",
+      "sha256": "409aad883eec0e9da04dea92ff8f57ab4035f9cbef1731f14a4db50aa93d03ca"
+    },
+    "localization-atomic.log": {
+      "status": "PASS",
+      "sha256": "3628377cc0a32475aab05189a3cd4a96d4de066695f1b4c38f69732370e0179f"
+    },
+    "analyze-atomic.log": {
+      "status": "PASS",
+      "sha256": "a3b0711e849dde547ce41a15dc01bf99a54db49f16864451b449cd642aeed78c"
+    },
+    "test-database-alert-regression.log": {
+      "status": "PASS",
+      "sha256": "751c04550949d8f798f176a628143d6b8fc8598bce03e04612a78f56c7a8ab5d"
     }
   },
   "ordinaryBuilds": [
@@ -145,6 +212,38 @@
       "package": "com.example.kasir_app",
       "version": "0.5.2+9",
       "sha256": "5f1751901081e47e059972dc31e285a73a8543cb788adc6fe073d1e435947a0f",
+      "nativeAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "zipalign16kPass": true,
+      "certificateSha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "androidDebugCertificate": true,
+      "installed": false
+    },
+    {
+      "mode": "debug",
+      "artifact": "build/m52-ordinary-atomic-20261022/kasir-app-0.5.2-ordinary-debug.apk",
+      "package": "com.example.kasir_app",
+      "version": "0.5.2+9",
+      "sha256": "2a23bab70a3c0fc9a0d4c1c75277eb3e0671ce9b9d6c00db59b94104d06f6ea4",
+      "nativeAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "zipalign16kPass": true,
+      "certificateSha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "androidDebugCertificate": true,
+      "installed": false
+    },
+    {
+      "mode": "release",
+      "artifact": "build/m52-ordinary-atomic-20261022/kasir-app-0.5.2-ordinary-release.apk",
+      "package": "com.example.kasir_app",
+      "version": "0.5.2+9",
+      "sha256": "58397a48cca2c3e2f97740e0b1c8931c21f837b30a8301752e000d472bf1625e",
       "nativeAbis": [
         "arm64-v8a",
         "armeabi-v7a",
@@ -186,5 +285,19 @@
     "confirmedCredentials": 0,
     "classification": "3 vendor provenance SHA256, 5 source SHA256, 1 prose Keystore/SQLCipher, 1 synthetic fixture source-key digest; unchanged from prior classification",
     "historyComprehensivelyAudited": false
+  },
+  "upgradeRaceDiagnosis": {
+    "method": "Read-only SQLCipher comparison through attached in-process compiler; no key exported",
+    "originalSnapshotMatchesPreparedProofTables": 43,
+    "changedColumnsOnly": [
+      "m5_store.alert_generation",
+      "alert_state.evaluation"
+    ],
+    "allOtherOldColumnsAndRowSetsMatch": true,
+    "originalFailedInstallRetained": "build/m52-skybee-20261022-075521",
+    "originalFailureIsNotSuccessfulHandoff": true,
+    "repair": "Single lease through preflight/migration/verification; debug worker waits for foreground proof; scoped snapshot-verified monotonic-counter recovery",
+    "reset": false,
+    "reseed": false
   }
 }

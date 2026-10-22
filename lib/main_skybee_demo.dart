@@ -43,6 +43,13 @@ Future<void> main() async {
       await SkybeeUpgradeAudit.upgradeExisting(
         database,
         File(p.join(marker.parent.path, 'skybee-m52-upgrade-audit.json')),
+        originalSnapshot: File(
+          p.join(
+            marker.parent.parent.path,
+            'cache',
+            'skybee-m52-original-v13.db',
+          ),
+        ),
       );
     } else {
       // A started marker prevents a crash or partial setup from being silently

@@ -1,5 +1,11 @@
 # Rencana milestone
 
+Penutupan M5.2 dilanjutkan setelah race audit upgrade Skybee direproduksi:
+verifikasi lease atomik/guard worker/pemulihan terbatas dua penghitung pada host
+dan native DV dahulu lalu Poco; analyze/build, commit/push biasa perbaikan, lalu
+upgrade in-place dengan snapshot asli terverifikasi. Handoff belum PASS sampai
+dua startup, proof, gate publik/protected dan preservasi package lain terbukti.
+
 Keputusan kalibrasi22 Oktober2026: pengguna memilih feed3terbaik setelah tiga
 sampel Iware58 Bluetooth (6/2/3) terkirim masing-masing sekali. Opsi coba Iware
 di form menjadi3baris; nilai profil lain dan default umum6tetap. M5.2 menutup

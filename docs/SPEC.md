@@ -1,5 +1,15 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Audit upgrade debug Skybee memegang satu lease dari pembacaan schema lama,
+prepared proof, migrasi sampai verifikasi selesai. Worker debug tidak membuka
+DB sebelum seed/foreground proof lengkap. Untuk insiden upgrade pertama M5.2,
+pemulihan terarah hanya menerima perubahan monotonik pada
+`m5_store.alert_generation` dan `alert_state.evaluation`, setelah ciphertext
+snapshot asli cocok dengan seluruh prepared proof. Seluruh baris dan kolom
+lama lainnya wajib identik. Proof membedakan fakta bisnis yang cocok dari dua
+metadata berubah; tidak reset, mengubah preferensi, atau menulis ulang data.
+Aturan ini khusus launcher debug Skybee, bukan kelonggaran restore umum.
+
 Keputusan kalibrasi22 Oktober2026: setelah sampel Iware58 Bluetooth feed6/2
 utuh dan feed3dicetak sekali atas permintaan tambahan, pengguna memilih **feed3
 yang terbaik**. Opsi coba pada profil58mm menjadi Iware58/3baris; perubahan

@@ -342,3 +342,17 @@ Manifest M5.2 mencakup275artefak lokal, tetapi274deletion index+1dump baru yang
 di-ignore. Verifikasi `git ls-tree HEAD` dan diff index, bukan menyimpulkan
 force-remove sukses berarti file tadinya tracked. Hash seluruh salinan lokal
 tetap diperiksa; cleanup normal tidak menghapus history atau file pengguna.
+
+106. Preflight upgrade harus memegang lease lintas engine sampai proof selesai.
+Melepas lease untuk menulis prepared marker memberi periodic worker kesempatan
+migrasi dan menambah penghitung alert sebelum verifikasi foreground. Pada
+Skybee, snapshot asli cocok 43 tabel; hanya alert_generation/evaluation berubah.
+Pemulihan tidak mengecualikan seluruh tabel: verifikasi snapshot terhadap proof,
+semua rowset/kolom lain dan monotonisitas dua penghitung, lalu catat scope
+sebenarnya. Worker debug menunggu seed/proof lengkap sebelum membuka DB.
+
+107. ADB stdin biner pada Windows dapat terpotong pada Ctrl-Z. Untuk ciphertext
+snapshot tambahan di cache sendiri, gunakan encoding ASCII lalu decode dan
+verifikasi SHA256 di perangkat; jangan menulis DB utama. Diagnosis VM read-only
+memerlukan compiler attach, tanpa reload/restart; URI autentikasi debugger dan
+log tetap privat. Bandingkan hash berkas bisnis/key sebelum dan sesudah diagnosis.

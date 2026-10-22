@@ -1,5 +1,11 @@
 # Matriks persyaratan
 
+Checkpoint terbaru: fitur `41b3430` sudah dipush; handoff aktual Skybee pertama
+belum PASS. Perbaikan race preflight dan pemulihan dua penghitung alert memakai
+snapshot asli sedang diperiksa (host10PASS); semua fakta bisnis lama harus
+cocok dan proof menyebut metadata berubah secara eksplisit. Lihat
+[checkpoint aktif](CURRENT_HANDOFF.md). Riwayat pending di bawah dipertahankan.
+
 M5.2 checkpoint22 Oktober2026: A–H tersedia di source0.5.2+9/schema14; acceptance
 DV24/Poco25 PASS, ditambah DV publicform2 serta helper upgrade nyata3per device
 PASS. Printer/paper, repository dan upgrade Skybee masih berjalan.

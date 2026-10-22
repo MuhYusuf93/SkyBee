@@ -64,7 +64,36 @@ death; mismatch menghentikan startup normal. Snapshot closed dan key terbungkus
 tetap diperlukan untuk handoff; snapshot lokal ini bukan recovery Keystore
 portable. Tidak reset, uninstall, downgrade atau reseed.
 
+Pemasangan awal dari `41b3430` berhasil, tetapi startup berhenti pada guard.
+Audit SQLCipher read-only membuktikan snapshot13 cocok dengan prepared proof
+seluruh43tabel; pada current14 hanya `m5_store.alert_generation` dan
+`alert_state.evaluation` berubah. Helper lama melepas lease sesudah capture,
+memberi periodic worker kesempatan mengevaluasi notifikasi sebelum verifikasi.
+Perbaikan menahan satu lease hingga proof selesai dan menunda worker debug
+sebelum foreground audit lengkap. Pemulihan khusus memeriksa snapshot asli,
+seluruh rowset/kolom lain serta monotonisitas dua penghitung tersebut. Proof
+menyebut `allExistingFactsMatch:false`, `allExistingBusinessFactsMatch:true` dan
+dua kolom metadata berubah; bukan klaim semua kolom current sama. Data
+eksplorasi101produk/21sale tidak dipaksa menjadi100/20. Handoff aktual masih
+menunggu pengujian perbaikan dan dua startup berhasil.
+
 ## Bukti yang sudah tersedia
+
+- Host perbaikan upgrade10PASS5s: populated13→14 dan pemulihan penghitung,
+  penolakan perubahan produk/preferensi/body/baris/snapshot/penghitung invalid,
+  serta policy worker sebelum proof. Ini tes fixture, bukan handoff perangkat.
+- Native perbaikan DV5PASS216s: capture populated, prepared, mismatch,
+  workerRace dan recoverDerived memakai SQLCipher/lease nyata. Semua hash lama
+  sama; awake restored/readback exact dan kontrolOff. Poco suite sama5PASS203s,
+  seluruh hash lama sama/kontrolOff. Format akhir305file/0changed PASS.
+- Host database/alert setelah perbaikan15PASS14s; audit lokalisasi678pesan/
+  245requirement PASS dan analyze akhir No issues208,7s. Ordinary build ulang
+  debug20,0s/release43,6s di `build/m52-ordinary-atomic-20261022` verified
+  signature/3ABI/ELF+ZIP16KiB; tidak dipasang. Handoff repair berikutnya.
+- Percobaan native filter `workerRace|recoverDerived|mismatch` gagal pada shell
+  Windows sebelum kasus berjalan; wrapper memakai plain-name, bukan regex.
+  Semua hash lama sama/awake exact/controlOff. Retest tanpa filter dijalankan;
+  kegagalan harness awal tetap disimpan.
 
 - Host domain/forms/operasi26PASS116s, lalu form terbaru+metadata18PASS69s.
   Run bertumpang tindih, tidak dijumlahkan menjadi kasus unik.

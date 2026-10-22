@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:sqflite/sqflite.dart' show getDatabasesPath;
+import '../../../data/database/schema.dart';
+import '../../../demo/skybee_background_guard.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -242,6 +245,13 @@ final class BackupScheduler {
 void m5BackgroundDispatcher() {
   Workmanager().executeTask((task, input) async {
     WidgetsFlutterBinding.ensureInitialized();
+    if (const bool.fromEnvironment('KASIR_SKYBEE_DEMO') &&
+        !await SkybeeBackgroundGuard.ready(
+          await getDatabasesPath(),
+          Schema.version,
+        )) {
+      return true; // Foreground owns the first audited migration/seed.
+    }
     final database = await DatabaseCoordinator.android(headless: true);
     try {
       final app = AppServices(database),

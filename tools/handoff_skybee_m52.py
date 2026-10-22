@@ -1,10 +1,12 @@
-"""In-place Skybee v8 -> v9 handoff after passing DV acceptance and ordinary push.
+"""In-place Skybee handoff after passing DV acceptance and ordinary push.
 
 Retains a verified closed same-installation sandbox snapshot and prior APK.
-Never uninstalls, clears, seeds, changes OS settings or retries an installation.
+Never uninstalls, clears, seeds or changes OS settings. A repair requires an
+inspected failed attempt, a new artifact directory and verified prior APK/data.
 The app proves old logical facts before any runtime work; bytes can migrate.
 """
 import argparse
+import base64
 import hashlib
 import io
 import json
@@ -24,10 +26,34 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--directory', type=pathlib.Path, required=True)
 parser.add_argument('--dv-result', type=pathlib.Path, required=True)
 parser.add_argument('--source-commit', required=True)
+parser.add_argument('--previous-attempt', type=pathlib.Path,
+                    help='Inspected failed v9 handoff; retain its original v13 proof and snapshot')
+parser.add_argument('--original-snapshot', type=pathlib.Path,
+                    help='Verified encrypted v13 DB from the original closed snapshot; counters-only recovery')
 args = parser.parse_args()
 DIR = args.directory.resolve()
 assert DIR.parent == ROOT / 'build' and DIR.name.startswith('m52-skybee-')
 assert not (DIR / 'handoff-result.json').exists(), 'Inspect previous attempt; no blind replay'
+previous = None
+if args.previous_attempt:
+    previous_dir = args.previous_attempt.resolve()
+    assert previous_dir.parent == ROOT / 'build' and previous_dir.name.startswith('m52-skybee-')
+    assert previous_dir != DIR
+    previous = json.loads((previous_dir / 'handoff-result.json').read_text())
+    assert previous['package'] == PACKAGE and previous['device'] == DEVICE
+    assert previous['installed'] and previous['status'] != 'PASS'
+    assert previous['automaticDeviceControlActive'] is False and previous['otherPackagesUnchanged']
+    assert previous['closedFilesPreservedBeforeLaunch'] and previous['installedApkHashMatches']
+original_snapshot = None
+if args.original_snapshot:
+    assert previous is not None
+    original_snapshot = args.original_snapshot.resolve()
+    assert original_snapshot.is_relative_to(ROOT / 'build') and original_snapshot.suffix == '.db'
+    original_bytes = original_snapshot.read_bytes()
+    assert 0 < len(original_bytes) < 200 * 1024 * 1024
+    assert original_bytes[:16] != b'SQLite format 3\x00'
+    original_digest = hashlib.sha256(original_bytes).hexdigest()
+    assert original_digest == previous.get('originalDatabaseSha256', previous['beforeHashes']['databases/kasir_app.db'])
 
 
 def run(*command, timeout=60):
@@ -82,11 +108,15 @@ def text(nodes):
 
 def wait_ui(label, required):
     until = time.monotonic() + 120
+    failed_frames = 0
     while time.monotonic() < until:
         nodes = hierarchy(label)
         value = text(nodes)
         if all(any(option in value for option in alternatives) for alternatives in required):
             return nodes
+        failed_frames = failed_frames + 1 if 'Persiapan data demo belum selesai.' in value else 0
+        if failed_frames >= 3:
+            raise RuntimeError('Startup preflight stopped; inspect private diagnostic, no reset/reseed')
         time.sleep(1)
     raise RuntimeError(f'{label} semantics not verified; no reset/reseed fallback')
 
@@ -107,7 +137,7 @@ commit = run('git', '-C', str(ROOT), 'rev-parse', 'HEAD').decode().strip()
 assert re.fullmatch('[0-9a-f]{40}', args.source_commit) and commit == args.source_commit
 remote = run('git', '-C', str(ROOT), 'ls-remote', 'origin', 'refs/heads/main').decode().split()[0]
 assert remote == commit, 'Latest tested source must already be pushed'
-assert not run('git', '-C', str(ROOT), 'diff', '--name-only', '--', 'lib', 'android', 'packages', 'pubspec.yaml', 'pubspec.lock').strip(), 'Build sources changed after commit'
+assert not run('git', '-C', str(ROOT), 'status', '--porcelain', '--', 'lib', 'android', 'packages', 'pubspec.yaml', 'pubspec.lock').strip(), 'Build sources changed after commit'
 dv = json.loads(args.dv_result.read_text(encoding='utf-8-sig'))
 assert dv['device'] == '192.168.0.102:5555' and dv['tests'] == 'PASS'
 assert dv['test'] == 'integration_test/m52_acceptance_test.dart'
@@ -119,7 +149,10 @@ assert gate['android_debug_certificate'] and gate['zipalign_16k_pass'] and diges
 path = adb('shell', 'pm', 'path', PACKAGE).decode().strip().removeprefix('package:')
 adb('pull', path, str(DIR / 'prior-skybee.apk'))
 prior_badging = run(str(SDK / 'aapt.exe'), 'dump', 'badging', str(DIR / 'prior-skybee.apk')).decode()
-assert f"package: name='{PACKAGE}' versionCode='8' versionName='0.5.1'" in prior_badging
+prior_version = (9, '0.5.2') if previous else (8, '0.5.1')
+assert f"package: name='{PACKAGE}' versionCode='{prior_version[0]}' versionName='{prior_version[1]}'" in prior_badging
+if previous:
+    assert digest(DIR / 'prior-skybee.apk') == previous['apkSha256'], 'Installed APK changed since inspected attempt'
 signature = run(str(SDK / 'apksigner.bat'), 'verify', '--print-certs', str(DIR / 'prior-skybee.apk')).decode()
 prior_cert = re.search(r'Signer #1 certificate SHA-256 digest: ([a-f0-9]{64})', signature)
 assert prior_cert and prior_cert[1] == gate['signing_certificate_sha256']
@@ -129,6 +162,14 @@ assert 'databases/kasir_app.db' in before and 'no_backup/secret-database-v1' in 
 marker = 'databases/skybee-demo-seed-v1.json'
 seed = adb('exec-out', 'run-as', PACKAGE, 'cat', marker)
 assert json.loads(seed)['status'] == 'complete' and hashlib.sha256(seed).hexdigest() == before[marker]
+if previous:
+    for retained in (path for path in previous['beforeHashes']
+                     if path == marker or path.startswith(('no_backup/secret-', 'no_backup/biometric-'))):
+        assert before[retained] == previous['beforeHashes'][retained]
+    saved_proof = adb('exec-out', 'run-as', PACKAGE, 'cat', 'databases/skybee-m52-upgrade-audit.json')
+    proof_state = json.loads(saved_proof)
+    assert proof_state['status'] == 'prepared' and proof_state['before']['fromVersion'] == 13
+    (DIR / 'private-original-prepared-proof.json').write_bytes(saved_proof)
 folders = adb('shell', 'run-as', PACKAGE, 'ls').decode().splitlines()
 selected = [folder for folder in ('databases', 'files', 'no_backup', 'shared_prefs', 'app_flutter') if folder in folders]
 snapshot = adb('exec-out', 'run-as', PACKAGE, 'tar', '-cf', '-', *selected)
@@ -146,6 +187,10 @@ result = {'package': PACKAGE, 'device': DEVICE, 'sourceCommit': commit, 'version
           'apkSha256': gate['sha256'], 'beforeHashes': before,
           'snapshotSha256': hashlib.sha256(snapshot).hexdigest(),
           'snapshotScope': 'closed same-installation snapshot; not portable Keystore recovery'}
+if previous:
+    result['previousAttempt'] = previous_dir.name
+if original_snapshot:
+    result['originalDatabaseSha256'] = original_digest
 result_file = DIR / 'handoff-result.json'
 result_file.write_text(json.dumps(result, indent=2))
 try:
@@ -159,20 +204,44 @@ try:
     adb('pull', path, str(DIR / 'installed-skybee.apk'))
     assert digest(DIR / 'installed-skybee.apk') == gate['sha256']
     result['installedApkHashMatches'] = True
+    if original_snapshot:
+        # Windows adb stdin can truncate binary data at Ctrl-Z. Transfer only
+        # ASCII ciphertext encoding and decode inside this app's cache.
+        cache = 'cache/skybee-m52-original-v13.db'
+        inspect = subprocess.run([ADB, '-s', DEVICE, 'shell', 'run-as', PACKAGE, 'ls', '-ld', cache], capture_output=True)
+        if inspect.returncode:
+            assert inspect.returncode == 1 and b'No such file' in inspect.stderr
+            transfer = subprocess.run(
+                [ADB, '-s', DEVICE, 'shell', '-T', 'run-as', PACKAGE, 'sh', '-c', "'base64 -d > cache/skybee-m52-original-v13.db'"],
+                input=base64.b64encode(original_bytes), capture_output=True, timeout=60)
+            assert transfer.returncode == 0
+        actual = adb('exec-out', 'run-as', PACKAGE, 'sha256sum', cache).decode().split()[0]
+        assert actual == original_digest, 'Never overwrite an unrecognized recovery copy'
+        result['verifiedOriginalSnapshotForRecovery'] = True
     cashier_labels = [('Daftar belanja', 'Shopping list'), ('Kelola', 'Manage')]
     for label in ('first-startup', 'second-startup'):
         adb('shell', 'am', 'force-stop', PACKAGE)
         adb('shell', 'am', 'start', '-W', '-n', PACKAGE + '/com.example.kasir_app.SkybeeDemoActivity')
         wait_ui(label, cashier_labels)
         proof = json.loads(adb('exec-out', 'run-as', PACKAGE, 'cat', 'databases/skybee-m52-upgrade-audit.json'))
-        assert proof['status'] == 'complete' and proof['allExistingFactsMatch'] and proof['fromVersion'] == 13 and proof['toVersion'] == 14
+        assert proof['status'] == 'complete' and proof['fromVersion'] == 13 and proof['toVersion'] == 14
+        if proof.get('allExistingFactsMatch') is not True:
+            derived = proof['derivedAlertMetadata']
+            assert original_snapshot and proof['allExistingBusinessFactsMatch'] is True
+            assert set(derived['columns']) == {'m5_store.alert_generation', 'alert_state.evaluation'}
+            assert len(derived['columns']) == 2
+            assert all(derived[key] is True for key in ('sourceSnapshotMatchesPreparedProof', 'monotonicCountersOnly', 'rowSetsUnchanged', 'otherOldColumnsMatch'))
+            result['verifiedDerivedAlertCountersOnly'] = True
         assert hashlib.sha256(adb('exec-out', 'run-as', PACKAGE, 'cat', marker)).hexdigest() == before[marker]
         result[label] = True
     (DIR / 'migration-proof.json').write_text(json.dumps(proof, indent=2))
     nodes = hierarchy('before-public-printer')
     tap(nodes, ('Printer Bluetooth / USB', 'Bluetooth / USB printer'))
     nodes = wait_ui('public-printer', [('Printer Bluetooth / USB', 'Bluetooth / USB printer'), ('Bluetooth',)])
-    assert not any(word in text(nodes) for word in ('PIN', 'Kode pemulihan', 'Recovery code'))
+    # Help prose mentions PIN for protected routes. Verify the actual obscured
+    # PIN input/gate is absent, rather than rejecting a word in that prose.
+    assert not any(node.get('password') == 'true' for node in nodes)
+    assert not any(word in text(nodes) for word in ('Kode pemulihan', 'Recovery code'))
     result['publicPrinterWithoutPin'] = True
     adb('shell', 'input', 'keyevent', '4')
     nodes = wait_ui('cashier-before-gate', cashier_labels)
@@ -182,9 +251,12 @@ try:
     adb('shell', 'input', 'keyevent', '4')
     wait_ui('ready-cashier', cashier_labels)
     after = hashes(PACKAGE)
-    assert after['no_backup/secret-database-v1'] == before['no_backup/secret-database-v1']
+    for retained in (path for path in before
+                     if path.startswith(('no_backup/secret-', 'no_backup/biometric-'))):
+        assert after[retained] == before[retained]
     assert after[marker] == before[marker]
     result['wrappedDatabaseKeyAndSeedMarkerUnchanged'] = True
+    result['allExistingWrappedSecretsAndBiometricsUnchanged'] = True
     adb('shell', 'am', 'start', '-W', '-n', PACKAGE + '/com.example.kasir_app.SkybeeDemoActivity')
     wait_ui('final-ready', cashier_labels)
     pid = adb('shell', 'pidof', PACKAGE).decode().strip()

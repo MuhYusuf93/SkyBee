@@ -10,13 +10,21 @@ import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/data/database/database_gate.dart';
 import 'package:kasir_app/data/database/encrypted_database.dart';
 import 'package:kasir_app/demo/skybee_upgrade_audit.dart';
+import 'package:kasir_app/demo/skybee_demo_seed.dart';
+import 'package:kasir_app/demo/skybee_upgrade_proof.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 
 /// Exercises the actual pre-runtime helper with real SQLCipher/file leases and
 /// fresh namespaced keys. Never selects the operational or Skybee database.
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  for (final mode in ['capture', 'prepared', 'mismatch']) {
+  for (final mode in [
+    'capture',
+    'prepared',
+    'mismatch',
+    'workerRace',
+    'recoverDerived',
+  ]) {
     test(
       'Skybee actual upgrade helper $mode preserves key and refuses false proof',
       () async {
@@ -27,6 +35,7 @@ void main() {
         final platform = KasirPlatform(fixtureNamespace: 'test-m51-$nonce');
         final path = '${directory.path}/source.db';
         final report = File('${directory.path}/proof.json');
+        final originalSnapshot = File('${directory.path}/original.db');
         DatabaseCoordinator open(int version) => DatabaseCoordinator(
           factory: databaseFactory,
           databasePath: path,
@@ -39,14 +48,22 @@ void main() {
           ),
         );
         var database = open(13);
+        DatabaseCoordinator? workerDatabase;
+        Future<void>? worker;
+        var workerWrote = false;
         try {
           final app = AppServices(database);
-          await app.management.configure(
-            'PUBLIC explored store',
-            '0001',
-            '0001',
-          );
-          await app.management.unlock('0001');
+          if (mode == 'capture') {
+            await SkybeeDemoSeed.populate(database);
+            await app.management.unlock(SkybeeDemoSeed.publicDemoPin);
+          } else {
+            await app.management.configure(
+              'PUBLIC explored store',
+              '0001',
+              '0001',
+            );
+            await app.management.unlock('0001');
+          }
           final id = await app.inventory.create(
             ProductInput(
               name: 'PUBLIC explored product',
@@ -56,6 +73,24 @@ void main() {
             unitCost: CostAmount.fromMoney(Money(5000, 'IDR', 0)),
           );
           final originalKey = database.encryption!.key;
+          if (mode == 'workerRace' || mode == 'recoverDerived') {
+            await database.transaction((sql) async {
+              await sql.insert('m5_store', {
+                'id': 1,
+                'store_id': id.value,
+                'alert_generation': 7,
+              });
+              await sql.insert('alert_state', {
+                'alert_key': 'PUBLIC low stock',
+                'product_id': id.value,
+                'kind': 'low_stock',
+                'body_json': '{}',
+                'active': 1,
+                'fingerprint': '{}',
+                'evaluation': 7,
+              });
+            });
+          }
           final before = await database.read(SkybeeUpgradeAudit.capture);
           if (mode != 'capture') {
             await report.writeAsString(
@@ -74,7 +109,19 @@ void main() {
             );
           }
           await database.close();
+          if (mode == 'recoverDerived') {
+            await File(path).copy(originalSnapshot.path);
+          }
           database = open(14);
+          if (mode == 'recoverDerived') {
+            await database.transaction((sql) async {
+              await sql.update('m5_store', {'alert_generation': 8});
+              await sql.update('alert_state', {'evaluation': 8});
+            });
+            await database.close();
+            database = open(14);
+          }
+          if (mode == 'workerRace') workerDatabase = open(14);
           if (mode == 'mismatch') {
             await expectLater(
               SkybeeUpgradeAudit.upgradeExisting(database, report),
@@ -92,21 +139,55 @@ void main() {
             );
             expect(
               (await database.read(
-                (sql) => sql.query('products'),
+                (sql) =>
+                    sql.query('products', where: 'id=?', whereArgs: [id.value]),
               )).single['name'],
               'PUBLIC changed after proof',
             );
           } else {
-            await SkybeeUpgradeAudit.upgradeExisting(database, report);
+            await SkybeeUpgradeAudit.upgradeExisting(
+              database,
+              report,
+              originalSnapshot: mode == 'recoverDerived'
+                  ? originalSnapshot
+                  : null,
+              afterPrepared: mode == 'workerRace'
+                  ? () async {
+                      worker = workerDatabase!.transaction<void>((sql) async {
+                        await sql.update('m5_store', {'alert_generation': 8});
+                        await sql.update('alert_state', {'evaluation': 8});
+                        workerWrote = true;
+                      });
+                      await Future<void>.delayed(
+                        const Duration(milliseconds: 150),
+                      );
+                      expect(
+                        workerWrote,
+                        false,
+                        reason: 'Worker must wait for complete proof lease',
+                      );
+                    }
+                  : null,
+            );
             final completed = await report.readAsString();
             final proof = jsonDecode(completed) as Map;
             expect(proof['status'], 'complete');
-            expect(proof['allExistingFactsMatch'], true);
+            expect(SkybeeUpgradeProof.isComplete(proof, 14), true);
+            expect(proof['allExistingFactsMatch'], mode != 'recoverDerived');
+            if (mode == 'recoverDerived') {
+              expect(proof['allExistingBusinessFactsMatch'], true);
+            }
+            if (worker != null) {
+              await worker;
+              expect(workerWrote, true);
+              await workerDatabase!.close();
+            }
             expect(proof['fromVersion'], 13);
             expect(proof['toVersion'], 14);
             expect(
               (await database.read(
-                (sql) => sql.query('products'),
+                (sql) =>
+                    sql.query('products', where: 'id=?', whereArgs: [id.value]),
               )).single['stock_quantity'],
               25,
             );
@@ -133,9 +214,14 @@ void main() {
             reason: 'Existing wrapped key retained',
           );
         } finally {
+          if (worker != null) await worker;
+          await workerDatabase?.close();
           await database.close();
           await deleteDatabase(path);
           if (await report.exists()) await report.delete();
+          final failure = File('${report.path}.failure.json');
+          if (await failure.exists()) await failure.delete();
+          if (await originalSnapshot.exists()) await originalSnapshot.delete();
           await directory.delete();
         }
       },

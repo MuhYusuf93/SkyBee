@@ -1,5 +1,88 @@
 # Handoff aktif — M5.2
 
+## Checkpoint 14:12 WIB — perbaikan upgrade siap dikirim
+
+DV5PASS216s/Poco5PASS203s pada suite actual upgrade terbaru;434/438hash lama
+cocok, kontrolOff, awake DV restored/readback exact. Host recovery+populated
+10PASS5s dan regresi database/alert15PASS14s. Format305/0changed, l10n678/245
+PASS, analyze No issues208,7s. Ordinary debug20,0s/release43,6s di
+`build/m52-ordinary-atomic-20261022` verified3ABI/16KiB/signature, tidak dipasang.
+Tidak ada SDK/device job aktif. Berikut selective stage/scan/commit/push normal,
+lalu `build/m52-checkpoint/build-handoff-repair.ps1` untuk membangun dari pushed
+commit dan installer repair baru. Handoff aktual tetap belum PASS; bukti awal
+gagal tidak ditimpa. Tidak ada cetak tambahan atau tahap M5.3–M6.
+
+## Resume 22 Oktober 2026 — perbaikan race audit sedang diverifikasi
+
+Final host database/alert15PASS14s, lokalisasi678pesan/245requirement PASS dan
+analyzer **No issues208,7s**. Ordinary debug/release rebuild+verify berjalan;
+sesudah sukses lanjut selective stage/scan/commit/push lalu installer repair.
+
+Poco `m52-atomic-upgrade-poco-20261022-140037` **5PASS203s** dan seluruh
+hash lama cocok/kontrolOff. DV+Poco kini lulus perbaikan yang sama. Pemeriksaan
+akhir berjalan serial: format305file/0changed sudah PASS, lalu regresi
+database/alert, analyze dan ordinary debug/release. Source belum commit pada
+checkpoint ini. Jangan mulai SDK/device job lain selama pipeline masih aktif.
+
+DV retest lengkap `m52-atomic-upgrade-dv-20261022-135436` **5PASS216s**,
+semua hash berkas lama sama, awake restored/readback exact dan kontrolOff.
+Kasus mencakup populated capture, prepared, penolakan mismatch, workerRace
+yang tertahan sampai proof selesai dan recoverDerived. Percobaan filter awal
+berhenti sebelum kasus karena plain-name shell Windows; bukti failure terjaga.
+Poco suite sama sedang dijalankan. Tidak ada job diagnosis VM yang masih aktif.
+
+Feature `41b3430` sudah di origin/main. Pemasangan Skybee awal berhasil, tetapi
+startup dihentikan guard audit. Pembandingan read-only SQLCipher membuktikan
+snapshot asli cocok dengan prepared proof seluruh 43 tabel. Pada DB sesudah
+migrasi hanya `m5_store.alert_generation` dan `alert_state.evaluation` berbeda;
+seluruh baris dan kolom lama lainnya cocok. Periodic alert worker dapat menulis
+di jeda antara capture/prepared dan migrasi pada helper lama. Data eksplorasi
+101 produk/21 sale dipertahankan; tidak dikembalikan ke jumlah seed awal.
+
+Perbaikan lokal memegang satu lease dari preflight sampai proof complete dan
+menahan worker debug Skybee sebelum foreground audit selesai. Pemulihan khusus
+memerlukan ciphertext snapshot asli yang hash-nya terverifikasi serta cocok
+dengan prepared proof, lalu memeriksa semua fakta kecuali tepat dua penghitung
+monotonik tersebut. Proof menyatakan `allExistingFactsMatch:false` dan
+`allExistingBusinessFactsMatch:true`; tidak menyembunyikan perubahan metadata.
+Perubahan produk/preferensi/body/jumlah baris/snapshot atau penghitung yang
+tidak sah tetap ditolak. Host baru 10/10 PASS. Native terarah DV lalu Poco,
+analyze/build, commit/push perbaikan dan handoff aktual masih perlu ditutup.
+
+Installer repair memakai direktori baru, `--previous-attempt` menuju
+`build/m52-skybee-20261022-075521`, serta `--original-snapshot` menuju
+`private-original-v13.db` di direktori tersebut. Jangan reset/uninstall/reseed
+atau menimpa bukti awal. Snapshot host dan prior APK tetap lokal ignored.
+Salinan snapshot cache kanonik `cache/skybee-m52-original-v13.db` terverifikasi;
+auxiliary audit `cache/m52_before_ro_20261022.db` hanya 397 byte akibat transport
+stdin biner Windows dan bukan DB utama. Bersihkan dua file milik audit ini
+sesudah handoff PASS, dengan pemeriksaan nama/hash terlebih dahulu.
+Flutter attach untuk diagnosis telah detached tanpa reload/restart; kontrol Off.
+Izin commit/push langsung pengguna tetap berlaku. M5.3–M6 tidak dimulai.
+
+## Checkpoint 08:02 WIB — upgrade nyata dihentikan guard, diagnosis aktif
+
+Hygiene f0f8baf + feature41b3430 sudahcommit/push dan remotehash sama. Sempat
+ditolakautoreview karena izin GitHub dianggap dari dokumen; pengguna kemudian
+langsung menyetujui commit/push origin/main di chat, operasi berhasil.
+Finalordinary sesudahfeed3debug34,4s/release51,8s verified, analyze164,9s bersih.
+Skybee APK dari41b3430 dibangun18,4s/verifysignature/3ABI/16KiB; SHA0542b761...
+direktori `build/m52-skybee-20261022-075521`. Snapshotclosed73.378.304byte serta
+priorAPK tersimpan. InstallSuccess/exacthash, closedDB/key/marker sama sebelum
+launch. **Startup pertama belumlulus**: layar persiapan gagal, preparedproof13
+untuk43tabel tersimpan. Installer selesaierror, kontrolOff, ordinary/integration
+hashsemuasama. Jangan mengklaim handoff selesai/reinstallblind/reset/reseed.
+
+LogPIDprivat tidakmenemukan kategoriSQLconstraint; errorcatchAppmenyembunyikan
+detail. Hostpopulated13→14 baru1PASS7s (100produk/20sale) sehingga bukan bukti
+masalah hilang di native. Sedangmenambah private diagnostic (hanya jeniserror/
+kodeaman/tablenames, tanpaSQL/rows/key), nativecapturefixture diperluasfullseed.
+Helper mismatch tetap StateError.message lama; tambah tableidentifier aman.
+Installer mendapat --previous-attempt untuk versi9yangsudahterpasang, snapshot
+baru+priorAPKhashkeymarker/proof13tetapdivalidasi, tanpa overwritebuktiawal.
+Smoke PIN akanmemeriksa fieldpassword, bukan kataPIN dalamhelp management.
+Sourceedit belumcommit/SDKrun; berikutformat/host/nativeDVhelperdiagnosis.
+
 ## Checkpoint 07:49 WIB — paper final feed3 dipilih, SDK final berjalan
 
 User meminta satu sampel feed3 tambahan sesudah6/2utuh; native

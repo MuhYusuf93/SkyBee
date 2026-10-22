@@ -79,6 +79,16 @@ vector. Tidak menyalin credential/row/data eksplorasi Skybee ke evidence publik.
 
 ## Pengiriman
 
+Update aktual: hygiene `f0f8baf` dan feature
+`41b34308c81fd1b464f6efc9e81e7682004bd1c8` sudah dikirim ke origin/main dan
+hash remote diverifikasi sama. Pengguna memberi persetujuan langsung di chat
+sesudah pemeriksaan otomatis semula menolak otorisasi yang dianggap hanya dari
+dokumen. Perbaikan race audit upgrade dibuat sesudah pemasangan pertama
+dihentikan guard; akan diperiksa/dipindai dan dikirim melalui commit biasa
+berikutnya. Tidak force-push atau menulis ulang histori.
+
+Paragraf pending berikut merupakan checkpoint sebelum pengiriman feature.
+
 Acceptance DV sudah lulus sebelum commit. Fetch terbaru membuktikan HEAD dan
 origin/main tidak divergen (0/0), remote tepat MuhYusuf93/SkyBee dan branch main.
 Staging fitur terpilih, review diff dan scan kandidat final masih pending;

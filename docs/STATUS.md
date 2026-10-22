@@ -1,5 +1,23 @@
 # Status proyek
 
+**22 Oktober 2026,14:12 WIB — perbaikan upgrade lulus pemeriksaan:** actual
+helper DV5/Poco5 PASS, seluruh434/438hash lama sama/controlOff/awake DV exact.
+Host recovery+populated10PASS dan database/alert15PASS; format305/0changed,
+l10n678/245, analyze208,7s bersih. Ordinary debug20,0s/release43,6s verified
+3ABI/16KiB/signature, tidak dipasang. Commit/push perbaikan dan handoff Skybee
+aktual berikutnya; startup awal yang dihentikan guard tetap tercatat gagal.
+[Laporan dan batas](M52_REPORT.md). M5.3–M6 belum dimulai.
+
+**22 Oktober 2026 — sesi dilanjutkan, handoff Skybee belum selesai:** feature
+`41b3430` sudah dipush. Update APK pertama terpasang, tetapi guard menghentikan
+startup karena dua penghitung alert berubah pada jeda audit lama. Audit
+read-only membuktikan snapshot asli cocok dengan prepared proof 43 tabel dan
+seluruh fakta lama lainnya pada DB saat ini cocok. Perbaikan lease atomik,
+guard worker debug dan pemulihan khusus dua penghitung sedang diverifikasi;
+host baru10PASS. Data eksplorasi101produk/21sale dipertahankan, tidak reseed.
+Native DV/Poco, commit perbaikan serta handoff aktual masih berjalan.
+[Checkpoint aktif](CURRENT_HANDOFF.md). M5.3–M6 belum dimulai.
+
 **22 Oktober2026,07:41WIB — M5.2 validasi utama PASS, handoff berjalan:**
 DV24+publicform2/Poco25; helper upgrade SQLCipher nyata DV3/Poco3 PASS.
 Seluruh hash berkas lama terlindungi cocok pada setiap interval, DV awake pulih
