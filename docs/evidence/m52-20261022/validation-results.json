@@ -299,5 +299,80 @@
     "repair": "Single lease through preflight/migration/verification; debug worker waits for foreground proof; scoped snapshot-verified monotonic-counter recovery",
     "reset": false,
     "reseed": false
-  }
+  },
+  "skybeeHandoff": {
+    "status": "PASS",
+    "package": "com.example.kasir_app.skybee",
+    "device": "7f0edea0",
+    "sourceCommit": "704642c06b7a519623bc053f86b32adbfafcca14",
+    "version": "0.5.2+9",
+    "apkSha256": "edcc9879051ba190e9c593adad911bf9c3eb0138d8216feb2791ace9d79abd2d",
+    "reset": false,
+    "uninstall": false,
+    "reseed": false,
+    "firstStartup": true,
+    "secondStartup": true,
+    "startupWithoutRecoveryCopy": true,
+    "publicPrinterWithoutPin": true,
+    "managementLockedBoundaryVisible": true,
+    "pinGateAndBackViaExistingDebugRoute": true,
+    "fingerprintUnlock": "PASS_USER_REPORTED",
+    "biometricConfigurationChanged": false,
+    "allExistingWrappedSecretsBiometricsSeedUnchanged": true,
+    "oldTablesVerified": 43,
+    "allExistingBusinessFactsMatch": true,
+    "derivedMetadataChangesOnly": {
+      "columns": [
+        "m5_store.alert_generation",
+        "alert_state.evaluation"
+      ],
+      "sourceSnapshotMatchesPreparedProof": true,
+      "monotonicCountersOnly": true,
+      "rowSetsUnchanged": true,
+      "otherOldColumnsMatch": true
+    },
+    "otherPackagesUnchanged": true,
+    "otherProtectedFilesCompared": 438,
+    "finalInstalledApkHashMatches": true,
+    "finalCashierReady": true,
+    "automaticDeviceControlActive": false,
+    "artifact": "build/m52-skybee-repair-20261022/skybee-kasir-0.5.2-debug.apk",
+    "certificateSha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+    "androidDebugCertificate": true,
+    "nativeAbis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86_64"
+    ],
+    "zipalign16kPass": true,
+    "dataPreservationScope": "Every pre-existing row/column verified against original prepared proof except exactly two monotonic derived alert counters; no restoration/reseed",
+    "explorationCountsPreserved": {
+      "products": 101,
+      "saleTransactions": 21
+    },
+    "navigationMethod": "Own Flutter debug widget callbacks and read-only Android hierarchy; PIN-only route uses existing allowBiometrics:false API transiently; no preferences changed",
+    "androidAdbTouch": "UNAVAILABLE_INJECT_EVENTS_PERMISSION_DENIED",
+    "fingerprintUserReport": "User confirmed opening management with fingerprint; no binding deletion needed",
+    "debuggerDetachedWithoutReloadOrRestart": true,
+    "verifiedAuditCacheFilesRemoved": 2,
+    "hostSnapshotsAndPriorApksRetainedLocally": true,
+    "rawFailedInstallerResultPreserved": true,
+    "completionSha256": "005b12810fda86f1f423d35571fb8e867919f4df7da5c12f0d1ee878b0cd723f",
+    "migrationProofSha256": "898d86a13d78407dc3358ce6dbe6a076cadfa7b0ed91849f74ad582f039c214a",
+    "navigationCompletionSha256": "66a319fd7dcff7cbe3fa82bb201acf20d7d980450435ec3f46eb4419a1f61bbb"
+  },
+  "upgradeFixRepository": {
+    "sourceCommit": "704642c06b7a519623bc053f86b32adbfafcca14",
+    "sourceRemoteHashVerifiedEqual": true,
+    "exactStagedTree": "21bb1545a7fc5f96ee4f95f30affe7bfd8f33574",
+    "filesScanned": 1572,
+    "excludedOver8MB": 0,
+    "bytesScanned": 10724096,
+    "findings": 10,
+    "samePreviouslyClassifiedFalsePositives": true,
+    "confirmedCredentials": 0,
+    "forcePush": false,
+    "historyRewrite": false
+  },
+  "closedMilestone": "M5.2 only; M5.3-M6 not started; no wait for independent user exploration"
 }

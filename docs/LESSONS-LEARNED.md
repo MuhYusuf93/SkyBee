@@ -356,3 +356,13 @@ snapshot tambahan di cache sendiri, gunakan encoding ASCII lalu decode dan
 verifikasi SHA256 di perangkat; jangan menulis DB utama. Diagnosis VM read-only
 memerlukan compiler attach, tanpa reload/restart; URI autentikasi debugger dan
 log tetap privat. Bandingkan hash berkas bisnis/key sebelum dan sesudah diagnosis.
+
+108. HyperOS dapat mengizinkan ADB dan read-only hierarchy tetapi menolak input
+INJECT_EVENTS. Catat batasnya; jangan mengubah OS untuk membuat smoke lulus.
+Own debug widget callbacks melalui DDS WebSocket dapat memeriksa navigasi,
+namun bukan bukti sentuhan fisik. HTTP DDS hanya proxy ke VM dan dapat melewati
+compiler ekspresi Flutter. Biometric unlock yang dilakukan pengguna ketika
+smoke berjalan bukan bypass PIN: konfirmasi konteks pengguna, uji Kunci/redaksi
+dan route PIN-only sementara tanpa menghapus binding. Pertahankan failure raw,
+buat completion terpisah, detach debugger dan verifikasi kembali key/biometrik/
+seed/package lain serta startup tanpa cache salinan audit.

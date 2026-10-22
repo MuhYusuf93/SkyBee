@@ -1,10 +1,34 @@
 # M5.2 — perbaikan operasional A–H
 
-Status22 Oktober2026: **implementasi dan pemeriksaan tersedia PASS; Git/handoff
-Skybee sedang ditutup**.
+Status22 Oktober2026,14:29WIB: **M5.2 selesai pada cakupan implementasi,
+pemeriksaan yang tersedia, repository dan handoff debug Skybee**.
 Source0.5.2+9/schema14. Kontrak [M52_REQUEST](decisions/M52_REQUEST_20261022.md)
 diaktifkan oleh pengguna, disertai syarat DV8910 diuji sebelum commit/push/update
-Skybee. M5.3–M6 tidak dikerjakan. File ini diperbarui dengan hasil aktual.
+Skybee. M5.3–M6 tidak dikerjakan. Batas hardware/manual di bawah tetap berlaku.
+
+Skybee `com.example.kasir_app.skybee`0.5.2+9 sudah diperbarui in-place pada Poco
+dari source `704642c06b7a519623bc053f86b32adbfafcca14`, setelah DV diuji dan source
+dipush. APK lokal:
+`build/m52-skybee-repair-20261022/skybee-kasir-0.5.2-debug.apk`,
+SHA256 `edcc9879051ba190e9c593adad911bf9c3eb0138d8216feb2791ace9d79abd2d`.
+Signature/3ABI/ELF+ZIP16KiB dan hash APK terpasang cocok. Dua startup lulus,
+ditambah startup tanpa salinan recovery sesudah cleanup; kasir siap, kontrolOff.
+
+Data eksplorasi101produk/21sale serta seluruh fakta bisnis lama diverifikasi;
+key terbungkus, seed marker dan konfigurasi biometrik lama tetap sama.
+Pengguna mengonfirmasi membuka Kelola dengan fingerprint. Izin menghapusnya
+tidak perlu dipakai: konfigurasi tetap aktif. Printer publik, Kunci/redaksi,
+layar PIN dan Back→kasir lulus melalui callback Flutter debug dan hierarchy
+Android read-only. PIN route sementara memakai API `allowBiometrics:false`,
+bukan perubahan preferensi. Sentuhan ADB ditolak INJECT_EVENTS; hasil itu tetap
+tercatat sebagai batas metode, bukan PASS sentuhan fisik. Tidak memasukkan PIN.
+
+Snapshot/priorAPK dan failure awal tetap lokal; hanya dua file cache milik audit
+yang isinya terverifikasi dihapus.438hash terlindungi ordinary/integration sama
+pada pemeriksaan akhir; keduanya tidak diperbarui demi handoff ini.
+[Bukti terkurasi](evidence/m52-20261022/validation-results.json).
+
+Checkpoint berikut merupakan riwayat sebelum penutupan.
 
 Checkpoint07:31WIB: native DV acceptance24PASS304s (13→14 logical proof,
 route/forms, promo/stok/ekspor, portable cross-key),400hash sama/awake exact/
@@ -18,7 +42,7 @@ Poco helper dan printer/build/repository/handoff masih dilanjutkan.
 | --- | --- | --- |
 | 1 | Cari barang fokus sesudah draft/route siap, kembali Kelola, tidak tiap rebuild | Host/native DV/Poco gesture/focus PASS |
 | 2 | Tap area baris+1; kontrol anak tetap terpisah | Host PASS; native DV lama PASS |
-| 3 | Printer publik lewat capability khusus, tanpa grant Kelola/logo/recovery | Host boundary PASS; Bluetooth/installed smoke masih pending |
+| 3 | Printer publik lewat capability khusus, tanpa grant Kelola/logo/recovery | Host/native boundary dan installed debug callback smoke PASS; INJECT_EVENTS ditolak |
 | 4 | Profil saved tetap; default umum6, opsi Iware3; sampel berlabel feed | Iware58 Bluetooth6/2/3 masing-masing submitted sekali; kertas6/2utuh, pengguna memilih3yang terbaik |
 | 5 | Lunas semua membaca saldo terkini dan hanya mengisi input | Host fill-only/saldo berubah sebelum konfirmasi PASS |
 | 6 | Promo quantity eceran terpisah/soft archive/CAS/snapshot | Host/native DV/Poco operasi+portable PASS |
@@ -74,8 +98,8 @@ sebelum foreground audit lengkap. Pemulihan khusus memeriksa snapshot asli,
 seluruh rowset/kolom lain serta monotonisitas dua penghitung tersebut. Proof
 menyebut `allExistingFactsMatch:false`, `allExistingBusinessFactsMatch:true` dan
 dua kolom metadata berubah; bukan klaim semua kolom current sama. Data
-eksplorasi101produk/21sale tidak dipaksa menjadi100/20. Handoff aktual masih
-menunggu pengujian perbaikan dan dua startup berhasil.
+eksplorasi101produk/21sale tidak dipaksa menjadi100/20. Pemulihan aktual dan dua
+startup kini PASS; startup tambahan tanpa snapshot cache juga PASS.
 
 ## Bukti yang sudah tersedia
 
@@ -89,10 +113,11 @@ menunggu pengujian perbaikan dan dua startup berhasil.
 - Host database/alert setelah perbaikan15PASS14s; audit lokalisasi678pesan/
   245requirement PASS dan analyze akhir No issues208,7s. Ordinary build ulang
   debug20,0s/release43,6s di `build/m52-ordinary-atomic-20261022` verified
-  signature/3ABI/ELF+ZIP16KiB; tidak dipasang. Handoff repair berikutnya.
+  signature/3ABI/ELF+ZIP16KiB; tidak dipasang. Skybee repair16,7s kemudian
+  diverifikasi/dipasang dan handoff lengkap PASS seperti ringkasan di atas.
 - Percobaan native filter `workerRace|recoverDerived|mismatch` gagal pada shell
   Windows sebelum kasus berjalan; wrapper memakai plain-name, bukan regex.
-  Semua hash lama sama/awake exact/controlOff. Retest tanpa filter dijalankan;
+  Semua hash lama sama/awake exact/controlOff. Retest tanpa filter5PASS per device;
   kegagalan harness awal tetap disimpan.
 
 - Host domain/forms/operasi26PASS116s, lalu form terbaru+metadata18PASS69s.
@@ -136,9 +161,10 @@ menunggu pengujian perbaikan dan dua startup berhasil.
   Penyebab/fixture dijelaskan di CURRENT_HANDOFF; logfailure tidak ditimpa.
 
 Log mentah, DB, APK dan laporan privat berada di `build/` yang diabaikan Git.
-Hasil final native, ekspor independen, printer, Git dan handoff akan ditambahkan
-setelah benar-benar dijalankan. Natural21/Doze/reboot, keyboard OEM, TalkBack,
-biometrik/WhatsApp fisik dan printer80mm tidak dibuktikan oleh mock/host.
+Hasil native, ekspor independen, printer, Git dan handoff aktual sudah dicatat.
+Natural21/Doze/reboot, keyboard OEM, TalkBack, WhatsApp/browser eksternal fisik
+dan printer80mm tidak dibuktikan oleh mock/host. Fingerprint Kelola Skybee
+berhasil dilaporkan langsung pengguna; bukan kampanye seluruh kondisi biometrik.
 
 ## Panduan singkat penggunaan
 

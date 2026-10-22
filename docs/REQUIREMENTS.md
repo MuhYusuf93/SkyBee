@@ -1,10 +1,11 @@
 # Matriks persyaratan
 
-Checkpoint terbaru: fitur `41b3430` sudah dipush; handoff aktual Skybee pertama
-belum PASS. Perbaikan race preflight dan pemulihan dua penghitung alert memakai
-snapshot asli sedang diperiksa (host10PASS); semua fakta bisnis lama harus
-cocok dan proof menyebut metadata berubah secara eksplisit. Lihat
-[checkpoint aktif](CURRENT_HANDOFF.md). Riwayat pending di bawah dipertahankan.
+Penutupan22 Oktober2026: M5.2 A–H, repository dan handoff debug selesai.
+Perbaikan704642c dipush; actual helper DV5/Poco5 dan host recovery10/DB-alert15
+PASS. Skybee0.5.2+9 terpasang Poco, data/key/seed/biometrik lama terjaga,
+dua startup+startup tanpa recovery copy PASS,438file package lain sama/controlOff.
+Proof menyebut tepat dua penghitung alert berubah; fakta bisnis lain cocok.
+Lihat [laporan/batas](M52_REPORT.md). Checkpoint lama berikut adalah histori.
 
 M5.2 checkpoint22 Oktober2026: A–H tersedia di source0.5.2+9/schema14; acceptance
 DV24/Poco25 PASS, ditambah DV publicform2 serta helper upgrade nyata3per device
@@ -16,21 +17,22 @@ Jangan membaca status DVunauthorized lama sebagai keadaan koneksi sekarang.
 M52-D-OUTPUT (tambahan langsung pengguna22 Oktober2026): outputphone→WhatsApp,
 outputwebsite→browser melalui tap eksplisit. Input dikecualikan; validasi offline,
 nomorE164→wa.me, URLhttp/https; tidak auto-send pesan/auto-open. Implementasi
-outputsupplier/customer/receipt dibuat; pemeriksaan berikutnya masih diperlukan.
+outputsupplier/customer/receipt/piutang tersedia dan host/native mock PASS;
+aplikasi WhatsApp/browser eksternal fisik belum diverifikasi.
 
 ## Persyaratan aktif M5.2 — ID stabil
 
 Bukti terbaru: DV acceptance24PASS, ditambah regresi form publik2PASS; host
 fullform17PASS75s, output/queue/ekspor26PASS59s, reader CSV/XLSX20row performat
 PASS. Poco final25PASS143s; helper upgrade DV3/Poco3 PASS. Run bertumpang tindih.
-Handoff masih berjalan. [Bukti terkurasi](evidence/m52-20261022/validation-results.json). Pemetaan
+Handoff aktual sudah PASS dengan metode/batas pada laporan. [Bukti terkurasi](evidence/m52-20261022/validation-results.json). Pemetaan
 lengkap modul/perilaku/batas ada di [laporan M5.2](M52_REPORT.md).
 
 | ID | Request | Implementasi/pemeriksaan |
 | --- | --- | --- |
 | M52-01 | Fokus Cari barang | Route/draft-ready/return Kelola, host/native PASS |
 | M52-02 | Tap baris+1, kontrol anak tunggal | Gesture terpisah, host/native PASS |
-| M52-03 | Printer kasir tanpa PIN terbatas | Capability khusus, no management grant/logo/recovery; host PASS |
+| M52-03 | Printer kasir tanpa PIN terbatas | Capability khusus, no management grant/logo/recovery; host/native boundary dan installed debug callback smoke PASS |
 | M52-04 | Kalibrasi ruang footer | Iware58 Bluetooth6/2/3 submitted masing-masing sekali, paper USER_REPORTED; pengguna memilih3terbaik, opsi Iware3mengisi form; saved profile/defaultumum6tetap |
 | M52-05 | Lunas semua hanya mengisi saldo kini | UI saldo berubah/stale confirmation/dirty discard, host/DV PASS |
 | M52-06 | Promo quantity hanya retail | Exact half-up/threshold/grosir/snapshot/retry/reversal/export/restore, host/DV PASS |
@@ -51,8 +53,8 @@ lengkap modul/perilaku/batas ada di [laporan M5.2](M52_REPORT.md).
 | M52-21 | Bantuan backup/baterai best effort | Explicit AppInfo intent, tanpa OS bypass; natural21/Doze unverified |
 | M52-22 | Lebar58/80mm, dots/margin terpisah | Renderer kedua lebar otomatis PASS; hardware80mm NOT TESTED |
 | M52-D-OUTPUT | Outputphone→WhatsApp/website→browser | Tap-only native intent+host/native mock PASS; app eksternal fisik unverified |
-| M52-REPO | Audit/selective commit/push biasa |274file untracked+1dump baru di-ignore;275localhash sama, scan classified; commit/push pending |
-| M52-HANDOFF | Upgrade `.skybee` tanpa reseed/reset | Snapshot/proof13→14/installer tersedia; actual install pending |
+| M52-REPO | Audit/selective commit/push biasa |274file dikeluarkan index+1dump baru di-ignore;275localhash sama, scan classified; hygiene f0f8baf/fitur41b3430/perbaikan704642c dipush normal, remote sama |
+| M52-HANDOFF | Upgrade `.skybee` tanpa reseed/reset |0.5.2+9 dari704642c terpasang;43tabel fakta bisnis/proof scoped2counter, key/seed/biometrik sama, dua startup+startup tanpa recovery copy PASS; callback debug printer/Kunci/PIN-Back PASS, ADB touch ditolak;438file package lain sama/controlOff |
 
 ## Histori checkpoint sebelumnya
 

@@ -1,5 +1,37 @@
 # Handoff aktif — M5.2
 
+## Penutupan 22 Oktober 2026,14:29 WIB — M5.2 selesai
+
+Source perbaikan `704642c06b7a519623bc053f86b32adbfafcca14` telah dipush dan
+remote sama. DV5/Poco5 actual upgrade PASS setelah acceptance DV24/Poco25.
+Host recovery10 dan regresi DB/alert15 PASS; format305/0changed, l10n678/245,
+analyze208,7s bersih, ordinary debug/release verified3ABI/signature/16KiB.
+
+Skybee0.5.2+9/schema14 kini terpasang dan siap pada kasir Poco. APK dari704642c
+di `build/m52-skybee-repair-20261022/skybee-kasir-0.5.2-debug.apk`,
+SHA256 `edcc9879051ba190e9c593adad911bf9c3eb0138d8216feb2791ace9d79abd2d`.
+Proof43tabel cocok untuk seluruh fakta bisnis/rowset/kolom lama kecuali dua
+penghitung alert yang sudah dibuktikan monotonik. Dua startup dan startup tanpa
+salinan recovery PASS. Data eksplorasi101produk/21sale tidak reseed. Semua key,
+seed dan biometrik lama sama;438file ordinary/integration sama. KontrolOff.
+
+Installer otomatis berhenti pada tap ADB yang ditolak INJECT_EVENTS setelah
+migrasi dan dua startup lulus; raw failure tidak diubah menjadi PASS. Penutupan
+terpisah `handoff-completion.json` menggabungkan bukti tersebut dengan callback
+Flutter debug/hierarchy aktual: printer publik, tombol Kunci, PIN gate/Back
+ke kasir PASS. Route PIN memakai allowBiometrics:false hanya sementara; tidak
+mengubah preferensi. Pengguna mengonfirmasi fingerprint Kelola berhasil dan
+mengizinkan hapus sementara; konfigurasi tidak perlu dihapus dan tetap aktif.
+Debugger detached tanpa reload/restart. Dua salinan cache audit diverifikasi
+isinya lalu dihapus; snapshot host/priorAPK/failure awal tetap lokal ignored.
+
+[Laporan](M52_REPORT.md) dan [bukti terkurasi](evidence/m52-20261022/validation-results.json)
+memuat metode/batas yang belum diuji. Feed Iware3 dipilih pengguna, tidak ada
+cetak tambahan. Tidak ada pekerjaan wajib M5.2 tersisa atau penantian laporan
+uji mandiri. M5.3–M6 tetap planned; tunggu command baru untuk bug/fitur lain.
+
+Checkpoint berikut dipertahankan sebagai riwayat, bukan status aktif.
+
 ## Checkpoint 14:12 WIB — perbaikan upgrade siap dikirim
 
 DV5PASS216s/Poco5PASS203s pada suite actual upgrade terbaru;434/438hash lama

@@ -79,6 +79,19 @@ vector. Tidak menyalin credential/row/data eksplorasi Skybee ke evidence publik.
 
 ## Pengiriman
 
+Handoff aktual kini PASS pada bukti completion terpisah; source APK tetap704642c.
+Dokumen penutupan ini tidak mengubah source/build APK. Snapshot/DB/APK/log privat
+tetap ignored, dua file cache audit diverifikasi lalu dibersihkan pada perangkat.
+Fingerprint tetap aktif,438hash package lain cocok, kontrolOff. Lihat
+[laporan](M52_REPORT.md) untuk batas INJECT_EVENTS dan smoke callback debug.
+
+Perbaikan upgrade **`704642c06b7a519623bc053f86b32adbfafcca14`** sudah commit/push
+biasa ke origin/main, remote diverifikasi sama. Exact staged tree
+`21bb1545a7fc5f96ee4f95f30affe7bfd8f33574`:19path,1572file dipindai/0excluded
+di atas8MB,10,72MB; sepuluh temuan rule/path/line identik dengan false positive
+terklasifikasi sebelumnya. Tidak ada credential nyata terkonfirmasi dalam scope
+ini. Working tree bersih sesudah push; APK dibangun dari commit tersebut.
+
 Update aktual: hygiene `f0f8baf` dan feature
 `41b34308c81fd1b464f6efc9e81e7682004bd1c8` sudah dikirim ke origin/main dan
 hash remote diverifikasi sama. Pengguna memberi persetujuan langsung di chat

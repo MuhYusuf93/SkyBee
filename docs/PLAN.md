@@ -1,5 +1,14 @@
 # Rencana milestone
 
+**22 Oktober 2026 — M5.2 selesai pada cakupan A–H dan handoff pengembangan.**
+Acceptance DV24/Poco25, upgrade perbaikan DV5/Poco5, host/format/l10n/analyze
+dan build PASS. Source704642c dipush; Skybee0.5.2+9 diperbarui in-place Poco
+dengan fakta bisnis lama/key/seed/biometrik terjaga. Dua startup serta startup
+tanpa cache recovery PASS; kasir siap/controlOff. Printer Iware3 dipilih pengguna.
+Tidak menunggu hasil eksplorasi mandiri. M5.3–M5.5 planned sesuai kontrak baru,
+M6 belum dimulai. Batas manual/hardware pada [laporan akhir M5.2](M52_REPORT.md)
+bukan alasan memperluas tahap otomatis. Catatan berikut merupakan histori.
+
 Penutupan M5.2 dilanjutkan setelah race audit upgrade Skybee direproduksi:
 verifikasi lease atomik/guard worker/pemulihan terbatas dua penghitung pada host
 dan native DV dahulu lalu Poco; analyze/build, commit/push biasa perbaikan, lalu

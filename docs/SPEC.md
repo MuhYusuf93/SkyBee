@@ -1,5 +1,12 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Penutupan22 Oktober2026: implementasi/pemeriksaan tersedia M5.2 A–H dan handoff
+Skybee0.5.2+9 selesai. Scope/keputusan tetap mengikuti kontrak22request, tidak
+mengaktifkan M5.3–M6. Data eksplorasi dipertahankan; pengguna mengonfirmasi
+fingerprint Kelola berhasil. Konfigurasi biometrik tetap aktif, tidak dihapus
+untuk smoke PIN; hanya route debug sementara menonaktifkan auto-biometrik.
+Lihat [hasil aktual dan batas](M52_REPORT.md).
+
 Audit upgrade debug Skybee memegang satu lease dari pembacaan schema lama,
 prepared proof, migrasi sampai verifikasi selesai. Worker debug tidak membuka
 DB sebelum seed/foreground proof lengkap. Untuk insiden upgrade pertama M5.2,

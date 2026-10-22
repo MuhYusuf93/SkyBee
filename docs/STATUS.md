@@ -1,5 +1,21 @@
 # Status proyek
 
+**22 Oktober 2026,14:29 WIB — M5.2 ditutup:** A–H, pemeriksaan yang tersedia,
+audit/push repository dan handoff debug Skybee selesai. DV acceptance24/Poco25
+serta upgrade perbaikan5per device PASS; host recovery10 dan DB/alert15PASS,
+format305/0changed, l10n678/245, analyze208,7s bersih. Ordinary debug/release
+verified3ABI/16KiB/signature; Skybee0.5.2+9 dari704642c dipasang in-place Poco,
+dua startup+startup tanpa recovery copy PASS. Data eksplorasi101produk/21sale,
+key/seed/biometrik lama terjaga,438file package lain sama, kasir siap/controlOff.
+Fingerprint Kelola PASS dilaporkan pengguna; konfigurasi tetap aktif. Printer
+publik/Kunci/PIN-Back smoke lewat callback debug+hierarchy, karena ADB touch
+ditolak INJECT_EVENTS. Feed Iware3 pilihan pengguna. Tidak menunggu laporan
+uji mandiri; M5.3–M6 belum dimulai. [Laporan/batas](M52_REPORT.md),
+[bukti](evidence/m52-20261022/validation-results.json).
+
+Bagian berikut adalah riwayat checkpoint; status pending lama telah ditutup
+sesuai ringkasan di atas.
+
 **22 Oktober 2026,14:12 WIB — perbaikan upgrade lulus pemeriksaan:** actual
 helper DV5/Poco5 PASS, seluruh434/438hash lama sama/controlOff/awake DV exact.
 Host recovery+populated10PASS dan database/alert15PASS; format305/0changed,
