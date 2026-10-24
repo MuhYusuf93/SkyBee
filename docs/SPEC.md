@@ -1,5 +1,7 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Koreksi langsung25Oktober2026: profil tanpa footerFeedVersion yang membawa feed6 (default lama) dibaca sebagai3, termasuk sesudah restart. Nilai lama selain6 tetap. Simpan berikutnya menandai versi sehingga pilihan manual0–8, termasuk6, tetap berlaku. Snapshot job yang sudah disiapkan tidak dinormalisasi; tidak ada rewrite SQL/data bisnis. Data lama tidak membedakan default6 dan pilihan manual6; aturan kompatibilitas ini khusus mengikuti koreksi pengguna. Menggantikan kebijakan mempertahankan bottom6 lama pada catatan sebelumnya.
+
 Tambahan langsung25Oktober2026: sesudah perbaikan cetak, pengguna meminta
 feed sebelum header manual/default3 dan pilihan protokol seperti referensi
 OpenLabel. Implementasikan ESC/POS Raster/Kolom, TSPL dan CPCL sesuai kontrak
@@ -21,8 +23,8 @@ TSPL/CPCL sebagaimana kontrak lanjutan di atas; BLE tetap belum ditambahkan.
 Tambahan25Oktober sesudah hasil cetak utuh: ruang kosong akhir struk dapat
 diketik manual0–8baris atau−/+, tersimpan per printer;0tanpa tambahanfeed.
 Default baru/reset template3baris mengikuti instruksi langsung pengguna.
-Profil lama tetap memegang nilainya; jarak fisik kepala cetak tidak dijanjikan
-dapat dihilangkan oleh feed0.
+Kebijakan kompatibilitas legacy6 mengikuti koreksi langsung di atas;
+jarak fisik kepala cetak tidak dijanjikan dapat dihilangkan oleh feed0.
 
 Penutupan validasi 24-10-2026 00:19 WIB: verifikasi sesudah temuan Realme dibatasi pada perubahan yang relevan. DV/Poco masing-masing satu kasus migrasi PASS; source fitur dan kebutuhan tetap. Tidak ada fitur dihapus atau downgrade. Batas audit DV terdahulu dicatat pada [Laporan lengkap](REALME_C11_RESUME_20261023.md).
 

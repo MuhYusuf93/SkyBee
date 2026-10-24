@@ -178,7 +178,8 @@ void m5PrintQueueSuite(
       () async {
         final before = await financial();
         final legacy = const PrinterProfile(feed: 6).toJson()
-          ..remove('topFeed');
+          ..remove('topFeed')
+          ..remove('footerFeedVersion');
         await db.transaction(
           (sql) => sql.update('printer_profiles', {
             'settings_json': jsonEncode(legacy),
@@ -189,11 +190,11 @@ void m5PrintQueueSuite(
             jsonDecode((await queue.job(current))['profile_json'] as String)
                 as Map;
         expect(settings['topFeed'], 3);
-        expect(settings['feed'], 6);
+        expect(settings['feed'], 3);
         expect(await queue.send(current), 'submitted');
         expect(transport.packets.first, [0x1b, 0x40]);
         expect(transport.packets[1], [10, 10, 10]);
-        expect(transport.packets.last, List.filled(6, 10));
+        expect(transport.packets.last, List.filled(3, 10));
         final queuedBeforeFeature = await queue.prepareCalibration();
         await db.transaction(
           (sql) => sql.update(
@@ -206,6 +207,7 @@ void m5PrintQueueSuite(
         transport.packets.clear();
         expect(await queue.send(queuedBeforeFeature), 'submitted');
         expect(transport.packets[1].take(4), [0x1d, 0x76, 0x30, 0]);
+        expect(transport.packets.last, List.filled(6, 10));
         await app.printers.save(
           '00:11:22:33:44:55',
           'Synthetic ESC/POS',

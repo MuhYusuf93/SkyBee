@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-25",
+  "status": "PASS",
+  "version": "0.5.2+12",
+  "schemaVersion": 14,
+  "host": {
+    "passed": 44,
+    "runtimeSeconds": 66
+  },
+  "analyze": {
+    "status": "PASS",
+    "seconds": 176.2
+  },
+  "native": {
+    "passed": 1,
+    "runtimeSeconds": 12,
+    "preexistingProtectedHashesMatched": 451,
+    "isolatedPackage": true,
+    "automaticDeviceControlActive": false
+  },
+  "build": {
+    "seconds": 24.2,
+    "abis": 3,
+    "nativeLibraries": 13,
+    "signatureVerified": true,
+    "alignment16KiBVerified": true
+  },
+  "update": {
+    "status": "PASS",
+    "package": "com.example.kasir_app.skybee",
+    "device": "Poco F6",
+    "installed": true,
+    "automaticDeviceControlActive": false,
+    "reset": false,
+    "reseed": false,
+    "downgrade": false,
+    "sandboxExported": false,
+    "biometricConfigurationChanged": false,
+    "allPreexistingClosedFilesUnchangedAfterInstall": true,
+    "protectedFileCount": 463,
+    "installedApkMatchesVerifiedArtifact": true,
+    "versionCode": 12,
+    "cashierStartupVerified": true,
+    "keysPreferencesSeedProofUnchangedAfterStartup": true,
+    "otherPackagesUnchanged": true,
+    "postStartupWholeDatabaseHashClaimed": false,
+    "apkSha256": "1b8c70cba4852ea04e93c2e4e29f8a188b5960305f7ed4db54cf067b6c490b9b"
+  },
+  "actualProfileFirstLaunch": {
+    "status": "PASS",
+    "sqlWrites": false,
+    "printed": false,
+    "selectedProfile": {
+      "rawFooter": 6,
+      "rawVersion": null,
+      "shownFooter": "3",
+      "shownHeader": "3",
+      "width": 80,
+      "protocol": "escPosRaster"
+    },
+    "automaticDeviceControlActive": false
+  },
+  "actualProfileColdRestart": {
+    "status": "PASS",
+    "sqlWrites": false,
+    "printed": false,
+    "selectedProfile": {
+      "rawFooter": 6,
+      "rawVersion": null,
+      "shownFooter": "3",
+      "shownHeader": "3",
+      "width": 80,
+      "protocol": "escPosRaster"
+    },
+    "automaticDeviceControlActive": false
+  },
+  "manualNewValuesPreserved": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "historicalJobSnapshotsPreserved": true,
+  "physicalPrintAdditional": false,
+  "sourceHashes": {
+    "lib/features/printer/domain/printer_profile.dart": "106bcf48e743a06e366af70fe47321161339d9e7a38cbe6c6e80a868fd84148c",
+    "test/printer_footer_default_test.dart": "31720e16ef93d04e62b4e2d09ca1d4cddc736ec58bfeca024d8110b41e363b47",
+    "test/support/printer_feed_suite.dart": "5dce1b18ea9766b44f24143fc81af419e42e573498f340ea1063b7d9d876c7ad",
+    "test/m5_print_queue_test.dart": "097a3f379fc111abcfb1c7cad4eb620888e5c6947a000f4b3a083a4fe6385004",
+    "pubspec.yaml": "0b0e44b2082c1f4de246908017f9f5118a75ab452898cb2a5ec609b9715adb1f"
+  },
+  "formatter": {
+    "files": 4,
+    "changed": 0,
+    "status": "PASS"
+  },
+  "stagedPrivateArtifactAudit": {
+    "files": 12,
+    "status": "PASS"
+  }
+}

@@ -1,5 +1,7 @@
 # Status proyek
 
+25Oktober — koreksi footer selesai pada Skybee0.5.2+12/schema14. Profil legacy6 tanpa marker efektif3; header tetap3. Pilihan manual baru0–8 termasuk6 tetap. Host44PASS66s, analyze bersih176,2s, native1PASS12s/451hash lama cocok; build24,2s/signature/3ABI/16KiB PASS. Update in-place11→12:463hash tertutup sama; startup/key/prefs/seed/proof/package lain PASS. Profil aktual80mm menunjukkan footer3/header3 pada dua peluncuran termasuk cold restart. Tidak reset/reseed/downgrade/ubah fingerprint/cetak tambahan. Debugger detached/kontrol otomatis berakhir. [Laporan](PRINTER_FOOTER_DEFAULT_20261025.md).
+
 **25Oktober sekitar02:04WIB — implementasi, pemeriksaan dan handoff selesai.**
 Empat pilihan perprinter ESC/POS Raster/Kolom, TSPL/CPCL; feed atas/bawah
 manual0–8/default3. Host42PASS65s, Poco delta17PASS24s/448hash lama cocok,

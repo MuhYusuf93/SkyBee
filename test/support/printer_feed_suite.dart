@@ -118,6 +118,20 @@ void printerFeedSuite(DatabaseFactory factory) {
             'PUBLIC other',
             const PrinterProfile(feed: 1),
           );
+          // Reproduce an installed pre-fix profile, including the old default.
+          await db.transaction(
+            (sql) => sql.update(
+              'printer_profiles',
+              {
+                'settings_json': jsonEncode(
+                  const PrinterProfile(paperMm: 80, dots: 576, feed: 6).toJson()
+                    ..remove('footerFeedVersion'),
+                ),
+              },
+              where: 'device_id=?',
+              whereArgs: [first],
+            ),
+          );
         });
         messenger.setMockMethodCallHandler(KasirPlatform.channel, (call) async {
           printerCalls++;
@@ -127,7 +141,11 @@ void printerFeedSuite(DatabaseFactory factory) {
         });
         await tester.pumpWidget(screen());
         await choose();
-        expect(tester.widget<TextField>(editor()).controller!.text, '6');
+        expect(tester.widget<TextField>(editor()).controller!.text, '3');
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpWidget(screen());
+        await choose();
+        expect(tester.widget<TextField>(editor()).controller!.text, '3');
         await tester.scrollUntilVisible(topField, -120, scrollable: scroll());
         expect(tester.widget<TextField>(topEditor()).controller!.text, '3');
         await tester.enterText(topEditor(), '2');

@@ -1,5 +1,7 @@
 # Rencana milestone
 
+Koreksi default footer25Oktober: reproduksi saved feed6 tanpa marker, normalisasi pengaturan menjadi3, versi pada save berikutnya, snapshot job historis tetap. Verifikasi host/native form-reopen, analyze, build+12, update Poco in-place dan restart; tidak perlu cetak fisik atau suite ulang perangkat lain. Selesai: host44/native1 PASS, analyze/build/APK PASS, +12 terpasang dan profil aktual cold restart3/3 PASS.
+
 25Oktober tambahan langsung: feed atas/bawah manual/default3, kemudian empat
 pilihan protokol sesuai [kontrak aktif](PRINTER_PROTOCOLS_20261025.md).
 Host pixel/packet/page/wipe/queue, native delta terarah Poco, analyze/l10n dan

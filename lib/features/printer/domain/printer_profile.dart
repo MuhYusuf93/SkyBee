@@ -79,6 +79,7 @@ final class PrinterProfile {
     'headerAlign': headerAlign,
     'footerAlign': footerAlign,
     'feed': feed,
+    'footerFeedVersion': 1,
     'topFeed': topFeed,
     'protocol': protocol.name,
     'pageRows': pageRows,
@@ -97,7 +98,12 @@ final class PrinterProfile {
     bold: json['bold'] as bool,
     headerAlign: json['headerAlign'] as String,
     footerAlign: json['footerAlign'] as String,
-    feed: json['feed'] as int,
+    // Old builds persisted their six-line default without recording whether it
+    // was chosen manually. Adopt the requested default only for that legacy
+    // value; versioned saves can explicitly choose six again.
+    feed: json['footerFeedVersion'] == null && json['feed'] == 6
+        ? 3
+        : json['feed'] as int,
     topFeed: json['topFeed'] as int? ?? 3,
     protocol: PrinterProtocol.parse(json['protocol']),
     pageRows: json['pageRows'] as int? ?? 1024,
@@ -109,6 +115,11 @@ final class PrinterProfile {
   /// Jobs already prepared before leading feed existed keep their original
   /// zero-leading-space snapshot. New jobs explicitly capture current defaults.
   factory PrinterProfile.fromSnapshotJson(Map<String, dynamic> json) =>
-      PrinterProfile.fromJson({...json, 'topFeed': json['topFeed'] ?? 0});
+      PrinterProfile.fromJson({
+        ...json,
+        'topFeed': json['topFeed'] ?? 0,
+        // Historical jobs are immutable output instructions, not settings.
+        'footerFeedVersion': 1,
+      });
   static const generic80 = PrinterProfile(paperMm: 80, dots: 576);
 }

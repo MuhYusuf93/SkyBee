@@ -1,5 +1,7 @@
 # Matriks persyaratan
 
+Koreksi P25-01 tanggal25Oktober: default6 profil tanpa marker versi harus efektif3 setelah buka ulang. Nilai lama lainnya serta semua pilihan manual tersimpan versi baru tetap; job historis tidak diubah. Kebijakan ini menggantikan frasa bottom lama tetap di histori berikut. Pemeriksaan/handoff+12 selesai; host44/native1 dan profil aktual cold restart PASS.
+
 Tambahan langsung25Oktober: feed atas/bawah0–8manual/−/+, default3; perprinter
 ESC/POS Raster/Kolom, TSPL/CPCL kertas kontinu203dpi dan tinggi page bounded.
 Snapshot lama tetap, buffer sensitif dihapus saat cancel, transaksi tidak
@@ -8,10 +10,10 @@ berubah saat output gagal. Bukti software/hardware dibedakan pada
 
 | ID | Kebutuhan tambahan25Oktober | Bukti/status |
 |---|---|---|
-| P25-01 | Feed sebelum header/akhir0–8manual/−/+, default3, perprinter | Host/native form-save-reopen PASS; bottom lama tetap |
+| P25-01 | Feed sebelum header/akhir0–8manual/−/+, default3, perprinter | Host44/native1 PASS; legacy6→3; manual baru tetap; profil aktual cold restart3/3 |
 | P25-02 | ESC/POS Raster/Kolom, TSPL/CPCL pilihan eksplisit | Host42/native17 termasuk decoder piksel/page PASS; hardware tambahan UNVERIFIED |
 | P25-03 | Memori bounded/page, snapshot lama, wipe/cancel/no retry, fakta bisnis tetap | Queue/recovery/software/native delta PASS; tidak ada fallback otomatis |
-| P25-04 | Update Skybee in-place tanpa reset/downgrade/penghilangan fingerprint | v11/schema14 PASS;462hash lama sama sebelum launch, startup/key/prefs/package lain PASS |
+| P25-04 | Update Skybee in-place tanpa reset/downgrade/penghilangan fingerprint | v12/schema14 PASS;463hash lama sama sebelum launch, startup/key/prefs/package lain PASS |
 | P25-05 | Klaim kompatibilitas mengikuti bukti/kemampuan | ESC/POS Raster Milestone utuh reported; BLE/proprietary/300dpi/die-cut belum didukung; tidak mengklaim semua model screenshot |
 
 Bug25 Oktober2026 — MHT-P29L 80 mm Bluetooth: kalibrasi terpotong/tertunda dan

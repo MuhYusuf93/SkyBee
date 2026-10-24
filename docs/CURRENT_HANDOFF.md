@@ -1,5 +1,7 @@
 # Handoff selesai — printer, ruang kosong dan pilihan protokol
 
+25Oktober — koreksi footer selesai pada Skybee0.5.2+12/schema14. Profil legacy6 tanpa marker efektif3; header tetap3. Pilihan manual baru0–8 termasuk6 tetap. Host44PASS66s, analyze bersih176,2s, native1PASS12s/451hash lama cocok; build24,2s/signature/3ABI/16KiB PASS. Update in-place11→12:463hash tertutup sama; startup/key/prefs/seed/proof/package lain PASS. Profil aktual80mm menunjukkan footer3/header3 pada dua peluncuran termasuk cold restart. Tidak reset/reseed/downgrade/ubah fingerprint/cetak tambahan. Debugger detached/kontrol otomatis berakhir. [Laporan](PRINTER_FOOTER_DEFAULT_20261025.md).
+
 **Delivery Git25Oktober terverifikasi:** source fitur9a23775 dan checkpoint
 harness25c66a7 dipush biasa ke origin/main; ls-remote membuktikan source HEAD
 9a23775f0e06376d3fc0ce84f099c86ab06c30ef sama. Catatan penutupan ini merupakan
