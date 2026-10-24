@@ -366,3 +366,33 @@ smoke berjalan bukan bypass PIN: konfirmasi konteks pengguna, uji Kunci/redaksi
 dan route PIN-only sementara tanpa menghapus binding. Pertahankan failure raw,
 buat completion terpisah, detach debugger dan verifikasi kembali key/biometrik/
 seed/package lain serta startup tanpa cache salinan audit.
+
+109. Row terminal WorkManager dapat dipangkas setelah jeda beberapa hari dan
+inisialisasi ulang. Simpan metadata exact unique task sebelum update beserta
+nonce/workId/state/attempt dan hash marker setup/result. Reader tidak boleh
+menganggap null sebagai sukses tanpa bukti tersebut atau menjalankan ulang
+setup hanya untuk menutup checkpoint lama. Realme19→23Oktober dibuktikan
+succeeded sebelum update, lalu reader/cleanup2PASS dengan fakta lama terjaga.
+
+110. Pembanding migrasi SELECT* tidak cocok untuk skema aditif bila expected
+berasal dari skema lama. Tangkap seluruh nama kolom sebelum migrasi, bandingkan
+proyeksi kolom tersebut, lalu periksa default kolom baru secara eksplisit.
+Jangan menghapus field baru atau mengurangi fakta lama agar test menjadi hijau.
+Probe release pada fixture retained harus mengembalikan exact APK debug dengan
+versi/signature sama memakai install-r, tanpa opsi downgrade atau uninstall.
+
+111. Ketersediaan perangkat untuk verifikasi bukan instruksi mengulang suite.
+Sesudah perbaikan dari Realme, jalankan hanya kasus yang terdampak di DV/Poco.
+Koreksi pengguna24Oktober: DV terlanjur60kasus, Poco akhirnya hanya satu kasus
+migrasi. Catat scope yang terlalu luas secara jujur dan jangan meneruskannya.
+
+112. Force-stop membuat baseline tertutup, tetapi worker periodik lama dapat
+resume saat app integration dibuka lagi. DV60nativePASS, satu hash root DB
+fixture berubah dekat completion periodic alert. Tanpa before-image jangan
+klaim seluruh row terjaga atau mengecualikan root DB agar audit lolos. Native
+PASS dan isolation PASS adalah bukti berbeda; wrapper harus menandai gagal
+hash sebagai FAILED_OR_BLOCKED. Baseline baru/retest1PASS tidak menghapus
+failure interval awal. Preflight Poco memeriksa WorkManager0pending sebelum
+kasus terarah. Dahulukan query metadata on-device; salinan sandbox luas yang
+ditolak auto-review tidak boleh dijalankan. Izin pengguna untuk WorkManager
+saja bukan izin menyalin DB bisnis/key/prefs, dan rawcopy sementara dihapus.

@@ -115,6 +115,20 @@ void m51CashSuite(DatabaseFactory factory) {
         draft.revision,
         const CheckoutInput(),
       );
+      final oldColumns = await db.read(
+        (sql) async => {
+          for (final table in [
+            'sale_transactions',
+            'sale_transaction_items',
+            'payments',
+            'stock_history',
+            'print_receipts',
+          ])
+            table: (await sql.rawQuery(
+              'PRAGMA table_info($table)',
+            )).map((column) => column['name'] as String).toList(),
+        },
+      );
       final before = await db.read(
         (sql) async => {
           for (final table in [
@@ -126,6 +140,7 @@ void m51CashSuite(DatabaseFactory factory) {
           ])
             table: await sql.query(
               table,
+              columns: oldColumns[table],
               orderBy: table == 'print_receipts' ? 'sale_transaction_id' : 'id',
             ),
         },
@@ -147,11 +162,20 @@ void m51CashSuite(DatabaseFactory factory) {
           expect(
             await sql.query(
               table,
+              // Additive schemas legitimately add keys to SELECT *. Compare
+              // every original column and separately constrain new defaults.
+              columns: oldColumns[table],
               orderBy: table == 'print_receipts' ? 'sale_transaction_id' : 'id',
             ),
             before[table],
           );
         }
+        final migratedItem = (await sql.query('sale_transaction_items')).single;
+        expect(migratedItem['promo_snapshot_json'], isNull);
+        expect(migratedItem['gross_minor'], isNull);
+        expect(migratedItem['discount_minor'], 0);
+        expect(migratedItem['stock_tracking_snapshot'], 1);
+        expect(migratedItem['reference_cost_micros_snapshot'], isNull);
         expect(await sql.query('checkout_tenders'), isEmpty);
         expect((await sql.query('space_maintenance')).single['status'], 'none');
       });

@@ -163,3 +163,11 @@ produksi melalui cleanup terisolasi. Jangan menjalankan setup baru terlebih
 dahulu, merotasi root recovery/retry atau memakai wrapper legacy tanpa guard.
 Google nyata, paper Realme, OEM/touch/TalkBack/lockscreen/biometrik fisik,
 release runtime terkini, natural21/reboot/Doze tetap NOT VERIFIED pada run ini.
+
+Addendum23Oktober2026: interval worker yang tertunda di atas telah diaudit
+dan ditutup, tanpa replay setup. Semua257entri baseline awal cocok; metadata
+terminal sebelum update membuktikan succeeded, reader/cleanup retest2PASS6s
+dan callback produksi pulih. Failure/raw BLOCKED19Oktober tetap dipertahankan.
+Delta schema14/AOT dan worker current memakai hasil sesi lanjut tersendiri,
+bukan mengubah98kasus di laporan ini menjadi hasil source terbaru. Lihat
+[laporan kelanjutan](REALME_C11_RESUME_20261023.md).

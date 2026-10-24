@@ -66,6 +66,12 @@ try {
   $taskAfter | ConvertTo-Json -Depth 5 | Set-Content "$taskEvidence/after.json" -Encoding UTF8
   foreach($taskKey in $taskBefore.Keys){if($taskAfter[$taskKey] -ne $taskBefore[$taskKey]){throw "Retained file mismatch: $taskKey"}}
   $taskResult.isolation='Every pre-existing protected file hash unchanged'
+ } catch {
+  # Passing test cases cannot turn an unverified data boundary into overall PASS.
+  # Keep the original run/log intact; a later baseline is a separate interval.
+  $taskResult.tests='FAILED_OR_BLOCKED'
+  $taskResult.isolation='FAILED_OR_UNVERIFIED'
+  throw
  } finally {
   if(Test-Path -LiteralPath $taskAwake){& "$PSScriptRoot/dv8910_awake.ps1" -Action Restore -SnapshotPath $taskAwake *> "$taskEvidence/awake-restored.log"}
   $taskResult.automaticDeviceControlActive=$false

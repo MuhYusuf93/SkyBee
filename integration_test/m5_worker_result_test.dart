@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:kasir_app/features/backup/application/backup_scheduler.dart';
 import 'package:kasir_app/features/backup/application/backup_retry_store.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:kasir_app/data/database/encrypted_database.dart';
+import 'package:kasir_app/demo/skybee_upgrade_audit.dart';
 import 'm5_worker_probe_app.dart' as probe;
 
 void main() {
@@ -40,14 +43,66 @@ void main() {
         expect(result['retryAttemptAfterRestart'], 2);
         expect(result['archiveBytes'], greaterThan(0));
         expect(result['archiveSha256'], matches(r'^[a-f0-9]{64}$'));
-        expect(
-          (await Workmanager().getWorkInfo(
-            probe.taskName(probe.nonce),
-          ))?.state.name,
-          'succeeded',
-        );
+        final terminal = (await Workmanager().getWorkInfo(
+          probe.taskName(probe.nonce),
+        ))?.state.name;
+        if (terminal == null) {
+          // Android can prune a completed WorkSpec after a multi-day pause.
+          // Require the exact succeeded record captured before APK replacement,
+          // tied to these retained setup/result bytes, rather than accepting
+          // absence as success or rerunning a completed worker.
+          final proof =
+              jsonDecode(
+                    await (await probe.marker(
+                      probe.nonce,
+                      'terminal-proof',
+                    )).readAsString(),
+                  )
+                  as Map;
+          expect(proof['nonce'], probe.nonce);
+          expect(proof['state'], 'succeeded');
+          expect(proof['capturedBeforeReader'], true);
+          expect(proof['attempts'], 1);
+          expect(proof['workId'], matches(r'^[a-f0-9-]{36}$'));
+          for (final suffix in ['setup', 'result']) {
+            expect(
+              proof['${suffix}Sha256'],
+              sha256
+                  .convert(
+                    await (await probe.marker(
+                      probe.nonce,
+                      suffix,
+                    )).readAsBytes(),
+                  )
+                  .toString(),
+            );
+          }
+        } else {
+          expect(terminal, 'succeeded');
+        }
         final database = await probe.openProbeDatabase(probe.nonce);
         try {
+          // A resumed probe can predate later additive schemas. Capture the
+          // exact retained columns before the coordinator migrates its own DB;
+          // count-only assertions would miss changes to the three old products.
+          late Map<String, Object?> before;
+          await database.gate!.run(() async {
+            await database.encryption!.bootstrap();
+            final original = await EncryptedDatabase.openFile(
+              database.databasePath,
+              database.encryption!.key,
+              readOnly: true,
+            );
+            try {
+              before = await SkybeeUpgradeAudit.capture(original);
+            } finally {
+              await original.close();
+            }
+          });
+          final preservation = await database.read(
+            (sql) => SkybeeUpgradeAudit.verify(sql, before),
+          );
+          expect(preservation['allExistingFactsMatch'], true);
           await database.exclusive((_) async {
             expect(
               await KeystoreBackupRetryStore(
