@@ -8,6 +8,7 @@ import '../../management/application/management_service.dart';
 import '../domain/printer_profile.dart';
 import 'print_queue_service.dart';
 import 'receipt_layout.dart';
+import 'printer_document.dart';
 
 final class RecoveryPrintTarget {
   const RecoveryPrintTarget(this.deviceId, this.name, this.profile);
@@ -106,14 +107,9 @@ final class RecoveryPrintService {
             language: language,
             createdAt: access.clock.now,
           );
-          await write(Uint8List.fromList([0x1b, 0x40]));
-          await for (final tile in layout.tiles()) {
-            late Uint8List bytes;
-            try {
-              bytes = await ReceiptLayout.encodeTile(tile, sensitive: true);
-            } finally {
-              tile.dispose();
-            }
+          await for (final bytes in PrinterDocument(
+            layout,
+          ).frames(sensitive: true)) {
             try {
               for (var at = 0; at < bytes.length; at += 4096) {
                 // Copy: the write helper can wipe its own chunk without
@@ -128,11 +124,9 @@ final class RecoveryPrintService {
               bytes.fillRange(0, bytes.length, 0);
             }
           }
-          if (confirmedTarget.profile.feed > 0) {
-            await write(
-              Uint8List.fromList(List.filled(confirmedTarget.profile.feed, 10)),
-            );
-          }
+          await guard();
+          await queue.transport.finish();
+          await guard();
           return RecoveryPrintOutcome.submitted;
         } catch (_) {
           return attempted

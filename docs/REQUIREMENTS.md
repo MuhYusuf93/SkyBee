@@ -1,5 +1,47 @@
 # Matriks persyaratan
 
+Tambahan langsung25Oktober: feed atas/bawah0–8manual/−/+, default3; perprinter
+ESC/POS Raster/Kolom, TSPL/CPCL kertas kontinu203dpi dan tinggi page bounded.
+Snapshot lama tetap, buffer sensitif dihapus saat cancel, transaksi tidak
+berubah saat output gagal. Bukti software/hardware dibedakan pada
+[laporan](PRINTER_PROTOCOLS_20261025.md); implementasi/pemeriksaan/handoff11 selesai.
+
+| ID | Kebutuhan tambahan25Oktober | Bukti/status |
+|---|---|---|
+| P25-01 | Feed sebelum header/akhir0–8manual/−/+, default3, perprinter | Host/native form-save-reopen PASS; bottom lama tetap |
+| P25-02 | ESC/POS Raster/Kolom, TSPL/CPCL pilihan eksplisit | Host42/native17 termasuk decoder piksel/page PASS; hardware tambahan UNVERIFIED |
+| P25-03 | Memori bounded/page, snapshot lama, wipe/cancel/no retry, fakta bisnis tetap | Queue/recovery/software/native delta PASS; tidak ada fallback otomatis |
+| P25-04 | Update Skybee in-place tanpa reset/downgrade/penghilangan fingerprint | v11/schema14 PASS;462hash lama sama sebelum launch, startup/key/prefs/package lain PASS |
+| P25-05 | Klaim kompatibilitas mengikuti bukti/kemampuan | ESC/POS Raster Milestone utuh reported; BLE/proprietary/300dpi/die-cut belum didukung; tidak mengklaim semua model screenshot |
+
+Bug25 Oktober2026 — MHT-P29L 80 mm Bluetooth: kalibrasi terpotong/tertunda dan
+karakter tak diharapkan dilaporkan pengguna. Verifikasi difokuskan ke framing
+raster, pacing dan akhir dokumen pada Poco; belum mengklaim perbaikan fisik.
+[Laporan/bukti](PRINTER_80MM_FIX_20261025.md).
+Hasil satu sampel fisik dikonfirmasi utuh oleh pengguna. Tambahan: kontrol
+manual ruang kosong akhir0–8baris dengan−/+, default profil baru/reset3baris,
+nilai tersimpan perprinter tetap. Host form/save/reopen1PASS2s; regresi akhir
+26kasus memiliki PASS lintas25PASS/1ekspektasi lamaFAIL lalu1PASS4s. Analyze
+bersih101,9s/l10n680keyPASS. Native1form5s/447hash dan handoff10/459hash PASS;
+riwayat ini disusul tambahan top/protokol pada11 di atas.
+
+**Validasi lanjutan ditutup 24-10-2026 00:19 WIB.** Realme60skenario memiliki PASS lintas run; AOT ARM32 serta dua endpoint worker PASS. Verifikasi terarah DV1/Poco1 PASS dengan hash lama sama/awake exact. Run DV60yang terlanjur tetap FAILED_ISOLATION satu DB fixture; tidak mengklaim60PASS Poco atau preservation interval DV awal. [Laporan lengkap](REALME_C11_RESUME_20261023.md), [bukti terkurasi](evidence/realme-resume-20261023/validation-results.json).
+
+Koreksi24Oktober2026: verifikasi DV/Poco dibatasi pada perubahan akibat temuan
+Realme. DV terlanjur60PASS, audit isolation gagal satu hash DB integration;
+Poco belum diuji ulang. Tidak mengklaim endpoint DV bersih atau60PASS Poco.
+
+Tambahan23Oktober: Realme60skenario delta lulus lintas run utama59PASS dan
+retest migrasi1PASS; pembanding kini memeriksa seluruh kolom lama dan default
+kolom baru. DV8910 dan Poco F6 tersedia untuk verifikasi akhir setelah Realme,
+tanpa update/reset/reseed Skybee. Hasil aktual dicatat per perangkat.
+
+Validasi Realme dilanjutkan23 Oktober2026 sampai source M5.2 tanpa manual,
+downgrade atau penghilangan fitur. Exact worker tertunda ditemukan succeeded,
+257hash lama cocok; reader/cleanup dan delta yang belum diuji sedang berjalan.
+[Hasil per perangkat/metode](REALME_C11_RESUME_20261023.md) terpisah dari bukti
+Poco/DV; status pending lama tidak otomatis menjadi PASS Realme terbaru.
+
 Penutupan22 Oktober2026: M5.2 A–H, repository dan handoff debug selesai.
 Perbaikan704642c dipush; actual helper DV5/Poco5 dan host recovery10/DB-alert15
 PASS. Skybee0.5.2+9 terpasang Poco, data/key/seed/biometrik lama terjaga,

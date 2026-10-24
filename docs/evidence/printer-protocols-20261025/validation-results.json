@@ -1,0 +1,100 @@
+{
+  "task": "Explicit multi-protocol thermal receipt output and independent leading/trailing feed",
+  "status": "IMPLEMENTED_AND_HANDED_OFF;_HARDWARE_PARTIAL",
+  "date": "2026-10-25",
+  "protocols": [
+    "escPosRaster",
+    "escPosColumn",
+    "tspl",
+    "cpcl"
+  ],
+  "manufacturerAllowlist": false,
+  "schema": 14,
+  "host": {
+    "bilingualKeys": 690,
+    "formatFiles": 23,
+    "analyze": "PASS",
+    "seconds": 65,
+    "analyzeSeconds": 5.7,
+    "passed": 42,
+    "originalRequirementIds": 245,
+    "formatChanges": 0
+  },
+  "pocoNative": {
+    "automaticDeviceControlActive": false,
+    "oldSuitesRepeated": false,
+    "preexistingHashesMatched": 448,
+    "physicalOutput": false,
+    "passed": 17,
+    "seconds": 24
+  },
+  "hardware": {
+    "otherPrintersUnavailable": true,
+    "tspl": "UNVERIFIED",
+    "escPosRaster": "Milestone MHT-P29L: user confirmed full initial calibration",
+    "escPosColumn": "UNVERIFIED",
+    "cpcl": "UNVERIFIED"
+  },
+  "artifact": {
+    "versionName": "0.5.2",
+    "signatureVerified": true,
+    "librariesChecked": 13,
+    "sha256": "7d8735f847f6315a38021439e1b6ddb5dc75b88a000eed41b84922fec96623b1",
+    "alignment16KiB": true,
+    "package": "com.example.kasir_app.skybee",
+    "abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86_64"
+    ],
+    "versionCode": 11,
+    "buildSeconds": 21
+  },
+  "handoff": {
+    "status": "PASS",
+    "package": "com.example.kasir_app.skybee",
+    "device": "Poco F6",
+    "installed": true,
+    "automaticDeviceControlActive": false,
+    "reset": false,
+    "reseed": false,
+    "downgrade": false,
+    "sandboxExported": false,
+    "biometricConfigurationChanged": false,
+    "allPreexistingClosedFilesUnchangedAfterInstall": true,
+    "protectedFileCount": 462,
+    "installedApkMatchesVerifiedArtifact": true,
+    "versionCode": 11,
+    "cashierStartupVerified": true,
+    "keysPreferencesSeedProofUnchangedAfterStartup": true,
+    "otherPackagesUnchanged": true,
+    "postStartupWholeDatabaseHashClaimed": false,
+    "apkSha256": "7d8735f847f6315a38021439e1b6ddb5dc75b88a000eed41b84922fec96623b1"
+  },
+  "unsupported": [
+    "BLE",
+    "proprietary protocols represented by model-specific screenshot entries",
+    "300dpi",
+    "die-cut or black-mark label layout"
+  ],
+  "sourceFileSha256": {
+    "pubspec.yaml": "565d2bcb0aa93a08446869e06bbf2110b61c7484be909d0643009e2caea0fd05",
+    "lib/features/printer/domain/printer_profile.dart": "5c84803ca8569e69303e43671b842fc118f746875d50dabe2d169fd689d498ff",
+    "lib/features/printer/domain/printer_protocol.dart": "87e797ff6d73a6af1b0d71b48dbacc9827c2132fc0b57af2da13ccb78355abe2",
+    "lib/features/printer/application/printer_document.dart": "58f15e512a46a9af949a022cb1019cd7d34f3d9018184dd229cefc6ac712ae67",
+    "lib/features/printer/application/printer_transport.dart": "02c272d7e8e482af2f584cfb9087ba6abc0ec31b4b29fda245be93c089f7fcee",
+    "lib/features/printer/application/print_queue_service.dart": "0f7155fee49c202b582b9190e96dcdb6f87d841190f9f6c0a40fab38df66d182",
+    "lib/features/printer/application/receipt_layout.dart": "4e873185fde557e0b4e55671e6467fe4006b961d324a9ed03d993ac02c1882fa",
+    "lib/features/printer/application/recovery_print_service.dart": "21923b147d03da01e93476bc42b1f3e4dddee3c31702fcb66f54647318214aba",
+    "lib/features/printer/presentation/printer_settings_screen.dart": "4cae545fca8435b9ee72f72aff378f6bd2767176c91276db151a7a693dca2a44",
+    "packages/kasir_platform/android/src/main/java/com/example/kasir_platform/BluetoothPrinterIo.java": "77512133006a754cea0fc95d31f95005a995f362757cd9e4f97b600053cf94d7",
+    "packages/kasir_platform/android/src/main/java/com/example/kasir_platform/PrinterBluetooth.java": "75c0412673e9c5275ac2a0ad3958a637524a37cdd23b42819dc235402d209296",
+    "packages/kasir_platform/android/src/main/java/com/example/kasir_platform/KasirPlatformPlugin.java": "f815e6411a34e0cbf2de08651f57e4ce6be17dfe13b856f395be5a093c77d093"
+  },
+  "rawLogSha256": {
+    "native": "1fa0abb5be7cc2f2cc203bff314832ed3ed2e5c2ca76fb328414deab42a59c65",
+    "host": "9ac33a2b2462cbf2e81ff68ef48d614bad450f4cb7156fbb39c080fda6eb1439"
+  },
+  "gitDelivery": "Authorized; record after push completes",
+  "noWaitingForManualCampaign": true
+}

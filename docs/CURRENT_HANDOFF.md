@@ -1,4 +1,172 @@
-# Handoff aktif — M5.2
+# Handoff aktif — perbaikan printer Bluetooth 80 mm
+
+**25Oktober sekitar02:04WIB — implementasi/pemeriksaan/handoff ditutup.**
+Skybee0.5.2+11/schema14 terpasang in-place Poco. Feed atas/bawah manual0–8,
+default3; ESC/POS Raster/Kolom, TSPL/CPCL dengan pageRows128–4096/default1024.
+Host42PASS65s, native17PASS24s/448hash sama/controlOff, analyze bersih5,7s,
+format23/0changed, l10n690/471/245PASS. Build21s/signature/3ABI/13library/
+16KiB PASS. Install-r10→11:462hash lama sama sebelum launch, kasir startup,
+key/prefs/seed/proof/package lain PASS; app ditutup/controlOff. APK/private
+di build/printer-protocols-20261025. [Laporan](PRINTER_PROTOCOLS_20261025.md),
+[bukti terkurasi](evidence/printer-protocols-20261025/validation-results.json).
+Hanya Milestone ESC/POS Raster punya bukti kertas utuh dari pengguna. Kolom/
+TSPL/CPCL hardware UNVERIFIED; BLE/proprietary/300dpi/die-cut tidak diklaim.
+Tidak menunggu uji mandiri/printer lain, tidak mengulang suite DV/Realme atau
+memulai milestone lain. Tidak reset/reseed/uninstall/downgrade/ekspor sandbox/
+ubah fingerprint. Commit-push terbaru diotorisasi pengguna; dilanjutkan setelah
+penyusunan bukti ini, hasil Git dicatat sesudah tool selesai. Tidak ada job
+SDK/device aktif. Paragraf berikut histori checkpoint, bukan pekerjaan pending.
+
+25 Oktober 2026: perbaikan generik ESC/POS tanpa cabang merek: raster24row,
+Bluetooth256byte/40ms, finish400ms sebelum submitted/disconnect. Poco4native
+PASS/445hashsama dan satu sampel80mm1PASS7s/445hashsama/controlOff. Pengguna
+mengonfirmasi cetakan utuh; meminta kontrol manual ruang kosong/default3.
+Field0–8baris dipindah di bawah paper width, tombol−/+; saved profiles tetap.
+Host form1PASS2s. Regresi default3 sedang ditutup (satu ekspektasi historis6
+perlu disesuaikan), lalu analyze/l10n, native1form tanpa output, build ulang
+Skybee+10 dan handoff in-place. APK v10awal sebelum feed UI tidak dipasang.
+Host awal24PASS, focused2PASS; JVM Bluetooth6/USB8PASS. Analyzer bersih6,3s
+sebelum perubahan UI. Raw failed/interrupted helper tetap dipertahankan.
+OpenLabel belum diuji oleh pengguna; ESC1/ESC2 bukan bukti kompatibilitas.
+[Laporan aktif](PRINTER_80MM_FIX_20261025.md). Jangan mengulang suite DV/Realme,
+reset/reseed/downgrade, atau memulai M5.3–M6. Catatan Realme berikut histori.
+
+**24-10-2026 00:19 WIB — kelanjutan Realme dan verifikasi terarah ditutup.**
+Realme: seluruh 60 skenario delta memiliki PASS lintas run (59PASS/1FAIL lalu
+retest kasus migrasi 1PASS), AOT ARM32 final PASS, reader/cleanup checkpoint
+lama 2PASS dan worker current 2PASS. Seluruh 257 entri checkpoint awal tetap
+cocok pada endpoint hash Realme terakhir. Verifikasi perubahan pembanding
+migrasi saja: **DV 1PASS 00:29, Poco 1PASS 00:18**; seluruh
+hash lama pada kedua interval terarah cocok, awake DV restored/readback exact.
+Poco tidak menjalankan suite 60 kasus. Koreksi scope pengguna berlaku: hanya
+perubahan akibat temuan Realme yang diverifikasi di DV/Poco.
+
+DV sempat terlanjur menjalankan 60 kasus (60PASS14:47), tetapi interval itu
+**FAILED ISOLATION**: satu DB integration berubah dan 436 berkas lain cocok.
+Metadata menunjukkan periodic alert selesai dekat waktu perubahan DB;
+penyebab ini inferred, bukan bukti seluruh row lama terjaga. Failure/raw lama
+dipertahankan, tidak ditutup oleh baseline baru atau focused pass.
+
+Tidak ada source fitur app yang berubah atau bug fitur app yang terbukti.
+Perbaikan ada pada test/harness/workflow, termasuk ledger yang kini menandai
+kegagalan hash sebagai FAILED_OR_BLOCKED. Tidak reset/uninstall/downgrade,
+reboot, penghilangan fitur, perubahan fingerprint atau update Skybee baru.
+Data/key/Skybee Poco cocok selama interval terarah. Fixture ketiga perangkat
+tetap0.5.2+9, semua package sendiri tertutup/controlOff; WorkManager Realme
+0pending. Salinan sementara WorkManager Poco yang khusus disetujui pengguna
+sudah dihapus. Sandbox DV tidak disalin; penolakan auto-review dipatuhi.
+
+Format308/0changed, analyze No issues121,0s, l10n678/468/245 PASS.
+Source app tetap b45f069; perubahan lokal test/tooling/docs belum commit/push.
+[Laporan lengkap](REALME_C11_RESUME_20261023.md), [bukti terkurasi](evidence/realme-resume-20261023/validation-results.json). Tidak menunggu uji manual dan tidak memulai M5.3–M6.
+
+Tidak ada SDK/device job aktif. Jangan mengulang 98 kasus historis atau suite
+DV/Poco yang sudah diuji. Tidak ada perbaikan fitur aplikasi yang memerlukan
+verifikasi baru. Original DV broad isolation tetap memiliki batas UNVERIFIED
+untuk row DB fixture; jangan klaim preservation interval itu. Rencana/curator
+full-Poco lama di build diberi guard OBSOLETE dan tidak pernah dijalankan.
+Permintaan lanjutan ini selesai dengan batas bukti tersebut; tunggu command
+bug/fitur baru, bukan laporan uji mandiri pengguna.
+
+Catatan setelah bagian ini merupakan riwayat checkpoint yang sudah ditutup;
+nomor session, pending dan rencana suite luas lama bukan instruksi aktif.
+
+**24Oktober00:16WIB:** scope pengguna telah dikoreksi. DV focused migration
+1PASS29s, seluruh hash baseline baru sama/controlOff/awake exact. Run DV60yang
+terlanjur tetap memiliki failure isolation satu rootDB fixture (436filelain sama),
+tidak ditimpa. On-device SELECT metadata hanya WorkSpec/WorkName menunjukkan
+periodic alert6jam cycle12, last_enqueue_time satu detik sesudah mtime DB;
+penyebab inferred, bukan proof row bisnis lama. Tidak menyalin sandbox DV.
+Auto-review menolak salinan luas; pengguna secara khusus mengizinkan salinan
+WorkManager Poco saja. Preflight closed consistent0job, rawcopy sudah dihapus.
+Poco **hanya satu** migration case aktif session24818, RunName
+realme-verify-poco-cash-focused. Wrapper kini menandai FAILED_OR_BLOCKED bila
+hash audit gagal, bukan menulis testsPASS dengan isolationNOTCHECKED.
+Curator/template60Poco lama diberi guard OBSOLETE dan tidak pernah dieksekusi.
+Finalkan bukti scoped serta laporan setelah Poco/hash selesai; jangan tes ulang
+suite lain. App lib/android/packages/pubspec tetap tanpa perubahan.
+
+**Koreksi scope pengguna24Oktober,00:08WIB:** verifikasi DV/Poco hanya kasus
+yang terpengaruh perbaikan temuan Realme; jangan mengulang suite yang sudah diuji.
+DV terlanjur diulang60kasus (60PASS14:47), tetapi wrapper exit1 karena satu hash
+integration/databases/kasir_app.db berubah;436berkas lama lainnya cocok, awake
+restored/readback exact, controlOff. Ordinary tetap absent DV, Skybee absent.
+Poco BELUM diuji ulang. Tahan template finalisasi/curator yang masih meminta
+60PASS Poco; template itu kini tidak sesuai scope dan tidak boleh dieksekusi.
+Tutup audit read-only fixture DV, lalu hanya verifikasi terarah pembanding
+migrasi yang diperbaiki bila aman. Tidak ada app feature bug terbukti Realme;
+perubahan sejauh ini hanya harness/workflow/docs. Jangan patch app/WorkManager
+atau menghapus/cancel job lama tanpa bukti dan scope yang tepat.
+
+Update23:49WIB: Realme selesai. Release final nonce1792773864623 PASS dengan
+guard nonce existing sebelum tulis marker, seluruh341hash lama cocok dan exact
+debugAPK9 dipulihkan; worker current2PASS5s/controlOff/hash sama. Format308/0,
+full analyze No issues121,0s, l10n678/468/245 PASS. Source lib/android/pubspec
+tidak berubah. DV delta60 sedang aktif session55119, evidence
+`build/realme-verify-dv-final-delta-20261023-234554/runner.log` (5kasus awal PASS,
+termasuk migrasi fixed). Setelah DV endpoint/hash/awake restored, jalankan
+suite sama di Poco7f0edea0 dengan RunName realme-verify-poco-final-delta.
+Ketiga device authorized. Jangan menjalankan SDK/device job paralel atau edit
+app/test source. Curator metadata siap di build/curate_realme_resume_20261023.py;
+jalankan hanya setelah DV dan Poco60PASS, lalu finalisasi laporan/status/handoff.
+Raw failed attempts tetap; tidak ada app update Skybee/commit/push baru diminta.
+
+Update23:41WIB: AOT ARM32 nonce1792773379344 **PASS**, hash lama semua sama,
+exact APK debug versi9 dipulihkan. Worker current nonce1792773513170 setupPID2035,
+workerPID2723/result697354byte sudah ada; reader/cleanup masih aktif, session43663.
+Sesudah job selesai periksa safe probe menolak nonce existing sebelum menulis
+marker apa pun, lalu final format/analyze dan verifikasi DV→Poco serial.
+
+Update23:38WIB: delta Realme selesai59PASS/1FAIL (1063s); failure pembanding
+schema11 diperbaiki tanpa perubahan fitur. Host kasus migrasi1PASS8s dan native
+terarah1PASS34s, seluruh hash lama cocok/controlOff. Jadi60skenario delta lulus
+lintas dua run, bukan satu run60PASS. Analyzer perbaikan/probe No issues3,3s.
+Probe release ARM32 berjalan melalui `test_realme_release_current.ps1`,
+nonce1792773379344; mengembalikan exact APK debug versi9 tanpa `-d`.
+Setelahnya worker current baru, DV8910 lalu Poco F6 untuk verifikasi akhir.
+Pengguna kini juga menyediakan Poco; `.skybee` dipertahankan, tidak di-update
+atau reseed. SDK/device job serial. Catatan lama di bawah adalah histori.
+
+## 23 Oktober 2026 — melanjutkan checkpoint Realme hingga M5.2
+
+23:13WIB: jobSDKaktif95227, native gabungan
+`build/realme-current-m51-m52-delta-retest-20261023-230651/runner.log`.
+Analyzer3entrypoint112,8s No issues. Satu failure awal legacy migration pada
+`test/support/m51_cash_suite.dart:147`: SELECT* sesudah11→14 memuat5kolom
+snapshot baru (nilai lama sama), expected map schema11 belum mempunyai key.
+Setelah suite selesai, tangkap daftar kolom lama lewat PRAGMA sebelum migrasi,
+query proyeksi lama untuk equality dan assert default baru null/0/tracked1.
+Jangan edit source ketika SDK job masih aktif. Retest Realme hanya kasus gagal
+yang diperbaiki, kemudian DV delta final sesuai instruksi tambahan pengguna.
+Pertimbangkan probe AOT ARM32 kecil pada fixture baru untuk fitur latest dan
+plugin notifikasi; hindari wrapper release legacy yang memakai install -r -d.
+Setiap release→debug restore harus version9/signature sama dan tanpa -d, dengan
+hash seluruh berkas lama before/after. Tidak ada source app diubah sejauh ini.
+
+User tambahan: DV8910 siap untuk verifikasi setelah perubahan Realme. Koneksi
+192.168.0.102:5555 authorized/AX810. Setelah Realme/fix selesai, jalankan delta
+akhir pada DV dengan wrapper hash/awake, bukan paralel dengan SDK Realme.
+
+Update23:05WIB: worker lama sudah ditutup2PASS6s,257entri awal semua sama.
+WorkSpec terminal yang terprune sesudah update dibuktikan melalui capture
+preflight sebelum reader + terminal-proof terikat hash marker; bukan skip.
+Callback produksi dipulihkan. Stop flag lama disimpan sebagai previous-stop.flag
+di direktori audit, sesuai user resume. Entry point delta gabungan
+`realme_m51_m52_delta_test.dart` sedang analyzer/retest melalui safe runner;
+satu helper compile error pertama tidak sempat install dan semua hash sama.
+Jangan edit source atau mulai job SDK/device lain selama job ini berjalan.
+
+Pengguna mengaktifkan kembali Realme, meminta otomatis tanpa uji manual,
+tanpa penghilangan fitur/downgrade. Beri instruksi hanya untuk izin/setting atau
+reboot yang dibutuhkan. [Laporan aktif](REALME_C11_RESUME_20261023.md).
+Target0062112V2210F9B3/RMX3231; jangan mengontrol Poco/Skybee.
+Audit exact nonce1792404362140: WorkManager succeeded/0pending, resultPID3685,
+semua257entri baseline sebelumprobe sama. Reader nonce lama berjalan melalui
+safe runner, tanpa setup ulang. Tunggu reader/cleanup/audit before→after selesai
+sebelum melepas stop flag kampanye lama dan lanjut delta M5.1D/E/G/M5.2.
+Native job SDK serial; jangan edit app/test source selama berjalan.
+
+Penutupan M5.2/Poco berikut tetap histori yang valid, bukan permintaan mengulang.
 
 ## Penutupan 22 Oktober 2026,14:29 WIB — M5.2 selesai
 

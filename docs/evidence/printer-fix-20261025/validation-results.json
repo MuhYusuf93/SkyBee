@@ -1,0 +1,104 @@
+{
+  "task": "Generic ESC/POS Bluetooth transport and raster fix",
+  "date": "2026-10-25",
+  "status": "PASS_BUGFIX_AND_BOTTOM_FEED;_FOLLOWUP_TOP_PROTOCOLS_IN_PROGRESS",
+  "scope": "Poco focused regression; no full DV or Realme rerun",
+  "productionModelAllowlist": false,
+  "protocolsAdded": [],
+  "host": {
+    "rasterQueueRecovery": {
+      "passed": 24,
+      "seconds": 57
+    },
+    "additionalRecoveryDrain": {
+      "passed": 1,
+      "seconds": 4
+    },
+    "transportAdapter": {
+      "passed": 1,
+      "seconds": 4
+    },
+    "jvm": {
+      "bluetoothSimulated": 6,
+      "usbSimulated": 8,
+      "failures": 0
+    },
+    "analyze": {
+      "status": "PASS",
+      "seconds": 6.3
+    },
+    "priorAnalyze": "12 archived build snapshot errors and one current lint; retained, diagnosed and corrected"
+  },
+  "poco": {
+    "framingAndPairedInventory": {
+      "passed": 4,
+      "preexistingHashesMatched": 445
+    },
+    "oneSyntheticCalibration": {
+      "passed": 1,
+      "seconds": 7,
+      "outcome": "submitted",
+      "physicalPaper": "USER_CONFIRMED_FULL_OUTPUT;_SAMPLE_FEED6",
+      "automaticRetry": false,
+      "preexistingHashesMatched": 445,
+      "syntheticSalesPaymentsStockHistory": 0
+    },
+    "automaticDeviceControlActive": false,
+    "manualFeedForm": {
+      "physicalOutput": false,
+      "passed": 1,
+      "seconds": 5,
+      "preexistingHashesMatched": 447
+    }
+  },
+  "artifact": {
+    "package": "com.example.kasir_app.skybee",
+    "versionName": "0.5.2",
+    "versionCode": 10,
+    "schemaVersion": 14,
+    "sha256": "3863b00f3a77a91b73fa7856c7b2ea70b671df94d262465c4deca2d64e2806f5",
+    "verifiedAbis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86_64"
+    ],
+    "librariesChecked": 13,
+    "signatureVerified": true,
+    "zipAndElf16KiB": true,
+    "installed": true,
+    "note": "v10 includes trailing feed control; leading feed and protocol selection belong to the later v11 followup"
+  },
+  "limits": [
+    "Submission is not a paper acknowledgment",
+    "No physical USB printer verification in this task",
+    "OpenLabel ESC1/ESC2 not tested by user; no inferred byte protocol mapping",
+    "CPCL, TSPL and BLE not implemented or claimed",
+    "Support for all printer firmware not claimed"
+  ],
+  "reset": false,
+  "reseed": false,
+  "downgrade": false,
+  "fingerprintRemoved": false,
+  "commitOrPushPerformed": false,
+  "handoff": {
+    "status": "PASS",
+    "package": "com.example.kasir_app.skybee",
+    "device": "Poco F6",
+    "installed": true,
+    "automaticDeviceControlActive": false,
+    "reset": false,
+    "reseed": false,
+    "downgrade": false,
+    "sandboxExported": false,
+    "biometricConfigurationChanged": false,
+    "allPreexistingClosedFilesUnchangedAfterInstall": true,
+    "protectedFileCount": 459,
+    "installedApkMatchesVerifiedArtifact": true,
+    "versionCode": 10,
+    "cashierStartupVerified": true,
+    "keysPreferencesSeedProofUnchangedAfterStartup": true,
+    "otherPackagesUnchanged": true,
+    "postStartupWholeDatabaseHashClaimed": false,
+    "apkSha256": "3863b00f3a77a91b73fa7856c7b2ea70b671df94d262465c4deca2d64e2806f5"
+  }
+}

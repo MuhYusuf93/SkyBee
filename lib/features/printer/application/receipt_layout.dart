@@ -24,6 +24,9 @@ final class ReceiptLine {
 /// rendered by Flutter fonts instead of guessing a printer code page. Monetary
 /// fields get a complete dedicated line, never substring/ellipsis truncation.
 final class ReceiptLayout {
+  /// At 640 dots a complete command stays below 2 KiB. Small raster strips
+  /// bound receiver pressure independently of its brand and the paper width.
+  static const rasterRows = 24;
   ReceiptLayout(this.profile, this.lines);
   final PrinterProfile profile;
   final List<ReceiptLine> lines;
@@ -195,10 +198,13 @@ final class ReceiptLayout {
         ReceiptLine(
           'L=${profile.left} R=${profile.right} shift=${profile.shift}',
         ),
-        ReceiptLine('Feed=${profile.feed} lines'),
+        ReceiptLine('Top=${profile.topFeed} / Feed=${profile.feed} lines'),
         const ReceiptLine('|1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZ|'),
-        const ReceiptLine('IDR 120.000 / USD 1,234.56 / -12,34 €'),
+        const ReceiptLine('IDR 120.000'),
+        const ReceiptLine('USD 1,234.56'),
+        const ReceiptLine('-12,34 €'),
         const ReceiptLine('--------------------------------'),
+        ReceiptLine('AKHIR UJI ${profile.paperMm}mm', bold: true),
       ]);
 
   TextPainter painter(ReceiptLine line) =>
@@ -221,7 +227,7 @@ final class ReceiptLayout {
         maxWidth: profile.effectiveDots.toDouble(),
       );
 
-  /// Each allocation is at most width×64 pixels plus one TextPainter; a long
+  /// Each allocation is at most width×24 pixels plus one TextPainter; a long
   /// receipt never allocates a full receipt bitmap. Caller disposes tile images.
   Future<ui.Image> decodeLogo(Uint8List logo) async {
     if (logo.length > 4194304) throw StateError('printerLogoTooTall');
@@ -305,8 +311,8 @@ final class ReceiptLayout {
       final image = await decodeLogo(logo);
       try {
         if (image.height > 2048) throw StateError('printerLogoTooTall');
-        for (var y = 0; y < image.height; y += 64) {
-          final height = (image.height - y).clamp(1, 64);
+        for (var y = 0; y < image.height; y += rasterRows) {
+          final height = (image.height - y).clamp(1, rasterRows);
           final recorder = ui.PictureRecorder();
           // Use one recording canvas per tile; never retain the entire raster.
           final drawing = ui.Canvas(recorder);
@@ -329,8 +335,8 @@ final class ReceiptLayout {
       final text = painter(line);
       try {
         final height = text.height.ceil() + profile.lineGap;
-        for (var y = 0; y < height; y += 64) {
-          final tileHeight = (height - y).clamp(1, 64);
+        for (var y = 0; y < height; y += rasterRows) {
+          final tileHeight = (height - y).clamp(1, rasterRows);
           final recorder = ui.PictureRecorder();
           final drawing = ui.Canvas(recorder);
           drawing.drawColor(const ui.Color(0xffffffff), ui.BlendMode.src);

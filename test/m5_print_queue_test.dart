@@ -19,7 +19,11 @@ import 'package:kasir_app/core/domain/app_error.dart';
 final class Transport implements PrinterTransport {
   int connections = 0, writes = 0, bytes = 0;
   bool failConnect = false, partial = false;
+  bool failFinish = false;
+  int? failAtWrite;
+  int finishes = 0;
   Uint8List? lastWrite;
+  final packets = <Uint8List>[];
   @override
   Future<void> connect(String id) async {
     connections++;
@@ -29,9 +33,19 @@ final class Transport implements PrinterTransport {
   @override
   Future<void> disconnect() async {}
   @override
+  Future<void> finish() async {
+    finishes++;
+    if (failFinish) throw const SocketException('Synthetic drain failure');
+  }
+
+  @override
   Future<void> write(Uint8List data) async {
     lastWrite = Uint8List.fromList(data);
+    packets.add(lastWrite!);
     writes++;
+    if (writes == failAtWrite) {
+      throw const SocketException('Synthetic later write failure');
+    }
     bytes += partial ? 1 : data.length;
     if (partial) throw const SocketException('Synthetic partial send');
   }
@@ -160,6 +174,79 @@ void m5PrintQueueSuite(
       );
     }
     test(
+      'printer spacing snapshots leading feed independently and preserves legacy queued jobs',
+      () async {
+        final before = await financial();
+        final legacy = const PrinterProfile(feed: 6).toJson()
+          ..remove('topFeed');
+        await db.transaction(
+          (sql) => sql.update('printer_profiles', {
+            'settings_json': jsonEncode(legacy),
+          }),
+        );
+        final current = await queue.prepareCalibration();
+        final settings =
+            jsonDecode((await queue.job(current))['profile_json'] as String)
+                as Map;
+        expect(settings['topFeed'], 3);
+        expect(settings['feed'], 6);
+        expect(await queue.send(current), 'submitted');
+        expect(transport.packets.first, [0x1b, 0x40]);
+        expect(transport.packets[1], [10, 10, 10]);
+        expect(transport.packets.last, List.filled(6, 10));
+        final queuedBeforeFeature = await queue.prepareCalibration();
+        await db.transaction(
+          (sql) => sql.update(
+            'print_jobs',
+            {'profile_json': jsonEncode(legacy)},
+            where: 'id=?',
+            whereArgs: [queuedBeforeFeature],
+          ),
+        );
+        transport.packets.clear();
+        expect(await queue.send(queuedBeforeFeature), 'submitted');
+        expect(transport.packets[1].take(4), [0x1d, 0x76, 0x30, 0]);
+        await app.printers.save(
+          '00:11:22:33:44:55',
+          'Synthetic ESC/POS',
+          const PrinterProfile(topFeed: 0, feed: 0),
+        );
+        transport.packets.clear();
+        expect(await queue.send(await queue.prepareCalibration()), 'submitted');
+        expect(transport.packets[1].take(4), [0x1d, 0x76, 0x30, 0]);
+        expect(transport.packets.last.take(4), [0x1d, 0x76, 0x30, 0]);
+        expect(transport.finishes, 3);
+        expect(await financial(), before);
+        expect(
+          () => const PrinterProfile(topFeed: 9).validate(),
+          throwsFormatException,
+        );
+      },
+    );
+    test(
+      'printer protocol partial delivery never retries or changes financial facts',
+      () async {
+        final before = await financial();
+        for (final protocol in PrinterProtocol.values) {
+          await app.printers.save(
+            '00:11:22:33:44:55',
+            'Synthetic multi-protocol',
+            PrinterProfile(protocol: protocol, pageRows: 128),
+          );
+          transport.writes = 0;
+          transport.failAtWrite = 12;
+          final connections = transport.connections;
+          final id = await queue.prepareCalibration();
+          expect(await queue.send(id), 'unknown');
+          expect(await queue.send(id), 'unknown');
+          expect(transport.connections, connections + 1);
+          expect(transport.writes, 12);
+          expect(await financial(), before);
+        }
+        expect(transport.finishes, 0);
+      },
+    );
+    test(
       'duplicate print taps submit once and copy never changes financial facts',
       () async {
         final before = await financial();
@@ -170,12 +257,13 @@ void m5PrintQueueSuite(
         await Future.wait([queue.send(one), queue.send(two)]);
         expect((await queue.job(one))['status'], 'submitted');
         expect(transport.connections, 1);
+        expect(transport.finishes, 1);
         expect(transport.bytes, greaterThan(2));
-        // New profiles advance six lines beyond the raster footer. Explicit
-        // older saved profiles remain configurable and deserialize unchanged.
-        expect(transport.lastWrite, [10, 10, 10, 10, 10, 10]);
-        final legacyProfile = const PrinterProfile(feed: 3).toJson();
-        expect(PrinterProfile.fromJson(legacyProfile).feed, 3);
+        // The requested default is three; persisted six-line profiles keep
+        // their explicit value rather than being silently recalibrated.
+        expect(transport.lastWrite, [10, 10, 10]);
+        final legacyProfile = const PrinterProfile(feed: 6).toJson();
+        expect(PrinterProfile.fromJson(legacyProfile).feed, 6);
         final copy = await queue.prepare(sale, copy: true);
         expect(copy, isNot(one));
         expect(
@@ -185,6 +273,21 @@ void m5PrintQueueSuite(
         );
         expect(await queue.send(copy), 'submitted');
         expect(transport.connections, 2);
+        expect(await financial(), before);
+      },
+    );
+    test(
+      'drain failure stays ambiguous and never retries or changes financial facts',
+      () async {
+        final before = await financial();
+        transport.failFinish = true;
+        final id = await queue.prepare(sale);
+        expect(await queue.send(id), 'unknown');
+        expect(transport.finishes, 1);
+        final writes = transport.writes;
+        expect(await queue.send(id), 'unknown');
+        expect(transport.writes, writes);
+        expect(transport.finishes, 1);
         expect(await financial(), before);
       },
     );

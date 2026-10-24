@@ -26,10 +26,17 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
       left = TextEditingController(text: '8'),
       right = TextEditingController(text: '8'),
       shift = TextEditingController(text: '0'),
+      topFeed = TextEditingController(
+        text: '${const PrinterProfile().topFeed}',
+      ),
+      pageRows = TextEditingController(
+        text: '${const PrinterProfile().pageRows}',
+      ),
       feed = TextEditingController(text: '${const PrinterProfile().feed}');
   String? device;
   String name = '';
   int paper = 58, font = 24, logoPercent = 100, lineGap = 6;
+  PrinterProtocol protocol = PrinterProtocol.escPosRaster;
   bool bold = false, logo = true;
   String header = 'center', footer = 'center';
   String? outcome;
@@ -50,6 +57,9 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
     right.text,
     shift.text,
     feed.text,
+    topFeed.text,
+    protocol.name,
+    pageRows.text,
   ]);
   PrinterProfile profile() => PrinterProfile(
     paperMm: paper,
@@ -63,6 +73,11 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
     headerAlign: header,
     footerAlign: footer,
     feed: int.parse(feed.text),
+    topFeed: int.parse(topFeed.text),
+    protocol: protocol,
+    pageRows: protocol.paged
+        ? int.parse(pageRows.text)
+        : (int.tryParse(pageRows.text) ?? 1024).clamp(128, 4096),
     logoPercent: logoPercent,
     lineGap: lineGap,
   )..validate();
@@ -95,6 +110,9 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
     right.text = '${value.right}';
     shift.text = '${value.shift}';
     feed.text = '${value.feed}';
+    topFeed.text = '${value.topFeed}';
+    protocol = value.protocol;
+    pageRows.text = '${value.pageRows}';
   }
 
   @override
@@ -111,7 +129,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
   @override
   void dispose() {
     _state?.dispose();
-    for (final c in [dots, left, right, shift, feed]) {
+    for (final c in [dots, left, right, shift, feed, topFeed, pageRows]) {
       c.dispose();
     }
     super.dispose();
@@ -124,13 +142,62 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
 
   Widget _gate(Widget child) =>
       widget.publicAccess ? child : ManagementGate(child: child);
+
+  Widget feedInput(
+    TextEditingController controller,
+    String label,
+    String key,
+    bool busy,
+  ) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8),
+    child: Row(
+      children: [
+        IconButton(
+          tooltip: tr(context, '${label}Decrease'),
+          onPressed: busy || (int.tryParse(controller.text) ?? 0) <= 0
+              ? null
+              : () => controller.text =
+                    '${(int.parse(controller.text) - 1).clamp(0, 8)}',
+          icon: const Icon(Icons.remove),
+        ),
+        Expanded(
+          child: ManagedTextField(
+            key: ValueKey(key),
+            controller: controller,
+            enabled: !busy,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: tr(context, label),
+              border: const OutlineInputBorder(),
+            ),
+          ),
+        ),
+        IconButton(
+          tooltip: tr(context, '${label}Increase'),
+          onPressed: busy || (int.tryParse(controller.text) ?? 8) >= 8
+              ? null
+              : () => controller.text =
+                    '${(int.parse(controller.text) + 1).clamp(0, 8)}',
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    ),
+  );
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider.value(
     value: _state!,
     child: _gate(
       Consumer<PrinterSettingsProvider>(
         builder: (context, state, _) => ListenableBuilder(
-          listenable: Listenable.merge([dots, left, right, shift, feed]),
+          listenable: Listenable.merge([
+            dots,
+            left,
+            right,
+            shift,
+            feed,
+            topFeed,
+            pageRows,
+          ]),
           builder: (context, _) => FormExitGuard(
             managementProtected: !widget.publicAccess,
             dirty: baseline != snapshot(),
@@ -295,6 +362,48 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                     ),
                     if (device != null) ...[
                       Text('$name · $device'),
+                      DropdownButtonFormField<PrinterProtocol>(
+                        key: ValueKey('printer-protocol-${protocol.name}'),
+                        initialValue: protocol,
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          labelText: tr(context, 'm5Protocol'),
+                        ),
+                        items: [
+                          for (final value in PrinterProtocol.values)
+                            DropdownMenuItem(
+                              value: value,
+                              child: Text(
+                                tr(context, switch (value) {
+                                  PrinterProtocol.escPosRaster =>
+                                    'm5ProtocolRaster',
+                                  PrinterProtocol.escPosColumn =>
+                                    'm5ProtocolColumn',
+                                  PrinterProtocol.tspl => 'm5ProtocolTspl',
+                                  PrinterProtocol.cpcl => 'm5ProtocolCpcl',
+                                }),
+                              ),
+                            ),
+                        ],
+                        onChanged: state.busy
+                            ? null
+                            : (value) => setState(() => protocol = value!),
+                      ),
+                      Text(tr(context, 'm5ProtocolHelp')),
+                      if (protocol.paged)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: ManagedTextField(
+                            key: const ValueKey('printer-page-rows'),
+                            controller: pageRows,
+                            enabled: !state.busy,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              labelText: tr(context, 'm5PageRows'),
+                              border: const OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
                       Text(tr(context, 'm52PaperWidth')),
                       SegmentedButton<int>(
                         segments: const [
@@ -304,20 +413,43 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                         selected: {paper},
                         onSelectionChanged: state.busy
                             ? null
-                            : (value) => setState(
-                                () => apply(
+                            : (value) => setState(() {
+                                final savedProtocol = protocol,
+                                    savedPageRows = pageRows.text;
+                                apply(
                                   value.single == 80
                                       ? PrinterProfile.generic80
                                       : const PrinterProfile(),
-                                ),
-                              ),
+                                );
+                                protocol = savedProtocol;
+                                pageRows.text = savedPageRows;
+                              }),
                       ),
+                      feedInput(
+                        topFeed,
+                        'm5TopFeed',
+                        'receipt-top-feed-lines',
+                        state.busy,
+                      ),
+                      feedInput(
+                        feed,
+                        'm5Feed',
+                        'receipt-feed-lines',
+                        state.busy,
+                      ),
+                      Text(tr(context, 'm52FeedHelp')),
+                      if (paper == 58)
+                        OutlinedButton(
+                          onPressed: state.busy
+                              ? null
+                              : () => setState(() => feed.text = '3'),
+                          child: Text(tr(context, 'm52IwareFeed')),
+                        ),
                       for (final field in [
                         (dots, 'm5PrintableDots'),
                         (left, 'm5LeftDots'),
                         (right, 'm5RightDots'),
                         (shift, 'm5ShiftDots'),
-                        (feed, 'm5Feed'),
                       ])
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -334,14 +466,6 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                           ),
                         ),
                       Text(tr(context, 'm5GeometryHelp')),
-                      Text(tr(context, 'm52FeedHelp')),
-                      if (paper == 58)
-                        OutlinedButton(
-                          onPressed: state.busy
-                              ? null
-                              : () => setState(() => feed.text = '3'),
-                          child: Text(tr(context, 'm52IwareFeed')),
-                        ),
                       SegmentedButton<int>(
                         segments: [
                           for (final size in [18, 24, 32])

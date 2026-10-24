@@ -1289,7 +1289,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get m5ShiftDots => 'Horizontal shift (dots)';
 
   @override
-  String get m5Feed => 'Blank lines after receipt (0–8)';
+  String get m5Feed => 'Blank space after receipt (0–8 lines)';
+
+  @override
+  String get m5TopFeed => 'Blank space before header (0–8 lines)';
+
+  @override
+  String get m5Protocol => 'Printer command language';
+
+  @override
+  String get m5ProtocolRaster => 'ESC/POS Raster (common)';
+
+  @override
+  String get m5ProtocolColumn => 'ESC/POS Column (alternative)';
+
+  @override
+  String get m5ProtocolTspl => 'TSPL (continuous paper)';
+
+  @override
+  String get m5ProtocolCpcl => 'CPCL (continuous paper)';
+
+  @override
+  String get m5ProtocolHelp =>
+      'Match the printer mode or manufacturer guide, then Save. Firmware mode is not changed automatically. TSPL/CPCL use continuous paper at 203 dpi; match page height to the printer capability. Test print to check the paper result.';
+
+  @override
+  String get m5PageRows => 'Maximum page height (128–4096 dots)';
+
+  @override
+  String get m5TopFeedDecrease => 'Reduce blank space before header';
+
+  @override
+  String get m5TopFeedIncrease => 'Increase blank space before header';
+
+  @override
+  String get m5FeedDecrease => 'Reduce blank space after receipt';
+
+  @override
+  String get m5FeedIncrease => 'Increase blank space after receipt';
 
   @override
   String get m5GeometryHelp =>
@@ -2255,7 +2292,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m52FeedHelp =>
-      'Adjust feed after the footer. Inspect paper before saving calibration; old profiles retain their values.';
+      'Enter the number of lines or use −/+. 0 adds no extra blank space. Press Save for this printer. Line length varies by printer; the printhead-to-tear distance remains.';
 
   @override
   String get m52BatteryHelp =>

@@ -4,6 +4,10 @@ import 'package:kasir_platform/kasir_platform.dart';
 abstract interface class PrinterTransport {
   Future<void> connect(String deviceId);
   Future<void> write(Uint8List bytes);
+
+  /// Completes the bounded transport drain before closing a document. This is
+  /// submission only; printers without paper acknowledgments remain unverified.
+  Future<void> finish();
   Future<void> disconnect();
 }
 
@@ -18,6 +22,8 @@ final class NativePrinterTransport implements PrinterTransport {
       platform.channelCall('printerConnect', {'device': deviceId});
   @override
   Future<void> write(Uint8List bytes) => platform.send(bytes);
+  @override
+  Future<void> finish() => platform.channelCall('printerFinish');
   @override
   Future<void> disconnect() => platform.channelCall('printerDisconnect');
 }

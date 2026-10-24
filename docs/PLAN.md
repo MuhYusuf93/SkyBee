@@ -1,5 +1,42 @@
 # Rencana milestone
 
+25Oktober tambahan langsung: feed atas/bawah manual/default3, kemudian empat
+pilihan protokol sesuai [kontrak aktif](PRINTER_PROTOCOLS_20261025.md).
+Host pixel/packet/page/wipe/queue, native delta terarah Poco, analyze/l10n dan
+build/handoff Skybee+11. Hanya Milestone tersedia; tidak menunggu printer lain
+atau mengirim mode TSPL/CPCL ke printer yang belum dikonfirmasi pada mode itu.
+Penutupan25Oktober: host42/native17 PASS, analyzer/l10n/build verified; handoff11
+PASS/462hash tertutup sama/startup/key/prefs/controlOff. Commit-push kini
+diotorisasi pengguna; hardware protokol tambahan tetap unverified, tidak
+menjadi pekerjaan menunggu perangkat atau aktivasi milestone baru.
+
+25 Oktober 2026: tangani bug printer MHT-P29L 80 mm Bluetooth. Reproduksi
+transport/raster di host, perbaiki pacing/finalisasi bila terbukti, verifikasi
+terarah di Poco dan satu sampel sintetis pada target yang dikonfirmasi.
+Update Skybee in-place setelah lulus, tanpa reset/reseed/downgrade; DV tidak
+tersedia dan tidak diperlukan untuk mengulang suite. Tahap lain tetap.
+Hasil satu sampel80mm sudah dikonfirmasi utuh. Tambahan pengguna: kontrol
+ruang kosong manual dan default3feed. Tuntaskan form/save/reopen pada host
+dan Poco, analyze/l10n/build akhir, lalu handoff in-place tanpa cetak tambahan.
+
+Penutupan 24-10-2026 00:19 WIB: Realme60skenario lintas run, AOT/worker PASS; verifikasi pembanding migrasi DV1/Poco1 PASS sesuai klarifikasi pengguna. Suite60Poco dibatalkan; run60DV terdahulu tetap FAILED_ISOLATION. [Laporan lengkap](REALME_C11_RESUME_20261023.md). Tidak mengaktifkan tahap baru.
+
+Koreksi scope24Oktober2026: pengguna menjelaskan verifikasi DV/Poco hanya pada
+perubahan sesudah temuan Realme. Jangan mengulang suite lama. DV60kasus sudah
+terlanjur berjalan; Poco belum. Tutup audit hash fixture DV dan gunakan bukti
+kasus terarah yang relevan; rencana suite60Poco di bawah dibatalkan.
+
+Tambahan23Oktober: sesudah Realme, verifikasi delta akhir pada DV8910 kemudian
+Poco F6 yang tersedia. Semua memakai integration terisolasi dan hash data lama;
+Skybee uji mandiri dipertahankan tanpa update/reset/reseed.
+
+23 Oktober2026: tindak lanjut pengujian perangkat Realme C11 sampai source M5.2
+terbaru, melanjutkan checkpoint19Oktober. Tutup worker lama exact nonce dahulu,
+lalu delta M5.1D/E/G/M5.2 dan handoff otomatis. Pengguna tidak menjadi penguji
+manual; izin OS/reboot diminta bila memang perlu. Tanpa reset/downgrade/
+penghilangan fitur. Ini validasi tahap yang sudah diimplementasikan, bukan
+aktivasi M5.3–M6. [Laporan aktif](REALME_C11_RESUME_20261023.md).
+
 **22 Oktober 2026 — M5.2 selesai pada cakupan A–H dan handoff pengembangan.**
 Acceptance DV24/Poco25, upgrade perbaikan DV5/Poco5, host/format/l10n/analyze
 dan build PASS. Source704642c dipush; Skybee0.5.2+9 diperbarui in-place Poco

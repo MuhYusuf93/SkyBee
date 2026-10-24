@@ -81,7 +81,7 @@ void m51UsbSuite(DatabaseFactory factory) {
                 if (connected && !missing) 'device': serialId,
               },
               'btDisconnect' || 'printerDisconnect' => connected = false,
-              'printerConnect' || 'printerWrite' => true,
+              'printerConnect' || 'printerWrite' || 'printerFinish' => true,
               _ => throw PlatformException(code: 'unexpected_public_usb_call'),
             };
           });
@@ -268,8 +268,14 @@ void m51UsbSuite(DatabaseFactory factory) {
         const wire = NativePrinterTransport();
         await wire.connect(tempId);
         await wire.write(Uint8List.fromList([0x1b, 0x40]));
+        await wire.finish();
         await wire.disconnect();
-        expect(calls, ['printerConnect', 'printerWrite', 'printerDisconnect']);
+        expect(calls, [
+          'printerConnect',
+          'printerWrite',
+          'printerFinish',
+          'printerDisconnect',
+        ]);
         calls.clear();
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(KasirPlatform.channel, (call) async {

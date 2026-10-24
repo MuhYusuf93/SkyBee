@@ -2393,8 +2393,80 @@ abstract class AppLocalizations {
   /// M5 printer, alerts or backup interface: m5Feed.
   ///
   /// In en, this message translates to:
-  /// **'Blank lines after receipt (0–8)'**
+  /// **'Blank space after receipt (0–8 lines)'**
   String get m5Feed;
+
+  /// Manual extra blank lines before the receipt header, from zero to eight.
+  ///
+  /// In en, this message translates to:
+  /// **'Blank space before header (0–8 lines)'**
+  String get m5TopFeed;
+
+  /// Explicit printer command language selection per saved profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer command language'**
+  String get m5Protocol;
+
+  /// ESC/POS GS v 0 raster encoder option.
+  ///
+  /// In en, this message translates to:
+  /// **'ESC/POS Raster (common)'**
+  String get m5ProtocolRaster;
+
+  /// ESC/POS ESC asterisk column image encoder option.
+  ///
+  /// In en, this message translates to:
+  /// **'ESC/POS Column (alternative)'**
+  String get m5ProtocolColumn;
+
+  /// TSPL bitmap continuous-media receipt encoder option.
+  ///
+  /// In en, this message translates to:
+  /// **'TSPL (continuous paper)'**
+  String get m5ProtocolTspl;
+
+  /// CPCL graphics continuous-media receipt encoder option.
+  ///
+  /// In en, this message translates to:
+  /// **'CPCL (continuous paper)'**
+  String get m5ProtocolCpcl;
+
+  /// User guidance for explicit protocol, continuous media and physical calibration.
+  ///
+  /// In en, this message translates to:
+  /// **'Match the printer mode or manufacturer guide, then Save. Firmware mode is not changed automatically. TSPL/CPCL use continuous paper at 203 dpi; match page height to the printer capability. Test print to check the paper result.'**
+  String get m5ProtocolHelp;
+
+  /// Bounded page height for TSPL/CPCL receipts, independent of total receipt length.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum page height (128–4096 dots)'**
+  String get m5PageRows;
+
+  /// Decrease leading blank lines for this printer profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce blank space before header'**
+  String get m5TopFeedDecrease;
+
+  /// Increase leading blank lines for this printer profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase blank space before header'**
+  String get m5TopFeedIncrease;
+
+  /// Decrease the extra trailing blank lines for this printer profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce blank space after receipt'**
+  String get m5FeedDecrease;
+
+  /// Increase the extra trailing blank lines for this printer profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase blank space after receipt'**
+  String get m5FeedIncrease;
 
   /// M5 printer, alerts or backup interface: m5GeometryHelp.
   ///
@@ -4109,7 +4181,7 @@ abstract class AppLocalizations {
   /// M5.2 operational form or validation. English meaning: Adjust feed after the footer. Inspect paper before saving calibration; old profiles retain their values.
   ///
   /// In en, this message translates to:
-  /// **'Adjust feed after the footer. Inspect paper before saving calibration; old profiles retain their values.'**
+  /// **'Enter the number of lines or use −/+. 0 adds no extra blank space. Press Save for this printer. Line length varies by printer; the printhead-to-tear distance remains.'**
   String get m52FeedHelp;
 
   /// M5.2 operational form or validation. English meaning: 21:00 backup is a best-effort target. Battery/background restrictions can delay it. On HyperOS, No restrictions (if available) may help without guaranteeing timing. Scheduling cannot be relied on after force-stop.

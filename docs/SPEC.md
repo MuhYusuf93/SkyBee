@@ -1,5 +1,45 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Tambahan langsung25Oktober2026: sesudah perbaikan cetak, pengguna meminta
+feed sebelum header manual/default3 dan pilihan protokol seperti referensi
+OpenLabel. Implementasikan ESC/POS Raster/Kolom, TSPL dan CPCL sesuai kontrak
+[dukungan protokol](PRINTER_PROTOCOLS_20261025.md). Tidak mengklaim seluruh
+merek/protokol proprietary/BLE pada screenshot. Ini perluasan yang diminta
+langsung, bukan aktivasi otomatis milestone lain. Profil/snapshot/transaksi
+lama dipertahankan, hardware tambahan dicatat unverified.
+
+Tindak lanjut bug25 Oktober2026: output 80 mm MHT-P29L Bluetooth harus mengirim
+seluruh raster dan footer dalam satu dokumen tanpa ekor dari job sebelumnya.
+Kontrol laju/finalisasi tidak boleh menjadi retry, cutter, pergantian codepage,
+atau perubahan transaksi. Profil/lebar/feed tersimpan tetap milik pengguna.
+Keberhasilan transport tetap bukan bukti kertas; kalibrasi fisik dicatat terpisah.
+Dukungan banyak printer mengikuti protokol/kemampuan, bukan daftar merek.
+Tidak ada cabang encoder berdasarkan MHT-P29L. ESC1/ESC2 OpenLabel belum diuji
+oleh pengguna dan bukan pemetaan protokol terverifikasi; CPCL/TSPL/BLE tidak
+ditambahkan pada scope bugfix awal. Sesudahnya pengguna mengotorisasi
+TSPL/CPCL sebagaimana kontrak lanjutan di atas; BLE tetap belum ditambahkan.
+Tambahan25Oktober sesudah hasil cetak utuh: ruang kosong akhir struk dapat
+diketik manual0–8baris atau−/+, tersimpan per printer;0tanpa tambahanfeed.
+Default baru/reset template3baris mengikuti instruksi langsung pengguna.
+Profil lama tetap memegang nilainya; jarak fisik kepala cetak tidak dijanjikan
+dapat dihilangkan oleh feed0.
+
+Penutupan validasi 24-10-2026 00:19 WIB: verifikasi sesudah temuan Realme dibatasi pada perubahan yang relevan. DV/Poco masing-masing satu kasus migrasi PASS; source fitur dan kebutuhan tetap. Tidak ada fitur dihapus atau downgrade. Batas audit DV terdahulu dicatat pada [Laporan lengkap](REALME_C11_RESUME_20261023.md).
+
+Klarifikasi24Oktober2026: ketersediaan DV/Poco untuk verifikasi berarti hanya
+kasus yang terdampak perbaikan temuan Realme, bukan pengujian ulang suite lama.
+Tidak memperluas fitur atau tahap. Poco suite60 tidak dijalankan.
+
+Verifikasi tambahan23Oktober: DV8910 dan Poco F6 tersedia sesudah perubahan
+Realme. Pengujian terisolasi mempertahankan data/aplikasi Skybee uji mandiri;
+tidak mengubah kebutuhan fitur atau mengaktifkan tahap berikutnya.
+
+Instruksi pengujian23 Oktober2026: Realme C11 dilanjutkan dari checkpoint lama
+sampai perubahan M5.2 terbaru, otomatis tanpa acceptance manual. Pengguna
+menangani izin/setting/reboot bila dibutuhkan; jangan menghapus fitur atau
+downgrade demi tes. Bila alternatif tersebut diperlukan, cukup laporkan hasil
+dan alasan di laporan akhir. Kebutuhan fitur tetap; M5.3–M6 belum dimulai.
+
 Penutupan22 Oktober2026: implementasi/pemeriksaan tersedia M5.2 A–H dan handoff
 Skybee0.5.2+9 selesai. Scope/keputusan tetap mengikuti kontrak22request, tidak
 mengaktifkan M5.3–M6. Data eksplorasi dipertahankan; pengguna mengonfirmasi

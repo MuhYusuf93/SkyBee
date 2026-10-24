@@ -12,6 +12,7 @@ import 'printer_transport.dart';
 import 'receipt_layout.dart';
 import 'receipt_snapshots.dart';
 import 'printer_output_gate.dart';
+import 'printer_document.dart';
 
 final class SalePrintPreview {
   const SalePrintPreview(this.layout, this.logo);
@@ -60,6 +61,14 @@ final class PrintQueueService {
   }
 
   static const ids = Uuid();
+
+  /// Capture effective new settings now; a queued document must not pick up
+  /// future profile defaults when it is sent or inspected after an upgrade.
+  static String _profileSnapshot(String settings) => jsonEncode(
+    PrinterProfile.fromJson(
+      jsonDecode(settings) as Map<String, dynamic>,
+    ).toJson(),
+  );
   Future<SalePrintPreview> preview(
     EntityId saleId, {
     bool copy = false,
@@ -161,7 +170,7 @@ final class PrintQueueService {
         'operation_key': operation,
         'sale_transaction_id': saleId.value,
         'device_id': profile['device_id'],
-        'profile_json': profile['settings_json'],
+        'profile_json': _profileSnapshot(profile['settings_json'] as String),
         'snapshot_json': jsonEncode({
           ...snapshot,
           'copy': copy,
@@ -205,7 +214,9 @@ final class PrintQueueService {
           'id': id,
           'operation_key': 'test:$id',
           'device_id': selected.single['device_id'],
-          'profile_json': selected.single['settings_json'],
+          'profile_json': _profileSnapshot(
+            selected.single['settings_json'] as String,
+          ),
           'snapshot_json': jsonEncode({
             'test': true,
             'logoHash': publicPrinter ? null : shop.firstOrNull?['logo_asset'],
@@ -263,7 +274,7 @@ final class PrintQueueService {
     var attempted = false;
     try {
       final row = await job(id);
-      final profile = PrinterProfile.fromJson(
+      final profile = PrinterProfile.fromSnapshotJson(
         jsonDecode(row['profile_json'] as String) as Map<String, dynamic>,
       );
       final snapshot =
@@ -290,25 +301,14 @@ final class PrintQueueService {
       }
       await transport.connect(row['device_id'] as String);
       attempted = true;
-      await transport.write(Uint8List.fromList([0x1b, 0x40]));
-      await for (final tile in layout.tiles(logo: logo)) {
-        late Uint8List bytes;
-        try {
-          bytes = await ReceiptLayout.encodeTile(tile);
-        } finally {
-          tile.dispose();
-        }
+      await for (final bytes in PrinterDocument(layout).frames(logo: logo)) {
         for (var i = 0; i < bytes.length; i += 4096) {
           await transport.write(
             Uint8List.sublistView(bytes, i, (i + 4096).clamp(0, bytes.length)),
           );
         }
       }
-      if (profile.feed > 0) {
-        await transport.write(
-          Uint8List.fromList(List.filled(profile.feed, 10)),
-        );
-      }
+      await transport.finish();
       await _status(id, 'submitted');
       return 'submitted';
     } catch (_) {

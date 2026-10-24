@@ -18,6 +18,7 @@ final class PrinterBluetooth {
     private final Handler main=new Handler(Looper.getMainLooper());
     private final ExecutorService io=Executors.newCachedThreadPool();
     private BluetoothSocket socket;
+    private BluetoothPrinterIo writer;
     private CompletableFuture<Map<String,Object>> discovery;
     private final Map<String,Map<String,Object>> found=new LinkedHashMap<>();
     private boolean registered;
@@ -68,17 +69,27 @@ final class PrinterBluetooth {
         BluetoothDevice device=adapter.getRemoteDevice(address);
         if(device.getType()==BluetoothDevice.DEVICE_TYPE_LE)throw new IOException("BLE-only printer unsupported");
         BluetoothSocket candidate=device.createRfcommSocketToServiceRecord(SPP);
-        synchronized(this){socket=candidate;}
+        synchronized(this){socket=candidate;writer=new BluetoothPrinterIo(new BluetoothPrinterIo.Link(){
+            public boolean connected(){return candidate.isConnected();}
+            public OutputStream output() throws IOException{return candidate.getOutputStream();}
+            public void close() throws IOException{candidate.close();}
+        });}
         Future<?> request=io.submit(()->{try{candidate.connect();}catch(IOException e){throw new CompletionException(e);}});
         try{request.get(15,TimeUnit.SECONDS);}catch(Exception error){candidate.close();request.cancel(true);disconnect();throw error;}
     }
     void write(byte[] bytes) throws Exception {
         if(bytes==null||bytes.length==0||bytes.length>4096)throw new IOException("Invalid Bluetooth chunk");
-        BluetoothSocket target;synchronized(this){target=socket;}
-        if(target==null||!target.isConnected())throw new IOException("Printer not connected");
-        Future<?> request=io.submit(()->{try{target.getOutputStream().write(bytes);target.getOutputStream().flush();}catch(IOException e){throw new CompletionException(e);}});
+        BluetoothPrinterIo target;synchronized(this){target=writer;}
+        if(target==null)throw new IOException("Printer not connected");
+        Future<?> request=io.submit(()->{try{target.write(bytes);}catch(IOException e){throw new CompletionException(e);}});
         try{request.get(10,TimeUnit.SECONDS);}catch(Exception error){target.close();request.cancel(true);throw error;}
     }
-    synchronized void disconnect() throws IOException {if(socket!=null){BluetoothSocket previous=socket;socket=null;previous.close();}}
+    void finish() throws Exception {
+        BluetoothPrinterIo target;synchronized(this){target=writer;}
+        if(target==null)throw new IOException("Printer not connected");
+        Future<?> request=io.submit(()->{try{target.finish();}catch(IOException e){throw new CompletionException(e);}});
+        try{request.get(10,TimeUnit.SECONDS);}catch(Exception error){target.close();request.cancel(true);throw error;}
+    }
+    synchronized void disconnect() throws IOException {if(socket!=null){BluetoothSocket previous=socket;BluetoothPrinterIo old=writer;socket=null;writer=null;if(old!=null)old.close();else previous.close();}}
     void dispose(){finishDiscovery(true,false);try{disconnect();}catch(IOException ignored){}io.shutdownNow();}
 }

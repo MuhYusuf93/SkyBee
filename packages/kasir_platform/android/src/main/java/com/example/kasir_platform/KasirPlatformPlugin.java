@@ -221,6 +221,11 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
                         finally{if(bytes!=null)Arrays.fill(bytes,(byte)0);}
                         yield true;
                     }
+                    case "printerFinish" -> {
+                        if("bluetooth".equals(activePrinter))bluetooth.finish();
+                        else if(!"usb".equals(activePrinter)||!Boolean.TRUE.equals(usb.status().get("connected")))throw new IOException("Printer not connected");
+                        yield true;
+                    }
                     case "printerDisconnect", "btDisconnect" -> {activePrinter=null;usb.disconnect();bluetooth.disconnect();yield true;}
                     default -> null;
                 };

@@ -28,6 +28,7 @@ final class PublicRecoveryWire implements PrinterTransport {
   final views = <Uint8List>[];
   int connections = 0, writes = 0;
   bool failConnect = false;
+  bool failFinish = false;
   int? failWrite;
   Future<void> Function()? firstWrite;
   @override
@@ -50,6 +51,11 @@ final class PublicRecoveryWire implements PrinterTransport {
 
   @override
   Future<void> disconnect() async => events.add('$label:disconnect');
+  @override
+  Future<void> finish() async {
+    events.add('$label:finish');
+    if (failFinish) throw const SocketException('PUBLIC final drain failure');
+  }
 }
 
 void m51RecoveryPrintSuite(DatabaseFactory factory) {
@@ -284,6 +290,19 @@ void m51RecoveryPrintSuite(DatabaseFactory factory) {
         expect(log.length, 1);
         expect(log.single['entity_id'], isNull);
         expect((await db.read((sql) => sql.query('print_jobs'))), isEmpty);
+      },
+    );
+    test(
+      'final drain failure stays ambiguous, consumes authorization and preserves facts',
+      () async {
+        wire.failFinish = true;
+        final before = await db.read(DatabaseValidation.fingerprint);
+        expect(await send(), RecoveryPrintOutcome.unknown);
+        expect(await db.read(DatabaseValidation.fingerprint), before);
+        expect(events.where((e) => e == 'recovery:finish').length, 1);
+        await expectLater(send(), throwsA(isA<AppError>()));
+        expect(wire.connections, 1);
+        expect(wire.views.every((v) => v.every((byte) => byte == 0)), true);
       },
     );
     for (final partial in [false, true]) {

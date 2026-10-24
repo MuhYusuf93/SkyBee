@@ -1,5 +1,92 @@
 # Status proyek
 
+**25Oktober sekitar02:04WIB — implementasi, pemeriksaan dan handoff selesai.**
+Empat pilihan perprinter ESC/POS Raster/Kolom, TSPL/CPCL; feed atas/bawah
+manual0–8/default3. Host42PASS65s, Poco delta17PASS24s/448hash lama cocok,
+format23/0changed, analyze bersih5,7s, l10n690/471/245PASS. Build debug21s/
+signature/3ABI/13library/16KiB PASS. Skybee0.5.2+11/schema14 dipasang-r:
+462hash tertutup lama sama sebelum launch; startup kasir/key/prefs/seed/proof
+dan package lain PASS/controlOff. Tidak reset/reseed/downgrade/ekspor sandbox
+atau menghapus fingerprint. Protokol tambahan hardware UNVERIFIED; hanya
+Milestone ESC/POS Raster pernah dikonfirmasi utuh. Tidak menunggu perangkat
+lain atau uji mandiri, tidak mengulang suite DV/Realme. [Laporan](PRINTER_PROTOCOLS_20261025.md).
+Commit/push diotorisasi pengguna sesudah selesai dan dilanjutkan setelah
+penyusunan bukti ini; bukti Git final dicatat setelah hasil tool tersedia.
+
+**Riwayat25Oktober — perbaikan printer 80 mm ditutup pada versi10.** Pengguna melaporkan
+MHT-P29L Bluetooth memotong kalibrasi, menunda ekor ke cetakan berikutnya,
+dan sesekali menghasilkan karakter tak diharapkan. Poco tersedia, DV tidak.
+Investigasi dibatasi raster/transport/finalisasi output; tidak mengulang suite
+perangkat lain atau mengubah data Skybee. [Laporan aktif](PRINTER_80MM_FIX_20261025.md).
+Poco4PASS dan satu sampel80mm1PASS7s,445hash lama cocok masing-masing.
+Pengguna mengonfirmasi kertas utuh, meminta kontrol manual/default3feed.
+UI0–8baris dengan−/+ di bawah ukuran kertas sudah diterapkan, saved profile
+tetap. Host final26kasus memiliki PASS lintas25PASS/1ekspektasi lamaFAIL
+dan focused1PASS4s; analyze bersih101,9s, l10n680/471/245PASS. Native1form
+5sPASS/447hashsama, handoff10PASS/459hashsama. Disusul11 di atas.
+
+**24-10-2026 00:19 WIB — kelanjutan Realme dan verifikasi terarah ditutup.**
+Realme: seluruh 60 skenario delta memiliki PASS lintas run (59PASS/1FAIL lalu
+retest kasus migrasi 1PASS), AOT ARM32 final PASS, reader/cleanup checkpoint
+lama 2PASS dan worker current 2PASS. Seluruh 257 entri checkpoint awal tetap
+cocok pada endpoint hash Realme terakhir. Verifikasi perubahan pembanding
+migrasi saja: **DV 1PASS 00:29, Poco 1PASS 00:18**; seluruh
+hash lama pada kedua interval terarah cocok, awake DV restored/readback exact.
+Poco tidak menjalankan suite 60 kasus. Koreksi scope pengguna berlaku: hanya
+perubahan akibat temuan Realme yang diverifikasi di DV/Poco.
+
+DV sempat terlanjur menjalankan 60 kasus (60PASS14:47), tetapi interval itu
+**FAILED ISOLATION**: satu DB integration berubah dan 436 berkas lain cocok.
+Metadata menunjukkan periodic alert selesai dekat waktu perubahan DB;
+penyebab ini inferred, bukan bukti seluruh row lama terjaga. Failure/raw lama
+dipertahankan, tidak ditutup oleh baseline baru atau focused pass.
+
+Tidak ada source fitur app yang berubah atau bug fitur app yang terbukti.
+Perbaikan ada pada test/harness/workflow, termasuk ledger yang kini menandai
+kegagalan hash sebagai FAILED_OR_BLOCKED. Tidak reset/uninstall/downgrade,
+reboot, penghilangan fitur, perubahan fingerprint atau update Skybee baru.
+Data/key/Skybee Poco cocok selama interval terarah. Fixture ketiga perangkat
+tetap0.5.2+9, semua package sendiri tertutup/controlOff; WorkManager Realme
+0pending. Salinan sementara WorkManager Poco yang khusus disetujui pengguna
+sudah dihapus. Sandbox DV tidak disalin; penolakan auto-review dipatuhi.
+
+Format308/0changed, analyze No issues121,0s, l10n678/468/245 PASS.
+Source app tetap b45f069; perubahan lokal test/tooling/docs belum commit/push.
+[Laporan lengkap](REALME_C11_RESUME_20261023.md), [bukti terkurasi](evidence/realme-resume-20261023/validation-results.json). Tidak menunggu uji manual dan tidak memulai M5.3–M6.
+
+Catatan setelah bagian ini merupakan riwayat checkpoint yang sudah ditutup;
+nomor session, pending dan rencana suite luas lama bukan instruksi aktif.
+
+**24Oktober2026 — scope dikoreksi, audit DV berjalan:** pengguna hanya meminta
+verifikasi perubahan akibat temuan Realme. DV terlanjur60PASS14:47, tetapi
+wrapper exit1 karena hash root DB integration berubah;436file lama lain cocok,
+awake pulih exact/controlOff. Poco belum diuji ulang; suite60Poco dibatalkan.
+Perbaikan Realme hanya harness/workflow, tidak ada source fitur app berubah.
+
+**23 Oktober2026,23:38WIB — delta Realme diperiksa:** run utama59PASS1FAIL,
+retest migrasi terarah1PASS34s sesudah memperbaiki pembanding kolom aditif.
+Seluruh60skenario lulus lintas run; hash lama sama/controlOff. Tidak ada source
+fitur aplikasi berubah. Probe release ARM32 berjalan, lalu worker current,
+verifikasi DV8910 dan Poco F6 yang kini tersedia sesuai instruksi pengguna.
+[Laporan aktif](REALME_C11_RESUME_20261023.md). M5.3–M6 belum dimulai.
+
+**23 Oktober2026,23:05WIB — endpoint worker Realme ditutup:** reader/cleanup
+exact nonce1792404362140 retest2PASS6s;257entri baseline awal tetap sama,
+hanya DB/retry own-probe bermigrasi/claim. WorkManager prune multi-hari ditangani
+dengan bukti terminal sebelum update yang terikat hash marker, tanpa replay
+setup. Callback produksi pulih/controlOff. Delta M5.1/M5.2 gabungan berjalan
+setelah perbaikan compile helper; tidak ada app feature berubah/downgrade.
+[Laporan aktif](REALME_C11_RESUME_20261023.md).
+
+**23 Oktober 2026 — pengujian Realme dilanjutkan atas instruksi pengguna:**
+lanjut checkpoint19Oktober hingga M5.2, otomatis tanpa acceptance manual;
+tidak menghapus fitur/reset/downgrade, reboot/izin OS diminta bila perlu.
+RMX3231/API30/ARM32 terhubung. Exact worker lama1792404362140 ternyata selesai
+PID3685, WorkManager succeeded/0pending,257hash baseline lama semua sama.
+Reader+cleanup nonce sama berjalan sebelum delta M5.1D/E/G dan M5.2. Tidak
+mengulang98kasus lama dari awal. [Laporan aktif](REALME_C11_RESUME_20261023.md).
+Poco/Skybee tetap; M5.3–M6 tidak dimulai.
+
 **22 Oktober 2026,14:29 WIB — M5.2 ditutup:** A–H, pemeriksaan yang tersedia,
 audit/push repository dan handoff debug Skybee selesai. DV acceptance24/Poco25
 serta upgrade perbaikan5per device PASS; host recovery10 dan DB/alert15PASS,

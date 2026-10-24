@@ -1,3 +1,6 @@
+import 'printer_protocol.dart';
+export 'printer_protocol.dart';
+
 /// Physical paper width and effective printable dots are distinct. Defaults are
 /// conservative ESC/POS profiles, not proof of a particular printer capability.
 final class PrinterProfile {
@@ -12,7 +15,10 @@ final class PrinterProfile {
     this.bold = false,
     this.headerAlign = 'center',
     this.footerAlign = 'center',
-    this.feed = 6,
+    this.feed = 3,
+    this.topFeed = 3,
+    this.protocol = PrinterProtocol.escPosRaster,
+    this.pageRows = 1024,
     this.logo = true,
     this.logoPercent = 100,
     this.lineGap = 6,
@@ -25,9 +31,12 @@ final class PrinterProfile {
       shift,
       font,
       feed,
+      topFeed,
+      pageRows,
       logoPercent,
       lineGap;
   final bool bold, logo;
+  final PrinterProtocol protocol;
   final String headerAlign, footerAlign;
   int get x => left + shift;
   int get effectiveDots => dots - left - right - shift.abs();
@@ -48,6 +57,10 @@ final class PrinterProfile {
         ![0, 3, 6, 9].contains(lineGap) ||
         feed < 0 ||
         feed > 8 ||
+        topFeed < 0 ||
+        topFeed > 8 ||
+        pageRows < 128 ||
+        pageRows > 4096 ||
         !['left', 'center', 'right'].contains(headerAlign) ||
         !['left', 'center', 'right'].contains(footerAlign)) {
       throw const FormatException('printerProfileInvalid');
@@ -66,6 +79,9 @@ final class PrinterProfile {
     'headerAlign': headerAlign,
     'footerAlign': footerAlign,
     'feed': feed,
+    'topFeed': topFeed,
+    'protocol': protocol.name,
+    'pageRows': pageRows,
     'logo': logo,
     'logoPercent': logoPercent,
     'lineGap': lineGap,
@@ -82,9 +98,17 @@ final class PrinterProfile {
     headerAlign: json['headerAlign'] as String,
     footerAlign: json['footerAlign'] as String,
     feed: json['feed'] as int,
+    topFeed: json['topFeed'] as int? ?? 3,
+    protocol: PrinterProtocol.parse(json['protocol']),
+    pageRows: json['pageRows'] as int? ?? 1024,
     logo: json['logo'] as bool,
     logoPercent: json['logoPercent'] as int? ?? 100,
     lineGap: json['lineGap'] as int? ?? 6,
   )..validate();
+
+  /// Jobs already prepared before leading feed existed keep their original
+  /// zero-leading-space snapshot. New jobs explicitly capture current defaults.
+  factory PrinterProfile.fromSnapshotJson(Map<String, dynamic> json) =>
+      PrinterProfile.fromJson({...json, 'topFeed': json['topFeed'] ?? 0});
   static const generic80 = PrinterProfile(paperMm: 80, dots: 576);
 }

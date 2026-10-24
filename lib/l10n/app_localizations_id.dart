@@ -1295,7 +1295,44 @@ class AppLocalizationsId extends AppLocalizations {
   String get m5ShiftDots => 'Pergeseran horizontal (dots)';
 
   @override
-  String get m5Feed => 'Baris kosong setelah struk (0–8)';
+  String get m5Feed => 'Ruang kosong akhir struk (0–8 baris)';
+
+  @override
+  String get m5TopFeed => 'Ruang kosong sebelum header (0–8 baris)';
+
+  @override
+  String get m5Protocol => 'Bahasa perintah printer';
+
+  @override
+  String get m5ProtocolRaster => 'ESC/POS Raster (umum)';
+
+  @override
+  String get m5ProtocolColumn => 'ESC/POS Kolom (alternatif)';
+
+  @override
+  String get m5ProtocolTspl => 'TSPL (kertas gulung)';
+
+  @override
+  String get m5ProtocolCpcl => 'CPCL (kertas gulung)';
+
+  @override
+  String get m5ProtocolHelp =>
+      'Pilih sesuai mode printer atau panduan pabrik, lalu Simpan. Penggantian mode firmware tidak otomatis. TSPL/CPCL memakai kertas gulung 203 dpi; pilih tinggi halaman sesuai kemampuan printer. Uji cetak untuk memastikan hasil kertas.';
+
+  @override
+  String get m5PageRows => 'Tinggi halaman maksimum (128–4096 dot)';
+
+  @override
+  String get m5TopFeedDecrease => 'Kurangi ruang kosong sebelum header';
+
+  @override
+  String get m5TopFeedIncrease => 'Tambah ruang kosong sebelum header';
+
+  @override
+  String get m5FeedDecrease => 'Kurangi ruang kosong akhir struk';
+
+  @override
+  String get m5FeedIncrease => 'Tambah ruang kosong akhir struk';
 
   @override
   String get m5GeometryHelp =>
@@ -2265,7 +2302,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m52FeedHelp =>
-      'Atur feed sesudah footer. Periksa kertas sebelum menyimpan hasil kalibrasi; profil lama tetap memakai nilainya.';
+      'Ketik jumlah baris atau gunakan −/+. 0 berarti tanpa tambahan ruang kosong. Tekan Simpan untuk printer ini. Panjang tiap baris bergantung pada printer; jarak kepala cetak ke sobekan tetap ada.';
 
   @override
   String get m52BatteryHelp =>
