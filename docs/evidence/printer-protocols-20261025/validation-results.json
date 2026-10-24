@@ -95,6 +95,14 @@
     "native": "1fa0abb5be7cc2f2cc203bff314832ed3ed2e5c2ca76fb328414deab42a59c65",
     "host": "9ac33a2b2462cbf2e81ff68ef48d614bad450f4cb7156fbb39c080fda6eb1439"
   },
-  "gitDelivery": "Authorized; record after push completes",
+  "gitDelivery": {
+    "status": "SOURCE_PUSH_VERIFIED",
+    "remoteSourceHeadMatches": true,
+    "featureSourceCommit": "9a23775f0e06376d3fc0ce84f099c86ab06c30ef",
+    "privateArtifactsPushed": false,
+    "checkpointHarnessCommit": "25c66a7",
+    "branch": "origin/main",
+    "documentationClosureFollowsSource": true
+  },
   "noWaitingForManualCampaign": true
 }

@@ -6,8 +6,8 @@ Host pixel/packet/page/wipe/queue, native delta terarah Poco, analyze/l10n dan
 build/handoff Skybee+11. Hanya Milestone tersedia; tidak menunggu printer lain
 atau mengirim mode TSPL/CPCL ke printer yang belum dikonfirmasi pada mode itu.
 Penutupan25Oktober: host42/native17 PASS, analyzer/l10n/build verified; handoff11
-PASS/462hash tertutup sama/startup/key/prefs/controlOff. Commit-push kini
-diotorisasi pengguna; hardware protokol tambahan tetap unverified, tidak
+PASS/462hash tertutup sama/startup/key/prefs/controlOff. Commit-push source
+9a23775/25c66a7 selesai/remoteverified; hardware protokol tambahan tetap unverified, tidak
 menjadi pekerjaan menunggu perangkat atau aktivasi milestone baru.
 
 25 Oktober 2026: tangani bug printer MHT-P29L 80 mm Bluetooth. Reproduksi

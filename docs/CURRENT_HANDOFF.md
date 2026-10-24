@@ -1,4 +1,10 @@
-# Handoff aktif — perbaikan printer Bluetooth 80 mm
+# Handoff selesai — printer, ruang kosong dan pilihan protokol
+
+**Delivery Git25Oktober terverifikasi:** source fitur9a23775 dan checkpoint
+harness25c66a7 dipush biasa ke origin/main; ls-remote membuktikan source HEAD
+9a23775f0e06376d3fc0ce84f099c86ab06c30ef sama. Catatan penutupan ini merupakan
+commit dokumentasi sesudah source tersebut. Seluruh permintaan yang tersedia
+sudah ditangani; jangan mengulang tes atau menunggu printer/uji mandiri lain.
 
 **25Oktober sekitar02:04WIB — implementasi/pemeriksaan/handoff ditutup.**
 Skybee0.5.2+11/schema14 terpasang in-place Poco. Feed atas/bawah manual0–8,
@@ -13,8 +19,8 @@ Hanya Milestone ESC/POS Raster punya bukti kertas utuh dari pengguna. Kolom/
 TSPL/CPCL hardware UNVERIFIED; BLE/proprietary/300dpi/die-cut tidak diklaim.
 Tidak menunggu uji mandiri/printer lain, tidak mengulang suite DV/Realme atau
 memulai milestone lain. Tidak reset/reseed/uninstall/downgrade/ekspor sandbox/
-ubah fingerprint. Commit-push terbaru diotorisasi pengguna; dilanjutkan setelah
-penyusunan bukti ini, hasil Git dicatat sesudah tool selesai. Tidak ada job
+ubah fingerprint. Commit-push diotorisasi pengguna dan source telah dikirim
+seperti bukti delivery di atas. Tidak ada job
 SDK/device aktif. Paragraf berikut histori checkpoint, bukan pekerjaan pending.
 
 25 Oktober 2026: perbaikan generik ESC/POS tanpa cabang merek: raster24row,

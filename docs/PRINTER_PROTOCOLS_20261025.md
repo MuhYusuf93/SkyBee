@@ -68,6 +68,8 @@ BLE, protokol proprietary merek,300dpi dan desain/die-cut label belum didukung.
 Tidak ada retry/fallback atau perubahan firmware otomatis. Hardware tambahan
 tetap UNVERIFIED dan tidak menahan penutupan pekerjaan yang tersedia.
 
-Pengguna mengotorisasi commit-push setelah seluruh pekerjaan selesai. Pada
-saat penyusunan laporan ini source/bukti siap dikirim; bukti Git diisi sesudah
-hasil tool, tanpa APK/database/log privat.
+Pengguna mengotorisasi commit-push setelah seluruh pekerjaan selesai. Source
+fitur9a23775 dan harness checkpoint25c66a7 sudah dipush biasa ke origin/main;
+remote source HEAD9a23775f0e06376d3fc0ce84f099c86ab06c30ef terverifikasi sama.
+Catatan penutupan dokumentasi mengikuti source tersebut. APK/database/log
+privat tetap lokal. Tidak ada pekerjaan menunggu hasil uji mandiri pengguna.

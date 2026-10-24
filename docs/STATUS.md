@@ -10,8 +10,9 @@ dan package lain PASS/controlOff. Tidak reset/reseed/downgrade/ekspor sandbox
 atau menghapus fingerprint. Protokol tambahan hardware UNVERIFIED; hanya
 Milestone ESC/POS Raster pernah dikonfirmasi utuh. Tidak menunggu perangkat
 lain atau uji mandiri, tidak mengulang suite DV/Realme. [Laporan](PRINTER_PROTOCOLS_20261025.md).
-Commit/push diotorisasi pengguna sesudah selesai dan dilanjutkan setelah
-penyusunan bukti ini; bukti Git final dicatat setelah hasil tool tersedia.
+Commit/push source selesai:9a23775 fitur printer dan25c66a7 checkpoint harness,
+origin/main diverifikasi remote sama dengan source HEAD. Catatan penutupan
+dokumentasi mengikuti source tersebut; APK/database/log privat tidak dipush.
 
 **Riwayat25Oktober — perbaikan printer 80 mm ditutup pada versi10.** Pengguna melaporkan
 MHT-P29L Bluetooth memotong kalibrasi, menunda ekor ke cetakan berikutnya,

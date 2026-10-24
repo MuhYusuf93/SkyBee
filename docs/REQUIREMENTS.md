@@ -16,7 +16,8 @@ berubah saat output gagal. Bukti software/hardware dibedakan pada
 
 Bug25 Oktober2026 — MHT-P29L 80 mm Bluetooth: kalibrasi terpotong/tertunda dan
 karakter tak diharapkan dilaporkan pengguna. Verifikasi difokuskan ke framing
-raster, pacing dan akhir dokumen pada Poco; belum mengklaim perbaikan fisik.
+raster, pacing dan akhir dokumen pada Poco; hasil fisik berikutnya dikonfirmasi
+utuh oleh pengguna.
 [Laporan/bukti](PRINTER_80MM_FIX_20261025.md).
 Hasil satu sampel fisik dikonfirmasi utuh oleh pengguna. Tambahan: kontrol
 manual ruang kosong akhir0–8baris dengan−/+, default profil baru/reset3baris,
