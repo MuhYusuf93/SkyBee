@@ -1,5 +1,87 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Onboarding19 tervalidasi — commit lalu B kunci kasir
+
+Poco `build/m53-onboarding-poco-20261027-025715`13PASS2:17,525hash lama sama/
+controlOff. DV semua13 memiliki PASS lintas domain9+migration1 pada run10PASS3FAIL
+ dan focusedUI3PASS1:24; bukan satu DV13all-pass. Hash577/580/595 seluruhnya sama,
+awake exact dan controlOff tiap interval, termasuk failure. Baseline577 awalDV
+masih cocok endpointUI akhir. Source checksum tidak berubah selama native akhir.
+Host23PASS34s=acceptance13+cost10; pathname retest13PASS33s dan helper3PASS14s
+(overlap). Analyze final No issues104,3s, format366/0changed, l10n792/525/245.
+[Laporan](M53_ONBOARDING_REPORT.md), [bukti](evidence/m53-20261026/onboarding-validation.json).
+
+Source+12/schema19 belum rilis, .skybee+12/schema14 tanpa update/reset. Semua
+wrapper telah ditutup. Audit/stage/commit/push checkpoint19 lalu langsung B:
+kunci kasir defaultoff, own/refowner PIN tanpa grant Kelola, manual/screen lock
+mempertahankan cart/tender+dirty Back warning. Rancangan privat
+`build/m53/cashier-lock-next-design.md` dan primary PowerManager API sudah dibaca.
+Pilih lock ROUTE+NavigatorObserver agar seluruh route/controller tetap hidup dan
+Back/dialog tetap benar; jangan global builder overlay yang menyembunyikan dialog.
+Lanjut C–H sampai handoff, bukan berhenti pada checkpoint. Jangan ulang suite
+native yang tidak terdampak; ordinary/release+update .skybee tetap H.
+
+
+## Onboarding19 DV UI3 PASS, Poco13 dimulai
+
+DV focused `build/m53-onboarding-ui-dv-20261027-025302`3PASS1:24,595protected
+hash lama sama/controlOff/awake exact. Dengan SQL9+migration1 PASS pada retest
+sebelumnya, semua13 memiliki PASS lintas run; bukan satu DV13all-pass. Helper
+then<void>/expectSync lulus host3PASS14s dan native3. App source tidak berubah;
+snapshot source pre-ui-retest masih cocok. Analyze final No issues104,3s.
+Poco full13 dimulai dengan source yang sama, snapshot tetap berlaku. Jangan
+ubah source sampai wrapper selesai; lalu audit/checkpoint/commit source19,
+lanjut B kunci kasir (rancangan privat build/m53/cashier-lock-next-design.md)
+dan C–H tanpa berhenti sebelum handoff. .skybee+12/schema14 tetap tidak diupdate.
+
+
+## Onboarding19 DV10PASS3FAIL, focused UI3 retest berikut
+
+`build/m53-onboarding-dv-retest-20261027-024621`10PASS3FAIL2:54: SQL9 dan
+populated migration1 PASS. UI pertama mencapai Kasir, lalu assertion SQL yang
+berjalan saat guarded pump native memicu TestAsyncUtils; helper Future.then
+inferred bool dengan onError void menutupi error awal. Binding pendingFrame
+menggagalkan UI2/3 berikutnya. Fix helper only: then<void> dan expectSync pada
+asserts yang dapat selesai ketika pump berjalan; assertion/data/fitur tetap.
+Source unchanged sepanjang run; hash lama semua sama/controlOff/awake exact.
+Retest host UI3 lalu DV UI3, kemudian Poco13; jangan ulang DV domain yang sudah PASS.
+
+
+## Onboarding19 DV guard failure ditutup, retest13 aktif
+
+Native awal `build/m53-onboarding-dv-20261027-023951`:1PASS4FAIL2:04. Migrasi1PASS;
+SQL setUpAll dan UI3 gagal karena fixture filename m5_regression_setup_* tidak
+lolos whitelist numeric EncryptedFixtureFactory. Tidak melemahkan guard; hanya
+nama file test diganti m5_regression_<timestamp>_<serial>. App source unchanged.
+Seluruh577 hash lama cocok, controlOff, awake restored/readback exact. Source
+pre-native checksum tidak berubah selama interval. Host sesudah helper fix13PASS33s.
+DV retest13 mulai, lalu Poco13; snapshot `build/m53/onboarding-source-pre-retest.json`.
+Jangan edit app/test source sampai dua wrapper ditutup. KDF/native binder tetap.
+
+
+## Onboarding19 host23PASS — native DV dimulai
+
+Host `build/m53/onboarding-acceptance-regression.txt`23PASS34s = setup acceptance13
+(SQL9/UI3/populated14-to19 rollback1)+cost10. Format366/0changed; l10n792/525/245.
+Analyzer sebelum penambahan test terakhir No issues111,9s. Semua perubahan
+source19 masih WIP, belum commit/install .skybee. Native melalui audited wrapper,
+M53 background-paused. Snapshot source privat `build/m53/onboarding-source-pre-native.json`.
+DV endpoint.101/Poco7f0edea0 device. Jangan mengubah source selama build/run;
+lanjut Poco setelah wrapper DV selesai, lalu bukti/commit dan remaining B–H.
+
+
+## Resume27Oktober — onboarding source19 WIP, tahap tetap aktif
+
+Transisi tracking sudah commit/push `81d430686bdd62b08c4063657d0872068b414294`.
+Source lokal kini+12/schema19 belum dirilis: draft non-secret, staging verifier,
+proof acknowledgement recovery, final atomic setup service/controller/screen,
+startup defer runtime sedang diimplementasikan. Host domain awal6PASS1FAIL13s:
+assert test membaca name dari preferences publik yang memang tidak memilih name;
+assert diganti membaca row settings langsung, retest belum selesai. Analyze awal
+8info braces dan audit menemukan key ok, sedang diperbaiki. Belum native19.
+Tidak ada update/reset data .skybee+12/schema14. Lanjut widget/resume/security/
+migration/backup checks, native delta DV/Poco, lalu remaining B–H sampai handoff.
+
 ## Checkpoint tracking source18 tervalidasi — lanjut onboarding
 
 Host acceptance/regresi34PASS1:32; focused helper1PASS8s; dynamic report labels

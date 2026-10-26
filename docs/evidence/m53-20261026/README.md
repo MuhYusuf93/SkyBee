@@ -13,3 +13,7 @@ menutup6interval native terisolasi, bukan handoff seluruh M5.3.
 
 [Checkpoint tracking](tracking-validation.json) dan [source checksums](tracking-source-sha256.json)
 mempertahankan DV16PASS1FAIL serta focused retest, tidak menandainya sebagai satu17PASS.
+
+Onboarding19 ditutup27Oktober: [validasi dan scope](onboarding-validation.json),
+[source checksums](onboarding-source-sha256.json). Raw failure tetap privat;
+DV13PASS lintas domain/migration+focusedUI, Poco13PASS satu run. B–H masih aktif.

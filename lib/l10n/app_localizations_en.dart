@@ -2542,4 +2542,140 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53EmptyCostCheck => 'Empty stock valuation';
+
+  @override
+  String get m53SetupTitle => 'Store setup';
+
+  @override
+  String get m53SetupIdentity => 'Store identity';
+
+  @override
+  String get m53SetupSecurity => 'Management security';
+
+  @override
+  String get m53SetupFeatures => 'Visible features';
+
+  @override
+  String get m53SetupPrinter => 'Set up a receipt printer now?';
+
+  @override
+  String get m53SetupReview => 'Review setup';
+
+  @override
+  String get m53SetupStep => 'Step';
+
+  @override
+  String get m53SetupNext => 'Next';
+
+  @override
+  String get m53SetupBack => 'Previous';
+
+  @override
+  String get m53SetupFinish => 'Finish and open Cashier';
+
+  @override
+  String get m53SetupAddress => 'Address (optional)';
+
+  @override
+  String get m53SetupContact => 'WhatsApp/phone (optional)';
+
+  @override
+  String get m53SetupSelfManaged => 'I manage the store myself';
+
+  @override
+  String get m53SetupTaskHelp =>
+      'These are access patterns on the same app/device, not personal employee accounts. Pattern 1: the owner handles checkout and management. Pattern 2: cashier and inventory/reports manager. Pattern 3 or more: Cashier, Warehouse and Owner/Reports are separate.';
+
+  @override
+  String get m53SetupPinHelp =>
+      'The PIN protects management; Cashier stays open unless the optional cashier lock is enabled. Owner/manager biometrics can be enabled later in Security. Biometrics do not identify Warehouse staff.';
+
+  @override
+  String get m53SetupOwnerPin => 'Create Owner/Management PIN';
+
+  @override
+  String get m53SetupOwnerConfirm => 'Confirm Owner/Management PIN';
+
+  @override
+  String get m53SetupWarehouseConfirm => 'Confirm Warehouse PIN';
+
+  @override
+  String get m53SetupPreparePin => 'Save security setup';
+
+  @override
+  String get m53SetupPinsReady =>
+      'Security is prepared. Raw PINs are not stored in the draft.';
+
+  @override
+  String get m53SetupRedoPin => 'Prepare PINs again';
+
+  @override
+  String get m53SetupStockRequired =>
+      'Stock tracking is active for warehouse task separation.';
+
+  @override
+  String get m53SetupPrinterHelp =>
+      'You can set up a printer later. Select a profile/transport, connect and try a test print on the printer page. Profiles change only after saving. Failed or cancelled printing does not block setup.';
+
+  @override
+  String get m53SetupOpenPrinter => 'Set up printer';
+
+  @override
+  String get m53SetupSkipPrinter => 'Skip';
+
+  @override
+  String get m53SetupOffline =>
+      'Setup needs no internet or Google account. The initial currency is IDR; currency settings remain available in store settings.';
+
+  @override
+  String get m53SetupVisiblePin => 'Show PIN';
+
+  @override
+  String get m53SetupShowRecovery => 'Show recovery code';
+
+  @override
+  String get m53SetupDraftInvalid =>
+      'The setup draft is invalid. Check the fields and try again.';
+
+  @override
+  String get m53SetupChanged =>
+      'Setup progress changed. Reopen setup to load the latest progress.';
+
+  @override
+  String get m53SetupUnavailable =>
+      'New-store setup is unavailable for a configured store or a store with business data.';
+
+  @override
+  String get m53SetupPinsRequired =>
+      'Complete security setup and save the recovery code first.';
+
+  @override
+  String get m53SetupSaved => 'Progress is saved on this device.';
+
+  @override
+  String get m53SetupWholesale => 'Wholesale prices';
+
+  @override
+  String get m53SetupPackaging => 'Carton/box packaging';
+
+  @override
+  String get m53SetupCost => 'Purchase price/cost';
+
+  @override
+  String get m53SetupBarcode => 'Barcode';
+
+  @override
+  String get m53SetupExpiry => 'Expiry tracking';
+
+  @override
+  String get m53SetupPackagingHelp =>
+      'Enter package quantity and units per package. Base stock stays in pieces; configuration changes do not alter old transactions.';
+
+  @override
+  String get m53SetupOptionalFeatures =>
+      'Additional features can be enabled later in feature settings.';
+
+  @override
+  String get m53SetupSecurityHidden =>
+      'Setup is hidden while the app is inactive.';
 }

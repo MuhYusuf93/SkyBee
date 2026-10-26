@@ -4,7 +4,7 @@ import '../../core/domain/value_types.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 18;
+  static const version = 19;
 
   static Future<void> migrate(
     Database db,
@@ -34,6 +34,7 @@ final class Schema {
         16 => _separatedAccess,
         17 => _costKnowledge,
         18 => _trackingTransitions,
+        19 => _onboarding,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
@@ -109,6 +110,23 @@ final class Schema {
 
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
+
+  /// Setup credentials are staged without operational authority. Only the
+  /// final atomic setup commit installs them; drafts never contain PINs/codes.
+  static const _onboarding = [
+    """CREATE TABLE onboarding_progress(id INTEGER PRIMARY KEY CHECK(id=1),
+      draft_json TEXT NOT NULL CHECK(length(draft_json)<=16384),
+      step INTEGER NOT NULL CHECK(step BETWEEN 1 AND 7),
+      revision INTEGER NOT NULL CHECK(revision>0),
+      pins_ready INTEGER NOT NULL DEFAULT 0 CHECK(pins_ready IN(0,1)),
+      preparation_id TEXT CHECK(preparation_id IS NULL OR length(preparation_id)=36))""",
+    """CREATE TABLE onboarding_credentials(role TEXT PRIMARY KEY CHECK(role IN('owner','warehouse')),
+      id INTEGER NOT NULL CHECK(id=1),pin_verifier BLOB NOT NULL,salt BLOB NOT NULL,
+      kdf_name TEXT NOT NULL,kdf_parameters TEXT NOT NULL,recovery_verifier BLOB NOT NULL,
+      failed_attempts INTEGER NOT NULL CHECK(failed_attempts=0),
+      blocked_until INTEGER NOT NULL CHECK(blocked_until=0),
+      last_attempt_at INTEGER NOT NULL CHECK(last_attempt_at>=0))""",
+  ];
 
   /// No employee identities are fabricated for historical audit records. A
   /// separate verifier prevents trying one PIN against all access levels.

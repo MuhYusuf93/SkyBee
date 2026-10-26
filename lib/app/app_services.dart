@@ -1,3 +1,4 @@
+import '../features/onboarding/application/onboarding_service.dart';
 import '../features/cashier/application/quick_cash_service.dart';
 import '../features/cashier/application/quantity_promotion_service.dart';
 import '../features/reports/application/report_export_service.dart';
@@ -53,6 +54,7 @@ final class AppServices {
   final DatabaseCoordinator database;
   final PrinterOutputGate printerGate;
   late final ManagementService management;
+  late final onboarding = OnboardingService(database, management);
   late final InventoryService inventory;
   late final SettingsService settings;
   late final CartService cart;

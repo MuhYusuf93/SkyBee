@@ -4603,6 +4603,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Empty stock valuation'**
   String get m53EmptyCostCheck;
+
+  /// M5.3 resumable new-store setup: m53SetupTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Store setup'**
+  String get m53SetupTitle;
+
+  /// M5.3 resumable new-store setup: m53SetupIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'Store identity'**
+  String get m53SetupIdentity;
+
+  /// M5.3 resumable new-store setup: m53SetupSecurity
+  ///
+  /// In en, this message translates to:
+  /// **'Management security'**
+  String get m53SetupSecurity;
+
+  /// M5.3 resumable new-store setup: m53SetupFeatures
+  ///
+  /// In en, this message translates to:
+  /// **'Visible features'**
+  String get m53SetupFeatures;
+
+  /// M5.3 resumable new-store setup: m53SetupPrinter
+  ///
+  /// In en, this message translates to:
+  /// **'Set up a receipt printer now?'**
+  String get m53SetupPrinter;
+
+  /// M5.3 resumable new-store setup: m53SetupReview
+  ///
+  /// In en, this message translates to:
+  /// **'Review setup'**
+  String get m53SetupReview;
+
+  /// M5.3 resumable new-store setup: m53SetupStep
+  ///
+  /// In en, this message translates to:
+  /// **'Step'**
+  String get m53SetupStep;
+
+  /// M5.3 resumable new-store setup: m53SetupNext
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get m53SetupNext;
+
+  /// M5.3 resumable new-store setup: m53SetupBack
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get m53SetupBack;
+
+  /// M5.3 resumable new-store setup: m53SetupFinish
+  ///
+  /// In en, this message translates to:
+  /// **'Finish and open Cashier'**
+  String get m53SetupFinish;
+
+  /// M5.3 resumable new-store setup: m53SetupAddress
+  ///
+  /// In en, this message translates to:
+  /// **'Address (optional)'**
+  String get m53SetupAddress;
+
+  /// M5.3 resumable new-store setup: m53SetupContact
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp/phone (optional)'**
+  String get m53SetupContact;
+
+  /// M5.3 resumable new-store setup: m53SetupSelfManaged
+  ///
+  /// In en, this message translates to:
+  /// **'I manage the store myself'**
+  String get m53SetupSelfManaged;
+
+  /// M5.3 resumable new-store setup: m53SetupTaskHelp
+  ///
+  /// In en, this message translates to:
+  /// **'These are access patterns on the same app/device, not personal employee accounts. Pattern 1: the owner handles checkout and management. Pattern 2: cashier and inventory/reports manager. Pattern 3 or more: Cashier, Warehouse and Owner/Reports are separate.'**
+  String get m53SetupTaskHelp;
+
+  /// M5.3 resumable new-store setup: m53SetupPinHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The PIN protects management; Cashier stays open unless the optional cashier lock is enabled. Owner/manager biometrics can be enabled later in Security. Biometrics do not identify Warehouse staff.'**
+  String get m53SetupPinHelp;
+
+  /// M5.3 resumable new-store setup: m53SetupOwnerPin
+  ///
+  /// In en, this message translates to:
+  /// **'Create Owner/Management PIN'**
+  String get m53SetupOwnerPin;
+
+  /// M5.3 resumable new-store setup: m53SetupOwnerConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Owner/Management PIN'**
+  String get m53SetupOwnerConfirm;
+
+  /// M5.3 resumable new-store setup: m53SetupWarehouseConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Warehouse PIN'**
+  String get m53SetupWarehouseConfirm;
+
+  /// M5.3 resumable new-store setup: m53SetupPreparePin
+  ///
+  /// In en, this message translates to:
+  /// **'Save security setup'**
+  String get m53SetupPreparePin;
+
+  /// M5.3 resumable new-store setup: m53SetupPinsReady
+  ///
+  /// In en, this message translates to:
+  /// **'Security is prepared. Raw PINs are not stored in the draft.'**
+  String get m53SetupPinsReady;
+
+  /// M5.3 resumable new-store setup: m53SetupRedoPin
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare PINs again'**
+  String get m53SetupRedoPin;
+
+  /// M5.3 resumable new-store setup: m53SetupStockRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Stock tracking is active for warehouse task separation.'**
+  String get m53SetupStockRequired;
+
+  /// M5.3 resumable new-store setup: m53SetupPrinterHelp
+  ///
+  /// In en, this message translates to:
+  /// **'You can set up a printer later. Select a profile/transport, connect and try a test print on the printer page. Profiles change only after saving. Failed or cancelled printing does not block setup.'**
+  String get m53SetupPrinterHelp;
+
+  /// M5.3 resumable new-store setup: m53SetupOpenPrinter
+  ///
+  /// In en, this message translates to:
+  /// **'Set up printer'**
+  String get m53SetupOpenPrinter;
+
+  /// M5.3 resumable new-store setup: m53SetupSkipPrinter
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get m53SetupSkipPrinter;
+
+  /// M5.3 resumable new-store setup: m53SetupOffline
+  ///
+  /// In en, this message translates to:
+  /// **'Setup needs no internet or Google account. The initial currency is IDR; currency settings remain available in store settings.'**
+  String get m53SetupOffline;
+
+  /// M5.3 resumable new-store setup: m53SetupVisiblePin
+  ///
+  /// In en, this message translates to:
+  /// **'Show PIN'**
+  String get m53SetupVisiblePin;
+
+  /// M5.3 resumable new-store setup: m53SetupShowRecovery
+  ///
+  /// In en, this message translates to:
+  /// **'Show recovery code'**
+  String get m53SetupShowRecovery;
+
+  /// M5.3 resumable new-store setup: m53SetupDraftInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'The setup draft is invalid. Check the fields and try again.'**
+  String get m53SetupDraftInvalid;
+
+  /// M5.3 resumable new-store setup: m53SetupChanged
+  ///
+  /// In en, this message translates to:
+  /// **'Setup progress changed. Reopen setup to load the latest progress.'**
+  String get m53SetupChanged;
+
+  /// M5.3 resumable new-store setup: m53SetupUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'New-store setup is unavailable for a configured store or a store with business data.'**
+  String get m53SetupUnavailable;
+
+  /// M5.3 resumable new-store setup: m53SetupPinsRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Complete security setup and save the recovery code first.'**
+  String get m53SetupPinsRequired;
+
+  /// M5.3 resumable new-store setup: m53SetupSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Progress is saved on this device.'**
+  String get m53SetupSaved;
+
+  /// M5.3 resumable new-store setup: m53SetupWholesale
+  ///
+  /// In en, this message translates to:
+  /// **'Wholesale prices'**
+  String get m53SetupWholesale;
+
+  /// M5.3 resumable new-store setup: m53SetupPackaging
+  ///
+  /// In en, this message translates to:
+  /// **'Carton/box packaging'**
+  String get m53SetupPackaging;
+
+  /// M5.3 resumable new-store setup: m53SetupCost
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase price/cost'**
+  String get m53SetupCost;
+
+  /// M5.3 resumable new-store setup: m53SetupBarcode
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get m53SetupBarcode;
+
+  /// M5.3 resumable new-store setup: m53SetupExpiry
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry tracking'**
+  String get m53SetupExpiry;
+
+  /// M5.3 resumable new-store setup: m53SetupPackagingHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Enter package quantity and units per package. Base stock stays in pieces; configuration changes do not alter old transactions.'**
+  String get m53SetupPackagingHelp;
+
+  /// M5.3 resumable new-store setup: m53SetupOptionalFeatures
+  ///
+  /// In en, this message translates to:
+  /// **'Additional features can be enabled later in feature settings.'**
+  String get m53SetupOptionalFeatures;
+
+  /// M5.3 resumable new-store setup: m53SetupSecurityHidden
+  ///
+  /// In en, this message translates to:
+  /// **'Setup is hidden while the app is inactive.'**
+  String get m53SetupSecurityHidden;
 }
 
 class _AppLocalizationsDelegate

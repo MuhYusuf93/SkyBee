@@ -3098,5 +3098,169 @@
   "m53EmptyCostCheck": "Empty stock valuation",
   "@m53EmptyCostCheck": {
     "description": "Dynamic reconciliation result label shown in reports"
+  },
+  "m53SetupTitle": "Store setup",
+  "@m53SetupTitle": {
+    "description": "M5.3 resumable new-store setup: m53SetupTitle"
+  },
+  "m53SetupIdentity": "Store identity",
+  "@m53SetupIdentity": {
+    "description": "M5.3 resumable new-store setup: m53SetupIdentity"
+  },
+  "m53SetupSecurity": "Management security",
+  "@m53SetupSecurity": {
+    "description": "M5.3 resumable new-store setup: m53SetupSecurity"
+  },
+  "m53SetupFeatures": "Visible features",
+  "@m53SetupFeatures": {
+    "description": "M5.3 resumable new-store setup: m53SetupFeatures"
+  },
+  "m53SetupPrinter": "Set up a receipt printer now?",
+  "@m53SetupPrinter": {
+    "description": "M5.3 resumable new-store setup: m53SetupPrinter"
+  },
+  "m53SetupReview": "Review setup",
+  "@m53SetupReview": {
+    "description": "M5.3 resumable new-store setup: m53SetupReview"
+  },
+  "m53SetupStep": "Step",
+  "@m53SetupStep": {
+    "description": "M5.3 resumable new-store setup: m53SetupStep"
+  },
+  "m53SetupNext": "Next",
+  "@m53SetupNext": {
+    "description": "M5.3 resumable new-store setup: m53SetupNext"
+  },
+  "m53SetupBack": "Previous",
+  "@m53SetupBack": {
+    "description": "M5.3 resumable new-store setup: m53SetupBack"
+  },
+  "m53SetupFinish": "Finish and open Cashier",
+  "@m53SetupFinish": {
+    "description": "M5.3 resumable new-store setup: m53SetupFinish"
+  },
+  "m53SetupAddress": "Address (optional)",
+  "@m53SetupAddress": {
+    "description": "M5.3 resumable new-store setup: m53SetupAddress"
+  },
+  "m53SetupContact": "WhatsApp/phone (optional)",
+  "@m53SetupContact": {
+    "description": "M5.3 resumable new-store setup: m53SetupContact"
+  },
+  "m53SetupSelfManaged": "I manage the store myself",
+  "@m53SetupSelfManaged": {
+    "description": "M5.3 resumable new-store setup: m53SetupSelfManaged"
+  },
+  "m53SetupTaskHelp": "These are access patterns on the same app/device, not personal employee accounts. Pattern 1: the owner handles checkout and management. Pattern 2: cashier and inventory/reports manager. Pattern 3 or more: Cashier, Warehouse and Owner/Reports are separate.",
+  "@m53SetupTaskHelp": {
+    "description": "M5.3 resumable new-store setup: m53SetupTaskHelp"
+  },
+  "m53SetupPinHelp": "The PIN protects management; Cashier stays open unless the optional cashier lock is enabled. Owner/manager biometrics can be enabled later in Security. Biometrics do not identify Warehouse staff.",
+  "@m53SetupPinHelp": {
+    "description": "M5.3 resumable new-store setup: m53SetupPinHelp"
+  },
+  "m53SetupOwnerPin": "Create Owner/Management PIN",
+  "@m53SetupOwnerPin": {
+    "description": "M5.3 resumable new-store setup: m53SetupOwnerPin"
+  },
+  "m53SetupOwnerConfirm": "Confirm Owner/Management PIN",
+  "@m53SetupOwnerConfirm": {
+    "description": "M5.3 resumable new-store setup: m53SetupOwnerConfirm"
+  },
+  "m53SetupWarehouseConfirm": "Confirm Warehouse PIN",
+  "@m53SetupWarehouseConfirm": {
+    "description": "M5.3 resumable new-store setup: m53SetupWarehouseConfirm"
+  },
+  "m53SetupPreparePin": "Save security setup",
+  "@m53SetupPreparePin": {
+    "description": "M5.3 resumable new-store setup: m53SetupPreparePin"
+  },
+  "m53SetupPinsReady": "Security is prepared. Raw PINs are not stored in the draft.",
+  "@m53SetupPinsReady": {
+    "description": "M5.3 resumable new-store setup: m53SetupPinsReady"
+  },
+  "m53SetupRedoPin": "Prepare PINs again",
+  "@m53SetupRedoPin": {
+    "description": "M5.3 resumable new-store setup: m53SetupRedoPin"
+  },
+  "m53SetupStockRequired": "Stock tracking is active for warehouse task separation.",
+  "@m53SetupStockRequired": {
+    "description": "M5.3 resumable new-store setup: m53SetupStockRequired"
+  },
+  "m53SetupPrinterHelp": "You can set up a printer later. Select a profile/transport, connect and try a test print on the printer page. Profiles change only after saving. Failed or cancelled printing does not block setup.",
+  "@m53SetupPrinterHelp": {
+    "description": "M5.3 resumable new-store setup: m53SetupPrinterHelp"
+  },
+  "m53SetupOpenPrinter": "Set up printer",
+  "@m53SetupOpenPrinter": {
+    "description": "M5.3 resumable new-store setup: m53SetupOpenPrinter"
+  },
+  "m53SetupSkipPrinter": "Skip",
+  "@m53SetupSkipPrinter": {
+    "description": "M5.3 resumable new-store setup: m53SetupSkipPrinter"
+  },
+  "m53SetupOffline": "Setup needs no internet or Google account. The initial currency is IDR; currency settings remain available in store settings.",
+  "@m53SetupOffline": {
+    "description": "M5.3 resumable new-store setup: m53SetupOffline"
+  },
+  "m53SetupVisiblePin": "Show PIN",
+  "@m53SetupVisiblePin": {
+    "description": "M5.3 resumable new-store setup: m53SetupVisiblePin"
+  },
+  "m53SetupShowRecovery": "Show recovery code",
+  "@m53SetupShowRecovery": {
+    "description": "M5.3 resumable new-store setup: m53SetupShowRecovery"
+  },
+  "m53SetupDraftInvalid": "The setup draft is invalid. Check the fields and try again.",
+  "@m53SetupDraftInvalid": {
+    "description": "M5.3 resumable new-store setup: m53SetupDraftInvalid"
+  },
+  "m53SetupChanged": "Setup progress changed. Reopen setup to load the latest progress.",
+  "@m53SetupChanged": {
+    "description": "M5.3 resumable new-store setup: m53SetupChanged"
+  },
+  "m53SetupUnavailable": "New-store setup is unavailable for a configured store or a store with business data.",
+  "@m53SetupUnavailable": {
+    "description": "M5.3 resumable new-store setup: m53SetupUnavailable"
+  },
+  "m53SetupPinsRequired": "Complete security setup and save the recovery code first.",
+  "@m53SetupPinsRequired": {
+    "description": "M5.3 resumable new-store setup: m53SetupPinsRequired"
+  },
+  "m53SetupSaved": "Progress is saved on this device.",
+  "@m53SetupSaved": {
+    "description": "M5.3 resumable new-store setup: m53SetupSaved"
+  },
+  "m53SetupWholesale": "Wholesale prices",
+  "@m53SetupWholesale": {
+    "description": "M5.3 resumable new-store setup: m53SetupWholesale"
+  },
+  "m53SetupPackaging": "Carton/box packaging",
+  "@m53SetupPackaging": {
+    "description": "M5.3 resumable new-store setup: m53SetupPackaging"
+  },
+  "m53SetupCost": "Purchase price/cost",
+  "@m53SetupCost": {
+    "description": "M5.3 resumable new-store setup: m53SetupCost"
+  },
+  "m53SetupBarcode": "Barcode",
+  "@m53SetupBarcode": {
+    "description": "M5.3 resumable new-store setup: m53SetupBarcode"
+  },
+  "m53SetupExpiry": "Expiry tracking",
+  "@m53SetupExpiry": {
+    "description": "M5.3 resumable new-store setup: m53SetupExpiry"
+  },
+  "m53SetupPackagingHelp": "Enter package quantity and units per package. Base stock stays in pieces; configuration changes do not alter old transactions.",
+  "@m53SetupPackagingHelp": {
+    "description": "M5.3 resumable new-store setup: m53SetupPackagingHelp"
+  },
+  "m53SetupOptionalFeatures": "Additional features can be enabled later in feature settings.",
+  "@m53SetupOptionalFeatures": {
+    "description": "M5.3 resumable new-store setup: m53SetupOptionalFeatures"
+  },
+  "m53SetupSecurityHidden": "Setup is hidden while the app is inactive.",
+  "@m53SetupSecurityHidden": {
+    "description": "M5.3 resumable new-store setup: m53SetupSecurityHidden"
   }
 }

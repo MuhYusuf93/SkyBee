@@ -2550,4 +2550,140 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53EmptyCostCheck => 'Nilai saldo stok kosong';
+
+  @override
+  String get m53SetupTitle => 'Penyiapan toko';
+
+  @override
+  String get m53SetupIdentity => 'Identitas toko';
+
+  @override
+  String get m53SetupSecurity => 'Pengamanan pengelolaan';
+
+  @override
+  String get m53SetupFeatures => 'Fitur yang ditampilkan';
+
+  @override
+  String get m53SetupPrinter => 'Siapkan printer struk sekarang?';
+
+  @override
+  String get m53SetupReview => 'Tinjau penyiapan';
+
+  @override
+  String get m53SetupStep => 'Langkah';
+
+  @override
+  String get m53SetupNext => 'Selanjutnya';
+
+  @override
+  String get m53SetupBack => 'Sebelumnya';
+
+  @override
+  String get m53SetupFinish => 'Selesai dan buka Kasir';
+
+  @override
+  String get m53SetupAddress => 'Alamat (opsional)';
+
+  @override
+  String get m53SetupContact => 'WA/telepon (opsional)';
+
+  @override
+  String get m53SetupSelfManaged => 'Saya mengelola toko sendiri';
+
+  @override
+  String get m53SetupTaskHelp =>
+      'Ini pembagian akses pada aplikasi/perangkat yang sama, bukan akun pribadi pegawai. Pola 1: pemilik menangani kasir dan pengelolaan. Pola 2: kasir dan pengelola gudang/laporan. Pola 3 atau lebih: Kasir, Gudang, dan Pemilik/Laporan dipisahkan.';
+
+  @override
+  String get m53SetupPinHelp =>
+      'PIN mengamankan pengelolaan; Kasir tetap terbuka kecuali kunci kasir opsional diaktifkan. Biometrik pemilik/pengelola dapat diaktifkan nanti pada Keamanan. Biometrik bukan identitas petugas Gudang.';
+
+  @override
+  String get m53SetupOwnerPin => 'Buat PIN Pemilik/Pengelolaan';
+
+  @override
+  String get m53SetupOwnerConfirm => 'Konfirmasi PIN Pemilik/Pengelolaan';
+
+  @override
+  String get m53SetupWarehouseConfirm => 'Konfirmasi PIN Gudang';
+
+  @override
+  String get m53SetupPreparePin => 'Simpan pengamanan';
+
+  @override
+  String get m53SetupPinsReady =>
+      'Pengamanan sudah disiapkan. PIN mentah tidak disimpan dalam draft.';
+
+  @override
+  String get m53SetupRedoPin => 'Siapkan ulang PIN';
+
+  @override
+  String get m53SetupStockRequired =>
+      'Pelacakan stok aktif untuk pembagian tugas gudang.';
+
+  @override
+  String get m53SetupPrinterHelp =>
+      'Printer dapat diatur nanti. Pilih profil/transport, hubungkan, lalu coba cetak melalui halaman printer. Profil hanya berubah setelah disimpan. Gagal atau batal cetak tidak menghalangi penyiapan.';
+
+  @override
+  String get m53SetupOpenPrinter => 'Siapkan printer';
+
+  @override
+  String get m53SetupSkipPrinter => 'Lewati';
+
+  @override
+  String get m53SetupOffline =>
+      'Penyiapan tidak memerlukan internet atau akun Google. Mata uang awal IDR; pengaturan mata uang tersedia pada pengaturan toko.';
+
+  @override
+  String get m53SetupVisiblePin => 'Tampilkan PIN';
+
+  @override
+  String get m53SetupShowRecovery => 'Tampilkan kode pemulihan';
+
+  @override
+  String get m53SetupDraftInvalid =>
+      'Draft penyiapan tidak valid. Periksa isian dan coba lagi.';
+
+  @override
+  String get m53SetupChanged =>
+      'Kemajuan penyiapan berubah. Buka kembali penyiapan untuk memuat kemajuan terakhir.';
+
+  @override
+  String get m53SetupUnavailable =>
+      'Penyiapan baru tidak tersedia untuk toko yang sudah dikonfigurasi atau berisi data.';
+
+  @override
+  String get m53SetupPinsRequired =>
+      'Selesaikan pengamanan dan simpan kode pemulihan terlebih dahulu.';
+
+  @override
+  String get m53SetupSaved => 'Kemajuan disimpan pada perangkat ini.';
+
+  @override
+  String get m53SetupWholesale => 'Harga grosir';
+
+  @override
+  String get m53SetupPackaging => 'Kemasan dus/box';
+
+  @override
+  String get m53SetupCost => 'Harga beli/biaya';
+
+  @override
+  String get m53SetupBarcode => 'Barcode';
+
+  @override
+  String get m53SetupExpiry => 'Pelacakan kedaluwarsa';
+
+  @override
+  String get m53SetupPackagingHelp =>
+      'Masukkan jumlah kemasan dan isi per kemasan. Saldo dasar tetap pcs; perubahan konfigurasi tidak mengubah transaksi lama.';
+
+  @override
+  String get m53SetupOptionalFeatures =>
+      'Fitur tambahan dapat diaktifkan nanti melalui pengaturan fitur.';
+
+  @override
+  String get m53SetupSecurityHidden =>
+      'Penyiapan disembunyikan saat aplikasi tidak aktif.';
 }

@@ -1,0 +1,111 @@
+{
+  "checkpoint": "M53 onboarding, not final handoff",
+  "source_version": "0.5.2+12",
+  "schema": 19,
+  "prepared_against_head": "81d430686bdd62b08c4063657d0872068b414294",
+  "source_manifest_sha256": "8ef8119f67287fd1339d6d6181c3ebc5437b70a9f805d14d059d672cd4628135",
+  "host": [
+    {
+      "run": "onboarding-acceptance-regression",
+      "passed": 23,
+      "failed": 0,
+      "seconds": 34,
+      "scope": "acceptance13+cost10"
+    },
+    {
+      "run": "onboarding-path-retest-host",
+      "passed": 13,
+      "failed": 0,
+      "seconds": 33,
+      "overlaps_previous": true
+    },
+    {
+      "run": "onboarding-native-helper-host",
+      "passed": 3,
+      "failed": 0,
+      "seconds": 14,
+      "overlaps_previous": true
+    }
+  ],
+  "native": [
+    {
+      "device": "192.168.0.101:5555",
+      "test": "integration_test/m53_onboarding_acceptance_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "FAILED_OR_BLOCKED",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "protected_entries": 577,
+      "private_artifacts": "build/m53-onboarding-dv-20261027-023951",
+      "passed": 1,
+      "failed": 4,
+      "reporter_seconds": 124,
+      "dv_awake_restored_exact": true
+    },
+    {
+      "device": "192.168.0.101:5555",
+      "test": "integration_test/m53_onboarding_acceptance_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "FAILED_OR_BLOCKED",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "protected_entries": 580,
+      "private_artifacts": "build/m53-onboarding-dv-retest-20261027-024621",
+      "passed": 10,
+      "failed": 3,
+      "reporter_seconds": 174,
+      "dv_awake_restored_exact": true
+    },
+    {
+      "device": "192.168.0.101:5555",
+      "test": "integration_test/m53_onboarding_widgets_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "protected_entries": 595,
+      "private_artifacts": "build/m53-onboarding-ui-dv-20261027-025302",
+      "passed": 3,
+      "failed": 0,
+      "reporter_seconds": 84,
+      "dv_awake_restored_exact": true
+    },
+    {
+      "device": "7f0edea0",
+      "test": "integration_test/m53_onboarding_acceptance_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "protected_entries": 525,
+      "private_artifacts": "build/m53-onboarding-poco-20261027-025715",
+      "passed": 13,
+      "failed": 0,
+      "reporter_seconds": 137,
+      "dv_awake_restored_exact": false
+    }
+  ],
+  "dv_original_baseline_still_matches_final_endpoint": true,
+  "analyze": "No issues found! (ran in 104.3s)",
+  "format": "366 files, 0 changed",
+  "localization": {
+    "keys": 792,
+    "static_references": 525,
+    "original_requirement_ids": 245
+  },
+  "preservation_scope": "Audited pre-existing protected databases/no_backup hashes at endpoints, WorkManager/lease exclusions documented. No ordinary/Skybee update/reset/reseed, no root or business sandbox copy.",
+  "unverified": [
+    "Widget callbacks/test keyboard are not physical touch or OEM IME evidence.",
+    "Ordinary/release final and Skybee in-place migration remain H.",
+    "Remaining B/cashier lock and C-H not complete."
+  ],
+  "milestone_complete": false
+}

@@ -1,3 +1,4 @@
+import '../features/onboarding/presentation/onboarding_screen.dart';
 import 'package:kasir_app/l10n/localization.dart';
 import '../features/settings/presentation/locale_provider.dart';
 import 'dart:async';
@@ -67,6 +68,7 @@ class _ManagementAppState extends State<_ManagementApp> {
   DatabaseCoordinator? _owned;
   Map<String, Object?> _preferences = {};
   bool _disposed = false;
+  bool _onboardingNeeded = false, _nativeWanted = false;
   M5Runtime? _runtime;
   AppServices? _activeServices;
   StreamSubscription<DatabaseReplacement>? _replacements;
@@ -80,6 +82,7 @@ class _ManagementAppState extends State<_ManagementApp> {
 
   void _bind(AppServices services, {required bool native}) {
     _activeServices = services;
+    _nativeWanted = native;
     _replacements ??= services.database.replacements.listen((event) {
       if (_disposed) return;
       _activeServices?.management.lock();
@@ -92,7 +95,7 @@ class _ManagementAppState extends State<_ManagementApp> {
         _future = _reload(services.database, native: native);
       });
     });
-    if (native) {
+    if (native && !_onboardingNeeded) {
       _runtime = M5Runtime(services, _openAlerts);
       unawaited(_runtime!.start());
     }
@@ -107,7 +110,9 @@ class _ManagementAppState extends State<_ManagementApp> {
     final services = AppServices(database);
     _preferences = await services.settings.preferences();
     _activeServices = services;
-    if (!_disposed && native) {
+    _onboardingNeeded = await services.onboarding.needed;
+    _nativeWanted = native;
+    if (!_disposed && native && !_onboardingNeeded) {
       try {
         await services.notifications.plugin.cancelAll();
       } catch (_) {
@@ -128,6 +133,7 @@ class _ManagementAppState extends State<_ManagementApp> {
   Future<AppServices> _open() async {
     if (widget.services != null) {
       _preferences = await widget.services!.settings.preferences();
+      _onboardingNeeded = await widget.services!.onboarding.needed;
       _bind(widget.services!, native: false);
       return widget.services!;
     }
@@ -141,6 +147,7 @@ class _ManagementAppState extends State<_ManagementApp> {
       _owned = database;
       final services = AppServices(database);
       _preferences = await services.settings.preferences();
+      _onboardingNeeded = await services.onboarding.needed;
       _bind(services, native: true);
       return services;
     } catch (_) {
@@ -256,7 +263,17 @@ class _ManagementAppState extends State<_ManagementApp> {
             onGenerateTitle: (context) => tr(context, 'cashier'),
             debugShowCheckedModeBanner: false,
             theme: kasirTheme(),
-            home: const CashierScreen(),
+            home: _onboardingNeeded
+                ? OnboardingScreen(
+                    onCompleted: () {
+                      setState(() => _onboardingNeeded = false);
+                      if (_nativeWanted && _runtime == null) {
+                        _runtime = M5Runtime(services, _openAlerts);
+                        unawaited(_runtime!.start());
+                      }
+                    },
+                  )
+                : const CashierScreen(),
           ),
         ),
       );

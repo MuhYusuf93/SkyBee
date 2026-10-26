@@ -3098,5 +3098,169 @@
   "m53EmptyCostCheck": "Nilai saldo stok kosong",
   "@m53EmptyCostCheck": {
     "description": "Dynamic reconciliation result label shown in reports"
+  },
+  "m53SetupTitle": "Penyiapan toko",
+  "@m53SetupTitle": {
+    "description": "M5.3 resumable new-store setup: m53SetupTitle"
+  },
+  "m53SetupIdentity": "Identitas toko",
+  "@m53SetupIdentity": {
+    "description": "M5.3 resumable new-store setup: m53SetupIdentity"
+  },
+  "m53SetupSecurity": "Pengamanan pengelolaan",
+  "@m53SetupSecurity": {
+    "description": "M5.3 resumable new-store setup: m53SetupSecurity"
+  },
+  "m53SetupFeatures": "Fitur yang ditampilkan",
+  "@m53SetupFeatures": {
+    "description": "M5.3 resumable new-store setup: m53SetupFeatures"
+  },
+  "m53SetupPrinter": "Siapkan printer struk sekarang?",
+  "@m53SetupPrinter": {
+    "description": "M5.3 resumable new-store setup: m53SetupPrinter"
+  },
+  "m53SetupReview": "Tinjau penyiapan",
+  "@m53SetupReview": {
+    "description": "M5.3 resumable new-store setup: m53SetupReview"
+  },
+  "m53SetupStep": "Langkah",
+  "@m53SetupStep": {
+    "description": "M5.3 resumable new-store setup: m53SetupStep"
+  },
+  "m53SetupNext": "Selanjutnya",
+  "@m53SetupNext": {
+    "description": "M5.3 resumable new-store setup: m53SetupNext"
+  },
+  "m53SetupBack": "Sebelumnya",
+  "@m53SetupBack": {
+    "description": "M5.3 resumable new-store setup: m53SetupBack"
+  },
+  "m53SetupFinish": "Selesai dan buka Kasir",
+  "@m53SetupFinish": {
+    "description": "M5.3 resumable new-store setup: m53SetupFinish"
+  },
+  "m53SetupAddress": "Alamat (opsional)",
+  "@m53SetupAddress": {
+    "description": "M5.3 resumable new-store setup: m53SetupAddress"
+  },
+  "m53SetupContact": "WA/telepon (opsional)",
+  "@m53SetupContact": {
+    "description": "M5.3 resumable new-store setup: m53SetupContact"
+  },
+  "m53SetupSelfManaged": "Saya mengelola toko sendiri",
+  "@m53SetupSelfManaged": {
+    "description": "M5.3 resumable new-store setup: m53SetupSelfManaged"
+  },
+  "m53SetupTaskHelp": "Ini pembagian akses pada aplikasi/perangkat yang sama, bukan akun pribadi pegawai. Pola 1: pemilik menangani kasir dan pengelolaan. Pola 2: kasir dan pengelola gudang/laporan. Pola 3 atau lebih: Kasir, Gudang, dan Pemilik/Laporan dipisahkan.",
+  "@m53SetupTaskHelp": {
+    "description": "M5.3 resumable new-store setup: m53SetupTaskHelp"
+  },
+  "m53SetupPinHelp": "PIN mengamankan pengelolaan; Kasir tetap terbuka kecuali kunci kasir opsional diaktifkan. Biometrik pemilik/pengelola dapat diaktifkan nanti pada Keamanan. Biometrik bukan identitas petugas Gudang.",
+  "@m53SetupPinHelp": {
+    "description": "M5.3 resumable new-store setup: m53SetupPinHelp"
+  },
+  "m53SetupOwnerPin": "Buat PIN Pemilik/Pengelolaan",
+  "@m53SetupOwnerPin": {
+    "description": "M5.3 resumable new-store setup: m53SetupOwnerPin"
+  },
+  "m53SetupOwnerConfirm": "Konfirmasi PIN Pemilik/Pengelolaan",
+  "@m53SetupOwnerConfirm": {
+    "description": "M5.3 resumable new-store setup: m53SetupOwnerConfirm"
+  },
+  "m53SetupWarehouseConfirm": "Konfirmasi PIN Gudang",
+  "@m53SetupWarehouseConfirm": {
+    "description": "M5.3 resumable new-store setup: m53SetupWarehouseConfirm"
+  },
+  "m53SetupPreparePin": "Simpan pengamanan",
+  "@m53SetupPreparePin": {
+    "description": "M5.3 resumable new-store setup: m53SetupPreparePin"
+  },
+  "m53SetupPinsReady": "Pengamanan sudah disiapkan. PIN mentah tidak disimpan dalam draft.",
+  "@m53SetupPinsReady": {
+    "description": "M5.3 resumable new-store setup: m53SetupPinsReady"
+  },
+  "m53SetupRedoPin": "Siapkan ulang PIN",
+  "@m53SetupRedoPin": {
+    "description": "M5.3 resumable new-store setup: m53SetupRedoPin"
+  },
+  "m53SetupStockRequired": "Pelacakan stok aktif untuk pembagian tugas gudang.",
+  "@m53SetupStockRequired": {
+    "description": "M5.3 resumable new-store setup: m53SetupStockRequired"
+  },
+  "m53SetupPrinterHelp": "Printer dapat diatur nanti. Pilih profil/transport, hubungkan, lalu coba cetak melalui halaman printer. Profil hanya berubah setelah disimpan. Gagal atau batal cetak tidak menghalangi penyiapan.",
+  "@m53SetupPrinterHelp": {
+    "description": "M5.3 resumable new-store setup: m53SetupPrinterHelp"
+  },
+  "m53SetupOpenPrinter": "Siapkan printer",
+  "@m53SetupOpenPrinter": {
+    "description": "M5.3 resumable new-store setup: m53SetupOpenPrinter"
+  },
+  "m53SetupSkipPrinter": "Lewati",
+  "@m53SetupSkipPrinter": {
+    "description": "M5.3 resumable new-store setup: m53SetupSkipPrinter"
+  },
+  "m53SetupOffline": "Penyiapan tidak memerlukan internet atau akun Google. Mata uang awal IDR; pengaturan mata uang tersedia pada pengaturan toko.",
+  "@m53SetupOffline": {
+    "description": "M5.3 resumable new-store setup: m53SetupOffline"
+  },
+  "m53SetupVisiblePin": "Tampilkan PIN",
+  "@m53SetupVisiblePin": {
+    "description": "M5.3 resumable new-store setup: m53SetupVisiblePin"
+  },
+  "m53SetupShowRecovery": "Tampilkan kode pemulihan",
+  "@m53SetupShowRecovery": {
+    "description": "M5.3 resumable new-store setup: m53SetupShowRecovery"
+  },
+  "m53SetupDraftInvalid": "Draft penyiapan tidak valid. Periksa isian dan coba lagi.",
+  "@m53SetupDraftInvalid": {
+    "description": "M5.3 resumable new-store setup: m53SetupDraftInvalid"
+  },
+  "m53SetupChanged": "Kemajuan penyiapan berubah. Buka kembali penyiapan untuk memuat kemajuan terakhir.",
+  "@m53SetupChanged": {
+    "description": "M5.3 resumable new-store setup: m53SetupChanged"
+  },
+  "m53SetupUnavailable": "Penyiapan baru tidak tersedia untuk toko yang sudah dikonfigurasi atau berisi data.",
+  "@m53SetupUnavailable": {
+    "description": "M5.3 resumable new-store setup: m53SetupUnavailable"
+  },
+  "m53SetupPinsRequired": "Selesaikan pengamanan dan simpan kode pemulihan terlebih dahulu.",
+  "@m53SetupPinsRequired": {
+    "description": "M5.3 resumable new-store setup: m53SetupPinsRequired"
+  },
+  "m53SetupSaved": "Kemajuan disimpan pada perangkat ini.",
+  "@m53SetupSaved": {
+    "description": "M5.3 resumable new-store setup: m53SetupSaved"
+  },
+  "m53SetupWholesale": "Harga grosir",
+  "@m53SetupWholesale": {
+    "description": "M5.3 resumable new-store setup: m53SetupWholesale"
+  },
+  "m53SetupPackaging": "Kemasan dus/box",
+  "@m53SetupPackaging": {
+    "description": "M5.3 resumable new-store setup: m53SetupPackaging"
+  },
+  "m53SetupCost": "Harga beli/biaya",
+  "@m53SetupCost": {
+    "description": "M5.3 resumable new-store setup: m53SetupCost"
+  },
+  "m53SetupBarcode": "Barcode",
+  "@m53SetupBarcode": {
+    "description": "M5.3 resumable new-store setup: m53SetupBarcode"
+  },
+  "m53SetupExpiry": "Pelacakan kedaluwarsa",
+  "@m53SetupExpiry": {
+    "description": "M5.3 resumable new-store setup: m53SetupExpiry"
+  },
+  "m53SetupPackagingHelp": "Masukkan jumlah kemasan dan isi per kemasan. Saldo dasar tetap pcs; perubahan konfigurasi tidak mengubah transaksi lama.",
+  "@m53SetupPackagingHelp": {
+    "description": "M5.3 resumable new-store setup: m53SetupPackagingHelp"
+  },
+  "m53SetupOptionalFeatures": "Fitur tambahan dapat diaktifkan nanti melalui pengaturan fitur.",
+  "@m53SetupOptionalFeatures": {
+    "description": "M5.3 resumable new-store setup: m53SetupOptionalFeatures"
+  },
+  "m53SetupSecurityHidden": "Penyiapan disembunyikan saat aplikasi tidak aktif.",
+  "@m53SetupSecurityHidden": {
+    "description": "M5.3 resumable new-store setup: m53SetupSecurityHidden"
   }
 }

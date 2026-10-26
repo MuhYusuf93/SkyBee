@@ -1,3 +1,4 @@
+import '../../onboarding/data/onboarding_store.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
@@ -20,6 +21,20 @@ final class FreshActionProof {
   FreshActionProof._(this.purpose, this.generation, this.deadline);
   final String purpose;
   final int generation, deadline;
+}
+
+/// An in-memory receipt acknowledgement cannot be recreated from draft JSON.
+/// Background/session locks do not invalidate setup: there is no authority yet.
+final class OnboardingPinProof {
+  OnboardingPinProof._(
+    this.issuer,
+    this.databaseGeneration,
+    this.preparationId,
+    this.revision,
+  );
+  final ManagementService issuer;
+  final int databaseGeneration, revision;
+  final String preparationId;
 }
 
 /// Owns the authorization capability and persisted attempt limits. UI session
@@ -545,7 +560,7 @@ final class ManagementService {
     }
   }
 
-  /// One-time credential creation; not the final consent/onboarding flow (M6).
+  /// Legacy credential creation for stores whose setup predates the M5.3 wizard.
   /// Returns a random recovery code once. Never logs or persists the plaintext.
   Future<String> configure(
     String storeName,
@@ -573,6 +588,92 @@ final class ManagementService {
     lock();
     return credentials.$2;
   }
+
+  /// Stages the existing KDF policy, never raw PINs or a management grant.
+  /// The returned recovery code is transient and must be acknowledged before
+  /// completion. A killed process before acknowledgement must prepare again.
+  Future<({String recoveryCode, OnboardingPinProof proof})>
+  prepareOnboardingPins({
+    required int revision,
+    required String ownerPin,
+    required String confirmation,
+    String? warehousePin,
+    String? warehouseConfirmation,
+  }) async {
+    _validatePin(ownerPin);
+    if (ownerPin != confirmation) {
+      throw const AppError('pinConfirmationDoesNotMatch');
+    }
+    final current = await database.read(
+      (db) => OnboardingStore.expect(db, revision),
+    );
+    if (current.draft.taskPattern == 3) {
+      _validatePin(warehousePin ?? '');
+      if (warehousePin != warehouseConfirmation) {
+        throw const AppError('pinConfirmationDoesNotMatch');
+      }
+      if (ownerPin == warehousePin) throw const AppError('m53PinsMustDiffer');
+    }
+    final databaseGeneration = database.generation;
+    final owner = await _credentials(ownerPin);
+    final warehouse = current.draft.taskPattern == 3
+        ? await _credentials(warehousePin!)
+        : null;
+    final preparationId = const IdGenerator().next().value;
+    await database.transaction((dbTxn) async {
+      if (database.generation != databaseGeneration) {
+        throw const AppError('m53SetupChanged');
+      }
+      await OnboardingStore.expect(dbTxn, revision);
+      await dbTxn.delete('onboarding_credentials');
+      await dbTxn.insert('onboarding_credentials', {
+        'role': 'owner',
+        ...owner.$1,
+      });
+      if (warehouse != null) {
+        await dbTxn.insert('onboarding_credentials', {
+          'role': 'warehouse',
+          ...warehouse.$1,
+        });
+      }
+      await dbTxn.update('onboarding_progress', {
+        'revision': revision + 1,
+        'step': 3,
+        'pins_ready': 0,
+        'preparation_id': preparationId,
+      }, where: 'id=1');
+    });
+    return (
+      recoveryCode: owner.$2,
+      proof: OnboardingPinProof._(
+        this,
+        databaseGeneration,
+        preparationId,
+        revision + 1,
+      ),
+    );
+  }
+
+  Future<void> acknowledgeOnboardingRecovery(OnboardingPinProof proof) =>
+      database.transaction((dbTxn) async {
+        if (!identical(proof.issuer, this) ||
+            proof.databaseGeneration != database.generation) {
+          throw const AppError('m53SetupChanged');
+        }
+        final current = await OnboardingStore.expect(dbTxn, proof.revision);
+        final row = (await dbTxn.query(
+          'onboarding_progress',
+          columns: ['preparation_id'],
+        )).single;
+        if (current.pinsReady || row['preparation_id'] != proof.preparationId) {
+          throw const AppError('m53SetupChanged');
+        }
+        await dbTxn.update('onboarding_progress', {
+          'pins_ready': 1,
+          'step': 4,
+          'revision': proof.revision + 1,
+        }, where: 'id=1');
+      });
 
   Future<(Map<String, Object?>, String)> _credentials(String pin) async {
     final salt = _hasher.randomBytes(32);

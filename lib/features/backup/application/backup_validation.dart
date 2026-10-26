@@ -22,6 +22,19 @@ final class BackupValidation {
     DatabaseExecutor db,
     BackupManifest manifest,
   ) async {
+    final schema =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
+    // Backups require an operational owner credential. Setup staging must never
+    // travel in a finished-store archive or resurrect a second setup workflow.
+    if (schema >= 19 &&
+        ((await db.rawQuery(
+              'SELECT 1 FROM onboarding_progress LIMIT 1',
+            )).isNotEmpty ||
+            (await db.rawQuery(
+              'SELECT 1 FROM onboarding_credentials LIMIT 1',
+            )).isNotEmpty)) {
+      throw const FormatException('backupSetupIncomplete');
+    }
     final settings = (await db.query('store_settings')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,

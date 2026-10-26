@@ -396,3 +396,18 @@ failure interval awal. Preflight Poco memeriksa WorkManager0pending sebelum
 kasus terarah. Dahulukan query metadata on-device; salinan sandbox luas yang
 ditolak auto-review tidak boleh dijalankan. Izin pengguna untuk WorkManager
 saja bukan izin menyalin DB bisnis/key/prefs, dan rawcopy sementara dihapus.
+
+
+113. Nama fixture native wajib cocok whitelist EncryptedFixtureFactory sebelum
+menganggap suite FFI siap Android. Prefix m5_regression_setup_* lolos FFI tetapi
+native menolak sebelum DB dibuka; gunakan m5_regression_<timestamp>_<serial> dan
+jangan melemahkan guard. DV1PASS4FAIL awal tetap dicatat dan audit finally tetap
+harus ditutup. Native PASS dan file preservation adalah bukti berbeda.
+
+114. Callback SQL yang selesai saat tester.pump native masih guarded harus
+memakai expectSync untuk assertion data non-widget, seperti petunjuk SDK lokal.
+Helper penunggu then<void> harus menyatakan tipe; arrow done=true menginfer
+Future<bool>, sehingga onError void melempar ArgumentError dan menutupi kegagalan
+awal. Tetap pump real IO secara bounded agar antrean fake-zone bisa selesai.
+WidgetTester.pageBack mencari tooltip English Back pada SDK ini, sehingga UI ID
+memerlukan tap BackButton aktual. Jangan melonggarkan matcher agar harness hijau.

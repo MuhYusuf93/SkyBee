@@ -185,7 +185,7 @@ void m53FoundationSuite(DatabaseFactory factory, {String? only}) {
           expect(await sql.getVersion(), 14);
           expect(
             await sql.rawQuery(
-              "SELECT name FROM sqlite_master WHERE name IN ('store_feature_policy','valuation_reconciliations','stock_tracking_changes')",
+              "SELECT name FROM sqlite_master WHERE name IN ('store_feature_policy','valuation_reconciliations','stock_tracking_changes','onboarding_progress','onboarding_credentials')",
             ),
             isEmpty,
           );

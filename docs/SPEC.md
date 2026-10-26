@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Onboarding tujuh langkah memakai marker fresh dan staging non-secret/encrypted,
+commit konfigurasi+credential atomik tanpa grant; toko legacy tidak diulang.
+Lihat [batas dan invariant penyiapan](decisions/M53_ONBOARDING.md).
+
 Transisi pelacakan mengikuti [scope closure](decisions/M53_TRACKING.md):
 saldo/batch/nilai diarsipkan, bukan opname0 atau HPP; expiry berdiri sendiri
 dari flag tracking. Laporan selisih wajib mengecualikan link tracking change.
