@@ -1581,28 +1581,52 @@
   "m5Feed": "Ruang kosong akhir struk (0–8 baris)",
   "m5TopFeed": "Ruang kosong sebelum header (0–8 baris)",
   "m5Protocol": "Bahasa perintah printer",
-  "@m5Protocol": {"description": "Explicit printer command language selection per saved profile."},
+  "@m5Protocol": {
+    "description": "Explicit printer command language selection per saved profile."
+  },
   "m5ProtocolRaster": "ESC/POS Raster (umum)",
-  "@m5ProtocolRaster": {"description": "ESC/POS GS v 0 raster encoder option."},
+  "@m5ProtocolRaster": {
+    "description": "ESC/POS GS v 0 raster encoder option."
+  },
   "m5ProtocolColumn": "ESC/POS Kolom (alternatif)",
-  "@m5ProtocolColumn": {"description": "ESC/POS ESC asterisk column image encoder option."},
+  "@m5ProtocolColumn": {
+    "description": "ESC/POS ESC asterisk column image encoder option."
+  },
   "m5ProtocolTspl": "TSPL (kertas gulung)",
-  "@m5ProtocolTspl": {"description": "TSPL bitmap continuous-media receipt encoder option."},
+  "@m5ProtocolTspl": {
+    "description": "TSPL bitmap continuous-media receipt encoder option."
+  },
   "m5ProtocolCpcl": "CPCL (kertas gulung)",
-  "@m5ProtocolCpcl": {"description": "CPCL graphics continuous-media receipt encoder option."},
+  "@m5ProtocolCpcl": {
+    "description": "CPCL graphics continuous-media receipt encoder option."
+  },
   "m5ProtocolHelp": "Pilih sesuai mode printer atau panduan pabrik, lalu Simpan. Penggantian mode firmware tidak otomatis. TSPL/CPCL memakai kertas gulung 203 dpi; pilih tinggi halaman sesuai kemampuan printer. Uji cetak untuk memastikan hasil kertas.",
-  "@m5ProtocolHelp": {"description": "User guidance for explicit protocol, continuous media and physical calibration."},
+  "@m5ProtocolHelp": {
+    "description": "User guidance for explicit protocol, continuous media and physical calibration."
+  },
   "m5PageRows": "Tinggi halaman maksimum (128–4096 dot)",
-  "@m5PageRows": {"description": "Bounded page height for TSPL/CPCL receipts, independent of total receipt length."},
-  "@m5TopFeed": {"description": "Manual extra blank lines before the receipt header, from zero to eight."},
+  "@m5PageRows": {
+    "description": "Bounded page height for TSPL/CPCL receipts, independent of total receipt length."
+  },
+  "@m5TopFeed": {
+    "description": "Manual extra blank lines before the receipt header, from zero to eight."
+  },
   "m5TopFeedDecrease": "Kurangi ruang kosong sebelum header",
-  "@m5TopFeedDecrease": {"description": "Decrease leading blank lines for this printer profile."},
+  "@m5TopFeedDecrease": {
+    "description": "Decrease leading blank lines for this printer profile."
+  },
   "m5TopFeedIncrease": "Tambah ruang kosong sebelum header",
-  "@m5TopFeedIncrease": {"description": "Increase leading blank lines for this printer profile."},
+  "@m5TopFeedIncrease": {
+    "description": "Increase leading blank lines for this printer profile."
+  },
   "m5FeedDecrease": "Kurangi ruang kosong akhir struk",
-  "@m5FeedDecrease": {"description": "Decrease the extra trailing blank lines for this printer profile."},
+  "@m5FeedDecrease": {
+    "description": "Decrease the extra trailing blank lines for this printer profile."
+  },
   "m5FeedIncrease": "Tambah ruang kosong akhir struk",
-  "@m5FeedIncrease": {"description": "Increase the extra trailing blank lines for this printer profile."},
+  "@m5FeedIncrease": {
+    "description": "Increase the extra trailing blank lines for this printer profile."
+  },
   "m5GeometryHelp": "203 DPI: 8 dots sekitar 1 mm. Lebar kertas berbeda dari area cetak. Pergeseran harus tetap di dalam area yang aman; -4 mm dari OpenLabel bukan default semua printer. Header/footer diatur pada pengaturan toko.",
   "m5Bold": "Teks tebal",
   "m5Logo": "Cetak logo bila tersedia",
@@ -2830,5 +2854,157 @@
   "m52LowPriceThreshold": "Ambang harga rendah tidak boleh negatif.",
   "@m52LowPriceThreshold": {
     "description": "Validation error when saving a negative per-currency low-price threshold."
+  },
+  "m53Features": "Fitur dan pelacakan stok",
+  "@m53Features": {
+    "description": "M5.3 store policy and PIN verification: m53Features"
+  },
+  "m53StockMode": "Pelacakan stok toko",
+  "@m53StockMode": {
+    "description": "M5.3 store policy and PIN verification: m53StockMode"
+  },
+  "m53Stockoff": "Tidak melacak stok",
+  "@m53Stockoff": {
+    "description": "M5.3 store policy and PIN verification: m53Stockoff"
+  },
+  "m53Stockpartial": "Melacak sebagian barang",
+  "@m53Stockpartial": {
+    "description": "M5.3 store policy and PIN verification: m53Stockpartial"
+  },
+  "m53Stockall": "Melacak semua barang",
+  "@m53Stockall": {
+    "description": "M5.3 store policy and PIN verification: m53Stockall"
+  },
+  "m53TrackThisProduct": "Lacak stok barang ini",
+  "@m53TrackThisProduct": {
+    "description": "M5.3 store policy and PIN verification: m53TrackThisProduct"
+  },
+  "m53StockHelp": "Stok yang tidak dilacak tidak menunjukkan jumlah barang di toko dan tidak berkurang saat penjualan. Pastikan barang tersedia. Jika stok dilacak, catat barang masuk, penjualan, retur dan koreksi agar sesuai kondisi fisik. Penjualan di luar aplikasi perlu dicatat kembali atau direkonsiliasi. Untuk mengubah mode, rekonsiliasi barang yang belum sesuai terlebih dahulu.",
+  "@m53StockHelp": {
+    "description": "M5.3 store policy and PIN verification: m53StockHelp"
+  },
+  "m53PolicyPreview": "Tinjau perubahan",
+  "@m53PolicyPreview": {
+    "description": "M5.3 store policy and PIN verification: m53PolicyPreview"
+  },
+  "m53PolicyImpact": "Barang yang perlu direkonsiliasi sebelum mengganti mode",
+  "@m53PolicyImpact": {
+    "description": "M5.3 store policy and PIN verification: m53PolicyImpact"
+  },
+  "m53PreserveFeatures": "Menyembunyikan fitur tidak menghapus harga grosir, kemasan, barcode, tanggal atau riwayat yang sudah tersimpan. Aturan kelayakan jual tetap berlaku.",
+  "@m53PreserveFeatures": {
+    "description": "M5.3 store policy and PIN verification: m53PreserveFeatures"
+  },
+  "m53WholesaleHelp": "Harga grosir dikonfigurasi per barang. Mengaktifkan fitur tidak otomatis memberi semua barang harga grosir.",
+  "@m53WholesaleHelp": {
+    "description": "M5.3 store policy and PIN verification: m53WholesaleHelp"
+  },
+  "m53BarcodeHelp": "Barcode dapat dipakai dengan kamera atau scanner eksternal yang didukung. Barang tanpa barcode tetap dapat memakai kode internal otomatis.",
+  "@m53BarcodeHelp": {
+    "description": "M5.3 store policy and PIN verification: m53BarcodeHelp"
+  },
+  "m53ExpiryHelp": "Tanggal dan batch membantu pengingat serta kelayakan jual. Tetap periksa kondisi fisik barang. Menyembunyikan input tidak menghapus tanggal atau membuat stok kedaluwarsa layak jual.",
+  "@m53ExpiryHelp": {
+    "description": "M5.3 store policy and PIN verification: m53ExpiryHelp"
+  },
+  "m53PolicyChanged": "Pengaturan berubah. Buka ulang untuk meninjau data terbaru.",
+  "@m53PolicyChanged": {
+    "description": "M5.3 store policy and PIN verification: m53PolicyChanged"
+  },
+  "m53StockReconciliationRequired": "Masih ada barang yang tidak sesuai mode stok. Rekonsiliasi melalui perubahan pelacakan per barang, lalu tinjau kembali. Tidak ada saldo yang diubah.",
+  "@m53StockReconciliationRequired": {
+    "description": "M5.3 store policy and PIN verification: m53StockReconciliationRequired"
+  },
+  "m53StockModeConflict": "Pelacakan barang tidak sesuai pengaturan stok toko. Muat ulang pengaturan dan pilih mode yang sesuai.",
+  "@m53StockModeConflict": {
+    "description": "M5.3 store policy and PIN verification: m53StockModeConflict"
+  },
+  "m53InitialQuantityRequired": "Isi jumlah stok awal secara eksplisit, termasuk 0 jika belum ada stok.",
+  "@m53InitialQuantityRequired": {
+    "description": "M5.3 store policy and PIN verification: m53InitialQuantityRequired"
+  },
+  "m53PinRequired72Hours": "Gunakan PIN aplikasi untuk membuka pengelolaan. PIN diwajibkan kembali setelah 72 jam; biometrik tidak memulai ulang interval ini.",
+  "@m53PinRequired72Hours": {
+    "description": "M5.3 store policy and PIN verification: m53PinRequired72Hours"
+  },
+  "m53RoleSetupRequired": "Perubahan pembagian tugas memerlukan penyiapan PIN dan akses yang sesuai.",
+  "@m53RoleSetupRequired": {
+    "description": "M5.3 store policy and PIN verification: m53RoleSetupRequired"
+  },
+  "m53UnknownCostPending": "Pengaturan ini memerlukan pencatatan status biaya yang belum diketahui. Biaya tersimpan dipertahankan.",
+  "@m53UnknownCostPending": {
+    "description": "M5.3 store policy and PIN verification: m53UnknownCostPending"
+  },
+  "m53OwnerRequired": "Akses Pemilik/Laporan diperlukan untuk tindakan ini.",
+  "@m53OwnerRequired": {
+    "description": "M5.3 separated local access: m53OwnerRequired"
+  },
+  "m53WarehouseNotConfigured": "Akses Gudang belum disiapkan untuk pola tugas ini.",
+  "@m53WarehouseNotConfigured": {
+    "description": "M5.3 separated local access: m53WarehouseNotConfigured"
+  },
+  "m53PinsMustDiffer": "PIN Gudang dan Pemilik/Laporan harus berbeda.",
+  "@m53PinsMustDiffer": {
+    "description": "M5.3 separated local access: m53PinsMustDiffer"
+  },
+  "m53ChooseAccess": "Pilih akses yang ingin dibuka",
+  "@m53ChooseAccess": {
+    "description": "M5.3 separated local access: m53ChooseAccess"
+  },
+  "m53OwnerRole": "Pemilik/Laporan",
+  "@m53OwnerRole": {
+    "description": "M5.3 separated local access: m53OwnerRole"
+  },
+  "m53WarehouseRole": "Gudang",
+  "@m53WarehouseRole": {
+    "description": "M5.3 separated local access: m53WarehouseRole"
+  },
+  "m53TaskPattern": "Bagaimana toko Anda dikelola?",
+  "@m53TaskPattern": {
+    "description": "M5.3 separated local access: m53TaskPattern"
+  },
+  "m53TaskHelp": "Ini pembagian tugas dan akses pada aplikasi/perangkat yang sama, bukan batas jumlah karyawan atau akun pribadi. Perubahan mencabut sesi pengelolaan lama.",
+  "@m53TaskHelp": {
+    "description": "M5.3 separated local access: m53TaskHelp"
+  },
+  "m53Pattern1": "1 — Pemilik menjalankan kasir dan pengelolaan",
+  "@m53Pattern1": {
+    "description": "M5.3 separated local access: m53Pattern1"
+  },
+  "m53Pattern2": "2 — Kasir dan pengelola",
+  "@m53Pattern2": {
+    "description": "M5.3 separated local access: m53Pattern2"
+  },
+  "m53Pattern3": "3 atau lebih — Tugas dipisahkan",
+  "@m53Pattern3": {
+    "description": "M5.3 separated local access: m53Pattern3"
+  },
+  "m53WarehousePinHelp": "Pelacakan semua barang wajib aktif. Rekonsiliasi barang yang belum dilacak sebelum mengubah pola ini. PIN Gudang harus berbeda dari PIN Pemilik/Laporan. Biometrik hanya untuk Pemilik/Laporan; biometrik perangkat tidak membuktikan jabatan pegawai. Pemilik dapat mengatur ulang PIN Gudang melalui halaman ini.",
+  "@m53WarehousePinHelp": {
+    "description": "M5.3 separated local access: m53WarehousePinHelp"
+  },
+  "m53WarehousePin": "Buat PIN Gudang",
+  "@m53WarehousePin": {
+    "description": "M5.3 separated local access: m53WarehousePin"
+  },
+  "m53ZeroCostConfirmation": "Konfirmasikan bahwa barang ini memang tanpa biaya sebelum mencatat harga beli 0.",
+  "@m53ZeroCostConfirmation": {
+    "description": "M5.3 explicit stock valuation: m53ZeroCostConfirmation"
+  },
+  "m53ValuationQuantityMismatch": "Jumlah rekonsiliasi biaya harus sama dengan jumlah stok yang dikonfirmasi.",
+  "@m53ValuationQuantityMismatch": {
+    "description": "M5.3 explicit stock valuation: m53ValuationQuantityMismatch"
+  },
+  "m53LockedUnsavedBody": "Ada perubahan pengelolaan yang belum disimpan. Tetap di layar terkunci, atau buang perubahan dan kembali ke Kasir. Buka akses dengan autentikasi yang sesuai untuk melanjutkan pengeditan.",
+  "@m53LockedUnsavedBody": {
+    "description": "User clarification M5.3 locked dirty exit: m53LockedUnsavedBody"
+  },
+  "m53StayLocked": "Tetap di layar terkunci",
+  "@m53StayLocked": {
+    "description": "User clarification M5.3 locked dirty exit: m53StayLocked"
+  },
+  "m53DiscardToCashier": "Buang perubahan dan kembali ke Kasir",
+  "@m53DiscardToCashier": {
+    "description": "User clarification M5.3 locked dirty exit: m53DiscardToCashier"
   }
 }

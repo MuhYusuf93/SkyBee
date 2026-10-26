@@ -1,5 +1,5 @@
 param(
- [Parameter(Mandatory=$true)][ValidateSet('7f0edea0','192.168.0.102:5555','0062112V2210F9B3')][string]$DeviceId,
+ [Parameter(Mandatory=$true)][ValidateSet('7f0edea0','192.168.0.102:5555','192.168.0.101:5555','0062112V2210F9B3')][string]$DeviceId,
  [Parameter(Mandatory=$true)][string]$TestFile,
  [string]$RunName='m51-native',
  [string]$NameFilter='',
@@ -19,7 +19,7 @@ $taskEvidence=Join-Path $taskRoot "build/$RunName-$(Get-Date -Format yyyyMMdd-HH
 New-Item -ItemType Directory -Path $taskEvidence | Out-Null
 $env:PATH='C:\Users\ACER\dev\flutter\bin;'+$env:PATH
 if(((& $taskAdb -s $DeviceId get-state)-join '').Trim() -ne 'device' -or $LASTEXITCODE -ne 0){throw 'Confirmed device unavailable'}
-$taskExpected=switch($DeviceId){'7f0edea0' {'24069PC21G'} '192.168.0.102:5555' {'AX810'} '0062112V2210F9B3' {'RMX3231'}}
+$taskExpected=switch($DeviceId){'7f0edea0' {'24069PC21G'} '192.168.0.102:5555' {'AX810'} '192.168.0.101:5555' {'AX810'} '0062112V2210F9B3' {'RMX3231'}}
 if(((& $taskAdb -s $DeviceId shell getprop ro.product.model)-join '').Trim() -ne $taskExpected){throw 'Device mismatch'}
 function Get-ProtectedHashes {
  $taskResult=[ordered]@{}
@@ -50,7 +50,7 @@ $taskAwake=Join-Path $taskEvidence 'awake-original.json'
 $taskResult=[ordered]@{device=$DeviceId;test=$TestFile;nameFilter=$NameFilter;automaticDeviceControlActive=$true;tests='RUNNING';isolation='NOT CHECKED';downgrade=$false;reset=$false}
 $taskResult | ConvertTo-Json | Set-Content "$taskEvidence/result.json" -Encoding UTF8
 try {
- if($DeviceId -eq '192.168.0.102:5555'){& "$PSScriptRoot/dv8910_awake.ps1" -Action Enable -SnapshotPath $taskAwake}
+ if($DeviceId -in @('192.168.0.102:5555','192.168.0.101:5555')){& "$PSScriptRoot/dv8910_awake.ps1" -DeviceId $DeviceId -Action Enable -SnapshotPath $taskAwake}
  & "$PSScriptRoot/test_android.ps1" -DeviceId $DeviceId -AndroidSdkRoot $taskSdk -TestFiles @($TestFile) -AdditionalDartDefines $AdditionalDartDefines -PrepareOnly *> "$taskEvidence/prepare.log"
  if($LASTEXITCODE -ne 0){throw 'Isolated prepare failed'}
  & $taskAdb -s $DeviceId install -r "$taskRoot/build/app/outputs/flutter-apk/app-debug.apk" *> "$taskEvidence/install.log"
@@ -73,7 +73,7 @@ try {
   $taskResult.isolation='FAILED_OR_UNVERIFIED'
   throw
  } finally {
-  if(Test-Path -LiteralPath $taskAwake){& "$PSScriptRoot/dv8910_awake.ps1" -Action Restore -SnapshotPath $taskAwake *> "$taskEvidence/awake-restored.log"}
+  if(Test-Path -LiteralPath $taskAwake){& "$PSScriptRoot/dv8910_awake.ps1" -DeviceId $DeviceId -Action Restore -SnapshotPath $taskAwake *> "$taskEvidence/awake-restored.log"}
   $taskResult.automaticDeviceControlActive=$false
   $taskResult | ConvertTo-Json | Set-Content "$taskEvidence/result.json" -Encoding UTF8
   Write-Output "M5.1 evidence: $taskEvidence"

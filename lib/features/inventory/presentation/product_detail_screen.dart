@@ -1,3 +1,4 @@
+import '../../management/domain/management_role.dart';
 import 'whole_quantity_formatter.dart';
 import 'package:kasir_app/l10n/localized_notice.dart';
 import '../../../core/money/money_field.dart';
@@ -26,6 +27,7 @@ class ProductDetailScreen extends StatelessWidget {
   final EntityId id;
   @override
   Widget build(BuildContext context) => ManagementGate(
+    capability: ManagementCapability.inventory,
     child: ChangeNotifierProvider(
       create: (_) =>
           ProductDetailProvider(context.read<AppServices>().inventory, id)
@@ -51,6 +53,7 @@ class _DetailBody extends StatelessWidget {
       context: parent,
       builder: (dialog) => StatefulBuilder(
         builder: (context, update) => ProtectedDialog(
+          capability: ManagementCapability.inventory,
           child: AlertDialog(
             title: Text(tr(context, 'm52TrackingChange')),
             content: SingleChildScrollView(
@@ -154,6 +157,7 @@ class _DetailBody extends StatelessWidget {
       context: parent,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setState) => ProtectedDialog(
+          capability: ManagementCapability.inventory,
           child: AlertDialog(
             title: Text(switch (kind) {
               'receive' => tr(context, 'receiveStock'),

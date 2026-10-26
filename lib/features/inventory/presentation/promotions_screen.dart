@@ -1,3 +1,4 @@
+import '../../management/domain/management_role.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +56,7 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
 
   @override
   Widget build(BuildContext context) => ManagementGate(
+    capability: ManagementCapability.inventory,
     child: ListenableBuilder(
       listenable: paging!,
       builder: (context, _) => Scaffold(
@@ -220,6 +222,7 @@ class _PromotionFormState extends State<_PromotionForm> {
         final accepted = await showDialog<bool>(
           context: context,
           builder: (dialog) => ProtectedDialog(
+            capability: ManagementCapability.inventory,
             child: AlertDialog(
               title: Text(tr(dialog, 'm52PromoArchive')),
               actions: [
@@ -246,6 +249,7 @@ class _PromotionFormState extends State<_PromotionForm> {
           final accepted = await showDialog<bool>(
             context: context,
             builder: (dialog) => ProtectedDialog(
+              capability: ManagementCapability.inventory,
               child: AlertDialog(
                 content: Text(tr(dialog, 'm52PromoLoss')),
                 actions: [
@@ -293,9 +297,11 @@ class _PromotionFormState extends State<_PromotionForm> {
 
   @override
   Widget build(BuildContext context) => ManagementGate(
+    capability: ManagementCapability.inventory,
     child: ListenableBuilder(
       listenable: Listenable.merge([name, minimum, percent, productText]),
       builder: (context, _) => FormExitGuard(
+        capability: ManagementCapability.inventory,
         dirty: baseline != null && snapshot() != baseline,
         child: Scaffold(
           appBar: AppBar(

@@ -17,7 +17,7 @@ final class QuantityPromotionService {
     String prefix = '',
     PromotionCursor? after,
   }) => database.read((db) async {
-    await access.authorize(db);
+    await access.authorize(db, capability: ManagementCapability.inventory);
     final search = normalizeName(prefix),
         end = prefixEnd(normalizeName(prefix));
     if (after != null && after.prefix != search) {
@@ -36,7 +36,7 @@ final class QuantityPromotionService {
         if (after != null) ...[after.name, after.id],
       ],
     );
-    await access.authorize(db);
+    await access.authorize(db, capability: ManagementCapability.inventory);
     final visible = rows.take(50).toList();
     return Page(
       items: visible,
@@ -58,7 +58,7 @@ final class QuantityPromotionService {
     required bool active,
     int? expectedRevision,
   }) => database.transaction((dbTxn) async {
-    await access.authorize(dbTxn);
+    await access.authorize(dbTxn, capability: ManagementCapability.inventory);
     Quantity.positive(minimum);
     if (basisPoints < 1 ||
         basisPoints > 10000 ||
@@ -115,13 +115,13 @@ final class QuantityPromotionService {
       'quantity_promotion_saved',
       entityId: target.value,
     );
-    await access.authorize(dbTxn);
+    await access.authorize(dbTxn, capability: ManagementCapability.inventory);
     return target;
   });
   Future<void> archive(EntityId id, int revision) => database.transaction((
     dbTxn,
   ) async {
-    await access.authorize(dbTxn);
+    await access.authorize(dbTxn, capability: ManagementCapability.inventory);
     final changed = await dbTxn.update(
       'quantity_promotions',
       {
@@ -139,6 +139,6 @@ final class QuantityPromotionService {
       'quantity_promotion_archived',
       entityId: id.value,
     );
-    await access.authorize(dbTxn);
+    await access.authorize(dbTxn, capability: ManagementCapability.inventory);
   });
 }

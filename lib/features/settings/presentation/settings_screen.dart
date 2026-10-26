@@ -1,6 +1,7 @@
 import '../../cashier/presentation/quick_cash_settings_screen.dart';
 import '../../../core/presentation/form_exit_guard.dart';
 import 'low_price_settings_screen.dart';
+import 'feature_settings_screen.dart';
 import '../../../app/app_version.dart';
 import 'package:kasir_app/l10n/localized_notice.dart';
 import 'package:kasir_app/features/settings/presentation/language_button.dart';
@@ -12,6 +13,7 @@ import '../../../app/app_services.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/pin_screen.dart';
 import '../../management/presentation/security_settings_screen.dart';
+import '../../management/presentation/task_pattern_screen.dart';
 import 'settings_provider.dart';
 import 'currency_selector.dart';
 import '../../printer/presentation/printer_settings_screen.dart';
@@ -115,6 +117,8 @@ class _SettingsFormState extends State<_SettingsForm> {
                     ),
                   const CurrencySelector(),
                   for (final destination in [
+                    (const TaskPatternScreen(), 'm53TaskPattern'),
+                    (const FeatureSettingsScreen(), 'm53Features'),
                     (const QuickCashSettingsScreen(), 'm51QuickSettings'),
                     (const LowPriceSettingsScreen(), 'm52LowPriceSettings'),
                     (const PrinterSettingsScreen(), 'm5Printer'),

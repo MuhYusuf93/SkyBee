@@ -38,13 +38,16 @@ final class ManagementSessionProvider extends ChangeNotifier
     if (!_disposed) notifyListeners();
   }
 
-  Future<bool> unlock(String pin) async {
+  Future<bool> unlock(
+    String pin, {
+    ManagementRole role = ManagementRole.owner,
+  }) async {
     if (_busy) return false;
     _busy = true;
     _error = null;
     notifyListeners();
     try {
-      await service.unlock(pin);
+      await service.unlock(pin, role: role);
       if (!_disposed) _unlocked = service.isUnlocked;
       return unlocked;
     } catch (error) {

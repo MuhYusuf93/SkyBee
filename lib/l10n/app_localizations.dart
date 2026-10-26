@@ -4237,6 +4237,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The low-price threshold must not be negative.'**
   String get m52LowPriceThreshold;
+
+  /// M5.3 store policy and PIN verification: m53Features
+  ///
+  /// In en, this message translates to:
+  /// **'Features and stock tracking'**
+  String get m53Features;
+
+  /// M5.3 store policy and PIN verification: m53StockMode
+  ///
+  /// In en, this message translates to:
+  /// **'Store stock tracking'**
+  String get m53StockMode;
+
+  /// M5.3 store policy and PIN verification: m53Stockoff
+  ///
+  /// In en, this message translates to:
+  /// **'Do not track stock'**
+  String get m53Stockoff;
+
+  /// M5.3 store policy and PIN verification: m53Stockpartial
+  ///
+  /// In en, this message translates to:
+  /// **'Track selected products'**
+  String get m53Stockpartial;
+
+  /// M5.3 store policy and PIN verification: m53Stockall
+  ///
+  /// In en, this message translates to:
+  /// **'Track all products'**
+  String get m53Stockall;
+
+  /// M5.3 store policy and PIN verification: m53TrackThisProduct
+  ///
+  /// In en, this message translates to:
+  /// **'Track stock for this product'**
+  String get m53TrackThisProduct;
+
+  /// M5.3 store policy and PIN verification: m53StockHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Untracked stock does not show the quantity in the store and does not decrease after a sale. Check availability. For tracked stock, record receipts, sales, returns and corrections to match physical stock. Record or reconcile sales made outside the app. Reconcile conflicting products before changing the store mode.'**
+  String get m53StockHelp;
+
+  /// M5.3 store policy and PIN verification: m53PolicyPreview
+  ///
+  /// In en, this message translates to:
+  /// **'Review changes'**
+  String get m53PolicyPreview;
+
+  /// M5.3 store policy and PIN verification: m53PolicyImpact
+  ///
+  /// In en, this message translates to:
+  /// **'Products requiring reconciliation before changing mode'**
+  String get m53PolicyImpact;
+
+  /// M5.3 store policy and PIN verification: m53PreserveFeatures
+  ///
+  /// In en, this message translates to:
+  /// **'Hiding a feature preserves stored wholesale prices, packaging, barcodes, dates and history. Sale eligibility rules still apply.'**
+  String get m53PreserveFeatures;
+
+  /// M5.3 store policy and PIN verification: m53WholesaleHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Configure wholesale prices per product. Enabling this feature does not assign wholesale prices automatically.'**
+  String get m53WholesaleHelp;
+
+  /// M5.3 store policy and PIN verification: m53BarcodeHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Use barcodes with a supported camera or external scanner. Products without barcodes can use automatic internal codes.'**
+  String get m53BarcodeHelp;
+
+  /// M5.3 store policy and PIN verification: m53ExpiryHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Dates and batches help with reminders and sale eligibility. Check physical condition. Hiding these inputs does not erase dates or make expired stock saleable.'**
+  String get m53ExpiryHelp;
+
+  /// M5.3 store policy and PIN verification: m53PolicyChanged
+  ///
+  /// In en, this message translates to:
+  /// **'Settings changed. Reopen to review the latest data.'**
+  String get m53PolicyChanged;
+
+  /// M5.3 store policy and PIN verification: m53StockReconciliationRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Some products conflict with this stock mode. Reconcile them using product tracking changes, then review again. No balances were changed.'**
+  String get m53StockReconciliationRequired;
+
+  /// M5.3 store policy and PIN verification: m53StockModeConflict
+  ///
+  /// In en, this message translates to:
+  /// **'Product tracking conflicts with the store policy. Reload settings and choose a compatible mode.'**
+  String get m53StockModeConflict;
+
+  /// M5.3 store policy and PIN verification: m53InitialQuantityRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an explicit initial quantity, including 0 if there is no stock.'**
+  String get m53InitialQuantityRequired;
+
+  /// M5.3 store policy and PIN verification: m53PinRequired72Hours
+  ///
+  /// In en, this message translates to:
+  /// **'Use the app PIN to unlock management. A PIN is required again after 72 hours; biometrics do not restart this interval.'**
+  String get m53PinRequired72Hours;
+
+  /// M5.3 store policy and PIN verification: m53RoleSetupRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Changing task assignments requires the corresponding PIN and access setup.'**
+  String get m53RoleSetupRequired;
+
+  /// M5.3 store policy and PIN verification: m53UnknownCostPending
+  ///
+  /// In en, this message translates to:
+  /// **'This setting requires explicit unknown-cost accounting. Existing costs are preserved.'**
+  String get m53UnknownCostPending;
+
+  /// M5.3 separated local access: m53OwnerRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Owner/Reports access is required for this action.'**
+  String get m53OwnerRequired;
+
+  /// M5.3 separated local access: m53WarehouseNotConfigured
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse access has not been configured for this task pattern.'**
+  String get m53WarehouseNotConfigured;
+
+  /// M5.3 separated local access: m53PinsMustDiffer
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse and Owner/Reports PINs must differ.'**
+  String get m53PinsMustDiffer;
+
+  /// M5.3 separated local access: m53ChooseAccess
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the access to unlock'**
+  String get m53ChooseAccess;
+
+  /// M5.3 separated local access: m53OwnerRole
+  ///
+  /// In en, this message translates to:
+  /// **'Owner/Reports'**
+  String get m53OwnerRole;
+
+  /// M5.3 separated local access: m53WarehouseRole
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse'**
+  String get m53WarehouseRole;
+
+  /// M5.3 separated local access: m53TaskPattern
+  ///
+  /// In en, this message translates to:
+  /// **'How is your store managed?'**
+  String get m53TaskPattern;
+
+  /// M5.3 separated local access: m53TaskHelp
+  ///
+  /// In en, this message translates to:
+  /// **'These are task and access patterns on the same app/device, not employee limits or personal accounts. Changes revoke existing management sessions.'**
+  String get m53TaskHelp;
+
+  /// M5.3 separated local access: m53Pattern1
+  ///
+  /// In en, this message translates to:
+  /// **'1 — Owner handles checkout and management'**
+  String get m53Pattern1;
+
+  /// M5.3 separated local access: m53Pattern2
+  ///
+  /// In en, this message translates to:
+  /// **'2 — Cashier and manager'**
+  String get m53Pattern2;
+
+  /// M5.3 separated local access: m53Pattern3
+  ///
+  /// In en, this message translates to:
+  /// **'3 or more — Separate responsibilities'**
+  String get m53Pattern3;
+
+  /// M5.3 separated local access: m53WarehousePinHelp
+  ///
+  /// In en, this message translates to:
+  /// **'All products must be tracked. Reconcile untracked products before selecting this pattern. The Warehouse PIN must differ from the Owner/Reports PIN. Biometrics are for Owner/Reports only; device biometrics do not prove an employee role. The owner can reset the Warehouse PIN on this page.'**
+  String get m53WarehousePinHelp;
+
+  /// M5.3 separated local access: m53WarehousePin
+  ///
+  /// In en, this message translates to:
+  /// **'Create Warehouse PIN'**
+  String get m53WarehousePin;
+
+  /// M5.3 explicit stock valuation: m53ZeroCostConfirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm that this purchase is intentionally free before recording zero cost.'**
+  String get m53ZeroCostConfirmation;
+
+  /// M5.3 explicit stock valuation: m53ValuationQuantityMismatch
+  ///
+  /// In en, this message translates to:
+  /// **'Cost reconciliation quantity must match the confirmed stock quantity.'**
+  String get m53ValuationQuantityMismatch;
+
+  /// User clarification M5.3 locked dirty exit: m53LockedUnsavedBody
+  ///
+  /// In en, this message translates to:
+  /// **'There are unsaved management changes. Stay on the locked screen, or discard the changes and return to the cashier. Authenticate with the appropriate access to resume editing.'**
+  String get m53LockedUnsavedBody;
+
+  /// User clarification M5.3 locked dirty exit: m53StayLocked
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on locked screen'**
+  String get m53StayLocked;
+
+  /// User clarification M5.3 locked dirty exit: m53DiscardToCashier
+  ///
+  /// In en, this message translates to:
+  /// **'Discard and return to cashier'**
+  String get m53DiscardToCashier;
 }
 
 class _AppLocalizationsDelegate

@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
 import 'management_session_provider.dart';
+import 'management_navigation.dart';
+import '../domain/management_role.dart';
 
 /// PIN setup/access/rotation form. No credentials or SQL in state/Provider.
 class PinScreen extends StatefulWidget {
@@ -17,11 +19,13 @@ class PinScreen extends StatefulWidget {
     this.rotate = false,
     this.freshPurpose,
     this.allowBiometrics = true,
+    this.role = ManagementRole.owner,
   });
   final bool configure;
   final bool rotate;
   final String? freshPurpose;
   final bool allowBiometrics;
+  final ManagementRole role;
   @override
   State<PinScreen> createState() => _PinScreenState();
 }
@@ -36,6 +40,8 @@ class _PinScreenState extends State<PinScreen> {
   String? _error;
   bool _focusScheduled = false;
   String? _submittedPin;
+  bool get _useBiometrics =>
+      widget.allowBiometrics && widget.role == ManagementRole.owner;
   bool get _ordinaryGate =>
       !widget.configure && !widget.rotate && widget.freshPurpose == null;
   void _focusPin() {
@@ -44,10 +50,7 @@ class _PinScreenState extends State<PinScreen> {
     }
   }
 
-  void _cancelGate() {
-    context.read<ManagementSessionProvider>().lock();
-    Navigator.of(context).popUntil((route) => route.isFirst);
-  }
+  Future<void> _cancelGate() => requestManagementExit(context);
 
   bool _biometricTried = false, _biometricAvailable = false;
   @override
@@ -71,8 +74,14 @@ class _PinScreenState extends State<PinScreen> {
   }
 
   Future<void> _tryBiometrics({bool automatic = true}) async {
+    if (!_useBiometrics) return;
     if (!mounted || _busy) return;
     try {
+      if (await context.read<AppServices>().management.appPinRequired) {
+        if (mounted) setState(() => _error = 'm53PinRequired72Hours');
+        return;
+      }
+      if (!mounted) return;
       final status = await context
           .read<AppServices>()
           .management
@@ -172,7 +181,7 @@ class _PinScreenState extends State<PinScreen> {
       } else {
         final state = context.read<ManagementSessionProvider>();
         final result = widget.freshPurpose == null
-            ? await state.unlock(_pin.text)
+            ? await state.unlock(_pin.text, role: widget.role)
             : await state.reauthenticate(_pin.text, widget.freshPurpose!);
         _pin.clear();
         if (!mounted) return;
@@ -244,7 +253,12 @@ class _PinScreenState extends State<PinScreen> {
               ? tr(context, 'createManagementPin')
               : widget.rotate
               ? tr(context, 'changePinOrRecovery')
-              : tr(context, 'managementAccess'),
+              : tr(
+                  context,
+                  widget.role == ManagementRole.warehouse
+                      ? 'm53WarehouseRole'
+                      : 'managementAccess',
+                ),
         ),
       ),
       body: SafeArea(

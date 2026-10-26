@@ -1,5 +1,16 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+26 Oktober — klarifikasi pengguna: Back terkunci dengan form berubah tetap
+memunculkan peringatan generik. Tetap terkunci atau buang dan kembali ke Kasir;
+tidak commit, tidak membuka data tanpa autentikasi, cart/tender tetap.
+[Keputusan dan acceptance](decisions/M53_LOCKED_BACK.md).
+
+26 Oktober 2026 — M5.3 aktif sesuai [kontrak pengguna](decisions/M53_REQUEST.md).
+Cakupan A–H mencakup onboarding/preferensi/stok/biaya, akses terpisah, kasir/member,
+kas fisik, gudang/supplier/utang/jadwal, output/laporan dan keselamatan data.
+M5.4/M5.5/M6 tetap terpisah. Ketentuan lama yang bertentangan digantikan kontrak
+ini; data eksplorasi wajib dipertahankan. Progres dan batas pada [checkpoint](M53_CHECKPOINT.md).
+
 Koreksi langsung25Oktober2026: profil tanpa footerFeedVersion yang membawa feed6 (default lama) dibaca sebagai3, termasuk sesudah restart. Nilai lama selain6 tetap. Simpan berikutnya menandai versi sehingga pilihan manual0–8, termasuk6, tetap berlaku. Snapshot job yang sudah disiapkan tidak dinormalisasi; tidak ada rewrite SQL/data bisnis. Data lama tidak membedakan default6 dan pilihan manual6; aturan kompatibilitas ini khusus mengikuti koreksi pengguna. Menggantikan kebijakan mempertahankan bottom6 lama pada catatan sebelumnya.
 
 Tambahan langsung25Oktober2026: sesudah perbaikan cetak, pengguna meminta

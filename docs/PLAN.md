@@ -1,5 +1,31 @@
 # Rencana milestone
 
+26 Oktober2026 — checkpoint fondasi M5.3 tervalidasi, tahap tetap AKTIF.
+Host66PASS; shared UI/valuation/metadata10PASS dan focused invariant1PASS
+bertumpang tindih. Native domain DV14/Poco14 dan UI Back terkunci DV3/Poco3
+PASS; seluruh511/467/528/484entri protected masing-masing interval sama,
+controlOff, awake DV restored. Analyze bersih, l10n728/493/245, KDF/vendor
+unchanged, debug/release ordinary ABI/signature/16KiB verified tanpa install.
+Source+12/schema16 belum rilis; .skybee+12/schema14 tetap. A2/remaining B–H
+belum selesai. [Laporan dan batas bukti](M53_REPORT.md).
+
+26 Oktober — klarifikasi pengguna: Back terkunci dengan form berubah tetap
+memunculkan peringatan generik. Tetap terkunci atau buang dan kembali ke Kasir;
+tidak commit, tidak membuka data tanpa autentikasi, cart/tender tetap.
+[Keputusan dan acceptance](decisions/M53_LOCKED_BACK.md).
+
+26 Oktober2026 — M5.3 DILANJUTKAN sesudah izin debugging DV. Host22PASS,
+DV9PASS/Poco9kasus PASS lintas8PASS1FAIL+retest1PASS; seluruh hash lama pada
+interval native cocok. Widget dan delta clock72jam sedang diperbaiki/diperiksa.
+Belum update Paket Eksplorasi Mandiri atau handoff M5.3. [Checkpoint aktif](M53_CHECKPOINT.md).
+Catatan jeda berikut historis; instruksi lanjut pengguna berlaku.
+
+26 Oktober 2026 — urutan aktif M5.3 A→B→C→D→E→F→G→H mengikuti
+[kontrak](decisions/M53_REQUEST.md). A1 fondasi preferensi/mode stok dan bagian
+PIN72jam sedang diimplementasi/diperiksa; A2 biaya unknown/onboarding belum.
+Pengguna meminta jeda untuk otorisasi DV; lanjut dari [checkpoint](M53_CHECKPOINT.md)
+setelah instruksi siap. Jangan mengulang pekerjaan printer yang telah ditutup.
+
 Koreksi default footer25Oktober: reproduksi saved feed6 tanpa marker, normalisasi pengaturan menjadi3, versi pada save berikutnya, snapshot job historis tetap. Verifikasi host/native form-reopen, analyze, build+12, update Poco in-place dan restart; tidak perlu cetak fisik atau suite ulang perangkat lain. Selesai: host44/native1 PASS, analyze/build/APK PASS, +12 terpasang dan profil aktual cold restart3/3 PASS.
 
 25Oktober tambahan langsung: feed atas/bawah manual/default3, kemudian empat

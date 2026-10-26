@@ -1,3 +1,4 @@
+import '../../management/domain/management_role.dart';
 import '../../../core/money/money_field.dart';
 import 'package:kasir_app/features/settings/presentation/language_button.dart';
 import 'package:kasir_app/l10n/localization.dart';
@@ -14,6 +15,7 @@ class InventoryHistoryScreen extends StatelessWidget {
   final EntityId productId;
   @override
   Widget build(BuildContext context) => ManagementGate(
+    capability: ManagementCapability.inventory,
     child: ChangeNotifierProvider(
       create: (_) => PagedController<ChangeRecord, ChangeCursor, ChangeKind>(
         filter: ChangeKind.stock,

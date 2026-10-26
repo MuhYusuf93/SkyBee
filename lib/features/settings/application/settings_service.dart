@@ -3,12 +3,76 @@ import 'package:dlibphonenumber/dlibphonenumber.dart';
 import '../../../core/money/money.dart';
 import '../../../data/database/database_coordinator.dart';
 import '../../management/application/management_service.dart';
+import '../domain/store_feature_policy.dart';
+import 'package:sqflite/sqflite.dart';
 
 /// Basic store forms only. Printer/logo/Drive/consent remain their milestones.
 final class SettingsService {
   const SettingsService(this.database, this.access);
   final DatabaseCoordinator database;
   final ManagementService access;
+
+  /// Only presentation switches are public. Protected configuration edits and
+  /// previews still authorize before and after the serialized database read.
+  Future<StoreFeaturePolicy> featurePolicy() => database.read(policyOn);
+  static Future<StoreFeaturePolicy> policyOn(DatabaseExecutor db) async {
+    final version =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
+    if (version < 15) return const StoreFeaturePolicy();
+    return StoreFeaturePolicy.fromRow(
+      (await db.query('store_feature_policy', where: 'id=1')).single,
+    );
+  }
+
+  static Future<StockPolicyImpact> _impactOn(DatabaseExecutor db) async {
+    final row = (await db.rawQuery(
+      '''SELECT
+      COALESCE(SUM(stock_tracking_enabled=1),0) AS tracked,
+      COALESCE(SUM(stock_tracking_enabled=0),0) AS untracked FROM products''',
+    )).single;
+    return StockPolicyImpact(row['tracked'] as int, row['untracked'] as int);
+  }
+
+  Future<StockPolicyImpact> stockPolicyImpact() => database.read((db) async {
+    await access.authorize(db);
+    final result = await _impactOn(db);
+    await access.authorize(db);
+    return result;
+  });
+
+  /// Compare-and-swap protects a preview from concurrent configuration changes.
+  /// Conflicting products must use audited stock reconciliation first; changing
+  /// a display preference is never permission to discard stock or expiry facts.
+  Future<void> saveFeaturePolicy(StoreFeaturePolicy value) =>
+      database.transaction((dbTxn) async {
+        await access.authorize(dbTxn);
+        if (database.schemaVersion < 15) {
+          throw StateError('storePolicyRequiresMigration');
+        }
+        final current = await policyOn(dbTxn);
+        if (current.revision != value.revision) {
+          throw const AppError('m53PolicyChanged');
+        }
+        if (value.taskPattern != current.taskPattern) {
+          throw const AppError('m53RoleSetupRequired');
+        }
+        if (value.taskPattern == 3 &&
+            (!value.enforced || value.stockMode != StockMode.all)) {
+          throw const AppError('m53StockModeConflict');
+        }
+        if (!value.cost) throw const AppError('m53UnknownCostPending');
+        if (value.enforced &&
+            (await _impactOn(dbTxn)).conflicts(value.stockMode) != 0) {
+          throw const AppError('m53StockReconciliationRequired');
+        }
+        await dbTxn.update('store_feature_policy', {
+          ...value.values,
+          'revision': current.revision + 1,
+        }, where: 'id=1');
+        await access.audit(dbTxn, 'store_feature_policy_changed');
+        await access.authorize(dbTxn);
+        access.touch();
+      }, inventoryChanged: true);
 
   /// Public phone entry metadata only, independent of UI language/currency.
   Future<String> phoneRegion() => database.read(
@@ -24,14 +88,14 @@ final class SettingsService {
   Future<({int threshold, bool suppressed})> lowPricePreference(
     String currency,
   ) => database.read((db) async {
-    await access.authorize(db);
+    await access.authorize(db, capability: ManagementCapability.inventory);
     CurrencyPolicy.forCode(currency);
     final rows = await db.query(
       'low_price_preferences',
       where: 'currency_code=?',
       whereArgs: [currency],
     );
-    await access.authorize(db);
+    await access.authorize(db, capability: ManagementCapability.inventory);
     return (
       threshold: rows.isEmpty
           ? (currency == 'IDR' ? 100 : 1)

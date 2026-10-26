@@ -76,6 +76,9 @@ void m51SecuritySuite(DatabaseFactory factory) {
       verifier = Map.of(
         (await seed.read((sql) => sql.query('management_credentials'))).single,
       );
+      // Each case injects an earlier synthetic wall clock. Start its attempt
+      // accounting at that clock rather than carrying the host setup time.
+      verifier['last_attempt_at'] = 0;
     } finally {
       await seed.close();
     }
@@ -166,7 +169,12 @@ void m51SecuritySuite(DatabaseFactory factory) {
         schemaVersion: 9,
       );
       await old.transaction(
-        (sql) => sql.insert('management_credentials', verifier),
+        (sql) => sql.insert(
+          'management_credentials',
+          {...verifier}
+            ..remove('last_pin_verified_at')
+            ..remove('last_pin_clock_seen_at'),
+        ),
       );
       await old.close();
       old = DatabaseCoordinator(factory: factory, databasePath: oldPath);

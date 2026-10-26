@@ -22,6 +22,13 @@ val isSkybeeDemo = project.findProperty("dart-defines")?.toString()
 if (isIntegrationFixture && isSkybeeDemo) {
     throw GradleException("Skybee demo and integration fixture are separate sandboxes.")
 }
+val fixtureBackgroundPaused = project.findProperty("dart-defines")?.toString()
+    ?.split(',')?.any {
+        String(Base64.getDecoder().decode(it)) == "KASIR_FIXTURE_BACKGROUND_PAUSED=true"
+    } == true
+if (fixtureBackgroundPaused && !isIntegrationFixture) {
+    throw GradleException("Background isolation override is restricted to integration fixtures.")
+}
 
 // Flutter's packaging defaults retain all three supported ABIs even for a
 // --target-platform build. Compile our CMake library for exactly the requested

@@ -8,6 +8,7 @@ import '../../sale_history/presentation/sale_history_screen.dart';
 import '../../reports/presentation/reports_screen.dart';
 import 'management_gate.dart';
 import 'management_session_provider.dart';
+import '../domain/management_role.dart';
 
 class ManagementScreen extends StatelessWidget {
   const ManagementScreen({super.key});
@@ -17,6 +18,7 @@ class ManagementScreen extends StatelessWidget {
       if (didPop) context.read<ManagementSessionProvider>().lock();
     },
     child: ManagementGate(
+      capability: ManagementCapability.inventory,
       child: Scaffold(
         appBar: AppBar(
           title: Text(tr(context, 'management')),
@@ -42,36 +44,39 @@ class ManagementScreen extends StatelessWidget {
                 ),
                 child: Text(tr(context, 'inventory')),
               ),
-              const SizedBox(height: 16),
-              OutlinedButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const SettingsScreen(),
+              if (context.watch<ManagementSessionProvider>().service.role ==
+                  ManagementRole.owner) ...[
+                const SizedBox(height: 16),
+                OutlinedButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const SettingsScreen(),
+                    ),
                   ),
+                  child: Text(tr(context, 'storeSettings')),
                 ),
-                child: Text(tr(context, 'storeSettings')),
-              ),
-              const SizedBox(height: 24),
-              OutlinedButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const SaleHistoryScreen(),
+                const SizedBox(height: 24),
+                OutlinedButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const SaleHistoryScreen(),
+                    ),
                   ),
+                  child: Text(tr(context, 'm3SaleHistory')),
                 ),
-                child: Text(tr(context, 'm3SaleHistory')),
-              ),
-              const SizedBox(height: 16),
-              OutlinedButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const ReportsScreen(),
+                const SizedBox(height: 16),
+                OutlinedButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const ReportsScreen(),
+                    ),
                   ),
+                  child: Text(tr(context, 'm4Reports')),
                 ),
-                child: Text(tr(context, 'm4Reports')),
-              ),
+              ],
               Text(tr(context, 'm4LaterFeatures')),
             ],
           ),

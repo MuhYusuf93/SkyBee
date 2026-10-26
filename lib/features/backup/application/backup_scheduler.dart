@@ -244,6 +244,10 @@ final class BackupScheduler {
 @pragma('vm:entry-point')
 void m5BackgroundDispatcher() {
   Workmanager().executeTask((task, input) async {
+    if (const bool.fromEnvironment('KASIR_INTEGRATION_TEST') &&
+        const bool.fromEnvironment('KASIR_FIXTURE_BACKGROUND_PAUSED')) {
+      return true; // Preserve retained fixture data; leave periodic metadata intact.
+    }
     WidgetsFlutterBinding.ensureInitialized();
     if (const bool.fromEnvironment('KASIR_SKYBEE_DEMO') &&
         !await SkybeeBackgroundGuard.ready(

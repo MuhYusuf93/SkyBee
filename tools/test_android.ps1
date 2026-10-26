@@ -43,6 +43,10 @@ try {
         throw 'Selected Android device is not connected/authorized; no build or install attempted.'
     }
     if ($TestFiles.Count -eq 0) { throw 'At least one integration suite is required.' }
+    if (@($TestFiles | Where-Object { (Split-Path -Leaf $_) -like 'm53_*' }).Count -gt 0 -and
+        'KASIR_FIXTURE_BACKGROUND_PAUSED=true' -notin $AdditionalDartDefines) {
+        throw 'M5.3 retained-package tests require KASIR_FIXTURE_BACKGROUND_PAUSED=true before build/install.'
+    }
     if($BuildMode -ne 'debug' -and -not $PrepareOnly){throw 'Profile/release fixtures use PrepareOnly; Flutter integration runner remains debug.'}
     if($PrepareOnly -and $TestFiles.Count -ne 1){throw 'PrepareOnly requires exactly one isolated entrypoint.'}
     $taskNameFilterArgs = @()

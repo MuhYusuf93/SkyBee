@@ -1,3 +1,4 @@
+import '../../management/domain/management_role.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
@@ -82,6 +83,7 @@ class _ShelvesScreenState extends State<ShelvesScreen> {
       context: context,
       builder: (dialog) => StatefulBuilder(
         builder: (_, update) => ProtectedDialog(
+          capability: ManagementCapability.inventory,
           child: AlertDialog(
             title: Text(tr(dialog, 'editRecord')),
             content: Column(
@@ -136,9 +138,11 @@ class _ShelvesScreenState extends State<ShelvesScreen> {
 
   @override
   Widget build(BuildContext context) => ManagementGate(
+    capability: ManagementCapability.inventory,
     child: ListenableBuilder(
       listenable: Listenable.merge([name, paging!]),
       builder: (context, _) => FormExitGuard(
+        capability: ManagementCapability.inventory,
         dirty: name.text != baseline,
         child: Scaffold(
           appBar: AppBar(

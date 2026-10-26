@@ -1,3 +1,4 @@
+import '../../management/domain/management_role.dart';
 import 'whole_quantity_formatter.dart';
 import 'dart:convert';
 import 'package:kasir_app/l10n/localization.dart';
@@ -18,6 +19,7 @@ import 'expiry_date_field.dart';
 import '../../../core/presentation/form_exit_guard.dart';
 import '../../../core/money/money_field.dart';
 import '../../settings/presentation/language_button.dart';
+import '../../settings/domain/store_feature_policy.dart';
 
 /// Form expanded only as needed. Stock/value cannot be edited in master fields.
 class ProductForm extends StatefulWidget {
@@ -51,6 +53,23 @@ class _ProductFormState extends State<ProductForm> {
   String? sizeUnit;
   bool tracking = false, low = true, busy = false;
   String? error;
+  StoreFeaturePolicy _policy = const StoreFeaturePolicy();
+  bool _policyRequested = false, _policyLoading = true, _trackStock = true;
+  Future<void> _loadPolicy() async {
+    try {
+      final policy = await context.read<AppServices>().settings.featurePolicy();
+      if (!mounted) return;
+      final unchanged = _baseline == snapshot();
+      setState(() {
+        _policy = policy;
+        _policyLoading = false;
+        if (unchanged) _baseline = snapshot();
+      });
+    } catch (e) {
+      if (mounted) setState(() => error = safeError(e));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -92,6 +111,10 @@ class _ProductFormState extends State<ProductForm> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (!_policyRequested) {
+      _policyRequested = true;
+      _loadPolicy();
+    }
     final language = sizeNumberLanguage(moneyCodec(context).policy.code);
     if (_sizeLanguage != null &&
         _sizeLanguage != language &&
@@ -155,9 +178,16 @@ class _ProductFormState extends State<ProductForm> {
     _baseline ??= snapshot();
   }
 
-  bool get untracked => widget.product == null
-      ? stockInput.quantity.text.isEmpty
-      : !widget.product!.stockTracked;
+  bool get untracked {
+    if (widget.product != null) return !widget.product!.stockTracked;
+    if (!_policy.enforced) return stockInput.quantity.text.isEmpty;
+    return switch (_policy.stockMode) {
+      StockMode.off => true,
+      StockMode.all => false,
+      StockMode.partial => !_trackStock,
+    };
+  }
+
   String snapshot() {
     Object money(MoneyEditingController c) =>
         c.text.isEmpty ? '' : c.canonicalMoney?.amountMinor ?? c.text;
@@ -197,6 +227,7 @@ class _ProductFormState extends State<ProductForm> {
       category?.id.value,
       tracking,
       low,
+      _trackStock,
     ]);
   }
 
@@ -351,6 +382,13 @@ class _ProductFormState extends State<ProductForm> {
         shelfId: selectedShelf?.id,
       );
       final product = widget.product;
+      if (_policyLoading) return;
+      if (product == null &&
+          !untracked &&
+          _policy.enforced &&
+          stockInput.quantity.text.isEmpty) {
+        throw const AppError('m53InitialQuantityRequired');
+      }
       final entered = product == null && !untracked ? stockInput.parse() : null;
       final purchase =
           entered != null && entered.quantityBase > 0 && cost.text.isNotEmpty
@@ -399,7 +437,11 @@ class _ProductFormState extends State<ProductForm> {
                   Text(tr(context, 'm52LowPriceBody')),
                   CheckboxListTile(
                     value: suppress,
-                    onChanged: (value) => update(() => suppress = value!),
+                    onChanged:
+                        context.read<AppServices>().management.role ==
+                            ManagementRole.owner
+                        ? (value) => update(() => suppress = value!)
+                        : null,
                     title: Text(
                       '${tr(context, 'm52SuppressLowPrice')} (${input.sellingPrice.currencyCode})',
                     ),
@@ -424,6 +466,7 @@ class _ProductFormState extends State<ProductForm> {
       if (product == null) {
         await service.create(
           input,
+          initialQuantity: purchase == null ? entered?.quantityBase : null,
           initialPurchase: purchase,
           expiry: date,
           stockTracking: !untracked,
@@ -459,6 +502,7 @@ class _ProductFormState extends State<ProductForm> {
 
   @override
   Widget build(BuildContext context) => ManagementGate(
+    capability: ManagementCapability.inventory,
     child: ListenableBuilder(
       listenable: Listenable.merge([
         name,
@@ -479,6 +523,7 @@ class _ProductFormState extends State<ProductForm> {
         stockInput.size,
       ]),
       builder: (context, _) => FormExitGuard(
+        capability: ManagementCapability.inventory,
         dirty: _baseline != null && snapshot() != _baseline,
         child: Scaffold(
           appBar: AppBar(
@@ -493,7 +538,23 @@ class _ProductFormState extends State<ProductForm> {
             child: ListView(
               padding: const EdgeInsets.all(20),
               children: [
+                if (_policyLoading)
+                  Text(
+                    tr(context, 'loading'),
+                    key: const ValueKey('product-policy-loading'),
+                  ),
                 field(name, tr(context, 'productName')),
+                if (widget.product == null &&
+                    _policy.enforced &&
+                    _policy.stockMode == StockMode.partial)
+                  SwitchListTile(
+                    title: Text(tr(context, 'm53TrackThisProduct')),
+                    subtitle: Text(tr(context, 'm53StockHelp')),
+                    value: _trackStock,
+                    onChanged: busy || _policyLoading
+                        ? null
+                        : (value) => setState(() => _trackStock = value),
+                  ),
                 if (widget.product == null && untracked)
                   Text(tr(context, 'm52UntrackedNote')),
                 ExpansionTile(
@@ -568,39 +629,42 @@ class _ProductFormState extends State<ProductForm> {
                         : null,
                   ),
                 ),
-                ExpansionTile(
-                  key: ValueKey(
-                    'wholesale-${error == 'm52WholesaleAboveRetail'}',
+                if (_policy.wholesale)
+                  ExpansionTile(
+                    key: ValueKey(
+                      'wholesale-${error == 'm52WholesaleAboveRetail'}',
+                    ),
+                    initiallyExpanded: error == 'm52WholesaleAboveRetail',
+                    title: Text(tr(context, 'm31WholesaleOptional')),
+                    children: [
+                      MoneyField(
+                        controller: wholesale,
+                        label: tr(context, 'm31WholesalePrice'),
+                        enabled: !busy,
+                        focusNode: wholesaleFocus,
+                        errorText:
+                            priceErrors.contains('m52WholesaleAboveRetail')
+                            ? tr(context, 'm52WholesaleAboveRetail')
+                            : null,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(tr(context, 'm31WholesaleHelp')),
+                      ),
+                    ],
                   ),
-                  initiallyExpanded: error == 'm52WholesaleAboveRetail',
-                  title: Text(tr(context, 'm31WholesaleOptional')),
-                  children: [
-                    MoneyField(
-                      controller: wholesale,
-                      label: tr(context, 'm31WholesalePrice'),
-                      enabled: !busy,
-                      focusNode: wholesaleFocus,
-                      errorText: priceErrors.contains('m52WholesaleAboveRetail')
-                          ? tr(context, 'm52WholesaleAboveRetail')
-                          : null,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Text(tr(context, 'm31WholesaleHelp')),
-                    ),
-                  ],
-                ),
-                ExpansionTile(
-                  title: Text(tr(context, 'm31PackOptional')),
-                  children: [
-                    field(packLabel, tr(context, 'm31PackLabel')),
-                    field(packSize, tr(context, 'm31PackSize'), number: true),
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Text(tr(context, 'm31PackConfigHelp')),
-                    ),
-                  ],
-                ),
+                if (_policy.packaging)
+                  ExpansionTile(
+                    title: Text(tr(context, 'm31PackOptional')),
+                    children: [
+                      field(packLabel, tr(context, 'm31PackLabel')),
+                      field(packSize, tr(context, 'm31PackSize'), number: true),
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(tr(context, 'm31PackConfigHelp')),
+                      ),
+                    ],
+                  ),
                 if (widget.product == null || untracked)
                   ExpansionTile(
                     key: ValueKey(
@@ -610,7 +674,8 @@ class _ProductFormState extends State<ProductForm> {
                         untracked || error == 'm52PurchaseAboveRetail',
                     title: Text(tr(context, 'initialStockAndPurchasePrice')),
                     children: [
-                      if (widget.product == null)
+                      if (widget.product == null &&
+                          (!untracked || !_policy.enforced))
                         StockInputFields(
                           controller: stockInput,
                           enabled: !busy,
@@ -650,7 +715,8 @@ class _ProductFormState extends State<ProductForm> {
                               : null,
                         ),
                       ),
-                      if (widget.product == null || untracked)
+                      if (_policy.expiry &&
+                          (widget.product == null || untracked))
                         ExpiryDateField(controller: expiry, enabled: !busy),
                     ],
                   ),
@@ -658,7 +724,8 @@ class _ProductFormState extends State<ProductForm> {
                   title: Text(tr(context, 'codeBarcodeAndCategory')),
                   children: [
                     field(sku, tr(context, 'storeCodeAutomaticIfEmpty')),
-                    field(barcode, tr(context, 'barcodeOptional')),
+                    if (_policy.barcode)
+                      field(barcode, tr(context, 'barcodeOptional')),
                     OutlinedButton(
                       onPressed: busy
                           ? null
@@ -689,13 +756,14 @@ class _ProductFormState extends State<ProductForm> {
                       value: low,
                       onChanged: busy ? null : (v) => setState(() => low = v),
                     ),
-                    SwitchListTile(
-                      title: Text(tr(context, 'trackExpiry')),
-                      value: tracking,
-                      onChanged: busy
-                          ? null
-                          : (v) => setState(() => tracking = v),
-                    ),
+                    if (_policy.expiry)
+                      SwitchListTile(
+                        title: Text(tr(context, 'trackExpiry')),
+                        value: tracking,
+                        onChanged: busy
+                            ? null
+                            : (v) => setState(() => tracking = v),
+                      ),
                     Padding(
                       padding: EdgeInsets.all(12),
                       child: Text(
@@ -707,7 +775,9 @@ class _ProductFormState extends State<ProductForm> {
                 if (error != null) Text(message(context, error!)),
                 const SizedBox(height: 16),
                 FilledButton(
-                  onPressed: busy || initialError != null ? null : save,
+                  onPressed: busy || _policyLoading || initialError != null
+                      ? null
+                      : save,
                   child: Text(
                     busy ? tr(context, 'saving') : tr(context, 'saveProduct'),
                   ),

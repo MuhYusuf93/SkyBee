@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/localization.dart';
 import '../../features/management/presentation/management_session_provider.dart';
+import '../../features/management/domain/management_role.dart';
+import '../../features/management/presentation/management_navigation.dart';
 
 /// Forms supply canonical current values; the baseline is explicitly reset only
 /// after load/save. Revocation bypasses the dialog so a hidden management form
@@ -12,20 +14,58 @@ class FormExitGuard extends StatefulWidget {
     required this.dirty,
     required this.child,
     this.managementProtected = true,
+    this.capability = ManagementCapability.owner,
   });
   final bool dirty;
   final Widget child;
   final bool managementProtected;
+  final ManagementCapability capability;
   @override
   State<FormExitGuard> createState() => _FormExitGuardState();
 }
 
 class _FormExitGuardState extends State<FormExitGuard> {
   bool _leaving = false, _asking = false;
+  NavigatorState? _registeredNavigator;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final navigator = Navigator.of(context, rootNavigator: true);
+    if (_registeredNavigator != navigator) {
+      if (_registeredNavigator != null) {
+        ProtectedFormExits.unregister(_registeredNavigator!, this);
+      }
+      _registeredNavigator = navigator;
+    }
+    final route = ModalRoute.of(context);
+    ProtectedFormExits.register(
+      navigator,
+      this,
+      () =>
+          mounted &&
+          widget.managementProtected &&
+          widget.dirty &&
+          (route?.isActive ?? false),
+    );
+  }
+
+  @override
+  void dispose() {
+    if (_registeredNavigator != null) {
+      ProtectedFormExits.unregister(_registeredNavigator!, this);
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final session = context.watch<ManagementSessionProvider?>();
-    final allowed = !widget.managementProtected || (session?.unlocked ?? true);
+    final allowed =
+        !widget.managementProtected ||
+        (session == null ||
+            (session.unlocked &&
+                (widget.capability == ManagementCapability.inventory ||
+                    session.service.role == ManagementRole.owner)));
     return PopScope(
       canPop: _leaving || !widget.dirty || !allowed,
       onPopInvokedWithResult: (didPop, result) async {

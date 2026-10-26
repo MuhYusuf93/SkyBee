@@ -1,3 +1,4 @@
+import '../../management/domain/management_role.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
@@ -53,8 +54,10 @@ class ExpiryDateField extends StatelessWidget {
                       initialDate: initial,
                       firstDate: first,
                       lastDate: last,
-                      builder: (context, child) =>
-                          ProtectedDialog(child: child!),
+                      builder: (context, child) => ProtectedDialog(
+                        capability: ManagementCapability.inventory,
+                        child: child!,
+                      ),
                     );
                     if (date != null &&
                         context.mounted &&

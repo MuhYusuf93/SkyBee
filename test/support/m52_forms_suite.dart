@@ -360,6 +360,13 @@ void m52FormsSuite(DatabaseFactory factory) {
       );
       await tester.tap(find.text('OPEN'));
       await tester.pumpAndSettle();
+      await drain(
+        tester,
+        () => find
+            .byKey(const ValueKey('product-policy-loading'))
+            .evaluate()
+            .isEmpty,
+      );
       await tester.enterText(input('Product name'), 'PUBLIC low price');
       await tester.enterText(input('Selling price (IDR)'), '10');
       final purchase = input(
@@ -501,6 +508,13 @@ void m52FormsSuite(DatabaseFactory factory) {
       );
       await tester.tap(find.text('OPEN'));
       await tester.pumpAndSettle();
+      await drain(
+        tester,
+        () => find
+            .byKey(const ValueKey('product-policy-loading'))
+            .evaluate()
+            .isEmpty,
+      );
       await tester.enterText(input('Product name'), 'PUBLIC unsaved');
       await tester.pump();
       await tester.pageBack();
@@ -767,11 +781,25 @@ void m52FormsSuite(DatabaseFactory factory) {
       );
       await tester.tap(find.text('OPEN'));
       await tester.pumpAndSettle();
+      await drain(
+        tester,
+        () => find
+            .byKey(const ValueKey('product-policy-loading'))
+            .evaluate()
+            .isEmpty,
+      );
       await tester.pageBack();
       await tester.pumpAndSettle();
       expect(find.text('OPEN'), findsOneWidget);
       await tester.tap(find.text('OPEN'));
       await tester.pumpAndSettle();
+      await drain(
+        tester,
+        () => find
+            .byKey(const ValueKey('product-policy-loading'))
+            .evaluate()
+            .isEmpty,
+      );
       final name = find.byWidgetPredicate(
         (w) => w is TextField && w.controller?.text == 'PUBLIC original',
       );

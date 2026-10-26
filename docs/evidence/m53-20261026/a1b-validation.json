@@ -1,0 +1,136 @@
+{
+  "checkpoint": "M53 A1 and partial B; not final M5.3 handoff",
+  "source_version": "0.5.2+12",
+  "schema": 16,
+  "prepared_against_head": "02d4f6752ba3eee10540953485ba5fc8604c4048",
+  "source_manifest_sha256": "3062b9476f3b493ada4f34ff65fc1774ec88719bb3697d647964929919c4846d",
+  "host": [
+    {
+      "run": "roles-host-retest",
+      "cases": 66,
+      "seconds": 122,
+      "result": "PASS"
+    },
+    {
+      "run": "shared-ui-host",
+      "cases": 10,
+      "seconds": 28,
+      "result": "PASS",
+      "overlaps_previous": true
+    },
+    {
+      "run": "role-policy-invariant",
+      "cases": 1,
+      "seconds": 32,
+      "result": "PASS",
+      "overlaps_previous": true
+    }
+  ],
+  "native": [
+    {
+      "kind": "DV ARM32 domain/security",
+      "cases": 14,
+      "reporter_seconds": 295,
+      "tests": "PASS",
+      "protected_entries": 511,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "reset": false,
+      "private_artifacts": "build/m53-access-dv-20261026-204029"
+    },
+    {
+      "kind": "Poco ARM64 domain/security",
+      "cases": 14,
+      "reporter_seconds": 183,
+      "tests": "PASS",
+      "protected_entries": 467,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "reset": false,
+      "private_artifacts": "build/m53-access-poco-20261026-204924"
+    },
+    {
+      "kind": "Poco synthetic widget + native SQLCipher",
+      "cases": 3,
+      "reporter_seconds": 35,
+      "tests": "PASS",
+      "protected_entries": 484,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "reset": false,
+      "private_artifacts": "build/m53-locked-ui-poco-20261026-210540"
+    },
+    {
+      "kind": "DV synthetic widget + native SQLCipher",
+      "cases": 3,
+      "reporter_seconds": 83,
+      "tests": "PASS",
+      "protected_entries": 528,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "reset": false,
+      "private_artifacts": "build/m53-locked-ui-dv-20261026-210844"
+    }
+  ],
+  "artifacts": [
+    {
+      "kind": "debug",
+      "package": "com.example.kasir_app",
+      "version_name": "0.5.2",
+      "version_code": 12,
+      "sha256": "629d75632d52400b39afe41c70a3b7b70222b4d4904bc7515763088652ef4c9d",
+      "signing_certificate_sha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "debug_certificate": true,
+      "abis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "native_library_count": 13,
+      "zipalign_16k": true,
+      "installed": false,
+      "private_file": "build/m53/checkpoint-a1b/ordinary-debug.apk"
+    },
+    {
+      "kind": "release",
+      "package": "com.example.kasir_app",
+      "version_name": "0.5.2",
+      "version_code": 12,
+      "sha256": "53d17c880557d357035173112ae7acc0f17b22acfecfcdcdb308302add883606",
+      "signing_certificate_sha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "debug_certificate": true,
+      "abis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "native_library_count": 12,
+      "zipalign_16k": true,
+      "installed": false,
+      "private_file": "build/m53/checkpoint-a1b/ordinary-release.apk"
+    }
+  ],
+  "analyzer": {
+    "result": "PASS",
+    "seconds": 137.7
+  },
+  "localization": {
+    "keys": 728,
+    "references": 493,
+    "original_requirement_ids": 245,
+    "result": "PASS"
+  },
+  "kdf_vendor_files": 106,
+  "negative_guards": [
+    "M53 safe runner refuses missing background pause before build/install",
+    "ordinary Gradle refuses fixture background override"
+  ],
+  "preservation_scope": "All preexisting databases/no_backup files of protected installed packages except explicitly listed WorkManager metadata and lease files. No Skybee install/migration performed. Not a full logical handoff proof.",
+  "unverified": [
+    "physical OEM touch/keyboard/fingerprint acceptance",
+    "natural 72h interval",
+    "full M5.3 portable restore",
+    "remaining A2 and cashier lock/C-H implementation"
+  ],
+  "milestone_complete": false
+}

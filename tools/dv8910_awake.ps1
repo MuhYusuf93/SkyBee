@@ -1,4 +1,5 @@
 param(
+    [ValidateSet('192.168.0.102:5555','192.168.0.101:5555')][string]$DeviceId = '192.168.0.102:5555',
     [ValidateSet('Probe','Enable','Restore')][string]$Action = 'Probe',
     [string]$AndroidSdkRoot = 'C:\Users\ACER\AppData\Local\Android\sdk',
     [string]$SnapshotPath = "$PSScriptRoot/../docs/evidence/m5-20261016/dv-awake-original.json"
@@ -7,7 +8,7 @@ param(
 # on resume. This is independent of the integration runner and survives its exit.
 $ErrorActionPreference = 'Stop'
 $taskAdb = Join-Path $AndroidSdkRoot 'platform-tools/adb.exe'
-$taskTarget = '192.168.0.102:5555'
+$taskTarget = $DeviceId
 function Invoke-Dv([string[]]$Arguments) {
     $taskResult = & $taskAdb -s $taskTarget @Arguments
     if ($LASTEXITCODE -ne 0) { throw "ADB operation failed for confirmed DV target ($Action)." }

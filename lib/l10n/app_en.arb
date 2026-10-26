@@ -1581,28 +1581,52 @@
   "m5Feed": "Blank space after receipt (0–8 lines)",
   "m5TopFeed": "Blank space before header (0–8 lines)",
   "m5Protocol": "Printer command language",
-  "@m5Protocol": {"description": "Explicit printer command language selection per saved profile."},
+  "@m5Protocol": {
+    "description": "Explicit printer command language selection per saved profile."
+  },
   "m5ProtocolRaster": "ESC/POS Raster (common)",
-  "@m5ProtocolRaster": {"description": "ESC/POS GS v 0 raster encoder option."},
+  "@m5ProtocolRaster": {
+    "description": "ESC/POS GS v 0 raster encoder option."
+  },
   "m5ProtocolColumn": "ESC/POS Column (alternative)",
-  "@m5ProtocolColumn": {"description": "ESC/POS ESC asterisk column image encoder option."},
+  "@m5ProtocolColumn": {
+    "description": "ESC/POS ESC asterisk column image encoder option."
+  },
   "m5ProtocolTspl": "TSPL (continuous paper)",
-  "@m5ProtocolTspl": {"description": "TSPL bitmap continuous-media receipt encoder option."},
+  "@m5ProtocolTspl": {
+    "description": "TSPL bitmap continuous-media receipt encoder option."
+  },
   "m5ProtocolCpcl": "CPCL (continuous paper)",
-  "@m5ProtocolCpcl": {"description": "CPCL graphics continuous-media receipt encoder option."},
+  "@m5ProtocolCpcl": {
+    "description": "CPCL graphics continuous-media receipt encoder option."
+  },
   "m5ProtocolHelp": "Match the printer mode or manufacturer guide, then Save. Firmware mode is not changed automatically. TSPL/CPCL use continuous paper at 203 dpi; match page height to the printer capability. Test print to check the paper result.",
-  "@m5ProtocolHelp": {"description": "User guidance for explicit protocol, continuous media and physical calibration."},
+  "@m5ProtocolHelp": {
+    "description": "User guidance for explicit protocol, continuous media and physical calibration."
+  },
   "m5PageRows": "Maximum page height (128–4096 dots)",
-  "@m5PageRows": {"description": "Bounded page height for TSPL/CPCL receipts, independent of total receipt length."},
-  "@m5TopFeed": {"description": "Manual extra blank lines before the receipt header, from zero to eight."},
+  "@m5PageRows": {
+    "description": "Bounded page height for TSPL/CPCL receipts, independent of total receipt length."
+  },
+  "@m5TopFeed": {
+    "description": "Manual extra blank lines before the receipt header, from zero to eight."
+  },
   "m5TopFeedDecrease": "Reduce blank space before header",
-  "@m5TopFeedDecrease": {"description": "Decrease leading blank lines for this printer profile."},
+  "@m5TopFeedDecrease": {
+    "description": "Decrease leading blank lines for this printer profile."
+  },
   "m5TopFeedIncrease": "Increase blank space before header",
-  "@m5TopFeedIncrease": {"description": "Increase leading blank lines for this printer profile."},
+  "@m5TopFeedIncrease": {
+    "description": "Increase leading blank lines for this printer profile."
+  },
   "m5FeedDecrease": "Reduce blank space after receipt",
-  "@m5FeedDecrease": {"description": "Decrease the extra trailing blank lines for this printer profile."},
+  "@m5FeedDecrease": {
+    "description": "Decrease the extra trailing blank lines for this printer profile."
+  },
   "m5FeedIncrease": "Increase blank space after receipt",
-  "@m5FeedIncrease": {"description": "Increase the extra trailing blank lines for this printer profile."},
+  "@m5FeedIncrease": {
+    "description": "Increase the extra trailing blank lines for this printer profile."
+  },
   "m5GeometryHelp": "203 DPI: 8 dots is about 1 mm. Paper width differs from printable width. Keep shifts within the safe area; the OpenLabel -4 mm setting is not a universal default. Edit header/footer in store settings.",
   "m5Bold": "Bold text",
   "m5Logo": "Print logo when available",
@@ -2830,5 +2854,157 @@
   "m52LowPriceThreshold": "The low-price threshold must not be negative.",
   "@m52LowPriceThreshold": {
     "description": "Validation error when saving a negative per-currency low-price threshold."
+  },
+  "m53Features": "Features and stock tracking",
+  "@m53Features": {
+    "description": "M5.3 store policy and PIN verification: m53Features"
+  },
+  "m53StockMode": "Store stock tracking",
+  "@m53StockMode": {
+    "description": "M5.3 store policy and PIN verification: m53StockMode"
+  },
+  "m53Stockoff": "Do not track stock",
+  "@m53Stockoff": {
+    "description": "M5.3 store policy and PIN verification: m53Stockoff"
+  },
+  "m53Stockpartial": "Track selected products",
+  "@m53Stockpartial": {
+    "description": "M5.3 store policy and PIN verification: m53Stockpartial"
+  },
+  "m53Stockall": "Track all products",
+  "@m53Stockall": {
+    "description": "M5.3 store policy and PIN verification: m53Stockall"
+  },
+  "m53TrackThisProduct": "Track stock for this product",
+  "@m53TrackThisProduct": {
+    "description": "M5.3 store policy and PIN verification: m53TrackThisProduct"
+  },
+  "m53StockHelp": "Untracked stock does not show the quantity in the store and does not decrease after a sale. Check availability. For tracked stock, record receipts, sales, returns and corrections to match physical stock. Record or reconcile sales made outside the app. Reconcile conflicting products before changing the store mode.",
+  "@m53StockHelp": {
+    "description": "M5.3 store policy and PIN verification: m53StockHelp"
+  },
+  "m53PolicyPreview": "Review changes",
+  "@m53PolicyPreview": {
+    "description": "M5.3 store policy and PIN verification: m53PolicyPreview"
+  },
+  "m53PolicyImpact": "Products requiring reconciliation before changing mode",
+  "@m53PolicyImpact": {
+    "description": "M5.3 store policy and PIN verification: m53PolicyImpact"
+  },
+  "m53PreserveFeatures": "Hiding a feature preserves stored wholesale prices, packaging, barcodes, dates and history. Sale eligibility rules still apply.",
+  "@m53PreserveFeatures": {
+    "description": "M5.3 store policy and PIN verification: m53PreserveFeatures"
+  },
+  "m53WholesaleHelp": "Configure wholesale prices per product. Enabling this feature does not assign wholesale prices automatically.",
+  "@m53WholesaleHelp": {
+    "description": "M5.3 store policy and PIN verification: m53WholesaleHelp"
+  },
+  "m53BarcodeHelp": "Use barcodes with a supported camera or external scanner. Products without barcodes can use automatic internal codes.",
+  "@m53BarcodeHelp": {
+    "description": "M5.3 store policy and PIN verification: m53BarcodeHelp"
+  },
+  "m53ExpiryHelp": "Dates and batches help with reminders and sale eligibility. Check physical condition. Hiding these inputs does not erase dates or make expired stock saleable.",
+  "@m53ExpiryHelp": {
+    "description": "M5.3 store policy and PIN verification: m53ExpiryHelp"
+  },
+  "m53PolicyChanged": "Settings changed. Reopen to review the latest data.",
+  "@m53PolicyChanged": {
+    "description": "M5.3 store policy and PIN verification: m53PolicyChanged"
+  },
+  "m53StockReconciliationRequired": "Some products conflict with this stock mode. Reconcile them using product tracking changes, then review again. No balances were changed.",
+  "@m53StockReconciliationRequired": {
+    "description": "M5.3 store policy and PIN verification: m53StockReconciliationRequired"
+  },
+  "m53StockModeConflict": "Product tracking conflicts with the store policy. Reload settings and choose a compatible mode.",
+  "@m53StockModeConflict": {
+    "description": "M5.3 store policy and PIN verification: m53StockModeConflict"
+  },
+  "m53InitialQuantityRequired": "Enter an explicit initial quantity, including 0 if there is no stock.",
+  "@m53InitialQuantityRequired": {
+    "description": "M5.3 store policy and PIN verification: m53InitialQuantityRequired"
+  },
+  "m53PinRequired72Hours": "Use the app PIN to unlock management. A PIN is required again after 72 hours; biometrics do not restart this interval.",
+  "@m53PinRequired72Hours": {
+    "description": "M5.3 store policy and PIN verification: m53PinRequired72Hours"
+  },
+  "m53RoleSetupRequired": "Changing task assignments requires the corresponding PIN and access setup.",
+  "@m53RoleSetupRequired": {
+    "description": "M5.3 store policy and PIN verification: m53RoleSetupRequired"
+  },
+  "m53UnknownCostPending": "This setting requires explicit unknown-cost accounting. Existing costs are preserved.",
+  "@m53UnknownCostPending": {
+    "description": "M5.3 store policy and PIN verification: m53UnknownCostPending"
+  },
+  "m53OwnerRequired": "Owner/Reports access is required for this action.",
+  "@m53OwnerRequired": {
+    "description": "M5.3 separated local access: m53OwnerRequired"
+  },
+  "m53WarehouseNotConfigured": "Warehouse access has not been configured for this task pattern.",
+  "@m53WarehouseNotConfigured": {
+    "description": "M5.3 separated local access: m53WarehouseNotConfigured"
+  },
+  "m53PinsMustDiffer": "Warehouse and Owner/Reports PINs must differ.",
+  "@m53PinsMustDiffer": {
+    "description": "M5.3 separated local access: m53PinsMustDiffer"
+  },
+  "m53ChooseAccess": "Choose the access to unlock",
+  "@m53ChooseAccess": {
+    "description": "M5.3 separated local access: m53ChooseAccess"
+  },
+  "m53OwnerRole": "Owner/Reports",
+  "@m53OwnerRole": {
+    "description": "M5.3 separated local access: m53OwnerRole"
+  },
+  "m53WarehouseRole": "Warehouse",
+  "@m53WarehouseRole": {
+    "description": "M5.3 separated local access: m53WarehouseRole"
+  },
+  "m53TaskPattern": "How is your store managed?",
+  "@m53TaskPattern": {
+    "description": "M5.3 separated local access: m53TaskPattern"
+  },
+  "m53TaskHelp": "These are task and access patterns on the same app/device, not employee limits or personal accounts. Changes revoke existing management sessions.",
+  "@m53TaskHelp": {
+    "description": "M5.3 separated local access: m53TaskHelp"
+  },
+  "m53Pattern1": "1 — Owner handles checkout and management",
+  "@m53Pattern1": {
+    "description": "M5.3 separated local access: m53Pattern1"
+  },
+  "m53Pattern2": "2 — Cashier and manager",
+  "@m53Pattern2": {
+    "description": "M5.3 separated local access: m53Pattern2"
+  },
+  "m53Pattern3": "3 or more — Separate responsibilities",
+  "@m53Pattern3": {
+    "description": "M5.3 separated local access: m53Pattern3"
+  },
+  "m53WarehousePinHelp": "All products must be tracked. Reconcile untracked products before selecting this pattern. The Warehouse PIN must differ from the Owner/Reports PIN. Biometrics are for Owner/Reports only; device biometrics do not prove an employee role. The owner can reset the Warehouse PIN on this page.",
+  "@m53WarehousePinHelp": {
+    "description": "M5.3 separated local access: m53WarehousePinHelp"
+  },
+  "m53WarehousePin": "Create Warehouse PIN",
+  "@m53WarehousePin": {
+    "description": "M5.3 separated local access: m53WarehousePin"
+  },
+  "m53ZeroCostConfirmation": "Confirm that this purchase is intentionally free before recording zero cost.",
+  "@m53ZeroCostConfirmation": {
+    "description": "M5.3 explicit stock valuation: m53ZeroCostConfirmation"
+  },
+  "m53ValuationQuantityMismatch": "Cost reconciliation quantity must match the confirmed stock quantity.",
+  "@m53ValuationQuantityMismatch": {
+    "description": "M5.3 explicit stock valuation: m53ValuationQuantityMismatch"
+  },
+  "m53LockedUnsavedBody": "There are unsaved management changes. Stay on the locked screen, or discard the changes and return to the cashier. Authenticate with the appropriate access to resume editing.",
+  "@m53LockedUnsavedBody": {
+    "description": "User clarification M5.3 locked dirty exit: m53LockedUnsavedBody"
+  },
+  "m53StayLocked": "Stay on locked screen",
+  "@m53StayLocked": {
+    "description": "User clarification M5.3 locked dirty exit: m53StayLocked"
+  },
+  "m53DiscardToCashier": "Discard and return to cashier",
+  "@m53DiscardToCashier": {
+    "description": "User clarification M5.3 locked dirty exit: m53DiscardToCashier"
   }
 }

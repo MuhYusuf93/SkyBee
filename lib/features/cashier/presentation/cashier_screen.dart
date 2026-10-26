@@ -11,6 +11,7 @@ import '../../../l10n/localization.dart';
 import '../../../l10n/localized_notice.dart';
 import '../../management/presentation/pin_screen.dart';
 import '../../management/presentation/management_screen.dart';
+import '../../management/presentation/management_role_picker.dart';
 import '../../receivables/presentation/receivables_screen.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/cashier_models.dart';
@@ -98,9 +99,13 @@ class _CashierBodyState extends State<_CashierBody> {
     final services = context.read<AppServices>();
     final configured = await services.management.isConfigured;
     if (!mounted) return;
+    final role = await chooseManagementRole(context);
+    if (!mounted || role == null) return;
     final unlocked = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(builder: (_) => PinScreen(configure: !configured)),
+      MaterialPageRoute(
+        builder: (_) => PinScreen(configure: !configured, role: role),
+      ),
     );
     if (unlocked == true && mounted) {
       await Navigator.push<void>(

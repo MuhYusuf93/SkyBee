@@ -14,6 +14,7 @@ final class SaleHistoryService {
     : repository = SqliteSaleTransactionRepository(
         database,
         trackMutations: true,
+        authorize: access.authorize,
       );
   final DatabaseCoordinator database;
   final ManagementService access;

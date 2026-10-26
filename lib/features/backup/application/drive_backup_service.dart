@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../../core/domain/app_error.dart';
 import 'dart:io';
 import 'package:kasir_platform/kasir_platform.dart';
 import 'package:path/path.dart' as p;
@@ -151,6 +152,9 @@ final class DriveBackupService implements ScheduledDriveBackup {
     bool headless = false,
     int? notBeforeTarget,
   }) async {
+    if (headless && access.lastRole == ManagementRole.warehouse) {
+      throw const AppError('m53OwnerRequired');
+    }
     if (!headless) await access.authorizeCurrent();
     return workGate.run(() async {
       final policy = await policies.read();

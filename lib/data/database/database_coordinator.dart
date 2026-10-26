@@ -67,6 +67,14 @@ final class DatabaseCoordinator {
     bool headless = false,
     String databaseName = androidDatabaseName,
   }) async {
+    // Retained integration packages can contain old periodic work. Domain-only
+    // campaigns must not let that work open/migrate their legacy default DB.
+    // Named test fixtures use their own explicit factory and remain available.
+    if (const bool.fromEnvironment('KASIR_INTEGRATION_TEST') &&
+        const bool.fromEnvironment('KASIR_FIXTURE_BACKGROUND_PAUSED') &&
+        databaseName == 'kasir_app.db') {
+      throw StateError('retainedFixtureDatabaseDisabled');
+    }
     if (databaseName != 'kasir_app.db' &&
         (!const bool.fromEnvironment('KASIR_INTEGRATION_TEST') ||
             !RegExp(

@@ -1,4 +1,5 @@
 import '../../../app/app_version.dart';
+import '../../../core/domain/app_error.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
@@ -162,6 +163,11 @@ final class BackupService {
     Future<void> Function()? checkAuthorization,
     bool workLeaseHeld = false,
   }) {
+    // A warehouse session cannot repurpose a scheduled-worker entrypoint. Real
+    // workers own a separate service and must verify local consent themselves.
+    if (headless && access.lastRole == ManagementRole.warehouse) {
+      return Future.error(const AppError('m53OwnerRequired'));
+    }
     Future<PortableBackup> action() => _create(
       headless: headless,
       code: code,

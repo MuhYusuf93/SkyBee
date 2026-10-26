@@ -1,3 +1,4 @@
+import '../../management/domain/management_role.dart';
 import 'package:kasir_app/l10n/localized_notice.dart';
 import 'package:kasir_app/features/settings/presentation/language_button.dart';
 import 'package:kasir_app/l10n/localization.dart';
@@ -82,6 +83,7 @@ class _MasterBody extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setState) => ProtectedDialog(
+          capability: ManagementCapability.inventory,
           child: AlertDialog(
             title: Text(
               record == null
@@ -388,7 +390,10 @@ Future<MasterRecord?> pickMaster(BuildContext context, MasterKind kind) =>
                   : tr(context, 'selectSupplier'),
             ),
           ),
-          body: ManagementGate(child: MasterList(kind: kind, picker: true)),
+          body: ManagementGate(
+            capability: ManagementCapability.inventory,
+            child: MasterList(kind: kind, picker: true),
+          ),
         ),
       ),
     );

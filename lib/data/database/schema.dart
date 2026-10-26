@@ -4,7 +4,7 @@ import '../../core/domain/value_types.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 14;
+  static const version = 16;
 
   static Future<void> migrate(
     Database db,
@@ -30,9 +30,18 @@ final class Schema {
         12 => _cashTender,
         13 => _spaceMaintenance,
         14 => _operational,
+        15 => _storePolicy,
+        16 => _separatedAccess,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
+      }
+      if (target == 15 && oldVersion == 0) {
+        // Only a newly created database needs onboarding. Empty upgraded stores
+        // still keep their identity, credentials and previous setup lifecycle.
+        await db.execute(
+          'UPDATE store_feature_policy SET onboarding_completed=0 WHERE id=1',
+        );
       }
       if (target == 14) {
         // Retain original labels, use normalized stable relations for future
@@ -98,6 +107,45 @@ final class Schema {
 
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
+
+  /// No employee identities are fabricated for historical audit records. A
+  /// separate verifier prevents trying one PIN against all access levels.
+  static const _separatedAccess = [
+    '''CREATE TABLE warehouse_credentials(
+      id INTEGER PRIMARY KEY CHECK(id=1),pin_verifier BLOB NOT NULL,salt BLOB NOT NULL,
+      kdf_name TEXT NOT NULL,kdf_parameters TEXT NOT NULL,recovery_verifier BLOB NOT NULL,
+      failed_attempts INTEGER NOT NULL DEFAULT 0 CHECK(failed_attempts>=0),
+      blocked_until INTEGER NOT NULL DEFAULT 0 CHECK(blocked_until>=0),
+      last_attempt_at INTEGER NOT NULL DEFAULT 0 CHECK(last_attempt_at>=0),
+      last_pin_verified_at INTEGER CHECK(last_pin_verified_at IS NULL OR last_pin_verified_at>=0),
+      last_pin_clock_seen_at INTEGER CHECK(last_pin_clock_seen_at IS NULL OR last_pin_clock_seen_at>=0))''',
+    '''CREATE TABLE management_access_epoch(id INTEGER PRIMARY KEY CHECK(id=1),
+      revision INTEGER NOT NULL DEFAULT 0 CHECK(revision>=0))''',
+    'INSERT INTO management_access_epoch(id) VALUES(1)',
+    "ALTER TABLE audit_log ADD COLUMN actor_role TEXT CHECK(actor_role IS NULL OR actor_role IN ('owner','warehouse'))",
+  ];
+
+  /// Compatibility defaults preserve all existing controls and product modes.
+  /// Choosing a store policy later never rewrites physical balances or history.
+  static const _storePolicy = [
+    '''CREATE TABLE store_feature_policy(id INTEGER PRIMARY KEY CHECK(id=1),
+      stock_mode TEXT NOT NULL DEFAULT 'partial' CHECK(stock_mode IN ('off','partial','all')),
+      policy_enforced INTEGER NOT NULL DEFAULT 0 CHECK(policy_enforced IN (0,1)),
+      task_pattern INTEGER NOT NULL DEFAULT 1 CHECK(task_pattern IN (1,2,3)),
+      wholesale_visible INTEGER NOT NULL DEFAULT 1 CHECK(wholesale_visible IN (0,1)),
+      packaging_visible INTEGER NOT NULL DEFAULT 1 CHECK(packaging_visible IN (0,1)),
+      cost_visible INTEGER NOT NULL DEFAULT 1 CHECK(cost_visible IN (0,1)),
+      barcode_visible INTEGER NOT NULL DEFAULT 1 CHECK(barcode_visible IN (0,1)),
+      expiry_visible INTEGER NOT NULL DEFAULT 1 CHECK(expiry_visible IN (0,1)),
+      onboarding_completed INTEGER NOT NULL DEFAULT 1 CHECK(onboarding_completed IN (0,1)),
+      revision INTEGER NOT NULL DEFAULT 1 CHECK(revision>0),
+      CHECK(task_pattern<>3 OR stock_mode='all'))''',
+    'INSERT INTO store_feature_policy(id) VALUES(1)',
+    '''ALTER TABLE management_credentials ADD COLUMN last_pin_verified_at INTEGER
+      CHECK(last_pin_verified_at IS NULL OR last_pin_verified_at>=0)''',
+    '''ALTER TABLE management_credentials ADD COLUMN last_pin_clock_seen_at INTEGER
+      CHECK(last_pin_clock_seen_at IS NULL OR last_pin_clock_seen_at>=0)''',
+  ];
 
   /// Legacy products/sales remain tracked. Placeholder999 exists only alongside
   /// the explicit flag and zero physical valuation; it is never backfilled by

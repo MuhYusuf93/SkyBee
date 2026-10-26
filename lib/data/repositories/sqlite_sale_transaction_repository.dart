@@ -1,4 +1,5 @@
 import '../../core/domain/value_types.dart';
+import 'package:sqflite/sqflite.dart';
 import '../../core/domain/app_error.dart';
 import '../../core/domain/pricing_mode.dart';
 import '../../core/pagination/page.dart';
@@ -14,9 +15,11 @@ final class SqliteSaleTransactionRepository
   const SqliteSaleTransactionRepository(
     this._database, {
     this.trackMutations = false,
+    this.authorize,
   });
   final DatabaseCoordinator _database;
   final bool trackMutations;
+  final Future<void> Function(DatabaseExecutor db)? authorize;
   @override
   Future<Page<SaleTransaction, SaleHistoryCursor>> page({
     required SaleHistoryFilter filter,
@@ -25,13 +28,13 @@ final class SqliteSaleTransactionRepository
   }) async {
     final query = saleHistoryQuery(filter, after, pageSize);
     final result = await _database.read((db) async {
+      await authorize?.call(db);
       if (after?.revision != null && after!.revision != _database.revision) {
         throw const AppError('m4DatasetChanged');
       }
-      return (
-        await db.rawQuery(query.sql, query.arguments),
-        _database.revision,
-      );
+      final rows = await db.rawQuery(query.sql, query.arguments);
+      await authorize?.call(db);
+      return (rows, _database.revision);
     });
     final rows = result.$1;
     final sales = rows
@@ -77,12 +80,15 @@ final class SqliteSaleTransactionRepository
 
   @override
   Future<List<SaleTransactionItem>> items(EntityId saleTransactionId) async {
-    final rows = await _database.read(
-      (db) => db.rawQuery(
+    final rows = await _database.read((db) async {
+      await authorize?.call(db);
+      final rows = await db.rawQuery(
         '''SELECT i.*, h.currency_code, h.currency_scale FROM sale_transaction_items i JOIN sale_transactions h ON h.id=i.sale_transaction_id WHERE i.sale_transaction_id=? ORDER BY i.id COLLATE BINARY ASC''',
         [saleTransactionId.value],
-      ),
-    );
+      );
+      await authorize?.call(db);
+      return rows;
+    });
     return List.unmodifiable(
       rows.map(
         (row) => SaleTransactionItem(

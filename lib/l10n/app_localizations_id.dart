@@ -2333,4 +2333,139 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m52LowPriceThreshold => 'Ambang harga rendah tidak boleh negatif.';
+
+  @override
+  String get m53Features => 'Fitur dan pelacakan stok';
+
+  @override
+  String get m53StockMode => 'Pelacakan stok toko';
+
+  @override
+  String get m53Stockoff => 'Tidak melacak stok';
+
+  @override
+  String get m53Stockpartial => 'Melacak sebagian barang';
+
+  @override
+  String get m53Stockall => 'Melacak semua barang';
+
+  @override
+  String get m53TrackThisProduct => 'Lacak stok barang ini';
+
+  @override
+  String get m53StockHelp =>
+      'Stok yang tidak dilacak tidak menunjukkan jumlah barang di toko dan tidak berkurang saat penjualan. Pastikan barang tersedia. Jika stok dilacak, catat barang masuk, penjualan, retur dan koreksi agar sesuai kondisi fisik. Penjualan di luar aplikasi perlu dicatat kembali atau direkonsiliasi. Untuk mengubah mode, rekonsiliasi barang yang belum sesuai terlebih dahulu.';
+
+  @override
+  String get m53PolicyPreview => 'Tinjau perubahan';
+
+  @override
+  String get m53PolicyImpact =>
+      'Barang yang perlu direkonsiliasi sebelum mengganti mode';
+
+  @override
+  String get m53PreserveFeatures =>
+      'Menyembunyikan fitur tidak menghapus harga grosir, kemasan, barcode, tanggal atau riwayat yang sudah tersimpan. Aturan kelayakan jual tetap berlaku.';
+
+  @override
+  String get m53WholesaleHelp =>
+      'Harga grosir dikonfigurasi per barang. Mengaktifkan fitur tidak otomatis memberi semua barang harga grosir.';
+
+  @override
+  String get m53BarcodeHelp =>
+      'Barcode dapat dipakai dengan kamera atau scanner eksternal yang didukung. Barang tanpa barcode tetap dapat memakai kode internal otomatis.';
+
+  @override
+  String get m53ExpiryHelp =>
+      'Tanggal dan batch membantu pengingat serta kelayakan jual. Tetap periksa kondisi fisik barang. Menyembunyikan input tidak menghapus tanggal atau membuat stok kedaluwarsa layak jual.';
+
+  @override
+  String get m53PolicyChanged =>
+      'Pengaturan berubah. Buka ulang untuk meninjau data terbaru.';
+
+  @override
+  String get m53StockReconciliationRequired =>
+      'Masih ada barang yang tidak sesuai mode stok. Rekonsiliasi melalui perubahan pelacakan per barang, lalu tinjau kembali. Tidak ada saldo yang diubah.';
+
+  @override
+  String get m53StockModeConflict =>
+      'Pelacakan barang tidak sesuai pengaturan stok toko. Muat ulang pengaturan dan pilih mode yang sesuai.';
+
+  @override
+  String get m53InitialQuantityRequired =>
+      'Isi jumlah stok awal secara eksplisit, termasuk 0 jika belum ada stok.';
+
+  @override
+  String get m53PinRequired72Hours =>
+      'Gunakan PIN aplikasi untuk membuka pengelolaan. PIN diwajibkan kembali setelah 72 jam; biometrik tidak memulai ulang interval ini.';
+
+  @override
+  String get m53RoleSetupRequired =>
+      'Perubahan pembagian tugas memerlukan penyiapan PIN dan akses yang sesuai.';
+
+  @override
+  String get m53UnknownCostPending =>
+      'Pengaturan ini memerlukan pencatatan status biaya yang belum diketahui. Biaya tersimpan dipertahankan.';
+
+  @override
+  String get m53OwnerRequired =>
+      'Akses Pemilik/Laporan diperlukan untuk tindakan ini.';
+
+  @override
+  String get m53WarehouseNotConfigured =>
+      'Akses Gudang belum disiapkan untuk pola tugas ini.';
+
+  @override
+  String get m53PinsMustDiffer =>
+      'PIN Gudang dan Pemilik/Laporan harus berbeda.';
+
+  @override
+  String get m53ChooseAccess => 'Pilih akses yang ingin dibuka';
+
+  @override
+  String get m53OwnerRole => 'Pemilik/Laporan';
+
+  @override
+  String get m53WarehouseRole => 'Gudang';
+
+  @override
+  String get m53TaskPattern => 'Bagaimana toko Anda dikelola?';
+
+  @override
+  String get m53TaskHelp =>
+      'Ini pembagian tugas dan akses pada aplikasi/perangkat yang sama, bukan batas jumlah karyawan atau akun pribadi. Perubahan mencabut sesi pengelolaan lama.';
+
+  @override
+  String get m53Pattern1 => '1 — Pemilik menjalankan kasir dan pengelolaan';
+
+  @override
+  String get m53Pattern2 => '2 — Kasir dan pengelola';
+
+  @override
+  String get m53Pattern3 => '3 atau lebih — Tugas dipisahkan';
+
+  @override
+  String get m53WarehousePinHelp =>
+      'Pelacakan semua barang wajib aktif. Rekonsiliasi barang yang belum dilacak sebelum mengubah pola ini. PIN Gudang harus berbeda dari PIN Pemilik/Laporan. Biometrik hanya untuk Pemilik/Laporan; biometrik perangkat tidak membuktikan jabatan pegawai. Pemilik dapat mengatur ulang PIN Gudang melalui halaman ini.';
+
+  @override
+  String get m53WarehousePin => 'Buat PIN Gudang';
+
+  @override
+  String get m53ZeroCostConfirmation =>
+      'Konfirmasikan bahwa barang ini memang tanpa biaya sebelum mencatat harga beli 0.';
+
+  @override
+  String get m53ValuationQuantityMismatch =>
+      'Jumlah rekonsiliasi biaya harus sama dengan jumlah stok yang dikonfirmasi.';
+
+  @override
+  String get m53LockedUnsavedBody =>
+      'Ada perubahan pengelolaan yang belum disimpan. Tetap di layar terkunci, atau buang perubahan dan kembali ke Kasir. Buka akses dengan autentikasi yang sesuai untuk melanjutkan pengeditan.';
+
+  @override
+  String get m53StayLocked => 'Tetap di layar terkunci';
+
+  @override
+  String get m53DiscardToCashier => 'Buang perubahan dan kembali ke Kasir';
 }

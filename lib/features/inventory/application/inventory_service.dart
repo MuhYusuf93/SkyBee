@@ -15,6 +15,8 @@ import '../domain/stock_rules.dart';
 import '../domain/stock_input.dart';
 import '../domain/product_entry_rules.dart';
 import '../domain/change_record.dart';
+import '../../settings/application/settings_service.dart';
+import '../../settings/domain/store_feature_policy.dart';
 
 /// Protected master/stock use cases. Every write runs in one dbTxn and checks
 /// access at execution AND before commit. Screen state has no SQL/valuation.
@@ -50,14 +52,15 @@ final class InventoryService {
   }
 
   static const _ids = IdGenerator();
-  Future<T> _write<T>(Future<T> Function(Transaction dbTxn) operation) =>
-      database.transaction((dbTxn) async {
-        await access.authorize(dbTxn);
-        final result = await operation(dbTxn);
-        await access.authorize(dbTxn);
-        access.touch();
-        return result;
-      }, inventoryChanged: true);
+  Future<T> _write<T>(
+    Future<T> Function(Transaction dbTxn) operation,
+  ) => database.transaction((dbTxn) async {
+    await access.authorize(dbTxn, capability: ManagementCapability.inventory);
+    final result = await operation(dbTxn);
+    await access.authorize(dbTxn, capability: ManagementCapability.inventory);
+    access.touch();
+    return result;
+  }, inventoryChanged: true);
   String? _optional(String? value) =>
       value == null || value.trim().isEmpty ? null : value.trim();
 
@@ -65,11 +68,11 @@ final class InventoryService {
   /// Recheck at execution and after IO so protected values never escape a
   /// revoked session, even if the route's visibility guard has already closed.
   Future<T> _read<T>(Future<T> Function(Database db) operation) {
-    access.requireAccess();
+    access.requireAccess(capability: ManagementCapability.inventory);
     return database.read((db) async {
-      await access.authorize(db);
+      await access.authorize(db, capability: ManagementCapability.inventory);
       final value = await operation(db);
-      await access.authorize(db);
+      await access.authorize(db, capability: ManagementCapability.inventory);
       return value;
     });
   }
@@ -211,7 +214,7 @@ final class InventoryService {
   /// Stock initial is the same atomic receipt path; no SKU/barcode/supplier required.
   Future<EntityId> create(
     ProductInput input, {
-    int initialQuantity = 0,
+    int? initialQuantity,
     StockPurchase? initialPurchase,
     CostAmount? unitCost,
     CalendarDate? expiry,
@@ -219,24 +222,35 @@ final class InventoryService {
     CostAmount? referenceCost,
     bool suppressLowPriceWarning = false,
   }) => _write((dbTxn) async {
+    var startingQuantity = initialQuantity ?? 0;
+    final policy = await SettingsService.policyOn(dbTxn);
+    if (policy.enforced) {
+      if ((policy.stockMode == StockMode.all && !stockTracking) ||
+          (policy.stockMode == StockMode.off && stockTracking)) {
+        throw const AppError('m53StockModeConflict');
+      }
+      if (stockTracking && initialQuantity == null && initialPurchase == null) {
+        throw const AppError('m53InitialQuantityRequired');
+      }
+    }
     if (database.schemaVersion >= 14) {
       validateNewExpiry(expiry, access.clock.now);
     }
     if (initialPurchase != null) {
-      if (initialQuantity != 0 || unitCost != null) {
+      if (startingQuantity != 0 || unitCost != null) {
         throw const AppError('m31ConflictingInput');
       }
-      initialQuantity = initialPurchase.input.quantityBase;
+      startingQuantity = initialPurchase.input.quantityBase;
       unitCost = initialPurchase.unitCost;
       await _costCurrency(dbTxn, initialPurchase.costPerInput);
     }
-    Quantity(initialQuantity);
-    if (initialQuantity > 999999) {
+    Quantity(startingQuantity);
+    if (startingQuantity > 999999) {
       throw const AppError('m52InitialQuantityLimit');
     }
     if (!stockTracking) {
       if (database.schemaVersion < 14 ||
-          initialQuantity != 0 ||
+          startingQuantity != 0 ||
           initialPurchase != null ||
           referenceCost == null) {
         throw const AppError('m52ReferenceCostRequired');
@@ -250,7 +264,7 @@ final class InventoryService {
       costQuantity: initialPurchase?.input.quantityBase ?? 1,
     );
     if (priceErrors.isNotEmpty) throw AppError(priceErrors.first);
-    if (initialQuantity > 0 && unitCost == null) {
+    if (startingQuantity > 0 && unitCost == null) {
       throw const AppError('purchasePriceIsRequiredForInitialStock');
     }
     final id = _ids.next();
@@ -277,11 +291,11 @@ final class InventoryService {
         'created_at': now,
       });
     }
-    if (stockTracking && initialQuantity > 0) {
+    if (stockTracking && startingQuantity > 0) {
       await _receive(
         dbTxn,
         id,
-        initialQuantity,
+        startingQuantity,
         unitCost!,
         expiry: expiry,
         operationKey: 'initial-${id.value}',
@@ -423,6 +437,7 @@ final class InventoryService {
   /// Remember only inside the successful product transaction: a cancelled
   /// dialog or failed product write can never suppress later warnings.
   Future<void> _suppressLowPrice(DatabaseExecutor db, String currency) async {
+    await access.authorize(db);
     if (database.schemaVersion < 14) return;
     await db.rawInsert(
       '''INSERT INTO low_price_preferences(currency_code,threshold_minor,suppressed)
@@ -440,6 +455,12 @@ final class InventoryService {
     required CostAmount cost,
     int initialQuantity = 0,
   }) => _write((dbTxn) async {
+    final policy = await SettingsService.policyOn(dbTxn);
+    if (policy.enforced &&
+        ((policy.stockMode == StockMode.all && !tracked) ||
+            (policy.stockMode == StockMode.off && tracked))) {
+      throw const AppError('m53StockModeConflict');
+    }
     final old = await _product(dbTxn, id);
     if (old['revision'] != expectedRevision) {
       throw const AppError('productChangedReloadBeforeSaving');
@@ -1214,7 +1235,7 @@ final class InventoryService {
     CatalogFilter filter,
     CatalogCursor? after,
   ) async {
-    access.requireAccess();
+    access.requireAccess(capability: ManagementCapability.inventory);
     final products = await SqliteProductRepository(
       database,
     ).page(filter: filter, after: after);
@@ -1224,13 +1245,13 @@ final class InventoryService {
       for (final product in products.items) {
         items.add(await _detail(db, product.id));
       }
-      access.requireAccess();
+      access.requireAccess(capability: ManagementCapability.inventory);
     });
     return Page(items: items, nextCursor: products.nextCursor);
   }
 
   Future<InventoryProduct> detail(EntityId id) async {
-    access.requireAccess();
+    access.requireAccess(capability: ManagementCapability.inventory);
     return _read((db) => _detail(db, id));
   }
 
@@ -1283,7 +1304,7 @@ final class InventoryService {
     EntityId id, {
     BatchCursor? after,
   }) async {
-    access.requireAccess();
+    access.requireAccess(capability: ManagementCapability.inventory);
     if (after != null && after.productId != id) {
       throw const AppError('batchListChangedReload');
     }
@@ -1322,7 +1343,7 @@ final class InventoryService {
   }
 
   Future<EntityId?> latestReceipt(EntityId id) async {
-    access.requireAccess();
+    access.requireAccess(capability: ManagementCapability.inventory);
     return _read((db) async {
       final product = await _product(db, id);
       final rows = await db.query(
@@ -1445,7 +1466,7 @@ final class InventoryService {
     ChangeKind kind,
     ChangeCursor? after,
   ) async {
-    access.requireAccess();
+    access.requireAccess(capability: ManagementCapability.inventory);
     if (after != null && (after.productId != id || after.kind != kind)) {
       throw const AppError('historyFilterChangedReload');
     }
@@ -1486,7 +1507,7 @@ final class InventoryService {
           if (detail.isNotEmpty) 'receipt_input': detail.single,
         });
       }
-      access.requireAccess();
+      access.requireAccess(capability: ManagementCapability.inventory);
       final records = enriched
           .take(50)
           .map(
@@ -1520,7 +1541,7 @@ final class InventoryService {
     bool isDeleted = false,
     int pageSize = 50,
   }) async {
-    access.requireAccess();
+    access.requireAccess(capability: ManagementCapability.inventory);
     validatePageSize(pageSize);
     prefix = normalizeName(prefix);
     if (after != null &&

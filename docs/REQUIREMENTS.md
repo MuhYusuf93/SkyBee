@@ -1,5 +1,26 @@
 # Matriks persyaratan
 
+26 Oktober — klarifikasi pengguna: Back terkunci dengan form berubah tetap
+memunculkan peringatan generik. Tetap terkunci atau buang dan kembali ke Kasir;
+tidak commit, tidak membuka data tanpa autentikasi, cart/tender tetap.
+[Keputusan dan acceptance](decisions/M53_LOCKED_BACK.md).
+
+26 Oktober 2026 — M5.3 aktif dilanjutkan; checkpoint fondasi tervalidasi.
+Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
+
+| ID | Kebutuhan aktif M5.3 | Status/bukti checkpoint aktif |
+|---|---|---|
+| M53-A1 | Preferensi aman, mode toko, jumlah awal eksplisit, preservasi migrasi14 | Parsial: policy/migrasi15–16, host66/native14 per DV/Poco PASS; rekonsiliasi saldo masih tersisa |
+| M53-A2 | Onboarding lengkap, biaya unknown dan propagasi laporan | TODO |
+| M53-B1 | PIN aplikasi setiap72jam, biometric tidak mereset interval | Host dan native14 per DV/Poco PASS, termasuk restart/rollback clock sintetis; bukan72jam nyata |
+| M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir masih TODO |
+| M53-C | Pencarian/popularitas, uang cepat, member/piutang | TODO |
+| M53-D | Sesi dan pecahan kas, audit, jurnal laci | TODO |
+| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | TODO |
+| M53-F | Label/struk wajib dan laporan/ekspor baru | TODO |
+| M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |
+| M53-H | Build/push/update eksplorasi in-place dan preservasi | Parsial checkpoint: debug/release ordinary verified tanpa install; native hanya package integration, handoff .skybee belum |
+
 Koreksi P25-01 tanggal25Oktober: default6 profil tanpa marker versi harus efektif3 setelah buka ulang. Nilai lama lainnya serta semua pilihan manual tersimpan versi baru tetap; job historis tidak diubah. Kebijakan ini menggantikan frasa bottom lama tetap di histori berikut. Pemeriksaan/handoff+12 selesai; host44/native1 dan profil aktual cold restart PASS.
 
 Tambahan langsung25Oktober: feed atas/bawah0–8manual/−/+, default3; perprinter

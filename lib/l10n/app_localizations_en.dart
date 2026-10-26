@@ -2324,4 +2324,139 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m52LowPriceThreshold =>
       'The low-price threshold must not be negative.';
+
+  @override
+  String get m53Features => 'Features and stock tracking';
+
+  @override
+  String get m53StockMode => 'Store stock tracking';
+
+  @override
+  String get m53Stockoff => 'Do not track stock';
+
+  @override
+  String get m53Stockpartial => 'Track selected products';
+
+  @override
+  String get m53Stockall => 'Track all products';
+
+  @override
+  String get m53TrackThisProduct => 'Track stock for this product';
+
+  @override
+  String get m53StockHelp =>
+      'Untracked stock does not show the quantity in the store and does not decrease after a sale. Check availability. For tracked stock, record receipts, sales, returns and corrections to match physical stock. Record or reconcile sales made outside the app. Reconcile conflicting products before changing the store mode.';
+
+  @override
+  String get m53PolicyPreview => 'Review changes';
+
+  @override
+  String get m53PolicyImpact =>
+      'Products requiring reconciliation before changing mode';
+
+  @override
+  String get m53PreserveFeatures =>
+      'Hiding a feature preserves stored wholesale prices, packaging, barcodes, dates and history. Sale eligibility rules still apply.';
+
+  @override
+  String get m53WholesaleHelp =>
+      'Configure wholesale prices per product. Enabling this feature does not assign wholesale prices automatically.';
+
+  @override
+  String get m53BarcodeHelp =>
+      'Use barcodes with a supported camera or external scanner. Products without barcodes can use automatic internal codes.';
+
+  @override
+  String get m53ExpiryHelp =>
+      'Dates and batches help with reminders and sale eligibility. Check physical condition. Hiding these inputs does not erase dates or make expired stock saleable.';
+
+  @override
+  String get m53PolicyChanged =>
+      'Settings changed. Reopen to review the latest data.';
+
+  @override
+  String get m53StockReconciliationRequired =>
+      'Some products conflict with this stock mode. Reconcile them using product tracking changes, then review again. No balances were changed.';
+
+  @override
+  String get m53StockModeConflict =>
+      'Product tracking conflicts with the store policy. Reload settings and choose a compatible mode.';
+
+  @override
+  String get m53InitialQuantityRequired =>
+      'Enter an explicit initial quantity, including 0 if there is no stock.';
+
+  @override
+  String get m53PinRequired72Hours =>
+      'Use the app PIN to unlock management. A PIN is required again after 72 hours; biometrics do not restart this interval.';
+
+  @override
+  String get m53RoleSetupRequired =>
+      'Changing task assignments requires the corresponding PIN and access setup.';
+
+  @override
+  String get m53UnknownCostPending =>
+      'This setting requires explicit unknown-cost accounting. Existing costs are preserved.';
+
+  @override
+  String get m53OwnerRequired =>
+      'Owner/Reports access is required for this action.';
+
+  @override
+  String get m53WarehouseNotConfigured =>
+      'Warehouse access has not been configured for this task pattern.';
+
+  @override
+  String get m53PinsMustDiffer =>
+      'Warehouse and Owner/Reports PINs must differ.';
+
+  @override
+  String get m53ChooseAccess => 'Choose the access to unlock';
+
+  @override
+  String get m53OwnerRole => 'Owner/Reports';
+
+  @override
+  String get m53WarehouseRole => 'Warehouse';
+
+  @override
+  String get m53TaskPattern => 'How is your store managed?';
+
+  @override
+  String get m53TaskHelp =>
+      'These are task and access patterns on the same app/device, not employee limits or personal accounts. Changes revoke existing management sessions.';
+
+  @override
+  String get m53Pattern1 => '1 — Owner handles checkout and management';
+
+  @override
+  String get m53Pattern2 => '2 — Cashier and manager';
+
+  @override
+  String get m53Pattern3 => '3 or more — Separate responsibilities';
+
+  @override
+  String get m53WarehousePinHelp =>
+      'All products must be tracked. Reconcile untracked products before selecting this pattern. The Warehouse PIN must differ from the Owner/Reports PIN. Biometrics are for Owner/Reports only; device biometrics do not prove an employee role. The owner can reset the Warehouse PIN on this page.';
+
+  @override
+  String get m53WarehousePin => 'Create Warehouse PIN';
+
+  @override
+  String get m53ZeroCostConfirmation =>
+      'Confirm that this purchase is intentionally free before recording zero cost.';
+
+  @override
+  String get m53ValuationQuantityMismatch =>
+      'Cost reconciliation quantity must match the confirmed stock quantity.';
+
+  @override
+  String get m53LockedUnsavedBody =>
+      'There are unsaved management changes. Stay on the locked screen, or discard the changes and return to the cashier. Authenticate with the appropriate access to resume editing.';
+
+  @override
+  String get m53StayLocked => 'Stay on locked screen';
+
+  @override
+  String get m53DiscardToCashier => 'Discard and return to cashier';
 }

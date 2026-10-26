@@ -9,7 +9,10 @@ import '../domain/report_models.dart';
 
 final class ReportsService {
   ReportsService(this.database, this.access)
-    : repository = SqliteReportsRepository(database);
+    : repository = SqliteReportsRepository(
+        database,
+        authorize: access.authorize,
+      );
   final DatabaseCoordinator database;
   final ManagementService access;
   final SqliteReportsRepository repository;

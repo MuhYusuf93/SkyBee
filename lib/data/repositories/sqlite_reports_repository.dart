@@ -115,19 +115,22 @@ SqlQuery reportEventsQuery(
 }
 
 final class SqliteReportsRepository {
-  const SqliteReportsRepository(this.database);
+  const SqliteReportsRepository(this.database, {this.authorize});
   final DatabaseCoordinator database;
+  final Future<void> Function(DatabaseExecutor db)? authorize;
 
   Future<Page<ReportEntry, ReportCursor>> events(
     ReportFilter filter, {
     ReportCursor? after,
     int pageSize = 50,
   }) => database.read((db) async {
+    await authorize?.call(db);
     if (after != null && after.revision != database.revision) {
       throw const AppError('m4DatasetChanged');
     }
     final q = reportEventsQuery(filter, after, pageSize);
     final rows = await db.rawQuery(q.sql, q.arguments);
+    await authorize?.call(db);
     final entries = rows.take(pageSize).map(ReportEntry.new).toList();
     final last = entries.lastOrNull, first = entries.firstOrNull;
     return Page(
@@ -150,7 +153,12 @@ final class SqliteReportsRepository {
   /// SQL aggregates the entire range, independently of events/cache/page size.
   /// One serialized read prevents interleaved app writes between aggregates.
   Future<ReportSummary> summary(ReportFilter filter, String today) =>
-      database.read((db) => summaryDatabase(db, filter, today));
+      database.read((db) async {
+        await authorize?.call(db);
+        final result = await summaryDatabase(db, filter, today);
+        await authorize?.call(db);
+        return result;
+      });
 
   /// Shared frozen read for exports; never opens another coordinator lease.
   static Future<ReportSummary> summaryDatabase(
@@ -243,7 +251,12 @@ final class SqliteReportsRepository {
   }
 
   /// Whole-dataset checks diagnose drift; they never "fix" immutable records.
-  Future<ReconciliationResult> reconcile() => database.read(reconcileDatabase);
+  Future<ReconciliationResult> reconcile() => database.read((db) async {
+    await authorize?.call(db);
+    final result = await reconcileDatabase(db);
+    await authorize?.call(db);
+    return result;
+  });
 
   /// Also validates a private restore staging connection before promotion.
   /// This does not grant a public caller access to protected report reads.
