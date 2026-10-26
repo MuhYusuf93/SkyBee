@@ -322,9 +322,9 @@ void managementInventorySuite(
       );
       final product = await inventory.detail(id);
       expect(product.quantity, 20);
-      expect(averageCost(product.quantity, product.valueMicros), 9000000000);
+      expect(averageCost(product.quantity, product.valueMicros!), 9000000000);
       expect(
-        removalCost(quantity: 20, valueMicros: product.valueMicros, remove: 3),
+        removalCost(quantity: 20, valueMicros: product.valueMicros!, remove: 3),
         27000000000,
       );
       await inventory.edit(

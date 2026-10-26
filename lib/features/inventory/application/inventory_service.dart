@@ -12,6 +12,7 @@ import '../../catalog/domain/product_repository.dart';
 import '../../management/application/management_service.dart';
 import '../domain/inventory_models.dart';
 import '../domain/stock_rules.dart';
+import '../domain/stock_valuation.dart';
 import '../domain/stock_input.dart';
 import '../domain/product_entry_rules.dart';
 import '../domain/change_record.dart';
@@ -50,6 +51,40 @@ final class InventoryService {
       throw const AppError('currencyMismatch');
     }
   }
+
+  /// Unknown is admitted only by the explicit feature policy. Free inputs need
+  /// confirmation under the new policy; historical receipt facts are untouched.
+  Future<void> _purchaseCost(
+    DatabaseExecutor db,
+    CostAmount? amount, {
+    bool confirmedFree = false,
+  }) async {
+    final policy = await SettingsService.policyOn(db);
+    if (amount == null) {
+      if (database.schemaVersion < 17 || policy.cost) {
+        throw const AppError('purchasePriceIsRequiredForInitialStock');
+      }
+    } else {
+      await _costCurrency(db, amount);
+      if (database.schemaVersion >= 17) {
+        PurchaseCostInput.known(amount, confirmedFree: confirmedFree);
+      }
+    }
+  }
+
+  bool _complete(Map<String, Object?> row) => row['cost_complete'] != 0;
+
+  /// Numeric projection is for exact legacy ledger/reversal only. No average
+  /// exists for an incomplete pool; partial removal carries no guessed value.
+  int _removal(Map<String, Object?> row, int count) => _complete(row)
+      ? removalCost(
+          quantity: row['stock_quantity'] as int,
+          valueMicros: row['inventory_value_micros'] as int,
+          remove: count,
+        )
+      : count == row['stock_quantity']
+      ? row['inventory_value_micros'] as int
+      : 0;
 
   static const _ids = IdGenerator();
   Future<T> _write<T>(
@@ -216,20 +251,31 @@ final class InventoryService {
     ProductInput input, {
     int? initialQuantity,
     StockPurchase? initialPurchase,
+    StockInput? initialInput,
+    bool confirmedFree = false,
     CostAmount? unitCost,
     CalendarDate? expiry,
     bool stockTracking = true,
     CostAmount? referenceCost,
     bool suppressLowPriceWarning = false,
   }) => _write((dbTxn) async {
-    var startingQuantity = initialQuantity ?? 0;
+    if (initialInput != null &&
+        (initialQuantity != null ||
+            initialPurchase != null ||
+            unitCost != null)) {
+      throw const AppError('m31ConflictingInput');
+    }
+    var startingQuantity = initialInput?.quantityBase ?? initialQuantity ?? 0;
     final policy = await SettingsService.policyOn(dbTxn);
     if (policy.enforced) {
       if ((policy.stockMode == StockMode.all && !stockTracking) ||
           (policy.stockMode == StockMode.off && stockTracking)) {
         throw const AppError('m53StockModeConflict');
       }
-      if (stockTracking && initialQuantity == null && initialPurchase == null) {
+      if (stockTracking &&
+          initialQuantity == null &&
+          initialPurchase == null &&
+          initialInput == null) {
         throw const AppError('m53InitialQuantityRequired');
       }
     }
@@ -251,11 +297,10 @@ final class InventoryService {
     if (!stockTracking) {
       if (database.schemaVersion < 14 ||
           startingQuantity != 0 ||
-          initialPurchase != null ||
-          referenceCost == null) {
+          initialPurchase != null) {
         throw const AppError('m52ReferenceCostRequired');
       }
-      await _costCurrency(dbTxn, referenceCost);
+      await _purchaseCost(dbTxn, referenceCost, confirmedFree: confirmedFree);
     }
     final effectiveCost = stockTracking ? unitCost : referenceCost;
     final priceErrors = masterPriceErrors(
@@ -264,8 +309,14 @@ final class InventoryService {
       costQuantity: initialPurchase?.input.quantityBase ?? 1,
     );
     if (priceErrors.isNotEmpty) throw AppError(priceErrors.first);
-    if (startingQuantity > 0 && unitCost == null) {
-      throw const AppError('purchasePriceIsRequiredForInitialStock');
+    if (stockTracking && startingQuantity > 0) {
+      // A positive pack price may round to zero per base unit at micro precision;
+      // zero consent concerns the actual input price, not that rounded display.
+      await _purchaseCost(
+        dbTxn,
+        initialPurchase?.costPerInput ?? unitCost,
+        confirmedFree: confirmedFree,
+      );
     }
     final id = _ids.next();
     final now = access.clock.milliseconds;
@@ -276,6 +327,8 @@ final class InventoryService {
         'stock_tracking_enabled': stockTracking ? 1 : 0,
         'stock_quantity': stockTracking ? 0 : 999,
         'reference_cost_micros': referenceCost?.micros,
+        if (database.schemaVersion >= 17)
+          'cost_complete': stockTracking || referenceCost != null ? 1 : 0,
         'reference_expiry_date': stockTracking ? null : expiry?.iso,
       },
       'created_at': now,
@@ -287,7 +340,9 @@ final class InventoryService {
         'id': _ids.next().value,
         'product_id': id.value,
         'before_micros': null,
-        'after_micros': referenceCost!.micros,
+        'after_micros': referenceCost?.micros ?? 0,
+        if (database.schemaVersion >= 17)
+          'cost_complete': referenceCost == null ? 0 : 1,
         'created_at': now,
       });
     }
@@ -296,7 +351,9 @@ final class InventoryService {
         dbTxn,
         id,
         startingQuantity,
-        unitCost!,
+        unitCost,
+        confirmedFree: confirmedFree,
+        unknownInput: initialInput,
         expiry: expiry,
         operationKey: 'initial-${id.value}',
         initial: true,
@@ -326,6 +383,7 @@ final class InventoryService {
     ProductInput input,
     int expectedRevision, {
     CostAmount? referenceCost,
+    bool confirmedFree = false,
     bool suppressLowPriceWarning = false,
     CalendarDate? referenceExpiry,
     bool updateReferenceExpiry = false,
@@ -351,7 +409,9 @@ final class InventoryService {
         (old['stock_quantity'] as int) > 0) {
       final errors = masterPriceErrors(
         retail: input.sellingPrice,
-        costMicros: old['inventory_value_micros'] as int,
+        costMicros: _complete(old)
+            ? old['inventory_value_micros'] as int
+            : null,
         costQuantity: old['stock_quantity'] as int,
       );
       if (errors.isNotEmpty) throw AppError(errors.first);
@@ -364,19 +424,31 @@ final class InventoryService {
       }
       final reference =
           referenceCost?.micros ?? old['reference_cost_micros'] as int?;
-      if (reference == null) throw const AppError('m52ReferenceCostRequired');
-      if (referenceCost != null) await _costCurrency(dbTxn, referenceCost);
-      if (BigInt.from(reference) >
-          BigInt.from(input.sellingPrice.amountMinor) * BigInt.from(1000000)) {
+      if (referenceCost != null &&
+          referenceCost.micros != old['reference_cost_micros']) {
+        await _purchaseCost(dbTxn, referenceCost, confirmedFree: confirmedFree);
+      }
+      if (reference == null && database.schemaVersion < 17) {
+        throw const AppError('m52ReferenceCostRequired');
+      }
+      if (reference != null &&
+          BigInt.from(reference) >
+              BigInt.from(input.sellingPrice.amountMinor) *
+                  BigInt.from(1000000)) {
         throw const AppError('m52PurchaseAboveRetail');
       }
       values['reference_cost_micros'] = reference;
+      if (database.schemaVersion >= 17) {
+        values['cost_complete'] = reference == null ? 0 : 1;
+      }
       if (reference != old['reference_cost_micros']) {
         await dbTxn.insert('reference_cost_history', {
           'id': _ids.next().value,
           'product_id': id.value,
           'before_micros': old['reference_cost_micros'],
-          'after_micros': reference,
+          'after_micros': reference ?? 0,
+          if (database.schemaVersion >= 17)
+            'cost_complete': reference == null ? 0 : 1,
           'created_at': access.clock.milliseconds,
         });
       }
@@ -452,7 +524,8 @@ final class InventoryService {
     EntityId id,
     int expectedRevision, {
     required bool tracked,
-    required CostAmount cost,
+    CostAmount? cost,
+    bool confirmedFree = false,
     int initialQuantity = 0,
   }) => _write((dbTxn) async {
     final policy = await SettingsService.policyOn(dbTxn);
@@ -465,10 +538,13 @@ final class InventoryService {
     if (old['revision'] != expectedRevision) {
       throw const AppError('productChangedReloadBeforeSaving');
     }
-    await _costCurrency(dbTxn, cost);
-    if (BigInt.from(cost.micros) >
-        BigInt.from(old['selling_price_rupiah'] as int) *
-            BigInt.from(1000000)) {
+    if (!tracked || initialQuantity > 0) {
+      await _purchaseCost(dbTxn, cost, confirmedFree: confirmedFree);
+    }
+    if (cost != null &&
+        BigInt.from(cost.micros) >
+            BigInt.from(old['selling_price_rupiah'] as int) *
+                BigInt.from(1000000)) {
       throw const AppError('m52PurchaseAboveRetail');
     }
     final wasTracked = old['stock_tracking_enabled'] != 0;
@@ -494,7 +570,9 @@ final class InventoryService {
         'stock_tracking_enabled': tracked ? 1 : 0,
         'stock_quantity': tracked ? 0 : 999,
         'inventory_value_micros': 0,
-        'reference_cost_micros': tracked ? null : cost.micros,
+        'reference_cost_micros': tracked ? null : cost?.micros,
+        if (database.schemaVersion >= 17)
+          'cost_complete': tracked || cost != null ? 1 : 0,
         'revision': expectedRevision + 1,
         'updated_at': access.clock.milliseconds,
       },
@@ -507,6 +585,7 @@ final class InventoryService {
         id,
         initialQuantity,
         cost,
+        confirmedFree: confirmedFree,
         operationKey: 'tracking-${id.value}-${expectedRevision + 1}',
         initial: true,
       );
@@ -515,7 +594,8 @@ final class InventoryService {
       'id': _ids.next().value,
       'product_id': id.value,
       'before_micros': old['reference_cost_micros'],
-      'after_micros': cost.micros,
+      'after_micros': cost?.micros ?? 0,
+      if (database.schemaVersion >= 17) 'cost_complete': cost == null ? 0 : 1,
       'created_at': access.clock.milliseconds,
     });
     await access.audit(dbTxn, 'stock_tracking_changed', entityId: id.value);
@@ -608,7 +688,9 @@ final class InventoryService {
       final errors = masterPriceErrors(
         retail: amount(retail),
         wholesale: wholesale == null ? null : amount(wholesale),
-        costMicros: row['stock_tracking_enabled'] == 0
+        costMicros: !_complete(row)
+            ? null
+            : row['stock_tracking_enabled'] == 0
             ? row['reference_cost_micros'] as int?
             : row['inventory_value_micros'] as int,
         costQuantity: row['stock_tracking_enabled'] == 0
@@ -661,6 +743,7 @@ final class InventoryService {
   Future<EntityId> receivePurchase(
     EntityId id,
     StockPurchase purchase, {
+    bool confirmedFree = false,
     required String operationKey,
     EntityId? supplierId,
     CalendarDate? expiry,
@@ -674,8 +757,40 @@ final class InventoryService {
       supplierId: supplierId,
       expiry: expiry,
       purchase: purchase,
+      confirmedFree: confirmedFree,
     ),
   );
+
+  /// Packaging snapshot is kept even when the acquisition cost is unknown.
+  Future<EntityId> receiveInput(
+    EntityId id,
+    StockInput input,
+    CostAmount? cost, {
+    required String operationKey,
+    EntityId? supplierId,
+    CalendarDate? expiry,
+    bool confirmedFree = false,
+  }) => cost != null
+      ? receivePurchase(
+          id,
+          StockPurchase(input, cost),
+          operationKey: operationKey,
+          supplierId: supplierId,
+          expiry: expiry,
+          confirmedFree: confirmedFree,
+        )
+      : _write(
+          (dbTxn) => _receive(
+            dbTxn,
+            id,
+            input.quantityBase,
+            null,
+            operationKey: operationKey,
+            supplierId: supplierId,
+            expiry: expiry,
+            unknownInput: input,
+          ),
+        );
 
   /// Count conversion changes no master config and follows existing valuation.
   Future<void> adjustInput(
@@ -684,18 +799,21 @@ final class InventoryService {
     required String operationKey,
     required String reason,
     CostAmount? unitCost,
+    bool confirmedFree = false,
   }) => adjust(
     id,
     input.quantityBase,
     operationKey: operationKey,
     reason: reason,
     unitCost: unitCost,
+    confirmedFree: confirmedFree,
   );
 
   Future<EntityId> receive(
     EntityId id,
     int quantity,
-    CostAmount unitCost, {
+    CostAmount? unitCost, {
+    bool confirmedFree = false,
     required String operationKey,
     EntityId? supplierId,
     CalendarDate? expiry,
@@ -705,6 +823,7 @@ final class InventoryService {
       id,
       quantity,
       unitCost,
+      confirmedFree: confirmedFree,
       operationKey: operationKey,
       supplierId: supplierId,
       expiry: expiry,
@@ -737,22 +856,30 @@ final class InventoryService {
     DatabaseExecutor dbTxn,
     EntityId id,
     int quantity,
-    CostAmount unitCost, {
+    CostAmount? unitCost, {
+    bool confirmedFree = false,
     required String operationKey,
     EntityId? supplierId,
     CalendarDate? expiry,
     bool initial = false,
     StockPurchase? purchase,
+    StockInput? unknownInput,
   }) async {
     Quantity.positive(quantity);
-    await _costCurrency(dbTxn, purchase?.costPerInput ?? unitCost);
     final hash = await _hash([
       initial ? 'initial' : 'receipt',
       id.value,
       quantity,
-      unitCost.micros,
+      unitCost?.micros,
       supplierId?.value,
       expiry?.iso,
+      if (unknownInput != null && unitCost == null) ...[
+        unknownInput.unit.name,
+        unknownInput.count,
+        unknownInput.packSize,
+        unknownInput.packLabel,
+        'unknown',
+      ],
       if (purchase != null) ...[
         purchase.input.unit.name,
         purchase.input.count,
@@ -763,6 +890,12 @@ final class InventoryService {
     ]);
     final retry = await _retry(dbTxn, operationKey, hash);
     if (retry != null) return EntityId(retry['stock_receipt_id'] as String);
+    await _purchaseCost(
+      dbTxn,
+      purchase?.costPerInput ?? unitCost,
+      confirmedFree: confirmedFree,
+    );
+
     final old = await _product(dbTxn, id);
     if (old['stock_tracking_enabled'] == 0) {
       throw const AppError('m52StockOperationRequiresTracking');
@@ -775,7 +908,7 @@ final class InventoryService {
           old['currency_code'] as String,
           old['currency_scale'] as int,
         ),
-        costMicros: purchase?.totalMicros ?? unitCost.micros,
+        costMicros: purchase?.totalMicros ?? unitCost?.micros,
         costQuantity: purchase?.input.quantityBase ?? 1,
       );
       if (errors.isNotEmpty) throw AppError(errors.first);
@@ -787,7 +920,7 @@ final class InventoryService {
     final value =
         purchase?.totalMicros ??
         checkedNonNegative(
-          BigInt.from(unitCost.micros) * BigInt.from(quantity),
+          BigInt.from(unitCost?.micros ?? 0) * BigInt.from(quantity),
         );
     final newQty = checkedNonNegative(
       BigInt.from(old['stock_quantity'] as int) + BigInt.from(quantity),
@@ -813,15 +946,20 @@ final class InventoryService {
       'product_id': id.value,
       'product_name_snapshot': old['name'],
       'quantity': quantity,
-      'unit_cost_micros': unitCost.micros,
+      'unit_cost_micros': unitCost?.micros ?? 0,
+      if (database.schemaVersion >= 17)
+        'cost_complete': unitCost == null ? 0 : 1,
       'total_cost_micros': value,
-      'input_unit': purchase?.input.unit.name ?? 'base',
-      'input_quantity': purchase?.input.count ?? quantity,
-      'pack_size_snapshot': purchase?.input.packSize,
-      'pack_label_snapshot': purchase?.input.packLabel,
+      'input_unit':
+          purchase?.input.unit.name ?? unknownInput?.unit.name ?? 'base',
+      'input_quantity':
+          purchase?.input.count ?? unknownInput?.count ?? quantity,
+      'pack_size_snapshot': purchase?.input.packSize ?? unknownInput?.packSize,
+      'pack_label_snapshot':
+          purchase?.input.packLabel ?? unknownInput?.packLabel,
       'base_unit_snapshot': old['base_unit_label'],
       'input_unit_cost_micros':
-          purchase?.costPerInput.micros ?? unitCost.micros,
+          purchase?.costPerInput.micros ?? unitCost?.micros ?? 0,
       ...await _currency(dbTxn),
     });
     await dbTxn.insert('stock_batches', {
@@ -843,7 +981,14 @@ final class InventoryService {
       old,
       receiptId: receipt,
     );
-    await _stock(dbTxn, id, old, newQty, newValue);
+    await _stock(
+      dbTxn,
+      id,
+      old,
+      newQty,
+      newValue,
+      complete: _complete(old) && unitCost != null,
+    );
     await _history(
       dbTxn,
       id,
@@ -854,6 +999,7 @@ final class InventoryService {
       initial ? 'initialStock' : 'receiveStock',
       batch: batch,
       receipt: receipt,
+      complete: unitCost != null,
     );
     await access.audit(
       dbTxn,
@@ -885,6 +1031,8 @@ final class InventoryService {
         'reverses_operation_id': reverses?.value,
         'before_quantity': before['stock_quantity'],
         'before_value_micros': before['inventory_value_micros'],
+        if (database.schemaVersion >= 17)
+          'before_cost_complete': _complete(before) ? 1 : 0,
         'stock_revision_after': (before['stock_revision'] as int) + 1,
         'created_at': access.clock.milliseconds,
       })
@@ -894,13 +1042,18 @@ final class InventoryService {
     EntityId id,
     Map<String, Object?> old,
     int quantity,
-    int value,
-  ) async {
+    int value, {
+    bool? complete,
+  }) async {
     final affected = await db.update(
       'products',
       {
         'stock_quantity': quantity,
         'inventory_value_micros': value,
+        if (database.schemaVersion >= 17)
+          'cost_complete': quantity == 0 || (complete ?? _complete(old))
+              ? 1
+              : 0,
         'stock_revision': (old['stock_revision'] as int) + 1,
         'revision': (old['revision'] as int) + 1,
         'updated_at': access.clock.milliseconds,
@@ -924,6 +1077,7 @@ final class InventoryService {
     EntityId? batch,
     EntityId? receipt,
     EntityId? reverses,
+    bool complete = true,
   }) async => db
       .insert('stock_history', {
         'reason_key': switch (kind) {
@@ -940,6 +1094,7 @@ final class InventoryService {
         'reverses_history_id': reverses?.value,
         'quantity_delta': quantity,
         'value_delta_micros': value,
+        if (database.schemaVersion >= 17) 'cost_complete': complete ? 1 : 0,
         'kind': kind,
         'reason': reason,
         'created_at': access.clock.milliseconds,
@@ -1017,6 +1172,7 @@ final class InventoryService {
         batch: EntityId(history['stock_batch_id'] as String),
         receipt: receipt,
         reverses: EntityId(history['id'] as String),
+        complete: _complete(history),
       );
     }
     await _stock(
@@ -1025,6 +1181,7 @@ final class InventoryService {
       old,
       source['before_quantity'] as int,
       source['before_value_micros'] as int,
+      complete: source['before_cost_complete'] != 0,
     );
     await access.audit(dbTxn, 'receipt_reversed', entityId: receipt.value);
   });
@@ -1038,12 +1195,14 @@ final class InventoryService {
     required String operationKey,
     required String reason,
     CostAmount? unitCost,
+    bool confirmedFree = false,
   }) => _adjust(
     id,
     counted,
     operationKey: operationKey,
     reason: reason,
     unitCost: unitCost,
+    confirmedFree: confirmedFree,
   );
   Future<void> _adjust(
     EntityId id,
@@ -1051,6 +1210,7 @@ final class InventoryService {
     required String operationKey,
     required String reason,
     CostAmount? unitCost,
+    bool confirmedFree = false,
   }) => _write((dbTxn) async {
     Quantity(counted);
     if (unitCost != null) await _costCurrency(dbTxn, unitCost);
@@ -1075,8 +1235,8 @@ final class InventoryService {
     if (delta == 0) {
       throw const AppError('physicalQuantityAlreadyMatchesTheRecord');
     }
-    if (delta > 0 && quantity == 0 && unitCost == null) {
-      throw const AppError('purchasePriceIsRequiredWhenAddingTo');
+    if (delta > 0 && quantity == 0) {
+      await _purchaseCost(dbTxn, unitCost, confirmedFree: confirmedFree);
     }
     final operation = _ids.next();
     await _operation(
@@ -1091,8 +1251,10 @@ final class InventoryService {
     var nextValue = value;
     if (delta > 0) {
       final cost = quantity == 0
-          ? unitCost!.micros
-          : averageCost(quantity, value);
+          ? unitCost?.micros ?? 0
+          : _complete(old)
+          ? averageCost(quantity, value)
+          : 0;
       final added = checkedNonNegative(BigInt.from(cost) * BigInt.from(delta));
       nextValue = checkedNonNegative(BigInt.from(value) + BigInt.from(added));
       final batch = _ids.next();
@@ -1112,13 +1274,10 @@ final class InventoryService {
         'adjustment',
         reason.trim(),
         batch: batch,
+        complete: quantity == 0 ? unitCost != null : _complete(old),
       );
     } else {
-      final removed = removalCost(
-        quantity: quantity,
-        valueMicros: value,
-        remove: -delta,
-      );
+      final removed = _removal(old, -delta);
       nextValue = value - removed;
       final batches = await dbTxn.query(
         'stock_batches',
@@ -1154,6 +1313,7 @@ final class InventoryService {
           'adjustment',
           reason.trim(),
           batch: EntityId(row['id'] as String),
+          complete: _complete(old),
         );
         remaining -= take;
         valueLeft -= share;
@@ -1163,7 +1323,14 @@ final class InventoryService {
         throw const AppError('batchReconciliationRequired');
       }
     }
-    await _stock(dbTxn, id, old, counted, nextValue);
+    await _stock(
+      dbTxn,
+      id,
+      old,
+      counted,
+      nextValue,
+      complete: delta > 0 && quantity == 0 ? unitCost != null : _complete(old),
+    );
     await access.audit(dbTxn, 'stock_adjusted', entityId: id.value);
   });
 
@@ -1198,11 +1365,7 @@ final class InventoryService {
     if (old['stock_tracking_enabled'] == 0) {
       throw const AppError('m52StockOperationRequiresTracking');
     }
-    final cost = removalCost(
-      quantity: old['stock_quantity'] as int,
-      valueMicros: old['inventory_value_micros'] as int,
-      remove: quantity,
-    );
+    final cost = _removal(old, quantity);
     final operation = _ids.next();
     await _operation(dbTxn, operation, id, operationKey, hash, 'waste', old);
     await dbTxn.update(
@@ -1227,8 +1390,97 @@ final class InventoryService {
       'waste',
       reason.trim(),
       batch: batch,
+      complete: _complete(old),
     );
     await access.audit(dbTxn, 'stock_wasted', entityId: id.value);
+  });
+
+  /// Establishes the entire current pool from explicit evidence. This is an
+  /// append-only valuation adjustment, never a rewrite of historical sale HPP.
+  /// The quantity/revision check prevents reconciling a stale physical count.
+  Future<void> reconcileValuation(
+    EntityId id,
+    int expectedStockRevision, {
+    required int confirmedQuantity,
+    required CostAmount total,
+    required String operationKey,
+    required String reason,
+    bool confirmedFree = false,
+  }) => _write((dbTxn) async {
+    if (database.schemaVersion < 17 || reason.trim().isEmpty) {
+      throw const AppError('correctionReasonIsRequired');
+    }
+    PurchaseCostInput.known(total, confirmedFree: confirmedFree);
+    await _costCurrency(dbTxn, total);
+    final hash = await _hash([
+      'valuation',
+      id.value,
+      expectedStockRevision,
+      confirmedQuantity,
+      total.micros,
+      reason.trim(),
+    ]);
+    if (await _retry(dbTxn, operationKey, hash) != null) return;
+    final old = await _product(dbTxn, id);
+    if (old['stock_tracking_enabled'] == 0 ||
+        confirmedQuantity <= 0 ||
+        old['stock_quantity'] != confirmedQuantity ||
+        old['stock_revision'] != expectedStockRevision) {
+      throw const AppError('m53ValuationQuantityMismatch');
+    }
+    final errors = masterPriceErrors(
+      retail: Money.fromStoredMinor(
+        old['selling_price_rupiah'] as int,
+        old['currency_code'] as String,
+        old['currency_scale'] as int,
+      ),
+      costMicros: total.micros,
+      costQuantity: confirmedQuantity,
+    );
+    if (errors.isNotEmpty) throw AppError(errors.first);
+    final operation = _ids.next();
+    await _operation(
+      dbTxn,
+      operation,
+      id,
+      operationKey,
+      hash,
+      'adjustment',
+      old,
+    );
+    await dbTxn.insert('valuation_reconciliations', {
+      'id': _ids.next().value,
+      'product_id': id.value,
+      'inventory_operation_id': operation.value,
+      'confirmed_quantity': confirmedQuantity,
+      'before_complete': _complete(old) ? 1 : 0,
+      'before_micros': old['inventory_value_micros'],
+      'total_micros': total.micros,
+      'reason': reason.trim(),
+      'created_at': access.clock.milliseconds,
+    });
+    final delta = total.micros - (old['inventory_value_micros'] as int);
+    if (delta != 0) {
+      await _history(
+        dbTxn,
+        id,
+        operation,
+        0,
+        delta,
+        'adjustment',
+        reason.trim(),
+        complete: _complete(old),
+      );
+    }
+    await _stock(
+      dbTxn,
+      id,
+      old,
+      confirmedQuantity,
+      total.micros,
+      complete: true,
+    );
+    await access.audit(dbTxn, 'valuation_reconciled', entityId: id.value);
   });
 
   Future<Page<InventoryProduct, CatalogCursor>> page(
@@ -1471,26 +1723,41 @@ final class InventoryService {
       throw const AppError('historyFilterChangedReload');
     }
     return _read((db) async {
-      final table = kind == ChangeKind.stock
-          ? 'stock_history'
-          : 'price_history';
+      final table = switch (kind) {
+        ChangeKind.stock => 'stock_history',
+        ChangeKind.price => 'price_history',
+        ChangeKind.valuation => 'valuation_reconciliations',
+      };
       final zone =
           (await db.query(
                 'store_settings',
                 columns: ['time_zone'],
               )).single['time_zone']
               as String;
-      final rows = await db.query(
-        table,
-        where:
-            'product_id=? ${after == null ? '' : 'AND (created_at,id)<(?,?)'}',
-        whereArgs: [
-          id.value,
-          if (after != null) ...[after.createdAt, after.id.value],
-        ],
-        orderBy: 'created_at DESC,id DESC',
-        limit: 51,
-      );
+      final rows = kind == ChangeKind.valuation
+          ? (database.schemaVersion < 17
+                ? <Map<String, Object?>>[]
+                : await db.rawQuery(
+                    """SELECT v.*,p.currency_code,p.currency_scale FROM valuation_reconciliations v
+          JOIN products p ON p.id=v.product_id WHERE v.product_id=?
+          ${after == null ? '' : 'AND (v.created_at,v.id)<(?,?)'}
+          ORDER BY v.created_at DESC,v.id COLLATE BINARY DESC LIMIT 51""",
+                    [
+                      id.value,
+                      if (after != null) ...[after.createdAt, after.id.value],
+                    ],
+                  ))
+          : await db.query(
+              table,
+              where:
+                  'product_id=? ${after == null ? '' : 'AND (created_at,id)<(?,?)'}',
+              whereArgs: [
+                id.value,
+                if (after != null) ...[after.createdAt, after.id.value],
+              ],
+              orderBy: 'created_at DESC,id DESC',
+              limit: 51,
+            );
       final enriched = <Map<String, Object?>>[];
       for (final row in rows) {
         final receipt = row['stock_receipt_id'];

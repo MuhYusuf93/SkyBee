@@ -18,7 +18,11 @@ class FeatureSettingsScreen extends StatefulWidget {
 class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
   StoreFeaturePolicy? baseline;
   StockMode mode = StockMode.partial;
-  bool wholesale = true, packaging = true, barcode = true, expiry = true;
+  bool wholesale = true,
+      packaging = true,
+      cost = true,
+      barcode = true,
+      expiry = true;
   bool busy = false;
   String? error;
   StoreFeaturePolicy get value => StoreFeaturePolicy(
@@ -29,7 +33,7 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
     packaging: packaging,
     barcode: barcode,
     expiry: expiry,
-    cost: baseline!.cost,
+    cost: cost,
     revision: baseline!.revision,
   );
   bool get dirty =>
@@ -38,7 +42,8 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
           wholesale != baseline!.wholesale ||
           packaging != baseline!.packaging ||
           barcode != baseline!.barcode ||
-          expiry != baseline!.expiry);
+          expiry != baseline!.expiry ||
+          cost != baseline!.cost);
 
   @override
   void initState() {
@@ -64,6 +69,7 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
         packaging = policy.packaging;
         barcode = policy.barcode;
         expiry = policy.expiry;
+        cost = policy.cost;
       });
     } catch (e) {
       if (mounted) setState(() => error = safeError(e));
@@ -175,6 +181,12 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
                   'm31PackConfigHelp',
                   packaging,
                   (v) => packaging = v,
+                ),
+                _feature(
+                  'purchasePricePerUnit',
+                  'm53CostHelp',
+                  cost,
+                  (v) => cost = v,
                 ),
                 _feature(
                   'barcodeOptional',

@@ -8,7 +8,11 @@ import '../database/database_coordinator.dart';
 import 'keyset_queries.dart';
 
 /// Exact production aggregate query, also used by EXPLAIN/benchmark.
-SqlQuery reportSalesTotalsQuery(ReportFilter filter, CurrencyPolicy currency) {
+SqlQuery reportSalesTotalsQuery(
+  ReportFilter filter,
+  CurrencyPolicy currency, {
+  bool costKnowledge = false,
+}) {
   final customer = filter.customerId == null ? '' : 'AND s.customer_id=?';
   final periodArgs = <Object?>[
     filter.start.milliseconds,
@@ -17,12 +21,13 @@ SqlQuery reportSalesTotalsQuery(ReportFilter filter, CurrencyPolicy currency) {
   ];
   return SqlQuery(
     '''WITH events AS (
-      SELECT s.total_rupiah AS revenue,s.cost_micros AS cost,0 AS kind,s.currency_code,s.currency_scale
+      SELECT s.total_rupiah AS revenue,s.cost_micros AS cost,0 AS kind,${costKnowledge ? 's.cost_complete' : '1'} AS cost_complete,s.currency_code,s.currency_scale
         FROM sale_transactions s WHERE s.created_at>=? AND s.created_at<? $customer
-      UNION ALL SELECT -s.total_rupiah,-s.cost_micros,1,s.currency_code,s.currency_scale
+      UNION ALL SELECT -s.total_rupiah,-s.cost_micros,1,${costKnowledge ? 's.cost_complete' : '1'},s.currency_code,s.currency_scale
         FROM sale_transaction_reversals r JOIN sale_transactions s ON s.id=r.sale_transaction_id
         WHERE r.created_at>=? AND r.created_at<? $customer)
-      SELECT COALESCE(SUM(revenue),0) AS revenue,COALESCE(SUM(cost),0) AS cost,
+      SELECT COALESCE(SUM(revenue),0) AS revenue,CASE WHEN SUM(cost_complete=0)>0 THEN NULL ELSE COALESCE(SUM(cost),0) END AS cost,
+        COALESCE(SUM(cost_complete=0),0) AS incomplete,
         COALESCE(SUM(kind=0),0) AS sales,COALESCE(SUM(kind=1),0) AS returns,
         COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch FROM events''',
     [...periodArgs, ...periodArgs, currency.code, currency.scale],
@@ -40,8 +45,9 @@ const _paymentOrigin = '''CASE
 SqlQuery reportEventsQuery(
   ReportFilter filter,
   ReportCursor? after,
-  int pageSize,
-) {
+  int pageSize, {
+  bool costKnowledge = false,
+}) {
   validatePageSize(pageSize);
   if (filter.start.milliseconds >= filter.end.milliseconds) {
     throw ArgumentError('Invalid report period');
@@ -93,7 +99,7 @@ SqlQuery reportEventsQuery(
         : 'payments p LEFT JOIN customers c ON c.id=p.customer_id';
     final columns = sales
         ? '''$id AS id,$date AS created_at,$kind AS kind,s.id AS sale_id,
-      ${kind == 0 ? '' : '-'}s.total_rupiah AS amount_minor,${kind == 0 ? '' : '-'}s.cost_micros AS cost_micros,
+      ${kind == 0 ? '' : '-'}s.total_rupiah AS amount_minor,CASE WHEN ${costKnowledge ? 's.cost_complete' : '1'}=0 THEN NULL ELSE ${kind == 0 ? '' : '-'}s.cost_micros END AS cost_micros,
       s.currency_code,s.currency_scale,s.customer_name_snapshot AS customer_name,'sale' AS origin,
       ${kind == 0 ? 'NULL' : 'r.reason'} AS reason,
       EXISTS(SELECT 1 FROM sale_transaction_reversals x WHERE x.sale_transaction_id=s.id) AS reversed'''
@@ -128,7 +134,12 @@ final class SqliteReportsRepository {
     if (after != null && after.revision != database.revision) {
       throw const AppError('m4DatasetChanged');
     }
-    final q = reportEventsQuery(filter, after, pageSize);
+    final q = reportEventsQuery(
+      filter,
+      after,
+      pageSize,
+      costKnowledge: database.schemaVersion >= 17,
+    );
     final rows = await db.rawQuery(q.sql, q.arguments);
     await authorize?.call(db);
     final entries = rows.take(pageSize).map(ReportEntry.new).toList();
@@ -169,10 +180,9 @@ final class SqliteReportsRepository {
     if (filter.start.milliseconds >= filter.end.milliseconds) {
       throw ArgumentError('Invalid report period');
     }
-    final modern =
-        (await db.rawQuery('PRAGMA user_version')).single.values.single
-            as int >=
-        14;
+    final version =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
+    final modern = version >= 14, costKnowledge = version >= 17;
     final settings = (await db.query('store_settings', where: 'id=1')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,
@@ -182,7 +192,11 @@ final class SqliteReportsRepository {
       filter.end.milliseconds,
       if (filter.customerId != null) filter.customerId!.value,
     ];
-    final salesQuery = reportSalesTotalsQuery(filter, currency);
+    final salesQuery = reportSalesTotalsQuery(
+      filter,
+      currency,
+      costKnowledge: costKnowledge,
+    );
     final sales = (await db.rawQuery(
       salesQuery.sql,
       salesQuery.arguments,
@@ -215,7 +229,9 @@ final class SqliteReportsRepository {
     )).single;
     final inventory = (await db.rawQuery(
       '''SELECT COUNT(*) AS products,
-      COALESCE(SUM(${modern ? 'CASE WHEN stock_tracking_enabled=1 THEN stock_quantity ELSE 0 END' : 'stock_quantity'}),0) AS quantity,COALESCE(SUM(inventory_value_micros),0) AS value,
+      COALESCE(SUM(${modern ? 'CASE WHEN stock_tracking_enabled=1 THEN stock_quantity ELSE 0 END' : 'stock_quantity'}),0) AS quantity,
+      ${costKnowledge ? 'CASE WHEN SUM(stock_tracking_enabled=1 AND cost_complete=0)>0 THEN NULL ELSE COALESCE(SUM(inventory_value_micros),0) END' : 'COALESCE(SUM(inventory_value_micros),0)'} AS value,
+      ${costKnowledge ? 'COALESCE(SUM(stock_tracking_enabled=1 AND cost_complete=0),0)' : '0'} AS incomplete,
       ${modern ? 'COALESCE(SUM(stock_tracking_enabled=0),0)' : '0'} AS untracked,
       COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch FROM products''',
       [currency.code, currency.scale],
@@ -234,7 +250,8 @@ final class SqliteReportsRepository {
     return ReportSummary(
       currency: currency,
       salesMinor: sales['revenue'] as int,
-      costMicros: sales['cost'] as int,
+      costMicros: sales['cost'] as int?,
+      incompleteSaleEvents: sales['incomplete'] as int,
       saleCount: sales['sales'] as int,
       returnCount: sales['returns'] as int,
       paymentsMinor: payments['amount'] as int,
@@ -243,7 +260,8 @@ final class SqliteReportsRepository {
       unknownPaymentsMinor: payments['unknown'] as int,
       receivablesMinor: debt['balance'] as int,
       inventoryQuantity: inventory['quantity'] as int,
-      inventoryMicros: inventory['value'] as int,
+      inventoryMicros: inventory['value'] as int?,
+      incompleteInventoryProducts: inventory['incomplete'] as int,
       expiredQuantity: expired,
       productCount: inventory['products'] as int,
       untrackedProductCount: inventory['untracked'] as int,
@@ -263,17 +281,17 @@ final class SqliteReportsRepository {
   static Future<ReconciliationResult> reconcileDatabase(
     DatabaseExecutor db,
   ) async {
-    final modern =
-        (await db.rawQuery('PRAGMA user_version')).single.values.single
-            as int >=
-        14;
+    final version =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
+    final modern = version >= 14, costKnowledge = version >= 17;
     final queries = <String, String>{
       'm4StockCheck':
           '''SELECT COUNT(*) AS n FROM products p WHERE (${modern ? 'p.stock_tracking_enabled=1 AND ' : ''}(p.stock_quantity<>
         COALESCE((SELECT SUM(h.quantity_delta) FROM stock_history h WHERE h.product_id=p.id),0)
         OR p.stock_quantity<>COALESCE((SELECT SUM(b.remaining_quantity) FROM stock_batches b WHERE b.product_id=p.id),0)))
         ${modern ? '''OR (p.stock_tracking_enabled=0 AND (p.stock_quantity<>999 OR p.inventory_value_micros<>0
-          OR typeof(p.reference_cost_micros)<>'integer' OR p.reference_cost_micros<0
+          OR (${costKnowledge ? 'p.cost_complete=1 AND ' : ''}(typeof(p.reference_cost_micros)<>'integer' OR p.reference_cost_micros<0))
+          ${costKnowledge ? 'OR (p.cost_complete=0 AND p.reference_cost_micros IS NOT NULL)' : ''}
           OR EXISTS(SELECT 1 FROM stock_batches b WHERE b.product_id=p.id AND b.remaining_quantity>0)))''' : ''}''',
       'm4ValueCheck':
           '''SELECT COUNT(*) AS n FROM products p WHERE ${modern ? 'p.stock_tracking_enabled=1 AND ' : ''}p.inventory_value_micros<>
@@ -301,6 +319,14 @@ final class SqliteReportsRepository {
           OR i.cost_micros<>(SELECT COALESCE(SUM(h.value_delta_micros),0) FROM stock_history h
             WHERE h.sale_transaction_reversal_id=r.id AND h.product_id=i.product_id)))''',
     };
+    if (costKnowledge) {
+      queries['m53CostKnowledgeCheck'] =
+          """SELECT COUNT(*) AS n FROM sale_transactions s
+        WHERE s.cost_complete<>(NOT EXISTS(SELECT 1 FROM sale_transaction_items i
+        WHERE i.sale_transaction_id=s.id AND i.cost_complete=0))""";
+      queries['m53EmptyCostCheck'] = """SELECT COUNT(*) AS n FROM products
+        WHERE stock_tracking_enabled=1 AND stock_quantity=0 AND cost_complete<>1""";
+    }
     final values = <String, int>{};
     for (final query in queries.entries) {
       values[query.key] = (await db.rawQuery(query.value)).single['n'] as int;

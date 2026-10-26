@@ -8,6 +8,8 @@ import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/inventory/presentation/product_form.dart';
+import 'package:kasir_app/features/inventory/presentation/inventory_history_screen.dart';
+import 'package:kasir_app/features/inventory/presentation/valuation_reconciliation_screen.dart';
 import 'package:kasir_app/features/management/presentation/management_session_provider.dart';
 import 'package:kasir_app/features/settings/domain/store_feature_policy.dart';
 import 'package:kasir_app/features/settings/presentation/feature_settings_screen.dart';
@@ -19,7 +21,11 @@ import 'package:kasir_app/features/management/presentation/pin_screen.dart';
 import 'package:kasir_app/features/settings/presentation/settings_screen.dart';
 
 /// Shared synthetic UI assertions on FFI and isolated native SQLCipher fixtures.
-void m53FeatureWidgetsSuite(DatabaseFactory factory) {
+void m53FeatureWidgetsSuite(DatabaseFactory factory, {String? only}) {
+  void scenario(String name, Future<void> Function(WidgetTester) body) {
+    if (only == null || name.contains(only)) testWidgets(name, body);
+  }
+
   late Directory directory;
   var serial = 0;
   late DatabaseCoordinator db;
@@ -137,7 +143,7 @@ void m53FeatureWidgetsSuite(DatabaseFactory factory) {
     ),
   );
 
-  testWidgets(
+  scenario(
     'M53 preference preview saves only after confirmation and preserves barcode facts',
     (tester) async {
       tester.testTextInput.register();
@@ -186,7 +192,7 @@ void m53FeatureWidgetsSuite(DatabaseFactory factory) {
     },
   );
 
-  testWidgets(
+  scenario(
     'M53 warehouse cannot reveal cached owner fields; Back discards unsigned form and preserves cart',
     (tester) async {
       tester.testTextInput.register();
@@ -302,7 +308,7 @@ void m53FeatureWidgetsSuite(DatabaseFactory factory) {
     },
   );
 
-  testWidgets(
+  scenario(
     'M53 editing with hidden fields retains wholesale packaging barcode and expiry',
     (tester) async {
       tester.testTextInput.register();
@@ -342,6 +348,176 @@ void m53FeatureWidgetsSuite(DatabaseFactory factory) {
           expect(row.expiryEnabled, true);
         });
         await tester.pumpWidget(const SizedBox());
+      } finally {
+        await cleanup(tester);
+      }
+    },
+  );
+  scenario(
+    'M53 hidden cost creates tracked stock without a fabricated free price',
+    (tester) async {
+      tester.testTextInput.register();
+      try {
+        await tester.runAsync(
+          () => app.settings.saveFeaturePolicy(
+            const StoreFeaturePolicy(
+              stockMode: StockMode.all,
+              enforced: true,
+              cost: false,
+              wholesale: false,
+              packaging: false,
+            ),
+          ),
+        );
+        await open(tester, const ProductForm());
+        await tester.enterText(
+          input('Product name'),
+          'PUBLIC unknown-cost goods',
+        );
+        final selling = input('Selling price (IDR)');
+        await tester.scrollUntilVisible(
+          selling,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.enterText(selling, '10000');
+        final initial = find.text('Initial stock');
+        await tester.scrollUntilVisible(
+          initial,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+        final quantity = input('Initial quantity');
+        if (quantity.evaluate().isEmpty) {
+          await tester.tap(initial);
+          await tester.pumpAndSettle();
+        }
+        await tester.scrollUntilVisible(
+          quantity,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.enterText(quantity, '3');
+        expect(input('Purchase price per pcs (IDR)'), findsNothing);
+        final save = find.widgetWithText(FilledButton, 'Save product');
+        await tester.scrollUntilVisible(
+          save,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.tap(save);
+        await drain(tester, () => find.byType(ProductForm).evaluate().isEmpty);
+        await tester.runAsync(() async {
+          final rows = await db.read((sql) => sql.query('products'));
+          expect(rows.length, 1);
+          expect(rows.single['stock_quantity'], 3);
+          expect(rows.single['cost_complete'], 0);
+          expect(
+            (await app.inventory.detail(
+              EntityId(rows.single['id'] as String),
+            )).valueMicros,
+            isNull,
+          );
+        });
+      } finally {
+        await cleanup(tester);
+      }
+    },
+  );
+
+  scenario(
+    'M53 reconciliation zero requires confirmation; dirty locked Back still warns',
+    (tester) async {
+      tester.testTextInput.register();
+      try {
+        late InventoryProduct detail;
+        await tester.runAsync(() async {
+          await app.settings.saveFeaturePolicy(
+            const StoreFeaturePolicy(enforced: true, cost: false),
+          );
+          final id = await app.inventory.create(
+            ProductInput(
+              name: 'PUBLIC valuation',
+              sellingPrice: Money(10000, 'IDR', 0),
+            ),
+            initialQuantity: 3,
+          );
+          detail = await app.inventory.detail(id);
+        });
+        await open(
+          tester,
+          ValuationReconciliationScreen(product: detail),
+          ready: () =>
+              find.byType(ValuationReconciliationScreen).evaluate().isNotEmpty,
+        );
+        await tester.enterText(input('Total cost of entire stock (IDR)'), '0');
+        await tester.enterText(
+          input('Correction reason'),
+          'PUBLIC donated whole stock',
+        );
+        session.lock();
+        await tester.pump();
+        await tester.binding.handlePopRoute();
+        await drain(
+          tester,
+          () => find.text('Unsaved changes').evaluate().isNotEmpty,
+        );
+        await tester.tap(find.text('Stay on locked screen'));
+        await tester.pumpAndSettle();
+        expect(session.unlocked, false);
+        await tester.runAsync(() => session.unlock('0001'));
+        await tester.pumpAndSettle();
+        final save = find.widgetWithText(FilledButton, 'Save');
+        await tester.scrollUntilVisible(
+          save,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.tap(save);
+        await tester.pumpAndSettle();
+        expect(find.text('Free acquisition?'), findsOneWidget);
+        await tester.tap(find.widgetWithText(TextButton, 'Cancel'));
+        await tester.pumpAndSettle();
+        await tester.runAsync(() async {
+          expect((await app.inventory.detail(detail.id)).valueMicros, isNull);
+        });
+        await tester.tap(save);
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.descendant(
+            of: find.byType(AlertDialog),
+            matching: find.widgetWithText(FilledButton, 'Save'),
+          ),
+        );
+        await drain(
+          tester,
+          () => find.byType(ValuationReconciliationScreen).evaluate().isEmpty,
+        );
+        await tester.runAsync(() async {
+          expect((await app.inventory.detail(detail.id)).valueMicros, 0);
+        });
+        await open(
+          tester,
+          InventoryHistoryScreen(productId: detail.id),
+          ready: () =>
+              find.byType(InventoryHistoryScreen).evaluate().isNotEmpty,
+        );
+        await tester.tap(
+          find.widgetWithText(ChoiceChip, 'Stock valuation history'),
+        );
+        await drain(
+          tester,
+          () => find
+              .textContaining('Total cost of entire stock:')
+              .evaluate()
+              .isNotEmpty,
+        );
+        expect(
+          find.textContaining('PUBLIC donated whole stock'),
+          findsOneWidget,
+        );
+        expect(find.textContaining('Incomplete — cost unknown'), findsNothing);
       } finally {
         await cleanup(tester);
       }

@@ -25,6 +25,7 @@ final class ReportFileWriter {
     'amount_minor',
     'amount_decimal',
     'cost_micros',
+    'cost_status',
     'customer',
     'reason',
     'product_id',

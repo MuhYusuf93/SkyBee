@@ -4465,6 +4465,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Discard and return to cashier'**
   String get m53DiscardToCashier;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'Incomplete — cost unknown'**
+  String get m53CostIncomplete;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'Sale/reversal documents with incomplete cost'**
+  String get m53IncompleteSaleEvents;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'Stock products with incomplete value'**
+  String get m53IncompleteInventoryProducts;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'Cost supports cost of sales, inventory value and estimated profit. Revenue is still recorded without cost; cost/profit is marked incomplete. Empty cost differs from zero cost.'**
+  String get m53CostHelp;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'Free acquisition?'**
+  String get m53ConfirmFreeTitle;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'I intentionally record zero cost. These goods were acquired free of charge; their cost is not unknown.'**
+  String get m53ConfirmFreeBody;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'Reconcile entire stock value'**
+  String get m53ReconcileValuation;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the total cost of the entire current physical balance and its supporting reason. Previous sale cost snapshots stay unchanged.'**
+  String get m53ReconcileValuationHelp;
+
+  /// M5.3 explicit cost knowledge and reconciliation
+  ///
+  /// In en, this message translates to:
+  /// **'Total cost of entire stock'**
+  String get m53PoolTotalCost;
+
+  /// M5.3 append-only whole-pool reconciliation history including zero-valued events
+  ///
+  /// In en, this message translates to:
+  /// **'Stock valuation history'**
+  String get m53ValuationHistory;
 }
 
 class _AppLocalizationsDelegate

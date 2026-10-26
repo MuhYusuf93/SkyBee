@@ -16,7 +16,7 @@ final class SaleTransaction {
   final EntityId id;
   final UtcInstant createdAt;
   final Money total;
-  final CostAmount cost;
+  final CostAmount? cost;
   final EntityId? customerId;
   final bool reversed;
   final String? customerName;
@@ -44,6 +44,6 @@ final class SaleTransactionItem {
   final Quantity quantity;
   final Money unitPrice;
   final Money total;
-  final CostAmount cost;
+  final CostAmount? cost;
   final PricingMode pricingMode;
 }

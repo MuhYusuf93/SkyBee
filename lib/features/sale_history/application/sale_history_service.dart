@@ -62,23 +62,30 @@ final class SaleHistoryService {
     return result;
   }
 
-  Future<(SaleReceipt, CostAmount)> detail(EntityId id) async {
+  Future<(SaleReceipt, CostAmount?)> detail(EntityId id) async {
     await access.authorizeCurrent();
     final result = await database.read((db) async {
       final receipt = await store.receipt(db, id);
       final row = (await db.query(
         'sale_transactions',
-        columns: ['cost_micros', 'currency_code', 'currency_scale'],
+        columns: [
+          'cost_micros',
+          'currency_code',
+          'currency_scale',
+          if (database.schemaVersion >= 17) 'cost_complete',
+        ],
         where: 'id=?',
         whereArgs: [id.value],
       )).single;
       return (
         receipt,
-        CostAmount(
-          row['cost_micros'] as int,
-          currencyCode: row['currency_code'] as String,
-          currencyScale: row['currency_scale'] as int,
-        ),
+        row['cost_complete'] == 0
+            ? null
+            : CostAmount(
+                row['cost_micros'] as int,
+                currencyCode: row['currency_code'] as String,
+                currencyScale: row['currency_scale'] as int,
+              ),
       );
     });
     await access.authorizeCurrent();

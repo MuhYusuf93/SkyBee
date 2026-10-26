@@ -46,9 +46,16 @@ class _ReportsBodyState extends State<_ReportsBody> {
         ),
         (
           'm3CostSnapshot',
-          codec.formatSignedCost(BigInt.from(summary.costMicros)),
+          summary.costMicros == null
+              ? tr(context, 'm53CostIncomplete')
+              : codec.formatSignedCost(BigInt.from(summary.costMicros!)),
         ),
-        ('m4GrossProfit', codec.formatSignedCost(summary.grossProfitMicros)),
+        (
+          'm4GrossProfit',
+          summary.grossProfitMicros == null
+              ? tr(context, 'm53CostIncomplete')
+              : codec.formatSignedCost(summary.grossProfitMicros!),
+        ),
         (
           'm4NetPayments',
           codec.formatSignedMinor(BigInt.from(summary.paymentsMinor)),
@@ -72,7 +79,14 @@ class _ReportsBodyState extends State<_ReportsBody> {
         ),
         (
           'm4InventoryValue',
-          codec.formatSignedCost(BigInt.from(summary.inventoryMicros)),
+          summary.inventoryMicros == null
+              ? tr(context, 'm53CostIncomplete')
+              : codec.formatSignedCost(BigInt.from(summary.inventoryMicros!)),
+        ),
+        ('m53IncompleteSaleEvents', '${summary.incompleteSaleEvents}'),
+        (
+          'm53IncompleteInventoryProducts',
+          '${summary.incompleteInventoryProducts}',
         ),
         ('m4PhysicalStock', '${summary.inventoryQuantity}'),
         ('m52UntrackedCount', '${summary.untrackedProductCount}'),

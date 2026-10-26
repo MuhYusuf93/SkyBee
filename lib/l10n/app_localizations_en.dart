@@ -2459,4 +2459,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53DiscardToCashier => 'Discard and return to cashier';
+
+  @override
+  String get m53CostIncomplete => 'Incomplete — cost unknown';
+
+  @override
+  String get m53IncompleteSaleEvents =>
+      'Sale/reversal documents with incomplete cost';
+
+  @override
+  String get m53IncompleteInventoryProducts =>
+      'Stock products with incomplete value';
+
+  @override
+  String get m53CostHelp =>
+      'Cost supports cost of sales, inventory value and estimated profit. Revenue is still recorded without cost; cost/profit is marked incomplete. Empty cost differs from zero cost.';
+
+  @override
+  String get m53ConfirmFreeTitle => 'Free acquisition?';
+
+  @override
+  String get m53ConfirmFreeBody =>
+      'I intentionally record zero cost. These goods were acquired free of charge; their cost is not unknown.';
+
+  @override
+  String get m53ReconcileValuation => 'Reconcile entire stock value';
+
+  @override
+  String get m53ReconcileValuationHelp =>
+      'Enter the total cost of the entire current physical balance and its supporting reason. Previous sale cost snapshots stay unchanged.';
+
+  @override
+  String get m53PoolTotalCost => 'Total cost of entire stock';
+
+  @override
+  String get m53ValuationHistory => 'Stock valuation history';
 }

@@ -260,7 +260,7 @@ void reportsCorrectionsSuite(
       expect(detail.$1.reversed, true);
       expect(detail.$1.outstanding, 0);
       expect(detail.$1.total.amountMinor, 30000);
-      expect(detail.$2.micros, 27000 * CostAmount.scale);
+      expect(detail.$2!.micros, 27000 * CostAmount.scale);
       expect(await count('sale_transactions'), 1);
       expect(await count('sale_transaction_reversals'), 1);
       expect(await count('payments'), 2);
@@ -323,13 +323,13 @@ void reportsCorrectionsSuite(
         operationKey: 'new-stock',
       );
       final second = await sale(quantity: 1, paid: null);
-      final secondCost = (await services.history.detail(second.id)).$2.micros;
+      final secondCost = (await services.history.detail(second.id)).$2!.micros;
       expect(secondCost, 9450 * CostAmount.scale);
       await cancel(first);
       final product = await services.inventory.detail(productId);
       expect(product.quantity, 22);
       expect(product.valueMicros, 206550 * CostAmount.scale);
-      expect((await services.history.detail(second.id)).$2.micros, secondCost);
+      expect((await services.history.detail(second.id)).$2!.micros, secondCost);
       expect((await services.reports.reconcile()).consistent, true);
     },
   );
@@ -655,7 +655,7 @@ void reportsCorrectionsSuite(
         cart.revision,
         const CheckoutInput(),
       );
-      final cost = (await services.history.detail(receipt.id)).$2.micros;
+      final cost = (await services.history.detail(receipt.id)).$2!.micros;
       expect(cost, 333333);
       await cancel(receipt);
       expect((await services.inventory.detail(productId)).valueMicros, 1000000);

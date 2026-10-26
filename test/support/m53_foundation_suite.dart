@@ -18,7 +18,11 @@ import 'package:kasir_app/features/sale_history/domain/sale_transaction_reposito
 import 'm51_security_suite.dart' show SyntheticStrongBiometrics;
 
 /// Shared FFI/native SQLCipher assertions; only newly owned temporary fixtures.
-void m53FoundationSuite(DatabaseFactory factory) {
+void m53FoundationSuite(DatabaseFactory factory, {String? only}) {
+  void scenario(String name, Future<void> Function() body) {
+    if (only == null || name.contains(only)) test(name, body);
+  }
+
   late Directory directory;
   late DatabaseCoordinator db;
   late AppServices app;
@@ -80,7 +84,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
   });
   tearDownAll(() async => directory.delete());
 
-  test(
+  scenario(
     'M53 fresh database distinguishes new setup from upgraded empty store',
     () async {
       expect((await app.settings.featurePolicy()).onboardingCompleted, false);
@@ -113,7 +117,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 populated14 upgrade preserves every old table and column; failed upgrade rolls back',
     () async {
       final oldPath = path();
@@ -210,7 +214,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 active policy requires explicit zero; real999 stays physical; direct service cannot create sentinel',
     () async {
       await app.settings.saveFeaturePolicy(policy(StockMode.all));
@@ -241,7 +245,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 mode preview and save reject conflicts without changing stock/history',
     () async {
       final id = await app.inventory.create(
@@ -264,7 +268,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 partial/off enforce tracking and preserve sentinel; stale settings save is rejected',
     () async {
       await app.settings.saveFeaturePolicy(
@@ -299,7 +303,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 hidden preferences preserve existing barcode/wholesale/packaging/expiry',
     () async {
       final id = await app.inventory.create(
@@ -354,7 +358,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     );
   }
 
-  test(
+  scenario(
     'M53 warehouse is inventory-only through direct services and never probes owner PIN',
     () async {
       await separated();
@@ -434,7 +438,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 role/PIN changes revoke other-engine capabilities and preserve owner biometric binding',
     () async {
       await enroll();
@@ -469,7 +473,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 separated access rejects equal PINs and untracked stock atomically',
     () async {
       await app.management.reauthenticate('0001', 'security');
@@ -503,7 +507,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 owner cannot rotate own PIN to warehouse PIN; owner reset revokes old warehouse',
     () async {
       await separated();
@@ -558,7 +562,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 clock correction PIN success starts fresh interval without retry loop',
     () async {
       await enroll();
@@ -595,7 +599,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 biometric does not reset72h; exact boundary requires PIN before prompting',
     () async {
       await enroll();
@@ -623,7 +627,7 @@ void m53FoundationSuite(DatabaseFactory factory) {
     },
   );
 
-  test(
+  scenario(
     'M53 rollback/missing timestamp are conservative; expiration during biometric prompt cannot grant',
     () async {
       await enroll();

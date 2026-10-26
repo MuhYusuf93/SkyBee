@@ -65,11 +65,15 @@ final class ReportSummary {
     required this.expiredQuantity,
     required this.productCount,
     this.untrackedProductCount = 0,
+    this.incompleteSaleEvents = 0,
+    this.incompleteInventoryProducts = 0,
   });
-  final int untrackedProductCount;
+  final int untrackedProductCount,
+      incompleteSaleEvents,
+      incompleteInventoryProducts;
+  final int? costMicros, inventoryMicros;
   final CurrencyPolicy currency;
   final int salesMinor,
-      costMicros,
       saleCount,
       returnCount,
       paymentsMinor,
@@ -78,12 +82,12 @@ final class ReportSummary {
       unknownPaymentsMinor,
       receivablesMinor,
       inventoryQuantity,
-      inventoryMicros,
       expiredQuantity,
       productCount;
-  BigInt get grossProfitMicros =>
-      BigInt.from(salesMinor) * BigInt.from(CostAmount.scale) -
-      BigInt.from(costMicros);
+  BigInt? get grossProfitMicros => costMicros == null
+      ? null
+      : BigInt.from(salesMinor) * BigInt.from(CostAmount.scale) -
+            BigInt.from(costMicros!);
 }
 
 final class ReportEntry {
@@ -95,7 +99,7 @@ final class ReportEntry {
           ? null
           : EntityId(row['sale_id'] as String),
       amountMinor = row['amount_minor'] as int,
-      costMicros = row['cost_micros'] as int,
+      costMicros = row['cost_micros'] as int?,
       currency = CurrencyPolicy.forCode(row['currency_code'] as String),
       customerName = row['customer_name'] as String?,
       origin = row['origin'] as String,
@@ -103,7 +107,8 @@ final class ReportEntry {
       reversed = row['reversed'] == 1;
   final EntityId id;
   final EntityId? saleId;
-  final int createdAt, kind, amountMinor, costMicros;
+  final int createdAt, kind, amountMinor;
+  final int? costMicros;
   final CurrencyPolicy currency;
   final String? customerName, reason;
   final String origin;

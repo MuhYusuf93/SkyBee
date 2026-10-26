@@ -258,10 +258,70 @@ final class BackupValidation {
     return result;
   }
 
+  /// Do not trust CHECK constraints in imported archives. Unknown projections
+  /// must retain their flags and cannot be relabelled as known header totals.
+  static Future<void> _costKnowledge(DatabaseExecutor db) async {
+    for (final table in [
+      'products',
+      'stock_receipt_items',
+      'sale_transactions',
+      'sale_transaction_items',
+      'stock_history',
+      'reference_cost_history',
+      'inventory_operations',
+    ]) {
+      final column = table == 'inventory_operations'
+          ? 'before_cost_complete'
+          : 'cost_complete';
+      if ((await db.rawQuery(
+        "SELECT 1 FROM $table WHERE typeof($column)<>'integer' OR $column NOT IN(0,1) LIMIT 1",
+      )).isNotEmpty) {
+        throw const FormatException('backupOperationalMetadataInvalid');
+      }
+    }
+    if ((await db.rawQuery(
+          """SELECT 1 FROM sale_transactions s WHERE
+      s.cost_complete<>(NOT EXISTS(SELECT 1 FROM sale_transaction_items i
+      WHERE i.sale_transaction_id=s.id AND i.cost_complete=0)) LIMIT 1""",
+        )).isNotEmpty ||
+        (await db.rawQuery(
+          """SELECT 1 FROM products WHERE stock_tracking_enabled=1
+      AND stock_quantity=0 AND cost_complete<>1 LIMIT 1""",
+        )).isNotEmpty ||
+        (await db.rawQuery(
+          """SELECT 1 FROM stock_receipt_items WHERE cost_complete=0
+      AND (unit_cost_micros<>0 OR total_cost_micros<>0 OR input_unit_cost_micros<>0) LIMIT 1""",
+        )).isNotEmpty ||
+        (await db.rawQuery(
+          """SELECT 1 FROM sale_transaction_items WHERE cost_complete=0
+      AND stock_tracking_snapshot=0 AND (reference_cost_micros_snapshot IS NOT NULL OR cost_micros<>0) LIMIT 1""",
+        )).isNotEmpty) {
+      throw const FormatException('backupOperationalMetadataInvalid');
+    }
+    if ((await db.rawQuery("""SELECT 1 FROM valuation_reconciliations v
+      JOIN inventory_operations o ON o.id=v.inventory_operation_id WHERE
+      typeof(v.confirmed_quantity)<>'integer' OR v.confirmed_quantity<=0 OR
+      typeof(v.before_complete)<>'integer' OR v.before_complete NOT IN(0,1) OR
+      typeof(v.before_micros)<>'integer' OR v.before_micros<0 OR
+      typeof(v.total_micros)<>'integer' OR v.total_micros<0 OR
+      typeof(v.reason)<>'text' OR length(trim(v.reason))=0 OR
+      v.product_id<>o.product_id OR v.confirmed_quantity<>o.before_quantity OR
+      v.before_micros<>o.before_value_micros OR v.before_complete<>o.before_cost_complete OR
+      v.total_micros-v.before_micros<>COALESCE((SELECT SUM(h.value_delta_micros) FROM stock_history h WHERE h.inventory_operation_id=o.id),0)
+      LIMIT 1""")).isNotEmpty) {
+      throw const FormatException('backupOperationalMetadataInvalid');
+    }
+  }
+
   /// Archives may have forged away SQLite constraints. Validate the physical
   /// versus reference-cost distinction and exact line arithmetic independently,
   /// without loading full tables or trusting the current promotion master.
   static Future<void> _operational(DatabaseExecutor db) async {
+    final costKnowledge =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single
+            as int >=
+        17;
+    if (costKnowledge) await _costKnowledge(db);
     final region = (await db.query(
       'store_settings',
       columns: ['phone_region'],
@@ -338,7 +398,8 @@ final class BackupValidation {
       '''SELECT 1 FROM products p WHERE
       typeof(stock_tracking_enabled)<>'integer' OR stock_tracking_enabled NOT IN(0,1) OR
       (stock_tracking_enabled=0 AND (stock_quantity<>999 OR inventory_value_micros<>0 OR
-      typeof(reference_cost_micros)<>'integer' OR reference_cost_micros<0 OR
+      (${costKnowledge ? 'cost_complete=1 AND ' : ''}(typeof(reference_cost_micros)<>'integer' OR reference_cost_micros<0)) OR
+      ${costKnowledge ? '(cost_complete=0 AND reference_cost_micros IS NOT NULL) OR' : ''}
       EXISTS(SELECT 1 FROM stock_batches b WHERE b.product_id=p.id AND remaining_quantity>0))) LIMIT 1''',
     )).isNotEmpty) {
       throw const FormatException('backupUntrackedInvalid');
@@ -392,7 +453,8 @@ final class BackupValidation {
               if (![0, 1].contains(row['stock_tracking_snapshot'])) {
                 throw const FormatException('stockMode');
               }
-              if (row['stock_tracking_snapshot'] == 0) {
+              if (row['stock_tracking_snapshot'] == 0 &&
+                  row['cost_complete'] != 0) {
                 final reference = row['reference_cost_micros_snapshot'];
                 if (reference is! int ||
                     reference < 0 ||

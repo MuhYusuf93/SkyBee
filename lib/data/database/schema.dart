@@ -4,7 +4,7 @@ import '../../core/domain/value_types.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 16;
+  static const version = 17;
 
   static Future<void> migrate(
     Database db,
@@ -32,6 +32,7 @@ final class Schema {
         14 => _operational,
         15 => _storePolicy,
         16 => _separatedAccess,
+        17 => _costKnowledge,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
@@ -145,6 +146,44 @@ final class Schema {
       CHECK(last_pin_verified_at IS NULL OR last_pin_verified_at>=0)''',
     '''ALTER TABLE management_credentials ADD COLUMN last_pin_clock_seen_at INTEGER
       CHECK(last_pin_clock_seen_at IS NULL OR last_pin_clock_seen_at>=0)''',
+  ];
+
+  /// Existing numeric facts stay byte-for-byte unchanged. Legacy non-null
+  /// micros become a ledger projection when cost_complete=0; callers must mask
+  /// them rather than treating partial/unknown costs as a zero-valued asset.
+  static List<String> get _costKnowledge => [
+    for (final table in [
+      'products',
+      'stock_receipt_items',
+      'sale_transactions',
+      'sale_transaction_items',
+      'stock_history',
+      'reference_cost_history',
+    ])
+      'ALTER TABLE $table ADD COLUMN cost_complete INTEGER NOT NULL DEFAULT 1 CHECK(cost_complete IN (0,1))',
+    'ALTER TABLE inventory_operations ADD COLUMN before_cost_complete INTEGER NOT NULL DEFAULT 1 CHECK(before_cost_complete IN (0,1))',
+    for (final suffix in ['insert', 'update']) ...[
+      'DROP TRIGGER products_untracked_$suffix',
+      """CREATE TRIGGER products_untracked_$suffix BEFORE ${suffix.toUpperCase()} ON products
+        WHEN NEW.stock_tracking_enabled=0 AND (NEW.stock_quantity<>999 OR NEW.inventory_value_micros<>0
+        OR (NEW.cost_complete=1 AND NEW.reference_cost_micros IS NULL)
+        OR (NEW.cost_complete=0 AND NEW.reference_cost_micros IS NOT NULL))
+        BEGIN SELECT RAISE(ABORT,'invalid_untracked_stock'); END""",
+      """CREATE TRIGGER products_empty_cost_$suffix BEFORE ${suffix.toUpperCase()} ON products
+        WHEN NEW.stock_tracking_enabled=1 AND NEW.stock_quantity=0 AND NEW.cost_complete<>1
+        BEGIN SELECT RAISE(ABORT,'invalid_empty_valuation'); END""",
+    ],
+    """CREATE TABLE valuation_reconciliations(${_id('id')},
+      product_id TEXT NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
+      inventory_operation_id TEXT NOT NULL UNIQUE REFERENCES inventory_operations(id) ON DELETE RESTRICT,
+      confirmed_quantity INTEGER NOT NULL CHECK(confirmed_quantity>0),
+      before_complete INTEGER NOT NULL CHECK(before_complete IN (0,1)),
+      before_micros INTEGER NOT NULL CHECK(before_micros>=0),
+      total_micros INTEGER NOT NULL CHECK(total_micros>=0),
+      reason TEXT NOT NULL CHECK(length(trim(reason))>0),created_at INTEGER NOT NULL)""",
+    'CREATE INDEX valuation_history_cursor ON valuation_reconciliations(product_id,created_at DESC,id COLLATE BINARY DESC)',
+    for (final action in ['update', 'delete'])
+      "CREATE TRIGGER valuation_no_$action BEFORE ${action.toUpperCase()} ON valuation_reconciliations BEGIN SELECT RAISE(ABORT,'immutable_fact'); END",
   ];
 
   /// Legacy products/sales remain tracked. Placeholder999 exists only alongside

@@ -21,7 +21,9 @@ final class InventoryProduct {
   String get sku => row['sku'] as String;
   String? get barcode => row['barcode'] as String?;
   int get quantity => row['stock_quantity'] as int;
-  int get valueMicros => row['inventory_value_micros'] as int;
+  bool get costComplete => row['cost_complete'] != 0;
+  int? get valueMicros =>
+      costComplete ? row['inventory_value_micros'] as int : null;
   int get revision => row['revision'] as int;
   int get stockRevision => row['stock_revision'] as int;
 

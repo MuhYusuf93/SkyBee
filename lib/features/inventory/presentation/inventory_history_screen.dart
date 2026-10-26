@@ -41,9 +41,11 @@ class InventoryHistoryScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         child: ChoiceChip(
                           label: Text(
-                            kind == ChangeKind.stock
-                                ? tr(context, 'stock')
-                                : tr(context, 'price'),
+                            tr(context, switch (kind) {
+                              ChangeKind.stock => 'stock',
+                              ChangeKind.price => 'price',
+                              ChangeKind.valuation => 'm53ValuationHistory',
+                            }),
                           ),
                           selected: state.filter == kind,
                           onSelected: (_) => state.reset(kind),
@@ -78,11 +80,15 @@ class InventoryHistoryScreen extends StatelessWidget {
                                 row['currency_code'] as String,
                               ),
                             );
-                      final detail = state.filter == ChangeKind.price
+                      final detail = state.filter == ChangeKind.valuation
+                          ? '${tr(context, 'm53PoolTotalCost')}: ${moneyCostLabel(context, row['total_micros'] as int, currency: CurrencyPolicy.forCode(row['currency_code'] as String))}\n${tr(context, 'currentPhysicalQuantity')}: ${row['confirmed_quantity']}'
+                          : state.filter == ChangeKind.price
                           ? '${tr(context, wholesale ? 'm31Wholesale' : 'm31Retail')}: ${priceValue(wholesale ? row['before_price_minor'] : row['before_rupiah'])} \u2192 ${priceValue(wholesale ? row['after_price_minor'] : row['after_rupiah'])}'
                           : AppLocalizations.of(context)!.stockChange(
                               row['quantity_delta'] as int,
-                              '${(row['value_delta_micros'] as int) < 0 ? '-' : ''}${moneyCostLabel(context, (row['value_delta_micros'] as int).abs(), currency: CurrencyPolicy.forCode(row['currency_code'] as String))}',
+                              row['cost_complete'] == 0
+                                  ? tr(context, 'm53CostIncomplete')
+                                  : '${(row['value_delta_micros'] as int) < 0 ? '-' : ''}${moneyCostLabel(context, (row['value_delta_micros'] as int).abs(), currency: CurrencyPolicy.forCode(row['currency_code'] as String))}',
                             );
                       final receipt =
                           row['receipt_input'] as Map<String, Object?>?;
@@ -100,8 +106,8 @@ class InventoryHistoryScreen extends StatelessWidget {
                           receiptInfo =
                               '\n${tr(context, 'm31ReceiptInput')}: ${receipt['input_quantity']} $unit'
                               '${receipt['input_unit'] == 'pack' ? ' \u00d7 ${receipt['pack_size_snapshot']} ${receipt['base_unit_snapshot']} = ${receipt['quantity']} ${receipt['base_unit_snapshot']}' : ''}'
-                              '\n${tr(context, 'm31InputPrice')}: ${moneyCostLabel(context, receipt['input_unit_cost_micros'] as int, currency: currency)} / $unit'
-                              '\n${tr(context, 'm31ReceiptValue')}: ${moneyCostLabel(context, receipt['total_cost_micros'] as int, currency: currency)}';
+                              '\n${tr(context, 'm31InputPrice')}: ${moneyCostLabel(context, receipt['cost_complete'] == 0 ? null : receipt['input_unit_cost_micros'] as int, currency: currency)} / $unit'
+                              '\n${tr(context, 'm31ReceiptValue')}: ${moneyCostLabel(context, receipt['cost_complete'] == 0 ? null : receipt['total_cost_micros'] as int, currency: currency)}';
                         }
                       }
                       return ListTile(

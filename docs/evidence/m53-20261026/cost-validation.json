@@ -1,0 +1,125 @@
+{
+  "checkpoint": "M53 A2 cost propagation; not final M5.3 handoff",
+  "source_version": "0.5.2+12",
+  "schema": 17,
+  "prepared_against_head": "f4fb71978a42a168159557512c8d79d64f03bfce",
+  "source_manifest_sha256": "c82da31a3b45e47a1571c9ba2054bb2dd2807275e88d11c03eb09ecf9c6caa8a",
+  "host": [
+    {
+      "run": "cost-retests-second",
+      "cases": 66,
+      "seconds": 88,
+      "result": "PASS"
+    },
+    {
+      "run": "cost-host-final",
+      "cases": 15,
+      "seconds": 45,
+      "result": "PASS",
+      "overlaps_previous": true
+    },
+    {
+      "run": "cost-history-host",
+      "cases": 14,
+      "seconds": 24,
+      "result": "PASS",
+      "overlaps_previous": true
+    },
+    {
+      "run": "cost-fraction-host",
+      "cases": 1,
+      "seconds": 4,
+      "result": "PASS",
+      "overlaps_previous": true
+    }
+  ],
+  "native": [
+    {
+      "kind": "DV cost",
+      "cases": 10,
+      "reporter_seconds": 154,
+      "tests": "PASS",
+      "protected_entries": 531,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": true,
+      "reset": false,
+      "private_artifacts": "build/m53-cost-dv-20261026-214715"
+    },
+    {
+      "kind": "DV synthetic UI",
+      "cases": 5,
+      "reporter_seconds": 119,
+      "tests": "PASS",
+      "protected_entries": 542,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": true,
+      "reset": false,
+      "private_artifacts": "build/m53-cost-ui-dv-20261026-215218"
+    },
+    {
+      "kind": "DV history/UI/migration follow-up",
+      "cases": 4,
+      "reporter_seconds": 96,
+      "tests": "PASS",
+      "protected_entries": 547,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": true,
+      "reset": false,
+      "private_artifacts": "build/m53-cost-followup-dv-20261026-215710"
+    },
+    {
+      "kind": "DV fractional pack focused",
+      "cases": 1,
+      "reporter_seconds": 26,
+      "tests": "PASS",
+      "protected_entries": 554,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": true,
+      "reset": false,
+      "private_artifacts": "build/m53-cost-pack-dv-20261026-220202"
+    },
+    {
+      "kind": "Poco cost",
+      "cases": 10,
+      "reporter_seconds": 126,
+      "tests": "PASS",
+      "protected_entries": 487,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": false,
+      "reset": false,
+      "private_artifacts": "build/m53-cost-poco-20261026-220543"
+    },
+    {
+      "kind": "Poco history/UI/migration follow-up",
+      "cases": 4,
+      "reporter_seconds": 59,
+      "tests": "PASS",
+      "protected_entries": 498,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": false,
+      "reset": false,
+      "private_artifacts": "build/m53-cost-followup-poco-20261026-220944"
+    }
+  ],
+  "format": "PASS",
+  "analyze": "No issues",
+  "localization": {
+    "keys": 738,
+    "static_references": 492,
+    "original_requirement_ids": 245
+  },
+  "builds": "Integration debug built and exercised on ARM32/ARM64. Ordinary/release final remains H; no ordinary/Skybee install.",
+  "preservation_scope": "Every pre-existing protected databases/no_backup entry at each audited wrapper endpoint; WorkManager metadata and documented lease files excluded. No data/key export, reset or user-package update.",
+  "unverified": [
+    "Natural 72h/physical touch/OEM IME/physical biometrics are not established by synthetic callbacks.",
+    "In-place Skybee schema17 migration/handoff has not occurred.",
+    "Nonzero stock tracking closure, onboarding and remaining B-H are still required."
+  ],
+  "milestone_complete": false
+}

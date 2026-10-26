@@ -13,6 +13,7 @@ import '../domain/inventory_models.dart';
 import '../domain/product_entry_rules.dart';
 import '../domain/stock_input.dart';
 import 'stock_input_fields.dart';
+import 'confirm_free_cost.dart';
 import 'relation_field.dart';
 import 'size_input_formatter.dart';
 import 'expiry_date_field.dart';
@@ -161,7 +162,8 @@ class _ProductFormState extends State<ProductForm> {
       for (final controller in [price, wholesale, cost]) {
         controller.codec = codec;
       }
-      if (widget.product?.stockTracked == false) {
+      if (widget.product?.stockTracked == false &&
+          widget.product!.referenceCostMicros != null) {
         final original = CostAmount(
           widget.product!.referenceCostMicros!,
           currencyCode: codec.policy.code,
@@ -391,25 +393,46 @@ class _ProductFormState extends State<ProductForm> {
       }
       final entered = product == null && !untracked ? stockInput.parse() : null;
       final purchase =
-          entered != null && entered.quantityBase > 0 && cost.text.isNotEmpty
+          entered != null &&
+              entered.quantityBase > 0 &&
+              _policy.cost &&
+              cost.text.isNotEmpty
           ? StockPurchase(
               entered,
               CostAmount.fromMoney(cost.parseMoney(finish: true)),
             )
           : null;
-      if (entered != null && entered.quantityBase > 0 && purchase == null) {
+      if (_policy.cost &&
+          entered != null &&
+          entered.quantityBase > 0 &&
+          purchase == null) {
         throw const AppError('purchasePriceIsRequiredForInitialStock');
       }
       CostAmount? reference;
       if (untracked) {
-        if (cost.text.isEmpty) throw const AppError('m52ReferenceCostRequired');
-        reference = product != null && cost.text == _originalReferenceText
+        if (_policy.cost &&
+            cost.text.isEmpty &&
+            product?.referenceCostMicros == null) {
+          throw const AppError('m52ReferenceCostRequired');
+        }
+        reference = cost.text.isEmpty
+            ? null
+            : product != null &&
+                  cost.text == _originalReferenceText &&
+                  product.referenceCostMicros != null
             ? CostAmount(
                 product.referenceCostMicros!,
                 currencyCode: input.sellingPrice.currencyCode,
                 currencyScale: input.sellingPrice.scale,
               )
             : CostAmount.fromMoney(cost.parseMoney(finish: true));
+      }
+      final newCost = purchase?.costPerInput ?? (untracked ? reference : null);
+      var confirmedFree = false;
+      if (newCost?.micros == 0 &&
+          (product == null || newCost!.micros != product.referenceCostMicros)) {
+        confirmedFree = await confirmFreeCost(context, 0);
+        if (!confirmedFree || !mounted) return;
       }
       final date = expiry.text.isEmpty ? null : CalendarDate(expiry.text);
       if (product == null) {
@@ -466,8 +489,12 @@ class _ProductFormState extends State<ProductForm> {
       if (product == null) {
         await service.create(
           input,
-          initialQuantity: purchase == null ? entered?.quantityBase : null,
+          initialQuantity: entered?.quantityBase == 0 ? 0 : null,
           initialPurchase: purchase,
+          initialInput: purchase == null && (entered?.quantityBase ?? 0) > 0
+              ? entered
+              : null,
+          confirmedFree: confirmedFree,
           expiry: date,
           stockTracking: !untracked,
           referenceCost: reference,
@@ -478,6 +505,7 @@ class _ProductFormState extends State<ProductForm> {
           product.id,
           input,
           product.revision,
+          confirmedFree: confirmedFree,
           referenceCost: reference,
           suppressLowPriceWarning: suppress,
           referenceExpiry: date,
@@ -672,7 +700,14 @@ class _ProductFormState extends State<ProductForm> {
                     ),
                     initiallyExpanded:
                         untracked || error == 'm52PurchaseAboveRetail',
-                    title: Text(tr(context, 'initialStockAndPurchasePrice')),
+                    title: Text(
+                      tr(
+                        context,
+                        _policy.cost
+                            ? 'initialStockAndPurchasePrice'
+                            : 'initialStock',
+                      ),
+                    ),
                     children: [
                       if (widget.product == null &&
                           (!untracked || !_policy.enforced))
@@ -695,26 +730,27 @@ class _ProductFormState extends State<ProductForm> {
                             }
                           }),
                         ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: MoneyField(
-                          controller: cost,
-                          label: tr(
-                            context,
-                            untracked
-                                ? 'm52ReferenceCost'
-                                : stockInput.unit == StockInputUnit.pack
-                                ? 'm31PurchasePerPack'
-                                : 'purchasePricePerUnit',
+                      if (_policy.cost)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: MoneyField(
+                            controller: cost,
+                            label: tr(
+                              context,
+                              untracked
+                                  ? 'm52ReferenceCost'
+                                  : stockInput.unit == StockInputUnit.pack
+                                  ? 'm31PurchasePerPack'
+                                  : 'purchasePricePerUnit',
+                            ),
+                            enabled: !busy,
+                            focusNode: costFocus,
+                            errorText:
+                                priceErrors.contains('m52PurchaseAboveRetail')
+                                ? tr(context, 'm52PurchaseAboveRetail')
+                                : null,
                           ),
-                          enabled: !busy,
-                          focusNode: costFocus,
-                          errorText:
-                              priceErrors.contains('m52PurchaseAboveRetail')
-                              ? tr(context, 'm52PurchaseAboveRetail')
-                              : null,
                         ),
-                      ),
                       if (_policy.expiry &&
                           (widget.product == null || untracked))
                         ExpiryDateField(controller: expiry, enabled: !busy),

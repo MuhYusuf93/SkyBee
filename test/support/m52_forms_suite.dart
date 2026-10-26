@@ -410,6 +410,16 @@ void m52FormsSuite(DatabaseFactory factory) {
         scrollable: scroll,
       );
       await tester.tap(find.text('Save product'));
+      await drain(
+        tester,
+        () => find.text('Free acquisition?').evaluate().isNotEmpty,
+      );
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.widgetWithText(FilledButton, 'Save'),
+        ),
+      );
       await drain(tester, () => find.text('Save anyway').evaluate().isNotEmpty);
       await tester.tap(find.byType(CheckboxListTile));
       await tester.pump();

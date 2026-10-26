@@ -2468,4 +2468,39 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53DiscardToCashier => 'Buang perubahan dan kembali ke Kasir';
+
+  @override
+  String get m53CostIncomplete => 'Belum lengkap — biaya belum diketahui';
+
+  @override
+  String get m53IncompleteSaleEvents =>
+      'Dokumen penjualan/reversal dengan biaya belum lengkap';
+
+  @override
+  String get m53IncompleteInventoryProducts =>
+      'Produk stok dengan nilai belum lengkap';
+
+  @override
+  String get m53CostHelp =>
+      'Biaya membantu HPP, nilai persediaan dan estimasi laba. Tanpa biaya, omzet tetap dicatat; HPP/laba ditandai belum lengkap. Biaya kosong berbeda dari biaya nol.';
+
+  @override
+  String get m53ConfirmFreeTitle => 'Barang tanpa biaya?';
+
+  @override
+  String get m53ConfirmFreeBody =>
+      'Saya sengaja mencatat biaya 0. Barang ini diperoleh tanpa biaya, bukan karena harganya belum diketahui.';
+
+  @override
+  String get m53ReconcileValuation => 'Lengkapi nilai seluruh stok';
+
+  @override
+  String get m53ReconcileValuationHelp =>
+      'Masukkan total biaya seluruh saldo fisik saat ini beserta alasannya. HPP penjualan lama tidak berubah.';
+
+  @override
+  String get m53PoolTotalCost => 'Total biaya seluruh stok';
+
+  @override
+  String get m53ValuationHistory => 'Riwayat nilai stok';
 }

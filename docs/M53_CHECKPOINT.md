@@ -1,5 +1,81 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Checkpoint biaya ditutup, M5.3 tetap aktif
+
+26 Oktober2026 sekitar22:12 — checkpoint biaya source+12/schema17 tervalidasi.
+Host retest66PASS, biaya/UI15PASS, history/migrasi14PASS, pack1PASS (overlap).
+DV biaya10/UI5/followup4/pack1 dan Poco biaya10/followup4 PASS; seluruh hash
+protected lama tiap interval cocok/controlOff, awake DV restored exact.
+Analyze No issues94,2s; format175/0changed; l10n738/492/245 PASS. .skybee tetap
++12/schema14, tidak diupdate/reset. A1 transisi saldo, onboarding, sisa B–H masih
+aktif. [Laporan biaya dan batas](M53_COST_REPORT.md).
+
+Poco followup4PASS59s/498hash lama cocok/controlOff. DV focused pack1PASS26s/
+554hash cocok/controlOff/awake exact. Seluruh6interval native biaya tertutup.
+Bukti cost-validation.json, source manifest dan [laporan](M53_COST_REPORT.md)
+tersedia. Tidak ada ordinary/Skybee install. Berikutnya transisi tracking nonzero
+yang aman lalu onboarding dan remaining B–H; jangan berhenti untuk review.
+Catatan WIP di bawah historis dan tidak membatalkan checkpoint PASS ini.
+
+## Pembaruan A2 biaya — 26 Oktober sekitar22:03 WIB
+
+Source17 belum rilis/commit. Fondasi16 f4fb719 sudah remote verified.
+- Host regresi retest66PASS1:28; final biaya+UI15PASS45s; follow-up history/
+  migration14PASS24s (10biaya+4followup,2overlap); pack fractional1PASS4s.
+- Analyzer setelah history No issues99,1s; audit738key/492staticref/245ID PASS.
+- DV biaya10PASS2:34/531entri protected cocok, UI5PASS1:59/542cocok, followup
+  history2+UI1+migration1=4PASS1:36/547cocok. ControlOff/awake exact masing-masing.
+- Review memperbaiki delta rekonsiliasi unknown→known: projection bukan selisih
+  finansial diketahui; history ledger flag0, tab valuasi terpisah mencatat total
+  baru termasuk delta0. API history cursor/index sendiri dan scope inventory.
+- Review tambahan: harga dus1micro/isi3 dapat membulat0 per pcs tetapi bukan
+  gratis. Zero-consent harus memakai input costPerInput asli. Host1PASS4s;
+  DV focused pack sedang berjalan: session98721, build/m53-cost-pack-dv-
+  20261026-220202. Sesudah wrapper close/hash, lanjut Poco cost10 + followup4.
+- Raw UI awal19PASS3FAIL1:57: dua finder field uang lupa suffix(IDR), satu tes
+  lama belum mengonfirmasi prompt biaya0 baru. Sudah retest66PASS/15PASS; satu
+  tap warning scroll pada retest66 diperbaiki, final15 tanpa warning tersebut.
+- Audit diff menemukan pesan ARB lama sempat berubah encoding; dipulihkan dari
+  baseline UTF8 dan hanya10key baru dipertahankan. Gen-l10n/audit PASS. Tidak ada
+  build itu yang dipasang ke ordinary/Skybee; raw/log test tetap disimpan.
+
+Selanjutnya tutup proof Poco dan DV pack, final format/analyze/l10n/diff; native
+integration debug sudah dibuild, ordinary debug/release final tetap bagian H.
+Buat commit/push checkpoint biaya yang lulus tanpa APK/DB/key/log privat. A1
+transisi tracked nonzero belum lengkap (jangan menyarankan opname0 fiktif untuk
+mematikannya); perlu penutupan tracking eksplisit dengan snapshot qty/batch/nilai,
+terpisah dari selisih fisik/HPP. Lalu onboarding sesuai desain berikutnya dan B–H.
+Onboarding [desain](decisions/M53_ONBOARDING.md) belum implementasi; belum handoff.
+
+## Checkpoint A2 — biaya unknown sedang divalidasi (schema17, belum rilis)
+
+Fondasi schema16 sudah commit/push biasa `f4fb719`; origin/main terbukti sama
+`f4fb71978a42a168159557512c8d79d64f03bfce`. Perubahan A2 berikut belum commit.
+Source lokal+12/schema17, Paket Eksplorasi Mandiri tetap+12/schema14/tidak diupdate.
+
+- SQL flag cost_complete legacy default1, before flag operasi, event rekonsiliasi
+  append-only. Proyeksi micros non-null lama hanya untuk ledger exact saat flag0;
+  canonical HPP/nilai/average nullable. [Kontrak](decisions/M53_UNKNOWN_COST.md).
+- Unknown receipt/pack, mixed pool, checkout snapshot/header, reversal/receipt,
+  count/waste, zero consent, whole-pool reconciliation dengan quantity/revision,
+  laporan fullrange, ekspor blank+status, backup validation sudah terhubung.
+  Feature biaya dapat dimatikan pada schema17; UI input tersembunyi mempertahankan
+  reference historis; input baru tidak memakai harga lama sebagai biaya aktual.
+- Domain10PASS22s pertama: mixed/empty/return/pack/idempotent/reconcile/free/
+  untracked/count/waste/rollback/export/validator. Delta retry sesudah feature
+  berubah dan zero consent schema17 sedang retest; native belum pada schema17.
+- Regresi awal114PASS19FAIL2:14 (build/m53/cost-regressions-first.txt):18cashier
+  memakai phone fixture00123 yang sudah invalid menurut kontrak M52;1export
+  mengharapkan129row, kini131 dengan2metric coverage baru. Fixture diperbaiki
+  menjadi nomor sintetis valid/raw draft tetap, assertion customer E164; ekspektasi
+  export16summary diperbarui, bukan melonggarkan validasi aplikasi. Retest wajib.
+- UI5 (3lama+2biaya/reconcile/Back) dan M52forms sedang berjalan. Analyzer awal
+  nullability4testknown + lint dibenahi; final analyzer sedang berjalan.
+
+Berikut: tutup host/native biaya/UI DV dahulu lalu Poco dengan wrapper audited
+background-paused; format/analyze/l10n; checkpoint A2 biaya lalu onboarding dan
+remaining B–H. Jangan reset/update pengguna atau berhenti meminta review.
+
 ## Checkpoint TERBARU — fondasi, akses dan klarifikasi Back
 
 Source0.5.2+12/schema16 belum dirilis; HEAD masih02d4f67, belum commit/push/

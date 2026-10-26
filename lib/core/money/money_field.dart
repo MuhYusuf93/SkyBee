@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../features/management/presentation/managed_text_field.dart';
 import '../../features/settings/presentation/locale_provider.dart';
 import 'money.dart';
+import '../../l10n/localization.dart';
 import 'money_codec.dart';
 import 'money_text_input_formatter.dart';
 import '../domain/value_types.dart' show CostAmount;
@@ -51,9 +52,10 @@ String moneyLabel(BuildContext context, int minor, {CurrencyPolicy? currency}) {
 /// Stored fixed-point cost is bound to its header currency before rounding.
 String moneyCostLabel(
   BuildContext context,
-  int micros, {
+  int? micros, {
   required CurrencyPolicy currency,
 }) {
+  if (micros == null) return tr(context, 'm53CostIncomplete');
   final cost = CostAmount(
     micros,
     currencyCode: currency.code,

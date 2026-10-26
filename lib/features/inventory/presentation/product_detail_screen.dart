@@ -16,9 +16,11 @@ import '../domain/inventory_models.dart';
 import '../domain/stock_rules.dart';
 import '../domain/stock_input.dart';
 import 'stock_input_fields.dart';
+import 'confirm_free_cost.dart';
 import 'expiry_date_field.dart';
 import 'product_detail_provider.dart';
 import 'product_form.dart';
+import 'valuation_reconciliation_screen.dart';
 import 'relation_field.dart';
 import 'inventory_history_screen.dart';
 
@@ -43,6 +45,8 @@ class _DetailBody extends StatelessWidget {
     BuildContext parent,
     ProductDetailProvider state,
   ) async {
+    final policy = await parent.read<AppServices>().settings.featurePolicy();
+    if (!parent.mounted) return;
     final product = state.product!;
     final tracked = !product.stockTracked;
     final count = TextEditingController(),
@@ -76,14 +80,15 @@ class _DetailBody extends StatelessWidget {
                         labelText: tr(context, 'initialQuantity'),
                       ),
                     ),
-                  MoneyField(
-                    controller: cost,
-                    enabled: !busy,
-                    label: tr(
-                      context,
-                      tracked ? 'purchasePricePerUnit' : 'm52ReferenceCost',
+                  if (policy.cost)
+                    MoneyField(
+                      controller: cost,
+                      enabled: !busy,
+                      label: tr(
+                        context,
+                        tracked ? 'purchasePricePerUnit' : 'm52ReferenceCost',
+                      ),
                     ),
-                  ),
                   if (error != null) Text(message(context, error!)),
                 ],
               ),
@@ -97,15 +102,32 @@ class _DetailBody extends StatelessWidget {
                 onPressed: busy
                     ? null
                     : () async {
+                        CostAmount? amount;
+                        if (policy.cost && cost.text.isNotEmpty) {
+                          try {
+                            amount = CostAmount.fromMoney(
+                              cost.parseMoney(finish: true),
+                            );
+                          } catch (_) {
+                            update(
+                              () => error = 'enterAValidAmountQuantityAndYyyy',
+                            );
+                            return;
+                          }
+                        }
+                        var confirmedFree = false;
+                        if (amount?.micros == 0) {
+                          confirmedFree = await confirmFreeCost(context, 0);
+                          if (!confirmedFree || !context.mounted) return;
+                        }
                         update(() => busy = true);
                         final success = await state.run(
                           () => state.service.changeStockTracking(
                             product.id,
                             product.revision,
                             tracked: tracked,
-                            cost: CostAmount.fromMoney(
-                              cost.parseMoney(finish: true),
-                            ),
+                            cost: amount,
+                            confirmedFree: confirmedFree,
                             initialQuantity: tracked
                                 ? parseWholeQuantity(count.text)
                                 : 0,
@@ -138,6 +160,8 @@ class _DetailBody extends StatelessWidget {
     String kind, {
     StockBatch? batch,
   }) async {
+    final policy = await parent.read<AppServices>().settings.featurePolicy();
+    if (!parent.mounted) return;
     final stockInput = StockInputController(
       packSize: state.product!.packSize,
       packLabel: state.product!.packLabel,
@@ -192,7 +216,10 @@ class _DetailBody extends StatelessWidget {
                             : tr(context, 'unitQuantity'),
                       ),
                     ),
-                  if (kind == 'receive' || kind == 'count')
+                  if (policy.cost &&
+                      (kind == 'receive' ||
+                          kind == 'count' ||
+                          kind == 'valuation'))
                     MoneyField(
                       controller: cost,
                       enabled: !busy,
@@ -203,7 +230,12 @@ class _DetailBody extends StatelessWidget {
                                   ? 'm31PurchasePerPack'
                                   : 'purchasePricePerUnit',
                             )
-                          : tr(context, 'purchasePriceWhenStockIsEmpty'),
+                          : tr(
+                              context,
+                              kind == 'valuation'
+                                  ? 'm53PoolTotalCost'
+                                  : 'purchasePriceWhenStockIsEmpty',
+                            ),
                     ),
                   if (kind == 'receive') ...[
                     if (state.product!.expiryEnabled)
@@ -238,19 +270,34 @@ class _DetailBody extends StatelessWidget {
                 onPressed: busy
                     ? null
                     : () async {
+                        CostAmount? enteredCost;
+                        if (policy.cost && cost.text.isNotEmpty) {
+                          try {
+                            enteredCost = CostAmount.fromMoney(
+                              cost.parseMoney(finish: true),
+                            );
+                          } catch (_) {
+                            setState(
+                              () => error = 'enterAValidAmountQuantityAndYyyy',
+                            );
+                            return;
+                          }
+                        }
+                        var confirmedFree = false;
+                        if (enteredCost?.micros == 0) {
+                          confirmedFree = await confirmFreeCost(context, 0);
+                          if (!confirmedFree || !context.mounted) return;
+                        }
                         setState(() => busy = true);
                         final success = await state.run(() async {
                           final service = state.service;
                           switch (kind) {
                             case 'receive':
-                              await service.receivePurchase(
+                              await service.receiveInput(
                                 state.id,
-                                StockPurchase(
-                                  stockInput.parse(positive: true),
-                                  CostAmount.fromMoney(
-                                    cost.parseMoney(finish: true),
-                                  ),
-                                ),
+                                stockInput.parse(positive: true),
+                                enteredCost,
+                                confirmedFree: confirmedFree,
                                 operationKey: key,
                                 supplierId: supplier?.id,
                                 expiry: expiry.text.trim().isEmpty
@@ -263,11 +310,8 @@ class _DetailBody extends StatelessWidget {
                                 stockInput.parse(),
                                 operationKey: key,
                                 reason: reason.text,
-                                unitCost: cost.text.isEmpty
-                                    ? null
-                                    : CostAmount.fromMoney(
-                                        cost.parseMoney(finish: true),
-                                      ),
+                                unitCost: enteredCost,
+                                confirmedFree: confirmedFree,
                               );
                             case 'reverse':
                               await service.reverseReceipt(
@@ -389,7 +433,12 @@ class _DetailBody extends StatelessWidget {
                     AppLocalizations.of(context)!.averageCostAmount(
                       moneyCostLabel(
                         context,
-                        averageCost(product.quantity, product.valueMicros),
+                        product.valueMicros == null
+                            ? null
+                            : averageCost(
+                                product.quantity,
+                                product.valueMicros!,
+                              ),
                         currency: CurrencyPolicy.forCode(
                           product.row['currency_code'] as String,
                         ),
@@ -399,7 +448,7 @@ class _DetailBody extends StatelessWidget {
                 if (!product.stockTracked) ...[
                   Text('${tr(context, 'm4InventoryValue')}: —'),
                   Text(
-                    '${tr(context, 'm52ReferenceCost')}: ${moneyCostLabel(context, product.referenceCostMicros!, currency: CurrencyPolicy.forCode(product.row['currency_code'] as String))}',
+                    '${tr(context, 'm52ReferenceCost')}: ${moneyCostLabel(context, product.referenceCostMicros, currency: CurrencyPolicy.forCode(product.row['currency_code'] as String))}',
                   ),
                   if (product.row['reference_expiry_date'] != null)
                     Text(
@@ -425,6 +474,24 @@ class _DetailBody extends StatelessWidget {
                             : () => _tracking(context, state),
                         child: Text(tr(context, 'm52TrackingChange')),
                       ),
+                      if (product.stockTracked && product.quantity > 0)
+                        OutlinedButton(
+                          onPressed: state.busy
+                              ? null
+                              : () async {
+                                  await Navigator.push<bool>(
+                                    context,
+                                    MaterialPageRoute<bool>(
+                                      builder: (_) =>
+                                          ValuationReconciliationScreen(
+                                            product: product,
+                                          ),
+                                    ),
+                                  );
+                                  await state.load();
+                                },
+                          child: Text(tr(context, 'm53ReconcileValuation')),
+                        ),
                       FilledButton(
                         onPressed: state.busy || !product.stockTracked
                             ? null

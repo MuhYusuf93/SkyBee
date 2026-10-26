@@ -181,6 +181,7 @@ class _PromotionFormState extends State<_PromotionForm> {
   }
 
   bool loss(InventoryProduct product) {
+    if (!product.costComplete) return false;
     try {
       final qty = parseWholeQuantity(minimum.text, positive: true);
       final rule = QuantityPromotion(
@@ -199,7 +200,7 @@ class _PromotionFormState extends State<_PromotionForm> {
       return product.stockTracked
           ? product.quantity > 0 &&
                 net * BigInt.from(product.quantity) <
-                    BigInt.from(product.valueMicros) * BigInt.from(qty)
+                    BigInt.from(product.valueMicros!) * BigInt.from(qty)
           : net < BigInt.from(product.referenceCostMicros!) * BigInt.from(qty);
     } catch (_) {
       return false;

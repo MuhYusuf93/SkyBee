@@ -60,7 +60,9 @@ final class SettingsService {
             (!value.enforced || value.stockMode != StockMode.all)) {
           throw const AppError('m53StockModeConflict');
         }
-        if (!value.cost) throw const AppError('m53UnknownCostPending');
+        if (!value.cost && database.schemaVersion < 17) {
+          throw const AppError('m53UnknownCostPending');
+        }
         if (value.enforced &&
             (await _impactOn(dbTxn)).conflicts(value.stockMode) != 0) {
           throw const AppError('m53StockReconciliationRequired');

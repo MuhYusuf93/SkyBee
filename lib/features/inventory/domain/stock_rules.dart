@@ -75,13 +75,14 @@ List<String> wholesaleWarnings(
   Money retail,
   Money? wholesale,
   int quantity,
-  int valueMicros,
+  int? valueMicros,
 ) {
   if (wholesale == null) return const [];
   retail.compatible(wholesale);
   return [
     if (wholesale.amountMinor > retail.amountMinor) 'm31AboveRetail',
-    if (quantity > 0 &&
+    if (valueMicros != null &&
+        quantity > 0 &&
         BigInt.from(wholesale.amountMinor) *
                 BigInt.from(CostAmount.scale) *
                 BigInt.from(quantity) <

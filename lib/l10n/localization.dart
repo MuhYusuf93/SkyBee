@@ -16,6 +16,16 @@ String tr(BuildContext context, String key) {
     'm53StayLocked' => l.m53StayLocked,
     'm53DiscardToCashier' => l.m53DiscardToCashier,
 
+    'm53ValuationHistory' => l.m53ValuationHistory,
+    'm53CostIncomplete' => l.m53CostIncomplete,
+    'm53IncompleteSaleEvents' => l.m53IncompleteSaleEvents,
+    'm53IncompleteInventoryProducts' => l.m53IncompleteInventoryProducts,
+    'm53CostHelp' => l.m53CostHelp,
+    'm53ConfirmFreeTitle' => l.m53ConfirmFreeTitle,
+    'm53ConfirmFreeBody' => l.m53ConfirmFreeBody,
+    'm53ReconcileValuation' => l.m53ReconcileValuation,
+    'm53ReconcileValuationHelp' => l.m53ReconcileValuationHelp,
+    'm53PoolTotalCost' => l.m53PoolTotalCost,
     'm53ZeroCostConfirmation' => l.m53ZeroCostConfirmation,
     'm53ValuationQuantityMismatch' => l.m53ValuationQuantityMismatch,
 

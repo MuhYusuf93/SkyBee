@@ -95,7 +95,7 @@ class _DetailBody extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     children: [
                       Text(
-                        '${tr(context, 'm3CostSnapshot')}: ${moneyCostLabel(context, state.cost!.micros, currency: CurrencyPolicy.forCode(receipt.total.currencyCode))}',
+                        '${tr(context, 'm3CostSnapshot')}: ${moneyCostLabel(context, state.cost?.micros, currency: CurrencyPolicy.forCode(receipt.total.currencyCode))}',
                       ),
                       if (state.reversal != null) ...[
                         Text(tr(context, 'm4Cancelled')),

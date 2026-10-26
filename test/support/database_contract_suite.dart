@@ -206,7 +206,7 @@ void databaseContractSuite(
       final items = await repository.items(EntityId(fixtureId(10)));
       expect(items.single.productName, 'Nama lama');
       expect(items.single.unitPrice.value, 12000);
-      expect(items.single.cost.micros, 27000000000);
+      expect(items.single.cost!.micros, 27000000000);
     },
   );
 

@@ -192,10 +192,18 @@ final class CheckoutService {
               ? checkedNonNegative(
                   BigInt.from(
                         product['reference_cost_micros'] as int? ??
-                            (throw const AppError('m52ReferenceCostRequired')),
+                            (product['cost_complete'] == 0
+                                ? 0
+                                : throw const AppError(
+                                    'm52ReferenceCostRequired',
+                                  )),
                       ) *
                       BigInt.from(line.quantity),
                 )
+              : product['cost_complete'] == 0
+              ? (line.quantity == product['stock_quantity']
+                    ? product['inventory_value_micros'] as int
+                    : 0)
               : removalCost(
                   quantity: product['stock_quantity'] as int,
                   valueMicros: product['inventory_value_micros'] as int,
@@ -254,6 +262,10 @@ final class CheckoutService {
           'created_at': now,
           'total_rupiah': total.amountMinor,
           'cost_micros': cost,
+          if (database.schemaVersion >= 17)
+            'cost_complete': products.every((p) => p['cost_complete'] != 0)
+                ? 1
+                : 0,
           'payload_hash': hash,
           ...store.metadata(currency),
         });
@@ -277,6 +289,11 @@ final class CheckoutService {
               {
                 'stock_quantity': quantity - line.quantity,
                 'inventory_value_micros': value - costs[index],
+                if (database.schemaVersion >= 17)
+                  'cost_complete':
+                      quantity == line.quantity || product['cost_complete'] != 0
+                      ? 1
+                      : 0,
                 'stock_revision': (product['stock_revision'] as int) + 1,
                 'updated_at': now,
               },
@@ -305,6 +322,8 @@ final class CheckoutService {
             'pricing_mode': line.pricingMode.name,
             'total_rupiah': line.total.amountMinor,
             'cost_micros': costs[index],
+            if (database.schemaVersion >= 17)
+              'cost_complete': product['cost_complete'],
             if (database.schemaVersion >= 14) ...{
               'promo_snapshot_json': line.acceptedPromoJson,
               'gross_minor': line.gross.amountMinor,
@@ -325,6 +344,8 @@ final class CheckoutService {
               'kind': 'sale',
               'quantity_delta': -line.quantity,
               'value_delta_micros': -costs[index],
+              if (database.schemaVersion >= 17)
+                'cost_complete': product['cost_complete'],
               'created_at': now,
               'reason': 'sale',
               'reason_key': 'm3SaleMovement',

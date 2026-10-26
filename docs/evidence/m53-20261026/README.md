@@ -7,3 +7,6 @@ Tidak memuat database, key/PIN/token, recovery, kontak pelanggan, APK atau raw l
 Raw gagal/retry dan APK checkpoint disimpan privat di `build/m53` serta direktori
 run yang disebut pada [laporan](../../M53_REPORT.md). Hasil sintetis/native dan
 endpoint hash dibedakan dari bukti fisik dan logical handoff data pengguna.
+
+[Checkpoint biaya](cost-validation.json) dan [source checksums biaya](cost-source-sha256.json)
+menutup6interval native terisolasi, bukan handoff seluruh M5.3.

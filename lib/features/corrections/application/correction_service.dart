@@ -331,6 +331,12 @@ final class CorrectionService {
             await dbTxn.update(
               'products',
               {
+                if (database.schemaVersion >= 17)
+                  'cost_complete':
+                      product['cost_complete'] != 0 &&
+                          item['cost_complete'] != 0
+                      ? 1
+                      : 0,
                 'stock_quantity': checkedNonNegative(
                   BigInt.from(product['stock_quantity'] as int) +
                       BigInt.from(quantity),
@@ -357,6 +363,8 @@ final class CorrectionService {
               'kind': 'reversal',
               'quantity_delta': quantity,
               'value_delta_micros': snapshotCost,
+              if (database.schemaVersion >= 17)
+                'cost_complete': item['cost_complete'],
               'created_at': now,
               'reason': reason.trim(),
               'currency_code': sale['currency_code'],

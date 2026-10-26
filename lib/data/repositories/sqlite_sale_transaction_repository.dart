@@ -26,7 +26,12 @@ final class SqliteSaleTransactionRepository
     SaleHistoryCursor? after,
     int pageSize = 50,
   }) async {
-    final query = saleHistoryQuery(filter, after, pageSize);
+    final query = saleHistoryQuery(
+      filter,
+      after,
+      pageSize,
+      costKnowledge: _database.schemaVersion >= 17,
+    );
     final result = await _database.read((db) async {
       await authorize?.call(db);
       if (after?.revision != null && after!.revision != _database.revision) {
@@ -48,11 +53,13 @@ final class SqliteSaleTransactionRepository
               row['currency_code'] as String,
               row['currency_scale'] as int,
             ),
-            cost: CostAmount(
-              row['cost_micros'] as int,
-              currencyCode: row['currency_code'] as String,
-              currencyScale: row['currency_scale'] as int,
-            ),
+            cost: row['cost_complete'] == 0
+                ? null
+                : CostAmount(
+                    row['cost_micros'] as int,
+                    currencyCode: row['currency_code'] as String,
+                    currencyScale: row['currency_scale'] as int,
+                  ),
             customerId: row['customer_id'] == null
                 ? null
                 : EntityId(row['customer_id'] as String),
@@ -109,11 +116,13 @@ final class SqliteSaleTransactionRepository
             row['currency_code'] as String,
             row['currency_scale'] as int,
           ),
-          cost: CostAmount(
-            row['cost_micros'] as int,
-            currencyCode: row['currency_code'] as String,
-            currencyScale: row['currency_scale'] as int,
-          ),
+          cost: row['cost_complete'] == 0
+              ? null
+              : CostAmount(
+                  row['cost_micros'] as int,
+                  currencyCode: row['currency_code'] as String,
+                  currencyScale: row['currency_scale'] as int,
+                ),
         ),
       ),
     );

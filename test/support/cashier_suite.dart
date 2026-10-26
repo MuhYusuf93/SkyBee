@@ -102,7 +102,7 @@ void cashierSuite(
     int amount, {
     EntityId? customer,
     String name = 'Alex',
-    String phone = '00123',
+    String phone = '081234567890',
   }) => CheckoutInput(
     mode: PaymentMode.partial,
     paid: Money(amount, 'IDR', 0),
@@ -115,7 +115,11 @@ void cashierSuite(
       current.revision,
       CheckoutInput(
         mode: PaymentMode.debt,
-        customer: CustomerChoice(id: customer, name: 'Alex', phone: '00123'),
+        customer: CustomerChoice(
+          id: customer,
+          name: 'Alex',
+          phone: '081234567890',
+        ),
       ),
     );
   }
@@ -236,7 +240,7 @@ void cashierSuite(
       final reopened = await cart.open();
       expect(reopened.id, saved.id);
       expect(reopened.input.paid!.amountMinor, 10000);
-      expect(reopened.input.customer.phone, '00123');
+      expect(reopened.input.customer.phone, '081234567890');
       final corrected = await cart.quantity(reopened.id, productId, 2);
       expect(corrected.input.mode, PaymentMode.partial);
       expect(corrected.input.paid!.amountMinor, 10000);
@@ -739,7 +743,7 @@ void cashierSuite(
         pageSize: 1,
       );
       expect(firstPage.items.single.id, isNot(secondPage.items.single.id));
-      expect(firstPage.items.single.phone, '00123');
+      expect(firstPage.items.single.phone, '+6281234567890');
       final detail = await debts.transactions(
         firstPage.items.single.id,
         pageSize: 1,

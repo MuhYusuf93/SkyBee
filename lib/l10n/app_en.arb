@@ -3006,5 +3006,45 @@
   "m53DiscardToCashier": "Discard and return to cashier",
   "@m53DiscardToCashier": {
     "description": "User clarification M5.3 locked dirty exit: m53DiscardToCashier"
+  },
+  "m53CostIncomplete": "Incomplete — cost unknown",
+  "@m53CostIncomplete": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53IncompleteSaleEvents": "Sale/reversal documents with incomplete cost",
+  "@m53IncompleteSaleEvents": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53IncompleteInventoryProducts": "Stock products with incomplete value",
+  "@m53IncompleteInventoryProducts": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53CostHelp": "Cost supports cost of sales, inventory value and estimated profit. Revenue is still recorded without cost; cost/profit is marked incomplete. Empty cost differs from zero cost.",
+  "@m53CostHelp": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53ConfirmFreeTitle": "Free acquisition?",
+  "@m53ConfirmFreeTitle": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53ConfirmFreeBody": "I intentionally record zero cost. These goods were acquired free of charge; their cost is not unknown.",
+  "@m53ConfirmFreeBody": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53ReconcileValuation": "Reconcile entire stock value",
+  "@m53ReconcileValuation": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53ReconcileValuationHelp": "Enter the total cost of the entire current physical balance and its supporting reason. Previous sale cost snapshots stay unchanged.",
+  "@m53ReconcileValuationHelp": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53PoolTotalCost": "Total cost of entire stock",
+  "@m53PoolTotalCost": {
+    "description": "M5.3 explicit cost knowledge and reconciliation"
+  },
+  "m53ValuationHistory": "Stock valuation history",
+  "@m53ValuationHistory": {
+    "description": "M5.3 append-only whole-pool reconciliation history including zero-valued events"
   }
 }

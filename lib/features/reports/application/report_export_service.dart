@@ -106,9 +106,9 @@ final class ReportExportService {
           await writer.start('Summary');
           final metrics = <String, (Object, String)>{
             'net_sales': (summary.salesMinor.toString(), 'minor'),
-            'cost': (summary.costMicros.toString(), 'millionth_minor'),
+            'cost': (summary.costMicros?.toString() ?? '', 'millionth_minor'),
             'gross_profit': (
-              summary.grossProfitMicros.toString(),
+              summary.grossProfitMicros?.toString() ?? '',
               'millionth_minor',
             ),
             'net_payments': (summary.paymentsMinor.toString(), 'minor'),
@@ -125,10 +125,15 @@ final class ReportExportService {
               summary.receivablesMinor.toString(),
               'minor',
             ),
+            'incomplete_cost_events': (summary.incompleteSaleEvents, 'count'),
+            'incomplete_inventory_products': (
+              summary.incompleteInventoryProducts,
+              'count',
+            ),
             'sale_count': (summary.saleCount, 'count'),
             'reversal_count': (summary.returnCount, 'count'),
             'current_inventory_value': (
-              summary.inventoryMicros.toString(),
+              summary.inventoryMicros?.toString() ?? '',
               'millionth_minor',
             ),
             'current_stock': (summary.inventoryQuantity, 'pcs'),
@@ -150,7 +155,12 @@ final class ReportExportService {
             final selection = filter.withSection(section);
             ReportCursor? cursor;
             while (true) {
-              final query = reportEventsQuery(selection, cursor, 100);
+              final query = reportEventsQuery(
+                selection,
+                cursor,
+                100,
+                costKnowledge: database.schemaVersion >= 17,
+              );
               final entries = (await sql.rawQuery(
                 query.sql,
                 query.arguments,
@@ -169,7 +179,10 @@ final class ReportExportService {
                   'reversed': row.reversed ? 1 : 0,
                   'amount_minor': row.amountMinor.toString(),
                   'amount_decimal': decimal(row.amountMinor, currency.scale),
-                  'cost_micros': row.costMicros.toString(),
+                  'cost_micros': row.costMicros?.toString(),
+                  'cost_status': row.costMicros == null
+                      ? 'incomplete'
+                      : 'complete',
                   'customer': row.customerName,
                   'reason': row.reason,
                 });
@@ -228,7 +241,12 @@ final class ReportExportService {
                   row['total_rupiah'] as int,
                   currency.scale,
                 ),
-                'cost_micros': '${row['cost_micros']}',
+                'cost_micros': row['cost_complete'] == 0
+                    ? null
+                    : row['cost_micros'],
+                'cost_status': row['cost_complete'] == 0
+                    ? 'incomplete'
+                    : 'complete',
                 'pricing_mode': row['pricing_mode'],
                 'stock_tracking': row['stock_tracking_snapshot'] == 0
                     ? 'untracked'
@@ -255,7 +273,7 @@ final class ReportExportService {
           while (true) {
             final rows = await sql.rawQuery(
               '''SELECT id,sku,barcode,name,stock_quantity,pack_size,base_unit_label,pack_label,size_milli,size_unit,
-            shelf_location,product_note,is_deleted,inventory_value_micros ${database.schemaVersion >= 14 ? ',stock_tracking_enabled,reference_cost_micros' : ''} FROM products
+            shelf_location,product_note,is_deleted,inventory_value_micros ${database.schemaVersion >= 17 ? ',cost_complete' : ''} ${database.schemaVersion >= 14 ? ',stock_tracking_enabled,reference_cost_micros' : ''} FROM products
             ${productCursor == null ? '' : 'WHERE id COLLATE BINARY>?'} ORDER BY id COLLATE BINARY LIMIT 100''',
               [?productCursor],
             );
@@ -283,7 +301,12 @@ final class ReportExportService {
                 'shelf': row['shelf_location'],
                 'note': row['product_note'],
                 'archived': row['is_deleted'],
-                'cost_micros': row['stock_tracking_enabled'] == 0
+                'cost_status': row['cost_complete'] == 0
+                    ? 'incomplete'
+                    : 'complete',
+                'cost_micros': row['cost_complete'] == 0
+                    ? null
+                    : row['stock_tracking_enabled'] == 0
                     ? '—'
                     : '${row['inventory_value_micros']}',
               });

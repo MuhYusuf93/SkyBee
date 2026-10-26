@@ -124,8 +124,8 @@ void m51ReportExportSuite(DatabaseFactory factory) {
           expect(pages, greaterThanOrEqualTo(5));
           expect(
             control.rows,
-            129,
-          ); //14 summary +3 sales +4 payments +2 items +106 inventory.
+            131,
+          ); //16 summary +3 sales +4 payments +2 items +106 inventory.
           if (Platform.isWindows) {
             final root = await Directory(
               'build/m51-report-reader',

@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+M5.3 biaya unknown mengikuti [kontrak persistensi](decisions/M53_UNKNOWN_COST.md):
+flag legacy aditif, canonical nullable, mixed pool tanpa average tebakan, snapshot
+lama immutable dan rekonsiliasi eksplisit/audit; coverage pada laporan/ekspor.
+
 26 Oktober — klarifikasi pengguna: Back terkunci dengan form berubah tetap
 memunculkan peringatan generik. Tetap terkunci atau buang dan kembali ke Kasir;
 tidak commit, tidak membuka data tanpa autentikasi, cart/tender tetap.

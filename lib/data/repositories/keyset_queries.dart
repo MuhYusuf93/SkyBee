@@ -60,8 +60,9 @@ SqlQuery catalogQuery(
 SqlQuery saleHistoryQuery(
   SaleHistoryFilter filter,
   SaleHistoryCursor? after,
-  int pageSize,
-) {
+  int pageSize, {
+  bool costKnowledge = false,
+}) {
   validatePageSize(pageSize);
   if (after != null && after.filter != filter) {
     throw ArgumentError('Cursor riwayat berasal dari periode/filter berbeda.');
@@ -92,7 +93,7 @@ SqlQuery saleHistoryQuery(
   }
   arguments.add(pageSize + 1);
   return SqlQuery(
-    '''SELECT id, created_at, total_rupiah, cost_micros, currency_code, currency_scale, customer_id,customer_name_snapshot,
+    '''SELECT id, created_at, total_rupiah, cost_micros, ${costKnowledge ? 'cost_complete,' : ''} currency_code, currency_scale, customer_id,customer_name_snapshot,
     EXISTS(SELECT 1 FROM sale_transaction_reversals r WHERE r.sale_transaction_id=sale_transactions.id) AS is_reversed
     FROM sale_transactions WHERE ${conditions.join(' AND ')}
     ORDER BY created_at DESC, id COLLATE BINARY DESC LIMIT ?''',
