@@ -45,6 +45,7 @@ class InventoryHistoryScreen extends StatelessWidget {
                               ChangeKind.stock => 'stock',
                               ChangeKind.price => 'price',
                               ChangeKind.valuation => 'm53ValuationHistory',
+                              ChangeKind.tracking => 'm53TrackingHistory',
                             }),
                           ),
                           selected: state.filter == kind,
@@ -80,7 +81,9 @@ class InventoryHistoryScreen extends StatelessWidget {
                                 row['currency_code'] as String,
                               ),
                             );
-                      final detail = state.filter == ChangeKind.valuation
+                      final detail = state.filter == ChangeKind.tracking
+                          ? '${tr(context, row['after_tracked'] == 1 ? 'm52Tracked' : 'm52Untracked')}\n${tr(context, 'currentPhysicalQuantity')}: ${row['before_tracked'] == 0 ? tr(context, 'm52Untracked') : row['before_quantity']} → ${row['after_tracked'] == 0 ? tr(context, 'm52Untracked') : row['reconciled_quantity']}'
+                          : state.filter == ChangeKind.valuation
                           ? '${tr(context, 'm53PoolTotalCost')}: ${moneyCostLabel(context, row['total_micros'] as int, currency: CurrencyPolicy.forCode(row['currency_code'] as String))}\n${tr(context, 'currentPhysicalQuantity')}: ${row['confirmed_quantity']}'
                           : state.filter == ChangeKind.price
                           ? '${tr(context, wholesale ? 'm31Wholesale' : 'm31Retail')}: ${priceValue(wholesale ? row['before_price_minor'] : row['before_rupiah'])} \u2192 ${priceValue(wholesale ? row['after_price_minor'] : row['after_rupiah'])}'

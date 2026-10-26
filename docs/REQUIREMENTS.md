@@ -10,7 +10,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 
 | ID | Kebutuhan aktif M5.3 | Status/bukti checkpoint aktif |
 |---|---|---|
-| M53-A1 | Preferensi aman, mode toko, jumlah awal eksplisit, preservasi migrasi14 | Parsial: policy/migrasi15–16, host66/native14 per DV/Poco PASS; rekonsiliasi saldo masih tersisa |
+| M53-A1 | Preferensi aman, mode toko, jumlah awal eksplisit, preservasi migrasi14 | Policy+closure saldo/source18: host34/native17 DV lintas run dan Poco17 PASS; qty/batch/value/expiry dipertahankan; lihat M53_TRACKING_REPORT |
 | M53-A2 | Onboarding lengkap, biaya unknown dan propagasi laporan | Biaya schema17: host/native core10 + followup/migrasi/UI PASS, lihat M53_COST_REPORT. Onboarding TODO |
 | M53-B1 | PIN aplikasi setiap72jam, biometric tidak mereset interval | Host dan native14 per DV/Poco PASS, termasuk restart/rollback clock sintetis; bukan72jam nyata |
 | M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir masih TODO |

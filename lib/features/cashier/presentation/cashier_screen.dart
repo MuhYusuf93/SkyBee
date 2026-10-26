@@ -529,7 +529,11 @@ class _SearchPaneState extends State<_SearchPane> {
                 return ListTile(
                   title: Text(product.name),
                   subtitle: Text(
-                    '${moneyLabel(context, product.price.amountMinor)} · ${product.stockTracked ? '${tr(context, 'm3Available')}: ${product.saleable}' : tr(context, 'm52Untracked')}',
+                    '${moneyLabel(context, product.price.amountMinor)} · ${product.referenceExpired
+                        ? tr(context, 'm4ExpiredStock')
+                        : product.stockTracked
+                        ? '${tr(context, 'm3Available')}: ${product.saleable}'
+                        : tr(context, 'm52Untracked')}',
                   ),
                   enabled: product.saleable > 0,
                   onTap: product.saleable > 0 ? () => add(product) : null,

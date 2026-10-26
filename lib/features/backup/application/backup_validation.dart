@@ -10,6 +10,7 @@ import '../../../core/time/store_clock.dart';
 import '../../management/application/pin_hasher.dart';
 import '../domain/backup_manifest.dart';
 import '../../inventory/domain/product_attributes.dart';
+import '../../inventory/domain/stock_rules.dart';
 import '../../cashier/application/quick_cash_service.dart';
 import '../../cashier/domain/cash_tender.dart';
 import '../../cashier/domain/quantity_promotion.dart';
@@ -258,6 +259,92 @@ final class BackupValidation {
     return result;
   }
 
+  /// Tracking closure archives a physical scope; it is not a financial loss.
+  /// Verify batch snapshots and opening links even if archive triggers vanished.
+  static Future<void> _trackingChanges(DatabaseExecutor db) async {
+    final invalid = await db.rawQuery(
+      """SELECT 1 FROM stock_tracking_changes t WHERE
+      typeof(t.operation_key)<>'text' OR length(trim(t.operation_key)) NOT BETWEEN 1 AND 120 OR
+      typeof(t.payload_hash)<>'text' OR length(t.payload_hash)<>64 OR
+      typeof(t.before_tracked)<>'integer' OR t.before_tracked NOT IN(0,1) OR
+      typeof(t.after_tracked)<>'integer' OR t.after_tracked NOT IN(0,1) OR t.after_tracked=t.before_tracked OR
+      typeof(t.before_quantity)<>'integer' OR t.before_quantity<0 OR
+      typeof(t.before_value_micros)<>'integer' OR t.before_value_micros<0 OR
+      typeof(t.before_cost_complete)<>'integer' OR t.before_cost_complete NOT IN(0,1) OR
+      typeof(t.zero_confirmed)<>'integer' OR t.zero_confirmed NOT IN(0,1) OR
+      typeof(t.stock_revision_after)<>'integer' OR t.stock_revision_after<=0 OR
+      typeof(t.created_at)<>'integer' OR t.created_at<0 OR
+      typeof(t.reason)<>'text' OR length(t.reason)>1000 OR
+      (t.after_reference_micros IS NOT NULL AND (typeof(t.after_reference_micros)<>'integer' OR t.after_reference_micros<0)) OR
+      typeof(t.after_reference_source)<>'text' OR t.after_reference_source NOT IN('explicit','historical','unknown') OR
+      (t.before_reference_expiry_date IS NOT NULL AND (typeof(t.before_reference_expiry_date)<>'text' OR length(t.before_reference_expiry_date)<>10)) OR
+      (t.after_reference_expiry_date IS NOT NULL AND (typeof(t.after_reference_expiry_date)<>'text' OR length(t.after_reference_expiry_date)<>10)) OR
+      (t.reason_key IS NOT NULL AND (typeof(t.reason_key)<>'text' OR length(t.reason_key)>100)) OR
+      (t.after_tracked=0 AND t.after_reference_expiry_date IS NOT COALESCE(
+        (SELECT MIN(b.expiry_date) FROM stock_tracking_closed_batches c JOIN stock_batches b ON b.id=c.stock_batch_id WHERE c.tracking_change_id=t.id),t.before_reference_expiry_date)) OR
+      (t.after_reference_source='unknown' AND t.after_reference_micros IS NOT NULL) OR
+      (t.after_reference_source<>'unknown' AND t.after_reference_micros IS NULL) OR
+      (t.after_reference_source='explicit' AND t.after_reference_micros=0 AND t.zero_confirmed<>1) OR
+      (t.before_tracked=0 AND (t.before_quantity<>999 OR t.before_value_micros<>0)) OR
+      (t.after_tracked=1 AND (typeof(t.reconciled_quantity)<>'integer' OR t.reconciled_quantity NOT BETWEEN 0 AND 999999 OR t.after_reference_source<>'unknown')) OR
+      (t.after_tracked=0 AND (t.reconciled_quantity IS NOT NULL OR t.stock_receipt_id IS NOT NULL)) OR
+      (t.after_tracked=0 AND t.before_quantity>0 AND (length(trim(t.reason))=0 OR t.inventory_operation_id IS NULL)) OR
+      (t.before_tracked=1 AND t.after_tracked=0 AND t.before_quantity<>
+        (SELECT COALESCE(SUM(b.quantity_closed),0) FROM stock_tracking_closed_batches b WHERE b.tracking_change_id=t.id)) OR
+      (t.after_tracked=1 AND EXISTS(SELECT 1 FROM stock_tracking_closed_batches b WHERE b.tracking_change_id=t.id)) OR
+      (t.inventory_operation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM inventory_operations o
+        WHERE o.id=t.inventory_operation_id AND o.product_id=t.product_id AND o.stock_revision_after=t.stock_revision_after)) OR
+      (t.after_tracked=1 AND t.reconciled_quantity>0 AND NOT EXISTS(SELECT 1 FROM stock_receipt_items i
+        WHERE i.stock_receipt_id=t.stock_receipt_id AND i.product_id=t.product_id AND i.quantity=t.reconciled_quantity
+        AND EXISTS(SELECT 1 FROM stock_batches b WHERE b.stock_receipt_item_id=i.id AND b.expiry_date IS t.before_reference_expiry_date)))
+      LIMIT 1""",
+    );
+    if (invalid.isNotEmpty ||
+        (await db.rawQuery(
+          """SELECT 1 FROM stock_tracking_closed_batches c
+      JOIN stock_tracking_changes t ON t.id=c.tracking_change_id JOIN stock_batches b ON b.id=c.stock_batch_id
+      WHERE typeof(c.quantity_closed)<>'integer' OR c.quantity_closed<=0 OR c.quantity_closed>b.received_quantity
+      OR b.product_id<>t.product_id OR t.after_tracked<>0 LIMIT 1""",
+        )).isNotEmpty) {
+      throw const FormatException('backupOperationalMetadataInvalid');
+    }
+    String? cursor;
+    while (true) {
+      final rows = await db.query(
+        'stock_tracking_changes',
+        where: cursor == null ? null : 'id COLLATE BINARY>?',
+        whereArgs: cursor == null ? null : [cursor],
+        orderBy: 'id COLLATE BINARY',
+        limit: 100,
+      );
+      if (rows.isEmpty) break;
+      for (final row in rows) {
+        try {
+          for (final field in [
+            'before_reference_expiry_date',
+            'after_reference_expiry_date',
+          ]) {
+            if (row[field] != null) CalendarDate(row[field] as String);
+          }
+          if (row['after_reference_source'] == 'historical' &&
+              (row['before_tracked'] != 1 ||
+                  row['before_cost_complete'] != 1 ||
+                  (row['before_quantity'] as int) <= 0 ||
+                  averageCost(
+                        row['before_quantity'] as int,
+                        row['before_value_micros'] as int,
+                      ) !=
+                      row['after_reference_micros'])) {
+            throw const FormatException('historicalReference');
+          }
+        } catch (_) {
+          throw const FormatException('backupOperationalMetadataInvalid');
+        }
+      }
+      cursor = rows.last['id'] as String;
+    }
+  }
+
   /// Do not trust CHECK constraints in imported archives. Unknown projections
   /// must retain their flags and cannot be relabelled as known header totals.
   static Future<void> _costKnowledge(DatabaseExecutor db) async {
@@ -322,6 +409,11 @@ final class BackupValidation {
             as int >=
         17;
     if (costKnowledge) await _costKnowledge(db);
+    if ((await db.rawQuery('PRAGMA user_version')).single.values.single
+            as int >=
+        18) {
+      await _trackingChanges(db);
+    }
     final region = (await db.query(
       'store_settings',
       columns: ['phone_region'],

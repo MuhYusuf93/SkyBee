@@ -21,6 +21,7 @@ import 'expiry_date_field.dart';
 import 'product_detail_provider.dart';
 import 'product_form.dart';
 import 'valuation_reconciliation_screen.dart';
+import 'stock_tracking_screen.dart';
 import 'relation_field.dart';
 import 'inventory_history_screen.dart';
 
@@ -45,113 +46,13 @@ class _DetailBody extends StatelessWidget {
     BuildContext parent,
     ProductDetailProvider state,
   ) async {
-    final policy = await parent.read<AppServices>().settings.featurePolicy();
-    if (!parent.mounted) return;
-    final product = state.product!;
-    final tracked = !product.stockTracked;
-    final count = TextEditingController(),
-        cost = MoneyEditingController()..codec = moneyCodec(parent);
-    bool busy = false;
-    String? error;
-    await showManagedDialog<void>(
-      context: parent,
-      builder: (dialog) => StatefulBuilder(
-        builder: (context, update) => ProtectedDialog(
-          capability: ManagementCapability.inventory,
-          child: AlertDialog(
-            title: Text(tr(context, 'm52TrackingChange')),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    tr(
-                      context,
-                      tracked ? 'm52TrackedOpening' : 'm52StockTransition',
-                    ),
-                  ),
-                  if (tracked)
-                    ManagedTextField(
-                      controller: count,
-                      enabled: !busy,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: const [WholeQuantityFormatter()],
-                      decoration: InputDecoration(
-                        labelText: tr(context, 'initialQuantity'),
-                      ),
-                    ),
-                  if (policy.cost)
-                    MoneyField(
-                      controller: cost,
-                      enabled: !busy,
-                      label: tr(
-                        context,
-                        tracked ? 'purchasePricePerUnit' : 'm52ReferenceCost',
-                      ),
-                    ),
-                  if (error != null) Text(message(context, error!)),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: busy ? null : () => Navigator.pop(dialog),
-                child: Text(tr(context, 'cancel')),
-              ),
-              FilledButton(
-                onPressed: busy
-                    ? null
-                    : () async {
-                        CostAmount? amount;
-                        if (policy.cost && cost.text.isNotEmpty) {
-                          try {
-                            amount = CostAmount.fromMoney(
-                              cost.parseMoney(finish: true),
-                            );
-                          } catch (_) {
-                            update(
-                              () => error = 'enterAValidAmountQuantityAndYyyy',
-                            );
-                            return;
-                          }
-                        }
-                        var confirmedFree = false;
-                        if (amount?.micros == 0) {
-                          confirmedFree = await confirmFreeCost(context, 0);
-                          if (!confirmedFree || !context.mounted) return;
-                        }
-                        update(() => busy = true);
-                        final success = await state.run(
-                          () => state.service.changeStockTracking(
-                            product.id,
-                            product.revision,
-                            tracked: tracked,
-                            cost: amount,
-                            confirmedFree: confirmedFree,
-                            initialQuantity: tracked
-                                ? parseWholeQuantity(count.text)
-                                : 0,
-                          ),
-                        );
-                        if (dialog.mounted) {
-                          if (success) {
-                            Navigator.pop(dialog);
-                          } else {
-                            update(() => error = state.error);
-                          }
-                          if (dialog.mounted) update(() => busy = false);
-                        }
-                      },
-                child: Text(tr(context, 'save')),
-              ),
-            ],
-          ),
-        ),
+    await Navigator.push<bool>(
+      parent,
+      MaterialPageRoute<bool>(
+        builder: (_) => StockTrackingScreen(product: state.product!),
       ),
     );
-    count.dispose();
-    cost.dispose();
-    if (parent.mounted) await state.load();
+    await state.load();
   }
 
   Future<void> _operation(

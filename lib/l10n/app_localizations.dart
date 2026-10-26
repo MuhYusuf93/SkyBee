@@ -4525,6 +4525,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stock valuation history'**
   String get m53ValuationHistory;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'Review the balance and confirm ending tracking with a reason.'**
+  String get m53TrackingClosureRequired;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking ended; the last balance was archived, not lost goods'**
+  String get m53TrackingClosed;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'Stock tracking change'**
+  String get m53TrackingChangeRecorded;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking history'**
+  String get m53TrackingHistory;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'The physical goods remain. The last balance and batches are archived, then excluded from tracked stock/value. This is not a stocktake loss or cost of sales. Reopening tracking requires a new physical count.'**
+  String get m53TrackingClosureHelp;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'Use the last average cost as the per-unit reference'**
+  String get m53HistoricalAverageReference;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'I understand these goods are not treated as lost and confirm ending tracking for this balance'**
+  String get m53ConfirmTrackingClosure;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'The earliest date of closed batches is retained. Changing tracking does not make expired goods saleable.'**
+  String get m53TrackingExpiryPreserved;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'Start reconciliation using partial tracking'**
+  String get m53StartPartialTransition;
+
+  /// M5.3 explicit stock tracking scope transition, preserving physical history
+  ///
+  /// In en, this message translates to:
+  /// **'The store will use partial tracking so each product can be reviewed. Change product tracking and enter physical counts as needed, then select the target mode here again. Balances are not changed in bulk.'**
+  String get m53PartialTransitionHelp;
+
+  /// M5.3 tracking transition evidence reason length validation
+  ///
+  /// In en, this message translates to:
+  /// **'The reason must not exceed 1000 characters.'**
+  String get m53CorrectionReasonLimit;
+
+  /// Dynamic reconciliation result label shown in reports
+  ///
+  /// In en, this message translates to:
+  /// **'Sale cost snapshot completeness'**
+  String get m53CostKnowledgeCheck;
+
+  /// Dynamic reconciliation result label shown in reports
+  ///
+  /// In en, this message translates to:
+  /// **'Empty stock valuation'**
+  String get m53EmptyCostCheck;
 }
 
 class _AppLocalizationsDelegate

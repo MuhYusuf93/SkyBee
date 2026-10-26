@@ -28,6 +28,7 @@ final class CashierProduct {
   int get revision => row['revision'] as int;
   bool get archived => row['is_deleted'] == 1;
   bool get stockTracked => row['stock_tracking_enabled'] != 0;
+  bool get referenceExpired => row['reference_expired'] == 1;
   QuantityPromotion? get promotion =>
       QuantityPromotion.parse(row['promotion_json'] as String?);
   ProductAttributes get attributes => ProductAttributes.fromRow(row);
@@ -69,7 +70,9 @@ final class CartLine {
       acceptedPrice.amountMinor != currentPrice!.amountMinor ||
       currentPromotion?.snapshot != acceptedPromoJson;
   bool get unavailable =>
-      product.archived || (product.stockTracked && quantity > product.saleable);
+      product.archived ||
+      product.referenceExpired ||
+      (product.stockTracked && quantity > product.saleable);
 }
 
 enum PaymentMode { paid, partial, debt }

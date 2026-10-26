@@ -2503,4 +2503,51 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53ValuationHistory => 'Riwayat nilai stok';
+
+  @override
+  String get m53TrackingClosureRequired =>
+      'Tinjau saldo dan konfirmasi penghentian pelacakan dengan alasan.';
+
+  @override
+  String get m53TrackingClosed =>
+      'Pelacakan dihentikan; saldo terakhir dipindahkan ke riwayat, bukan barang hilang';
+
+  @override
+  String get m53TrackingChangeRecorded => 'Perubahan pelacakan stok';
+
+  @override
+  String get m53TrackingHistory => 'Riwayat pelacakan';
+
+  @override
+  String get m53TrackingClosureHelp =>
+      'Barang fisik tetap ada. Saldo dan batch terakhir disimpan sebagai riwayat penutupan, lalu dikeluarkan dari stok/nilai yang dilacak. Ini bukan selisih opname atau HPP. Saat dilacak kembali, jumlah fisik harus diisi ulang.';
+
+  @override
+  String get m53HistoricalAverageReference =>
+      'Gunakan rata-rata biaya terakhir sebagai acuan per pcs';
+
+  @override
+  String get m53ConfirmTrackingClosure =>
+      'Saya memahami barang tidak dianggap hilang dan menyetujui penutupan pelacakan saldo ini';
+
+  @override
+  String get m53TrackingExpiryPreserved =>
+      'Tanggal paling awal dari batch yang ditutup dipertahankan. Barang kedaluwarsa tidak menjadi layak jual karena perubahan mode.';
+
+  @override
+  String get m53StartPartialTransition =>
+      'Mulai rekonsiliasi melalui mode sebagian';
+
+  @override
+  String get m53PartialTransitionHelp =>
+      'Toko akan memakai pelacakan sebagian agar setiap barang dapat ditinjau. Ubah pelacakan barang dan isi jumlah fisik bila diperlukan, lalu pilih mode tujuan kembali di sini. Saldo tidak diubah massal.';
+
+  @override
+  String get m53CorrectionReasonLimit => 'Alasan maksimal 1000 karakter.';
+
+  @override
+  String get m53CostKnowledgeCheck => 'Kelengkapan snapshot biaya penjualan';
+
+  @override
+  String get m53EmptyCostCheck => 'Nilai saldo stok kosong';
 }

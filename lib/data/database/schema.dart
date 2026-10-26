@@ -4,7 +4,7 @@ import '../../core/domain/value_types.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 17;
+  static const version = 18;
 
   static Future<void> migrate(
     Database db,
@@ -33,6 +33,7 @@ final class Schema {
         15 => _storePolicy,
         16 => _separatedAccess,
         17 => _costKnowledge,
+        18 => _trackingTransitions,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
@@ -146,6 +147,41 @@ final class Schema {
       CHECK(last_pin_verified_at IS NULL OR last_pin_verified_at>=0)''',
     '''ALTER TABLE management_credentials ADD COLUMN last_pin_clock_seen_at INTEGER
       CHECK(last_pin_clock_seen_at IS NULL OR last_pin_clock_seen_at>=0)''',
+  ];
+
+  /// Closing tracking is a scope transition, not a fictional stock count/loss.
+  /// Preserve the last physical balance and each batch before excluding them
+  /// from active tracked balances. Sale/receipt facts remain untouched.
+  static List<String> get _trackingTransitions => [
+    """CREATE TABLE stock_tracking_changes(${_id('id')},
+      product_id TEXT NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
+      operation_key TEXT NOT NULL UNIQUE,payload_hash TEXT NOT NULL,
+      inventory_operation_id TEXT UNIQUE REFERENCES inventory_operations(id) ON DELETE RESTRICT,
+      stock_receipt_id TEXT REFERENCES stock_receipts(id) ON DELETE RESTRICT,
+      before_tracked INTEGER NOT NULL CHECK(before_tracked IN(0,1)),
+      after_tracked INTEGER NOT NULL CHECK(after_tracked IN(0,1) AND after_tracked<>before_tracked),
+      before_quantity INTEGER NOT NULL CHECK(before_quantity>=0),
+      before_value_micros INTEGER NOT NULL CHECK(before_value_micros>=0),
+      before_cost_complete INTEGER NOT NULL CHECK(before_cost_complete IN(0,1)),
+      before_reference_expiry_date TEXT,after_reference_expiry_date TEXT,
+      reconciled_quantity INTEGER CHECK(reconciled_quantity IS NULL OR reconciled_quantity>=0),
+      after_reference_micros INTEGER CHECK(after_reference_micros IS NULL OR after_reference_micros>=0),
+      after_reference_source TEXT NOT NULL CHECK(after_reference_source IN('explicit','historical','unknown')),
+      zero_confirmed INTEGER NOT NULL CHECK(zero_confirmed IN(0,1)),
+      stock_revision_after INTEGER NOT NULL CHECK(stock_revision_after>0),
+      reason TEXT NOT NULL CHECK(length(reason)<=1000),reason_key TEXT,created_at INTEGER NOT NULL)""",
+    """CREATE TABLE stock_tracking_closed_batches(
+      tracking_change_id TEXT NOT NULL REFERENCES stock_tracking_changes(id) ON DELETE RESTRICT,
+      stock_batch_id TEXT NOT NULL REFERENCES stock_batches(id) ON DELETE RESTRICT,
+      quantity_closed INTEGER NOT NULL CHECK(quantity_closed>0),
+      PRIMARY KEY(tracking_change_id,stock_batch_id))""",
+    'CREATE INDEX tracking_changes_cursor ON stock_tracking_changes(product_id,created_at DESC,id COLLATE BINARY DESC)',
+    for (final table in [
+      'stock_tracking_changes',
+      'stock_tracking_closed_batches',
+    ])
+      for (final action in ['update', 'delete'])
+        "CREATE TRIGGER ${table}_no_$action BEFORE ${action.toUpperCase()} ON $table BEGIN SELECT RAISE(ABORT,'immutable_fact'); END",
   ];
 
   /// Existing numeric facts stay byte-for-byte unchanged. Legacy non-null

@@ -1,0 +1,79 @@
+{
+  "checkpoint": "M53 tracking closure and expired untracked eligibility; not final handoff",
+  "source_version": "0.5.2+12",
+  "schema": 18,
+  "prepared_against_head": "1b034f2944e59aae41b22648c0281b0b7f5aa299",
+  "source_manifest_sha256": "5efb12e6abb7eb33f0ba0fc096ccfaf28193a9252dd7ebd2fd97bca5d6bc182c",
+  "host": [
+    {
+      "run": "tracking-acceptance-host",
+      "passed": 34,
+      "failed": 0,
+      "seconds": 92
+    },
+    {
+      "run": "tracking-native-helper-host",
+      "passed": 1,
+      "failed": 0,
+      "seconds": 8,
+      "overlaps_previous": true
+    },
+    {
+      "run": "tracking-label-host",
+      "passed": 1,
+      "failed": 0,
+      "seconds": 4,
+      "scope": "Actual dynamic reconciliation keys in ID and EN; translation-only delta after native run"
+    }
+  ],
+  "native": [
+    {
+      "kind": "DV acceptance initial",
+      "passed": 16,
+      "failed": 1,
+      "reporter_seconds": 666,
+      "protected_entries": 556,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": true,
+      "private_artifacts": "build/m53-tracking-dv-20261026-224616"
+    },
+    {
+      "kind": "DV focused UI retest",
+      "passed": 1,
+      "failed": 0,
+      "reporter_seconds": 38,
+      "protected_entries": 576,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": true,
+      "private_artifacts": "build/m53-tracking-policy-dv-20261026-230512"
+    },
+    {
+      "kind": "Poco acceptance",
+      "passed": 17,
+      "failed": 0,
+      "reporter_seconds": 229,
+      "protected_entries": 505,
+      "all_preexisting_protected_entries_unchanged": true,
+      "control_active": false,
+      "dv_awake_restored_exact": false,
+      "private_artifacts": "build/m53-tracking-poco-20261026-230825"
+    }
+  ],
+  "dv_original_baseline_still_matches_final_endpoint": true,
+  "analyze": "No issues found! (ran in 5.7s)",
+  "localization": {
+    "keys": 751,
+    "static_references": 500,
+    "original_requirement_ids": 245
+  },
+  "preservation_scope": "Protected databases/no_backup hashes at audited endpoints; WorkManager metadata/lease exclusions documented. No ordinary/Skybee update, reset, key export or business sandbox copy.",
+  "unverified": [
+    "Widget callbacks/test keyboard are not physical touch or OEM IME evidence.",
+    "Ordinary/release final and Skybee in-place user-data migration remain H.",
+    "Onboarding and remaining B-H are not complete."
+  ],
+  "milestone_complete": false,
+  "format": "177 files/0 changed before translation-only delta; label file formatted clean"
+}

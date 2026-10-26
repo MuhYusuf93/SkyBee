@@ -3046,5 +3046,57 @@
   "m53ValuationHistory": "Riwayat nilai stok",
   "@m53ValuationHistory": {
     "description": "M5.3 append-only whole-pool reconciliation history including zero-valued events"
+  },
+  "m53TrackingClosureRequired": "Tinjau saldo dan konfirmasi penghentian pelacakan dengan alasan.",
+  "@m53TrackingClosureRequired": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingClosed": "Pelacakan dihentikan; saldo terakhir dipindahkan ke riwayat, bukan barang hilang",
+  "@m53TrackingClosed": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingChangeRecorded": "Perubahan pelacakan stok",
+  "@m53TrackingChangeRecorded": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingHistory": "Riwayat pelacakan",
+  "@m53TrackingHistory": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingClosureHelp": "Barang fisik tetap ada. Saldo dan batch terakhir disimpan sebagai riwayat penutupan, lalu dikeluarkan dari stok/nilai yang dilacak. Ini bukan selisih opname atau HPP. Saat dilacak kembali, jumlah fisik harus diisi ulang.",
+  "@m53TrackingClosureHelp": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53HistoricalAverageReference": "Gunakan rata-rata biaya terakhir sebagai acuan per pcs",
+  "@m53HistoricalAverageReference": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53ConfirmTrackingClosure": "Saya memahami barang tidak dianggap hilang dan menyetujui penutupan pelacakan saldo ini",
+  "@m53ConfirmTrackingClosure": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingExpiryPreserved": "Tanggal paling awal dari batch yang ditutup dipertahankan. Barang kedaluwarsa tidak menjadi layak jual karena perubahan mode.",
+  "@m53TrackingExpiryPreserved": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53StartPartialTransition": "Mulai rekonsiliasi melalui mode sebagian",
+  "@m53StartPartialTransition": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53PartialTransitionHelp": "Toko akan memakai pelacakan sebagian agar setiap barang dapat ditinjau. Ubah pelacakan barang dan isi jumlah fisik bila diperlukan, lalu pilih mode tujuan kembali di sini. Saldo tidak diubah massal.",
+  "@m53PartialTransitionHelp": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53CorrectionReasonLimit": "Alasan maksimal 1000 karakter.",
+  "@m53CorrectionReasonLimit": {
+    "description": "M5.3 tracking transition evidence reason length validation"
+  },
+  "m53CostKnowledgeCheck": "Kelengkapan snapshot biaya penjualan",
+  "@m53CostKnowledgeCheck": {
+    "description": "Dynamic reconciliation result label shown in reports"
+  },
+  "m53EmptyCostCheck": "Nilai saldo stok kosong",
+  "@m53EmptyCostCheck": {
+    "description": "Dynamic reconciliation result label shown in reports"
   }
 }

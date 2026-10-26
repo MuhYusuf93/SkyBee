@@ -2494,4 +2494,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53ValuationHistory => 'Stock valuation history';
+
+  @override
+  String get m53TrackingClosureRequired =>
+      'Review the balance and confirm ending tracking with a reason.';
+
+  @override
+  String get m53TrackingClosed =>
+      'Tracking ended; the last balance was archived, not lost goods';
+
+  @override
+  String get m53TrackingChangeRecorded => 'Stock tracking change';
+
+  @override
+  String get m53TrackingHistory => 'Tracking history';
+
+  @override
+  String get m53TrackingClosureHelp =>
+      'The physical goods remain. The last balance and batches are archived, then excluded from tracked stock/value. This is not a stocktake loss or cost of sales. Reopening tracking requires a new physical count.';
+
+  @override
+  String get m53HistoricalAverageReference =>
+      'Use the last average cost as the per-unit reference';
+
+  @override
+  String get m53ConfirmTrackingClosure =>
+      'I understand these goods are not treated as lost and confirm ending tracking for this balance';
+
+  @override
+  String get m53TrackingExpiryPreserved =>
+      'The earliest date of closed batches is retained. Changing tracking does not make expired goods saleable.';
+
+  @override
+  String get m53StartPartialTransition =>
+      'Start reconciliation using partial tracking';
+
+  @override
+  String get m53PartialTransitionHelp =>
+      'The store will use partial tracking so each product can be reviewed. Change product tracking and enter physical counts as needed, then select the target mode here again. Balances are not changed in bulk.';
+
+  @override
+  String get m53CorrectionReasonLimit =>
+      'The reason must not exceed 1000 characters.';
+
+  @override
+  String get m53CostKnowledgeCheck => 'Sale cost snapshot completeness';
+
+  @override
+  String get m53EmptyCostCheck => 'Empty stock valuation';
 }

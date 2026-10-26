@@ -5,6 +5,8 @@ import '../../../core/domain/app_error.dart';
 import '../../../core/presentation/form_exit_guard.dart';
 import '../../../l10n/localization.dart';
 import '../../management/presentation/management_gate.dart';
+import '../../management/presentation/protected_dialog.dart';
+import '../../inventory/presentation/inventory_screen.dart';
 import '../domain/store_feature_policy.dart';
 import 'language_button.dart';
 
@@ -90,27 +92,60 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
       final impact = await settings.stockPolicyImpact();
       if (!mounted) return;
       final conflicts = impact.conflicts(pending.stockMode);
-      final confirmed = await showDialog<bool>(
+      final confirmed = await showManagedDialog<String>(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text(tr(context, 'm53PolicyPreview')),
-          content: Text(
-            '${tr(context, 'm53PolicyImpact')}: $conflicts\n\n${tr(context, 'm53StockHelp')}\n\n${tr(context, 'm53PreserveFeatures')}',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: Text(tr(context, 'cancel')),
-            ),
-            if (conflicts == 0)
-              FilledButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: Text(tr(context, 'save')),
+        builder: (context) => ProtectedDialog(
+          child: AlertDialog(
+            title: Text(tr(context, 'm53PolicyPreview')),
+            content: SingleChildScrollView(
+              child: Text(
+                '${tr(context, 'm53PolicyImpact')}: $conflicts\n\n${tr(context, 'm53StockHelp')}\n\n${tr(context, 'm53PreserveFeatures')}${conflicts > 0 ? '\n\n${tr(context, 'm53PartialTransitionHelp')}' : ''}',
               ),
-          ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'cancel'),
+                child: Text(tr(context, 'cancel')),
+              ),
+              if (conflicts > 0 && baseline!.taskPattern != 3)
+                FilledButton(
+                  onPressed: () => Navigator.pop(context, 'partial'),
+                  child: Text(tr(context, 'm53StartPartialTransition')),
+                ),
+              if (conflicts == 0)
+                FilledButton(
+                  onPressed: () => Navigator.pop(context, 'save'),
+                  child: Text(tr(context, 'save')),
+                ),
+            ],
+          ),
         ),
       );
-      if (confirmed != true) return;
+      if (confirmed == 'partial') {
+        await settings.saveFeaturePolicy(
+          StoreFeaturePolicy(
+            stockMode: StockMode.partial,
+            enforced: true,
+            taskPattern: pending.taskPattern,
+            wholesale: pending.wholesale,
+            packaging: pending.packaging,
+            cost: pending.cost,
+            barcode: pending.barcode,
+            expiry: pending.expiry,
+            revision: pending.revision,
+          ),
+        );
+        if (!mounted) return;
+        await Navigator.push<void>(
+          context,
+          MaterialPageRoute<void>(builder: (_) => const InventoryScreen()),
+        );
+        if (!mounted) return;
+        await _load();
+        if (mounted) setState(() => mode = pending.stockMode);
+        return;
+      }
+      if (confirmed != 'save') return;
       await settings.saveFeaturePolicy(pending);
       if (mounted) {
         baseline = pending;
@@ -138,6 +173,7 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
   @override
   Widget build(BuildContext context) => ManagementGate(
     child: FormExitGuard(
+      busy: busy && baseline != null,
       dirty: dirty,
       child: Scaffold(
         appBar: AppBar(

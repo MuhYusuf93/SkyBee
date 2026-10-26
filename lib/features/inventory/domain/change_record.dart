@@ -1,6 +1,6 @@
 import '../../../core/domain/value_types.dart';
 
-enum ChangeKind { stock, price, valuation }
+enum ChangeKind { stock, price, valuation, tracking }
 
 final class ChangeRecord {
   ChangeRecord(Map<String, Object?> row, {required this.localTime})

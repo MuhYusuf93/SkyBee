@@ -10,3 +10,6 @@ endpoint hash dibedakan dari bukti fisik dan logical handoff data pengguna.
 
 [Checkpoint biaya](cost-validation.json) dan [source checksums biaya](cost-source-sha256.json)
 menutup6interval native terisolasi, bukan handoff seluruh M5.3.
+
+[Checkpoint tracking](tracking-validation.json) dan [source checksums](tracking-source-sha256.json)
+mempertahankan DV16PASS1FAIL serta focused retest, tidak menandainya sebagai satu17PASS.

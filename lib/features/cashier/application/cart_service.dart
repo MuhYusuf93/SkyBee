@@ -85,7 +85,8 @@ final class CartService {
           whereArgs: [draftId.value, productId.value],
         );
         final quantity = (rows.firstOrNull?['quantity'] as int? ?? 0) + 1;
-        if (product.stockTracked && quantity > product.saleable) {
+        if (product.referenceExpired ||
+            (product.stockTracked && quantity > product.saleable)) {
           throw const AppError('insufficientSaleableStock');
         }
         if (rows.isEmpty) {
@@ -119,6 +120,7 @@ final class CartService {
     final draft = await store.draft(dbTxn, draftId);
     final product = await store.product(dbTxn, productId);
     if (product.archived ||
+        product.referenceExpired ||
         (product.stockTracked && quantity > product.saleable)) {
       throw const AppError('insufficientSaleableStock');
     }

@@ -64,7 +64,10 @@ final class CashierStore {
           'shelf_location',
           'product_note',
         ],
-        if (schema >= 14) 'stock_tracking_enabled',
+        if (schema >= 14) ...[
+          'stock_tracking_enabled',
+          'reference_expiry_date',
+        ],
       ],
       where: 'id=?',
       whereArgs: [id.value],
@@ -95,6 +98,19 @@ final class CashierStore {
               as int;
       saleable -= expired;
     }
+    // Expiry is eligibility, independent of whether quantity is tracked. The
+    // sentinel must not bypass a retained reference date after mode changes.
+    final referenceDate = row['reference_expiry_date'] as String?;
+    final referenceExpired =
+        row['stock_tracking_enabled'] == 0 &&
+        row['expiry_enabled'] == 1 &&
+        referenceDate != null &&
+        referenceDate.compareTo(
+              clock.today((await settings(db))['time_zone'] as String).iso,
+            ) <=
+            0;
+    row['reference_expired'] = referenceExpired ? 1 : 0;
+    if (referenceExpired) saleable = 0;
     return CashierProduct(row, saleable);
   }
 

@@ -13,6 +13,7 @@ import '../../management/application/management_service.dart';
 import '../domain/inventory_models.dart';
 import '../domain/stock_rules.dart';
 import '../domain/stock_valuation.dart';
+import 'stock_tracking_service.dart';
 import '../domain/stock_input.dart';
 import '../domain/product_entry_rules.dart';
 import '../domain/change_record.dart';
@@ -526,6 +527,55 @@ final class InventoryService {
     required bool tracked,
     CostAmount? cost,
     bool confirmedFree = false,
+    int? initialQuantity,
+    int? expectedStockRevision,
+    bool confirmClosure = false,
+    bool useHistoricalAverage = false,
+    String? reason,
+    String? operationKey,
+  }) => database.schemaVersion >= 18
+      ? StockTrackingService(
+          database,
+          access,
+          (sql, id, quantity, cost, key, free, existingExpiry) => _receive(
+            sql,
+            id,
+            quantity,
+            cost,
+            operationKey: key,
+            confirmedFree: free,
+            initial: true,
+            expiry: existingExpiry,
+            existingTrackingExpiry: existingExpiry != null,
+          ),
+        ).change(
+          id,
+          expectedRevision,
+          tracked: tracked,
+          cost: cost,
+          confirmedFree: confirmedFree,
+          initialQuantity: initialQuantity,
+          expectedStockRevision: expectedStockRevision,
+          confirmClosure: confirmClosure,
+          useHistoricalAverage: useHistoricalAverage,
+          reason: reason,
+          operationKey: operationKey,
+        )
+      : _legacyStockTracking(
+          id,
+          expectedRevision,
+          tracked: tracked,
+          cost: cost,
+          confirmedFree: confirmedFree,
+          initialQuantity: initialQuantity ?? 0,
+        );
+
+  Future<void> _legacyStockTracking(
+    EntityId id,
+    int expectedRevision, {
+    required bool tracked,
+    CostAmount? cost,
+    bool confirmedFree = false,
     int initialQuantity = 0,
   }) => _write((dbTxn) async {
     final policy = await SettingsService.policyOn(dbTxn);
@@ -862,6 +912,7 @@ final class InventoryService {
     EntityId? supplierId,
     CalendarDate? expiry,
     bool initial = false,
+    bool existingTrackingExpiry = false,
     StockPurchase? purchase,
     StockInput? unknownInput,
   }) async {
@@ -901,7 +952,10 @@ final class InventoryService {
       throw const AppError('m52StockOperationRequiresTracking');
     }
     if (database.schemaVersion >= 14) {
-      validateNewExpiry(expiry, access.clock.now);
+      // A tracking reconciliation restores a date already stored on this
+      // product. It must not turn expired/disabled dated goods into undated
+      // saleable stock; new purchase inputs still require a future date.
+      if (!existingTrackingExpiry) validateNewExpiry(expiry, access.clock.now);
       final errors = masterPriceErrors(
         retail: Money.fromStoredMinor(
           old['selling_price_rupiah'] as int,
@@ -914,7 +968,9 @@ final class InventoryService {
       if (errors.isNotEmpty) throw AppError(errors.first);
     }
     await _relation(dbTxn, 'suppliers', supplierId);
-    if (expiry != null && old['expiry_enabled'] != 1) {
+    if (expiry != null &&
+        old['expiry_enabled'] != 1 &&
+        !existingTrackingExpiry) {
       throw const AppError('enableExpiryTrackingBeforeRecordingDates');
     }
     final value =
@@ -1727,6 +1783,7 @@ final class InventoryService {
         ChangeKind.stock => 'stock_history',
         ChangeKind.price => 'price_history',
         ChangeKind.valuation => 'valuation_reconciliations',
+        ChangeKind.tracking => 'stock_tracking_changes',
       };
       final zone =
           (await db.query(
@@ -1734,7 +1791,20 @@ final class InventoryService {
                 columns: ['time_zone'],
               )).single['time_zone']
               as String;
-      final rows = kind == ChangeKind.valuation
+      final rows = kind == ChangeKind.tracking
+          ? (database.schemaVersion < 18
+                ? <Map<String, Object?>>[]
+                : await db.rawQuery(
+                    """SELECT t.*,p.currency_code,p.currency_scale FROM stock_tracking_changes t
+          JOIN products p ON p.id=t.product_id WHERE t.product_id=?
+          ${after == null ? '' : 'AND (t.created_at,t.id)<(?,?)'}
+          ORDER BY t.created_at DESC,t.id COLLATE BINARY DESC LIMIT 51""",
+                    [
+                      id.value,
+                      if (after != null) ...[after.createdAt, after.id.value],
+                    ],
+                  ))
+          : kind == ChangeKind.valuation
           ? (database.schemaVersion < 17
                 ? <Map<String, Object?>>[]
                 : await db.rawQuery(

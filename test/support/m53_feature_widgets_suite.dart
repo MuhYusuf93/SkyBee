@@ -8,6 +8,10 @@ import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/inventory/presentation/product_form.dart';
+import 'package:kasir_app/features/inventory/presentation/stock_tracking_screen.dart';
+import 'package:kasir_app/features/inventory/presentation/inventory_screen.dart';
+import 'package:kasir_app/core/presentation/form_exit_guard.dart';
+import 'package:kasir_app/features/management/presentation/management_gate.dart';
 import 'package:kasir_app/features/inventory/presentation/inventory_history_screen.dart';
 import 'package:kasir_app/features/inventory/presentation/valuation_reconciliation_screen.dart';
 import 'package:kasir_app/features/management/presentation/management_session_provider.dart';
@@ -518,6 +522,264 @@ void m53FeatureWidgetsSuite(DatabaseFactory factory, {String? only}) {
           findsOneWidget,
         );
         expect(find.textContaining('Incomplete — cost unknown'), findsNothing);
+      } finally {
+        await cleanup(tester);
+      }
+    },
+  );
+  scenario(
+    'M53 tracking closure preview stays private across relock and preserves cart',
+    (tester) async {
+      tester.testTextInput.register();
+      try {
+        late InventoryProduct detail;
+        late String draftId;
+        await tester.runAsync(() async {
+          final id = await app.inventory.create(
+            ProductInput(
+              name: 'PUBLIC closure UI',
+              sellingPrice: Money(10000, 'IDR', 0),
+            ),
+            initialQuantity: 5,
+            unitCost: CostAmount.fromMoney(Money(7000, 'IDR', 0)),
+          );
+          await app.settings.saveFeaturePolicy(
+            const StoreFeaturePolicy(enforced: true, cost: false),
+          );
+          detail = await app.inventory.detail(id);
+          var cart = await app.cart.open();
+          cart = await app.cart.add(cart.id, id);
+          cart = await app.cart.quantity(cart.id, id, 2);
+          draftId = cart.id.value;
+        });
+        await open(
+          tester,
+          StockTrackingScreen(product: detail),
+          ready: () => find.byType(StockTrackingScreen).evaluate().isNotEmpty,
+        );
+        final review = find.widgetWithText(FilledButton, 'Review changes');
+        await drain(
+          tester,
+          () =>
+              review.evaluate().isNotEmpty &&
+              tester.widget<FilledButton>(review).onPressed != null,
+        );
+        await tester.enterText(
+          input('Correction reason'),
+          'PUBLIC keep physical goods',
+        );
+        final consent = find.byType(CheckboxListTile);
+        await tester.scrollUntilVisible(
+          consent,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(consent);
+        await tester.pump();
+        await tester.scrollUntilVisible(
+          review,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(review);
+        await tester.pumpAndSettle();
+        expect(find.byType(AlertDialog), findsOneWidget);
+        session.lock();
+        await tester.pump();
+        expect(find.text('PUBLIC keep physical goods'), findsNothing);
+        await tester.binding.handlePopRoute();
+        await drain(
+          tester,
+          () => find.text('Unsaved changes').evaluate().isNotEmpty,
+        );
+        await tester.tap(find.text('Stay on locked screen'));
+        await tester.pumpAndSettle();
+        await tester.runAsync(() => session.unlock('0001'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.widgetWithText(TextButton, 'Cancel'));
+        await tester.pumpAndSettle();
+        await tester.runAsync(() async {
+          expect((await app.inventory.detail(detail.id)).quantity, 5);
+        });
+        await tester.tap(review);
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.descendant(
+            of: find.byType(AlertDialog),
+            matching: find.widgetWithText(FilledButton, 'Save'),
+          ),
+        );
+        await drain(
+          tester,
+          () => find.byType(StockTrackingScreen).evaluate().isEmpty,
+        );
+        await tester.runAsync(() async {
+          expect((await app.inventory.detail(detail.id)).stockTracked, false);
+          final cart = await app.cart.open();
+          expect(cart.id.value, draftId);
+          expect(cart.lines.single.quantity, 2);
+          expect(
+            await db.read((sql) => sql.query('sale_transactions')),
+            isEmpty,
+          );
+        });
+      } finally {
+        await cleanup(tester);
+      }
+    },
+  );
+
+  scenario(
+    'M53 busy form cannot discard an in-flight save while unlocked; locked Back warns',
+    (tester) async {
+      try {
+        await open(
+          tester,
+          const ManagementGate(
+            child: FormExitGuard(
+              dirty: true,
+              busy: true,
+              child: Scaffold(body: Text('PRIVATE BUSY FORM')),
+            ),
+          ),
+          ready: () => find.text('PRIVATE BUSY FORM').evaluate().isNotEmpty,
+        );
+        await tester.binding.handlePopRoute();
+        await tester.pumpAndSettle();
+        expect(find.text('Unsaved changes'), findsNothing);
+        expect(find.text('PRIVATE BUSY FORM'), findsOneWidget);
+        session.lock();
+        await tester.pump();
+        await tester.binding.handlePopRoute();
+        await drain(
+          tester,
+          () => find.text('Unsaved changes').evaluate().isNotEmpty,
+        );
+        expect(find.text('PRIVATE BUSY FORM'), findsNothing);
+        await tester.tap(find.text('Discard and return to cashier'));
+        await drain(
+          tester,
+          () => find.text('PUBLIC ROOT').evaluate().isNotEmpty,
+        );
+        expect(session.unlocked, false);
+      } finally {
+        await cleanup(tester);
+      }
+    },
+  );
+
+  scenario(
+    'M53 store mode preview stages partial tracking without changing quantities then resumes target',
+    (tester) async {
+      try {
+        late EntityId id;
+        await tester.runAsync(() async {
+          id = await app.inventory.create(
+            ProductInput(
+              name: 'PUBLIC policy closure',
+              sellingPrice: Money(10000, 'IDR', 0),
+            ),
+            initialQuantity: 5,
+            unitCost: CostAmount.fromMoney(Money(7000, 'IDR', 0)),
+          );
+          await app.settings.saveFeaturePolicy(
+            const StoreFeaturePolicy(
+              stockMode: StockMode.all,
+              enforced: true,
+              cost: false,
+            ),
+          );
+        });
+        await open(tester, const FeatureSettingsScreen());
+        await tester.tap(find.byType(DropdownButtonFormField<StockMode>));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Do not track stock').last);
+        await tester.pumpAndSettle();
+        final review = find.widgetWithText(FilledButton, 'Review changes');
+        await tester.scrollUntilVisible(
+          review,
+          250,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(review);
+        // Native SQL completion needs a real-IO turn. Settling an indeterminate
+        // busy indicator here can wait until idle-lock instead of the dialog.
+        await drain(
+          tester,
+          () => find
+              .text('Start reconciliation using partial tracking')
+              .evaluate()
+              .isNotEmpty,
+        );
+        await tester.tap(
+          find.text('Start reconciliation using partial tracking'),
+        );
+        await drain(
+          tester,
+          () => find.byType(InventoryScreen).evaluate().isNotEmpty,
+        );
+        await tester.runAsync(() async {
+          expect(
+            (await app.settings.featurePolicy()).stockMode,
+            StockMode.partial,
+          );
+          final detail = await app.inventory.detail(id);
+          expect(detail.quantity, 5);
+          await app.inventory.changeStockTracking(
+            id,
+            detail.revision,
+            tracked: false,
+            confirmClosure: true,
+            expectedStockRevision: detail.stockRevision,
+            useHistoricalAverage: true,
+            reason: 'PUBLIC reconcile',
+            operationKey: 'ui-policy-close',
+          );
+        });
+        await tester.binding.handlePopRoute();
+        await drain(
+          tester,
+          () =>
+              find.byType(InventoryScreen).evaluate().isEmpty &&
+              review.evaluate().isNotEmpty &&
+              tester.widget<FilledButton>(review).onPressed != null,
+        );
+        await tester.scrollUntilVisible(
+          review,
+          250,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(review);
+        // Native SQL completion needs a real-IO turn. Settling an indeterminate
+        // busy indicator here can wait until idle-lock instead of the dialog.
+        await drain(
+          tester,
+          () => find.byType(AlertDialog).evaluate().isNotEmpty,
+        );
+        await tester.tap(
+          find.descendant(
+            of: find.byType(AlertDialog),
+            matching: find.widgetWithText(FilledButton, 'Save'),
+          ),
+        );
+        await drain(
+          tester,
+          () => find.byType(FeatureSettingsScreen).evaluate().isEmpty,
+        );
+        await tester.runAsync(() async {
+          expect((await app.settings.featurePolicy()).stockMode, StockMode.off);
+          expect((await app.inventory.detail(id)).quantity, 999);
+          expect(
+            (await db.read(
+              (sql) => sql.query('stock_tracking_changes'),
+            )).single['before_quantity'],
+            5,
+          );
+        });
       } finally {
         await cleanup(tester);
       }

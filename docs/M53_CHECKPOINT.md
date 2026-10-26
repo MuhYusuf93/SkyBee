@@ -1,5 +1,75 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Checkpoint tracking source18 tervalidasi — lanjut onboarding
+
+Host acceptance/regresi34PASS1:32; focused helper1PASS8s; dynamic report labels
+ID/EN1PASS4s. DV17kasus memiliki PASS lintas16PASS1FAIL+focused1PASS38s; bukan
+run17all-pass. Hash556/576lama cocok/controlOff/awake exact. Poco17PASS3:49,
+505hash lama cocok/controlOff. BaselineDV awal556 tetap cocok di endpoint retest.
+Analyzer final No issues; format177/0changed sebelum delta label, label formatted;
+l10n751/500/245PASS. Raw gagal tidak dihapus. [Laporan](M53_TRACKING_REPORT.md).
+
+Seluruh native sudah ditutup. Berikut audit/stage source18, commit/push checkpoint
+lalu onboarding (model privat build/m53/onboarding_draft.dart.pending sudah punya
+probe domain, belum diimport). Sisa B/kunci kasir serta C–H tetap aktif; pengguna
+menunggu handoffM5.3, jangan berhenti pada checkpoint. .skybee+12/schema14 tidak
+diupdate/reset. Ordinary/release final tetap H, native integration debug sudah
+membuktikan ARM32/64. Keputusan tracking harus dibaca saat menambah laporan selisih.
+
+## Resume tracking — host34PASS, DV16PASS1FAIL, focused retest aktif
+
+Host tracking-acceptance-host.txt34PASS1:32 = acceptance17 +cost10 +M52ops7.
+Analyzer final No issues6,9s; l10n749/500/245PASS. UI awal54PASS1FAIL1:17,
+partial-dialog async readiness diperbaiki; host focused1PASS8s. Dokumen keputusan
+[tracking](decisions/M53_TRACKING.md) menjelaskan scope closure, expiry dan kewajiban
+laporan selisih mengecualikan operasi tracking.
+
+DV source18: build/m53-tracking-dv-20261026-224616,16PASS1FAIL11:06.
+Seluruh8domain,7UI dan populated14→18/full interrupted-upgrade rollback PASS.
+Satu UI partial menunggu pumpAndSettle tepat sesudah memulai SQL, menyebabkan
+busy spinner menunggu sampai idle lock5menit; lalu drain menolak tombol yang
+sudah redacted. BUKAN DV17PASS. Seluruh556hash protected lama cocok,
+controlOff/awake restored exact meskipun case gagal. Raw asli tetap disimpan.
+
+Fix hanya helper: hapus2pumpAndSettle sesudah review yang memulaiSQL; langsung
+bounded real-IO drain. Assertion policy/qty/closure/cart/hak akses tetap. Host
+tracking-native-helper-host.txt1PASS8s. Native focused DV sedang berjalan,
+wrapper session pada tool turn berikut, log build/m53/tracking-policy-dv-wrapper.txt,
+RunName m53-tracking-policy-dv, entrypoint m53_feature_widgets_test.dart dengan
+NameFilter 'M53 store mode preview'. Sesudah PASS/control/hash tutup, baru Poco
+acceptance17 seluruh delta source18. Jangan mengulang16DV yang sudah lulus.
+
+Private draft berikut tersedia di build/m53/onboarding_draft.dart.pending;
+belum diterapkan/diimport/test. Jangan menghitungnya sebagai onboarding selesai.
+Setelah native tracking dan audit source beres, commit/push checkpoint18 lalu
+onboarding (migration19 rencana) dan remaining B–H. .skybee+12/schema14 tetap.
+
+## WIP transisi tracking — source18, belum commit/handoff
+
+Baseline biaya 1b034f2 sudah push/remoteverified. Source+12/schema18 menambah
+stock_tracking_changes + snapshot batch closed append-only; StockTrackingService
+modular, jumlah/revisi/konfirmasi/alasan, retry hash, stop tracking bukan opname0
+atau HPP; tanggal paling awal dipertahankan dan dibawa ke batch saat aktif lagi.
+Legacy<=17 tetap melalui jalur kompatibel. Store-policy preview dapat memulai
+mode parsial secara eksplisit lalu kembali ke target, tanpa rewrite saldo massal.
+FormExitGuard busy menolak discard unlocked saat save, tetapi Back locked tetap
+menampilkan warning dirty. Preview setting kini memakai ProtectedDialog.
+
+Host pertama tracking+M52ops+cost:24PASS1FAIL31s, bug nyata expiry untracked
+(kasir mengabaikan reference_expiry_date). Fix CashierStore.reference_expired,
+CartLine serta CartService/checkout guard; retest tracking8PASS19s, termasuk
+closing/reopening expired, rollback/frozen HPP/cursor55ties/backup forged flags.
+UI shared kini8cases (5lama+tracking/privacy/busy/partial), bersama M52forms dan
+cashier sedang berjalan session92624/log build/m53/tracking-ui-host-first.txt.
+Native schema18 BELUM. Analyzer8lint awal, sebagian sudah dibenahi; final belum.
+Masih perlu final UI/regresi/analyze, native DV dahulu/Poco dan snapshot populated
+14→18 + rollback. Buat checkpoint sebelum onboarding (desain belum implementasi)
+dan remaining B–H. Tidak ada perangkat/package pengguna diupdate/reset.
+
+Biaya checkpoint commit/push `1b034f2` selesai; origin/main verified
+`1b034f2944e59aae41b22648c0281b0b7f5aa299`. Working tree bersih sebelum
+pekerjaan transisi tracking berikutnya. Paket pengguna tetap+12/schema14.
+
 ## Checkpoint biaya ditutup, M5.3 tetap aktif
 
 26 Oktober2026 sekitar22:12 — checkpoint biaya source+12/schema17 tervalidasi.

@@ -3046,5 +3046,57 @@
   "m53ValuationHistory": "Stock valuation history",
   "@m53ValuationHistory": {
     "description": "M5.3 append-only whole-pool reconciliation history including zero-valued events"
+  },
+  "m53TrackingClosureRequired": "Review the balance and confirm ending tracking with a reason.",
+  "@m53TrackingClosureRequired": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingClosed": "Tracking ended; the last balance was archived, not lost goods",
+  "@m53TrackingClosed": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingChangeRecorded": "Stock tracking change",
+  "@m53TrackingChangeRecorded": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingHistory": "Tracking history",
+  "@m53TrackingHistory": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingClosureHelp": "The physical goods remain. The last balance and batches are archived, then excluded from tracked stock/value. This is not a stocktake loss or cost of sales. Reopening tracking requires a new physical count.",
+  "@m53TrackingClosureHelp": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53HistoricalAverageReference": "Use the last average cost as the per-unit reference",
+  "@m53HistoricalAverageReference": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53ConfirmTrackingClosure": "I understand these goods are not treated as lost and confirm ending tracking for this balance",
+  "@m53ConfirmTrackingClosure": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53TrackingExpiryPreserved": "The earliest date of closed batches is retained. Changing tracking does not make expired goods saleable.",
+  "@m53TrackingExpiryPreserved": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53StartPartialTransition": "Start reconciliation using partial tracking",
+  "@m53StartPartialTransition": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53PartialTransitionHelp": "The store will use partial tracking so each product can be reviewed. Change product tracking and enter physical counts as needed, then select the target mode here again. Balances are not changed in bulk.",
+  "@m53PartialTransitionHelp": {
+    "description": "M5.3 explicit stock tracking scope transition, preserving physical history"
+  },
+  "m53CorrectionReasonLimit": "The reason must not exceed 1000 characters.",
+  "@m53CorrectionReasonLimit": {
+    "description": "M5.3 tracking transition evidence reason length validation"
+  },
+  "m53CostKnowledgeCheck": "Sale cost snapshot completeness",
+  "@m53CostKnowledgeCheck": {
+    "description": "Dynamic reconciliation result label shown in reports"
+  },
+  "m53EmptyCostCheck": "Empty stock valuation",
+  "@m53EmptyCostCheck": {
+    "description": "Dynamic reconciliation result label shown in reports"
   }
 }

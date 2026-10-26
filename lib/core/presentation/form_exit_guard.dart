@@ -13,10 +13,12 @@ class FormExitGuard extends StatefulWidget {
     super.key,
     required this.dirty,
     required this.child,
+    this.busy = false,
     this.managementProtected = true,
     this.capability = ManagementCapability.owner,
   });
   final bool dirty;
+  final bool busy;
   final Widget child;
   final bool managementProtected;
   final ManagementCapability capability;
@@ -67,9 +69,9 @@ class _FormExitGuardState extends State<FormExitGuard> {
                 (widget.capability == ManagementCapability.inventory ||
                     session.service.role == ManagementRole.owner)));
     return PopScope(
-      canPop: _leaving || !widget.dirty || !allowed,
+      canPop: !allowed || (!widget.busy && (_leaving || !widget.dirty)),
       onPopInvokedWithResult: (didPop, result) async {
-        if (didPop || _asking || !allowed) return;
+        if (didPop || _asking || !allowed || widget.busy) return;
         _asking = true;
         final state = widget.managementProtected ? session : null;
         final navigator = Navigator.of(context, rootNavigator: true);

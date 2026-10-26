@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Transisi pelacakan mengikuti [scope closure](decisions/M53_TRACKING.md):
+saldo/batch/nilai diarsipkan, bukan opname0 atau HPP; expiry berdiri sendiri
+dari flag tracking. Laporan selisih wajib mengecualikan link tracking change.
+
 M5.3 biaya unknown mengikuti [kontrak persistensi](decisions/M53_UNKNOWN_COST.md):
 flag legacy aditif, canonical nullable, mixed pool tanpa average tebakan, snapshot
 lama immutable dan rekonsiliasi eksplisit/audit; coverage pada laporan/ekspor.

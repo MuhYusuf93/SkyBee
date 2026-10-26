@@ -153,7 +153,7 @@ void m53FoundationSuite(DatabaseFactory factory, {String? only}) {
           factory.openDatabase(
             oldPath,
             options: OpenDatabaseOptions(
-              version: 15,
+              version: Schema.version,
               singleInstance: false,
               onUpgrade: (sql, from, to) async {
                 await Schema.migrate(sql, from, to);
@@ -185,7 +185,7 @@ void m53FoundationSuite(DatabaseFactory factory, {String? only}) {
           expect(await sql.getVersion(), 14);
           expect(
             await sql.rawQuery(
-              "SELECT name FROM sqlite_master WHERE name='store_feature_policy'",
+              "SELECT name FROM sqlite_master WHERE name IN ('store_feature_policy','valuation_reconciliations','stock_tracking_changes')",
             ),
             isEmpty,
           );

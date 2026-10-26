@@ -552,6 +552,7 @@ class _ProductFormState extends State<ProductForm> {
       ]),
       builder: (context, _) => FormExitGuard(
         capability: ManagementCapability.inventory,
+        busy: busy,
         dirty: _baseline != null && snapshot() != _baseline,
         child: Scaffold(
           appBar: AppBar(

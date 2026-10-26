@@ -88,6 +88,7 @@ class _ValuationState extends State<ValuationReconciliationScreen> {
       builder: (context, _) => FormExitGuard(
         capability: ManagementCapability.inventory,
         dirty: dirty,
+        busy: busy,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr(context, 'm53ReconcileValuation')),
