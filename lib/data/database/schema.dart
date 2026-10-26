@@ -4,7 +4,7 @@ import '../../core/domain/value_types.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 19;
+  static const version = 20;
 
   static Future<void> migrate(
     Database db,
@@ -35,6 +35,7 @@ final class Schema {
         17 => _costKnowledge,
         18 => _trackingTransitions,
         19 => _onboarding,
+        20 => _cashierLock,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
@@ -110,6 +111,23 @@ final class Schema {
 
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
+
+  /// Cashier authorization is separate from management. A process-local grant
+  /// is bound to these persisted epochs; raw PINs never enter policy/drafts.
+  static const _cashierLock = [
+    """CREATE TABLE cashier_lock_policy(id INTEGER PRIMARY KEY CHECK(id=1),
+      enabled INTEGER NOT NULL DEFAULT 0 CHECK(enabled IN(0,1)),
+      screen_lock INTEGER NOT NULL DEFAULT 0 CHECK(screen_lock IN(0,1)),
+      pin_source TEXT NOT NULL DEFAULT 'owner' CHECK(pin_source IN('owner','cashier')),
+      revision INTEGER NOT NULL DEFAULT 1 CHECK(revision>0),
+      gate_epoch INTEGER NOT NULL DEFAULT 0 CHECK(gate_epoch>=0))""",
+    'INSERT INTO cashier_lock_policy(id) VALUES(1)',
+    """CREATE TABLE cashier_credentials(id INTEGER PRIMARY KEY CHECK(id=1),
+      pin_verifier BLOB NOT NULL,salt BLOB NOT NULL,kdf_name TEXT NOT NULL,kdf_parameters TEXT NOT NULL,
+      failed_attempts INTEGER NOT NULL DEFAULT 0 CHECK(failed_attempts>=0),
+      blocked_until INTEGER NOT NULL DEFAULT 0 CHECK(blocked_until>=0),
+      last_attempt_at INTEGER NOT NULL DEFAULT 0 CHECK(last_attempt_at>=0))""",
+  ];
 
   /// Setup credentials are staged without operational authority. Only the
   /// final atomic setup commit installs them; drafts never contain PINs/codes.

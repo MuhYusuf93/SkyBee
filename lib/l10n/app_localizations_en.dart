@@ -2678,4 +2678,81 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m53SetupSecurityHidden =>
       'Setup is hidden while the app is inactive.';
+
+  @override
+  String get m53CashierLockSettings => 'Optional cashier lock';
+
+  @override
+  String get m53CashierEnable => 'Enable cashier lock';
+
+  @override
+  String get m53CashierLockNow => 'Lock cashier';
+
+  @override
+  String get m53CashierScreenLock =>
+      'Lock cashier when the device screen locks';
+
+  @override
+  String get m53CashierPinSource => 'PIN used to unlock Cashier';
+
+  @override
+  String get m53CashierOwnerReference => 'Use Owner/Management PIN';
+
+  @override
+  String get m53CashierOwnPin => 'Use a separate cashier PIN';
+
+  @override
+  String get m53CashierPin => 'Cashier PIN';
+
+  @override
+  String get m53CashierNewPin => 'New cashier PIN';
+
+  @override
+  String get m53CashierOwnerPin => 'Owner/Management PIN';
+
+  @override
+  String get m53CashierLocked => 'Cashier locked';
+
+  @override
+  String get m53CashierUnlock => 'Unlock Cashier';
+
+  @override
+  String get m53CashierUnlockHelp =>
+      'Enter the cashier PIN. Unlocking Cashier does not grant management access. Your cart and tender draft are retained.';
+
+  @override
+  String get m53CashierOwnerReferenceHelp =>
+      'This setting uses the Owner/Management PIN to unlock Cashier only. It does not grant management access or restart the management biometric PIN interval.';
+
+  @override
+  String get m53CashierPolicyHelp =>
+      'Off by default. The owner can choose a separate cashier PIN or reference the management PIN. The Lock cashier shortcut works whenever enabled. The screen option uses Android lock/noninteractive state; permission dialogs, notifications and briefly switching apps do not by themselves lock Cashier. Cart and tender are retained.';
+
+  @override
+  String get m53CashierOwnPinHelp =>
+      'A four-digit PIN is required when enabling or switching to a separate cashier PIN. While that PIN is already active, leave both fields empty to retain it. The owner can disable the lock if the cashier PIN is forgotten.';
+
+  @override
+  String get m53CashierPinRequired => 'Set up a four-digit cashier PIN first.';
+
+  @override
+  String get m53CashierForgotPin => 'Forgot cashier PIN? Owner help';
+
+  @override
+  String get m53CashierUsePin => 'Return to cashier PIN';
+
+  @override
+  String get m53CashierOwnerDisableHelp =>
+      'Only the owner can disable this lock with the Owner/Management PIN. A Warehouse or cashier PIN does not grant this right. Store data is retained.';
+
+  @override
+  String get m53CashierDisableConsent =>
+      'I am the owner and confirm disabling the cashier lock.';
+
+  @override
+  String get m53CashierDisable => 'Disable cashier lock';
+
+  @override
+  String get m53CashierScreenUnavailable =>
+      'Automatic screen-lock detection is unavailable right now. Use the Lock cashier shortcut; the manual cashier PIN gate still applies.';
 }

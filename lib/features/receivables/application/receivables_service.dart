@@ -188,7 +188,7 @@ final class ReceivablesService {
           )
           .toList(),
     ]);
-    return database.transaction((dbTxn) async {
+    return store.write(database, (dbTxn) async {
       if (plan.key.trim().isEmpty) throw const AppError('m3InvalidPayment');
       final existing = await dbTxn.query(
         'payments',

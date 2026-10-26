@@ -4849,6 +4849,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Setup is hidden while the app is inactive.'**
   String get m53SetupSecurityHidden;
+
+  /// M5.3 separate cashier authorization: m53CashierLockSettings
+  ///
+  /// In en, this message translates to:
+  /// **'Optional cashier lock'**
+  String get m53CashierLockSettings;
+
+  /// M5.3 separate cashier authorization: m53CashierEnable
+  ///
+  /// In en, this message translates to:
+  /// **'Enable cashier lock'**
+  String get m53CashierEnable;
+
+  /// M5.3 separate cashier authorization: m53CashierLockNow
+  ///
+  /// In en, this message translates to:
+  /// **'Lock cashier'**
+  String get m53CashierLockNow;
+
+  /// M5.3 separate cashier authorization: m53CashierScreenLock
+  ///
+  /// In en, this message translates to:
+  /// **'Lock cashier when the device screen locks'**
+  String get m53CashierScreenLock;
+
+  /// M5.3 separate cashier authorization: m53CashierPinSource
+  ///
+  /// In en, this message translates to:
+  /// **'PIN used to unlock Cashier'**
+  String get m53CashierPinSource;
+
+  /// M5.3 separate cashier authorization: m53CashierOwnerReference
+  ///
+  /// In en, this message translates to:
+  /// **'Use Owner/Management PIN'**
+  String get m53CashierOwnerReference;
+
+  /// M5.3 separate cashier authorization: m53CashierOwnPin
+  ///
+  /// In en, this message translates to:
+  /// **'Use a separate cashier PIN'**
+  String get m53CashierOwnPin;
+
+  /// M5.3 separate cashier authorization: m53CashierPin
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier PIN'**
+  String get m53CashierPin;
+
+  /// M5.3 separate cashier authorization: m53CashierNewPin
+  ///
+  /// In en, this message translates to:
+  /// **'New cashier PIN'**
+  String get m53CashierNewPin;
+
+  /// M5.3 separate cashier authorization: m53CashierOwnerPin
+  ///
+  /// In en, this message translates to:
+  /// **'Owner/Management PIN'**
+  String get m53CashierOwnerPin;
+
+  /// M5.3 separate cashier authorization: m53CashierLocked
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier locked'**
+  String get m53CashierLocked;
+
+  /// M5.3 separate cashier authorization: m53CashierUnlock
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Cashier'**
+  String get m53CashierUnlock;
+
+  /// M5.3 separate cashier authorization: m53CashierUnlockHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the cashier PIN. Unlocking Cashier does not grant management access. Your cart and tender draft are retained.'**
+  String get m53CashierUnlockHelp;
+
+  /// M5.3 separate cashier authorization: m53CashierOwnerReferenceHelp
+  ///
+  /// In en, this message translates to:
+  /// **'This setting uses the Owner/Management PIN to unlock Cashier only. It does not grant management access or restart the management biometric PIN interval.'**
+  String get m53CashierOwnerReferenceHelp;
+
+  /// M5.3 separate cashier authorization: m53CashierPolicyHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Off by default. The owner can choose a separate cashier PIN or reference the management PIN. The Lock cashier shortcut works whenever enabled. The screen option uses Android lock/noninteractive state; permission dialogs, notifications and briefly switching apps do not by themselves lock Cashier. Cart and tender are retained.'**
+  String get m53CashierPolicyHelp;
+
+  /// M5.3 separate cashier authorization: m53CashierOwnPinHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A four-digit PIN is required when enabling or switching to a separate cashier PIN. While that PIN is already active, leave both fields empty to retain it. The owner can disable the lock if the cashier PIN is forgotten.'**
+  String get m53CashierOwnPinHelp;
+
+  /// M5.3 separate cashier authorization: m53CashierPinRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Set up a four-digit cashier PIN first.'**
+  String get m53CashierPinRequired;
+
+  /// M5.3 separate cashier authorization: m53CashierForgotPin
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot cashier PIN? Owner help'**
+  String get m53CashierForgotPin;
+
+  /// M5.3 separate cashier authorization: m53CashierUsePin
+  ///
+  /// In en, this message translates to:
+  /// **'Return to cashier PIN'**
+  String get m53CashierUsePin;
+
+  /// M5.3 separate cashier authorization: m53CashierOwnerDisableHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Only the owner can disable this lock with the Owner/Management PIN. A Warehouse or cashier PIN does not grant this right. Store data is retained.'**
+  String get m53CashierOwnerDisableHelp;
+
+  /// M5.3 separate cashier authorization: m53CashierDisableConsent
+  ///
+  /// In en, this message translates to:
+  /// **'I am the owner and confirm disabling the cashier lock.'**
+  String get m53CashierDisableConsent;
+
+  /// M5.3 separate cashier authorization: m53CashierDisable
+  ///
+  /// In en, this message translates to:
+  /// **'Disable cashier lock'**
+  String get m53CashierDisable;
+
+  /// M5.3 separate cashier authorization: m53CashierScreenUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic screen-lock detection is unavailable right now. Use the Lock cashier shortcut; the manual cashier PIN gate still applies.'**
+  String get m53CashierScreenUnavailable;
 }
 
 class _AppLocalizationsDelegate

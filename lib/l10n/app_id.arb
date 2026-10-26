@@ -3262,5 +3262,97 @@
   "m53SetupSecurityHidden": "Penyiapan disembunyikan saat aplikasi tidak aktif.",
   "@m53SetupSecurityHidden": {
     "description": "M5.3 resumable new-store setup: m53SetupSecurityHidden"
+  },
+  "m53CashierLockSettings": "Kunci kasir opsional",
+  "@m53CashierLockSettings": {
+    "description": "M5.3 separate cashier authorization: m53CashierLockSettings"
+  },
+  "m53CashierEnable": "Aktifkan kunci kasir",
+  "@m53CashierEnable": {
+    "description": "M5.3 separate cashier authorization: m53CashierEnable"
+  },
+  "m53CashierLockNow": "Kunci kasir",
+  "@m53CashierLockNow": {
+    "description": "M5.3 separate cashier authorization: m53CashierLockNow"
+  },
+  "m53CashierScreenLock": "Kunci kasir saat layar terkunci",
+  "@m53CashierScreenLock": {
+    "description": "M5.3 separate cashier authorization: m53CashierScreenLock"
+  },
+  "m53CashierPinSource": "PIN untuk membuka Kasir",
+  "@m53CashierPinSource": {
+    "description": "M5.3 separate cashier authorization: m53CashierPinSource"
+  },
+  "m53CashierOwnerReference": "Gunakan PIN Pemilik/Pengelolaan",
+  "@m53CashierOwnerReference": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnerReference"
+  },
+  "m53CashierOwnPin": "Gunakan PIN kasir tersendiri",
+  "@m53CashierOwnPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnPin"
+  },
+  "m53CashierPin": "PIN kasir",
+  "@m53CashierPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierPin"
+  },
+  "m53CashierNewPin": "PIN kasir baru",
+  "@m53CashierNewPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierNewPin"
+  },
+  "m53CashierOwnerPin": "PIN Pemilik/Pengelolaan",
+  "@m53CashierOwnerPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnerPin"
+  },
+  "m53CashierLocked": "Kasir terkunci",
+  "@m53CashierLocked": {
+    "description": "M5.3 separate cashier authorization: m53CashierLocked"
+  },
+  "m53CashierUnlock": "Buka Kasir",
+  "@m53CashierUnlock": {
+    "description": "M5.3 separate cashier authorization: m53CashierUnlock"
+  },
+  "m53CashierUnlockHelp": "Masukkan PIN kasir. Membuka Kasir tidak memberikan akses Kelola. Keranjang dan uang diterima tetap tersimpan.",
+  "@m53CashierUnlockHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierUnlockHelp"
+  },
+  "m53CashierOwnerReferenceHelp": "Pengaturan ini menggunakan PIN Pemilik/Pengelolaan untuk membuka Kasir saja. Ini tidak memberikan akses Kelola dan tidak memperbarui interval PIN untuk biometrik pengelolaan.",
+  "@m53CashierOwnerReferenceHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnerReferenceHelp"
+  },
+  "m53CashierPolicyHelp": "Default nonaktif. Pemilik dapat memilih PIN kasir tersendiri atau merujuk PIN pengelolaan. Shortcut Kunci kasir selalu bekerja saat fitur aktif. Opsi layar memakai keadaan terkunci/noninteraktif dari Android; dialog izin, notifikasi, dan pindah aplikasi sesaat bukan pemicu kunci. Tidak menghapus keranjang atau tender.",
+  "@m53CashierPolicyHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierPolicyHelp"
+  },
+  "m53CashierOwnPinHelp": "PIN empat digit diperlukan saat mengaktifkan atau beralih ke PIN kasir tersendiri. Saat PIN kasir masih aktif, biarkan kedua isian kosong untuk mempertahankannya. Pemilik dapat menonaktifkan kunci jika PIN kasir terlupa.",
+  "@m53CashierOwnPinHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnPinHelp"
+  },
+  "m53CashierPinRequired": "Siapkan PIN kasir empat digit terlebih dahulu.",
+  "@m53CashierPinRequired": {
+    "description": "M5.3 separate cashier authorization: m53CashierPinRequired"
+  },
+  "m53CashierForgotPin": "Lupa PIN kasir? Bantuan pemilik",
+  "@m53CashierForgotPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierForgotPin"
+  },
+  "m53CashierUsePin": "Kembali ke PIN kasir",
+  "@m53CashierUsePin": {
+    "description": "M5.3 separate cashier authorization: m53CashierUsePin"
+  },
+  "m53CashierOwnerDisableHelp": "Hanya pemilik dapat menonaktifkan kunci menggunakan PIN Pemilik/Pengelolaan. PIN Gudang atau PIN kasir tidak memberi hak ini. Data toko tetap dipertahankan.",
+  "@m53CashierOwnerDisableHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnerDisableHelp"
+  },
+  "m53CashierDisableConsent": "Saya pemilik dan mengonfirmasi menonaktifkan kunci kasir.",
+  "@m53CashierDisableConsent": {
+    "description": "M5.3 separate cashier authorization: m53CashierDisableConsent"
+  },
+  "m53CashierDisable": "Nonaktifkan kunci kasir",
+  "@m53CashierDisable": {
+    "description": "M5.3 separate cashier authorization: m53CashierDisable"
+  },
+  "m53CashierScreenUnavailable": "Deteksi kunci layar otomatis tidak tersedia saat ini. Gunakan shortcut Kunci kasir; pengamanan PIN kasir manual tetap berlaku.",
+  "@m53CashierScreenUnavailable": {
+    "description": "M5.3 separate cashier authorization: m53CashierScreenUnavailable"
   }
 }

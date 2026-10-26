@@ -1,5 +1,110 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## B source20 tervalidasi — commit/push lalu C
+
+DV `build/m53-cashier-lock-dv-20261027-035144`22PASS7:01; Poco
+`build/m53-cashier-lock-poco-20261027-040145`22PASS4:07. Semua598/542hash lama
+cocok/controlOff; DVawake restored/readback exact. Snapshot frozen masihcocok.
+Host32PASS1:23 (D13/UI6 +onboarding13), acceptance20PASS2:32 overlap dan repay
+focused1PASS12s =>gate unique21(SQL14/UI6/migration1)+nativeAPI1. Analyze Noissues
+6,1s, format381/0changed, l10n815/540/245. KDF unchanged; native propertyinteractive
+additive, APItypes actual diuji; physical/OEM/powerbutton tidak diklaim.
+[Laporan](M53_CASHIER_LOCK_REPORT.md), [bukti](evidence/m53-20261026/cashier-lock-validation.json).
+
+Seluruh wrapper ditutup. Audit/stage/commit/push source20 lalu langsungC:
+private `build/m53/tender_draft_prototype.dart`, probe PASS dan
+`build/m53/c-tender-next-design.md` (sudah reread contract§6) belum diimport app.
+Implementasikan additive tender origin/replaceNext/counts dengan unclassified
+manual amount; exact bukan physical composition,000 dibatasi currency precision,
+pecahan additive/kurangi/clear, public quickamounts tanpa grantOwner. Perhatikan
+receive() lama juga dipakai exact/debt0, jangan ubahsemua jadiadd. Hash retry lama
+cash-v1 harus tetapvalid; hash hanya financial composition/member intent, bukan
+cosmeticorigin/replaceNext flags. C member baru+utangbaru wajibphoneunikvalid,
+legacyinvalid/dups remain payable for old debts. OwnerCRUD/archive, no automerge.
+Search/popularity fullSQL/keyset/index/30d reversalcorrect, not Dart wholehistory.
+Lanjut D–H; jangan stop atau meminta izincheckpoint. .skybee+12/schema14 tanpa
+update/reset. G warehouse/role metadata/portableall masihTODO. FinalHbuild/update.
+
+
+## B source20 DV22PASS — Poco22 dimulai
+
+`build/m53-cashier-lock-dv-20261027-035144`22PASS7:01. SQL14/UI6/migration1/
+nativeAPI type1 semuaPASS.598hash lama sama/controlOff/awake exact; source snapshot
+pre-native tetapcocok. Poco full22 sourceidentik berikutnya; FREEZE app/test/native/
+tools sampai wrapper selesai. NativeAPI membuktikan map interactive/locked/gen
+actual, bukan tombol layar fisik atau enrollment. .skybee+12/schema14 tetap.
+
+Private C prototype `build/m53/tender_draft_prototype.dart` +probe.txt PASS (bukan
+fitur app) dan `build/m53/c-tender-next-design.md` disiapkan saat freeze. Asal
+exact/preset, count+unclassified amount,000 decimals sudah modelprobe. Lanjut
+setelah commit20: C money/member/search dan D cashdrawer, bukan berhenti pada B.
+B22 Poco dan curasi/checkpoint/commit/push dahulu; baseline sourceHEAD0570137.
+
+
+## B source20 native22 DV dimulai
+
+Format381/0changed, l10n815/540/245, analyzer No issues6,1s. Host gate21 unique
+(D14/UI6/migration1): acceptance20PASS2:32+repay focused1PASS12s; regresi32PASS1:23
+termasuk onboarding13 (overlap). Native22 adds API screen-state real-map types1.
+Entry `integration_test/m53_cashier_lock_acceptance_test.dart`; DV.101 then Poco
+via audited wrapper/backgroundpause. Snapshot `build/m53/cashier-lock-source-pre-native.json`.
+FREEZE app/test/native/tool source sampai dua wrapper ditutup. Source20 belum
+commit/rilis; .skybee+12/schema14 tetap. BatasG warehouse/role/portable belum.
+Lanjut [laporan](M53_CASHIER_LOCK_REPORT.md); C–H tetap active sampai handoff.
+
+
+## B source20 host siap — native22 berikutnya
+
+Host32PASS1:23 gate13SQL+6UI/onboarding13. Gate acceptance20PASS2:32 overlap,
+repayment tambahan1PASS12s (record API): SQL14/UI6/migration1 unique21.
+Native entrypoint `integration_test/m53_cashier_lock_acceptance_test.dart` adds
+native screen-state map type smoke1 =>22. Seluruh fixture numeric m5_regression_*
+sesuai whitelist. Analyze No issues6,1s; l10n815/540/245; final format/check berikut.
+[Keputusan](decisions/M53_CASHIER_LOCK.md), [laporan/batas](M53_CASHIER_LOCK_REPORT.md).
+
+Native20 belum; Jalankan DV22 lalu Poco22 via audited wrapper flag backgroundpause.
+Freeze semua app/test/native source selama interval; hash manifest privat dulu.
+Tambahan terbaru: readonly cache, post-commit DTO publish (cache oldpolicy UI
+fixed), sync generation fence after final awaited epoch read, owner clock highwater
+advance tanpa verified reset, fallback unsupported screen, native FLAG_SECURE scope.
+Tidak mengubah PIN KDF/biometric locked semantics. G role/warehouse/portable audit
+masih TODO; C–H tetap active. Jangan update/reset .skybee+12/schema14 sebelum H.
+
+
+## B kunci kasir source20 WIP — domain9PASS, UI Back helper diperbaiki
+
+Domain awal9PASS52s (`cashier-lock-domain-retest.txt`); defaultoff, own/refowner
+PIN tanpa grant/72h reset, lockout, cart/tender, missing dependency denied,
+relock-at-checkout rollback, staleproof/DBgeneration dan fresh owner/CAS/SQLfault.
+Root NavigatorObserver+opaque lockRoute/Settings/shortcut terimplementasi; UI3
+awal2PASS1FAIL1:18. Fokus Back menemukan helper memakai TextField pertama (search
+kasir yang masih ada di tree transisi), bukan field nama form. Helper kini target
+label productName +readiness/predicate dirty +Navigator+route assertions; focused
+Back1PASS16s (appbar stay, hardware discard), tanpa mengubah FormExitGuard/aturan.
+
+Belum native20/ordinarybuild/commit. Analyze WIP awal info braces/unused dan error
+constructor test sudah diperbaiki sebagian; final clean belum. L10n815/540/245.
+Sedang menambah owner clock high-water tanpa reset verified_at, OS unsupported
+manual fallback, warehouse rejection dan backup cashier-policy validation/tests.
+CashierLockScreen native protectedScreen scope+inactive redaction; OS bridge
+PowerManager interactive property additive (biometric locked semantics tetap).
+Selanjutnya lengkapi UI recovery/settings/late route test, format/analyze &host
+regresi/onboarding, lalu safe native delta DV/Poco. .skybee+12/schema14 tetap.
+G masih harus memvalidasi role/warehouse metadata+portable seluruh tambahan;
+validator20 baru menyentuh cashier policy/credential. C–H semua aktif.
+
+
+## B kunci kasir source20 dimulai — onboarding checkpoint0570137 dipush
+
+Onboarding source19 commit/push/remote verified057013783b8a81db7e84e747def756b1f5ef40f9.
+Semua wrapper native19 ditutup. Kini source+12/schema20 WIP menambah policy/PIN
+kasir sendiri dan reference-owner verification tanpa grant/72h reset. Belum tes
+20 atau update .skybee. Lanjut service CAS/epoch/lockout, domain/widget+native
+delta; rancangan ROUTE+observer pada build/m53/cashier-lock-next-design.md (perlu
+baca audit kode terbaru, bukan menyalin eksplorasi builder-overlay yang ditolak).
+Remaining C–H tetap aktif sampai handoff; tidak minta izin ulang tiap checkpoint.
+
+
 ## Onboarding19 tervalidasi — commit lalu B kunci kasir
 
 Poco `build/m53-onboarding-poco-20261027-025715`13PASS2:17,525hash lama sama/

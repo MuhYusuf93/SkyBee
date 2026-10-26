@@ -37,6 +37,19 @@ final class OnboardingPinProof {
   final String preparationId;
 }
 
+/// Proves only a reference PIN check for the cashier gate, never management
+/// authority. Its private issuer/epoch are rechecked under the caller's lease.
+final class CashierReferenceProof {
+  CashierReferenceProof._(
+    this.issuer,
+    this.databaseGeneration,
+    this.authorization,
+  );
+  final ManagementService issuer;
+  final int databaseGeneration;
+  final String authorization;
+}
+
 /// Owns the authorization capability and persisted attempt limits. UI session
 /// state mirrors it; hiding buttons is never the authorization check.
 final class ManagementService {
@@ -707,6 +720,7 @@ final class ManagementService {
     String secret, {
     bool recovery = false,
     ManagementRole role = ManagementRole.owner,
+    bool cashierOnly = false,
   }) async {
     if (!recovery) _validatePin(secret);
     String? verifiedSalt, verifiedAuthorization;
@@ -756,18 +770,43 @@ final class ManagementService {
         'failed_attempts': attempts,
         'blocked_until': valid ? 0 : now + delaySeconds * 1000,
         'last_attempt_at': now,
-        if (database.schemaVersion >= 15 && valid && !recovery) ...{
+        if (database.schemaVersion >= 15 &&
+            valid &&
+            !recovery &&
+            !cashierOnly) ...{
           // Lockout time remains monotonic above. A successful PIN establishes
           // a new interval on the corrected wall clock, avoiding a PIN loop.
           'last_pin_verified_at': clock.milliseconds,
           'last_pin_clock_seen_at': clock.milliseconds,
         },
+        if (database.schemaVersion >= 15 && valid && !recovery && cashierOnly)
+          'last_pin_clock_seen_at': max(
+            clock.milliseconds,
+            row['last_pin_clock_seen_at'] as int? ?? 0,
+          ),
       }, where: 'id=1');
-      await audit(
-        dbTxn,
-        valid ? 'management_verified' : 'management_denied',
-        asRole: role,
-      );
+      if (cashierOnly) {
+        final installation = await InstallationIdentity.current(
+          dbTxn,
+          clock.milliseconds,
+        );
+        await dbTxn.insert('audit_log', {
+          'id': const IdGenerator().next().value,
+          'installation_id': installation,
+          'mode': 'cashier',
+          'action': valid
+              ? 'cashier_reference_verified'
+              : 'cashier_reference_denied',
+          'created_at': clock.milliseconds,
+          if (database.schemaVersion >= 16) 'actor_role': null,
+        });
+      } else {
+        await audit(
+          dbTxn,
+          valid ? 'management_verified' : 'management_denied',
+          asRole: role,
+        );
+      }
       // The first audit may establish active_installation. Bind the capability
       // to that final identity, never the pre-audit legacy placeholder.
       if (valid) {
@@ -777,6 +816,34 @@ final class ManagementService {
     });
     if (error != null) throw error;
     return (salt: verifiedSalt!, authorization: verifiedAuthorization!);
+  }
+
+  /// Checks the owner reference without granting, consuming fresh authority,
+  /// or restarting the management biometric PIN interval. Attempt limits stay
+  /// shared with that credential; there is no temporary unlock-then-lock window.
+  Future<CashierReferenceProof> verifyCashierReference(String pin) async {
+    final databaseGeneration = database.generation;
+    final verified = await _verify(pin, cashierOnly: true);
+    if (databaseGeneration != database.generation) {
+      throw const AppError('m53CashierLocked');
+    }
+    return CashierReferenceProof._(
+      this,
+      databaseGeneration,
+      verified.authorization,
+    );
+  }
+
+  Future<void> validateCashierReferenceOn(
+    DatabaseExecutor db,
+    CashierReferenceProof proof,
+  ) async {
+    if (!identical(proof.issuer, this) ||
+        proof.databaseGeneration != database.generation ||
+        proof.authorization !=
+            await _authorizationEpochOn(db, ManagementRole.owner)) {
+      throw const AppError('m53CashierLocked');
+    }
   }
 
   Future<void> unlock(

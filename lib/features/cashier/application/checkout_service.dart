@@ -110,7 +110,8 @@ final class CheckoutService {
   ) async {
     final generation = database.generation;
     final hash = await _hash(draftId, revision, input);
-    return database.transaction(
+    return store.write(
+      database,
       (dbTxn) async {
         final existing = await dbTxn.query(
           'sale_transactions',

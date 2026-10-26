@@ -1,3 +1,4 @@
+import '../features/cashier_lock/presentation/cashier_lock_navigator.dart';
 import '../features/onboarding/presentation/onboarding_screen.dart';
 import 'package:kasir_app/l10n/localization.dart';
 import '../features/settings/presentation/locale_provider.dart';
@@ -109,6 +110,7 @@ class _ManagementAppState extends State<_ManagementApp> {
     _runtime = null;
     final services = AppServices(database);
     _preferences = await services.settings.preferences();
+    await services.cashierLock.load();
     _activeServices = services;
     _onboardingNeeded = await services.onboarding.needed;
     _nativeWanted = native;
@@ -133,6 +135,7 @@ class _ManagementAppState extends State<_ManagementApp> {
   Future<AppServices> _open() async {
     if (widget.services != null) {
       _preferences = await widget.services!.settings.preferences();
+      await widget.services!.cashierLock.load();
       _onboardingNeeded = await widget.services!.onboarding.needed;
       _bind(widget.services!, native: false);
       return widget.services!;
@@ -147,6 +150,7 @@ class _ManagementAppState extends State<_ManagementApp> {
       _owned = database;
       final services = AppServices(database);
       _preferences = await services.settings.preferences();
+      await services.cashierLock.load();
       _onboardingNeeded = await services.onboarding.needed;
       _bind(services, native: true);
       return services;
@@ -243,6 +247,11 @@ class _ManagementAppState extends State<_ManagementApp> {
             create: (_) => ManagementSessionProvider(services.management),
             lazy: false,
           ),
+          Provider<CashierLockNavigator>(
+            create: (_) => CashierLockNavigator(services.cashierLock),
+            dispose: (_, value) => value.dispose(),
+            lazy: false,
+          ),
           Provider<FoundationReadiness>(
             create: (_) =>
                 FoundationService(openDatabase: () async => services.database),
@@ -251,6 +260,7 @@ class _ManagementAppState extends State<_ManagementApp> {
         child: Consumer<LocaleProvider>(
           builder: (context, preferences, _) => MaterialApp(
             navigatorKey: _navigator,
+            navigatorObservers: [context.read<CashierLockNavigator>()],
             locale: preferences.language == null
                 ? null
                 : Locale(preferences.language!),

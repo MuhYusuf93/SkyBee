@@ -1,6 +1,7 @@
 package com.example.kasir_platform;
 
 import android.app.KeyguardManager;
+import android.os.PowerManager;
 import android.content.*;
 import android.os.*;
 import android.security.keystore.*;
@@ -102,7 +103,8 @@ final class StrongBiometricsBridge {
     boolean handle(MethodCall call, MethodChannel.Result result) {
         if (call.method.equals("screenSecurityState")) {
             KeyguardManager manager = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
-            result.success(Map.of("locked", manager == null || manager.isDeviceLocked() || manager.isKeyguardLocked(), "generation", screenGeneration.get()));
+            PowerManager power = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+            result.success(Map.of("locked", manager == null || manager.isDeviceLocked() || manager.isKeyguardLocked(), "generation", screenGeneration.get(), "interactive", power != null && power.isInteractive()));
             return true;
         }
         if (!call.method.startsWith("biometric")) return false;

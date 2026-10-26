@@ -1,3 +1,4 @@
+import '../features/cashier_lock/application/cashier_lock_service.dart';
 import '../features/onboarding/application/onboarding_service.dart';
 import '../features/cashier/application/quick_cash_service.dart';
 import '../features/cashier/application/quantity_promotion_service.dart';
@@ -42,7 +43,10 @@ final class AppServices {
     );
     inventory = InventoryService(database, management);
     settings = SettingsService(database, management);
-    final cashierStore = CashierStore(management.clock);
+    final cashierStore = CashierStore(
+      management.clock,
+      cashierAccess: cashierLock,
+    );
     cart = CartService(database, cashierStore);
     checkout = CheckoutService(database, cashierStore);
     search = ProductSearchService(database, cashierStore);
@@ -55,6 +59,7 @@ final class AppServices {
   final PrinterOutputGate printerGate;
   late final ManagementService management;
   late final onboarding = OnboardingService(database, management);
+  late final cashierLock = CashierLockService(database, management);
   late final InventoryService inventory;
   late final SettingsService settings;
   late final CartService cart;

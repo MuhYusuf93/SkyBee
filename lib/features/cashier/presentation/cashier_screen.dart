@@ -1,3 +1,4 @@
+import '../../cashier_lock/presentation/cashier_lock_button.dart';
 import '../../printer/presentation/printer_settings_screen.dart';
 import '../../management/presentation/managed_text_field.dart';
 import 'package:flutter/material.dart';
@@ -194,7 +195,7 @@ class _CashierBodyState extends State<_CashierBody> {
       return Scaffold(
         appBar: AppBar(
           title: Text(name ?? tr(context, 'myStore')),
-          actions: const [LanguageButton()],
+          actions: const [CashierLockButton(), LanguageButton()],
         ),
         body: SafeArea(
           child: receipt == null

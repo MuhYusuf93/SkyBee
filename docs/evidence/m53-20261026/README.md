@@ -17,3 +17,8 @@ mempertahankan DV16PASS1FAIL serta focused retest, tidak menandainya sebagai sat
 Onboarding19 ditutup27Oktober: [validasi dan scope](onboarding-validation.json),
 [source checksums](onboarding-source-sha256.json). Raw failure tetap privat;
 DV13PASS lintas domain/migration+focusedUI, Poco13PASS satu run. B–H masih aktif.
+
+Kunci Kasir20 ditutup27Oktober: [bukti](cashier-lock-validation.json) dan
+[source checksums](cashier-lock-source-sha256.json). DV22/Poco22 PASS, seluruh
+hash interval sama/controlOff; OS synthetic vs native APItype scope dibedakan.
+C–H tetap aktif dan Paket Eksplorasi Mandiri belum diupdate/reset.

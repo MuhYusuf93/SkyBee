@@ -13,7 +13,12 @@ final class BiometricState {
 }
 
 final class ScreenSecurityState {
-  const ScreenSecurityState(this.locked, this.generation);
+  const ScreenSecurityState(
+    this.locked,
+    this.generation, {
+    this.interactive = true,
+  });
+  final bool interactive;
   final bool locked;
   final int generation;
 }
@@ -99,6 +104,7 @@ final class AndroidStrongBiometrics implements StrongBiometrics {
     return ScreenSecurityState(
       state['locked'] != false,
       state['generation'] as int,
+      interactive: state['interactive'] != false,
     );
   }
 }

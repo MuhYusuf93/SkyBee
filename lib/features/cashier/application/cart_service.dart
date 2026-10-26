@@ -49,7 +49,7 @@ final class CartService {
       database.read((db) => store.cart(db, id));
 
   /// Intended after acknowledgement only. Do not silently replace a live draft.
-  Future<CartSnapshot> next(EntityId completedId) => database.transaction((
+  Future<CartSnapshot> next(EntityId completedId) => store.write(database, (
     dbTxn,
   ) async {
     final pointer = (await dbTxn.query('cashier_state')).single['draft_id'];
@@ -73,7 +73,7 @@ final class CartService {
   }
 
   Future<CartSnapshot> add(EntityId draftId, EntityId productId) =>
-      database.transaction((dbTxn) async {
+      store.write(database, (dbTxn) async {
         final draft = await store.draft(dbTxn, draftId);
         final product = await store.product(dbTxn, productId);
         if (product.archived) {
@@ -115,7 +115,7 @@ final class CartService {
     EntityId draftId,
     EntityId productId,
     int quantity,
-  ) => database.transaction((dbTxn) async {
+  ) => store.write(database, (dbTxn) async {
     Quantity.positive(quantity);
     final draft = await store.draft(dbTxn, draftId);
     final product = await store.product(dbTxn, productId);
@@ -144,7 +144,7 @@ final class CartService {
     EntityId draftId,
     EntityId productId,
     PricingMode mode,
-  ) => database.transaction((dbTxn) async {
+  ) => store.write(database, (dbTxn) async {
     final draft = await store.draft(dbTxn, draftId);
     final product = await store.product(dbTxn, productId);
     final price = mode == PricingMode.wholesale
@@ -172,7 +172,7 @@ final class CartService {
   Future<(CartSnapshot, CartUndo)> remove(
     EntityId draftId, {
     EntityId? productId,
-  }) => database.transaction((dbTxn) async {
+  }) => store.write(database, (dbTxn) async {
     final draft = await store.draft(dbTxn, draftId);
     final rows = await dbTxn.query(
       'cart_draft_items',
@@ -197,7 +197,7 @@ final class CartService {
     );
   });
   Future<CartSnapshot> undo(CartUndo token) =>
-      database.transaction((dbTxn) async {
+      store.write(database, (dbTxn) async {
         final draft = await store.draft(dbTxn, token.draftId);
         if (draft['revision'] != token.expectedRevision ||
             store.clock.elapsedMilliseconds > token.expiresAt) {
@@ -217,7 +217,7 @@ final class CartService {
         return store.cart(dbTxn, token.draftId);
       });
   Future<CartSnapshot> acceptPrices(EntityId id, int expectedRevision) =>
-      database.transaction((dbTxn) async {
+      store.write(database, (dbTxn) async {
         final draft = await store.draft(dbTxn, id);
         if (draft['revision'] != expectedRevision) {
           throw const AppError('m3DraftChanged');
@@ -253,7 +253,7 @@ final class CartService {
     EntityId id,
     int revision,
     CheckoutInput input,
-  ) => database.transaction((dbTxn) async {
+  ) => store.write(database, (dbTxn) async {
     final draft = await store.draft(dbTxn, id, active: false);
     if (draft['revision'] != revision) throw const AppError('m3DraftChanged');
     if (draft['state'] == 'completed') return;

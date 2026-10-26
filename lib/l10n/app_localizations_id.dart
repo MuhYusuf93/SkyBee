@@ -2686,4 +2686,81 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m53SetupSecurityHidden =>
       'Penyiapan disembunyikan saat aplikasi tidak aktif.';
+
+  @override
+  String get m53CashierLockSettings => 'Kunci kasir opsional';
+
+  @override
+  String get m53CashierEnable => 'Aktifkan kunci kasir';
+
+  @override
+  String get m53CashierLockNow => 'Kunci kasir';
+
+  @override
+  String get m53CashierScreenLock => 'Kunci kasir saat layar terkunci';
+
+  @override
+  String get m53CashierPinSource => 'PIN untuk membuka Kasir';
+
+  @override
+  String get m53CashierOwnerReference => 'Gunakan PIN Pemilik/Pengelolaan';
+
+  @override
+  String get m53CashierOwnPin => 'Gunakan PIN kasir tersendiri';
+
+  @override
+  String get m53CashierPin => 'PIN kasir';
+
+  @override
+  String get m53CashierNewPin => 'PIN kasir baru';
+
+  @override
+  String get m53CashierOwnerPin => 'PIN Pemilik/Pengelolaan';
+
+  @override
+  String get m53CashierLocked => 'Kasir terkunci';
+
+  @override
+  String get m53CashierUnlock => 'Buka Kasir';
+
+  @override
+  String get m53CashierUnlockHelp =>
+      'Masukkan PIN kasir. Membuka Kasir tidak memberikan akses Kelola. Keranjang dan uang diterima tetap tersimpan.';
+
+  @override
+  String get m53CashierOwnerReferenceHelp =>
+      'Pengaturan ini menggunakan PIN Pemilik/Pengelolaan untuk membuka Kasir saja. Ini tidak memberikan akses Kelola dan tidak memperbarui interval PIN untuk biometrik pengelolaan.';
+
+  @override
+  String get m53CashierPolicyHelp =>
+      'Default nonaktif. Pemilik dapat memilih PIN kasir tersendiri atau merujuk PIN pengelolaan. Shortcut Kunci kasir selalu bekerja saat fitur aktif. Opsi layar memakai keadaan terkunci/noninteraktif dari Android; dialog izin, notifikasi, dan pindah aplikasi sesaat bukan pemicu kunci. Tidak menghapus keranjang atau tender.';
+
+  @override
+  String get m53CashierOwnPinHelp =>
+      'PIN empat digit diperlukan saat mengaktifkan atau beralih ke PIN kasir tersendiri. Saat PIN kasir masih aktif, biarkan kedua isian kosong untuk mempertahankannya. Pemilik dapat menonaktifkan kunci jika PIN kasir terlupa.';
+
+  @override
+  String get m53CashierPinRequired =>
+      'Siapkan PIN kasir empat digit terlebih dahulu.';
+
+  @override
+  String get m53CashierForgotPin => 'Lupa PIN kasir? Bantuan pemilik';
+
+  @override
+  String get m53CashierUsePin => 'Kembali ke PIN kasir';
+
+  @override
+  String get m53CashierOwnerDisableHelp =>
+      'Hanya pemilik dapat menonaktifkan kunci menggunakan PIN Pemilik/Pengelolaan. PIN Gudang atau PIN kasir tidak memberi hak ini. Data toko tetap dipertahankan.';
+
+  @override
+  String get m53CashierDisableConsent =>
+      'Saya pemilik dan mengonfirmasi menonaktifkan kunci kasir.';
+
+  @override
+  String get m53CashierDisable => 'Nonaktifkan kunci kasir';
+
+  @override
+  String get m53CashierScreenUnavailable =>
+      'Deteksi kunci layar otomatis tidak tersedia saat ini. Gunakan shortcut Kunci kasir; pengamanan PIN kasir manual tetap berlaku.';
 }

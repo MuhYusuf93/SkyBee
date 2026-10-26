@@ -1,3 +1,4 @@
+import '../../cashier_lock/presentation/cashier_lock_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
@@ -114,6 +115,17 @@ class _SecuritySettingsBody extends StatelessWidget {
                     liveRegion: true,
                     child: Text(message(context, state.message!)),
                   ),
+                ListTile(
+                  title: Text(tr(context, 'm53CashierLockSettings')),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: state.busy
+                      ? null
+                      : () => Navigator.of(context).push<void>(
+                          MaterialPageRoute(
+                            builder: (_) => const CashierLockSettingsScreen(),
+                          ),
+                        ),
+                ),
                 Text(tr(context, 'm51SessionHelp')),
                 Text(
                   '${tr(context, 'm51CurrentPolicy')}: ${tr(context, policyLabelKey(state.current))}',

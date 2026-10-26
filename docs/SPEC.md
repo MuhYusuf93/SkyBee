@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Kunci Kasir opsional terpisah dari capability Kelola dan defaultoff, dengan
+opaque lock route, fresh owner config, PIN/epoch/commit guard serta preservasi
+cart/tender/dirty Back: [keputusan implementasi](decisions/M53_CASHIER_LOCK.md).
+
 Onboarding tujuh langkah memakai marker fresh dan staging non-secret/encrypted,
 commit konfigurasi+credential atomik tanpa grant; toko legacy tidak diulang.
 Lihat [batas dan invariant penyiapan](decisions/M53_ONBOARDING.md).

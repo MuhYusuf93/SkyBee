@@ -13,7 +13,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-A1 | Preferensi aman, mode toko, jumlah awal eksplisit, preservasi migrasi14 | Policy+closure saldo/source18: host34/native17 DV lintas run dan Poco17 PASS; qty/batch/value/expiry dipertahankan; lihat M53_TRACKING_REPORT |
 | M53-A2 | Onboarding lengkap, biaya unknown dan propagasi laporan | Biaya schema17: host/native core10 + followup/migrasi/UI PASS, lihat M53_COST_REPORT. Onboarding19 host13+cost10 PASS, DV13kasus lintas10+UI3 PASS, Poco13 PASS; resumable/atomic/preset/language/legacy checks (M53_ONBOARDING_REPORT) |
 | M53-B1 | PIN aplikasi setiap72jam, biometric tidak mereset interval | Host dan native14 per DV/Poco PASS, termasuk restart/rollback clock sintetis; bukan72jam nyata |
-| M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir masih TODO |
+| M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir schema20:21kasus+API1 native22 per DV/Poco PASS (M53_CASHIER_LOCK_REPORT), defaultoff tanpa grant Kelola |
 | M53-C | Pencarian/popularitas, uang cepat, member/piutang | TODO |
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | TODO |
 | M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | TODO |

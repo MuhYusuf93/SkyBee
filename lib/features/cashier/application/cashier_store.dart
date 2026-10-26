@@ -1,3 +1,5 @@
+import '../../cashier_lock/application/cashier_lock_service.dart';
+import '../../../data/database/database_coordinator.dart';
 import 'dart:convert';
 import '../../../data/database/installation_identity.dart';
 import 'package:cryptography/cryptography.dart';
@@ -11,8 +13,27 @@ import '../domain/quantity_promotion.dart';
 
 /// Shared SQL primitives, not screen state. All callers use their own dbTxn.
 final class CashierStore {
-  CashierStore(this.clock);
+  CashierStore(this.clock, {this.cashierAccess});
+  final CashierLockService? cashierAccess;
   final StoreClock clock;
+
+  /// Validate one cashier operation before and after all awaited SQL/stages.
+  /// Lock/reconfigure while a draft is committing causes a full rollback.
+  Future<T> write<T>(
+    DatabaseCoordinator database,
+    Future<T> Function(Transaction dbTxn) operation, {
+    bool inventoryChanged = false,
+    int? expectedGeneration,
+  }) => database.transaction(
+    (dbTxn) async {
+      final proof = await CashierLockService.beginOn(dbTxn, cashierAccess);
+      final result = await operation(dbTxn);
+      await CashierLockService.endOn(dbTxn, proof);
+      return result;
+    },
+    inventoryChanged: inventoryChanged,
+    expectedGeneration: expectedGeneration,
+  );
   static const ids = IdGenerator();
   Future<Map<String, Object?>> settings(DatabaseExecutor db) async =>
       (await db.query('store_settings', where: 'id=1')).single;

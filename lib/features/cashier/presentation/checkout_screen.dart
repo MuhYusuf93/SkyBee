@@ -1,3 +1,4 @@
+import '../../cashier_lock/presentation/cashier_lock_button.dart';
 import 'dart:async';
 import 'cash_pad.dart';
 import '../../management/presentation/managed_text_field.dart';
@@ -83,7 +84,7 @@ class _CheckoutFormState extends State<_CheckoutForm> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(tr(context, 'pay')),
-          actions: const [LanguageButton()],
+          actions: const [CashierLockButton(), LanguageButton()],
         ),
         body: SafeArea(
           child: ListView(

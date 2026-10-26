@@ -3262,5 +3262,97 @@
   "m53SetupSecurityHidden": "Setup is hidden while the app is inactive.",
   "@m53SetupSecurityHidden": {
     "description": "M5.3 resumable new-store setup: m53SetupSecurityHidden"
+  },
+  "m53CashierLockSettings": "Optional cashier lock",
+  "@m53CashierLockSettings": {
+    "description": "M5.3 separate cashier authorization: m53CashierLockSettings"
+  },
+  "m53CashierEnable": "Enable cashier lock",
+  "@m53CashierEnable": {
+    "description": "M5.3 separate cashier authorization: m53CashierEnable"
+  },
+  "m53CashierLockNow": "Lock cashier",
+  "@m53CashierLockNow": {
+    "description": "M5.3 separate cashier authorization: m53CashierLockNow"
+  },
+  "m53CashierScreenLock": "Lock cashier when the device screen locks",
+  "@m53CashierScreenLock": {
+    "description": "M5.3 separate cashier authorization: m53CashierScreenLock"
+  },
+  "m53CashierPinSource": "PIN used to unlock Cashier",
+  "@m53CashierPinSource": {
+    "description": "M5.3 separate cashier authorization: m53CashierPinSource"
+  },
+  "m53CashierOwnerReference": "Use Owner/Management PIN",
+  "@m53CashierOwnerReference": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnerReference"
+  },
+  "m53CashierOwnPin": "Use a separate cashier PIN",
+  "@m53CashierOwnPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnPin"
+  },
+  "m53CashierPin": "Cashier PIN",
+  "@m53CashierPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierPin"
+  },
+  "m53CashierNewPin": "New cashier PIN",
+  "@m53CashierNewPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierNewPin"
+  },
+  "m53CashierOwnerPin": "Owner/Management PIN",
+  "@m53CashierOwnerPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnerPin"
+  },
+  "m53CashierLocked": "Cashier locked",
+  "@m53CashierLocked": {
+    "description": "M5.3 separate cashier authorization: m53CashierLocked"
+  },
+  "m53CashierUnlock": "Unlock Cashier",
+  "@m53CashierUnlock": {
+    "description": "M5.3 separate cashier authorization: m53CashierUnlock"
+  },
+  "m53CashierUnlockHelp": "Enter the cashier PIN. Unlocking Cashier does not grant management access. Your cart and tender draft are retained.",
+  "@m53CashierUnlockHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierUnlockHelp"
+  },
+  "m53CashierOwnerReferenceHelp": "This setting uses the Owner/Management PIN to unlock Cashier only. It does not grant management access or restart the management biometric PIN interval.",
+  "@m53CashierOwnerReferenceHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnerReferenceHelp"
+  },
+  "m53CashierPolicyHelp": "Off by default. The owner can choose a separate cashier PIN or reference the management PIN. The Lock cashier shortcut works whenever enabled. The screen option uses Android lock/noninteractive state; permission dialogs, notifications and briefly switching apps do not by themselves lock Cashier. Cart and tender are retained.",
+  "@m53CashierPolicyHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierPolicyHelp"
+  },
+  "m53CashierOwnPinHelp": "A four-digit PIN is required when enabling or switching to a separate cashier PIN. While that PIN is already active, leave both fields empty to retain it. The owner can disable the lock if the cashier PIN is forgotten.",
+  "@m53CashierOwnPinHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnPinHelp"
+  },
+  "m53CashierPinRequired": "Set up a four-digit cashier PIN first.",
+  "@m53CashierPinRequired": {
+    "description": "M5.3 separate cashier authorization: m53CashierPinRequired"
+  },
+  "m53CashierForgotPin": "Forgot cashier PIN? Owner help",
+  "@m53CashierForgotPin": {
+    "description": "M5.3 separate cashier authorization: m53CashierForgotPin"
+  },
+  "m53CashierUsePin": "Return to cashier PIN",
+  "@m53CashierUsePin": {
+    "description": "M5.3 separate cashier authorization: m53CashierUsePin"
+  },
+  "m53CashierOwnerDisableHelp": "Only the owner can disable this lock with the Owner/Management PIN. A Warehouse or cashier PIN does not grant this right. Store data is retained.",
+  "@m53CashierOwnerDisableHelp": {
+    "description": "M5.3 separate cashier authorization: m53CashierOwnerDisableHelp"
+  },
+  "m53CashierDisableConsent": "I am the owner and confirm disabling the cashier lock.",
+  "@m53CashierDisableConsent": {
+    "description": "M5.3 separate cashier authorization: m53CashierDisableConsent"
+  },
+  "m53CashierDisable": "Disable cashier lock",
+  "@m53CashierDisable": {
+    "description": "M5.3 separate cashier authorization: m53CashierDisable"
+  },
+  "m53CashierScreenUnavailable": "Automatic screen-lock detection is unavailable right now. Use the Lock cashier shortcut; the manual cashier PIN gate still applies.",
+  "@m53CashierScreenUnavailable": {
+    "description": "M5.3 separate cashier authorization: m53CashierScreenUnavailable"
   }
 }

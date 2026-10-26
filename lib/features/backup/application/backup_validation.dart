@@ -35,6 +35,7 @@ final class BackupValidation {
             )).isNotEmpty)) {
       throw const FormatException('backupSetupIncomplete');
     }
+    if (schema >= 20) await _cashierLock(db);
     final settings = (await db.query('store_settings')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,
@@ -270,6 +271,54 @@ final class BackupValidation {
       )).single['n'];
     }
     return result;
+  }
+
+  /// Persisted policy/verifiers can travel; a process-local cashier grant
+  /// cannot. Bound lengths before fetching imported blobs/JSON or using a PIN.
+  static Future<void> _cashierLock(DatabaseExecutor db) async {
+    if ((await db.rawQuery(
+      """SELECT 1 FROM cashier_lock_policy WHERE id<>1 OR
+      typeof(enabled)<>'integer' OR enabled NOT IN(0,1) OR
+      typeof(screen_lock)<>'integer' OR screen_lock NOT IN(0,1) OR
+      typeof(pin_source)<>'text' OR pin_source NOT IN('owner','cashier') OR
+      typeof(revision)<>'integer' OR revision<1 OR typeof(gate_epoch)<>'integer' OR gate_epoch<0 LIMIT 1""",
+    )).isNotEmpty) {
+      throw const FormatException('backupCashierPolicyInvalid');
+    }
+    final policies = await db.query('cashier_lock_policy', limit: 2);
+    if (policies.length != 1) {
+      throw const FormatException('backupCashierPolicyInvalid');
+    }
+    if ((await db.rawQuery(
+      """SELECT 1 FROM cashier_credentials WHERE id<>1 OR
+      typeof(salt)<>'blob' OR length(salt) NOT BETWEEN 16 AND 64 OR
+      typeof(pin_verifier)<>'blob' OR length(pin_verifier)<>32 OR
+      typeof(kdf_name)<>'text' OR length(kdf_name)>64 OR
+      typeof(kdf_parameters)<>'text' OR length(kdf_parameters)>1024 OR
+      typeof(failed_attempts)<>'integer' OR failed_attempts<0 OR
+      typeof(blocked_until)<>'integer' OR blocked_until<0 OR
+      typeof(last_attempt_at)<>'integer' OR last_attempt_at<0 LIMIT 1""",
+    )).isNotEmpty) {
+      throw const FormatException('backupCashierCredentialsInvalid');
+    }
+    final credentials = await db.query('cashier_credentials', limit: 2);
+    if (credentials.length > 1 ||
+        (policies.single['enabled'] == 1 &&
+            policies.single['pin_source'] == 'cashier' &&
+            credentials.length != 1)) {
+      throw const FormatException('backupCashierCredentialsInvalid');
+    }
+    for (final row in credentials) {
+      final Object? parameters = jsonDecode(row['kdf_parameters'] as String);
+      if (row['kdf_name'] != 'PBKDF2-HMAC-SHA256' ||
+          parameters is! Map ||
+          parameters['bits'] != 256 ||
+          parameters['iterations'] is! int ||
+          (parameters['iterations'] as int) < PinHasher.iterations ||
+          (parameters['iterations'] as int) > 2000000) {
+        throw const FormatException('backupCashierCredentialsInvalid');
+      }
+    }
   }
 
   /// Tracking closure archives a physical scope; it is not a financial loss.

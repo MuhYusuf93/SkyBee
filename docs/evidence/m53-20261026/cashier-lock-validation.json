@@ -1,0 +1,79 @@
+{
+  "checkpoint": "M53 optional cashier lock, not final handoff",
+  "source_version": "0.5.2+12",
+  "schema": 20,
+  "prepared_against_head": "057013783b8a81db7e84e747def756b1f5ef40f9",
+  "source_manifest_sha256": "2076b6dee4cd0ea5fbb180120199476bcce3a5e197d847f74cc60ba4c1d7198f",
+  "host": [
+    {
+      "run": "cashier-lock-regression-host",
+      "passed": 32,
+      "failed": 0,
+      "seconds": 83,
+      "scope": "gate SQL13/UI6 + onboarding13, shared migration once"
+    },
+    {
+      "run": "cashier-lock-acceptance-host",
+      "passed": 20,
+      "failed": 0,
+      "seconds": 152,
+      "overlaps_previous": true
+    },
+    {
+      "run": "cashier-lock-repayment-retest",
+      "passed": 1,
+      "failed": 0,
+      "seconds": 12,
+      "scope": "Additional receivable gate/idempotency without a new sale"
+    }
+  ],
+  "native": [
+    {
+      "device": "192.168.0.101:5555",
+      "test": "integration_test/m53_cashier_lock_acceptance_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "passed": 22,
+      "failed": 0,
+      "reporter_seconds": 421,
+      "protected_entries": 598,
+      "private_artifacts": "build/m53-cashier-lock-dv-20261027-035144",
+      "dv_awake_restored_exact": true
+    },
+    {
+      "device": "7f0edea0",
+      "test": "integration_test/m53_cashier_lock_acceptance_test.dart",
+      "nameFilter": "",
+      "automaticDeviceControlActive": false,
+      "tests": "PASS",
+      "isolation": "Every pre-existing protected file hash unchanged",
+      "downgrade": false,
+      "reset": false,
+      "passed": 22,
+      "failed": 0,
+      "reporter_seconds": 247,
+      "protected_entries": 542,
+      "private_artifacts": "build/m53-cashier-lock-poco-20261027-040145",
+      "dv_awake_restored_exact": null
+    }
+  ],
+  "analyze": "No issues found! (ran in 6.1s)",
+  "format": "381 files, 0 changed",
+  "localization": {
+    "keys": 815,
+    "static_references": 540,
+    "original_requirement_ids": 245
+  },
+  "preservation_scope": "Audited pre-existing protected databases/no_backup hash endpoints with documented WorkManager/lease exclusions. No ordinary/Skybee update, reset/reseed, root or business sandbox copy.",
+  "unverified": [
+    "Native screen API smoke checks types; synthetic OS/lifecycle tests are not physical power-button/OEM keyboard evidence.",
+    "No biometric enrollment/OS lock configuration was changed.",
+    "Final ordinary/release build and Skybee in-place migration remain H.",
+    "C-H still active, G role/warehouse metadata and all portable additions not yet closed."
+  ],
+  "milestone_complete": false
+}
