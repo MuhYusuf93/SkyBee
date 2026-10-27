@@ -7,7 +7,19 @@ import '../../core/domain/contact_validation.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 24;
+  static const version = 25;
+
+  // Keep the original unit CHECK and all populated columns unchanged. The
+  // mutually exclusive addition works for products and immutable sale facts.
+  static final _onsMetadata = [
+    for (final suffix in ['', '_snapshot'])
+      '''ALTER TABLE ${suffix.isEmpty ? 'products' : 'sale_transaction_items'}
+      ADD COLUMN size_ons_milli$suffix INTEGER CHECK(
+        size_ons_milli$suffix IS NULL OR
+        (typeof(size_ons_milli$suffix)='integer' AND
+         size_ons_milli$suffix BETWEEN 1 AND 999999999999 AND
+         size_milli$suffix IS NULL AND size_unit$suffix IS NULL))''',
+  ];
 
   static Future<void> migrate(
     Database db,
@@ -43,6 +55,7 @@ final class Schema {
         22 => _members,
         23 => _productSearch,
         24 => cashDrawerSchema,
+        25 => _onsMetadata,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);

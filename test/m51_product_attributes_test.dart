@@ -23,7 +23,10 @@ void main() {
         shelf: ' A-01 ',
         note: ' first\nsecond ',
       );
-      expect(ProductAttributes.fromRow(value.toRow()).sizeText('id'), '0,5');
+      expect(
+        ProductAttributes.fromRow(value.toRow(extended: true)).sizeText('id'),
+        '0,5',
+      );
       expect(value.shelf, 'A-01');
       expect(value.note, 'first\nsecond');
     }

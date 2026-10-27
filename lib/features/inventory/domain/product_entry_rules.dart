@@ -1,14 +1,6 @@
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 
-/// Physical metadata uses a documented currency number convention, never the
-/// UI language or money scale. Stored thousandths do not change with language.
-String sizeNumberLanguage(String currency) => switch (currency) {
-  'IDR' => 'id',
-  'USD' || 'MYR' || 'EUR' => 'en',
-  _ => throw ArgumentError('Unsupported currency'),
-};
-
 /// Calendar arithmetic in the device local zone, including midnight/DST. This
 /// rule applies to newly entered dates; existing history is never rewritten.
 DateTime firstNewExpiry(DateTime now) {

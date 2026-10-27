@@ -1,5 +1,12 @@
 # Rencana milestone
 
+28Oktober — E ons25 tervalidasi: host31PASS59s+localeuang1PASS5s dan
+M52pelunasan1PASS10s; analyzer bersih5,9s/format448/0/l10n947/637/245.
+DV6PASS2:04/Poco6PASS1:19;724/655hash lama cocok/controlOff/awakeDVexact,
+source544 sama. .skybee+12/schema14 belum update/reset. Lanjut gudang/form,
+dokumen/supplier serta F/G/H sampai handoff. [Laporan](M53_ONS_REPORT.md),
+[checkpoint](M53_CHECKPOINT.md).
+
 28 Oktober — fondasi scanner kamera source24 tervalidasi: hostkamera12 dan
 regresi drawerUI6 PASS; searchUI retest2 PASS13s. Analyzer bersih6,1s,
 format443/0/l10n946/636/245. DV14 PASS3:10/Poco14 PASS2:24,715/646hash lama

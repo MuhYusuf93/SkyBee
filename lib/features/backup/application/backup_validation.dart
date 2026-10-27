@@ -220,10 +220,15 @@ final class BackupValidation {
     // metadata before accepting the staged archive, never in a Provider.
     for (final table in ['products', 'sale_transaction_items']) {
       final suffix = table == 'products' ? '' : '_snapshot';
+      final ons = schema >= 25 ? 'size_ons_milli$suffix,' : '';
       // Check lengths/types before fetching text. Even forged multi-megabyte
       // notes never enter a paged Dart result just to be rejected there.
       if ((await db.rawQuery(
         '''SELECT 1 FROM $table WHERE
+        ${schema < 25 ? '' : '''(size_ons_milli$suffix IS NOT NULL AND
+          (typeof(size_ons_milli$suffix)<>'integer' OR
+           size_ons_milli$suffix NOT BETWEEN 1 AND 999999999999 OR
+           size_milli$suffix IS NOT NULL OR size_unit$suffix IS NOT NULL)) OR'''}
         (size_milli$suffix IS NOT NULL AND
           (typeof(size_milli$suffix)<>'integer' OR
            size_milli$suffix NOT BETWEEN 1 AND 999999999999)) OR
@@ -241,7 +246,7 @@ final class BackupValidation {
       String? cursor;
       while (true) {
         final rows = await db.rawQuery(
-          '''SELECT id,size_milli$suffix,size_unit$suffix,
+          '''SELECT id,${ons}size_milli$suffix,size_unit$suffix,
           shelf_location$suffix,product_note$suffix FROM $table
           ${cursor == null ? '' : 'WHERE id COLLATE BINARY>?'}
           ORDER BY id COLLATE BINARY LIMIT 100''',

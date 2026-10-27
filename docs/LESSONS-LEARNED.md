@@ -456,3 +456,14 @@ input pada frame berikutnya. Helper perlu memastikan target masih hit-testable
 sesudah pump secara bounded, juga sebelum tiap enterText. Dua search UI gagal
 pada penambahan tombol kamera; assertion ranking/teks tetap, retest2PASS. Jangan
 mengubah backend data untuk menyelesaikan masalah text-client pengujian.
+
+122. Notifikasi controller dari MoneyField.didChangeDependencies dapat menandai
+ListenableBuilder dirty-form di atasnya saat build. Uji pergantian locale harus
+memakai form aktual, bukan hanya field sendiri. Tunda translasi teks+codec ke
+post-frame dengan revision/controller proof, pertahankan codec lama hingga
+translasi atomik dan composing selesai; jangan membuang pemeriksaan dirty.
+
+123. Helper seedSale hanya membuat header, bukan item. Pemeriksaan migrasi dan
+pemalsuan snapshot harus menanam item yang nyata di fixture baru. Regresi M52
+pelunasan harus memiliki member valid dan melewati deklarasi sumber D24 sebelum
+dialog final; jangan melemahkan aturan member atau menghapus stale-balance test.

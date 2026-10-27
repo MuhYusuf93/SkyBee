@@ -120,7 +120,7 @@ class _ProductFormState extends State<ProductForm> {
       _policyRequested = true;
       _loadPolicy();
     }
-    final language = sizeNumberLanguage(moneyCodec(context).policy.code);
+    final language = Localizations.localeOf(context).languageCode;
     if (_sizeLanguage != null &&
         _sizeLanguage != language &&
         size.text.trim().isNotEmpty) {
@@ -630,6 +630,7 @@ class _ProductFormState extends State<ProductForm> {
                   children: [
                     ManagedTextField(
                       controller: size,
+                      key: const ValueKey('product-size-input'),
                       inputFormatters: [SizeInputFormatter(_sizeLanguage!)],
                       enabled: !busy,
                       keyboardType: const TextInputType.numberWithOptions(
@@ -642,6 +643,7 @@ class _ProductFormState extends State<ProductForm> {
                     ),
                     DropdownButtonFormField<String>(
                       initialValue: sizeUnit,
+                      key: const ValueKey('product-size-unit'),
                       decoration: InputDecoration(
                         labelText: tr(context, 'm51Unit'),
                       ),
@@ -654,7 +656,11 @@ class _ProductFormState extends State<ProductForm> {
                           DropdownMenuItem(
                             value: unit,
                             child: Text(
-                              unit == 'l' ? tr(context, 'm51Liter') : unit,
+                              unit == 'l'
+                                  ? tr(context, 'm51Liter')
+                                  : unit == 'ons'
+                                  ? tr(context, 'm53Ons')
+                                  : unit,
                             ),
                           ),
                       ],

@@ -1,0 +1,94 @@
+{
+  "scope": "E ons/metadata locale schema25; broader warehouse/supplier E and F/G/H remain active",
+  "hostLogs": {
+    "ons-host-initial.txt": {
+      "sha256": "c3fba2ccb7e0101fa1279e1b2bbca0d5b39216c9b13f1e4ea97c3722da39d629",
+      "status": "FAIL",
+      "passed": 25,
+      "failed": 3,
+      "elapsed": "02:05"
+    },
+    "ons-host-retest.txt": {
+      "sha256": "fa9d2e6318ec4f01af259541616646f275c1ede792e0940aed210b9ad7ade927",
+      "status": "FAIL",
+      "passed": 4,
+      "failed": 2,
+      "elapsed": "00:11"
+    },
+    "ons-ui-retest.txt": {
+      "sha256": "451daca652f4b552bb3df7e1c3e59d7ddaee4a1ec03e6da42befd4fcda0ba51c",
+      "status": "FAIL",
+      "passed": 1,
+      "failed": 1,
+      "elapsed": "00:08"
+    },
+    "ons-ui-final.txt": {
+      "sha256": "5654cba34f96813d951a2b8cdfb8fae9beb24eecac37a553521e14a33304bddb",
+      "status": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:06"
+    },
+    "ons-host-final.txt": {
+      "sha256": "3be88ea85f5099b1c3655af7044b150f2a3f5868d5c72c8c7eb6c673954a4db7",
+      "status": "PASS",
+      "passed": 31,
+      "failed": 0,
+      "elapsed": "00:59"
+    },
+    "ons-m52-focused.txt": {
+      "sha256": "c4620a642fc1099aaf12d3aef1175ce168f955a76ce097d305daef8b0eb7bbd7",
+      "status": "FAIL",
+      "passed": 1,
+      "failed": 1,
+      "elapsed": "00:52"
+    },
+    "ons-m52-final.txt": {
+      "sha256": "b9f5307b54d7b9af35bc7f8fb285d13aa3765217865451de5e120f77ed19cbe1",
+      "status": "PASS",
+      "passed": 1,
+      "failed": 0,
+      "elapsed": "00:10"
+    },
+    "ons-money-ui.txt": {
+      "sha256": "1fa86216d785683c968519307fe1478b2649c2296b5f0747c1dc3d2cbedc610f",
+      "status": "NO_TESTS_MATCHED",
+      "passed": 0
+    },
+    "ons-money-ui-final.txt": {
+      "sha256": "522216e9a844a34cdf00ee91b1a05861db37aa1d1841761b770e17af4907da9e",
+      "status": "PASS",
+      "passed": 1,
+      "failed": 0,
+      "elapsed": "00:05"
+    },
+    "ons-analyze-final2.txt": {
+      "sha256": "7f36b15e4b1c7008a70516070054c2e4c59d8d3498eb8df178db0ad9c4b2aa98",
+      "summary": "No issues found! (ran in 5.9s)"
+    },
+    "ons-format-final.txt": {
+      "sha256": "6b62cb672e46c92d11cd1679c544d19977d6f5beb15155c6192d79773e7bcba2",
+      "summary": "Formatted 448 files (0 changed) in 1.33 seconds."
+    },
+    "ons-l10n.txt": {
+      "sha256": "5a5a0ca0111e6b3cf70edd839e1e6f8c3dc32bc3494e03c15b89b774cc781c09",
+      "summary": "OK: 947 bilingual semantic keys, matching metadata/placeholders; 637 static message references; 245 original requirement IDs."
+    },
+    "ons-pin.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137",
+      "summary": "PASS: 106 unchanged upstream files; APK license identical; Mbed TLS 3.6.7 archive pinned."
+    }
+  },
+  "failures": [
+    "Initial 25PASS3FAIL: two new snapshot tests had no seeded item; M52 new-debt fixture lacked a required member phone. Owned fixture cleanup failed after that test aborted.",
+    "Second 4 SQL PASS with 2 load failures: UI harness awaited void TestTextInput.hide; corrected.",
+    "UI1PASS1FAIL revealed real MoneyField notification during build; deferred atomic locale update fixed it; finalUI2PASS.",
+    "M52 focused1PASS1FAIL: old test omitted schema24 payment-source route; updated current flow without weakening stale-debt assertions; final1PASS.",
+    "One overly narrow localization filter matched no tests; corrected exact name ran1PASS, not counted as a pass before rerun."
+  ],
+  "limits": [
+    "No ordinary/exploration package update or reset",
+    "Portable recovery all M53 facts remains G",
+    "Native evidence recorded separately"
+  ]
+}

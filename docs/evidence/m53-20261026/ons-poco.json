@@ -1,0 +1,20 @@
+{
+  "run": "m53-ons-poco-20261028-062108",
+  "device": "7f0edea0",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 6,
+  "failed": 0,
+  "elapsed": "01:19",
+  "preExistingProtectedEntries": 655,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "not applied",
+  "sourceFiles": 544,
+  "sourceManifestSha256": "eb21fcfe81f2e6ea8595c2f6c0003ff86793bba65896a01ba41ca9fa1f4f4e26",
+  "runnerLogSha256": "d345d0eec4e2e62662731434bd90f98f3a9e8e9497ae0269ad27c73b01b7811d",
+  "beforeManifestSha256": "5144b2f2ce9f0d5be0f01a5a5ed9b5480426ba40901564a2e4389efdace2e8a4",
+  "afterManifestSha256": "f8b62d80e8926cfabb749844b97c0dcf6251bbcce10ee376004e16be3e6a6994"
+}

@@ -273,7 +273,7 @@ final class ReportExportService {
           while (true) {
             final rows = await sql.rawQuery(
               '''SELECT id,sku,barcode,name,stock_quantity,pack_size,base_unit_label,pack_label,size_milli,size_unit,
-            shelf_location,product_note,is_deleted,inventory_value_micros ${database.schemaVersion >= 17 ? ',cost_complete' : ''} ${database.schemaVersion >= 14 ? ',stock_tracking_enabled,reference_cost_micros' : ''} FROM products
+            shelf_location,product_note,is_deleted,inventory_value_micros ${database.schemaVersion >= 25 ? ',size_ons_milli' : ''} ${database.schemaVersion >= 17 ? ',cost_complete' : ''} ${database.schemaVersion >= 14 ? ',stock_tracking_enabled,reference_cost_micros' : ''} FROM products
             ${productCursor == null ? '' : 'WHERE id COLLATE BINARY>?'} ORDER BY id COLLATE BINARY LIMIT 100''',
               [?productCursor],
             );
@@ -296,8 +296,10 @@ final class ReportExportService {
                 'pcs_per_pack': row['pack_size'],
                 'base_unit': row['base_unit_label'],
                 'pack_label': row['pack_label'],
-                'size_milli': row['size_milli'],
-                'size_unit': row['size_unit'],
+                'size_milli': row['size_ons_milli'] ?? row['size_milli'],
+                'size_unit': row['size_ons_milli'] != null
+                    ? 'ons (100 g)'
+                    : row['size_unit'],
                 'shelf': row['shelf_location'],
                 'note': row['product_note'],
                 'archived': row['is_deleted'],

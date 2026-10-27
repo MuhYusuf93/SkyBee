@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Metadata ons100g dan parser ukuran M5.3 mengikuti locale UI terpisah dari
+currency, dengan migrasi aditif25 dan snapshot immutable:
+[keputusan implementasi](decisions/M53_ONS_LOCALE.md).
+
 Scanner kamera M5.3 mengikuti [kontrak kamera bersama](decisions/M53_BARCODE_CAMERA.md):
 lookup literal, konfirmasi/rearm, lifecycle/otorisasi dan pilihan EAN13/UPC eksplisit.
 

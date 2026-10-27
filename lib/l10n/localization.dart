@@ -431,6 +431,7 @@ String tr(BuildContext context, String key) {
     'm51Unit' => l.m51Unit,
     'm51NoUnit' => l.m51NoUnit,
     'm51Liter' => l.m51Liter,
+    'm53Ons' => l.m53Ons,
     'm51Shelf' => l.m51Shelf,
     'm51Note' => l.m51Note,
     'm51AttributesHelp' => l.m51AttributesHelp,

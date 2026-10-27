@@ -83,6 +83,7 @@ final class CashierStore {
       'product_note',
     ],
     if (schema >= 14) ...['stock_tracking_enabled', 'reference_expiry_date'],
+    if (schema >= 25) 'size_ons_milli',
   ];
 
   /// Ranked pages fetch at most 200 public products in a few platform calls.
@@ -92,6 +93,7 @@ final class CashierStore {
     DatabaseExecutor db,
     List<EntityId> ids, {
     required String today,
+    required int schema,
   }) async {
     if (ids.isEmpty) return const [];
     if (ids.length > 200) throw RangeError.range(ids.length, 1, 200);
@@ -99,7 +101,7 @@ final class CashierStore {
         marks = List.filled(ids.length, '?').join(',');
     final rows = await db.query(
       'products',
-      columns: _publicColumns(23),
+      columns: _publicColumns(schema),
       where: 'id IN($marks)',
       whereArgs: values,
     );
@@ -370,6 +372,7 @@ final class CashierStore {
           'shelf_location_snapshot',
           'product_note_snapshot',
         ],
+        if (schema >= 25) 'size_ons_milli_snapshot',
         if (schema >= 14) ...[
           'promo_snapshot_json',
           'gross_minor',

@@ -13,7 +13,7 @@ final class ProductAttributes {
     }
   }
   static const maxMilli = 999999999999;
-  static const units = ['g', 'kg', 'ml', 'l'];
+  static const units = ['g', 'kg', 'ml', 'l', 'ons'];
   final int? sizeMilli;
   final String? unit;
   final String? shelf;
@@ -57,19 +57,38 @@ final class ProductAttributes {
     return '${sizeMilli! ~/ 1000}${fraction.isEmpty ? '' : '${language == 'id' ? ',' : '.'}$fraction'}';
   }
 
-  Map<String, Object?> toRow({String suffix = ''}) => {
-    'size_milli$suffix': sizeMilli,
-    'size_unit$suffix': unit,
-    'shelf_location$suffix': shelf,
-    'product_note$suffix': note,
-  };
+  /// Ons means 100 grams, not an international ounce. Schema25 stores it in
+  /// an additive column so every legacy value and constraint remains intact.
+  /// Metadata never converts the integer stock quantity or sale price.
+  Map<String, Object?> toRow({String suffix = '', bool extended = false}) {
+    if (unit == 'ons' && !extended) {
+      throw const AppError('m51AttributesInvalid');
+    }
+    return {
+      'size_milli$suffix': unit == 'ons' ? null : sizeMilli,
+      'size_unit$suffix': unit == 'ons' ? null : unit,
+      if (extended) 'size_ons_milli$suffix': unit == 'ons' ? sizeMilli : null,
+      'shelf_location$suffix': shelf,
+      'product_note$suffix': note,
+    };
+  }
+
   factory ProductAttributes.fromRow(
     Map<String, Object?> row, {
     String suffix = '',
-  }) => ProductAttributes(
-    sizeMilli: row['size_milli$suffix'] as int?,
-    unit: row['size_unit$suffix'] as String?,
-    shelf: row['shelf_location$suffix'] as String?,
-    note: row['product_note$suffix'] as String?,
-  );
+  }) {
+    final ons = row['size_ons_milli$suffix'];
+    if ((ons != null &&
+            (row['size_milli$suffix'] != null ||
+                row['size_unit$suffix'] != null)) ||
+        row['size_unit$suffix'] == 'ons') {
+      throw const AppError('m51AttributesInvalid');
+    }
+    return ProductAttributes(
+      sizeMilli: (ons ?? row['size_milli$suffix']) as int?,
+      unit: ons != null ? 'ons' : row['size_unit$suffix'] as String?,
+      shelf: row['shelf_location$suffix'] as String?,
+      note: row['product_note$suffix'] as String?,
+    );
+  }
 }

@@ -1,0 +1,20 @@
+{
+  "run": "m53-ons-dv-20261028-061631",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 6,
+  "failed": 0,
+  "elapsed": "02:04",
+  "preExistingProtectedEntries": 724,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 544,
+  "sourceManifestSha256": "eb21fcfe81f2e6ea8595c2f6c0003ff86793bba65896a01ba41ca9fa1f4f4e26",
+  "runnerLogSha256": "58b9f42417c46c72c6290353db36af0c647ede5cd0058de66f5ce8e4fbf305ef",
+  "beforeManifestSha256": "71fc5f290eede81369560fbcb9e5df48e1c00fde463fb0dd84ea4168cc2aa9a6",
+  "afterManifestSha256": "d8961bc2cbf436cc37f46e533d752881f70898b531b4487d4f9ecfd3915eabd2"
+}

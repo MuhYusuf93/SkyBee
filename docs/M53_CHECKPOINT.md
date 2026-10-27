@@ -1,5 +1,35 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## E ons25 selesai sesuai scope — lanjut gudang dan sisa E–H
+
+28Oktober06:26 — ons source25 host31PASS59s +localeuang1PASS5s dan
+M52pelunasan1PASS10s; analyzer bersih5,9s/format448/0/l10n947/637/245.
+DV6PASS2:04/Poco6PASS1:19;724/655hash lama cocok/controlOff/awakeDVexact.
+Source544 identik, kedua wrapper exit0, tidak ada runner aktif. Laporan/bukti
+ons lengkap; .skybee+12/schema14 tanpa update/reset. Sesudah normalcommit/push
+lanjut schema26 browse/master supplier/form, lalu dokumen/supplier dan F/G/H.
+Rincian serta kandidat query private: build/m53/warehouse-next-notes.md dan
+warehouse_{filter,query}.next.dart. Belum implementasi/tes. Jangan memakai
+ons_source_snapshot.py untuk membekukan source baru; simpan manifest baru.
+
+## E ons25 — host/native DV selesai, Poco aktif
+
+28Oktober06:21 — source0.5.2+12/schema25 ons100g+locale terpisahcurrency.
+Host31PASS59s, localeuang1PASS5s, M52pelunasan1PASS10s; analyzer bersih5,9s,
+format448/0/l10n947/637/245/PIN106match. DV6PASS2:04/724hash lama cocok,
+controlOff/awakeexact. Source544match; Poco wrapper shell97095 aktif
+build/m53/ons-poco-wrapper.txt. Jangan edit maintained source hingga selesai
+dan ons_source_snapshot.py --verify. .skybee+12/schema14 belum update/reset.
+[Laporan ons](M53_ONS_REPORT.md), [bukti host](evidence/m53-20261026/ons-host-validation.json).
+SesudahPoco: kurasi ons-poco.json, simpan source544, finaldocs/normalcommit/push
+lalu gudang/schema26, forms/harga beli, dokumen/supplier serta F/G/H tetapaktif.
+Detail berikut build/m53/warehouse-next-notes.md; query/domain kandidat di
+build/m53/warehouse_{query,filter}.next.dart BELUM diterapkan/diuji. Audit nyata:
+products belum punya suppliermaster, hanyareceipt.supplier_id; tambahopsional
+master_supplier_id, jangan infer dari receiptlama. PromotionsScreen memakai
+InventoryService.page(CatalogFilter) jadi pertahankan alphabetical adapter itu
+atau pindahkan secara sengaja. Scanner e1100f5 sebelumnya sudahpush/verified.
+
 ## E fondasi scanner selesai sesuai scope — lanjut gudang/form/ons
 
 28 Oktober — fondasi scanner kamera source24 tervalidasi: hostkamera12 dan

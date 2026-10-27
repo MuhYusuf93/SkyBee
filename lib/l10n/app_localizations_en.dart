@@ -1843,6 +1843,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get m51Liter => 'liter';
 
   @override
+  String get m53Ons => 'ons (100 g)';
+
+  @override
   String get m51Shelf => 'Shelf location';
 
   @override

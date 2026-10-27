@@ -163,8 +163,7 @@ void m52FormsSuite(DatabaseFactory factory) {
   test(
     'size formatter preserves accepted selection and rejects invalid paste whole',
     () {
-      for (final currency in ['IDR', 'USD', 'MYR', 'EUR']) {
-        final language = sizeNumberLanguage(currency);
+      for (final language in ['id', 'en']) {
         final separator = language == 'id' ? ',' : '.';
         final formatter = SizeInputFormatter(language);
         const old = TextEditingValue(
@@ -610,7 +609,10 @@ void m52FormsSuite(DatabaseFactory factory) {
           cart.revision,
           const CheckoutInput(
             mode: PaymentMode.debt,
-            customer: CustomerChoice(name: 'PUBLIC debtor'),
+            customer: CustomerChoice(
+              name: 'PUBLIC debtor',
+              phone: '+6281234567890',
+            ),
           ),
         );
         customer = (await app.receivables.customers()).items.single;
@@ -659,6 +661,23 @@ void m52FormsSuite(DatabaseFactory factory) {
       final record = find.widgetWithText(FilledButton, 'Record payment');
       await tester.ensureVisible(record);
       await tester.tap(record);
+      // Schema24 adds an explicit monetary source before confirmation. Keep
+      // this stale-balance assertion on the actual current public flow.
+      final external = find.byKey(const ValueKey('payment-source-external'));
+      await drain(tester, () => external.evaluate().isNotEmpty);
+      await tester.ensureVisible(external);
+      await tester.tap(external);
+      final declaration = find.byKey(
+        const ValueKey('payment-declaration-save'),
+      );
+      await drain(
+        tester,
+        () =>
+            declaration.evaluate().isNotEmpty &&
+            tester.widget<FilledButton>(declaration).onPressed != null,
+      );
+      await tester.ensureVisible(declaration);
+      await tester.tap(declaration);
       await drain(
         tester,
         () => find.text('Record this payment').evaluate().isNotEmpty,

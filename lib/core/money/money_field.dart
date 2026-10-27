@@ -94,6 +94,7 @@ class MoneyField extends StatefulWidget {
 class _MoneyFieldState extends State<MoneyField> {
   MoneyCodec? previous;
   MoneyCodec? pending;
+  int _localeRevision = 0;
   late final focus = widget.focusNode ?? FocusNode();
   @override
   void initState() {
@@ -129,12 +130,34 @@ class _MoneyFieldState extends State<MoneyField> {
       context,
       currency: widget.currency ?? previous?.policy,
     );
+    final revision = ++_localeRevision;
     if (!widget.controller.value.composing.isCollapsed) {
       pending = next;
       previous ??= next;
       if (widget.controller case final MoneyEditingController controller) {
         controller.codec ??= previous;
       }
+      return;
+    }
+    if (previous != null &&
+        previous!.locale != next.locale &&
+        widget.controller.text.isNotEmpty) {
+      // Form dirty listeners can live above this field. Translate after build
+      // so notifying its controller never marks an already built ancestor.
+      // Keep the old codec until text and codec can change together; a queued
+      // callback for an older locale/controller must not overwrite newer input.
+      pending = next;
+      final controller = widget.controller;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted ||
+            revision != _localeRevision ||
+            !identical(controller, widget.controller) ||
+            pending != next ||
+            !controller.value.composing.isCollapsed) {
+          return;
+        }
+        setState(() => relocalize(next));
+      });
       return;
     }
     relocalize(next);

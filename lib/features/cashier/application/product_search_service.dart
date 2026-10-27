@@ -293,6 +293,7 @@ final class ProductSearchService implements PagedProductSearch {
             .map((row) => EntityId(row['id'] as String))
             .toList(),
         today: day,
+        schema: database.schemaVersion,
       );
       if (store.clock.today(zone).iso != day) {
         throw const AppError('m3DraftChanged');

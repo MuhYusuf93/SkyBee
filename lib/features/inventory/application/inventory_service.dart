@@ -206,7 +206,9 @@ final class InventoryService {
       'pack_label': packLabel,
       'pack_size': input.packSize,
       if (database.schemaVersion >= 9)
-        ...(input.attributes ?? ProductAttributes()).toRow(),
+        ...(input.attributes ?? ProductAttributes()).toRow(
+          extended: database.schemaVersion >= 25,
+        ),
       if (database.schemaVersion >= 14) 'shelf_id': input.shelfId?.value,
       // A master rename can happen while this draft is open. Resolve its stable
       // ID inside the write transaction instead of restoring a stale UI label.

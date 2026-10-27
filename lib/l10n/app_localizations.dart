@@ -3392,6 +3392,12 @@ abstract class AppLocalizations {
   /// **'liter'**
   String get m51Liter;
 
+  /// Indonesian metadata unit, not an ounce or fractional stock unit.
+  ///
+  /// In en, this message translates to:
+  /// **'ons (100 g)'**
+  String get m53Ons;
+
   /// M5.1 management, printer or inventory interface. English meaning: Shelf location
   ///
   /// In en, this message translates to:
