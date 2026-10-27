@@ -1,0 +1,65 @@
+{
+  "run": "m53-search-dv-20261028-000310",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "",
+  "runnerStatus": "FAILED_OR_BLOCKED",
+  "passed": 11,
+  "failed": 2,
+  "elapsed": "06:53",
+  "preExistingProtectedEntries": 666,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 494,
+  "sourceManifestSha256": "f9c5152c23eceff7ff4acea74f393d92feb99056d05075553e6c09f4badfd945",
+  "runnerLogSha256": "8200f35ba9d99d5c6327ad06f75c94f19573a9fad3b006d8b1380550a7d81392",
+  "beforeManifestSha256": "240c1ce7abf0db4d3bdc0c3281aff4f55594186ad8dced002dd2ea622796ff4e",
+  "afterManifestSha256": "7328d19563cd7c06c764ef7dfe90d5560bd4cee39d85901cdb83208d9d9d88bc",
+  "benchmark": {
+    "products": 1000,
+    "sales": 2000,
+    "items": 2000,
+    "warmup": 1,
+    "seedMicroseconds": 10347128,
+    "coldMicroseconds": 101619242,
+    "samplesMicroseconds": {
+      "first": [
+        1200376,
+        1198988,
+        1198988,
+        1199921,
+        1199682
+      ],
+      "next": [
+        1221153,
+        1198582,
+        1220974,
+        1218257,
+        1219750
+      ],
+      "far": [
+        1199207,
+        1220776,
+        1219556,
+        1200291,
+        1198122
+      ]
+    },
+    "medianMicroseconds": {
+      "first": 1199682,
+      "next": 1219750,
+      "far": 1200291
+    },
+    "scope": "Native integration debug; cold includes dirty term/cache build, warm includes transaction and public DTO reads",
+    "loadLimit": "User reports possible concurrent CCTV live stream on DV; workload not isolated or changed",
+    "queryPlanUses": [
+      "sale_transactions_history",
+      "sale_transaction_items_parent",
+      "cashier_terms_prefix",
+      "stock_batches_sale_fefo"
+    ],
+    "temporaryGroupingSorting": true
+  }
+}

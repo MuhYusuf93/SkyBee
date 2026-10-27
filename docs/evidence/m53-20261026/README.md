@@ -22,3 +22,14 @@ Kunci Kasir20 ditutup27Oktober: [bukti](cashier-lock-validation.json) dan
 [source checksums](cashier-lock-source-sha256.json). DV22/Poco22 PASS, seluruh
 hash interval sama/controlOff; OS synthetic vs native APItype scope dibedakan.
 C–H tetap aktif dan Paket Eksplorasi Mandiri belum diupdate/reset.
+
+
+## Checkpoint pencarian C schema23 — 28Oktober2026
+
+[Ringkasan](search-validation.json), [DVakhir](search-batched-dv.json),
+[Pocoakhir](search-batched-poco.json), [source494](search-source-sha256.json).
+Native13 per perangkat PASS, semua680/611hash lama cocok/controlOff/awakeDVexact.
+[DVawal11P2F](search-initial-dv.json) dan
+[focused UI0P1F](search-focused-ui-failed-dv.json) tetap disimpan, bukan PASS.
+Query plan/timings synthetic debug dan beban CCTV tidak diisolasi; lihat
+[laporan/batas](../../M53_SEARCH_REPORT.md). D–H/handoff eksplorasi masih aktif.

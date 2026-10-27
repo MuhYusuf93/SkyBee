@@ -6,7 +6,7 @@ import '../../core/domain/contact_validation.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 22;
+  static const version = 23;
 
   static Future<void> migrate(
     Database db,
@@ -40,6 +40,7 @@ final class Schema {
         20 => _cashierLock,
         21 => _tenderIntent,
         22 => _members,
+        23 => _productSearch,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
@@ -155,6 +156,42 @@ final class Schema {
 
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
+
+  /// Reconstructible ranking metadata is separate from sales and from the
+  /// durable cart pointer. Cache writes do not invalidate themselves.
+  static final _productSearch = [
+    '''CREATE TABLE cashier_search_versions(id INTEGER PRIMARY KEY CHECK(id=1),
+      catalogue_epoch INTEGER NOT NULL DEFAULT 1 CHECK(typeof(catalogue_epoch)='integer' AND catalogue_epoch>0),
+      sale_epoch INTEGER NOT NULL DEFAULT 1 CHECK(typeof(sale_epoch)='integer' AND sale_epoch>0))''',
+    'INSERT INTO cashier_search_versions(id) VALUES(1)',
+    '''CREATE TABLE cashier_popularity_window(id INTEGER PRIMARY KEY CHECK(id=1),
+      cache_revision INTEGER NOT NULL DEFAULT 0 CHECK(typeof(cache_revision)='integer' AND cache_revision>=0),
+      sale_epoch INTEGER NOT NULL DEFAULT 0 CHECK(typeof(sale_epoch)='integer' AND sale_epoch>=0),
+      window_from INTEGER NOT NULL DEFAULT 0 CHECK(typeof(window_from)='integer' AND window_from>=0),
+      window_through INTEGER NOT NULL DEFAULT 0 CHECK(typeof(window_through)='integer' AND window_through>=window_from),
+      expires_at INTEGER NOT NULL DEFAULT 0 CHECK(typeof(expires_at)='integer' AND expires_at>=window_through))''',
+    'INSERT INTO cashier_popularity_window(id) VALUES(1)',
+    '''CREATE TABLE cashier_product_popularity(product_id TEXT PRIMARY KEY NOT NULL
+      REFERENCES products(id) ON DELETE RESTRICT,
+      receipts INTEGER NOT NULL CHECK(typeof(receipts)='integer' AND receipts>0),
+      net_quantity INTEGER NOT NULL CHECK(typeof(net_quantity)='integer' AND net_quantity>0))''',
+    for (final table in [
+      'products',
+      'stock_batches',
+      'categories',
+      'product_aliases',
+    ])
+      for (final event in ['INSERT', 'UPDATE', 'DELETE'])
+        '''CREATE TRIGGER search_epoch_${table}_${event.toLowerCase()}
+          AFTER $event ON $table BEGIN UPDATE cashier_search_versions
+          SET catalogue_epoch=catalogue_epoch+1 WHERE id=1; END''',
+    '''CREATE TRIGGER search_epoch_settings AFTER UPDATE OF time_zone,currency_code,currency_scale
+      ON store_settings BEGIN UPDATE cashier_search_versions SET catalogue_epoch=catalogue_epoch+1 WHERE id=1; END''',
+    for (final table in ['sale_transactions', 'sale_transaction_reversals'])
+      '''CREATE TRIGGER search_sale_epoch_$table AFTER INSERT ON $table BEGIN
+        UPDATE cashier_search_versions SET catalogue_epoch=catalogue_epoch+1,
+          sale_epoch=sale_epoch+1 WHERE id=1; END''',
+  ];
 
   /// Stable member IDs and legacy raw phones survive upgrades. Phone indexes
   /// remain nonunique because legacy collisions need explicit owner repair.

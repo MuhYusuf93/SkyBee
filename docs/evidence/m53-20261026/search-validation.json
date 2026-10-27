@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-28",
+  "checkpoint": "M53-C product search; D-H remain active",
+  "sourceVersion": "0.5.2+12",
+  "schema": 23,
+  "explorationUpdated": false,
+  "frozenSourceFiles": 494,
+  "host": {
+    "currentRegression": {
+      "passed": 51,
+      "elapsed": "00:14",
+      "searchCasesIncluded": 17
+    },
+    "m52Focus": {
+      "passed": 1,
+      "elapsed": "00:13"
+    },
+    "previousSourceBroaderRegression": {
+      "passed": 82,
+      "elapsed": "00:58",
+      "supersededForSearchByCurrentRegression": true
+    },
+    "analyze": {
+      "result": "No issues found",
+      "seconds": 49.1
+    },
+    "format": {
+      "files": 408,
+      "changed": 0
+    },
+    "localization": {
+      "keys": 852,
+      "staticReferences": 566,
+      "originalRequirementIds": 245
+    }
+  },
+  "native": [
+    "m53-search-batched-dv-20261028-002704",
+    "m53-search-batched-poco-20261028-003440"
+  ],
+  "failureHistory": [
+    "search-initial-dv.json",
+    "search-focused-ui-failed-dv.json"
+  ],
+  "limits": [
+    "Native widget input/reveal/resize is automated, not physical gestures or OEM keyboard evidence",
+    "Debug synthetic 1000 products/2000 sales/2000 items; no peak-RAM or release latency claim",
+    "Possible simultaneous CCTV stream on DV was user-reported and not isolated or changed",
+    "Ranking/grouping still depends on candidate/window size; no O(1) claim",
+    "Portable all-features restore, final ordinary/release builds and in-place exploration upgrade remain G/H"
+  ]
+}

@@ -16,6 +16,7 @@ import '../../management/presentation/management_role_picker.dart';
 import '../../receivables/presentation/receivables_screen.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/cashier_models.dart';
+import '../domain/product_search_page.dart';
 import 'cart_provider.dart';
 import 'product_search_provider.dart';
 import 'checkout_screen.dart';
@@ -46,7 +47,8 @@ class _CashierBody extends StatefulWidget {
   State<_CashierBody> createState() => _CashierBodyState();
 }
 
-class _CashierBodyState extends State<_CashierBody> {
+class _CashierBodyState extends State<_CashierBody>
+    with WidgetsBindingObserver {
   String? name;
   String zone = 'Asia/Jakarta';
   SaleReceipt? receipt;
@@ -72,6 +74,7 @@ class _CashierBodyState extends State<_CashierBody> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     searchFocus.dispose();
     super.dispose();
   }
@@ -79,7 +82,15 @@ class _CashierBodyState extends State<_CashierBody> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _preferences();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<ProductSearchProvider>().refresh();
+    }
   }
 
   Future<void> _preferences() async {
@@ -447,7 +458,17 @@ class _SearchPane extends StatefulWidget {
 }
 
 class _SearchPaneState extends State<_SearchPane> {
-  final input = TextEditingController();
+  late final TextEditingController input;
+  @override
+  void initState() {
+    super.initState();
+    // The responsive layout can recreate this pane while the flow-owned search
+    // remains alive. Reattach its current text rather than showing an empty box.
+    input = TextEditingController(
+      text: context.read<ProductSearchProvider>().query,
+    );
+  }
+
   FocusNode get focus => widget.focusNode;
   String? addError;
   Future<void> add(CashierProduct product, {int? version}) async {
@@ -478,6 +499,7 @@ class _SearchPaneState extends State<_SearchPane> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ManagedTextField(
+          key: const ValueKey('cashier-product-search'),
           controller: input,
           focusNode: focus,
           onTapOutside: (_) => focus.unfocus(),
@@ -511,6 +533,73 @@ class _SearchPaneState extends State<_SearchPane> {
             ),
           ),
         ),
+        if (search.supportsPages && search.query.trim().isNotEmpty)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: TextButton.icon(
+                  key: const ValueKey('product-search-order'),
+                  icon: const Icon(Icons.sort),
+                  label: Text(
+                    tr(
+                      context,
+                      search.order == ProductSearchOrder.frequent
+                          ? 'm53SearchFrequent'
+                          : 'm53SearchRelevance',
+                    ),
+                  ),
+                  onPressed: () async {
+                    final selected = await showDialog<ProductSearchOrder>(
+                      context: context,
+                      builder: (context) => SimpleDialog(
+                        title: Text(tr(context, 'm53SearchOrder')),
+                        children: [
+                          for (final order in ProductSearchOrder.values)
+                            SimpleDialogOption(
+                              onPressed: () => Navigator.pop(context, order),
+                              child: Text(
+                                tr(
+                                  context,
+                                  order == ProductSearchOrder.frequent
+                                      ? 'm53SearchFrequent'
+                                      : 'm53SearchRelevance',
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
+                    if (mounted && selected != null) search.setOrder(selected);
+                  },
+                ),
+              ),
+              IconButton(
+                tooltip: tr(context, 'm53SearchHelpTitle'),
+                icon: const Icon(Icons.help_outline),
+                onPressed: () => showDialog<void>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(tr(context, 'm53SearchHelpTitle')),
+                    content: SingleChildScrollView(
+                      child: Text(tr(context, 'm53SearchHelp')),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(tr(context, 'close')),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              IconButton(
+                tooltip: tr(context, 'm53SearchRefresh'),
+                onPressed: search.loading ? null : search.refresh,
+                icon: const Icon(Icons.refresh),
+              ),
+            ],
+          ),
         if (search.loading) const LinearProgressIndicator(),
         if (search.error != null || addError != null)
           Text(tr(context, addError ?? search.error!)),
@@ -524,8 +613,17 @@ class _SearchPaneState extends State<_SearchPane> {
             constraints: const BoxConstraints(maxHeight: 240),
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: search.results.length,
+              itemCount: search.results.length + (search.hasMore ? 1 : 0),
               itemBuilder: (context, index) {
+                if (index == search.results.length) {
+                  return TextButton(
+                    key: const ValueKey('product-search-more'),
+                    onPressed: search.loadingMore ? null : search.more,
+                    child: search.loadingMore
+                        ? const Center(child: CircularProgressIndicator())
+                        : Text(tr(context, 'm53SearchMore')),
+                  );
+                }
                 final product = search.results[index];
                 return ListTile(
                   title: Text(product.name),

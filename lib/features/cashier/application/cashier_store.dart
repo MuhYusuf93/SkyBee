@@ -61,36 +61,98 @@ final class CashierStore {
     return rows.single;
   }
 
+  static List<String> _publicColumns(int schema) => [
+    'id',
+    'name',
+    'sku',
+    'barcode',
+    'selling_price_rupiah',
+    'wholesale_price_minor',
+    'stock_quantity',
+    'revision',
+    'stock_revision',
+    'currency_code',
+    'currency_scale',
+    'is_deleted',
+    'expiry_enabled',
+    if (schema >= 9) ...[
+      'size_milli',
+      'size_unit',
+      'shelf_location',
+      'product_note',
+    ],
+    if (schema >= 14) ...['stock_tracking_enabled', 'reference_expiry_date'],
+  ];
+
+  /// Ranked pages fetch at most 200 public products in a few platform calls.
+  /// The exact same whitelist is used by single-product reads; costs never enter
+  /// a public search DTO. The caller owns one transaction and store-date proof.
+  Future<List<CashierProduct>> publicProductPage(
+    DatabaseExecutor db,
+    List<EntityId> ids, {
+    required String today,
+  }) async {
+    if (ids.isEmpty) return const [];
+    if (ids.length > 200) throw RangeError.range(ids.length, 1, 200);
+    final values = ids.map((id) => id.value).toList(),
+        marks = List.filled(ids.length, '?').join(',');
+    final rows = await db.query(
+      'products',
+      columns: _publicColumns(23),
+      where: 'id IN($marks)',
+      whereArgs: values,
+    );
+    final promotions = await db.query(
+      'quantity_promotions',
+      where: 'product_id IN($marks) AND active=1 AND is_deleted=0',
+      whereArgs: values,
+    );
+    final promoByProduct = {
+      for (final row in promotions)
+        row['product_id'] as String: QuantityPromotion.fromRow(row).snapshot,
+    };
+    final batches = await db.rawQuery(
+      '''SELECT product_id,SUM(remaining_quantity) AS eligible
+      FROM stock_batches WHERE product_id IN($marks) AND (expiry_date IS NULL OR expiry_date>?)
+      GROUP BY product_id''',
+      [...values, today],
+    );
+    final eligible = {
+      for (final row in batches)
+        row['product_id'] as String: row['eligible'] as int,
+    };
+    final byId = <String, CashierProduct>{};
+    for (final source in rows) {
+      final row = Map<String, Object?>.of(source), id = source['id'] as String;
+      row['promotion_json'] = promoByProduct[id];
+      final tracked = row['stock_tracking_enabled'] != 0,
+          expiry = row['expiry_enabled'] == 1;
+      var saleable = row['stock_quantity'] as int;
+      if (tracked && expiry && (eligible[id] ?? 0) < saleable) {
+        saleable = eligible[id] ?? 0;
+      }
+      final reference = row['reference_expiry_date'] as String?;
+      final expired =
+          !tracked &&
+          expiry &&
+          reference != null &&
+          reference.compareTo(today) <= 0;
+      row['reference_expired'] = expired ? 1 : 0;
+      byId[id] = CashierProduct(row, expired ? 0 : saleable);
+    }
+    return List.unmodifiable(
+      ids.map(
+        (id) => byId[id.value] ?? (throw const AppError('productNotFound')),
+      ),
+    );
+  }
+
   Future<CashierProduct> product(DatabaseExecutor db, EntityId id) async {
     final schema =
         (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
     final rows = await db.query(
       'products',
-      columns: [
-        'id',
-        'name',
-        'sku',
-        'barcode',
-        'selling_price_rupiah',
-        'wholesale_price_minor',
-        'stock_quantity',
-        'revision',
-        'stock_revision',
-        'currency_code',
-        'currency_scale',
-        'is_deleted',
-        'expiry_enabled',
-        if (schema >= 9) ...[
-          'size_milli',
-          'size_unit',
-          'shelf_location',
-          'product_note',
-        ],
-        if (schema >= 14) ...[
-          'stock_tracking_enabled',
-          'reference_expiry_date',
-        ],
-      ],
+      columns: _publicColumns(schema),
       where: 'id=?',
       whereArgs: [id.value],
     );
@@ -112,13 +174,15 @@ final class CashierStore {
       final today = clock
           .today((await settings(db))['time_zone'] as String)
           .iso;
-      final expired =
+      final eligible =
           (await db.rawQuery(
-                'SELECT COALESCE(SUM(remaining_quantity),0) AS quantity FROM stock_batches WHERE product_id=? AND expiry_date<=?',
+                'SELECT COALESCE(SUM(remaining_quantity),0) AS quantity FROM stock_batches WHERE product_id=? AND (expiry_date IS NULL OR expiry_date>?)',
                 [id.value, today],
               )).single['quantity']
               as int;
-      saleable -= expired;
+      // An unallocated legacy quantity is not evidence of an eligible batch.
+      // Checkout needs those batches too; fail closed without rewriting stock.
+      if (eligible < saleable) saleable = eligible;
     }
     // Expiry is eligibility, independent of whether quantity is tracked. The
     // sentinel must not bypass a retained reference date after mode changes.

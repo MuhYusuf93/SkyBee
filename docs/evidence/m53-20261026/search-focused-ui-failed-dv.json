@@ -1,0 +1,20 @@
+{
+  "run": "m53-search-ui-dv-20261028-001713",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "M53 search id frequent/relevance/help/paging/exact code",
+  "runnerStatus": "FAILED_OR_BLOCKED",
+  "passed": 0,
+  "failed": 1,
+  "elapsed": "01:11",
+  "preExistingProtectedEntries": 679,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 494,
+  "sourceManifestSha256": "6293d65a2e152a1e71aed04c5a325f8e2acc94f1fc73a4745fa3a8060005adff",
+  "runnerLogSha256": "c8987c78a4208ab0ffe83447b389371a72d957016e7cd2731f0be4a63a84239b",
+  "beforeManifestSha256": "7328d19563cd7c06c764ef7dfe90d5560bd4cee39d85901cdb83208d9d9d88bc",
+  "afterManifestSha256": "1f657a565c893bea87f19918f35a4df1914e6cae2b8563407a495e7438a592b2"
+}

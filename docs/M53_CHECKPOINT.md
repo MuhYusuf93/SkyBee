@@ -1,5 +1,105 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Csearch23 tervalidasi — commit/push lalu D24
+
+28Oktober: nativeDV13 PASS3:31/Poco13 PASS2:52. Semua680/611hashprotectedlama
+sama/controlOff/awakeDVexact; wrapper4621/61834exit0. Source494masihidentik,
+freezeberakhir. Host51 PASS14s+M52focus1 PASS13s/analyze49,1s/format4080/
+l10n852/566/245. ReportM53_SEARCH_REPORT dan curatelevidence/search* lengkap,
+dua failureNativeawal11P2F/0P1F tetapdicatat; CCTVloadbelumdiisolasi.
+Normalcommitpush23 sekarang, verifikasi remote, lalu Dcashdrawer sampai E–H.
+
+D belumappsource: build/m53/drawer-next-design.md +7 .next.dart candidates
+(pieces,models,SQLschema,ledger,service,pieces_screen,SQLsuite). Belumcompile/
+test, perlu review dan coupling checkout/repayment/refund/backup/UI. Copysekali
+ke paths tepat sesudahcommit23; schema24 aditif mencakup draftchange/session,
+tenderchange,payment_cash_sources sekaligus. Jangan expose enableUI sebelum
+financialcoupling lengkap; offdefault. Tidak ada sourceD24yangsudahdirilis.
+.skybee+12/schema14 tanpa update/reset/reseed; finalHinstall-r masihbelum.
+
+## Csearch23 DV13 PASS — Poco13 source494 identik berjalan
+
+DV m53-search-batched-dv-20261028-00270413 PASS3:31, semua680hashlama cocok,
+controlOff/awakeexact, wrapper4621exit0. Source494 verifyMATCH. Curated
+search-batched-dv.json tersedia. Cold1000produk/2000sale1,959s (awal101,619s),
+warmmedian first0,299s/next0,300s/far0,299s (awal~1,2s); CCTVloadtidakdiisolasi.
+UI helper resize/reveal/dispatch dan apptextpreservation teruji DV2.
+Poco wrapper61834 kini aktif build/m53/search-batched-poco-native.txt, folder
+namaaktual baca build/m53-search-batched-poco-*. FREEZEsource494 sampaifinally.
+Host51PASS14s+M52focus1PASS13s/analyze49,1s/format4080/l10n852/566/245.
+SesudahPoco: curate/docfinal/audit/normalcommitpush23 → Dcore+financialcoupling
+dan E–H. D6privatecandidate .next.dart dan design di build/m53 belumappsource.
+User .skybee+12/14 tanpa update/reset/reseed. Jangan menyatakan M5.3 selesai.
+
+## Csearch23 final host51+focus1 PASS — DV13 batched/responsive dimulai
+
+28Oktober: sourcebatched/responsive host51 PASS14s (search17 overlap), M5.2focus
+terarah1 PASS13s, analyzeNoissues49,1s, format408/0/l10n852/566/245. UIhelper
+reveal inputlazy+resizepump+assertdispatch dan roundtrip1000/320; UI2 PASS10s.
+Source494 freeze diperbarui sekarang; native13 batchedDV berikut laluPoco13
+sourceidentik. Sebelum edit selanjutnya tutupwrapper/finally/hash/controlOff dan
+verify source. InitialDV11P2F6:53/focused0P1F1:11 terkurasi JSONdi evidence,
+seluruh666/679hashlama sama/awakeexact. Jangan menyebut kedua run awalPASS.
+Rancangan D di build/m53/drawer-next-design.md plus4 .next.dart candidates,
+belumappsource. .skybee+12/14tetap; C→D–H sampai handoff masihaktif.
+
+## Csearch23 focused DV UI1 FAIL — responsive text-client diperbaiki
+
+Focused m53-search-ui-dv-20261028-0017130PASS1FAIL1:11 tetap waitfirstquery,
+bukan exceptionSQL yang sudah disurfaced. Wrapper47973exit1/controlOff/hashlama
+sama/awakeexact. Source494 cocok. UI helper kini pump resize sebelum focus
+current textclient, assertquerydispatch. App_SearchPane reattach Provider.query
+ketika responsivewide/narrow subtree dibuatulang agar kotak tidak kehilangantext.
+Tambahan UI resize roundtripassert. Perlu hostUI2 dan focusedDVretet sebelum
+final13/sourcefreezeDV/Poco. Bulk host51PASS15s; setelah fixconflicttargetPKtriple
+host13PASS12s (source exactAppError/aliaspaging fixtures). analyze116,1sclean
+sebelum responsivechange. FailedSQLinvocation13gagalkarenaONCONFLICTtarget2kolom
+tidak cocokPK3; reverted INSERTignore asli; semantic MINprioritytetapdiverifikasi.
+.skybee+12/14tetap; Dprivatecandidatebelumsource; C→D–Hsemuaaktif.
+
+## Csearch23 DV11PASS2FAIL — perbaikan performa dan diagnosis UI aktif
+
+DV initial m53-search-dv-20261028-000310: SQL11 PASS, UI2 FAIL pada penantian
+firstquery;11PASS2FAIL6:53 bukan suitePASS. Wrapper17524 exit1/finallycontrolOff,
+semua hash lama sama/awakeexact; source494identik sepanjangrun (initialmanifest
+privat search-source-initial-dv.json). DV benchmark1000/2000: cold101619242µs,
+warm~1,2s. Pengguna menyebut kemungkinan DV digunakan live streamCCTV; belum
+diukur terpisah/penyebab tunggal belum terbukti. Tidak mengubahstream/perangkat.
+
+Sesudah finally source dibuka: _refresh kini products100/aliases250/batch250,
+pageDTO<=200 whitelist dalam3query, bukan banyak IPCperproduct. Hostretet51
+berjalan build/m53/search-batched-host.txt session4708. Providersemanticerror
+dan UIwait fail-fast ditambah untuk diagnosisfirstquery; analyzer/focusednative
+berikut sebelum full13 kedua sourcefrozenDV/Poco. Tidak nativePoco23 yet.
+Rancangan Dprivat +2candidate .next.dart di build/m53 belumappimplementation.
+.skybee+12/schema14 tanpa update/reset/reseed; terus C→D–H sampaihandoff.
+
+## Csearch23 host82+focused1 PASS — native13 akan dimulai
+
+28Oktober: regresi terkait82 PASS58s, termasuk search16 (SQL10/Provider4/UI2).
+Tambahan searchlate-lock1 PASS6s, analyzerNoissues6,7s; l10n852/566/245.
+Format408/2changed lalu final perlu0. UI ID/EN320px2x+keyboard2 PASS11s;
+helper lazy scroll repaired, semua assertion dipertahankan. Source+12/schema23
+freeze via build/m53/search_source_snapshot.py sesudah format0. Native target13
+(SQL11/UI2) DV lalu Poco auditedwrapper/backgroundpause. Baca log/result/hash/
+awake/finally sebelum source edit/retest. Tidak mengulang suite lama di native.
+.skybee+12/schema14 tanpa update/reset/reseed. Setelah native13/curate/commitpush
+lanjut D lalu E–H sampai handoff. Doc keputusan dan M53_SEARCH_REPORT tersedia.
+
+## C pencarian23 WIP — member22 sudah push5ee63c5
+
+Member22 commit5ee63c54441f458324181a7e1f3eb9601740497a normalpush/remote verified.
+Source+12/schema23 WIP: cache popularitas rolling30hari diSQL, epoch/TTL60detik,
+ranking exactcode/kelayakan/frekuensi/quantity/relevansi/name/ID dan cursor snapshot.
+Provider paged bounded48, invalidation inventory/replacement/cashiergate tanpa
+selfcommitloop. Eligibility tracked expiry menggunakan saldo batch layak aktual,
+clamp physicalstock; missingbatch failclosed. Whitelist publicproduct tetap.
+Host awal cashier_sql+provider34 PASS9s; UI sort/loadmore, acceptance23,
+backupmetadata23, analyzer/native/docdecision belum selesai. Tidak ada nativejob.
+.skybee+12/schema14 tanpa update/reset/reseed. Lanjut Csearch lalu D–H sampai
+handoff; rancangan privat build/m53/search-next-design.md (bagian eligibility
+lama diganti strict eligiblebatch sebagaimana source23).
+
 ## Member22 tervalidasi — commit/push lalu Csearch23
 
 DV `m53-member-dv-20261027-173807`20 PASS7:10, Poco

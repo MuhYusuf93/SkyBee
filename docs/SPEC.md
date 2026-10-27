@@ -1,5 +1,8 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Pencarian M5.3 memakai kelayakan jual, exactcode tier, agregat rolling30hari dan
+cursor cache/epoch dengan bounded Provider: [kontrak implementasi](decisions/M53_PRODUCT_SEARCH.md).
+
 Member M5.3 memakai ID stabil, normalisasi nomor terpisah dari currency/bahasa,
 kompatibilitas utang legacy, paid opt-in dan kunjungan turunan SQL. Hak CRUD dan
 arsip hanya pemilik: [keputusan implementasi](decisions/M53_MEMBERS.md).

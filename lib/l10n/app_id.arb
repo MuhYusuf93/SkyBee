@@ -3474,5 +3474,33 @@
   "m53Guest": "Tanpa member",
   "@m53Guest": {
     "description": "M5.3 stable member identity and transactional selection: m53Guest"
+  },
+  "m53SearchFrequent": "Paling sering terjual",
+  "@m53SearchFrequent": {
+    "description": "M5.3 product search ranking: m53SearchFrequent"
+  },
+  "m53SearchRelevance": "Paling sesuai",
+  "@m53SearchRelevance": {
+    "description": "M5.3 product search ranking: m53SearchRelevance"
+  },
+  "m53SearchOrder": "Urutan hasil",
+  "@m53SearchOrder": {
+    "description": "M5.3 product search ranking: m53SearchOrder"
+  },
+  "m53SearchHelpTitle": "Urutan pencarian barang",
+  "@m53SearchHelpTitle": {
+    "description": "M5.3 product search ranking: m53SearchHelpTitle"
+  },
+  "m53SearchHelp": "Barang layak jual didahulukan. Kode atau barcode persis tetap paling atas, termasuk bila tidak layak jual; barang tersebut tidak dapat ditambahkan. Paling sering terjual menghitung jumlah transaksi selesai yang memuat barang dalam 30 hari terakhir, lalu quantity bersih dan kecocokan pencarian. Penjualan yang dibatalkan tidak dihitung. Banyak unit dalam satu transaksi tetap satu transaksi. Pembayaran piutang bukan penjualan baru. Hanya barang yang cocok dengan pencarian yang ditampilkan. Angka berasal dari snapshot yang diperbarui setelah penjualan/pembatalan, saat kembali ke aplikasi, atau ketika pencarian berikutnya melewati 60 detik. Gunakan Muat ulang untuk memperbarui hasil saat ini.",
+  "@m53SearchHelp": {
+    "description": "M5.3 product search ranking: m53SearchHelp"
+  },
+  "m53SearchRefresh": "Muat ulang hasil",
+  "@m53SearchRefresh": {
+    "description": "M5.3 product search ranking: m53SearchRefresh"
+  },
+  "m53SearchMore": "Hasil berikutnya",
+  "@m53SearchMore": {
+    "description": "M5.3 product search ranking: m53SearchMore"
   }
 }

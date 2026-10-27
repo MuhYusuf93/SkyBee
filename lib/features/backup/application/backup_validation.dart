@@ -12,6 +12,7 @@ import '../domain/backup_manifest.dart';
 import '../../inventory/domain/product_attributes.dart';
 import '../../inventory/domain/stock_rules.dart';
 import '../../cashier/application/quick_cash_service.dart';
+import '../../cashier/application/product_popularity_store.dart';
 import '../../cashier/domain/cash_tender.dart';
 import '../../cashier/domain/tender_draft.dart';
 import '../../cashier/domain/quantity_promotion.dart';
@@ -38,6 +39,7 @@ final class BackupValidation {
     }
     if (schema >= 20) await _cashierLock(db);
     if (schema >= 22) await _members(db);
+    if (schema >= 23) await _productSearch(db);
     final settings = (await db.query('store_settings')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,
@@ -337,6 +339,80 @@ final class BackupValidation {
     }
   }
 
+  /// Derived popularity is portable but never authoritative. A stale epoch is
+  /// rebuilt on the next search; a cache claiming the current epoch must exactly
+  /// match the SQL aggregate at its own window, including missing rows.
+  static Future<void> _productSearch(DatabaseExecutor db) async {
+    const invalid = FormatException('backupOperationalMetadataInvalid');
+    final versions = await db.query('cashier_search_versions', limit: 2);
+    final windows = await db.query('cashier_popularity_window', limit: 2);
+    if (versions.length != 1 || windows.length != 1) throw invalid;
+    final version = versions.single, window = windows.single;
+    if (version['id'] != 1 || window['id'] != 1) throw invalid;
+    for (final key in ['catalogue_epoch', 'sale_epoch']) {
+      if (version[key] is! int || (version[key] as int) < 1) throw invalid;
+    }
+    for (final key in [
+      'cache_revision',
+      'sale_epoch',
+      'window_from',
+      'window_through',
+      'expires_at',
+    ]) {
+      if (window[key] is! int || (window[key] as int) < 0) throw invalid;
+    }
+    final revision = window['cache_revision'] as int,
+        epoch = window['sale_epoch'] as int,
+        from = window['window_from'] as int,
+        through = window['window_through'] as int;
+    if (epoch > (version['sale_epoch'] as int)) throw invalid;
+    if (revision == 0) {
+      if (epoch != 0 ||
+          from != 0 ||
+          through != 0 ||
+          window['expires_at'] != 0 ||
+          (await db.query(
+            'cashier_product_popularity',
+            columns: ['product_id'],
+            limit: 1,
+          )).isNotEmpty) {
+        throw invalid;
+      }
+    } else if (epoch < 1 ||
+        from !=
+            (through - ProductPopularityStore.windowMilliseconds).clamp(
+              0,
+              through,
+            ) ||
+        window['expires_at'] !=
+            through + ProductPopularityStore.ttlMilliseconds) {
+      throw invalid;
+    }
+    if ((await db.rawQuery(
+      '''SELECT 1 FROM cashier_product_popularity c
+      LEFT JOIN products p ON p.id=c.product_id WHERE p.id IS NULL OR
+      typeof(c.receipts)<>'integer' OR c.receipts<1 OR
+      typeof(c.net_quantity)<>'integer' OR c.net_quantity<c.receipts LIMIT 1''',
+    )).isNotEmpty) {
+      throw invalid;
+    }
+    if (revision > 0 && epoch == version['sale_epoch']) {
+      final aggregate = ProductPopularityStore.aggregateSql;
+      for (final reverse in [false, true]) {
+        final actual =
+            'SELECT product_id,receipts,net_quantity FROM cashier_product_popularity';
+        final left = reverse ? actual : aggregate,
+            right = reverse ? aggregate : actual;
+        if ((await db.rawQuery('SELECT 1 FROM ($left EXCEPT $right) LIMIT 1', [
+          from,
+          through,
+        ])).isNotEmpty) {
+          throw invalid;
+        }
+      }
+    }
+  }
+
   /// Import constraints are untrusted. Bound JSON before fetching, then stream
   /// immutable intents by primary key and compare them with the financial row.
   /// NULL is deliberately retained for historical tenders without piece counts.
@@ -344,6 +420,19 @@ final class BackupValidation {
     DatabaseExecutor db,
     CurrencyPolicy currency,
   ) async {
+    // Bound both blobs before any cross-row JSON comparison. Imported schemas
+    // may have had CHECK constraints removed.
+    for (final table in ['cart_drafts', 'checkout_tenders']) {
+      final column = table == 'cart_drafts'
+          ? 'tender_details_json'
+          : 'details_json';
+      if ((await db.rawQuery(
+        '''SELECT 1 FROM $table WHERE $column IS NOT NULL
+        AND (typeof($column)<>'text' OR length($column)>16384) LIMIT 1''',
+      )).isNotEmpty) {
+        throw const FormatException('backupTenderDraftInvalid');
+      }
+    }
     if ((await db.rawQuery(
       '''SELECT 1 FROM checkout_tenders t
       JOIN sale_transactions s ON s.id=t.sale_transaction_id
@@ -357,12 +446,6 @@ final class BackupValidation {
       final column = table == 'cart_drafts'
           ? 'tender_details_json'
           : 'details_json';
-      if ((await db.rawQuery(
-        '''SELECT 1 FROM $table WHERE $column IS NOT NULL
-        AND (typeof($column)<>'text' OR length($column)>16384) LIMIT 1''',
-      )).isNotEmpty) {
-        throw const FormatException('backupTenderDraftInvalid');
-      }
       String? cursor;
       while (true) {
         final cart = table == 'cart_drafts';

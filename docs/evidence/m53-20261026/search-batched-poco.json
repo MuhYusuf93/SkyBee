@@ -1,0 +1,65 @@
+{
+  "run": "m53-search-batched-poco-20261028-003440",
+  "device": "7f0edea0",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 13,
+  "failed": 0,
+  "elapsed": "02:52",
+  "preExistingProtectedEntries": 611,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "not applied",
+  "sourceFiles": 494,
+  "sourceManifestSha256": "0b58da2a21ef54b404c7c0e17ccd634798ae70a2bf7e3646e2cdb1c2d9409e52",
+  "runnerLogSha256": "467822d7ada5ab8637044e2e948a4fb304b150c09051c3af11b93dfc1dc3818c",
+  "beforeManifestSha256": "44d97fc3d1d0b90c229ff92ad5636087c28c9904d1c4f66e7fcf3e36c3047370",
+  "afterManifestSha256": "5dd3b1ad3c372e68398c5f0f28621641dbf1529420162b353abfeedb1278c2d5",
+  "benchmark": {
+    "products": 1000,
+    "sales": 2000,
+    "items": 2000,
+    "warmup": 1,
+    "seedMicroseconds": 8617459,
+    "coldMicroseconds": 2244870,
+    "samplesMicroseconds": {
+      "first": [
+        264680,
+        268119,
+        263993,
+        263239,
+        284323
+      ],
+      "next": [
+        265990,
+        282419,
+        282080,
+        266666,
+        281025
+      ],
+      "far": [
+        267111,
+        249581,
+        265059,
+        266458,
+        281726
+      ]
+    },
+    "medianMicroseconds": {
+      "first": 264680,
+      "next": 281025,
+      "far": 266458
+    },
+    "scope": "Native integration debug; cold includes dirty term/cache build, warm includes transaction and public DTO reads",
+    "loadLimit": "User reports possible concurrent CCTV live stream on DV; workload not isolated or changed",
+    "queryPlanUses": [
+      "sale_transactions_history",
+      "sale_transaction_items_parent",
+      "cashier_terms_prefix",
+      "stock_batches_sale_fefo"
+    ],
+    "temporaryGroupingSorting": true
+  }
+}

@@ -2856,4 +2856,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53Guest => 'Guest';
+
+  @override
+  String get m53SearchFrequent => 'Most frequently sold';
+
+  @override
+  String get m53SearchRelevance => 'Most relevant';
+
+  @override
+  String get m53SearchOrder => 'Result order';
+
+  @override
+  String get m53SearchHelpTitle => 'Product search order';
+
+  @override
+  String get m53SearchHelp =>
+      'Eligible products appear first. An exact code or barcode stays first even when unavailable; unavailable products cannot be added. Most frequently sold counts completed sales containing the product in the last 30 days, then net quantity and search relevance. Cancelled sales are excluded. Multiple units in one sale still count as one sale. Debt repayments are not new sales. Only matching products appear. The snapshot refreshes after a sale/cancellation, when returning to the app, or when the next search is more than 60 seconds later. Use Refresh to update the current results.';
+
+  @override
+  String get m53SearchRefresh => 'Refresh results';
+
+  @override
+  String get m53SearchMore => 'More results';
 }

@@ -2862,4 +2862,26 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53Guest => 'Tanpa member';
+
+  @override
+  String get m53SearchFrequent => 'Paling sering terjual';
+
+  @override
+  String get m53SearchRelevance => 'Paling sesuai';
+
+  @override
+  String get m53SearchOrder => 'Urutan hasil';
+
+  @override
+  String get m53SearchHelpTitle => 'Urutan pencarian barang';
+
+  @override
+  String get m53SearchHelp =>
+      'Barang layak jual didahulukan. Kode atau barcode persis tetap paling atas, termasuk bila tidak layak jual; barang tersebut tidak dapat ditambahkan. Paling sering terjual menghitung jumlah transaksi selesai yang memuat barang dalam 30 hari terakhir, lalu quantity bersih dan kecocokan pencarian. Penjualan yang dibatalkan tidak dihitung. Banyak unit dalam satu transaksi tetap satu transaksi. Pembayaran piutang bukan penjualan baru. Hanya barang yang cocok dengan pencarian yang ditampilkan. Angka berasal dari snapshot yang diperbarui setelah penjualan/pembatalan, saat kembali ke aplikasi, atau ketika pencarian berikutnya melewati 60 detik. Gunakan Muat ulang untuk memperbarui hasil saat ini.';
+
+  @override
+  String get m53SearchRefresh => 'Muat ulang hasil';
+
+  @override
+  String get m53SearchMore => 'Hasil berikutnya';
 }

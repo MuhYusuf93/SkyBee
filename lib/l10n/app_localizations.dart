@@ -5167,6 +5167,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Guest'**
   String get m53Guest;
+
+  /// M5.3 product search ranking: m53SearchFrequent
+  ///
+  /// In en, this message translates to:
+  /// **'Most frequently sold'**
+  String get m53SearchFrequent;
+
+  /// M5.3 product search ranking: m53SearchRelevance
+  ///
+  /// In en, this message translates to:
+  /// **'Most relevant'**
+  String get m53SearchRelevance;
+
+  /// M5.3 product search ranking: m53SearchOrder
+  ///
+  /// In en, this message translates to:
+  /// **'Result order'**
+  String get m53SearchOrder;
+
+  /// M5.3 product search ranking: m53SearchHelpTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Product search order'**
+  String get m53SearchHelpTitle;
+
+  /// M5.3 product search ranking: m53SearchHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Eligible products appear first. An exact code or barcode stays first even when unavailable; unavailable products cannot be added. Most frequently sold counts completed sales containing the product in the last 30 days, then net quantity and search relevance. Cancelled sales are excluded. Multiple units in one sale still count as one sale. Debt repayments are not new sales. Only matching products appear. The snapshot refreshes after a sale/cancellation, when returning to the app, or when the next search is more than 60 seconds later. Use Refresh to update the current results.'**
+  String get m53SearchHelp;
+
+  /// M5.3 product search ranking: m53SearchRefresh
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh results'**
+  String get m53SearchRefresh;
+
+  /// M5.3 product search ranking: m53SearchMore
+  ///
+  /// In en, this message translates to:
+  /// **'More results'**
+  String get m53SearchMore;
 }
 
 class _AppLocalizationsDelegate

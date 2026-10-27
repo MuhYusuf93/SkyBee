@@ -3474,5 +3474,33 @@
   "m53Guest": "Guest",
   "@m53Guest": {
     "description": "M5.3 stable member identity and transactional selection: m53Guest"
+  },
+  "m53SearchFrequent": "Most frequently sold",
+  "@m53SearchFrequent": {
+    "description": "M5.3 product search ranking: m53SearchFrequent"
+  },
+  "m53SearchRelevance": "Most relevant",
+  "@m53SearchRelevance": {
+    "description": "M5.3 product search ranking: m53SearchRelevance"
+  },
+  "m53SearchOrder": "Result order",
+  "@m53SearchOrder": {
+    "description": "M5.3 product search ranking: m53SearchOrder"
+  },
+  "m53SearchHelpTitle": "Product search order",
+  "@m53SearchHelpTitle": {
+    "description": "M5.3 product search ranking: m53SearchHelpTitle"
+  },
+  "m53SearchHelp": "Eligible products appear first. An exact code or barcode stays first even when unavailable; unavailable products cannot be added. Most frequently sold counts completed sales containing the product in the last 30 days, then net quantity and search relevance. Cancelled sales are excluded. Multiple units in one sale still count as one sale. Debt repayments are not new sales. Only matching products appear. The snapshot refreshes after a sale/cancellation, when returning to the app, or when the next search is more than 60 seconds later. Use Refresh to update the current results.",
+  "@m53SearchHelp": {
+    "description": "M5.3 product search ranking: m53SearchHelp"
+  },
+  "m53SearchRefresh": "Refresh results",
+  "@m53SearchRefresh": {
+    "description": "M5.3 product search ranking: m53SearchRefresh"
+  },
+  "m53SearchMore": "More results",
+  "@m53SearchMore": {
+    "description": "M5.3 product search ranking: m53SearchMore"
   }
 }

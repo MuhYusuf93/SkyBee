@@ -12,6 +12,13 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm53SearchFrequent' => l.m53SearchFrequent,
+    'm53SearchRelevance' => l.m53SearchRelevance,
+    'm53SearchOrder' => l.m53SearchOrder,
+    'm53SearchHelpTitle' => l.m53SearchHelpTitle,
+    'm53SearchHelp' => l.m53SearchHelp,
+    'm53SearchRefresh' => l.m53SearchRefresh,
+    'm53SearchMore' => l.m53SearchMore,
     'm53MemberFieldsInvalid' => l.m53MemberFieldsInvalid,
     'm53MemberPhoneRequired' => l.m53MemberPhoneRequired,
     'm53MemberPhoneUsed' => l.m53MemberPhoneUsed,

@@ -411,3 +411,19 @@ Future<bool>, sehingga onError void melempar ArgumentError dan menutupi kegagala
 awal. Tetap pump real IO secara bounded agar antrean fake-zone bisa selesai.
 WidgetTester.pageBack mencari tooltip English Back pada SDK ini, sehingga UI ID
 memerlukan tap BackButton aktual. Jangan melonggarkan matcher agar harness hijau.
+
+115. Benchmark pencarian M5.3 harus mencakup pembentukan dirty index dan DTO publik,
+bukan query ranking saja. Batch produk100/alias250/write250 dan pembacaan DTO per
+halaman menurunkan cold DV1000produk dari101,619detik menjadi1,959detik dan warm
+dari~1,2detik menjadi~0,3detik pada prosedur native debug yang sama. Pengguna
+menyebut kemungkinan live stream CCTV bersamaan; beban itu tidak diisolasi.
+Jangan menyimpulkan arsitektur/umur perangkat sebagai penyebab tunggal atau
+mengubah aplikasi stream. Klaim hasil tetap terbatas pada workload yang diukur.
+
+116. Ketika widgettest mengubah lebar/textscale/insets, pump layout dan ungkap
+field lazy pada route aktif sebelum showKeyboard/enterText. Client dari subtree
+sebelum resize dapat gagal mengirim query pada native. Assert dispatch dan teks
+setelah roundtrip wide/narrow; controller panel yang dibuatulang harus mengambil
+query dari pemilik flow agar teks tidak lenyap. Reveal programmatic bukan bukti
+sentuhan fisik. Cocokkan seluruh kolom PK nyata sebelum menyusun ON CONFLICT;
+cashier_search_terms memakai product_id/term/priority, bukan hanya dua kolom.
