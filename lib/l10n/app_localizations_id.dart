@@ -2884,4 +2884,251 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53SearchMore => 'Hasil berikutnya';
+
+  @override
+  String get m53CashDrawer => 'Kas dan pecahan uang';
+
+  @override
+  String get m53CashPolicy => 'Kebijakan pencatatan kas';
+
+  @override
+  String get m53CashOff => 'Nonaktif';
+
+  @override
+  String get m53CashNotes => 'Catatan kasir';
+
+  @override
+  String get m53CashAudit => 'Audit wajib oleh pemilik';
+
+  @override
+  String get m53CashAuditHelp =>
+      'Pemilik mewajibkan rincian pecahan untuk uang tunai. Kasir tidak dapat mematikannya. Catatan pecahan adalah pernyataan kasir, bukan jaminan hitungan fisik yang benar. Selisih tidak otomatis berarti kecurangan.';
+
+  @override
+  String get m53CashNotesHelp =>
+      'Aktifkan untuk membantu mencatat uang harian. Catatan tetap tersimpan saat tanggal berganti atau pencatatan dimatikan. Selesaikan sesi terbuka sebelum mematikan pencatatan.';
+
+  @override
+  String get m53CashReasonRequired => 'Isi alasan, maksimal 1.000 karakter.';
+
+  @override
+  String get m53CashPolicyChanged =>
+      'Kebijakan kas berubah. Muat ulang dan tinjau pilihan Anda.';
+
+  @override
+  String get m53CashCloseSessionsFirst =>
+      'Tutup sesi kas yang masih terbuka sebelum mengubah kebijakan ini.';
+
+  @override
+  String get m53CashAuditRequired =>
+      'Pencatatan diwajibkan pemilik dan tidak dapat dimatikan oleh kasir.';
+
+  @override
+  String get m53CashRecordingOff => 'Pencatatan kas sedang nonaktif.';
+
+  @override
+  String get m53CashSessionChanged =>
+      'Sesi, tanggal, atau pengaturan kas berubah. Muat ulang, lalu tinjau isian sebelum mencoba lagi.';
+
+  @override
+  String get m53CashSessionAlreadyOpen =>
+      'Sesi kas hari ini sudah terbuka. Muat ulang untuk melihatnya.';
+
+  @override
+  String get m53CashPreviousUnclosed =>
+      'Ada sesi hari lain yang belum ditutup. Tinjau peringatannya sebelum membuka sesi baru.';
+
+  @override
+  String get m53CashClockChanged =>
+      'Waktu perangkat lebih awal daripada catatan kas terakhir. Periksa waktu perangkat sebelum melanjutkan.';
+
+  @override
+  String get m53CashOldSession =>
+      'Sesi ini berasal dari tanggal atau pengaturan sebelumnya. Hitungan saat ini tidak dapat dianggap sebagai hitungan fisik saat itu.';
+
+  @override
+  String get m53CashCountRequired =>
+      'Isi hitungan pecahan fisik sebelum menutup sesi.';
+
+  @override
+  String get m53CashPiecesUnavailable =>
+      'Pecahan keluar belum tersedia dalam catatan. Hitung ulang laci dengan alasan atau perbaiki rincian pecahan, lalu coba lagi. Saldo tidak dikurangi.';
+
+  @override
+  String get m53CashCompositionRequired =>
+      'Pencatatan aktif memerlukan rincian lengkap pecahan uang tunai. Nominal saja atau Uang pas tidak cukup.';
+
+  @override
+  String get m53CashCompositionMismatch =>
+      'Total pecahan harus tepat sama dengan nominal yang diperlukan. Tidak ada pembulatan otomatis.';
+
+  @override
+  String get m53CashSessionRequired =>
+      'Buka sesi kas hari ini dan tinjau saldo awal sebelum mencatat uang tunai.';
+
+  @override
+  String get m53CashCountInvalid =>
+      'Periksa jumlah lembar atau koin. Gunakan bilangan bulat 0 sampai 1.000.000.';
+
+  @override
+  String get m53CashDeclarationHelp =>
+      'Isi jumlah lembar atau koin yang Anda amati untuk tiap pecahan. Tombol + menambah satu lembar atau koin. Ini catatan pernyataan, bukan hasil sensor.';
+
+  @override
+  String get m53CashRequiredTotal => 'Total yang diperlukan';
+
+  @override
+  String get m53CashClearCounts => 'Kosongkan hitungan';
+
+  @override
+  String get m53CashPieceCount => 'Jumlah lembar/koin';
+
+  @override
+  String get m53CashAddPiece => 'Tambah satu lembar/koin';
+
+  @override
+  String get m53CashIncoming => 'Pecahan uang diterima';
+
+  @override
+  String get m53CashChangeCounts => 'Pecahan kembalian';
+
+  @override
+  String get m53CashOpeningCounts => 'Hitungan awal sesi';
+
+  @override
+  String get m53CashObservedCounts => 'Hitungan fisik sekarang';
+
+  @override
+  String get m53CashRefundCounts => 'Pecahan uang dikembalikan';
+
+  @override
+  String get m53CashJournalCounts => 'Pecahan uang pada catatan ini';
+
+  @override
+  String get m53CashOpeningKnown => 'Saldo awal sudah dihitung';
+
+  @override
+  String get m53CashOpeningUnknown => 'Saldo awal belum diketahui';
+
+  @override
+  String get m53CashUnknownHelp =>
+      'Belum diketahui berbeda dari kosong. Jumlah uang seharusnya belum pasti. Uang keluar dibatasi pada pecahan yang telah dihitung atau dicatat masuk. Hitung ulang dengan alasan untuk memperbaiki catatan.';
+
+  @override
+  String get m53CashOpenSession => 'Buka sesi kas';
+
+  @override
+  String get m53CashCloseSession => 'Tutup sesi kas';
+
+  @override
+  String get m53CashRecount => 'Hitung ulang dan catat koreksi';
+
+  @override
+  String get m53CashExpected => 'Pecahan yang diharapkan';
+
+  @override
+  String get m53CashLowerBound => 'Minimum pecahan yang sudah tercatat';
+
+  @override
+  String get m53CashBalance => 'Nilai pecahan tercatat';
+
+  @override
+  String get m53CashSessionDate => 'Tanggal sesi';
+
+  @override
+  String get m53CashPendingDays => 'Sesi hari lain belum ditutup';
+
+  @override
+  String get m53CashPendingHelp =>
+      'Tanggal berganti tidak menutup atau menghapus sesi lama. Saldo awal sesi baru harus ditinjau sendiri; saldo sesi lama tidak disalin otomatis.';
+
+  @override
+  String get m53CashAcceptPending =>
+      'Saya memahami masih ada sesi hari lain yang belum ditutup';
+
+  @override
+  String get m53CashNoSession => 'Belum ada sesi kas terbuka untuk hari ini.';
+
+  @override
+  String get m53CashSessionClosed =>
+      'Sesi sudah ditutup. Catatan dan hitungannya tetap tersimpan.';
+
+  @override
+  String get m53CashCashIn => 'Kas masuk nonpenjualan';
+
+  @override
+  String get m53CashCashOut => 'Kas keluar';
+
+  @override
+  String get m53CashHandover => 'Setoran atau penyerahan uang';
+
+  @override
+  String get m53CashReason => 'Alasan';
+
+  @override
+  String get m53CashHistory => 'Riwayat sesi dan jurnal';
+
+  @override
+  String get m53CashDifference => 'Selisih hitungan';
+
+  @override
+  String get m53CashDifferenceHelp =>
+      'Selisih membandingkan catatan dengan hitungan yang dinyatakan. Selisih tidak mengubah penjualan dan bukan bukti pencurian.';
+
+  @override
+  String get m53CashOwnerException => 'Tutup tanpa hitungan historis — pemilik';
+
+  @override
+  String get m53CashOwnerExceptionHelp =>
+      'Gunakan bila hitungan fisik pada waktu sesi lama tidak tersedia. PIN pemilik dan alasan diperlukan. Catatan ditandai belum terverifikasi, bukan dianggap selisih nol.';
+
+  @override
+  String get m53CashSourceDrawer => 'Tunai dari/ke laci';
+
+  @override
+  String get m53CashSourceExternal => 'Di luar laci / nontunai';
+
+  @override
+  String get m53CashSourceUnknown => 'Sumber pembayaran lama belum diketahui';
+
+  @override
+  String get m53CashEditReceived => 'Isi atau tinjau pecahan diterima';
+
+  @override
+  String get m53CashCurrentSession => 'Sesi kas yang digunakan';
+
+  @override
+  String get m53CashReviewSession => 'Tinjau dan gunakan sesi ini';
+
+  @override
+  String get m53CashMissingDetails =>
+      'Rincian pecahan belum lengkap. Nominal sebelumnya tetap tersimpan sampai Anda menggantinya.';
+
+  @override
+  String get m53CashPaymentDeclaration => 'Sumber dan rincian pembayaran';
+
+  @override
+  String get m53CashRefundPieces => 'Pecahan uang dikembalikan';
+
+  @override
+  String get m53CashDetailsUnknown => 'Rincian atau hitungan tidak diketahui';
+
+  @override
+  String get m53CashPublicHistoryHelp =>
+      'Riwayat mode catatan kasir tetap tersedia di sini. Riwayat mode audit dibuka pemilik dari Kelola.';
+
+  @override
+  String get m53CashClosingCounts => 'Hitungan fisik saat penutupan';
+
+  @override
+  String get m53CashReference => 'Referensi';
+
+  @override
+  String get m53CashSaleAudit => 'Rincian uang transaksi';
+
+  @override
+  String get m53CashApplied => 'Pembayaran tagihan';
+
+  @override
+  String get m53CashUnclassified => 'Nominal tanpa rincian pecahan';
 }

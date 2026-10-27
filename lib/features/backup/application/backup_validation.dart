@@ -12,6 +12,7 @@ import '../domain/backup_manifest.dart';
 import '../../inventory/domain/product_attributes.dart';
 import '../../inventory/domain/stock_rules.dart';
 import '../../cashier/application/quick_cash_service.dart';
+import '../../cash_drawer/application/cash_drawer_validation.dart';
 import '../../cashier/application/product_popularity_store.dart';
 import '../../cashier/domain/cash_tender.dart';
 import '../../cashier/domain/tender_draft.dart';
@@ -40,6 +41,7 @@ final class BackupValidation {
     if (schema >= 20) await _cashierLock(db);
     if (schema >= 22) await _members(db);
     if (schema >= 23) await _productSearch(db);
+    if (schema >= 24) await CashDrawerValidation.validate(db);
     final settings = (await db.query('store_settings')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,

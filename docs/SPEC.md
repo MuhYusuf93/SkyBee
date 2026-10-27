@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Kas fisik M5.3 mengikuti [kontrak jurnal laci](decisions/M53_CASH_DRAWER.md):
+defaultoff, sesi/unknown opening eksplisit, tender/change atomik, provenance
+pelunasan/refund, recount/closure append-only dan audit pemilik ber-PIN baru.
+
 Pencarian M5.3 memakai kelayakan jual, exactcode tier, agregat rolling30hari dan
 cursor cache/epoch dengan bounded Provider: [kontrak implementasi](decisions/M53_PRODUCT_SEARCH.md).
 
@@ -9,7 +13,7 @@ arsip hanya pemilik: [keputusan implementasi](decisions/M53_MEMBERS.md).
 
 Tender M5.3 menyimpan rincian deklarasi pecahan dan nominal tanpa rincian secara
 terpisah, dengan kompatibilitas retry lama serta editor nominal cepat publik:
-[kontrak implementasi](decisions/M53_TENDER.md). Jurnal laci/audit wajib tetap D.
+[kontrak implementasi](decisions/M53_TENDER.md). Jurnal laci/audit wajib mengikuti D.
 
 Kunci Kasir opsional terpisah dari capability Kelola dan defaultoff, dengan
 opaque lock route, fresh owner config, PIN/epoch/commit guard serta preservasi

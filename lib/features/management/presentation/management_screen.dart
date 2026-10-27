@@ -10,6 +10,7 @@ import '../../members/presentation/members_screen.dart';
 import 'management_gate.dart';
 import 'management_session_provider.dart';
 import '../domain/management_role.dart';
+import '../../cash_drawer/presentation/cash_drawer_history_screen.dart';
 
 class ManagementScreen extends StatelessWidget {
   const ManagementScreen({super.key});
@@ -86,6 +87,15 @@ class ManagementScreen extends StatelessWidget {
                     ),
                   ),
                   child: Text(tr(context, 'm4Reports')),
+                ),
+                OutlinedButton(
+                  onPressed: () => Navigator.of(context).push<void>(
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          const CashDrawerHistoryScreen(owner: true),
+                    ),
+                  ),
+                  child: Text(tr(context, 'm53CashHistory')),
                 ),
               ],
               Text(tr(context, 'm4LaterFeatures')),

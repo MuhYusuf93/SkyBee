@@ -1,0 +1,34 @@
+{
+  "acceptance": {
+    "passed": 20,
+    "elapsed": "00:52",
+    "logSha256": "7b31946c6939713a757c865a500eb17bd29b5d86098c6816b11f3ce782d74dfe"
+  },
+  "corrections": {
+    "passed": 24,
+    "elapsed": "00:55",
+    "logSha256": "95edd1bb7ca9e4a5c55a07e441aaeaa72b7eecf67b1747ae14ffeb278ed47290"
+  },
+  "domain_history": {
+    "passed": 14,
+    "elapsed": "00:53",
+    "logSha256": "30a785fa3749265f0e90d496fa7828f3d6efe7060eb190269d83289b5c8d6fcd"
+  },
+  "analyzer": {
+    "result": "No issues found! (ran in 6.7s)",
+    "logSha256": "d75c35fb6d854abda83fbfd182274e5b8cb15b68882ff6c9b607b791670cd648"
+  },
+  "localization": {
+    "bilingualKeys": 926,
+    "staticReferences": 624,
+    "originalRequirementIds": 245
+  },
+  "failureHistory": [
+    "Initial UI run stopped after hanging fixture SQL outside pumped IO; retest4 passed23s.",
+    "Extended UI5passed1failed119s waiting for repayment form; after waiting for enabled field, canonical amount assertion fixed to allow locale grouping; focused1passed7s and final acceptance20passed52s.",
+    "History initial compile failed due to guessed journal named arguments; corrected to actual pieces/incoming API, focused1passed5s.",
+    "Regression82cases:64passed18failed59s; reports helper lacked phone for new credit customers. Synthetic unique phone fixture update, correction retest24passed55s. No weakening member requirement.",
+    "One overlapping host retry failed to replace locked sqlite3.dll. After original process finished, serialized correction retest24passed55s.",
+    "Analyzer style-only findings fixed; final no issues6.7s."
+  ]
+}

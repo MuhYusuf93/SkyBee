@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'cash_drawer_schema.dart';
 import '../../core/domain/value_types.dart';
 import '../../core/domain/app_error.dart';
 import '../../core/domain/contact_validation.dart';
@@ -6,7 +7,7 @@ import '../../core/domain/contact_validation.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 23;
+  static const version = 24;
 
   static Future<void> migrate(
     Database db,
@@ -41,6 +42,7 @@ final class Schema {
         21 => _tenderIntent,
         22 => _members,
         23 => _productSearch,
+        24 => cashDrawerSchema,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);

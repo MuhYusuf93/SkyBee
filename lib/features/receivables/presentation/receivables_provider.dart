@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 import '../../cashier/domain/cashier_models.dart';
+import '../../cash_drawer/domain/cash_drawer_models.dart';
 import '../application/receivables_service.dart';
 
 /// List pages/detail payment state live only while the debt screen is open.
@@ -58,13 +59,13 @@ final class ReceivablesProvider extends ChangeNotifier {
   }
 
   bool paying = false;
-  Future<bool> pay(PaymentPlan plan) async {
+  Future<bool> pay(PaymentPlan plan, {CashPaymentIntent? cash}) async {
     if (paying || _disposed) return false;
     paying = true;
     error = null;
     notifyListeners();
     try {
-      await service.record(plan);
+      await service.record(plan, cash: cash);
       // Leaving the route cannot turn a committed payment into a failure.
       // The service remains the source of truth; disposed UI needs no refresh.
       await load();

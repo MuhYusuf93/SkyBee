@@ -11,6 +11,8 @@ import '../../cashier/domain/cashier_models.dart';
 import '../../cashier/presentation/receipt_view.dart';
 import '../../settings/presentation/language_button.dart';
 import 'receivables_provider.dart';
+import '../../cash_drawer/domain/cash_drawer_models.dart';
+import '../../cash_drawer/presentation/cash_payment_screen.dart';
 
 class ReceivablesScreen extends StatelessWidget {
   const ReceivablesScreen({super.key});
@@ -108,6 +110,7 @@ class _DebtDetailState extends State<_DebtDetail> {
   List<SaleReceipt> transactions = const [];
   DebtCursor? cursor;
   PaymentPlan? plan;
+  CashPaymentIntent? cash;
   String? error;
   int? balance;
   bool busy = false;
@@ -176,6 +179,7 @@ class _DebtDetailState extends State<_DebtDetail> {
               plan!.amount.currencyCode != requested.currencyCode ||
               plan!.amount.scale != requested.scale)) {
         plan = null;
+        cash = null;
       }
       plan ??= await state.preview(widget.customer.id, requested);
       if (!mounted) return;
@@ -183,6 +187,17 @@ class _DebtDetailState extends State<_DebtDetail> {
       // The preview is ready: wait for human confirmation without pretending
       // SQL is still running. Keep the submit guard to block a second attempt.
       setState(() => processing = false);
+      // Retain the reviewed declaration with the idempotency key after an
+      // uncertain write. Changing the requested amount starts a new plan.
+      if (cash == null &&
+          context.read<AppServices>().database.schemaVersion >= 24) {
+        cash = await Navigator.of(context).push<CashPaymentIntent>(
+          MaterialPageRoute(
+            builder: (_) => CashPaymentScreen(amount: savedPlan.amount),
+          ),
+        );
+        if (cash == null || !mounted) return;
+      }
       final confirm = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
@@ -237,8 +252,11 @@ class _DebtDetailState extends State<_DebtDetail> {
         ),
       );
       if (confirm == true && mounted) setState(() => processing = true);
-      if (confirm == true && await state.pay(savedPlan) && mounted) {
+      if (confirm == true &&
+          await state.pay(savedPlan, cash: cash) &&
+          mounted) {
         plan = null;
+        cash = null;
         amount.clear();
         setState(() => error = null);
       } else if (mounted && confirm == true) {
@@ -269,7 +287,9 @@ class _DebtDetailState extends State<_DebtDetail> {
     listenable: amount,
     builder: (context, _) => FormExitGuard(
       managementProtected: false,
-      dirty: amount.text.isNotEmpty,
+      dirty: amount.text.isNotEmpty || cash != null,
+      dirtyCheck: () => amount.text.isNotEmpty || cash != null,
+      busy: busy,
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.customer.name),
@@ -303,6 +323,7 @@ class _DebtDetailState extends State<_DebtDetail> {
                         setState(() {
                           balance = current.amountMinor;
                           plan = null;
+                          cash = null;
                         });
                         amount.text = moneyCodec(
                           context,
@@ -311,9 +332,30 @@ class _DebtDetailState extends State<_DebtDetail> {
                 child: Text(tr(context, 'm52PayAll')),
               ),
               FilledButton(
+                key: const ValueKey('repayment-submit'),
                 onPressed: busy || balance == 0 ? null : pay,
                 child: Text(tr(context, 'm3RecordPayment')),
               ),
+              if (plan != null && cash != null)
+                TextButton(
+                  onPressed: busy
+                      ? null
+                      : () async {
+                          final next = await Navigator.of(context)
+                              .push<CashPaymentIntent>(
+                                MaterialPageRoute(
+                                  builder: (_) => CashPaymentScreen(
+                                    amount: plan!.amount,
+                                    initial: cash,
+                                  ),
+                                ),
+                              );
+                          if (mounted && next != null) {
+                            setState(() => cash = next);
+                          }
+                        },
+                  child: Text(tr(context, 'm53CashPaymentDeclaration')),
+                ),
               if (error != null)
                 Text(
                   tr(context, error!),

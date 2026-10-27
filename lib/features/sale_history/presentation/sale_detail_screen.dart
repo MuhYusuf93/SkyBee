@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../cash_drawer/presentation/cash_sale_audit_screen.dart';
 import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
@@ -114,6 +115,14 @@ class _DetailBody extends StatelessWidget {
                           receipt.createdAt,
                           state.zone,
                         ),
+                      ),
+                      OutlinedButton(
+                        onPressed: () => Navigator.of(context).push<void>(
+                          MaterialPageRoute(
+                            builder: (_) => CashSaleAuditScreen(id: receipt.id),
+                          ),
+                        ),
+                        child: Text(tr(context, 'm53CashSaleAudit')),
                       ),
                       if (!receipt.reversed)
                         FilledButton(

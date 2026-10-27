@@ -1,4 +1,6 @@
 import 'package:sqflite/sqflite.dart';
+import '../../cash_drawer/application/cash_payment_posting.dart';
+import '../../cash_drawer/domain/cash_drawer_models.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../data/database/database_coordinator.dart';
@@ -14,6 +16,33 @@ final class CorrectionService {
   final ManagementService access;
   final CashierStore store;
   final Future<void> Function(String stage)? testStage;
+
+  /// Preview the amount actually applied, never the customer's larger tender.
+  /// The final cancellation rechecks all links and authority inside its write.
+  Future<Money> refundAmount(
+    EntityId id, {
+    required bool sale,
+  }) => database.read((sql) async {
+    await access.authorize(sql);
+    final rows = await sql.rawQuery(
+      sale
+          ? '''SELECT s.currency_code,s.currency_scale,COALESCE(SUM(CASE WHEN r.id IS NULL THEN p.amount_rupiah ELSE 0 END),0) AS amount
+        FROM sale_transactions s LEFT JOIN checkout_payment_links l ON l.sale_transaction_id=s.id
+        LEFT JOIN payments p ON p.id=l.payment_id
+        LEFT JOIN payments r ON r.reverses_payment_id=p.id WHERE s.id=? GROUP BY s.id'''
+          : "SELECT currency_code,currency_scale,amount_rupiah AS amount FROM payments WHERE id=? AND kind='receipt'",
+      [id.value],
+    );
+    if (rows.length != 1) throw const AppError('m4PaymentUnavailable');
+    final row = rows.single;
+    final amount = Money(
+      row['amount'] as int,
+      row['currency_code'] as String,
+      row['currency_scale'] as int,
+    );
+    await access.authorize(sql);
+    return amount;
+  });
 
   void _validate(String key, String reason, bool moneyHandled) {
     if (key.trim().isEmpty || key.length > 128) {
@@ -54,10 +83,12 @@ final class CorrectionService {
     required String operationKey,
     required String reason,
     required bool moneyHandled,
+    CashPaymentIntent? cash,
   }) async {
     access.requireAccess();
     _validate(operationKey, reason, moneyHandled);
     final hash = await store.fingerprint([
+      if (cash != null) ...['drawer-refund-v1', cash.financialValues],
       'payment',
       paymentId.value,
       reason.trim(),
@@ -94,6 +125,7 @@ final class CorrectionService {
         reason.trim(),
         hash,
         allowCancelledSale: false,
+        cash: cash,
       );
       await access.audit(dbTxn, 'payment_cancelled', entityId: id.value);
       await testStage?.call('audit');
@@ -109,6 +141,7 @@ final class CorrectionService {
     String reason,
     String hash, {
     required bool allowCancelledSale,
+    CashPaymentIntent? cash,
   }) async {
     final id = CashierStore.ids.next();
     await dbTxn.insert('payments', {
@@ -121,6 +154,7 @@ final class CorrectionService {
       'created_at': store.clock.milliseconds,
       'reason': reason,
       'payload_hash': hash,
+      if (database.schemaVersion >= 24) 'cash_provenance_version': 1,
       'currency_code': original['currency_code'],
       'currency_scale': original['currency_scale'],
     });
@@ -177,6 +211,20 @@ final class CorrectionService {
     if (sum != BigInt.from(original['amount_rupiah'] as int)) {
       throw const AppError('m4InconsistentData');
     }
+    if (database.schemaVersion >= 24) {
+      await CashPaymentPosting.refundOn(
+        dbTxn,
+        store,
+        payment: id,
+        amount: Money(
+          original['amount_rupiah'] as int,
+          original['currency_code'] as String,
+          original['currency_scale'] as int,
+        ),
+        intent: cash,
+      );
+      await testStage?.call('drawer');
+    }
     return id;
   }
 
@@ -186,11 +234,13 @@ final class CorrectionService {
     required String reason,
     required bool goodsReturned,
     required bool moneyHandled,
+    CashPaymentIntent? cash,
   }) async {
     access.requireAccess();
     _validate(operationKey, reason, moneyHandled);
     if (!goodsReturned) throw const AppError('m4ConfirmGoods');
     final hash = await store.fingerprint([
+      if (cash != null) ...['drawer-refund-v1', cash.financialValues],
       'sale',
       saleId.value,
       reason.trim(),
@@ -396,6 +446,7 @@ final class CorrectionService {
             reason.trim(),
             hash,
             allowCancelledSale: true,
+            cash: cash,
           );
         }
       }

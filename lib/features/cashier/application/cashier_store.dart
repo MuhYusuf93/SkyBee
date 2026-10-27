@@ -1,4 +1,5 @@
 import '../domain/tender_draft.dart';
+import '../../cash_drawer/domain/cash_pieces.dart';
 import '../../cashier_lock/application/cashier_lock_service.dart';
 import '../../../data/database/database_coordinator.dart';
 import 'dart:convert';
@@ -258,6 +259,12 @@ final class CashierStore {
         quickMode: row['tender_input_mode'] == 'quick',
         memberIntent: row['member_intent'] == 1,
         memberOptIn: row['member_opt_in'] == 1,
+        drawerSessionId: row['drawer_session_id'] == null
+            ? null
+            : EntityId(row['drawer_session_id'] as String),
+        changePieces: row['change_counts_json'] == null
+            ? null
+            : CashPieces.decode(currency, row['change_counts_json'] as String),
         customer: CustomerChoice(
           id: row['customer_id'] == null
               ? null

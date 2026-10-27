@@ -1,4 +1,7 @@
 import '../domain/tender_draft.dart';
+import '../../cash_drawer/application/cash_drawer_service.dart';
+import '../../cash_drawer/domain/cash_drawer_models.dart';
+import '../../cash_drawer/domain/cash_pieces.dart';
 import 'dart:convert';
 import '../../members/domain/member_models.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +23,7 @@ final class CheckoutProvider extends ChangeNotifier {
     this.service, {
     this.quickCash,
     this.phoneRegion,
+    this.drawer,
   }) {
     final input = cart.snapshot!.input;
     digits = input.tenderDetails == null
@@ -36,6 +40,9 @@ final class CheckoutProvider extends ChangeNotifier {
     phone.text = input.customer.phone;
     address.text = input.customer.address;
     useMember = input.memberOptIn ?? input.memberIntent;
+    drawerSessionId = input.drawerSessionId;
+    changePieces = input.changePieces;
+    drawerReady = drawer == null || service.database.schemaVersion < 24;
     _updateMode();
     _savedInputKey = _inputKey(this.input);
     name.addListener(_customerEdited);
@@ -47,6 +54,48 @@ final class CheckoutProvider extends ChangeNotifier {
   final CheckoutService service;
   final QuickCashService? quickCash;
   final Future<String> Function()? phoneRegion;
+  final CashDrawerService? drawer;
+  CashDrawerContext? drawerContext;
+  bool drawerReady = true;
+  EntityId? drawerSessionId;
+  CashPieces? changePieces;
+  int _drawerGeneration = 0;
+  bool get cashRecordingActive =>
+      drawerReady && drawerContext?.policy.active == true;
+  List<int> get cashAmounts => cashRecordingActive
+      ? CashDenominations.forCurrency(cart.snapshot!.currency).reversed.toList()
+      : amounts;
+  bool get completeReceivedPieces {
+    try {
+      CashPieces.fromTender(
+        cart.snapshot!.currency,
+        digits.snapshot,
+        tender?.amountMinor ?? 0,
+      );
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  CashPieces? get supportedReceivedPieces {
+    try {
+      return CashPieces.fromTender(
+        cart.snapshot!.currency,
+        digits.snapshot,
+        tender?.amountMinor ?? 0,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  bool get needsSessionReview =>
+      cashRecordingActive &&
+      (drawerContext?.session == null ||
+          drawerContext!.session!.closed ||
+          drawerSessionId != drawerContext!.session!.id ||
+          drawerContext!.session!.timeZone != drawerContext!.timeZone);
   String region = 'ID';
   String? get phoneError {
     if (!needsMember) return null;
@@ -88,6 +137,8 @@ final class CheckoutProvider extends ChangeNotifier {
     value.quickMode,
     value.memberIntent,
     value.memberOptIn,
+    value.drawerSessionId?.value,
+    value.changePieces?.encode(),
     value.customer.id?.value,
     value.customer.name.trim(),
     value.customer.phone.trim(),
@@ -105,6 +156,8 @@ final class CheckoutProvider extends ChangeNotifier {
     quickMode: quickMode,
     memberIntent: service.database.schemaVersion >= 22 && needsMember,
     memberOptIn: useMember,
+    drawerSessionId: drawerSessionId,
+    changePieces: changePieces,
     customer: CustomerChoice(
       id: selected,
       name: name.text,
@@ -114,14 +167,87 @@ final class CheckoutProvider extends ChangeNotifier {
   );
   Future<void> loadAmounts() async {
     final code = cart.snapshot!.currency.code;
+    List<int> next;
     try {
       region = await phoneRegion?.call() ?? 'ID';
-      amounts = await quickCash?.read(code) ?? QuickCashService.defaults(code);
+      next = await quickCash?.read(code) ?? QuickCashService.defaults(code);
     } on Object {
-      amounts = QuickCashService.defaults(code);
+      next = QuickCashService.defaults(code);
       error = 'm3OperationFailed';
     }
+    await loadDrawerContext();
+    amounts = next;
     if (!_disposed) notifyListeners();
+  }
+
+  Future<void> loadDrawerContext() async {
+    if (_disposed || drawer == null || service.database.schemaVersion < 24) {
+      return;
+    }
+    final generation = ++_drawerGeneration;
+    drawerReady = false;
+    notifyListeners();
+    try {
+      final value = await drawer!.context();
+      if (_disposed || generation != _drawerGeneration) return;
+      drawerContext = value;
+      drawerReady = true;
+      if (drawerSessionId == null &&
+          value.policy.active &&
+          value.session != null &&
+          !value.session!.closed &&
+          value.session!.timeZone == value.timeZone &&
+          value.currency.code == cart.snapshot!.currency.code) {
+        drawerSessionId = value.session!.id;
+        await persist();
+      }
+    } catch (e) {
+      if (!_disposed && generation == _drawerGeneration) error = safeError(e);
+    }
+    if (!_disposed && generation == _drawerGeneration) notifyListeners();
+  }
+
+  Future<void> reviewSession() async {
+    await loadDrawerContext();
+    final value = drawerContext;
+    if (!drawerReady ||
+        value == null ||
+        value.session == null ||
+        value.session!.closed ||
+        value.session!.timeZone != value.timeZone) {
+      return;
+    }
+    if (value.currency.code != cart.snapshot!.currency.code ||
+        value.currency.scale != cart.snapshot!.currency.scale) {
+      error = 'currencyMismatch';
+      notifyListeners();
+      return;
+    }
+    drawerSessionId = value.session!.id;
+    await persist();
+  }
+
+  Future<void> setReceivedPieces(CashPieces value) async {
+    if (submitting) return;
+    cart.snapshot!.total.compatible(value.total);
+    digits.replaceCounts(value.counts);
+    _updateMode();
+    error = null;
+    await persist();
+  }
+
+  Future<void> setChangePieces(CashPieces value) async {
+    if (submitting) return;
+    cart.snapshot!.total.compatible(value.total);
+    if (settlement == null ||
+        value.total.amountMinor != settlement!.change.amountMinor) {
+      error = 'm53CashCompositionMismatch';
+      notifyListeners();
+      return;
+    }
+    changePieces = value;
+    error = null;
+    await persist();
   }
 
   void _customerEdited() {
@@ -151,6 +277,11 @@ final class CheckoutProvider extends ChangeNotifier {
 
   Future<void> key(String value) async {
     if (submitting) return;
+    if (cashRecordingActive && value != 'clear') {
+      error = 'm53CashCompositionRequired';
+      notifyListeners();
+      return;
+    }
     try {
       digits.key(value);
       error = null;
@@ -172,6 +303,11 @@ final class CheckoutProvider extends ChangeNotifier {
 
   Future<void> receive(Money amount) async {
     if (submitting) return;
+    if (cashRecordingActive && amount.amountMinor > 0) {
+      error = 'm53CashCompositionRequired';
+      notifyListeners();
+      return;
+    }
     digits.amount(amount);
     _updateMode();
     error = null;
@@ -181,6 +317,11 @@ final class CheckoutProvider extends ChangeNotifier {
 
   Future<void> exact() async {
     if (submitting) return;
+    if (cashRecordingActive) {
+      error = 'm53CashCompositionRequired';
+      notifyListeners();
+      return;
+    }
     digits.exact(cart.snapshot!.total);
     _updateMode();
     error = null;
@@ -190,6 +331,14 @@ final class CheckoutProvider extends ChangeNotifier {
 
   Future<void> addDenomination(Money amount) async {
     if (submitting) return;
+    if (cashRecordingActive &&
+        !CashDenominations.forCurrency(
+          cart.snapshot!.currency,
+        ).contains(amount.amountMinor)) {
+      error = 'm53CashCompositionRequired';
+      notifyListeners();
+      return;
+    }
     try {
       digits.receive(amount);
       _updateMode();
@@ -212,6 +361,7 @@ final class CheckoutProvider extends ChangeNotifier {
   }
 
   Future<void> useQuick(bool value) async {
+    if (cashRecordingActive && !value) return;
     quickMode = value;
     await persist();
     if (!_disposed) notifyListeners();
@@ -278,6 +428,7 @@ final class CheckoutProvider extends ChangeNotifier {
     error = null;
     notifyListeners();
     try {
+      if (!drawerReady) throw const AppError('m3OperationFailed');
       await cart.beginCheckout();
       if (generation != service.database.generation) {
         throw const AppError('m3OperationFailed');
@@ -320,6 +471,7 @@ final class CheckoutProvider extends ChangeNotifier {
   @override
   void dispose() {
     _disposed = true;
+    _drawerGeneration++;
     name.removeListener(_customerEdited);
     phone.removeListener(_customerEdited);
     address.removeListener(_customerEdited);

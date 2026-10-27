@@ -3502,5 +3502,301 @@
   "m53SearchMore": "Hasil berikutnya",
   "@m53SearchMore": {
     "description": "M5.3 product search ranking: m53SearchMore"
+  },
+  "m53CashDrawer": "Kas dan pecahan uang",
+  "@m53CashDrawer": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDrawer"
+  },
+  "m53CashPolicy": "Kebijakan pencatatan kas",
+  "@m53CashPolicy": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPolicy"
+  },
+  "m53CashOff": "Nonaktif",
+  "@m53CashOff": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOff"
+  },
+  "m53CashNotes": "Catatan kasir",
+  "@m53CashNotes": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashNotes"
+  },
+  "m53CashAudit": "Audit wajib oleh pemilik",
+  "@m53CashAudit": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAudit"
+  },
+  "m53CashAuditHelp": "Pemilik mewajibkan rincian pecahan untuk uang tunai. Kasir tidak dapat mematikannya. Catatan pecahan adalah pernyataan kasir, bukan jaminan hitungan fisik yang benar. Selisih tidak otomatis berarti kecurangan.",
+  "@m53CashAuditHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAuditHelp"
+  },
+  "m53CashNotesHelp": "Aktifkan untuk membantu mencatat uang harian. Catatan tetap tersimpan saat tanggal berganti atau pencatatan dimatikan. Selesaikan sesi terbuka sebelum mematikan pencatatan.",
+  "@m53CashNotesHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashNotesHelp"
+  },
+  "m53CashReasonRequired": "Isi alasan, maksimal 1.000 karakter.",
+  "@m53CashReasonRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashReasonRequired"
+  },
+  "m53CashPolicyChanged": "Kebijakan kas berubah. Muat ulang dan tinjau pilihan Anda.",
+  "@m53CashPolicyChanged": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPolicyChanged"
+  },
+  "m53CashCloseSessionsFirst": "Tutup sesi kas yang masih terbuka sebelum mengubah kebijakan ini.",
+  "@m53CashCloseSessionsFirst": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCloseSessionsFirst"
+  },
+  "m53CashAuditRequired": "Pencatatan diwajibkan pemilik dan tidak dapat dimatikan oleh kasir.",
+  "@m53CashAuditRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAuditRequired"
+  },
+  "m53CashRecordingOff": "Pencatatan kas sedang nonaktif.",
+  "@m53CashRecordingOff": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRecordingOff"
+  },
+  "m53CashSessionChanged": "Sesi, tanggal, atau pengaturan kas berubah. Muat ulang, lalu tinjau isian sebelum mencoba lagi.",
+  "@m53CashSessionChanged": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionChanged"
+  },
+  "m53CashSessionAlreadyOpen": "Sesi kas hari ini sudah terbuka. Muat ulang untuk melihatnya.",
+  "@m53CashSessionAlreadyOpen": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionAlreadyOpen"
+  },
+  "m53CashPreviousUnclosed": "Ada sesi hari lain yang belum ditutup. Tinjau peringatannya sebelum membuka sesi baru.",
+  "@m53CashPreviousUnclosed": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPreviousUnclosed"
+  },
+  "m53CashClockChanged": "Waktu perangkat lebih awal daripada catatan kas terakhir. Periksa waktu perangkat sebelum melanjutkan.",
+  "@m53CashClockChanged": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashClockChanged"
+  },
+  "m53CashOldSession": "Sesi ini berasal dari tanggal atau pengaturan sebelumnya. Hitungan saat ini tidak dapat dianggap sebagai hitungan fisik saat itu.",
+  "@m53CashOldSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOldSession"
+  },
+  "m53CashCountRequired": "Isi hitungan pecahan fisik sebelum menutup sesi.",
+  "@m53CashCountRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCountRequired"
+  },
+  "m53CashPiecesUnavailable": "Pecahan keluar belum tersedia dalam catatan. Hitung ulang laci dengan alasan atau perbaiki rincian pecahan, lalu coba lagi. Saldo tidak dikurangi.",
+  "@m53CashPiecesUnavailable": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPiecesUnavailable"
+  },
+  "m53CashCompositionRequired": "Pencatatan aktif memerlukan rincian lengkap pecahan uang tunai. Nominal saja atau Uang pas tidak cukup.",
+  "@m53CashCompositionRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCompositionRequired"
+  },
+  "m53CashCompositionMismatch": "Total pecahan harus tepat sama dengan nominal yang diperlukan. Tidak ada pembulatan otomatis.",
+  "@m53CashCompositionMismatch": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCompositionMismatch"
+  },
+  "m53CashSessionRequired": "Buka sesi kas hari ini dan tinjau saldo awal sebelum mencatat uang tunai.",
+  "@m53CashSessionRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionRequired"
+  },
+  "m53CashCountInvalid": "Periksa jumlah lembar atau koin. Gunakan bilangan bulat 0 sampai 1.000.000.",
+  "@m53CashCountInvalid": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCountInvalid"
+  },
+  "m53CashDeclarationHelp": "Isi jumlah lembar atau koin yang Anda amati untuk tiap pecahan. Tombol + menambah satu lembar atau koin. Ini catatan pernyataan, bukan hasil sensor.",
+  "@m53CashDeclarationHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDeclarationHelp"
+  },
+  "m53CashRequiredTotal": "Total yang diperlukan",
+  "@m53CashRequiredTotal": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRequiredTotal"
+  },
+  "m53CashClearCounts": "Kosongkan hitungan",
+  "@m53CashClearCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashClearCounts"
+  },
+  "m53CashPieceCount": "Jumlah lembar/koin",
+  "@m53CashPieceCount": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPieceCount"
+  },
+  "m53CashAddPiece": "Tambah satu lembar/koin",
+  "@m53CashAddPiece": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAddPiece"
+  },
+  "m53CashIncoming": "Pecahan uang diterima",
+  "@m53CashIncoming": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashIncoming"
+  },
+  "m53CashChangeCounts": "Pecahan kembalian",
+  "@m53CashChangeCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashChangeCounts"
+  },
+  "m53CashOpeningCounts": "Hitungan awal sesi",
+  "@m53CashOpeningCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOpeningCounts"
+  },
+  "m53CashObservedCounts": "Hitungan fisik sekarang",
+  "@m53CashObservedCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashObservedCounts"
+  },
+  "m53CashRefundCounts": "Pecahan uang dikembalikan",
+  "@m53CashRefundCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRefundCounts"
+  },
+  "m53CashJournalCounts": "Pecahan uang pada catatan ini",
+  "@m53CashJournalCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashJournalCounts"
+  },
+  "m53CashOpeningKnown": "Saldo awal sudah dihitung",
+  "@m53CashOpeningKnown": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOpeningKnown"
+  },
+  "m53CashOpeningUnknown": "Saldo awal belum diketahui",
+  "@m53CashOpeningUnknown": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOpeningUnknown"
+  },
+  "m53CashUnknownHelp": "Belum diketahui berbeda dari kosong. Jumlah uang seharusnya belum pasti. Uang keluar dibatasi pada pecahan yang telah dihitung atau dicatat masuk. Hitung ulang dengan alasan untuk memperbaiki catatan.",
+  "@m53CashUnknownHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashUnknownHelp"
+  },
+  "m53CashOpenSession": "Buka sesi kas",
+  "@m53CashOpenSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOpenSession"
+  },
+  "m53CashCloseSession": "Tutup sesi kas",
+  "@m53CashCloseSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCloseSession"
+  },
+  "m53CashRecount": "Hitung ulang dan catat koreksi",
+  "@m53CashRecount": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRecount"
+  },
+  "m53CashExpected": "Pecahan yang diharapkan",
+  "@m53CashExpected": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashExpected"
+  },
+  "m53CashLowerBound": "Minimum pecahan yang sudah tercatat",
+  "@m53CashLowerBound": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashLowerBound"
+  },
+  "m53CashBalance": "Nilai pecahan tercatat",
+  "@m53CashBalance": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashBalance"
+  },
+  "m53CashSessionDate": "Tanggal sesi",
+  "@m53CashSessionDate": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionDate"
+  },
+  "m53CashPendingDays": "Sesi hari lain belum ditutup",
+  "@m53CashPendingDays": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPendingDays"
+  },
+  "m53CashPendingHelp": "Tanggal berganti tidak menutup atau menghapus sesi lama. Saldo awal sesi baru harus ditinjau sendiri; saldo sesi lama tidak disalin otomatis.",
+  "@m53CashPendingHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPendingHelp"
+  },
+  "m53CashAcceptPending": "Saya memahami masih ada sesi hari lain yang belum ditutup",
+  "@m53CashAcceptPending": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAcceptPending"
+  },
+  "m53CashNoSession": "Belum ada sesi kas terbuka untuk hari ini.",
+  "@m53CashNoSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashNoSession"
+  },
+  "m53CashSessionClosed": "Sesi sudah ditutup. Catatan dan hitungannya tetap tersimpan.",
+  "@m53CashSessionClosed": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionClosed"
+  },
+  "m53CashCashIn": "Kas masuk nonpenjualan",
+  "@m53CashCashIn": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCashIn"
+  },
+  "m53CashCashOut": "Kas keluar",
+  "@m53CashCashOut": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCashOut"
+  },
+  "m53CashHandover": "Setoran atau penyerahan uang",
+  "@m53CashHandover": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashHandover"
+  },
+  "m53CashReason": "Alasan",
+  "@m53CashReason": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashReason"
+  },
+  "m53CashHistory": "Riwayat sesi dan jurnal",
+  "@m53CashHistory": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashHistory"
+  },
+  "m53CashDifference": "Selisih hitungan",
+  "@m53CashDifference": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDifference"
+  },
+  "m53CashDifferenceHelp": "Selisih membandingkan catatan dengan hitungan yang dinyatakan. Selisih tidak mengubah penjualan dan bukan bukti pencurian.",
+  "@m53CashDifferenceHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDifferenceHelp"
+  },
+  "m53CashOwnerException": "Tutup tanpa hitungan historis — pemilik",
+  "@m53CashOwnerException": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOwnerException"
+  },
+  "m53CashOwnerExceptionHelp": "Gunakan bila hitungan fisik pada waktu sesi lama tidak tersedia. PIN pemilik dan alasan diperlukan. Catatan ditandai belum terverifikasi, bukan dianggap selisih nol.",
+  "@m53CashOwnerExceptionHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOwnerExceptionHelp"
+  },
+  "m53CashSourceDrawer": "Tunai dari/ke laci",
+  "@m53CashSourceDrawer": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSourceDrawer"
+  },
+  "m53CashSourceExternal": "Di luar laci / nontunai",
+  "@m53CashSourceExternal": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSourceExternal"
+  },
+  "m53CashSourceUnknown": "Sumber pembayaran lama belum diketahui",
+  "@m53CashSourceUnknown": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSourceUnknown"
+  },
+  "m53CashEditReceived": "Isi atau tinjau pecahan diterima",
+  "@m53CashEditReceived": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashEditReceived"
+  },
+  "m53CashCurrentSession": "Sesi kas yang digunakan",
+  "@m53CashCurrentSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCurrentSession"
+  },
+  "m53CashReviewSession": "Tinjau dan gunakan sesi ini",
+  "@m53CashReviewSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashReviewSession"
+  },
+  "m53CashMissingDetails": "Rincian pecahan belum lengkap. Nominal sebelumnya tetap tersimpan sampai Anda menggantinya.",
+  "@m53CashMissingDetails": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashMissingDetails"
+  },
+  "m53CashPaymentDeclaration": "Sumber dan rincian pembayaran",
+  "@m53CashPaymentDeclaration": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPaymentDeclaration"
+  },
+  "m53CashRefundPieces": "Pecahan uang dikembalikan",
+  "@m53CashRefundPieces": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRefundPieces"
+  },
+  "m53CashDetailsUnknown": "Rincian atau hitungan tidak diketahui",
+  "@m53CashDetailsUnknown": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDetailsUnknown"
+  },
+  "m53CashPublicHistoryHelp": "Riwayat mode catatan kasir tetap tersedia di sini. Riwayat mode audit dibuka pemilik dari Kelola.",
+  "@m53CashPublicHistoryHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPublicHistoryHelp"
+  },
+  "m53CashClosingCounts": "Hitungan fisik saat penutupan",
+  "@m53CashClosingCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashClosingCounts"
+  },
+  "m53CashReference": "Referensi",
+  "@m53CashReference": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashReference"
+  },
+  "m53CashSaleAudit": "Rincian uang transaksi",
+  "@m53CashSaleAudit": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSaleAudit"
+  },
+  "m53CashApplied": "Pembayaran tagihan",
+  "@m53CashApplied": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashApplied"
+  },
+  "m53CashUnclassified": "Nominal tanpa rincian pecahan",
+  "@m53CashUnclassified": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashUnclassified"
   }
 }

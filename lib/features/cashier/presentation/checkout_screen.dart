@@ -28,6 +28,7 @@ class CheckoutScreen extends StatelessWidget {
           context.read<AppServices>().checkout,
           quickCash: context.read<AppServices>().quickCash,
           phoneRegion: context.read<AppServices>().settings.phoneRegion,
+          drawer: context.read<AppServices>().cashDrawer,
         )..loadAmounts(),
       ),
     ],
@@ -41,10 +42,24 @@ class _CheckoutForm extends StatefulWidget {
   State<_CheckoutForm> createState() => _CheckoutFormState();
 }
 
-class _CheckoutFormState extends State<_CheckoutForm> {
+class _CheckoutFormState extends State<_CheckoutForm>
+    with WidgetsBindingObserver {
   Timer? timer;
   int generation = 0;
   List<MemberProfile> suggestions = const [];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<CheckoutProvider>().loadDrawerContext();
+    }
+  }
+
   void search(String name) {
     final form = context.read<CheckoutProvider>();
     form.newCustomer();
@@ -70,6 +85,7 @@ class _CheckoutFormState extends State<_CheckoutForm> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     timer?.cancel();
     generation++;
     super.dispose();
@@ -197,6 +213,7 @@ class _CheckoutFormState extends State<_CheckoutForm> {
                 ),
               const SizedBox(height: 16),
               FilledButton(
+                key: const ValueKey('checkout-confirm'),
                 onPressed:
                     form.submitting ||
                         cart.priceChanged ||
@@ -206,9 +223,13 @@ class _CheckoutFormState extends State<_CheckoutForm> {
                     ? null
                     : () async {
                         FocusScope.of(context).unfocus();
+                        final route = ModalRoute.of(context);
                         final result = await form.submit();
-                        if (result != null && context.mounted) {
-                          Navigator.pop(context, result);
+                        if (result != null &&
+                            context.mounted &&
+                            route != null &&
+                            route.isActive) {
+                          Navigator.of(context).removeRoute(route, result);
                         }
                       },
                 child: Text(

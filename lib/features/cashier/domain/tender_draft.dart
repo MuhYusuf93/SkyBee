@@ -195,6 +195,24 @@ final class TenderDraft {
   void amount(Money value) =>
       _amount(value, TenderOrigin.preset, replace: true);
   void exact(Money value) => _amount(value, TenderOrigin.exact, replace: true);
+
+  /// Replaces a manually reviewed count vector in one operation. It does not
+  /// infer pieces from an amount or perform a loop of synthetic button presses.
+  void replaceCounts(Map<int, int> counts) {
+    final total = checkedNonNegative(
+      counts.entries.fold<BigInt>(
+        BigInt.zero,
+        (sum, entry) => sum + BigInt.from(entry.key) * BigInt.from(entry.value),
+      ),
+    );
+    _amount(
+      Money(total, currency.code, currency.scale),
+      TenderOrigin.denominations,
+      unclassified: 0,
+      counts: counts,
+    );
+  }
+
   void receive(Money denomination) {
     _match(denomination);
     if (denomination.amountMinor <= 0) {

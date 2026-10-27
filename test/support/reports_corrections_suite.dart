@@ -24,6 +24,7 @@ void reportsCorrectionsSuite(
   late StoreClock clock;
   late Map<String, Object?> credentials;
   late EntityId productId;
+  var publicCustomerSerial = 0;
   setUpAll(() async {
     final seed = await newPath();
     final database = DatabaseCoordinator(factory: factory, databasePath: seed);
@@ -107,7 +108,11 @@ void reportsCorrectionsSuite(
             ? PaymentMode.debt
             : PaymentMode.partial,
         paid: paid == null ? null : Money(paid, 'IDR', 0),
-        customer: CustomerChoice(id: customer, name: 'Synthetic Alex'),
+        customer: CustomerChoice(
+          id: customer,
+          name: 'Synthetic Alex',
+          phone: '08123${(++publicCustomerSerial).toString().padLeft(7, '0')}',
+        ),
       ),
     );
     await services.cart.next(cart.id);

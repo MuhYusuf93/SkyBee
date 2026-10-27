@@ -15,7 +15,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-B1 | PIN aplikasi setiap72jam, biometric tidak mereset interval | Host dan native14 per DV/Poco PASS, termasuk restart/rollback clock sintetis; bukan72jam nyata |
 | M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir schema20:21kasus+API1 native22 per DV/Poco PASS (M53_CASHIER_LOCK_REPORT), defaultoff tanpa grant Kelola |
 | M53-C | Pencarian/popularitas, uang cepat, member/piutang | Tender21 host/native17 per perangkat PASS. Member22 host20/regresi79/native20 per perangkat PASS. Search23 host51 (17search)/M52focus1/native13 per DV/Poco PASS;680/611hash lama cocok. Lihat M53_TENDER_REPORT, M53_MEMBER_REPORT, M53_SEARCH_REPORT |
-| M53-D | Sesi dan pecahan kas, audit, jurnal laci | TODO |
+| M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
 | M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | TODO |
 | M53-F | Label/struk wajib dan laporan/ekspor baru | TODO |
 | M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |

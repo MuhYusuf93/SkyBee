@@ -427,3 +427,20 @@ setelah roundtrip wide/narrow; controller panel yang dibuatulang harus mengambil
 query dari pemilik flow agar teks tidak lenyap. Reveal programmatic bukan bukti
 sentuhan fisik. Cocokkan seluruh kolom PK nyata sebelum menyusun ON CONFLICT;
 cashier_search_terms memakai product_id/term/priority, bukan hanya dua kolom.
+
+117. Fixture SQL dalam testWidgets harus dijalankan melalui helper yang memompa
+I/O, termasuk helper pembuka sesi. Menunggu Future langsung di fake zone dapat
+membuat test diam sebelum timeout helper aktif. Tunggu field/tombol enabled,
+bukan hanya route sudah ada. Assertion nominal memakai nilai kanonis; formatter
+locale boleh mengelompokkan 20000 menjadi20,000. Jangan melonggarkan nilai uang.
+
+118. Editor bersama yang dipanggil dari alur pemilik memerlukan privacy gate
+pada route editornya sendiri. Gate pada route induk tidak menutupi route di atas.
+Pertahankan controller melalui Offstage, registry dirty membaca kondisi terkini,
+dan selesai Save dengan menghapus hanya route miliknya agar callback tertunda
+bukan malah menutup opaque lock. Native D memeriksa kedua lifecycle tersebut.
+
+119. Sebelum memulai Flutter FFI invocation baru, tunggu exit proses sebelumnya.
+Retest host D sempat beradu sqlite3.dll saat invocation awal masih aktif; tidak
+menandakan izin folder rusak. Laporan lama juga perlu fixture profil baru valid:
+phone sintetis unik diperbarui tanpa menurunkan aturan member atau data legacy.

@@ -1,4 +1,5 @@
 import '../../../core/domain/contact_validation.dart';
+import '../../cash_drawer/application/cash_payment_posting.dart';
 import '../../members/application/member_rules.dart';
 import '../../members/domain/member_models.dart';
 import '../domain/cash_tender.dart';
@@ -29,6 +30,11 @@ final class CheckoutService {
 
   Future<String> _hash(EntityId draftId, int revision, CheckoutInput input) =>
       store.fingerprint([
+        if (input.drawerSessionId != null || input.changePieces != null) ...[
+          'drawer-v1',
+          input.drawerSessionId?.value,
+          input.changePieces?.encode(),
+        ],
         if (input.memberIntent) ...[
           'member-v1',
           input.customer.id?.value,
@@ -309,6 +315,7 @@ final class CheckoutService {
           'created_at': now,
           'total_rupiah': total.amountMinor,
           'cost_micros': cost,
+          if (database.schemaVersion >= 24) 'drawer_version': 1,
           if (database.schemaVersion >= 17)
             'cost_complete': products.every((p) => p['cost_complete'] != 0)
                 ? 1
@@ -325,6 +332,8 @@ final class CheckoutService {
             'debt_minor': cash.debt.amountMinor,
             if (database.schemaVersion >= 21)
               'details_json': input.tenderDetails?.encode(),
+            if (database.schemaVersion >= 24)
+              'change_counts_json': input.changePieces?.encode(),
           });
         }
         await _stage('sale');
@@ -403,8 +412,9 @@ final class CheckoutService {
           }
           await _stage('history');
         }
+        EntityId? paymentId;
         if (paid.amountMinor > 0) {
-          final paymentId = CashierStore.ids.next();
+          paymentId = CashierStore.ids.next();
           await dbTxn.insert('payments', {
             'id': paymentId.value,
             'operation_key': 'checkout:${draftId.value}',
@@ -413,6 +423,7 @@ final class CheckoutService {
             'amount_rupiah': paid.amountMinor,
             'created_at': now,
             'payload_hash': hash,
+            if (database.schemaVersion >= 24) 'cash_provenance_version': 1,
             ...store.metadata(currency),
           });
           await dbTxn.insert('payment_allocations', {
@@ -426,6 +437,19 @@ final class CheckoutService {
             'sale_transaction_id': saleId.value,
           });
         }
+        if (database.schemaVersion >= 24) {
+          await CashPaymentPosting.checkoutOn(
+            dbTxn,
+            store,
+            sale: saleId,
+            payment: paymentId,
+            input: input,
+            tender: cash,
+            paid: paid,
+            currency: currency,
+          );
+          await _stage('drawer');
+        }
         await _stage('payment');
         final completed = await dbTxn.update(
           'cart_drafts',
@@ -435,6 +459,10 @@ final class CheckoutService {
             'updated_at': now,
             if (database.schemaVersion >= 21)
               'tender_details_json': input.tenderDetails?.encode(),
+            if (database.schemaVersion >= 24) ...{
+              'drawer_session_id': input.drawerSessionId?.value,
+              'change_counts_json': input.changePieces?.encode(),
+            },
             if (database.schemaVersion >= 22) ...{
               'member_intent': input.memberIntent ? 1 : 0,
               'member_opt_in': (input.memberOptIn ?? input.memberIntent)

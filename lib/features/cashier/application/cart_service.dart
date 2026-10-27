@@ -289,11 +289,36 @@ final class CartService {
         throw const AppError('m3InvalidPayment');
       }
     }
+    if (input.changePieces != null) {
+      if (!input.cash) throw const AppError('m3InvalidPayment');
+      Money(0, policy.code, policy.scale).compatible(input.changePieces!.total);
+    }
+    if (input.drawerSessionId != null && !input.cash) {
+      throw const AppError('m3InvalidPayment');
+    }
+    if (input.drawerSessionId != null && database.schemaVersion >= 24) {
+      final rows = await dbTxn.query(
+        'cash_drawer_sessions',
+        columns: ['currency_code', 'currency_scale'],
+        where: 'id=?',
+        whereArgs: [input.drawerSessionId!.value],
+        limit: 2,
+      );
+      if (rows.length != 1 ||
+          rows.single['currency_code'] != policy.code ||
+          rows.single['currency_scale'] != policy.scale) {
+        throw const AppError('currencyMismatch');
+      }
+    }
     await dbTxn.update(
       'cart_drafts',
       {
         if (database.schemaVersion >= 21)
           'tender_details_json': input.tenderDetails?.encode(),
+        if (database.schemaVersion >= 24) ...{
+          'drawer_session_id': input.drawerSessionId?.value,
+          'change_counts_json': input.changePieces?.encode(),
+        },
         if (database.schemaVersion >= 22) ...{
           'member_intent': input.memberIntent ? 1 : 0,
           'member_opt_in': (input.memberOptIn ?? input.memberIntent) ? 1 : 0,

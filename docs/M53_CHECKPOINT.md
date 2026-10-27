@@ -1,5 +1,102 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## D24 selesai — native kedua perangkat PASS, lanjut E
+
+28 Oktober 2026 — D kas fisik source24 tervalidasi: acceptance host20 PASS52s,
+regresi laporan/koreksi24 PASS55s, analyzer bersih6,7s, l10n926/624/245.
+DV20 PASS8:26/Poco20 PASS06:27; seluruh693/624 hash lama cocok dan
+kontrol otomatis berakhir; awake DV dipulihkan tepat. Source516 berkas sama.
+Paket Eksplorasi Mandiri .skybee+12/schema14 belum diupdate/reset.
+[Laporan D](M53_CASH_DRAWER_REPORT.md), [checkpoint](M53_CHECKPOINT.md).
+Lanjut E gudang/supplier, F laporan/output, G keselamatan data dan H handoff.
+
+Keputusan/usage berada pada decisions/M53_CASH_DRAWER.md dan
+M53_CASH_DRAWER_USAGE.md. Bukti terkurasi drawer-*.json beserta source checksum.
+Tidak mengulang 20 kasus tanpa perubahan baru. Integrasi kas supplier mengikuti
+E, ekspor/laporan F dan portable/reset G masih harus diperiksa sebelum H.
+Catatan implementasi E1/E2/E3 terperinci disimpan privat di
+build/m53/e-next-design.md. Baca ulang kontrak §7 dan matriks §4.1; gudang boleh
+melihat informasi operasional per supplier/membuat tagihan, tetapi posting
+pembayaran/kredit, due date final dan laporan lintas supplier hanya pemilik.
+Dsource dapat diedit kembali setelah commit/push checkpoint ini.
+
+
+## D24 host20 PASS — source516 dibekukan, native DV aktif
+
+Host domain14 PASS53s; shared acceptance domain14/UI6 gabungan20 PASS52s.
+UI mencakup checkout aktual ID/EN320px2x+keyboard, dirty locked Back, repayment
+aktual, owner freshPIN/policy, privacy counteditor owner saat lock, sumber
+external dan opening/closing explicitzero. History keysets25+1/cache75,
+publicnotes vsowneraudit, lateauthorization, tender audit sale/refund preview
+teruji. Regresi awal82kasus64PASS18FAIL59s:18fixture reports membuat memberbaru
+tanpaphone; fixturephone sintetis diperbaiki tanpaubahaturan, retest24 PASS55s.
+Satu percobaan host terlanjur overlap dan ditolak DLLlock; ulang serial24PASS.
+M53search migration22->current kini membandingkan SEMUAkolom asli dan default
+baru secara terpisah; tidak menghapus field agarassertcocok.
+
+Analyze Noissues6,7s; l10n926/624/245. Source516 checksum dibekukan di
+build/m53/drawer-source-pre-native.json. Native DV lewat auditedwrapper aktif,
+Poco berikut; tidak mengubahsource sampai kedua run selesai. .skybee+12/schema14
+belum diupdate/reset. Keputusan/usage: decisions/M53_CASH_DRAWER.md dan
+M53_CASH_DRAWER_USAGE.md. Laporan finalD/native/bukti/commit masih berikutnya;
+integrasi supplier E, laporan/ekspor F, portable/reset G, handoff H tetapaktif.
+
+## D24 domain12 PASS — UI CashPad/sessionforms WIP
+
+Hostroleinitial10PASS2FAIL28s hanya matcher salah sessionLocked vs management
+SessionLocked; perbaikan matcher3tempat tanpaubahguard, retest12 PASS47s.
+Validator+migration/sourceflags baru teruji; source24tetapbelumcommit/native.
+CashDrawerValidation boundedSQL preflight+replaycache+refs+closure+drafts, payment
+provenance1/saleDrawerVersion1 untukbaru, legacy0defaul tanpaSourceinferensi.
+Modesnapshot/currentSession requirematch; keymax256/currencyguardditambah.
+
+AppServices.cashDrawer kini diwire. CheckoutProvider.cashDrawer optionalctx dan
+draftSession/changePieces, blockingmanual/exactwhenactive, contextReadyperload,
+currentSessionreview, setReceived/Change; CashPad activefixedcatalog/CountEditor/
+changeeditor/Drawerlink danrootcashierlink tersedia. CashDrawerScreen scoped
+Provider; open/in/out/handover/recount/close forms public FormExitGuard RAMdirty.
+CountEditor validSave removesownRoute target only, cannotpopopaqueLock. UIbelum
+tests, ownerpolicy/history/repayment/refundUI belum. AnalyzeUI sedangberjalan
+build/m53/drawer-ui-initial-analyze.txt session67731; perlubaca/fixstyle/errors.
+Jangan jalankan ulang privatebootstrap yangmenimpasource maintained. Berikut UI
+sharedacceptanceID/EN3202x/lockBack +ownerHistory/policy/repayment/refund handlers,
+SQLcashjournals keysets/reportdetail, docdecision/finalanalyze/nativeDdelta.
+User .skybee+12/14tanpaupdate/reset; D→E–Hterusaktif sampaihandoff.
+
+## D24 core7 PASS — coupling tersedia, UI/backup/roles masih WIP
+
+Source24 belumcommit/rilis; C57cc831 sudahpush. Core awal compilefail satu arg
+CashierStore.audit diperbaiki; core3 PASS2s. Setelahcoupling checkout/repayment/
+refund dan additiveinput/sources: offregression44 PASS26s, active7 PASS15s.
+Native24belum. CashPaymentPosting mencatat sumber cash/external/unknown baru,
+payments.cash_provenance_version1, legacy0tidakdiinferensi; conditionalhasholdretry
+tetap. Draft sessionID/changePieces saved/reloaded;95000-2000→93000 once,
+refundnet93kactualotherpieces; cashrepayment nosale/HPP/visit; injectedledger/
+draft/auditfail rollback. Modeaudit/defaultoff SQLguard sudah, formcashincoming
+belumterhubung. AppServices.drawer/CheckoutProvider/CashPad/repayment/refundUI
+dan session/journal/policy/historyUI belum. Janganexpose enableUI sebelumsemua
+couplingterhubung danbackupvalidatorbaru. SharedpiecesEditor source tersedia.
+
+L10n65baru:917/587/245 PASS; initialanalyze43styleinfo(warningsdetailbaca log),
+dartfixcurly berjalan build/m53/drawer-curly-fix.txt, tunggusebelummengeditfile
+yangsama. Hostnativejobtidakaktif; analyzersession44388exit1/host52940exit0.
+Berikut: lintfixreview; tambahrole/lateproof/cursor/closure/reversaltests,
+backupderivedreconstruct+crossfacts+legacy migration23→24; AppServices+scopedUI,
+lockdirtyBackID/EN3202x; allD acceptanceanalyzefreeze/native. D→E–Htetapaktif,
+.skybee+12/14tidakdiupdate/reset. Ddesigncandidateprivatejanganbootstraplagi.
+
+## D24 WIP — search57cc831 dipush/remote verified
+
+28Oktober: checkpoint Csearch57cc8319141e461757986c662d5af26cb9372b3c normalpush
+dan ls-remoteMATCH; workingtreeclean sesudahpush. Source+12/schema24 kini Dcore
+WIP: tujuhcandidate disalinsekali via private stage_drawer_candidates.py,
+schema24aditif/physicalcounts/ledger/service/editor/3coretests. Belumcompile,
+beluml10n/coupling/validator/UIenable. AppServices belum expose drawer; policyoff
+default, jangan expose enableUI sampai financialcoupling lengkap. Tidak nativejob.
+Lanjut format/hostcore/fix, l10n, wiring checkout/repayment/refund/backup dan
+session/journal/ownerpolicy UI; sharedtestsatomic/idempotent/midnight/role/locked
+dirty. Seluruh D→E→F→G→H tetapaktif. .skybee+12/schema14 tanpa update/reset/reseed.
+
 ## Csearch23 tervalidasi — commit/push lalu D24
 
 28Oktober: nativeDV13 PASS3:31/Poco13 PASS2:52. Semua680/611hashprotectedlama

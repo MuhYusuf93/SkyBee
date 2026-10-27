@@ -3502,5 +3502,301 @@
   "m53SearchMore": "More results",
   "@m53SearchMore": {
     "description": "M5.3 product search ranking: m53SearchMore"
+  },
+  "m53CashDrawer": "Cash drawer and pieces",
+  "@m53CashDrawer": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDrawer"
+  },
+  "m53CashPolicy": "Cash recording policy",
+  "@m53CashPolicy": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPolicy"
+  },
+  "m53CashOff": "Off",
+  "@m53CashOff": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOff"
+  },
+  "m53CashNotes": "Cashier notes",
+  "@m53CashNotes": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashNotes"
+  },
+  "m53CashAudit": "Owner required audit",
+  "@m53CashAudit": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAudit"
+  },
+  "m53CashAuditHelp": "The owner requires piece counts for cash. Cashiers cannot disable this. Piece counts are cashier declarations, not proof of the physical cash. A difference does not automatically mean misconduct.",
+  "@m53CashAuditHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAuditHelp"
+  },
+  "m53CashNotesHelp": "Enable this to help record daily cash. Records remain when the date changes or recording is disabled. Close open sessions before disabling recording.",
+  "@m53CashNotesHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashNotesHelp"
+  },
+  "m53CashReasonRequired": "Enter a reason of at most 1,000 characters.",
+  "@m53CashReasonRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashReasonRequired"
+  },
+  "m53CashPolicyChanged": "The cash policy changed. Reload and review your choice.",
+  "@m53CashPolicyChanged": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPolicyChanged"
+  },
+  "m53CashCloseSessionsFirst": "Close the open cash sessions before changing this policy.",
+  "@m53CashCloseSessionsFirst": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCloseSessionsFirst"
+  },
+  "m53CashAuditRequired": "Recording is required by the owner and cannot be disabled by the cashier.",
+  "@m53CashAuditRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAuditRequired"
+  },
+  "m53CashRecordingOff": "Cash recording is off.",
+  "@m53CashRecordingOff": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRecordingOff"
+  },
+  "m53CashSessionChanged": "The cash session, date, or settings changed. Reload and review your entries before trying again.",
+  "@m53CashSessionChanged": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionChanged"
+  },
+  "m53CashSessionAlreadyOpen": "A cash session is already open today. Reload to view it.",
+  "@m53CashSessionAlreadyOpen": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionAlreadyOpen"
+  },
+  "m53CashPreviousUnclosed": "A session from another day is still open. Review the warning before opening a new one.",
+  "@m53CashPreviousUnclosed": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPreviousUnclosed"
+  },
+  "m53CashClockChanged": "The device time is earlier than the latest cash record. Check the device time before continuing.",
+  "@m53CashClockChanged": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashClockChanged"
+  },
+  "m53CashOldSession": "This session belongs to an earlier date or settings. A current count cannot be treated as the physical count from that time.",
+  "@m53CashOldSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOldSession"
+  },
+  "m53CashCountRequired": "Enter the physical piece counts before closing the session.",
+  "@m53CashCountRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCountRequired"
+  },
+  "m53CashPiecesUnavailable": "The outgoing pieces are not available in the records. Recount the drawer with a reason or correct the piece details, then try again. The balance has not been reduced.",
+  "@m53CashPiecesUnavailable": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPiecesUnavailable"
+  },
+  "m53CashCompositionRequired": "Active recording requires complete cash piece counts. An amount alone or Exact cash is insufficient.",
+  "@m53CashCompositionRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCompositionRequired"
+  },
+  "m53CashCompositionMismatch": "The piece total must exactly match the required amount. No automatic rounding is applied.",
+  "@m53CashCompositionMismatch": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCompositionMismatch"
+  },
+  "m53CashSessionRequired": "Open today’s cash session and review the opening balance before recording cash.",
+  "@m53CashSessionRequired": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionRequired"
+  },
+  "m53CashCountInvalid": "Check the piece counts. Use whole numbers from 0 to 1,000,000.",
+  "@m53CashCountInvalid": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCountInvalid"
+  },
+  "m53CashDeclarationHelp": "Enter the number of pieces you observe for each denomination. The + button adds one note or coin. These are declared counts, not sensor readings.",
+  "@m53CashDeclarationHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDeclarationHelp"
+  },
+  "m53CashRequiredTotal": "Required total",
+  "@m53CashRequiredTotal": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRequiredTotal"
+  },
+  "m53CashClearCounts": "Clear counts",
+  "@m53CashClearCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashClearCounts"
+  },
+  "m53CashPieceCount": "Piece count",
+  "@m53CashPieceCount": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPieceCount"
+  },
+  "m53CashAddPiece": "Add one piece",
+  "@m53CashAddPiece": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAddPiece"
+  },
+  "m53CashIncoming": "Pieces received",
+  "@m53CashIncoming": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashIncoming"
+  },
+  "m53CashChangeCounts": "Change pieces",
+  "@m53CashChangeCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashChangeCounts"
+  },
+  "m53CashOpeningCounts": "Opening piece count",
+  "@m53CashOpeningCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOpeningCounts"
+  },
+  "m53CashObservedCounts": "Current physical count",
+  "@m53CashObservedCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashObservedCounts"
+  },
+  "m53CashRefundCounts": "Refund pieces",
+  "@m53CashRefundCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRefundCounts"
+  },
+  "m53CashJournalCounts": "Pieces for this entry",
+  "@m53CashJournalCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashJournalCounts"
+  },
+  "m53CashOpeningKnown": "Opening balance counted",
+  "@m53CashOpeningKnown": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOpeningKnown"
+  },
+  "m53CashOpeningUnknown": "Opening balance unknown",
+  "@m53CashOpeningUnknown": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOpeningUnknown"
+  },
+  "m53CashUnknownHelp": "Unknown is different from empty. The expected amount is uncertain. Outgoing cash is limited to pieces already counted or recorded as received. Recount with a reason to correct the records.",
+  "@m53CashUnknownHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashUnknownHelp"
+  },
+  "m53CashOpenSession": "Open cash session",
+  "@m53CashOpenSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOpenSession"
+  },
+  "m53CashCloseSession": "Close cash session",
+  "@m53CashCloseSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCloseSession"
+  },
+  "m53CashRecount": "Recount and record correction",
+  "@m53CashRecount": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRecount"
+  },
+  "m53CashExpected": "Expected pieces",
+  "@m53CashExpected": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashExpected"
+  },
+  "m53CashLowerBound": "Minimum pieces already recorded",
+  "@m53CashLowerBound": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashLowerBound"
+  },
+  "m53CashBalance": "Recorded piece value",
+  "@m53CashBalance": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashBalance"
+  },
+  "m53CashSessionDate": "Session date",
+  "@m53CashSessionDate": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionDate"
+  },
+  "m53CashPendingDays": "Other days have unclosed sessions",
+  "@m53CashPendingDays": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPendingDays"
+  },
+  "m53CashPendingHelp": "A new date does not close or delete an older session. Review the new opening balance independently; an older balance is not copied automatically.",
+  "@m53CashPendingHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPendingHelp"
+  },
+  "m53CashAcceptPending": "I understand that another day has an unclosed session",
+  "@m53CashAcceptPending": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashAcceptPending"
+  },
+  "m53CashNoSession": "There is no open cash session for today.",
+  "@m53CashNoSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashNoSession"
+  },
+  "m53CashSessionClosed": "This session is closed. Its records and counts remain stored.",
+  "@m53CashSessionClosed": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSessionClosed"
+  },
+  "m53CashCashIn": "Cash in excluding sales",
+  "@m53CashCashIn": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCashIn"
+  },
+  "m53CashCashOut": "Cash out",
+  "@m53CashCashOut": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCashOut"
+  },
+  "m53CashHandover": "Deposit or cash handover",
+  "@m53CashHandover": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashHandover"
+  },
+  "m53CashReason": "Reason",
+  "@m53CashReason": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashReason"
+  },
+  "m53CashHistory": "Session and journal history",
+  "@m53CashHistory": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashHistory"
+  },
+  "m53CashDifference": "Count difference",
+  "@m53CashDifference": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDifference"
+  },
+  "m53CashDifferenceHelp": "A difference compares recorded cash with the declared count. It does not change sales and is not proof of theft.",
+  "@m53CashDifferenceHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDifferenceHelp"
+  },
+  "m53CashOwnerException": "Close without historical count — owner",
+  "@m53CashOwnerException": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOwnerException"
+  },
+  "m53CashOwnerExceptionHelp": "Use this when the physical count from an older session is unavailable. The owner PIN and a reason are required. The record is marked unverified, not treated as a zero difference.",
+  "@m53CashOwnerExceptionHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashOwnerExceptionHelp"
+  },
+  "m53CashSourceDrawer": "Cash from/to drawer",
+  "@m53CashSourceDrawer": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSourceDrawer"
+  },
+  "m53CashSourceExternal": "Outside drawer / noncash",
+  "@m53CashSourceExternal": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSourceExternal"
+  },
+  "m53CashSourceUnknown": "Legacy payment source unknown",
+  "@m53CashSourceUnknown": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSourceUnknown"
+  },
+  "m53CashEditReceived": "Enter or review received pieces",
+  "@m53CashEditReceived": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashEditReceived"
+  },
+  "m53CashCurrentSession": "Cash session used",
+  "@m53CashCurrentSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashCurrentSession"
+  },
+  "m53CashReviewSession": "Review and use this session",
+  "@m53CashReviewSession": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashReviewSession"
+  },
+  "m53CashMissingDetails": "The piece details are incomplete. The previous amount is retained until you replace it.",
+  "@m53CashMissingDetails": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashMissingDetails"
+  },
+  "m53CashPaymentDeclaration": "Payment source and details",
+  "@m53CashPaymentDeclaration": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPaymentDeclaration"
+  },
+  "m53CashRefundPieces": "Refund pieces",
+  "@m53CashRefundPieces": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashRefundPieces"
+  },
+  "m53CashDetailsUnknown": "Details or count unknown",
+  "@m53CashDetailsUnknown": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashDetailsUnknown"
+  },
+  "m53CashPublicHistoryHelp": "Cashier notes remain available here. The owner opens audit history from Management.",
+  "@m53CashPublicHistoryHelp": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashPublicHistoryHelp"
+  },
+  "m53CashClosingCounts": "Physical count at closing",
+  "@m53CashClosingCounts": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashClosingCounts"
+  },
+  "m53CashReference": "Reference",
+  "@m53CashReference": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashReference"
+  },
+  "m53CashSaleAudit": "Transaction cash details",
+  "@m53CashSaleAudit": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashSaleAudit"
+  },
+  "m53CashApplied": "Applied payment",
+  "@m53CashApplied": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashApplied"
+  },
+  "m53CashUnclassified": "Amount without piece details",
+  "@m53CashUnclassified": {
+    "description": "M5.3 physical cash declarations and session accounting: m53CashUnclassified"
   }
 }

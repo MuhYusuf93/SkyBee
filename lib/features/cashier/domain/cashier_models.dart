@@ -1,4 +1,5 @@
 import 'tender_draft.dart';
+import '../../cash_drawer/domain/cash_pieces.dart';
 import '../../../core/domain/value_types.dart';
 import 'cash_tender.dart';
 import 'quantity_promotion.dart';
@@ -102,6 +103,8 @@ final class CheckoutInput {
     this.quickMode = false,
     this.memberIntent = false,
     this.memberOptIn,
+    this.drawerSessionId,
+    this.changePieces,
     this.customer = const CustomerChoice(),
   });
   final PaymentMode mode;
@@ -111,6 +114,8 @@ final class CheckoutInput {
   /// Draft view preference only; null preserves intent for non-UI callers.
   /// Implicit credit membership must not become an opt-in merely on reopen.
   final bool? memberOptIn;
+  final EntityId? drawerSessionId;
+  final CashPieces? changePieces;
   final Money? tender;
   final String tenderRaw;
   final TenderSnapshot? tenderDetails;

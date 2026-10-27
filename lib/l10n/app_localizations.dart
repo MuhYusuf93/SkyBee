@@ -5209,6 +5209,450 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'More results'**
   String get m53SearchMore;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashDrawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash drawer and pieces'**
+  String get m53CashDrawer;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPolicy
+  ///
+  /// In en, this message translates to:
+  /// **'Cash recording policy'**
+  String get m53CashPolicy;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashOff
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get m53CashOff;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashNotes
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier notes'**
+  String get m53CashNotes;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashAudit
+  ///
+  /// In en, this message translates to:
+  /// **'Owner required audit'**
+  String get m53CashAudit;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashAuditHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The owner requires piece counts for cash. Cashiers cannot disable this. Piece counts are cashier declarations, not proof of the physical cash. A difference does not automatically mean misconduct.'**
+  String get m53CashAuditHelp;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashNotesHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Enable this to help record daily cash. Records remain when the date changes or recording is disabled. Close open sessions before disabling recording.'**
+  String get m53CashNotesHelp;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashReasonRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a reason of at most 1,000 characters.'**
+  String get m53CashReasonRequired;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPolicyChanged
+  ///
+  /// In en, this message translates to:
+  /// **'The cash policy changed. Reload and review your choice.'**
+  String get m53CashPolicyChanged;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCloseSessionsFirst
+  ///
+  /// In en, this message translates to:
+  /// **'Close the open cash sessions before changing this policy.'**
+  String get m53CashCloseSessionsFirst;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashAuditRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Recording is required by the owner and cannot be disabled by the cashier.'**
+  String get m53CashAuditRequired;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashRecordingOff
+  ///
+  /// In en, this message translates to:
+  /// **'Cash recording is off.'**
+  String get m53CashRecordingOff;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSessionChanged
+  ///
+  /// In en, this message translates to:
+  /// **'The cash session, date, or settings changed. Reload and review your entries before trying again.'**
+  String get m53CashSessionChanged;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSessionAlreadyOpen
+  ///
+  /// In en, this message translates to:
+  /// **'A cash session is already open today. Reload to view it.'**
+  String get m53CashSessionAlreadyOpen;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPreviousUnclosed
+  ///
+  /// In en, this message translates to:
+  /// **'A session from another day is still open. Review the warning before opening a new one.'**
+  String get m53CashPreviousUnclosed;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashClockChanged
+  ///
+  /// In en, this message translates to:
+  /// **'The device time is earlier than the latest cash record. Check the device time before continuing.'**
+  String get m53CashClockChanged;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashOldSession
+  ///
+  /// In en, this message translates to:
+  /// **'This session belongs to an earlier date or settings. A current count cannot be treated as the physical count from that time.'**
+  String get m53CashOldSession;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCountRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the physical piece counts before closing the session.'**
+  String get m53CashCountRequired;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPiecesUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The outgoing pieces are not available in the records. Recount the drawer with a reason or correct the piece details, then try again. The balance has not been reduced.'**
+  String get m53CashPiecesUnavailable;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCompositionRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Active recording requires complete cash piece counts. An amount alone or Exact cash is insufficient.'**
+  String get m53CashCompositionRequired;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCompositionMismatch
+  ///
+  /// In en, this message translates to:
+  /// **'The piece total must exactly match the required amount. No automatic rounding is applied.'**
+  String get m53CashCompositionMismatch;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSessionRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Open today’s cash session and review the opening balance before recording cash.'**
+  String get m53CashSessionRequired;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCountInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Check the piece counts. Use whole numbers from 0 to 1,000,000.'**
+  String get m53CashCountInvalid;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashDeclarationHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the number of pieces you observe for each denomination. The + button adds one note or coin. These are declared counts, not sensor readings.'**
+  String get m53CashDeclarationHelp;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashRequiredTotal
+  ///
+  /// In en, this message translates to:
+  /// **'Required total'**
+  String get m53CashRequiredTotal;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashClearCounts
+  ///
+  /// In en, this message translates to:
+  /// **'Clear counts'**
+  String get m53CashClearCounts;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPieceCount
+  ///
+  /// In en, this message translates to:
+  /// **'Piece count'**
+  String get m53CashPieceCount;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashAddPiece
+  ///
+  /// In en, this message translates to:
+  /// **'Add one piece'**
+  String get m53CashAddPiece;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashIncoming
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces received'**
+  String get m53CashIncoming;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashChangeCounts
+  ///
+  /// In en, this message translates to:
+  /// **'Change pieces'**
+  String get m53CashChangeCounts;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashOpeningCounts
+  ///
+  /// In en, this message translates to:
+  /// **'Opening piece count'**
+  String get m53CashOpeningCounts;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashObservedCounts
+  ///
+  /// In en, this message translates to:
+  /// **'Current physical count'**
+  String get m53CashObservedCounts;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashRefundCounts
+  ///
+  /// In en, this message translates to:
+  /// **'Refund pieces'**
+  String get m53CashRefundCounts;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashJournalCounts
+  ///
+  /// In en, this message translates to:
+  /// **'Pieces for this entry'**
+  String get m53CashJournalCounts;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashOpeningKnown
+  ///
+  /// In en, this message translates to:
+  /// **'Opening balance counted'**
+  String get m53CashOpeningKnown;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashOpeningUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Opening balance unknown'**
+  String get m53CashOpeningUnknown;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashUnknownHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown is different from empty. The expected amount is uncertain. Outgoing cash is limited to pieces already counted or recorded as received. Recount with a reason to correct the records.'**
+  String get m53CashUnknownHelp;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashOpenSession
+  ///
+  /// In en, this message translates to:
+  /// **'Open cash session'**
+  String get m53CashOpenSession;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCloseSession
+  ///
+  /// In en, this message translates to:
+  /// **'Close cash session'**
+  String get m53CashCloseSession;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashRecount
+  ///
+  /// In en, this message translates to:
+  /// **'Recount and record correction'**
+  String get m53CashRecount;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashExpected
+  ///
+  /// In en, this message translates to:
+  /// **'Expected pieces'**
+  String get m53CashExpected;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashLowerBound
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum pieces already recorded'**
+  String get m53CashLowerBound;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashBalance
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded piece value'**
+  String get m53CashBalance;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSessionDate
+  ///
+  /// In en, this message translates to:
+  /// **'Session date'**
+  String get m53CashSessionDate;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPendingDays
+  ///
+  /// In en, this message translates to:
+  /// **'Other days have unclosed sessions'**
+  String get m53CashPendingDays;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPendingHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A new date does not close or delete an older session. Review the new opening balance independently; an older balance is not copied automatically.'**
+  String get m53CashPendingHelp;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashAcceptPending
+  ///
+  /// In en, this message translates to:
+  /// **'I understand that another day has an unclosed session'**
+  String get m53CashAcceptPending;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashNoSession
+  ///
+  /// In en, this message translates to:
+  /// **'There is no open cash session for today.'**
+  String get m53CashNoSession;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSessionClosed
+  ///
+  /// In en, this message translates to:
+  /// **'This session is closed. Its records and counts remain stored.'**
+  String get m53CashSessionClosed;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCashIn
+  ///
+  /// In en, this message translates to:
+  /// **'Cash in excluding sales'**
+  String get m53CashCashIn;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCashOut
+  ///
+  /// In en, this message translates to:
+  /// **'Cash out'**
+  String get m53CashCashOut;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashHandover
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit or cash handover'**
+  String get m53CashHandover;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashReason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get m53CashReason;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashHistory
+  ///
+  /// In en, this message translates to:
+  /// **'Session and journal history'**
+  String get m53CashHistory;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashDifference
+  ///
+  /// In en, this message translates to:
+  /// **'Count difference'**
+  String get m53CashDifference;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashDifferenceHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A difference compares recorded cash with the declared count. It does not change sales and is not proof of theft.'**
+  String get m53CashDifferenceHelp;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashOwnerException
+  ///
+  /// In en, this message translates to:
+  /// **'Close without historical count — owner'**
+  String get m53CashOwnerException;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashOwnerExceptionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Use this when the physical count from an older session is unavailable. The owner PIN and a reason are required. The record is marked unverified, not treated as a zero difference.'**
+  String get m53CashOwnerExceptionHelp;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSourceDrawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash from/to drawer'**
+  String get m53CashSourceDrawer;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSourceExternal
+  ///
+  /// In en, this message translates to:
+  /// **'Outside drawer / noncash'**
+  String get m53CashSourceExternal;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSourceUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy payment source unknown'**
+  String get m53CashSourceUnknown;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashEditReceived
+  ///
+  /// In en, this message translates to:
+  /// **'Enter or review received pieces'**
+  String get m53CashEditReceived;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashCurrentSession
+  ///
+  /// In en, this message translates to:
+  /// **'Cash session used'**
+  String get m53CashCurrentSession;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashReviewSession
+  ///
+  /// In en, this message translates to:
+  /// **'Review and use this session'**
+  String get m53CashReviewSession;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashMissingDetails
+  ///
+  /// In en, this message translates to:
+  /// **'The piece details are incomplete. The previous amount is retained until you replace it.'**
+  String get m53CashMissingDetails;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPaymentDeclaration
+  ///
+  /// In en, this message translates to:
+  /// **'Payment source and details'**
+  String get m53CashPaymentDeclaration;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashRefundPieces
+  ///
+  /// In en, this message translates to:
+  /// **'Refund pieces'**
+  String get m53CashRefundPieces;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashDetailsUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'Details or count unknown'**
+  String get m53CashDetailsUnknown;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashPublicHistoryHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier notes remain available here. The owner opens audit history from Management.'**
+  String get m53CashPublicHistoryHelp;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashClosingCounts
+  ///
+  /// In en, this message translates to:
+  /// **'Physical count at closing'**
+  String get m53CashClosingCounts;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashReference
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get m53CashReference;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashSaleAudit
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction cash details'**
+  String get m53CashSaleAudit;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashApplied
+  ///
+  /// In en, this message translates to:
+  /// **'Applied payment'**
+  String get m53CashApplied;
+
+  /// M5.3 physical cash declarations and session accounting: m53CashUnclassified
+  ///
+  /// In en, this message translates to:
+  /// **'Amount without piece details'**
+  String get m53CashUnclassified;
 }
 
 class _AppLocalizationsDelegate

@@ -479,11 +479,15 @@ void m53SearchSuite(DatabaseFactory factory) {
         'stock_quantity': 999,
       });
       await seedSale(legacy, 1, 1);
-      final before = [
-        await legacy.query('products'),
-        await legacy.query('sale_transactions'),
-        await legacy.query('cart_drafts'),
-      ];
+      const preserved = ['products', 'sale_transactions', 'cart_drafts'];
+      final columns = <String, List<String>>{};
+      final before = <List<Map<String, Object?>>>[];
+      for (final table in preserved) {
+        columns[table] = (await legacy.rawQuery(
+          'PRAGMA table_info($table)',
+        )).map((row) => row['name'] as String).toList();
+        before.add(await legacy.query(table, orderBy: 'id COLLATE BINARY'));
+      }
       await legacy.close();
       await expectLater(
         factory.openDatabase(
@@ -514,13 +518,36 @@ void m53SearchSuite(DatabaseFactory factory) {
       expect(
         await db.read(
           (sql) async => [
-            await sql.query('products'),
-            await sql.query('sale_transactions'),
-            await sql.query('cart_drafts'),
+            for (final table in preserved)
+              await sql.query(
+                table,
+                columns: columns[table],
+                orderBy: 'id COLLATE BINARY',
+              ),
           ],
         ),
         before,
       );
+      if (db.schemaVersion >= 24) {
+        expect(
+          (await db.read(
+            (sql) => sql.query('sale_transactions'),
+          )).every((r) => r['drawer_version'] == 0),
+          isTrue,
+        );
+        expect(
+          (await db.read((sql) => sql.query('cart_drafts'))).every(
+            (r) =>
+                r['drawer_session_id'] == null &&
+                r['change_counts_json'] == null,
+          ),
+          isTrue,
+        );
+        expect(
+          await db.read((sql) => sql.query('payment_cash_sources')),
+          isEmpty,
+        );
+      }
       expect(
         await db.read(ProductPopularityStore.window),
         containsPair('cache_revision', 0),

@@ -1,4 +1,5 @@
 import '../../cashier_lock/presentation/cashier_lock_button.dart';
+import '../../cash_drawer/presentation/cash_drawer_screen.dart';
 import '../../printer/presentation/printer_settings_screen.dart';
 import '../../management/presentation/managed_text_field.dart';
 import 'package:flutter/material.dart';
@@ -185,6 +186,15 @@ class _CashierBodyState extends State<_CashierBody>
           onPressed: _manage,
           icon: const Icon(Icons.lock_outline),
           label: Text(tr(context, 'manage')),
+        ),
+        OutlinedButton.icon(
+          onPressed: () => Navigator.push<void>(
+            context,
+            MaterialPageRoute(builder: (_) => const CashDrawerScreen()),
+          ),
+          icon: const Icon(Icons.point_of_sale),
+          key: const ValueKey('cashier-drawer'),
+          label: Text(tr(context, 'm53CashDrawer')),
         ),
       ],
     ),

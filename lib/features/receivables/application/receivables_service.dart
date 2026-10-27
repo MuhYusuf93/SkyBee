@@ -7,6 +7,8 @@ import '../../cashier/application/cashier_store.dart';
 import '../../cashier/domain/cashier_models.dart';
 import '../../members/application/member_rules.dart';
 import 'package:sqflite/sqflite.dart';
+import '../../cash_drawer/application/cash_payment_posting.dart';
+import '../../cash_drawer/domain/cash_drawer_models.dart';
 
 /// Cashier may record repayment without PIN. Balances derive from immutable
 /// sales/allocations across ALL rows, independent of the current UI page.
@@ -258,9 +260,10 @@ final class ReceivablesService {
 
   /// Same-key/same-payload retry returns its payment ID. Changed payload or
   /// stale preview is rejected; neither can create a second receipt of money.
-  Future<EntityId> record(PaymentPlan plan) async {
+  Future<EntityId> record(PaymentPlan plan, {CashPaymentIntent? cash}) async {
     final generation = database.generation;
     final hash = await store.fingerprint([
+      if (cash != null) ...['drawer-receipt-v1', cash.financialValues],
       plan.customerId.value,
       plan.amount.amountMinor,
       plan.amount.currencyCode,
@@ -330,6 +333,7 @@ final class ReceivablesService {
         'amount_rupiah': plan.amount.amountMinor,
         'created_at': store.clock.milliseconds,
         'payload_hash': hash,
+        if (database.schemaVersion >= 24) 'cash_provenance_version': 1,
         ...store.metadata(currency),
       });
       await testStage?.call('payment');
@@ -343,6 +347,16 @@ final class ReceivablesService {
         await testStage?.call('allocation');
       }
       await dbTxn.insert('receivable_payment_links', {'payment_id': id.value});
+      if (database.schemaVersion >= 24) {
+        await CashPaymentPosting.receiptOn(
+          dbTxn,
+          store,
+          payment: id,
+          amount: plan.amount,
+          intent: cash,
+        );
+        await testStage?.call('drawer');
+      }
       await store.audit(dbTxn, 'receivable_payment', id.value);
       await testStage?.call('audit');
       return id;

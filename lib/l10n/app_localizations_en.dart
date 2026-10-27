@@ -2878,4 +2878,252 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53SearchMore => 'More results';
+
+  @override
+  String get m53CashDrawer => 'Cash drawer and pieces';
+
+  @override
+  String get m53CashPolicy => 'Cash recording policy';
+
+  @override
+  String get m53CashOff => 'Off';
+
+  @override
+  String get m53CashNotes => 'Cashier notes';
+
+  @override
+  String get m53CashAudit => 'Owner required audit';
+
+  @override
+  String get m53CashAuditHelp =>
+      'The owner requires piece counts for cash. Cashiers cannot disable this. Piece counts are cashier declarations, not proof of the physical cash. A difference does not automatically mean misconduct.';
+
+  @override
+  String get m53CashNotesHelp =>
+      'Enable this to help record daily cash. Records remain when the date changes or recording is disabled. Close open sessions before disabling recording.';
+
+  @override
+  String get m53CashReasonRequired =>
+      'Enter a reason of at most 1,000 characters.';
+
+  @override
+  String get m53CashPolicyChanged =>
+      'The cash policy changed. Reload and review your choice.';
+
+  @override
+  String get m53CashCloseSessionsFirst =>
+      'Close the open cash sessions before changing this policy.';
+
+  @override
+  String get m53CashAuditRequired =>
+      'Recording is required by the owner and cannot be disabled by the cashier.';
+
+  @override
+  String get m53CashRecordingOff => 'Cash recording is off.';
+
+  @override
+  String get m53CashSessionChanged =>
+      'The cash session, date, or settings changed. Reload and review your entries before trying again.';
+
+  @override
+  String get m53CashSessionAlreadyOpen =>
+      'A cash session is already open today. Reload to view it.';
+
+  @override
+  String get m53CashPreviousUnclosed =>
+      'A session from another day is still open. Review the warning before opening a new one.';
+
+  @override
+  String get m53CashClockChanged =>
+      'The device time is earlier than the latest cash record. Check the device time before continuing.';
+
+  @override
+  String get m53CashOldSession =>
+      'This session belongs to an earlier date or settings. A current count cannot be treated as the physical count from that time.';
+
+  @override
+  String get m53CashCountRequired =>
+      'Enter the physical piece counts before closing the session.';
+
+  @override
+  String get m53CashPiecesUnavailable =>
+      'The outgoing pieces are not available in the records. Recount the drawer with a reason or correct the piece details, then try again. The balance has not been reduced.';
+
+  @override
+  String get m53CashCompositionRequired =>
+      'Active recording requires complete cash piece counts. An amount alone or Exact cash is insufficient.';
+
+  @override
+  String get m53CashCompositionMismatch =>
+      'The piece total must exactly match the required amount. No automatic rounding is applied.';
+
+  @override
+  String get m53CashSessionRequired =>
+      'Open today’s cash session and review the opening balance before recording cash.';
+
+  @override
+  String get m53CashCountInvalid =>
+      'Check the piece counts. Use whole numbers from 0 to 1,000,000.';
+
+  @override
+  String get m53CashDeclarationHelp =>
+      'Enter the number of pieces you observe for each denomination. The + button adds one note or coin. These are declared counts, not sensor readings.';
+
+  @override
+  String get m53CashRequiredTotal => 'Required total';
+
+  @override
+  String get m53CashClearCounts => 'Clear counts';
+
+  @override
+  String get m53CashPieceCount => 'Piece count';
+
+  @override
+  String get m53CashAddPiece => 'Add one piece';
+
+  @override
+  String get m53CashIncoming => 'Pieces received';
+
+  @override
+  String get m53CashChangeCounts => 'Change pieces';
+
+  @override
+  String get m53CashOpeningCounts => 'Opening piece count';
+
+  @override
+  String get m53CashObservedCounts => 'Current physical count';
+
+  @override
+  String get m53CashRefundCounts => 'Refund pieces';
+
+  @override
+  String get m53CashJournalCounts => 'Pieces for this entry';
+
+  @override
+  String get m53CashOpeningKnown => 'Opening balance counted';
+
+  @override
+  String get m53CashOpeningUnknown => 'Opening balance unknown';
+
+  @override
+  String get m53CashUnknownHelp =>
+      'Unknown is different from empty. The expected amount is uncertain. Outgoing cash is limited to pieces already counted or recorded as received. Recount with a reason to correct the records.';
+
+  @override
+  String get m53CashOpenSession => 'Open cash session';
+
+  @override
+  String get m53CashCloseSession => 'Close cash session';
+
+  @override
+  String get m53CashRecount => 'Recount and record correction';
+
+  @override
+  String get m53CashExpected => 'Expected pieces';
+
+  @override
+  String get m53CashLowerBound => 'Minimum pieces already recorded';
+
+  @override
+  String get m53CashBalance => 'Recorded piece value';
+
+  @override
+  String get m53CashSessionDate => 'Session date';
+
+  @override
+  String get m53CashPendingDays => 'Other days have unclosed sessions';
+
+  @override
+  String get m53CashPendingHelp =>
+      'A new date does not close or delete an older session. Review the new opening balance independently; an older balance is not copied automatically.';
+
+  @override
+  String get m53CashAcceptPending =>
+      'I understand that another day has an unclosed session';
+
+  @override
+  String get m53CashNoSession => 'There is no open cash session for today.';
+
+  @override
+  String get m53CashSessionClosed =>
+      'This session is closed. Its records and counts remain stored.';
+
+  @override
+  String get m53CashCashIn => 'Cash in excluding sales';
+
+  @override
+  String get m53CashCashOut => 'Cash out';
+
+  @override
+  String get m53CashHandover => 'Deposit or cash handover';
+
+  @override
+  String get m53CashReason => 'Reason';
+
+  @override
+  String get m53CashHistory => 'Session and journal history';
+
+  @override
+  String get m53CashDifference => 'Count difference';
+
+  @override
+  String get m53CashDifferenceHelp =>
+      'A difference compares recorded cash with the declared count. It does not change sales and is not proof of theft.';
+
+  @override
+  String get m53CashOwnerException => 'Close without historical count — owner';
+
+  @override
+  String get m53CashOwnerExceptionHelp =>
+      'Use this when the physical count from an older session is unavailable. The owner PIN and a reason are required. The record is marked unverified, not treated as a zero difference.';
+
+  @override
+  String get m53CashSourceDrawer => 'Cash from/to drawer';
+
+  @override
+  String get m53CashSourceExternal => 'Outside drawer / noncash';
+
+  @override
+  String get m53CashSourceUnknown => 'Legacy payment source unknown';
+
+  @override
+  String get m53CashEditReceived => 'Enter or review received pieces';
+
+  @override
+  String get m53CashCurrentSession => 'Cash session used';
+
+  @override
+  String get m53CashReviewSession => 'Review and use this session';
+
+  @override
+  String get m53CashMissingDetails =>
+      'The piece details are incomplete. The previous amount is retained until you replace it.';
+
+  @override
+  String get m53CashPaymentDeclaration => 'Payment source and details';
+
+  @override
+  String get m53CashRefundPieces => 'Refund pieces';
+
+  @override
+  String get m53CashDetailsUnknown => 'Details or count unknown';
+
+  @override
+  String get m53CashPublicHistoryHelp =>
+      'Cashier notes remain available here. The owner opens audit history from Management.';
+
+  @override
+  String get m53CashClosingCounts => 'Physical count at closing';
+
+  @override
+  String get m53CashReference => 'Reference';
+
+  @override
+  String get m53CashSaleAudit => 'Transaction cash details';
+
+  @override
+  String get m53CashApplied => 'Applied payment';
+
+  @override
+  String get m53CashUnclassified => 'Amount without piece details';
 }

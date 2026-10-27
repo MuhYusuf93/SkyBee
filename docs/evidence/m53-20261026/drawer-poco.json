@@ -1,0 +1,20 @@
+{
+  "run": "m53-drawer-poco-20261028-050219",
+  "device": "7f0edea0",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 20,
+  "failed": 0,
+  "elapsed": "06:27",
+  "preExistingProtectedEntries": 624,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "not applied",
+  "sourceFiles": 516,
+  "sourceManifestSha256": "059bf0849fb17280b309dc640d7c02c9363b7cec67b1c7d283f1706e0a4b47ae",
+  "runnerLogSha256": "4cd94f2df8765b6be4e2636f1fd485f7bbb7d4b2504eaa5fd0fdd10226d33b4a",
+  "beforeManifestSha256": "5dd3b1ad3c372e68398c5f0f28621641dbf1529420162b353abfeedb1278c2d5",
+  "afterManifestSha256": "65223ddeca26a81821e3c15d4d87c0e82e3743ab1b5ee06ef07d8e25d4839264"
+}

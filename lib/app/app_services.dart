@@ -1,4 +1,5 @@
 import '../features/cashier_lock/application/cashier_lock_service.dart';
+import '../features/cash_drawer/application/cash_drawer_service.dart';
 import '../features/members/application/member_service.dart';
 import '../features/onboarding/application/onboarding_service.dart';
 import '../features/cashier/application/quick_cash_service.dart';
@@ -18,6 +19,7 @@ import '../features/receivables/application/receivables_service.dart';
 import '../features/sale_history/application/sale_history_service.dart';
 import '../features/reports/application/reports_service.dart';
 import '../features/corrections/application/correction_service.dart';
+import '../features/cash_drawer/application/cash_drawer_history_service.dart';
 import '../features/printer/application/print_queue_service.dart';
 import '../features/printer/application/printer_settings_service.dart';
 import '../features/printer/application/printer_transport.dart';
@@ -49,6 +51,8 @@ final class AppServices {
       cashierAccess: cashierLock,
     );
     cart = CartService(database, cashierStore);
+    cashDrawer = CashDrawerService(database, management, cashierStore);
+    cashDrawerHistory = CashDrawerHistoryService(cashDrawer);
     checkout = CheckoutService(database, cashierStore);
     search = ProductSearchService(database, cashierStore);
     receivables = ReceivablesService(database, cashierStore);
@@ -65,6 +69,8 @@ final class AppServices {
   late final InventoryService inventory;
   late final SettingsService settings;
   late final CartService cart;
+  late final CashDrawerService cashDrawer;
+  late final CashDrawerHistoryService cashDrawerHistory;
   late final CheckoutService checkout;
   late final ProductSearchService search;
   late final ReceivablesService receivables;

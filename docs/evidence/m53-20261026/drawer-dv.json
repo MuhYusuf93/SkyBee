@@ -1,0 +1,20 @@
+{
+  "run": "m53-drawer-dv-20261028-015204",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 20,
+  "failed": 0,
+  "elapsed": "08:26",
+  "preExistingProtectedEntries": 693,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 516,
+  "sourceManifestSha256": "059bf0849fb17280b309dc640d7c02c9363b7cec67b1c7d283f1706e0a4b47ae",
+  "runnerLogSha256": "8f8b4bbf76c696ec35dd43390fe654b9a120d581e6c2d3e2ccf78759fe7c4eb7",
+  "beforeManifestSha256": "d68942b505073b8ffd72338af13a2e774d9a783bd224ebf26a1723ed9a28c26c",
+  "afterManifestSha256": "32c13baa27756e48ae1ba1c2a8923d7de46c53e2989109cda9c1db67e868becd"
+}
