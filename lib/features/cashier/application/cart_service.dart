@@ -273,9 +273,21 @@ final class CartService {
         throw const AppError('m3InvalidPayment');
       }
     }
+    if (input.tenderDetails != null) {
+      final details = input.tenderDetails!;
+      if (!input.cash ||
+          details.currency.code != policy.code ||
+          details.currency.scale != policy.scale ||
+          details.raw != input.tenderRaw ||
+          details.money?.amountMinor != input.tender?.amountMinor) {
+        throw const AppError('m3InvalidPayment');
+      }
+    }
     await dbTxn.update(
       'cart_drafts',
       {
+        if (database.schemaVersion >= 21)
+          'tender_details_json': input.tenderDetails?.encode(),
         if (database.schemaVersion >= 12) ...{
           'cash_input': input.cash ? 1 : 0,
           'tender_minor': input.tender?.amountMinor,

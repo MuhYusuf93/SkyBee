@@ -3354,5 +3354,25 @@
   "m53CashierScreenUnavailable": "Deteksi kunci layar otomatis tidak tersedia saat ini. Gunakan shortcut Kunci kasir; pengamanan PIN kasir manual tetap berlaku.",
   "@m53CashierScreenUnavailable": {
     "description": "M5.3 separate cashier authorization: m53CashierScreenUnavailable"
+  },
+  "m53QuickAmountsInvalid": "Nominal uang cepat harus positif, berbeda, dan berjumlah 1 sampai 8.",
+  "@m53QuickAmountsInvalid": {
+    "description": "M5.3 additive tender editor: m53QuickAmountsInvalid"
+  },
+  "m53RemoveDenomination": "Kurangi satu lembar/koin pecahan ini",
+  "@m53RemoveDenomination": {
+    "description": "M5.3 additive tender editor: m53RemoveDenomination"
+  },
+  "m53EditQuickAmounts": "Atur nominal",
+  "@m53EditQuickAmounts": {
+    "description": "M5.3 additive tender editor: m53EditQuickAmounts"
+  },
+  "m53UnclassifiedTender": "Nominal tanpa rincian pecahan",
+  "@m53UnclassifiedTender": {
+    "description": "M5.3 additive tender editor: m53UnclassifiedTender"
+  },
+  "m53TenderCompositionRetained": "Rincian pecahan tetap disimpan. Mengubah angka secara manual akan menggantinya dengan nominal tanpa rincian.",
+  "@m53TenderCompositionRetained": {
+    "description": "M5.3 additive tender editor: m53TenderCompositionRetained"
   }
 }

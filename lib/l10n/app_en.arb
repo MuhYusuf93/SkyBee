@@ -3354,5 +3354,25 @@
   "m53CashierScreenUnavailable": "Automatic screen-lock detection is unavailable right now. Use the Lock cashier shortcut; the manual cashier PIN gate still applies.",
   "@m53CashierScreenUnavailable": {
     "description": "M5.3 separate cashier authorization: m53CashierScreenUnavailable"
+  },
+  "m53QuickAmountsInvalid": "Quick cash amounts must be positive, unique, and contain 1 to 8 values.",
+  "@m53QuickAmountsInvalid": {
+    "description": "M5.3 additive tender editor: m53QuickAmountsInvalid"
+  },
+  "m53RemoveDenomination": "Remove one note/coin of this denomination",
+  "@m53RemoveDenomination": {
+    "description": "M5.3 additive tender editor: m53RemoveDenomination"
+  },
+  "m53EditQuickAmounts": "Edit amounts",
+  "@m53EditQuickAmounts": {
+    "description": "M5.3 additive tender editor: m53EditQuickAmounts"
+  },
+  "m53UnclassifiedTender": "Amount without denomination details",
+  "@m53UnclassifiedTender": {
+    "description": "M5.3 additive tender editor: m53UnclassifiedTender"
+  },
+  "m53TenderCompositionRetained": "Denomination details are retained. Manually editing the amount replaces them with an amount without denomination details.",
+  "@m53TenderCompositionRetained": {
+    "description": "M5.3 additive tender editor: m53TenderCompositionRetained"
   }
 }

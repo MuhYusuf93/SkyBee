@@ -2755,4 +2755,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m53CashierScreenUnavailable =>
       'Automatic screen-lock detection is unavailable right now. Use the Lock cashier shortcut; the manual cashier PIN gate still applies.';
+
+  @override
+  String get m53QuickAmountsInvalid =>
+      'Quick cash amounts must be positive, unique, and contain 1 to 8 values.';
+
+  @override
+  String get m53RemoveDenomination =>
+      'Remove one note/coin of this denomination';
+
+  @override
+  String get m53EditQuickAmounts => 'Edit amounts';
+
+  @override
+  String get m53UnclassifiedTender => 'Amount without denomination details';
+
+  @override
+  String get m53TenderCompositionRetained =>
+      'Denomination details are retained. Manually editing the amount replaces them with an amount without denomination details.';
 }

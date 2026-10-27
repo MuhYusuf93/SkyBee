@@ -12,6 +12,11 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm53QuickAmountsInvalid' => l.m53QuickAmountsInvalid,
+    'm53RemoveDenomination' => l.m53RemoveDenomination,
+    'm53EditQuickAmounts' => l.m53EditQuickAmounts,
+    'm53UnclassifiedTender' => l.m53UnclassifiedTender,
+    'm53TenderCompositionRetained' => l.m53TenderCompositionRetained,
     'm53CashierLockSettings' => l.m53CashierLockSettings,
     'm53CashierEnable' => l.m53CashierEnable,
     'm53CashierLockNow' => l.m53CashierLockNow,

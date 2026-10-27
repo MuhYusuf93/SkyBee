@@ -4,7 +4,7 @@ import '../../core/domain/value_types.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 20;
+  static const version = 21;
 
   static Future<void> migrate(
     Database db,
@@ -36,6 +36,7 @@ final class Schema {
         18 => _trackingTransitions,
         19 => _onboarding,
         20 => _cashierLock,
+        21 => _tenderIntent,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
@@ -111,6 +112,13 @@ final class Schema {
 
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
+
+  /// Null means a legacy amount without declared composition. Do not guess
+  /// physical notes, exact-button provenance or customer intent from its value.
+  static const _tenderIntent = [
+    'ALTER TABLE cart_drafts ADD COLUMN tender_details_json TEXT CHECK(tender_details_json IS NULL OR length(tender_details_json)<=16384)',
+    'ALTER TABLE checkout_tenders ADD COLUMN details_json TEXT CHECK(details_json IS NULL OR length(details_json)<=16384)',
+  ];
 
   /// Cashier authorization is separate from management. A process-local grant
   /// is bound to these persisted epochs; raw PINs never enter policy/drafts.

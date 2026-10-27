@@ -1,3 +1,4 @@
+import '../domain/tender_draft.dart';
 import '../../cashier_lock/application/cashier_lock_service.dart';
 import '../../../data/database/database_coordinator.dart';
 import 'dart:convert';
@@ -184,6 +185,12 @@ final class CashierStore {
             ? null
             : Money(row['tender_minor'] as int, currency.code, currency.scale),
         tenderRaw: row['tender_raw'] as String? ?? '',
+        tenderDetails: row['tender_details_json'] == null
+            ? null
+            : TenderSnapshot.decode(
+                currency,
+                row['tender_details_json'] as String,
+              ),
         quickMode: row['tender_input_mode'] == 'quick',
         customer: CustomerChoice(
           id: row['customer_id'] == null

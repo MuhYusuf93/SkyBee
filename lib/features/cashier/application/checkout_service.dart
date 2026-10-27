@@ -27,6 +27,10 @@ final class CheckoutService {
 
   Future<String> _hash(EntityId draftId, int revision, CheckoutInput input) =>
       store.fingerprint([
+        if (input.tenderDetails != null) ...[
+          'tender-composition-v1',
+          input.tenderDetails!.financialValues,
+        ],
         if (input.cash) ...[
           'cash-v1',
           input.tender?.amountMinor,
@@ -135,6 +139,16 @@ final class CheckoutService {
         final cart = await store.cart(dbTxn, draftId);
         if (cart.lines.isEmpty) throw const AppError('m3EmptyCart');
         final currency = cart.currency;
+        if (input.tenderDetails != null &&
+            (!input.cash ||
+                input.tenderDetails!.currency.code != currency.code ||
+                input.tenderDetails!.currency.scale != currency.scale ||
+                input.tenderDetails!.money?.amountMinor !=
+                    input.tender?.amountMinor ||
+                input.tenderDetails!.raw != input.tenderRaw)) {
+          throw const AppError('m3InvalidPayment');
+        }
+
         final current = store.policy(await store.settings(dbTxn));
         if (current.code != currency.code || current.scale != currency.scale) {
           throw const AppError('currencyMismatch');
@@ -277,6 +291,8 @@ final class CheckoutService {
             'applied_minor': cash.applied.amountMinor,
             'change_minor': cash.change.amountMinor,
             'debt_minor': cash.debt.amountMinor,
+            if (database.schemaVersion >= 21)
+              'details_json': input.tenderDetails?.encode(),
           });
         }
         await _stage('sale');
@@ -385,12 +401,16 @@ final class CheckoutService {
             'state': 'completed',
             'completed_sale_transaction_id': saleId.value,
             'updated_at': now,
+            if (database.schemaVersion >= 21)
+              'tender_details_json': input.tenderDetails?.encode(),
             if (database.schemaVersion >= 12) ...{
               'cash_input': input.cash ? 1 : 0,
               'tender_minor': input.tender?.amountMinor,
-              'tender_raw': input.tender == null
-                  ? ''
-                  : (TenderDigits(currency)..amount(input.tender!)).raw,
+              'tender_raw':
+                  input.tenderDetails?.raw ??
+                  (input.tender == null
+                      ? ''
+                      : (TenderDigits(currency)..amount(input.tender!)).raw),
               'tender_input_mode': input.quickMode ? 'quick' : 'numpad',
             },
             'payment_mode': input.mode.name,

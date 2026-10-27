@@ -2763,4 +2763,21 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m53CashierScreenUnavailable =>
       'Deteksi kunci layar otomatis tidak tersedia saat ini. Gunakan shortcut Kunci kasir; pengamanan PIN kasir manual tetap berlaku.';
+
+  @override
+  String get m53QuickAmountsInvalid =>
+      'Nominal uang cepat harus positif, berbeda, dan berjumlah 1 sampai 8.';
+
+  @override
+  String get m53RemoveDenomination => 'Kurangi satu lembar/koin pecahan ini';
+
+  @override
+  String get m53EditQuickAmounts => 'Atur nominal';
+
+  @override
+  String get m53UnclassifiedTender => 'Nominal tanpa rincian pecahan';
+
+  @override
+  String get m53TenderCompositionRetained =>
+      'Rincian pecahan tetap disimpan. Mengubah angka secara manual akan menggantinya dengan nominal tanpa rincian.';
 }

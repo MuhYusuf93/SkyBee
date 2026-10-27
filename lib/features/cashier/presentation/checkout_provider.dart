@@ -1,3 +1,4 @@
+import '../domain/tender_draft.dart';
 import 'package:flutter/material.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/contact_validation.dart';
@@ -19,10 +20,12 @@ final class CheckoutProvider extends ChangeNotifier {
     this.phoneRegion,
   }) {
     final input = cart.snapshot!.input;
-    digits = TenderDigits(
-      cart.snapshot!.currency,
-      input.cash ? input.tenderRaw : '',
-    );
+    digits = input.tenderDetails == null
+        ? TenderDraft(
+            cart.snapshot!.currency,
+            input.cash ? input.tenderRaw : '',
+          )
+        : TenderDraft.restore(cart.snapshot!.currency, input.tenderDetails!);
     if (!input.cash && input.paid != null) digits.amount(input.paid!);
     quickMode = input.quickMode;
     mode = input.cash ? input.mode : PaymentMode.paid;
@@ -49,7 +52,7 @@ final class CheckoutProvider extends ChangeNotifier {
     }
   }
 
-  late final TenderDigits digits;
+  late final TenderDraft digits;
   bool quickMode = false;
   List<int> amounts = [];
   Future<void> _saveTail = Future.value();
@@ -63,6 +66,9 @@ final class CheckoutProvider extends ChangeNotifier {
     mode: mode,
     tender: tender,
     tenderRaw: digits.raw,
+    tenderDetails: service.database.schemaVersion >= 21
+        ? digits.snapshot
+        : null,
     quickMode: quickMode,
     customer: CustomerChoice(id: selected, name: name.text, phone: phone.text),
   );
@@ -129,7 +135,38 @@ final class CheckoutProvider extends ChangeNotifier {
     if (!_disposed) notifyListeners();
   }
 
-  Future<void> exact() => receive(cart.snapshot!.total);
+  Future<void> exact() async {
+    if (submitting) return;
+    digits.exact(cart.snapshot!.total);
+    _updateMode();
+    error = null;
+    await persist();
+    if (!_disposed) notifyListeners();
+  }
+
+  Future<void> addDenomination(Money amount) async {
+    if (submitting) return;
+    try {
+      digits.receive(amount);
+      _updateMode();
+      error = null;
+      await persist();
+    } catch (_) {
+      error = 'm3InvalidPayment';
+    }
+    if (!_disposed) notifyListeners();
+  }
+
+  Future<void> removeDenomination(int amount) async {
+    if (submitting) return;
+    if (digits.remove(amount)) {
+      _updateMode();
+      error = null;
+      await persist();
+    }
+    if (!_disposed) notifyListeners();
+  }
+
   Future<void> useQuick(bool value) async {
     quickMode = value;
     await persist();

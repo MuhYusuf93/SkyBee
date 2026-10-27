@@ -11,6 +11,7 @@ import 'package:kasir_app/data/database/schema.dart';
 import 'package:kasir_app/data/database/database_security_error.dart';
 import 'package:kasir_app/demo/skybee_upgrade_audit.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
+import 'package:kasir_app/features/cashier/domain/cashier_models.dart';
 import 'package:kasir_app/features/settings/domain/store_feature_policy.dart';
 import 'package:kasir_app/features/management/application/management_service.dart';
 import 'package:kasir_app/features/reports/domain/report_models.dart';
@@ -136,7 +137,7 @@ void m53FoundationSuite(DatabaseFactory factory, {String? only}) {
         ),
       );
       await services.management.unlock('0001');
-      await services.inventory.create(
+      final physical = await services.inventory.create(
         input('PUBLIC physical 999'),
         initialQuantity: 999,
         unitCost: cost(7000),
@@ -145,6 +146,19 @@ void m53FoundationSuite(DatabaseFactory factory, {String? only}) {
         input('PUBLIC sentinel'),
         stockTracking: false,
         referenceCost: cost(5000),
+      );
+      var draft = await services.cart.open();
+      draft = await services.cart.add(draft.id, physical);
+      final legacyIntent = CheckoutInput(
+        cash: true,
+        mode: PaymentMode.paid,
+        tender: Money(20000, 'IDR', 0),
+        tenderRaw: '20000',
+      );
+      final oldSale = await services.checkout.submit(
+        draft.id,
+        draft.revision,
+        legacyIntent,
       );
       final before = await old.read(SkybeeUpgradeAudit.capture);
       await old.close();
@@ -190,11 +204,25 @@ void m53FoundationSuite(DatabaseFactory factory, {String? only}) {
             isEmpty,
           );
           await SkybeeUpgradeAudit.verify(sql, before);
+          expect(
+            (await sql.rawQuery(
+              'PRAGMA table_info(cart_drafts)',
+            )).any((r) => r['name'] == 'tender_details_json'),
+            false,
+          );
         });
         await old.close();
         old = DatabaseCoordinator(factory: factory, databasePath: oldPath);
         await old.read((sql) async {
           await SkybeeUpgradeAudit.verify(sql, before);
+          expect(
+            (await sql.query('cart_drafts')).single['tender_details_json'],
+            isNull,
+          );
+          expect(
+            (await sql.query('checkout_tenders')).single['details_json'],
+            isNull,
+          );
           expect(
             (await sql.query(
               'management_credentials',
@@ -206,6 +234,12 @@ void m53FoundationSuite(DatabaseFactory factory, {String? only}) {
         expect(
           await AppServices(old, biometrics: bio).management.appPinRequired,
           true,
+        );
+        expect(
+          (await AppServices(
+            old,
+          ).checkout.submit(draft.id, draft.revision, legacyIntent)).id,
+          oldSale.id,
         );
       } finally {
         await old.close();

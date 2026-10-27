@@ -48,6 +48,7 @@ class _FormExitGuardState extends State<FormExitGuard> {
           widget.managementProtected &&
           widget.dirty &&
           (route?.isActive ?? false),
+      cashierDirty: () => mounted && widget.dirty && (route?.isActive ?? false),
     );
   }
 

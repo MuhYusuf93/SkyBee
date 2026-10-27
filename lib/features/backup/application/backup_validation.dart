@@ -13,6 +13,7 @@ import '../../inventory/domain/product_attributes.dart';
 import '../../inventory/domain/stock_rules.dart';
 import '../../cashier/application/quick_cash_service.dart';
 import '../../cashier/domain/cash_tender.dart';
+import '../../cashier/domain/tender_draft.dart';
 import '../../cashier/domain/quantity_promotion.dart';
 
 /// Archive authentication is necessary but not a substitute for supported
@@ -40,6 +41,7 @@ final class BackupValidation {
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,
     );
+    if (schema >= 21) await _tenderComposition(db, currency);
     StoreClock().validateZone(settings['time_zone'] as String);
     if (settings['currency_scale'] != currency.scale ||
         manifest.values['currency'] != currency.code ||
@@ -275,6 +277,64 @@ final class BackupValidation {
 
   /// Persisted policy/verifiers can travel; a process-local cashier grant
   /// cannot. Bound lengths before fetching imported blobs/JSON or using a PIN.
+  /// Import constraints are untrusted. Bound JSON before fetching, then stream
+  /// immutable intents by primary key and compare them with the financial row.
+  /// NULL is deliberately retained for historical tenders without piece counts.
+  static Future<void> _tenderComposition(
+    DatabaseExecutor db,
+    CurrencyPolicy currency,
+  ) async {
+    if ((await db.rawQuery(
+      '''SELECT 1 FROM checkout_tenders t
+      JOIN sale_transactions s ON s.id=t.sale_transaction_id
+      LEFT JOIN cart_drafts d ON d.id=s.draft_id
+      WHERE (t.details_json IS NOT NULL OR d.tender_details_json IS NOT NULL)
+      AND (d.id IS NULL OR t.details_json IS NOT d.tender_details_json) LIMIT 1''',
+    )).isNotEmpty) {
+      throw const FormatException('backupTenderDraftInvalid');
+    }
+    for (final table in ['cart_drafts', 'checkout_tenders']) {
+      final column = table == 'cart_drafts'
+          ? 'tender_details_json'
+          : 'details_json';
+      if ((await db.rawQuery(
+        '''SELECT 1 FROM $table WHERE $column IS NOT NULL
+        AND (typeof($column)<>'text' OR length($column)>16384) LIMIT 1''',
+      )).isNotEmpty) {
+        throw const FormatException('backupTenderDraftInvalid');
+      }
+      String? cursor;
+      while (true) {
+        final cart = table == 'cart_drafts';
+        final key = cart ? 'id' : 'sale_transaction_id';
+        final rows = await db.rawQuery(
+          '''SELECT $key AS cursor_key,
+          $column AS details,
+          ${cart ? 'cash_input,tender_raw,tender_minor' : 'received_minor'}
+          FROM $table WHERE $column IS NOT NULL
+          ${cursor == null ? '' : 'AND $key COLLATE BINARY>?'}
+          ORDER BY $key COLLATE BINARY LIMIT 100''',
+          [?cursor],
+        );
+        if (rows.isEmpty) break;
+        for (final row in rows) {
+          final intent = TenderSnapshot.decode(
+            currency,
+            row['details'] as String,
+          );
+          if (cart
+              ? row['cash_input'] != 1 ||
+                    intent.raw != row['tender_raw'] ||
+                    intent.money?.amountMinor != row['tender_minor']
+              : intent.money?.amountMinor != row['received_minor']) {
+            throw const FormatException('backupTenderDraftInvalid');
+          }
+        }
+        cursor = rows.last['cursor_key'] as String;
+      }
+    }
+  }
+
   static Future<void> _cashierLock(DatabaseExecutor db) async {
     if ((await db.rawQuery(
       """SELECT 1 FROM cashier_lock_policy WHERE id<>1 OR

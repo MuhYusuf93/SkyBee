@@ -181,7 +181,7 @@ final class CashierLockNavigator extends NavigatorObserver
     final nav = navigator;
     if (_asking || nav == null || !nav.mounted) return;
     service.management.lock();
-    if (ProtectedFormExits.hasDirty(nav)) {
+    if (ProtectedFormExits.hasDirtyForCashier(nav)) {
       _asking = true;
       final dialog = DialogRoute<bool>(
         context: context,

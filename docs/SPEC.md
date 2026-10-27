@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Tender M5.3 menyimpan rincian deklarasi pecahan dan nominal tanpa rincian secara
+terpisah, dengan kompatibilitas retry lama serta editor nominal cepat publik:
+[kontrak implementasi](decisions/M53_TENDER.md). Jurnal laci/audit wajib tetap D.
+
 Kunci Kasir opsional terpisah dari capability Kelola dan defaultoff, dengan
 opaque lock route, fresh owner config, PIN/epoch/commit guard serta preservasi
 cart/tender/dirty Back: [keputusan implementasi](decisions/M53_CASHIER_LOCK.md).

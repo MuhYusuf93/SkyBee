@@ -1,3 +1,4 @@
+import 'tender_draft.dart';
 import '../../../core/domain/value_types.dart';
 import 'cash_tender.dart';
 import 'quantity_promotion.dart';
@@ -92,6 +93,7 @@ final class CheckoutInput {
     this.cash = false,
     this.tender,
     this.tenderRaw = '',
+    this.tenderDetails,
     this.quickMode = false,
     this.customer = const CustomerChoice(),
   });
@@ -100,6 +102,7 @@ final class CheckoutInput {
   final bool cash, quickMode;
   final Money? tender;
   final String tenderRaw;
+  final TenderSnapshot? tenderDetails;
   final CustomerChoice customer;
 }
 

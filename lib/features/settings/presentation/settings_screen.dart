@@ -1,4 +1,3 @@
-import '../../cashier/presentation/quick_cash_settings_screen.dart';
 import '../../../core/presentation/form_exit_guard.dart';
 import 'low_price_settings_screen.dart';
 import 'feature_settings_screen.dart';
@@ -119,7 +118,6 @@ class _SettingsFormState extends State<_SettingsForm> {
                   for (final destination in [
                     (const TaskPatternScreen(), 'm53TaskPattern'),
                     (const FeatureSettingsScreen(), 'm53Features'),
-                    (const QuickCashSettingsScreen(), 'm51QuickSettings'),
                     (const LowPriceSettingsScreen(), 'm52LowPriceSettings'),
                     (const PrinterSettingsScreen(), 'm5Printer'),
                     (const AlertsScreen(), 'm5Alerts'),

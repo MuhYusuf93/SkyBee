@@ -1,3 +1,4 @@
+import 'quick_cash_settings_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../core/money/money_field.dart';
@@ -13,7 +14,6 @@ class CashPad extends StatelessWidget {
   Widget build(BuildContext context) {
     final currency = form.cart.snapshot!.currency;
     final settlement = form.settlement;
-    final amount = form.tender;
     final display = form.digits.display(
       Localizations.localeOf(context).languageCode == 'id' ? 'id_ID' : 'en_US',
     );
@@ -47,28 +47,74 @@ class CashPad extends StatelessWidget {
           onPressed: form.submitting ? null : form.exact,
           child: Text(tr(context, 'm51ExactCash')),
         ),
-        if (form.quickMode)
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              for (final minor in form.amounts)
-                OutlinedButton(
-                  onPressed: form.submitting
-                      ? null
-                      : () => form.receive(
-                          Money(minor, currency.code, currency.scale),
+        TextButton(
+          key: const ValueKey('cash-clear'),
+          onPressed: form.submitting ? null : () => form.key('clear'),
+          child: Text(tr(context, 'm51ClearTender')),
+        ),
+        if (form.quickMode) ...[
+          LayoutBuilder(
+            builder: (context, constraints) => Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final minor in form.amounts)
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: constraints.maxWidth),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          key: ValueKey('cash-minus-$minor'),
+                          tooltip: tr(context, 'm53RemoveDenomination'),
+                          onPressed:
+                              form.submitting ||
+                                  (form.digits.counts[minor] ?? 0) == 0
+                              ? null
+                              : () => form.removeDenomination(minor),
+                          icon: const Icon(Icons.remove_circle_outline),
                         ),
-                  child: Text(moneyLabel(context, minor, currency: currency)),
-                ),
-            ],
-          )
-        else ...[
+                        Flexible(
+                          child: OutlinedButton(
+                            key: ValueKey('cash-denomination-$minor'),
+                            onPressed: form.submitting
+                                ? null
+                                : () => form.addDenomination(
+                                    Money(minor, currency.code, currency.scale),
+                                  ),
+                            child: Text(
+                              '${moneyLabel(context, minor, currency: currency)} \u00d7${form.digits.counts[minor] ?? 0}',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          TextButton.icon(
+            key: const ValueKey('cash-quick-settings'),
+            icon: const Icon(Icons.tune),
+            onPressed: form.submitting
+                ? null
+                : () async {
+                    await Navigator.of(context).push<void>(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            QuickCashSettingsScreen(currency: currency),
+                      ),
+                    );
+                    await form.loadAmounts();
+                  },
+            label: Text(tr(context, 'm53EditQuickAmounts')),
+          ),
+        ] else ...[
           for (final row in [
             ['1', '2', '3'],
             ['4', '5', '6'],
             ['7', '8', '9'],
-            [if (currency.scale > 0) '.' else '00', '0', 'back'],
+            [if (currency.scale > 0) '.' else '00', '0', '000'],
           ])
             Row(
               children: [
@@ -100,21 +146,20 @@ class CashPad extends StatelessWidget {
             children: [
               Expanded(
                 child: TextButton(
-                  onPressed: form.submitting ? null : () => form.key('clear'),
-                  child: Text(tr(context, 'm51ClearTender')),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: form.submitting || amount == null
-                      ? null
-                      : () => FocusScope.of(context).unfocus(),
-                  child: Text(tr(context, 'm51ConfirmTender')),
+                  key: const ValueKey('cash-backspace'),
+                  onPressed: form.submitting ? null : () => form.key('back'),
+                  child: Text(tr(context, 'm51Backspace')),
                 ),
               ),
             ],
           ),
         ],
+        if (form.digits.unclassifiedMinor > 0)
+          Text(
+            '${tr(context, 'm53UnclassifiedTender')}: ${moneyLabel(context, form.digits.unclassifiedMinor, currency: currency)}',
+          ),
+        if (form.digits.counts.isNotEmpty && !form.quickMode)
+          Text(tr(context, 'm53TenderCompositionRetained')),
         if (settlement != null) ...[
           Text(
             '${tr(context, 'm51Applied')}: ${moneyLabel(context, settlement.applied.amountMinor)}',

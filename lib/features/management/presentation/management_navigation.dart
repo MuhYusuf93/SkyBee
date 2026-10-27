@@ -7,16 +7,30 @@ import '../../../l10n/localization.dart';
 /// state cross this presentation boundary. Disposed forms unregister themselves.
 final class ProtectedFormExits {
   static final _forms = <NavigatorState, Map<Object, bool Function()>>{};
+  static final _cashierForms = <NavigatorState, Map<Object, bool Function()>>{};
   static void register(
     NavigatorState navigator,
     Object owner,
-    bool Function() dirty,
-  ) => (_forms[navigator] ??= {})[owner] = dirty;
+    bool Function() dirty, {
+    bool Function()? cashierDirty,
+  }) {
+    (_forms[navigator] ??= {})[owner] = dirty;
+    (_cashierForms[navigator] ??= {})[owner] = cashierDirty ?? dirty;
+  }
+
   static void unregister(NavigatorState navigator, Object owner) {
     _forms[navigator]?.remove(owner);
+    _cashierForms[navigator]?.remove(owner);
+    if (_cashierForms[navigator]?.isEmpty ?? false) {
+      _cashierForms.remove(navigator);
+    }
     if (_forms[navigator]?.isEmpty ?? false) _forms.remove(navigator);
   }
 
+  /// Cashier lock covers public operational forms too; management-only Back
+  /// still considers just protected forms and never exposes their values.
+  static bool hasDirtyForCashier(NavigatorState navigator) =>
+      _cashierForms[navigator]?.values.any((dirty) => dirty()) ?? false;
   static bool hasDirty(NavigatorState navigator) =>
       _forms[navigator]?.values.any((dirty) => dirty()) ?? false;
 }

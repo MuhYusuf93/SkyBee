@@ -76,7 +76,11 @@ final class AppServices {
     const NativePrinterTransport(),
     outputGate: printerGate,
   );
-  late final quickCash = QuickCashService(database, management);
+  late final quickCash = QuickCashService(
+    database,
+    management,
+    cashierAccess: cashierLock,
+  );
   late final promotions = QuantityPromotionService(database, management);
   late final reportExport = ReportExportService(database, management);
   late final printers = PrinterSettingsService(

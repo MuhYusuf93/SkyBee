@@ -4987,6 +4987,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Automatic screen-lock detection is unavailable right now. Use the Lock cashier shortcut; the manual cashier PIN gate still applies.'**
   String get m53CashierScreenUnavailable;
+
+  /// M5.3 additive tender editor: m53QuickAmountsInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Quick cash amounts must be positive, unique, and contain 1 to 8 values.'**
+  String get m53QuickAmountsInvalid;
+
+  /// M5.3 additive tender editor: m53RemoveDenomination
+  ///
+  /// In en, this message translates to:
+  /// **'Remove one note/coin of this denomination'**
+  String get m53RemoveDenomination;
+
+  /// M5.3 additive tender editor: m53EditQuickAmounts
+  ///
+  /// In en, this message translates to:
+  /// **'Edit amounts'**
+  String get m53EditQuickAmounts;
+
+  /// M5.3 additive tender editor: m53UnclassifiedTender
+  ///
+  /// In en, this message translates to:
+  /// **'Amount without denomination details'**
+  String get m53UnclassifiedTender;
+
+  /// M5.3 additive tender editor: m53TenderCompositionRetained
+  ///
+  /// In en, this message translates to:
+  /// **'Denomination details are retained. Manually editing the amount replaces them with an amount without denomination details.'**
+  String get m53TenderCompositionRetained;
 }
 
 class _AppLocalizationsDelegate
