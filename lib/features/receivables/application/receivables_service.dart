@@ -5,6 +5,8 @@ import '../../../data/database/database_coordinator.dart';
 import '../../../data/repositories/keyset_queries.dart';
 import '../../cashier/application/cashier_store.dart';
 import '../../cashier/domain/cashier_models.dart';
+import '../../members/application/member_rules.dart';
+import 'package:sqflite/sqflite.dart';
 
 /// Cashier may record repayment without PIN. Balances derive from immutable
 /// sales/allocations across ALL rows, independent of the current UI page.
@@ -55,6 +57,9 @@ final class ReceivablesService {
     bool activeDebts = true,
   }) => database.read((db) async {
     validatePageSize(pageSize);
+    if (database.schemaVersion >= 22) {
+      return _memberCustomers(db, query, after, pageSize, activeDebts);
+    }
     final normalized = normalizeName(query);
     if (after != null &&
         (after.query != normalized || after.activeDebts != activeDebts)) {
@@ -105,6 +110,88 @@ final class ReceivablesService {
           : null,
     );
   });
+
+  /// Archive status never hides outstanding old debts. A member may need phone
+  /// repair for new sales while their historical debt remains payable as-is.
+  Future<Page<CustomerRecord, CustomerCursor>> _memberCustomers(
+    DatabaseExecutor db,
+    String query,
+    CustomerCursor? after,
+    int pageSize,
+    bool activeDebts,
+  ) async {
+    final normalized = normalizeName(query);
+    if (after != null &&
+        (after.query != normalized ||
+            after.activeDebts != activeDebts ||
+            after.generation != database.generation ||
+            after.databaseRevision != database.revision)) {
+      throw const AppError('m3DraftChanged');
+    }
+    final settings = await store.settings(db);
+    final search = MemberRules.searchWhere(
+      query,
+      settings['phone_region'] as String,
+    );
+    final rows = await db.rawQuery(
+      '''$_debts SELECT c.id,c.name,c.normalized_name,c.is_deleted,c.visit_count,c.phone_e164,
+      CASE WHEN typeof(c.phone_number)='text' AND length(c.phone_number)<=128
+        THEN c.phone_number END AS phone_number,
+      COALESCE((SELECT SUM(outstanding) FROM debts d WHERE d.customer_id=c.id),0) AS balance,
+      EXISTS(SELECT 1 FROM customers other WHERE other.phone_e164=c.phone_e164 AND other.id<>c.id) AS phone_conflict
+      FROM customers c WHERE ${activeDebts ? 'EXISTS(SELECT 1 FROM debts d WHERE d.customer_id=c.id AND d.outstanding>0)' : 'c.is_deleted=0'}
+      AND ${search.sql}
+      ${after == null ? '' : '''AND (c.visit_count<? OR (c.visit_count=? AND
+        (c.normalized_name COLLATE BINARY>? OR (c.normalized_name COLLATE BINARY=? AND c.id COLLATE BINARY>?))))'''}
+      ORDER BY c.visit_count DESC,c.normalized_name COLLATE BINARY,c.id COLLATE BINARY LIMIT ?''',
+      [
+        ...search.arguments,
+        if (after != null) ...[
+          after.visits,
+          after.visits,
+          after.name,
+          after.name,
+          after.id.value,
+        ],
+        pageSize + 1,
+      ],
+    );
+    final currency = store.policy(settings),
+        last = rows.take(pageSize).lastOrNull;
+    return Page(
+      items: rows
+          .take(pageSize)
+          .map(
+            (row) => CustomerRecord(
+              EntityId(row['id'] as String),
+              row['name'] as String,
+              row['phone_number'] as String?,
+              Money.fromStoredMinor(
+                row['balance'] as int,
+                currency.code,
+                currency.scale,
+              ),
+              visits: row['visit_count'] as int,
+              archived: row['is_deleted'] == 1,
+              needsReview:
+                  row['phone_e164'] == null || row['phone_conflict'] == 1,
+            ),
+          )
+          .toList(),
+      nextCursor: rows.length > pageSize && last != null
+          ? CustomerCursor(
+              last['normalized_name'] as String,
+              EntityId(last['id'] as String),
+              normalized,
+              activeDebts: activeDebts,
+              visits: last['visit_count'] as int,
+              generation: database.generation,
+              databaseRevision: database.revision,
+            )
+          : null,
+    );
+  }
+
   Future<Money> balance(EntityId customerId) => database.read((db) async {
     final row = (await db.rawQuery(
       '$_debts SELECT COALESCE(SUM(outstanding),0) AS balance FROM debts WHERE customer_id=?',

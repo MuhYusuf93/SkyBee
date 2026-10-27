@@ -3374,5 +3374,105 @@
   "m53TenderCompositionRetained": "Rincian pecahan tetap disimpan. Mengubah angka secara manual akan menggantinya dengan nominal tanpa rincian.",
   "@m53TenderCompositionRetained": {
     "description": "M5.3 additive tender editor: m53TenderCompositionRetained"
+  },
+  "m53MemberFieldsInvalid": "Nama member wajib diisi (maks. 200 karakter), nomor maks. 128 karakter, dan alamat maks. 4096 karakter.",
+  "@m53MemberFieldsInvalid": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberFieldsInvalid"
+  },
+  "m53MemberPhoneRequired": "Nomor telepon wajib untuk member baru.",
+  "@m53MemberPhoneRequired": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberPhoneRequired"
+  },
+  "m53MemberPhoneUsed": "Nomor ini sudah digunakan member lain. Pilih member yang sesuai atau minta pemilik memperbaiki datanya.",
+  "@m53MemberPhoneUsed": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberPhoneUsed"
+  },
+  "m53MemberRepairRequired": "Data member perlu dilengkapi oleh pemilik sebelum transaksi utang baru. Utang lama tetap dapat dilunasi.",
+  "@m53MemberRepairRequired": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberRepairRequired"
+  },
+  "m53MemberNameRequired": "Nama member wajib diisi.",
+  "@m53MemberNameRequired": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberNameRequired"
+  },
+  "m53Members": "Member",
+  "@m53Members": {
+    "description": "M5.3 stable member identity and transactional selection: m53Members"
+  },
+  "m53MemberName": "Nama member",
+  "@m53MemberName": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberName"
+  },
+  "m53MemberPhone": "Nomor telepon member",
+  "@m53MemberPhone": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberPhone"
+  },
+  "m53MemberAddress": "Alamat (opsional)",
+  "@m53MemberAddress": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberAddress"
+  },
+  "m53UseMember": "Hubungkan dengan member",
+  "@m53UseMember": {
+    "description": "M5.3 stable member identity and transactional selection: m53UseMember"
+  },
+  "m53MemberVisits": "Kunjungan belanja",
+  "@m53MemberVisits": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberVisits"
+  },
+  "m53MemberVisitHelp": "Kunjungan dihitung dari transaksi penjualan selesai yang belum dibatalkan. Pelunasan utang bukan kunjungan belanja baru.",
+  "@m53MemberVisitHelp": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberVisitHelp"
+  },
+  "m53NoMembers": "Belum ada member yang cocok.",
+  "@m53NoMembers": {
+    "description": "M5.3 stable member identity and transactional selection: m53NoMembers"
+  },
+  "m53ArchivedMembers": "Member diarsipkan",
+  "@m53ArchivedMembers": {
+    "description": "M5.3 stable member identity and transactional selection: m53ArchivedMembers"
+  },
+  "m53ArchiveMember": "Arsipkan member",
+  "@m53ArchiveMember": {
+    "description": "M5.3 stable member identity and transactional selection: m53ArchiveMember"
+  },
+  "m53RestoreMember": "Pulihkan member",
+  "@m53RestoreMember": {
+    "description": "M5.3 stable member identity and transactional selection: m53RestoreMember"
+  },
+  "m53MemberSelected": "Member dipilih",
+  "@m53MemberSelected": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberSelected"
+  },
+  "m53ChangeMember": "Ganti member / buat baru",
+  "@m53ChangeMember": {
+    "description": "M5.3 stable member identity and transactional selection: m53ChangeMember"
+  },
+  "m53MemberSaved": "Data member disimpan.",
+  "@m53MemberSaved": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberSaved"
+  },
+  "m53MemberSearch": "Cari nama atau nomor telepon",
+  "@m53MemberSearch": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberSearch"
+  },
+  "m53MemberCreate": "Buat member",
+  "@m53MemberCreate": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberCreate"
+  },
+  "m53GuestHelp": "Penjualan lunas boleh tanpa member. Transaksi utang wajib memilih atau membuat member.",
+  "@m53GuestHelp": {
+    "description": "M5.3 stable member identity and transactional selection: m53GuestHelp"
+  },
+  "m53MemberPhoneHelp": "Nomor wajib valid dan unik. Gunakan awalan negara, misalnya +62, bila berbeda dari negara nomor toko.",
+  "@m53MemberPhoneHelp": {
+    "description": "M5.3 stable member identity and transactional selection: m53MemberPhoneHelp"
+  },
+  "m53ArchiveMemberHelp": "Arsip menyembunyikan member dari transaksi baru. Riwayat dan utang tetap disimpan; utang lama tetap dapat dilunasi. Nomor tetap terikat pada profil ini.",
+  "@m53ArchiveMemberHelp": {
+    "description": "M5.3 stable member identity and transactional selection: m53ArchiveMemberHelp"
+  },
+  "m53Guest": "Tanpa member",
+  "@m53Guest": {
+    "description": "M5.3 stable member identity and transactional selection: m53Guest"
   }
 }

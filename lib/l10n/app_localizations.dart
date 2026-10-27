@@ -5017,6 +5017,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Denomination details are retained. Manually editing the amount replaces them with an amount without denomination details.'**
   String get m53TenderCompositionRetained;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberFieldsInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a member name (up to 200 characters), a phone number up to 128 characters, and an address up to 4096 characters.'**
+  String get m53MemberFieldsInvalid;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberPhoneRequired
+  ///
+  /// In en, this message translates to:
+  /// **'A phone number is required for a new member.'**
+  String get m53MemberPhoneRequired;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberPhoneUsed
+  ///
+  /// In en, this message translates to:
+  /// **'Another member already uses this number. Select the correct member or ask the owner to correct the profile.'**
+  String get m53MemberPhoneUsed;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberRepairRequired
+  ///
+  /// In en, this message translates to:
+  /// **'The owner must complete this member profile before a new credit sale. Existing debts can still be paid.'**
+  String get m53MemberRepairRequired;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberNameRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the member name.'**
+  String get m53MemberNameRequired;
+
+  /// M5.3 stable member identity and transactional selection: m53Members
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get m53Members;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberName
+  ///
+  /// In en, this message translates to:
+  /// **'Member name'**
+  String get m53MemberName;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberPhone
+  ///
+  /// In en, this message translates to:
+  /// **'Member phone number'**
+  String get m53MemberPhone;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberAddress
+  ///
+  /// In en, this message translates to:
+  /// **'Address (optional)'**
+  String get m53MemberAddress;
+
+  /// M5.3 stable member identity and transactional selection: m53UseMember
+  ///
+  /// In en, this message translates to:
+  /// **'Link to a member'**
+  String get m53UseMember;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberVisits
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get m53MemberVisits;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberVisitHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases count completed sales that have not been reversed. Debt repayments do not count as new purchases.'**
+  String get m53MemberVisitHelp;
+
+  /// M5.3 stable member identity and transactional selection: m53NoMembers
+  ///
+  /// In en, this message translates to:
+  /// **'No matching members.'**
+  String get m53NoMembers;
+
+  /// M5.3 stable member identity and transactional selection: m53ArchivedMembers
+  ///
+  /// In en, this message translates to:
+  /// **'Archived members'**
+  String get m53ArchivedMembers;
+
+  /// M5.3 stable member identity and transactional selection: m53ArchiveMember
+  ///
+  /// In en, this message translates to:
+  /// **'Archive member'**
+  String get m53ArchiveMember;
+
+  /// M5.3 stable member identity and transactional selection: m53RestoreMember
+  ///
+  /// In en, this message translates to:
+  /// **'Restore member'**
+  String get m53RestoreMember;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberSelected
+  ///
+  /// In en, this message translates to:
+  /// **'Selected member'**
+  String get m53MemberSelected;
+
+  /// M5.3 stable member identity and transactional selection: m53ChangeMember
+  ///
+  /// In en, this message translates to:
+  /// **'Change member / create new'**
+  String get m53ChangeMember;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Member profile saved.'**
+  String get m53MemberSaved;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberSearch
+  ///
+  /// In en, this message translates to:
+  /// **'Search name or phone number'**
+  String get m53MemberSearch;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberCreate
+  ///
+  /// In en, this message translates to:
+  /// **'Create member'**
+  String get m53MemberCreate;
+
+  /// M5.3 stable member identity and transactional selection: m53GuestHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Paid sales may use a guest. Credit sales must select or create a member.'**
+  String get m53GuestHelp;
+
+  /// M5.3 stable member identity and transactional selection: m53MemberPhoneHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Use a valid, unique number. Include a country code, such as +62, if it differs from the shop phone region.'**
+  String get m53MemberPhoneHelp;
+
+  /// M5.3 stable member identity and transactional selection: m53ArchiveMemberHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Archiving hides the member from new sales. History and debts remain, and existing debts can still be paid. The phone number remains linked to this profile.'**
+  String get m53ArchiveMemberHelp;
+
+  /// M5.3 stable member identity and transactional selection: m53Guest
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get m53Guest;
 }
 
 class _AppLocalizationsDelegate

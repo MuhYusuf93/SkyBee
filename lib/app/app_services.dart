@@ -1,4 +1,5 @@
 import '../features/cashier_lock/application/cashier_lock_service.dart';
+import '../features/members/application/member_service.dart';
 import '../features/onboarding/application/onboarding_service.dart';
 import '../features/cashier/application/quick_cash_service.dart';
 import '../features/cashier/application/quantity_promotion_service.dart';
@@ -51,6 +52,7 @@ final class AppServices {
     checkout = CheckoutService(database, cashierStore);
     search = ProductSearchService(database, cashierStore);
     receivables = ReceivablesService(database, cashierStore);
+    members = MemberService(database, management, cashierStore);
     history = SaleHistoryService(database, management, cashierStore);
     reports = ReportsService(database, management);
     corrections = CorrectionService(database, management, cashierStore);
@@ -66,6 +68,7 @@ final class AppServices {
   late final CheckoutService checkout;
   late final ProductSearchService search;
   late final ReceivablesService receivables;
+  late final MemberService members;
   late final SaleHistoryService history;
   late final ReportsService reports;
   late final CorrectionService corrections;

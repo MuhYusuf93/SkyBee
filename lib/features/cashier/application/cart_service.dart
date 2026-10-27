@@ -259,6 +259,12 @@ final class CartService {
     if (draft['state'] == 'completed') return;
     if (draft['state'] != 'active') throw const AppError('m3DraftUnavailable');
     final policy = store.policy(draft);
+    if (database.schemaVersion >= 22 &&
+        (input.customer.address.length > 4096 ||
+            input.customer.phone.length > 128 ||
+            input.customer.name.length > 200)) {
+      throw const AppError('m53MemberFieldsInvalid');
+    }
     if (input.paid != null &&
         (input.paid!.currencyCode != policy.code ||
             input.paid!.scale != policy.scale)) {
@@ -288,6 +294,11 @@ final class CartService {
       {
         if (database.schemaVersion >= 21)
           'tender_details_json': input.tenderDetails?.encode(),
+        if (database.schemaVersion >= 22) ...{
+          'member_intent': input.memberIntent ? 1 : 0,
+          'member_opt_in': (input.memberOptIn ?? input.memberIntent) ? 1 : 0,
+          'customer_address': input.customer.address.trim(),
+        },
         if (database.schemaVersion >= 12) ...{
           'cash_input': input.cash ? 1 : 0,
           'tender_minor': input.tender?.amountMinor,

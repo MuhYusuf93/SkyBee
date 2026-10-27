@@ -1,10 +1,12 @@
 import 'package:sqflite/sqflite.dart';
 import '../../core/domain/value_types.dart';
+import '../../core/domain/app_error.dart';
+import '../../core/domain/contact_validation.dart';
 
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 21;
+  static const version = 22;
 
   static Future<void> migrate(
     Database db,
@@ -37,6 +39,7 @@ final class Schema {
         19 => _onboarding,
         20 => _cashierLock,
         21 => _tenderIntent,
+        22 => _members,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);
@@ -47,6 +50,46 @@ final class Schema {
         await db.execute(
           'UPDATE store_feature_policy SET onboarding_completed=0 WHERE id=1',
         );
+      }
+      if (target == 22) {
+        // Preserve all original IDs/raw contact cells, including invalid and
+        // duplicate legacy phones. Only new derived metadata is populated.
+        final region =
+            (await db.query(
+                  'store_settings',
+                  columns: ['phone_region'],
+                )).single['phone_region']
+                as String;
+        String? cursor;
+        while (true) {
+          final rows = await db.rawQuery(
+            '''SELECT id,
+            CASE WHEN typeof(phone_number)='text' AND length(phone_number)<=128
+              THEN phone_number END AS old_phone FROM customers
+            ${cursor == null ? '' : 'WHERE id COLLATE BINARY>?'}
+            ORDER BY id COLLATE BINARY LIMIT 100''',
+            [?cursor],
+          );
+          if (rows.isEmpty) break;
+          for (final row in rows) {
+            String? phone;
+            try {
+              phone = ContactValidation.phone(
+                row['old_phone'] as String?,
+                region: region,
+              );
+            } on AppError {
+              phone = null;
+            }
+            await db.update(
+              'customers',
+              {'phone_e164': phone, 'member_phone_region': region},
+              where: 'id=?',
+              whereArgs: [row['id']],
+            );
+          }
+          cursor = rows.last['id'] as String;
+        }
       }
       if (target == 14) {
         // Retain original labels, use normalized stable relations for future
@@ -112,6 +155,44 @@ final class Schema {
 
   static String _id(String name) =>
       '$name TEXT PRIMARY KEY NOT NULL CHECK(length($name) = 36)';
+
+  /// Stable member IDs and legacy raw phones survive upgrades. Phone indexes
+  /// remain nonunique because legacy collisions need explicit owner repair.
+  static final _members = [
+    'ALTER TABLE customers ADD COLUMN address TEXT CHECK(address IS NULL OR length(address)<=4096)',
+    "ALTER TABLE customers ADD COLUMN revision INTEGER NOT NULL DEFAULT 0 CHECK(typeof(revision)='integer' AND revision>=0)",
+    "ALTER TABLE customers ADD COLUMN updated_at INTEGER NOT NULL DEFAULT 0 CHECK(typeof(updated_at)='integer' AND updated_at>=0)",
+    'ALTER TABLE customers ADD COLUMN phone_e164 TEXT COLLATE BINARY CHECK(phone_e164 IS NULL OR length(phone_e164)<=24)',
+    "ALTER TABLE customers ADD COLUMN member_phone_region TEXT NOT NULL DEFAULT 'ID' CHECK(length(member_phone_region)=2)",
+    'ALTER TABLE customers ADD COLUMN profile_version INTEGER NOT NULL DEFAULT 0 CHECK(profile_version IN (0,1))',
+    "ALTER TABLE customers ADD COLUMN visit_count INTEGER NOT NULL DEFAULT 0 CHECK(typeof(visit_count)='integer' AND visit_count>=0)",
+    'ALTER TABLE cart_drafts ADD COLUMN member_intent INTEGER NOT NULL DEFAULT 0 CHECK(member_intent IN (0,1))',
+    'ALTER TABLE cart_drafts ADD COLUMN member_opt_in INTEGER NOT NULL DEFAULT 0 CHECK(member_opt_in IN (0,1))',
+    "ALTER TABLE cart_drafts ADD COLUMN customer_address TEXT NOT NULL DEFAULT '' CHECK(length(customer_address)<=4096)",
+    'CREATE INDEX members_phone_lookup ON customers(phone_e164 COLLATE BINARY,id COLLATE BINARY)',
+    'CREATE INDEX members_raw_phone_lookup ON customers(phone_number COLLATE BINARY,id COLLATE BINARY)',
+    'CREATE INDEX members_frequency ON customers(is_deleted,visit_count DESC,normalized_name COLLATE BINARY,id COLLATE BINARY)',
+    '''UPDATE customers SET visit_count=(SELECT COUNT(*) FROM sale_transactions s
+      WHERE s.customer_id=customers.id AND NOT EXISTS(SELECT 1 FROM sale_transaction_reversals r
+        WHERE r.sale_transaction_id=s.id))''',
+    '''CREATE TRIGGER member_completed_visit AFTER INSERT ON sale_transactions
+      WHEN NEW.customer_id IS NOT NULL BEGIN
+        UPDATE customers SET visit_count=visit_count+1 WHERE id=NEW.customer_id;
+      END''',
+    '''CREATE TRIGGER member_reversed_visit AFTER INSERT ON sale_transaction_reversals
+      BEGIN UPDATE customers SET visit_count=visit_count-1
+        WHERE id=(SELECT customer_id FROM sale_transactions WHERE id=NEW.sale_transaction_id);
+      END''',
+    for (final event in [
+      'INSERT',
+      'UPDATE OF phone_e164,phone_number,profile_version',
+    ])
+      '''CREATE TRIGGER member_phone_${event == 'INSERT' ? 'insert' : 'update'}
+        BEFORE $event ON customers WHEN NEW.profile_version=1 AND
+        (NEW.phone_e164 IS NULL OR NEW.phone_number IS NOT NEW.phone_e164 OR
+          EXISTS(SELECT 1 FROM customers c WHERE c.phone_e164=NEW.phone_e164 AND c.id<>NEW.id))
+        BEGIN SELECT RAISE(ABORT,'invalid_member_phone'); END''',
+  ];
 
   /// Null means a legacy amount without declared composition. Do not guess
   /// physical notes, exact-button provenance or customer intent from its value.

@@ -108,18 +108,18 @@ void cashierSuite(
     paid: Money(amount, 'IDR', 0),
     customer: CustomerChoice(id: customer, name: name, phone: phone),
   );
-  Future<SaleReceipt> debtSale({EntityId? customer, int quantity = 1}) async {
+  Future<SaleReceipt> debtSale({
+    EntityId? customer,
+    int quantity = 1,
+    String phone = '081234567890',
+  }) async {
     final current = await basket(quantity);
     return checkout.submit(
       current.id,
       current.revision,
       CheckoutInput(
         mode: PaymentMode.debt,
-        customer: CustomerChoice(
-          id: customer,
-          name: 'Alex',
-          phone: '081234567890',
-        ),
+        customer: CustomerChoice(id: customer, name: 'Alex', phone: phone),
       ),
     );
   }
@@ -735,7 +735,7 @@ void cashierSuite(
       final first = await debtSale();
       final firstDraft = await cart.open();
       await cart.next(firstDraft.id);
-      await debtSale();
+      await debtSale(phone: '081234567891');
       final firstPage = await debts.customers(query: 'Alex', pageSize: 1);
       final secondPage = await debts.customers(
         query: 'Alex',
@@ -743,7 +743,10 @@ void cashierSuite(
         pageSize: 1,
       );
       expect(firstPage.items.single.id, isNot(secondPage.items.single.id));
-      expect(firstPage.items.single.phone, '+6281234567890');
+      expect(
+        {firstPage.items.single.phone, secondPage.items.single.phone},
+        {'+6281234567890', '+6281234567891'},
+      );
       final detail = await debts.transactions(
         firstPage.items.single.id,
         pageSize: 1,

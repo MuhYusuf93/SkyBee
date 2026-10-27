@@ -54,7 +54,10 @@ void m51CashSuite(DatabaseFactory factory) {
     cash: true,
     tender: Money(minor, 'IDR', 0),
     tenderRaw: '$minor',
-    customer: CustomerChoice(name: name),
+    customer: CustomerChoice(
+      name: name,
+      phone: name.isEmpty ? '' : '081234567890',
+    ),
   );
 
   test(

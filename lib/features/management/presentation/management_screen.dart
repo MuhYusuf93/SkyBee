@@ -6,6 +6,7 @@ import '../../inventory/presentation/inventory_screen.dart';
 import '../../settings/presentation/settings_screen.dart';
 import '../../sale_history/presentation/sale_history_screen.dart';
 import '../../reports/presentation/reports_screen.dart';
+import '../../members/presentation/members_screen.dart';
 import 'management_gate.dart';
 import 'management_session_provider.dart';
 import '../domain/management_role.dart';
@@ -46,6 +47,16 @@ class ManagementScreen extends StatelessWidget {
               ),
               if (context.watch<ManagementSessionProvider>().service.role ==
                   ManagementRole.owner) ...[
+                const SizedBox(height: 16),
+                OutlinedButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const MembersScreen(),
+                    ),
+                  ),
+                  child: Text(tr(context, 'm53Members')),
+                ),
                 const SizedBox(height: 16),
                 OutlinedButton(
                   onPressed: () => Navigator.push(

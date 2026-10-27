@@ -2773,4 +2773,87 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m53TenderCompositionRetained =>
       'Denomination details are retained. Manually editing the amount replaces them with an amount without denomination details.';
+
+  @override
+  String get m53MemberFieldsInvalid =>
+      'Enter a member name (up to 200 characters), a phone number up to 128 characters, and an address up to 4096 characters.';
+
+  @override
+  String get m53MemberPhoneRequired =>
+      'A phone number is required for a new member.';
+
+  @override
+  String get m53MemberPhoneUsed =>
+      'Another member already uses this number. Select the correct member or ask the owner to correct the profile.';
+
+  @override
+  String get m53MemberRepairRequired =>
+      'The owner must complete this member profile before a new credit sale. Existing debts can still be paid.';
+
+  @override
+  String get m53MemberNameRequired => 'Enter the member name.';
+
+  @override
+  String get m53Members => 'Members';
+
+  @override
+  String get m53MemberName => 'Member name';
+
+  @override
+  String get m53MemberPhone => 'Member phone number';
+
+  @override
+  String get m53MemberAddress => 'Address (optional)';
+
+  @override
+  String get m53UseMember => 'Link to a member';
+
+  @override
+  String get m53MemberVisits => 'Purchases';
+
+  @override
+  String get m53MemberVisitHelp =>
+      'Purchases count completed sales that have not been reversed. Debt repayments do not count as new purchases.';
+
+  @override
+  String get m53NoMembers => 'No matching members.';
+
+  @override
+  String get m53ArchivedMembers => 'Archived members';
+
+  @override
+  String get m53ArchiveMember => 'Archive member';
+
+  @override
+  String get m53RestoreMember => 'Restore member';
+
+  @override
+  String get m53MemberSelected => 'Selected member';
+
+  @override
+  String get m53ChangeMember => 'Change member / create new';
+
+  @override
+  String get m53MemberSaved => 'Member profile saved.';
+
+  @override
+  String get m53MemberSearch => 'Search name or phone number';
+
+  @override
+  String get m53MemberCreate => 'Create member';
+
+  @override
+  String get m53GuestHelp =>
+      'Paid sales may use a guest. Credit sales must select or create a member.';
+
+  @override
+  String get m53MemberPhoneHelp =>
+      'Use a valid, unique number. Include a country code, such as +62, if it differs from the shop phone region.';
+
+  @override
+  String get m53ArchiveMemberHelp =>
+      'Archiving hides the member from new sales. History and debts remain, and existing debts can still be paid. The phone number remains linked to this profile.';
+
+  @override
+  String get m53Guest => 'Guest';
 }

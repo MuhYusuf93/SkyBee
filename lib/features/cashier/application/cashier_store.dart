@@ -192,12 +192,15 @@ final class CashierStore {
                 row['tender_details_json'] as String,
               ),
         quickMode: row['tender_input_mode'] == 'quick',
+        memberIntent: row['member_intent'] == 1,
+        memberOptIn: row['member_opt_in'] == 1,
         customer: CustomerChoice(
           id: row['customer_id'] == null
               ? null
               : EntityId(row['customer_id'] as String),
           name: row['customer_name'] as String? ?? '',
           phone: row['customer_phone'] as String? ?? '',
+          address: row['customer_address'] as String? ?? '',
         ),
       ),
     );

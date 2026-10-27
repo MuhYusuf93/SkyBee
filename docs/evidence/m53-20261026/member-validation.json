@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-27",
+  "checkpoint": "M53-C members; remaining C product search and D-H active",
+  "sourceVersion": "0.5.2+12",
+  "schema": 22,
+  "ordinaryExplorationUpdated": false,
+  "host": {
+    "acceptance": {
+      "passed": 20,
+      "elapsed": "1:46",
+      "sql": 13,
+      "ui": 6,
+      "upgrade": 1
+    },
+    "regression": {
+      "passed": 79,
+      "elapsed": "1:34",
+      "overlapsAcceptance": true
+    },
+    "analyze": {
+      "result": "No issues found",
+      "elapsedSeconds": 7.2
+    },
+    "format": {
+      "files": 399,
+      "changed": 0
+    },
+    "localization": {
+      "bilingualKeys": 845,
+      "staticReferences": 561,
+      "originalRequirementIds": 245
+    }
+  },
+  "native": [
+    {
+      "run": "m53-member-dv-20261027-173807",
+      "device": "192.168.0.101:5555",
+      "passed": 20,
+      "runnerElapsed": "07:10",
+      "preExistingProtectedEntries": 642,
+      "everyPreExistingHashUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "downgrade": false,
+      "reset": false,
+      "awake": "Original DV settings restored and read back exactly.",
+      "runnerLogSha256": "c13702d4885cd38ae3a9bdeacf32c2315c6ace80f597271d1d48a6629877c703",
+      "beforeManifestSha256": "51676c679f6246a549b938ac7af31dc65bd1924ef55fab0951dcd1141c82d661",
+      "afterManifestSha256": "240c1ce7abf0db4d3bdc0c3281aff4f55594186ad8dced002dd2ea622796ff4e"
+    },
+    {
+      "run": "m53-member-poco-20261027-175108",
+      "device": "7f0edea0",
+      "passed": 20,
+      "runnerElapsed": "04:48",
+      "preExistingProtectedEntries": 587,
+      "everyPreExistingHashUnchanged": true,
+      "automaticDeviceControlActive": false,
+      "downgrade": false,
+      "reset": false,
+      "awake": "not applied",
+      "runnerLogSha256": "66bb433dca3e79878e9f3086496bd47251a6936df7557c937c80c76c7752339b",
+      "beforeManifestSha256": "44d4707ae583b48af11379a4189dbe242844770e9577fa0f63ac76c019c197d1",
+      "afterManifestSha256": "44d97fc3d1d0b90c229ff92ad5636087c28c9904d1c4f66e7fcf3e36c3047370"
+    }
+  ],
+  "frozenSourceFiles": 485,
+  "limits": [
+    "Native widget input is automated, not physical touch or OEM keyboard proof",
+    "Cash drawer/audit/change composition still D, not completed by member C",
+    "Portable metadata validation is not final all-features restore acceptance",
+    "Final ordinary debug/release and in-place exploration handoff remain H"
+  ]
+}

@@ -2780,4 +2780,86 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m53TenderCompositionRetained =>
       'Rincian pecahan tetap disimpan. Mengubah angka secara manual akan menggantinya dengan nominal tanpa rincian.';
+
+  @override
+  String get m53MemberFieldsInvalid =>
+      'Nama member wajib diisi (maks. 200 karakter), nomor maks. 128 karakter, dan alamat maks. 4096 karakter.';
+
+  @override
+  String get m53MemberPhoneRequired => 'Nomor telepon wajib untuk member baru.';
+
+  @override
+  String get m53MemberPhoneUsed =>
+      'Nomor ini sudah digunakan member lain. Pilih member yang sesuai atau minta pemilik memperbaiki datanya.';
+
+  @override
+  String get m53MemberRepairRequired =>
+      'Data member perlu dilengkapi oleh pemilik sebelum transaksi utang baru. Utang lama tetap dapat dilunasi.';
+
+  @override
+  String get m53MemberNameRequired => 'Nama member wajib diisi.';
+
+  @override
+  String get m53Members => 'Member';
+
+  @override
+  String get m53MemberName => 'Nama member';
+
+  @override
+  String get m53MemberPhone => 'Nomor telepon member';
+
+  @override
+  String get m53MemberAddress => 'Alamat (opsional)';
+
+  @override
+  String get m53UseMember => 'Hubungkan dengan member';
+
+  @override
+  String get m53MemberVisits => 'Kunjungan belanja';
+
+  @override
+  String get m53MemberVisitHelp =>
+      'Kunjungan dihitung dari transaksi penjualan selesai yang belum dibatalkan. Pelunasan utang bukan kunjungan belanja baru.';
+
+  @override
+  String get m53NoMembers => 'Belum ada member yang cocok.';
+
+  @override
+  String get m53ArchivedMembers => 'Member diarsipkan';
+
+  @override
+  String get m53ArchiveMember => 'Arsipkan member';
+
+  @override
+  String get m53RestoreMember => 'Pulihkan member';
+
+  @override
+  String get m53MemberSelected => 'Member dipilih';
+
+  @override
+  String get m53ChangeMember => 'Ganti member / buat baru';
+
+  @override
+  String get m53MemberSaved => 'Data member disimpan.';
+
+  @override
+  String get m53MemberSearch => 'Cari nama atau nomor telepon';
+
+  @override
+  String get m53MemberCreate => 'Buat member';
+
+  @override
+  String get m53GuestHelp =>
+      'Penjualan lunas boleh tanpa member. Transaksi utang wajib memilih atau membuat member.';
+
+  @override
+  String get m53MemberPhoneHelp =>
+      'Nomor wajib valid dan unik. Gunakan awalan negara, misalnya +62, bila berbeda dari negara nomor toko.';
+
+  @override
+  String get m53ArchiveMemberHelp =>
+      'Arsip menyembunyikan member dari transaksi baru. Riwayat dan utang tetap disimpan; utang lama tetap dapat dilunasi. Nomor tetap terikat pada profil ini.';
+
+  @override
+  String get m53Guest => 'Tanpa member';
 }

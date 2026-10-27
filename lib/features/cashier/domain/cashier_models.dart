@@ -80,10 +80,15 @@ enum PaymentMode { paid, partial, debt }
 
 /// Existing ID selection is explicit; a name never identifies an existing person.
 final class CustomerChoice {
-  const CustomerChoice({this.id, this.name = '', this.phone = ''});
+  const CustomerChoice({
+    this.id,
+    this.name = '',
+    this.phone = '',
+    this.address = '',
+  });
   final EntityId? id;
   final String name;
-  final String phone;
+  final String phone, address;
 }
 
 final class CheckoutInput {
@@ -95,11 +100,17 @@ final class CheckoutInput {
     this.tenderRaw = '',
     this.tenderDetails,
     this.quickMode = false,
+    this.memberIntent = false,
+    this.memberOptIn,
     this.customer = const CustomerChoice(),
   });
   final PaymentMode mode;
   final Money? paid;
-  final bool cash, quickMode;
+  final bool cash, quickMode, memberIntent;
+
+  /// Draft view preference only; null preserves intent for non-UI callers.
+  /// Implicit credit membership must not become an opt-in merely on reopen.
+  final bool? memberOptIn;
   final Money? tender;
   final String tenderRaw;
   final TenderSnapshot? tenderDetails;
@@ -171,11 +182,21 @@ final class SaleReceipt {
 }
 
 final class CustomerRecord {
-  const CustomerRecord(this.id, this.name, this.phone, this.balance);
+  const CustomerRecord(
+    this.id,
+    this.name,
+    this.phone,
+    this.balance, {
+    this.visits = 0,
+    this.needsReview = false,
+    this.archived = false,
+  });
   final EntityId id;
   final String name;
   final String? phone;
   final Money balance;
+  final int visits;
+  final bool needsReview, archived;
 }
 
 final class CustomerCursor {
@@ -184,11 +205,16 @@ final class CustomerCursor {
     this.id,
     this.query, {
     this.activeDebts = true,
+    this.visits = 0,
+    this.generation,
+    this.databaseRevision,
   });
   final String name;
   final EntityId id;
   final String query;
   final bool activeDebts;
+  final int visits;
+  final int? generation, databaseRevision;
 }
 
 final class DebtAllocation {

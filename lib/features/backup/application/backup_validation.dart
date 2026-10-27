@@ -37,6 +37,7 @@ final class BackupValidation {
       throw const FormatException('backupSetupIncomplete');
     }
     if (schema >= 20) await _cashierLock(db);
+    if (schema >= 22) await _members(db);
     final settings = (await db.query('store_settings')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,
@@ -275,8 +276,67 @@ final class BackupValidation {
     return result;
   }
 
-  /// Persisted policy/verifiers can travel; a process-local cashier grant
-  /// cannot. Bound lengths before fetching imported blobs/JSON or using a PIN.
+  /// Derived member data never invalidates a supported legacy identity merely
+  /// for an empty/invalid/duplicate phone. Validated new writes must remain
+  /// canonical and unique; visit counts are checked against immutable sales.
+  static Future<void> _members(DatabaseExecutor db) async {
+    if ((await db.rawQuery(
+          '''SELECT 1 FROM customers c WHERE
+      typeof(c.revision)<>'integer' OR c.revision<0 OR
+      typeof(c.is_deleted)<>'integer' OR c.is_deleted NOT IN(0,1) OR
+      typeof(c.updated_at)<>'integer' OR c.updated_at<0 OR
+      typeof(c.visit_count)<>'integer' OR c.visit_count<0 OR
+      typeof(c.profile_version)<>'integer' OR c.profile_version NOT IN(0,1) OR
+      typeof(c.member_phone_region)<>'text' OR length(c.member_phone_region)<>2 OR
+      (c.address IS NOT NULL AND (typeof(c.address)<>'text' OR length(c.address)>4096)) OR
+      (c.phone_e164 IS NOT NULL AND (typeof(c.phone_e164)<>'text' OR length(c.phone_e164)>24)) OR
+      (c.profile_version=1 AND (typeof(c.name)<>'text' OR length(trim(c.name)) NOT BETWEEN 1 AND 200 OR
+        typeof(c.phone_number)<>'text' OR length(c.phone_number)>128 OR
+        c.phone_e164 IS NULL OR c.phone_number IS NOT c.phone_e164 OR
+        EXISTS(SELECT 1 FROM customers other WHERE other.id<>c.id AND other.phone_e164=c.phone_e164))) OR
+      c.visit_count<>(SELECT COUNT(*) FROM sale_transactions s WHERE s.customer_id=c.id
+        AND NOT EXISTS(SELECT 1 FROM sale_transaction_reversals r WHERE r.sale_transaction_id=s.id)) LIMIT 1''',
+        )).isNotEmpty ||
+        (await db.rawQuery(
+          '''SELECT 1 FROM cart_drafts WHERE
+          typeof(member_intent)<>'integer' OR member_intent NOT IN(0,1) OR
+          typeof(member_opt_in)<>'integer' OR member_opt_in NOT IN(0,1) OR
+          typeof(customer_address)<>'text' OR length(customer_address)>4096 LIMIT 1''',
+        )).isNotEmpty) {
+      throw const FormatException('backupOperationalMetadataInvalid');
+    }
+    String? cursor;
+    while (true) {
+      final rows = await db.rawQuery(
+        '''SELECT id,phone_e164,member_phone_region,
+        CASE WHEN typeof(phone_number)='text' AND length(phone_number)<=128
+          THEN phone_number END AS raw_phone FROM customers
+        ${cursor == null ? '' : 'WHERE id COLLATE BINARY>?'} ORDER BY id COLLATE BINARY LIMIT 100''',
+        [?cursor],
+      );
+      if (rows.isEmpty) break;
+      for (final row in rows) {
+        final region = row['member_phone_region'] as String;
+        if (PhoneNumberUtil.instance.getCountryCodeForRegion(region) == 0) {
+          throw const FormatException('backupOperationalMetadataInvalid');
+        }
+        String? normalized;
+        try {
+          normalized = ContactValidation.phone(
+            row['raw_phone'] as String?,
+            region: region,
+          );
+        } on Object {
+          normalized = null;
+        }
+        if (normalized != row['phone_e164']) {
+          throw const FormatException('backupOperationalMetadataInvalid');
+        }
+      }
+      cursor = rows.last['id'] as String;
+    }
+  }
+
   /// Import constraints are untrusted. Bound JSON before fetching, then stream
   /// immutable intents by primary key and compare them with the financial row.
   /// NULL is deliberately retained for historical tenders without piece counts.
@@ -335,6 +395,8 @@ final class BackupValidation {
     }
   }
 
+  /// Persisted policy/verifiers can travel; a process-local cashier grant
+  /// cannot. Bound lengths before fetching imported blobs/JSON or using a PIN.
   static Future<void> _cashierLock(DatabaseExecutor db) async {
     if ((await db.rawQuery(
       """SELECT 1 FROM cashier_lock_policy WHERE id<>1 OR

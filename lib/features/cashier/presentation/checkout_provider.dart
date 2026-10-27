@@ -1,4 +1,6 @@
 import '../domain/tender_draft.dart';
+import 'dart:convert';
+import '../../members/domain/member_models.dart';
 import 'package:flutter/material.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/contact_validation.dart';
@@ -32,9 +34,13 @@ final class CheckoutProvider extends ChangeNotifier {
     selected = input.customer.id;
     name.text = input.customer.name;
     phone.text = input.customer.phone;
+    address.text = input.customer.address;
+    useMember = input.memberOptIn ?? input.memberIntent;
     _updateMode();
+    _savedInputKey = _inputKey(this.input);
     name.addListener(_customerEdited);
     phone.addListener(_customerEdited);
+    address.addListener(_customerEdited);
   }
   final CartProvider cart;
   final CartService drafts;
@@ -43,7 +49,13 @@ final class CheckoutProvider extends ChangeNotifier {
   final Future<String> Function()? phoneRegion;
   String region = 'ID';
   String? get phoneError {
-    if (!needsCustomer || selected != null) return null;
+    if (!needsMember) return null;
+    if (selected != null) {
+      return needsCustomer && selectedNeedsReview
+          ? 'm53MemberRepairRequired'
+          : null;
+    }
+    if (phone.text.trim().isEmpty) return 'm53MemberPhoneRequired';
     try {
       ContactValidation.phone(phone.text, region: region);
       return null;
@@ -61,6 +73,27 @@ final class CheckoutProvider extends ChangeNotifier {
       tender == null ? null : CashTender(cart.snapshot!.total, tender!);
   bool get needsCustomer =>
       settlement != null && settlement!.debt.amountMinor > 0;
+  bool useMember = false, selectedNeedsReview = false;
+  bool get needsMember => needsCustomer || useMember;
+  String? get nameError =>
+      needsMember && selected == null && name.text.trim().isEmpty
+      ? 'm53MemberNameRequired'
+      : null;
+  late String _savedInputKey;
+  static String _inputKey(CheckoutInput value) => jsonEncode([
+    value.mode.name,
+    value.tender?.amountMinor,
+    value.tenderRaw,
+    value.tenderDetails?.encode(),
+    value.quickMode,
+    value.memberIntent,
+    value.memberOptIn,
+    value.customer.id?.value,
+    value.customer.name.trim(),
+    value.customer.phone.trim(),
+    value.customer.address.trim(),
+  ]);
+  bool get hasUnsavedInput => _inputKey(input) != _savedInputKey;
   CheckoutInput get input => CheckoutInput(
     cash: true,
     mode: mode,
@@ -70,7 +103,14 @@ final class CheckoutProvider extends ChangeNotifier {
         ? digits.snapshot
         : null,
     quickMode: quickMode,
-    customer: CustomerChoice(id: selected, name: name.text, phone: phone.text),
+    memberIntent: service.database.schemaVersion >= 22 && needsMember,
+    memberOptIn: useMember,
+    customer: CustomerChoice(
+      id: selected,
+      name: name.text,
+      phone: phone.text,
+      address: address.text,
+    ),
   );
   Future<void> loadAmounts() async {
     final code = cart.snapshot!.currency.code;
@@ -85,19 +125,23 @@ final class CheckoutProvider extends ChangeNotifier {
   }
 
   void _customerEdited() {
-    if (!submitting && !_disposed) persist();
+    if (!submitting && !_disposed && !_settingCustomer) persist();
   }
 
   Future<void> persist() {
     final snapshot = cart.snapshot!;
     final saved = input;
     final generation = service.database.generation;
+    final key = _inputKey(saved);
+    if (!_disposed) notifyListeners();
     return _saveTail = _saveTail
-        .then((_) {
+        .then((_) async {
           if (generation != service.database.generation) {
             throw const AppError('m3OperationFailed');
           }
-          return drafts.saveInput(snapshot.id, snapshot.revision, saved);
+          await drafts.saveInput(snapshot.id, snapshot.revision, saved);
+          _savedInputKey = key;
+          if (!_disposed) notifyListeners();
         })
         .catchError((Object e) {
           error = e is AppError ? e.message : 'm3OperationFailed';
@@ -175,10 +219,12 @@ final class CheckoutProvider extends ChangeNotifier {
 
   final name = TextEditingController();
   final phone = TextEditingController();
+  final address = TextEditingController();
   late PaymentMode mode;
   EntityId? selected;
   bool submitting = false;
   bool _disposed = false;
+  bool _settingCustomer = false;
   String? error;
   void selectMode(PaymentMode value) {
     mode = value;
@@ -191,16 +237,36 @@ final class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void customer(CustomerRecord value) {
+  void customer(MemberProfile value) {
+    _settingCustomer = true;
     selected = value.id;
+    selectedNeedsReview = value.needsReview || value.archived;
+    useMember = true;
     name.text = value.name;
     phone.text = value.phone ?? '';
+    address.text = value.address;
+    _settingCustomer = false;
     persist();
     notifyListeners();
   }
 
-  void newCustomer() {
+  void setUseMember(bool value) {
+    if (submitting || (!value && needsCustomer)) return;
+    useMember = value;
+    persist();
+  }
+
+  void newCustomer({bool clearFields = false}) {
+    if (selected == null && !clearFields) return;
     selected = null;
+    selectedNeedsReview = false;
+    if (clearFields) {
+      _settingCustomer = true;
+      name.clear();
+      phone.clear();
+      address.clear();
+      _settingCustomer = false;
+    }
     persist();
     notifyListeners();
   }
@@ -212,7 +278,6 @@ final class CheckoutProvider extends ChangeNotifier {
     error = null;
     notifyListeners();
     try {
-      if (phoneError != null) throw AppError(phoneError!);
       await cart.beginCheckout();
       if (generation != service.database.generation) {
         throw const AppError('m3OperationFailed');
@@ -220,8 +285,11 @@ final class CheckoutProvider extends ChangeNotifier {
       final snapshot = cart.snapshot!;
       await _saveTail;
       if (tender == null) throw const AppError('m51TenderRequired');
+      if (phoneError != null) throw AppError(phoneError!);
+      if (nameError != null) throw AppError(nameError!);
       final savedInput = input;
       await drafts.saveInput(snapshot.id, snapshot.revision, savedInput);
+      _savedInputKey = _inputKey(savedInput);
       if (generation != service.database.generation) {
         throw const AppError('m3OperationFailed');
       }
@@ -254,8 +322,10 @@ final class CheckoutProvider extends ChangeNotifier {
     _disposed = true;
     name.removeListener(_customerEdited);
     phone.removeListener(_customerEdited);
+    address.removeListener(_customerEdited);
     name.dispose();
     phone.dispose();
+    address.dispose();
     super.dispose();
   }
 }

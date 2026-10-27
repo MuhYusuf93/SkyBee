@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Member M5.3 memakai ID stabil, normalisasi nomor terpisah dari currency/bahasa,
+kompatibilitas utang legacy, paid opt-in dan kunjungan turunan SQL. Hak CRUD dan
+arsip hanya pemilik: [keputusan implementasi](decisions/M53_MEMBERS.md).
+
 Tender M5.3 menyimpan rincian deklarasi pecahan dan nominal tanpa rincian secara
 terpisah, dengan kompatibilitas retry lama serta editor nominal cepat publik:
 [kontrak implementasi](decisions/M53_TENDER.md). Jurnal laci/audit wajib tetap D.

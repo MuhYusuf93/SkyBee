@@ -1,4 +1,6 @@
 import '../../cashier_lock/presentation/cashier_lock_button.dart';
+import '../../members/domain/member_models.dart';
+import '../../../core/presentation/form_exit_guard.dart';
 import 'dart:async';
 import 'cash_pad.dart';
 import '../../management/presentation/managed_text_field.dart';
@@ -9,7 +11,6 @@ import '../../../core/money/money_field.dart';
 import '../../../core/presentation/contact_output_link.dart';
 import '../../../l10n/localization.dart';
 import '../../settings/presentation/language_button.dart';
-import '../domain/cashier_models.dart';
 import 'cart_provider.dart';
 import 'checkout_provider.dart';
 
@@ -43,7 +44,7 @@ class _CheckoutForm extends StatefulWidget {
 class _CheckoutFormState extends State<_CheckoutForm> {
   Timer? timer;
   int generation = 0;
-  List<CustomerRecord> suggestions = const [];
+  List<MemberProfile> suggestions = const [];
   void search(String name) {
     final form = context.read<CheckoutProvider>();
     form.newCustomer();
@@ -53,10 +54,10 @@ class _CheckoutFormState extends State<_CheckoutForm> {
     if (name.trim().isEmpty) return;
     timer = Timer(const Duration(milliseconds: 275), () async {
       try {
-        final records = await context.read<AppServices>().receivables.customers(
+        final records = await context.read<AppServices>().members.forCheckout(
+          form.cart.snapshot!.id,
           query: name,
           pageSize: 10,
-          activeDebts: false,
         );
         if (mounted && version == generation) {
           setState(() => suggestions = records.items);
@@ -79,8 +80,11 @@ class _CheckoutFormState extends State<_CheckoutForm> {
     final form = context.watch<CheckoutProvider>();
     final cart = context.watch<CartProvider>().snapshot!;
     final total = cart.total;
-    return PopScope(
-      canPop: !form.submitting,
+    return FormExitGuard(
+      managementProtected: false,
+      busy: form.submitting,
+      dirty: form.hasUnsavedInput,
+      dirtyCheck: () => form.hasUnsavedInput,
       child: Scaffold(
         appBar: AppBar(
           title: Text(tr(context, 'pay')),
@@ -95,37 +99,79 @@ class _CheckoutFormState extends State<_CheckoutForm> {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               CashPad(form: form),
-              if (form.needsCustomer) ...[
-                ManagedTextField(
-                  controller: form.name,
-                  enabled: !form.submitting,
-                  onChanged: search,
-                  decoration: InputDecoration(
-                    labelText: tr(context, 'm3CustomerName'),
+              CheckboxListTile(
+                key: const ValueKey('checkout-use-member'),
+                value: form.needsMember,
+                onChanged: form.submitting || form.needsCustomer
+                    ? null
+                    : (value) => form.setUseMember(value!),
+                title: Text(tr(context, 'm53UseMember')),
+                subtitle: Text(tr(context, 'm53GuestHelp')),
+              ),
+              if (form.needsMember) ...[
+                if (form.selected == null) ...[
+                  ManagedTextField(
+                    key: const ValueKey('checkout-member-name'),
+                    controller: form.name,
+                    enabled: !form.submitting,
+                    onChanged: search,
+                    decoration: InputDecoration(
+                      labelText: tr(context, 'm53MemberName'),
+                      errorText: form.nameError == null
+                          ? null
+                          : tr(context, form.nameError!),
+                    ),
                   ),
-                ),
-                ManagedTextField(
-                  controller: form.phone,
-                  enabled: !form.submitting,
-                  onChanged: (_) => form.newCustomer(),
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: tr(context, 'm3PhoneOptional'),
-                    errorText: form.phoneError == null
-                        ? null
-                        : tr(context, form.phoneError!),
+                  ManagedTextField(
+                    key: const ValueKey('checkout-member-phone'),
+                    controller: form.phone,
+                    enabled: !form.submitting,
+                    onChanged: search,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      labelText: tr(context, 'm53MemberPhone'),
+                      helperText: tr(context, 'm53MemberPhoneHelp'),
+                      errorText: form.phoneError == null
+                          ? null
+                          : tr(context, form.phoneError!),
+                    ),
                   ),
-                ),
-                if (form.selected != null)
-                  Text(tr(context, 'm3SelectedCustomer')),
+                  ManagedTextField(
+                    key: const ValueKey('checkout-member-address'),
+                    controller: form.address,
+                    enabled: !form.submitting,
+                    decoration: InputDecoration(
+                      labelText: tr(context, 'm53MemberAddress'),
+                    ),
+                  ),
+                ] else ...[
+                  Text(tr(context, 'm53MemberSelected')),
+                  ListTile(
+                    title: Text(form.name.text),
+                    subtitle: Text(form.phone.text),
+                  ),
+                  if (form.phoneError != null)
+                    Text(tr(context, form.phoneError!)),
+                ],
                 if (suggestions.isNotEmpty && form.selected == null) ...[
                   Text(tr(context, 'm3ChooseCustomer')),
                   for (final person in suggestions)
                     ListTile(
                       title: Text(person.name),
-                      subtitle: person.phone == null
-                          ? Text(tr(context, 'm3NoPhone'))
-                          : ContactOutputLink.phone(person.phone!),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (person.phone == null)
+                            Text(tr(context, 'm3NoPhone'))
+                          else
+                            ContactOutputLink.phone(person.phone!),
+                          Text(
+                            '${tr(context, 'm53MemberVisits')}: ${person.visits}',
+                          ),
+                          if (person.needsReview)
+                            Text(tr(context, 'm53MemberRepairRequired')),
+                        ],
+                      ),
                       onTap: form.submitting
                           ? null
                           : () {
@@ -135,8 +181,10 @@ class _CheckoutFormState extends State<_CheckoutForm> {
                     ),
                 ],
                 TextButton(
-                  onPressed: form.submitting ? null : form.newCustomer,
-                  child: Text(tr(context, 'm3CreateSeparateCustomer')),
+                  onPressed: form.submitting
+                      ? null
+                      : () => form.newCustomer(clearFields: true),
+                  child: Text(tr(context, 'm53ChangeMember')),
                 ),
               ],
               if (cart.priceChanged) Text(tr(context, 'm3PricesChanged')),
@@ -153,7 +201,8 @@ class _CheckoutFormState extends State<_CheckoutForm> {
                     form.submitting ||
                         cart.priceChanged ||
                         cart.unavailable ||
-                        form.phoneError != null
+                        form.phoneError != null ||
+                        form.nameError != null
                     ? null
                     : () async {
                         FocusScope.of(context).unfocus();

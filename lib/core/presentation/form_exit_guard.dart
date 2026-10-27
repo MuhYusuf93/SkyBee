@@ -14,10 +14,15 @@ class FormExitGuard extends StatefulWidget {
     required this.dirty,
     required this.child,
     this.busy = false,
+    this.dirtyCheck,
     this.managementProtected = true,
     this.capability = ManagementCapability.owner,
   });
   final bool dirty;
+
+  /// Autosaving forms may change before their next frame, while a lock route
+  /// already covers them. The registry reads only this current dirty boolean.
+  final bool Function()? dirtyCheck;
   final bool busy;
   final Widget child;
   final bool managementProtected;
@@ -27,6 +32,7 @@ class FormExitGuard extends StatefulWidget {
 }
 
 class _FormExitGuardState extends State<FormExitGuard> {
+  bool get _dirty => widget.dirtyCheck?.call() ?? widget.dirty;
   bool _leaving = false, _asking = false;
   NavigatorState? _registeredNavigator;
   @override
@@ -46,9 +52,9 @@ class _FormExitGuardState extends State<FormExitGuard> {
       () =>
           mounted &&
           widget.managementProtected &&
-          widget.dirty &&
+          _dirty &&
           (route?.isActive ?? false),
-      cashierDirty: () => mounted && widget.dirty && (route?.isActive ?? false),
+      cashierDirty: () => mounted && _dirty && (route?.isActive ?? false),
     );
   }
 
@@ -70,7 +76,7 @@ class _FormExitGuardState extends State<FormExitGuard> {
                 (widget.capability == ManagementCapability.inventory ||
                     session.service.role == ManagementRole.owner)));
     return PopScope(
-      canPop: !allowed || (!widget.busy && (_leaving || !widget.dirty)),
+      canPop: !allowed || (!widget.busy && (_leaving || !_dirty)),
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop || _asking || !allowed || widget.busy) return;
         _asking = true;

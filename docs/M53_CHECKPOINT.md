@@ -1,5 +1,93 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Member22 tervalidasi — commit/push lalu Csearch23
+
+DV `m53-member-dv-20261027-173807`20 PASS7:10, Poco
+`m53-member-poco-20261027-175108`20 PASS4:48. Semua642/587 hash lama sama/controlOff;
+DVawakeexact. Source485 cocok; kedua wrapper exit0 (41398/19512), freeze berakhir.
+Host20 PASS1:46 (SQL13/UI6/migration1), regresi79 PASS1:34; analyzerNoissues7,2s,
+format399/0changed/l10n845/561/245. Curated member-validation/source-sha256.json
+dan M53_MEMBER_REPORT lengkap. Source+12/schema22 belum rilis/commit saatcatatanini.
+
+Stage/audit/commit/push22 sekarang lalu implementasi Csearch/popularity23 memakai
+`build/m53/search-next-design.md` dan private SQLprobe search_query_probe.py PASS
+(bukan appacceptance). Tetap C lalu D–H sampai handoff; .skybee+12/schema14 tanpa
+update/reset/reseed. G role/warehousemetadata/allfeaturesportable masihTODO.
+
+## Member22 DV20 PASS — Poco20 dimulai
+
+`build/m53-member-dv-20261027-173807`20 PASS7:10; result PASS/controlOff/allold
+protectedhashs unchanged, awake restored/readbackexact. Source485file masihcocok.
+Wrapper DV41398 sudah exit0. Poco20 kini berjalan `build/m53/member-poco-native.txt`;
+foldernamaaktual baca build/m53-member-poco-*. FREEZE app/test/native/tools
+sampai wrapper ditutup. Host20/regresi79/analyze7,2s/format399/0/l10n845/561/245
+tetap. Source22 belumcommit, HEAD4de1442; .skybee+12/schema14 tanpa update/reset.
+
+Private rancangan tahapC berikut sudah disimpan `build/m53/search-next-design.md`:
+rank eligibility/codepriority/frequency30d, SQLderivedcache+epoch/TTL/keyset,
+Providerinvalidation no-selfcommitloop, preserveM5.2focus/scan/aliases. Belumappcode.
+Sesudah Poco20: curate/check source +docs, commit/push22 lalu Csearch23 dan D–H.
+
+## Member22 host20 +regresi79 PASS — native DV20 dimulai
+
+27Oktober: final acceptance20 PASS1:46 (SQL13/UI6/migration1), regresi79 PASS1:34.
+Analyzer Noissues7,2s; format399/0changed; l10n845/561/245. Member source485file
+frozen `build/m53/member-source-pre-native.json`, cocok sebelum launch. Kedua
+device terkonfirmasi; wrapper DV20 berjalan `build/m53/member-dv-native.txt`
+(shell session41398; analyzer sebelumnya83596 sudah selesai).
+Folder run aktual di build/m53-member-dv-*. Setelah finally/controlOff/hash/awake
+ditutup, Poco20 sourceidentik. FREEZE app/test/native/tools sampai kedua wrapper
+ditutup. Jangan ulang suite lama yang tidak terdampak.
+
+Perbaikan sesudah20host: style/unusedimport saja; sourcebehavior saat20host telah
+mencakup member_opt_in terpisah dari effective member_intent, UIpreferredchoice
+survivesreopen tanpa menebakdariCredit. Source22 belumcommit/rilis; HEAD4de1442.
+Regresi awal69PASS5FAIL tanpa completion karena plainAsync widgettearDownstall,
+interrupted exactownhostPIDs; helperdibungkusbodyfinally+pumpedcleanup. Scroll
+helper kini routecurrent+vertical programmaticbounded, bukanphysicalgesture.
+3fixturecontractphone dan1validationpriority diperbaiki; retest79PASS. Rawfailed
+logs privat lengkap. Laporan M53_MEMBER_REPORT perlu update finalhasil ini.
+Selanjutnya curate/commit/push22 → Csearch/popularity lalu D–H. .skybee+12/14tetap.
+
+## Member22 domain11 PASS — acceptance19 aktif
+
+Source+12/schema22 WIP; tender4de1442 pushed/remote verified. Domain11 PASS41s
+termasuk legacy21 invalid/dups/blank preserve-alloldcells, oldretry/payability,
+backup visits/phone forged reject, role/CAS/atomicity. Lihat M53_MEMBER_REPORT
+untuk kegagalan helper asli. Tambahan paidlegacy selection membuat SQLtarget12.
+UI6 awal3PASS3FAIL2:19: owner/newpaid/credit PASS, pending helperstale context
+dan2lazy-layout readiness. Source helper diperbaiki, target acceptance19
+(SQL12/UI6/populated14→22 +failedrollback1) `build/m53/member-acceptance-host.txt`
+sedang berjalan (session73949); baca hasil sebelum FFI runner berikutnya.
+
+Provider/CheckoutScreen/member owner list/form terhubung; FormExitGuard dirtyCheck
+reads latest RAM intent while locked, canonical saved-input key only on SQLsuccess.
+Shared Widgetfixture source kini authoritative, jangan rerun private generator
+yang hanya bootstrap. Native entry integration_test/m53_member_test.dart19grouped.
+Belum native22/finalanalyze/commit. Analyzerinitial7info/warning noerrors267,7s;
+masih perlu style cleanup, docs/matrix/gate/regresi dan backupportableactualfinalG.
+Lanjut acceptance/fix, regressiontender17+cashierlock scopes, native19DV→Poco
+wrapper+backgroundpause+hash, curate/commit/push22 lalu Csearch/D–H. .skybee+12/14tetap.
+
+## Member22 WIP — tender checkpoint4de1442 dipush
+
+27Oktober: tender21 commit/push/remote verified4de14429bb767da974473ae4f122ed2293cbecaa.
+Source22 kini menambah customers address/revision/phone_e164/region/profileVersion/
+visit_count, indeks dan trigger cache SQL, bounded migration metadata legacy.
+MemberRules/MemberService ownerCRUD+checkout lookup disalin dari private prototype,
+AppServices composition, CustomerChoice.address/CheckoutInput.memberIntent,
+cart/checkout aditif dan new-member resolution atomik. Seluruhnya WIP belum tests.
+25 pesan bilingual baru sudah digenerate; FormExitGuard dirtyCheck callback ditambah
+tetapi CheckoutProvider/Screen belum terhubung. Belum native22/build/commit.
+
+Lanjut: baca analyzeinitial; hubungkan provider/memberUI/ownerCRUD screen,
+receivables legacy archive+name/phone/frequency, backup newmetadata +shared tests
+legacy21 invalid/dups payable/newcredit validation/oldretry/CAS/role/visits/dirty
+RAM-autosave. Detail rancangan di `build/m53/member-next-design.md`. Source22
+const-for diperbaiki staticfinal; normalisasi memakai phone_region bukancurrency.
+Masih perlu raw-phone lookup untuk legacyinvalid, UI dan acceptance seluruhnya.
+Tidak ada nativejob aktif; .skybee+12/schema14 tanpa update/reset. C–H masih aktif.
+
 ## Tender21 tervalidasi — commit/push, lanjut member22
 
 Final host17 PASS1:01 +regresi26 PASS1:26 overlap. Native DV17 PASS4:37 dan

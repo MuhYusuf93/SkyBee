@@ -1,4 +1,6 @@
 import '../../../core/domain/contact_validation.dart';
+import '../../members/application/member_rules.dart';
+import '../../members/domain/member_models.dart';
 import '../domain/cash_tender.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../core/domain/app_error.dart';
@@ -27,6 +29,13 @@ final class CheckoutService {
 
   Future<String> _hash(EntityId draftId, int revision, CheckoutInput input) =>
       store.fingerprint([
+        if (input.memberIntent) ...[
+          'member-v1',
+          input.customer.id?.value,
+          input.customer.name.trim(),
+          input.customer.phone.trim(),
+          input.customer.address.trim(),
+        ],
         if (input.tenderDetails != null) ...[
           'tender-composition-v1',
           input.tenderDetails!.financialValues,
@@ -232,7 +241,30 @@ final class CheckoutService {
         await _stage('validated');
         EntityId? customerId;
         String? customerName, customerPhone;
-        if (paid.amountMinor < total.amountMinor) {
+        if (database.schemaVersion >= 22 &&
+            (paid.amountMinor < total.amountMinor || input.memberIntent)) {
+          final choice = input.customer;
+          final member = choice.id != null
+              ? await MemberRules.existingOn(
+                  dbTxn,
+                  choice.id!,
+                  requireComplete: paid.amountMinor < total.amountMinor,
+                )
+              : await MemberRules.createOn(
+                  dbTxn,
+                  CashierStore.ids.next(),
+                  MemberInput(
+                    name: choice.name,
+                    phone: choice.phone,
+                    address: choice.address,
+                  ),
+                  (await store.settings(dbTxn))['phone_region'] as String,
+                  store.clock.milliseconds,
+                );
+          customerId = member.id;
+          customerName = member.name;
+          customerPhone = member.phone;
+        } else if (paid.amountMinor < total.amountMinor) {
           customerId = input.customer.id;
           if (customerId != null) {
             final records = await dbTxn.query(
@@ -403,6 +435,13 @@ final class CheckoutService {
             'updated_at': now,
             if (database.schemaVersion >= 21)
               'tender_details_json': input.tenderDetails?.encode(),
+            if (database.schemaVersion >= 22) ...{
+              'member_intent': input.memberIntent ? 1 : 0,
+              'member_opt_in': (input.memberOptIn ?? input.memberIntent)
+                  ? 1
+                  : 0,
+              'customer_address': input.customer.address.trim(),
+            },
             if (database.schemaVersion >= 12) ...{
               'cash_input': input.cash ? 1 : 0,
               'tender_minor': input.tender?.amountMinor,

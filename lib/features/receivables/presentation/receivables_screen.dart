@@ -58,6 +58,13 @@ class _DebtList extends StatelessWidget {
                     else
                       Text(tr(context, 'm3NoPhone')),
                     Text(moneyLabel(context, customer.balance.amountMinor)),
+                    Text(
+                      '${tr(context, 'm53MemberVisits')}: ${customer.visits}',
+                    ),
+                    if (customer.needsReview)
+                      Text(tr(context, 'm53MemberRepairRequired')),
+                    if (customer.archived)
+                      Text(tr(context, 'm53ArchivedMembers')),
                   ],
                 ),
                 onTap: () async {
