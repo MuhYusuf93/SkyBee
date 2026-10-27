@@ -1,4 +1,6 @@
 import '../../cashier_lock/presentation/cashier_lock_button.dart';
+import '../../barcode/domain/barcode_camera.dart';
+import '../../barcode/presentation/barcode_scanner_screen.dart';
 import '../../cash_drawer/presentation/cash_drawer_screen.dart';
 import '../../printer/presentation/printer_settings_screen.dart';
 import '../../management/presentation/managed_text_field.dart';
@@ -481,6 +483,38 @@ class _SearchPaneState extends State<_SearchPane> {
 
   FocusNode get focus => widget.focusNode;
   String? addError;
+  Future<void> camera() async {
+    focus.unfocus();
+    final search = context.read<ProductSearchProvider>(),
+        cart = context.read<CartProvider>();
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (_) => BarcodeScannerScreen(
+          lookup: (code) async {
+            if (!mounted) return const BarcodeFeedback('m3OperationFailed');
+            final product = await search.scan(code);
+            if (product == null) {
+              return BarcodeFeedback(
+                search.error ?? 'productNotFound',
+                unknown: search.error == 'productNotFound',
+              );
+            }
+            final version = search.inputVersion;
+            final changed = await cart.add(product.id);
+            if (changed && mounted && search.clearAfter(version)) {
+              input.clear();
+              setState(() => addError = null);
+            }
+            return BarcodeFeedback(
+              changed ? 'm53CameraAdded' : cart.error ?? 'm3OperationFailed',
+              success: changed,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   Future<void> add(CashierProduct product, {int? version}) async {
     final cart = context.read<CartProvider>();
     final search = context.read<ProductSearchProvider>();
@@ -530,7 +564,12 @@ class _SearchPaneState extends State<_SearchPane> {
           decoration: InputDecoration(
             labelText: tr(context, 'searchProducts'),
             hintText: tr(context, 'nameCodeOrBarcode'),
-            prefixIcon: const Icon(Icons.search),
+            prefixIcon: IconButton(
+              key: const ValueKey('cashier-camera'),
+              tooltip: tr(context, 'm53CameraScan'),
+              onPressed: context.watch<CartProvider>().busy ? null : camera,
+              icon: const Icon(Icons.qr_code_scanner),
+            ),
             suffixIcon: IconButton(
               tooltip: tr(context, 'm3ClearSearch'),
               onPressed: () {

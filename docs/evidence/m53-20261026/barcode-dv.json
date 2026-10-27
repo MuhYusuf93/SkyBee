@@ -1,0 +1,27 @@
+{
+  "run": "m53-barcode-dv-20261028-054800",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 14,
+  "failed": 0,
+  "elapsed": "03:10",
+  "preExistingProtectedEntries": 715,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 539,
+  "sourceManifestSha256": "c10b88a5a54b2a5d89610b7b84c891848db45a7044ce1fcded99d79c758ea701",
+  "runnerLogSha256": "cd7e5d649e2a08dc693155764f4c83bb242128afdcac18ed7b2ccd0ed920c90a",
+  "beforeManifestSha256": "32c13baa27756e48ae1ba1c2a8923d7de46c53e2989109cda9c1db67e868becd",
+  "afterManifestSha256": "71fc5f290eede81369560fbcb9e5df48e1c00fde463fb0dd84ea4168cc2aa9a6",
+  "nativeBarcode": {
+    "sdk": 30,
+    "availableCameras": 0,
+    "cameraPermission": false,
+    "bundledSyntheticCode128AndEan13LeadingZerosPassed": true,
+    "physicalCameraRecognitionVerified": false
+  }
+}

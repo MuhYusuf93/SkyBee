@@ -444,3 +444,15 @@ bukan malah menutup opaque lock. Native D memeriksa kedua lifecycle tersebut.
 Retest host D sempat beradu sqlite3.dll saat invocation awal masih aktif; tidak
 menandakan izin folder rusak. Laporan lama juga perlu fixture profil baru valid:
 phone sintetis unik diperbarui tanpa menurunkan aturan member atau data legacy.
+
+120. Pastikan decoder tidak mengubah identitas kode sebelum exact lookup. ZXing
+core3.4.1 mengubah EAN13 berawalan0 menjadi UPC-A bila keduanya diminta. Hints
+menjaga13digit; pilihan12digit ditampilkan eksplisit. Fixture image native perlu
+menguji kedua format, bukan hanya Code128. API camera.any/external bukan bukti
+kamera terpasang: DV sourcekamera melaporkan0 walau memiliki featureexternal.
+
+121. Setelah ensureVisible, autofocus/resize dapat menggeser list dan meng-evict
+input pada frame berikutnya. Helper perlu memastikan target masih hit-testable
+sesudah pump secara bounded, juga sebelum tiap enterText. Dua search UI gagal
+pada penambahan tombol kamera; assertion ranking/teks tetap, retest2PASS. Jangan
+mengubah backend data untuk menyelesaikan masalah text-client pengujian.

@@ -3798,5 +3798,85 @@
   "m53CashUnclassified": "Amount without piece details",
   "@m53CashUnclassified": {
     "description": "M5.3 physical cash declarations and session accounting: m53CashUnclassified"
+  },
+  "m53CameraScan": "Scan with camera",
+  "@m53CameraScan": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraScan"
+  },
+  "m53CameraHelp": "Aim one code at the camera. Review the selected text and tap Use code. Tap Scan again for the next item, including the same code. A product barcode cannot prove that a physical item was scanned only once.",
+  "@m53CameraHelp": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraHelp"
+  },
+  "m53CameraUnavailable": "The camera is unavailable or could not open. Use manual search or an external scanner.",
+  "@m53CameraUnavailable": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraUnavailable"
+  },
+  "m53CameraInvalidCode": "The code is invalid or its format is unsupported. Use manual entry.",
+  "@m53CameraInvalidCode": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraInvalidCode"
+  },
+  "m53CameraPermissionDenied": "Camera permission has not been granted. Manual search and external scanners remain available. You can retry after allowing camera access.",
+  "@m53CameraPermissionDenied": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraPermissionDenied"
+  },
+  "m53CameraStoreChanged": "The store data was replaced. Close the scanner and reopen it from the current store.",
+  "@m53CameraStoreChanged": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraStoreChanged"
+  },
+  "m53CameraFeatureOff": "The barcode feature is disabled in store preferences. Manual entry remains available.",
+  "@m53CameraFeatureOff": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraFeatureOff"
+  },
+  "m53CameraLookupFailed": "The code could not be processed. Review the result and try scanning again.",
+  "@m53CameraLookupFailed": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraLookupFailed"
+  },
+  "m53CameraStart": "Start camera",
+  "@m53CameraStart": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraStart"
+  },
+  "m53CameraScanAgain": "Scan again",
+  "@m53CameraScanAgain": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraScanAgain"
+  },
+  "m53CameraAim": "Camera active. Aim a code at the scan area.",
+  "@m53CameraAim": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraAim"
+  },
+  "m53CameraPaused": "Scanning is paused until you start or scan again.",
+  "@m53CameraPaused": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraPaused"
+  },
+  "m53CameraSelectedCode": "Selected code",
+  "@m53CameraSelectedCode": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraSelectedCode"
+  },
+  "m53CameraUseCode": "Use code",
+  "@m53CameraUseCode": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraUseCode"
+  },
+  "m53CameraRegisterProduct": "Register product using the form",
+  "@m53CameraRegisterProduct": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraRegisterProduct"
+  },
+  "m53CameraManualFallback": "Back to manual entry / external scanner",
+  "@m53CameraManualFallback": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraManualFallback"
+  },
+  "m53CameraAdded": "One item added to the cart.",
+  "@m53CameraAdded": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraAdded"
+  },
+  "m53CameraProductOpened": "Product details opened. Stock is unchanged.",
+  "@m53CameraProductOpened": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraProductOpened"
+  },
+  "m53CameraCodeCopied": "The code was filled in the form. The product has not been saved.",
+  "@m53CameraCodeCopied": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraCodeCopied"
+  },
+  "m53CameraEquivalentCodes": "A zero-prefixed EAN-13 and UPC-A can use the same bars. Select the exact code text stored for your product; the app does not silently change it.",
+  "@m53CameraEquivalentCodes": {
+    "description": "M5.3 explicit choice for equivalent UPC-A/EAN13 bars without silent zero removal"
   }
 }

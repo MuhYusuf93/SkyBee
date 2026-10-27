@@ -10,6 +10,7 @@ import io.flutter.plugin.common.StandardMethodCodec
  * thousands of high-level HMAC calls on ARM32. No credentials are logged.
  */
 open class MainActivity : FlutterFragmentActivity() {
+    private var barcodeCamera: BarcodeCameraPlugin? = null
     companion object {
         private val nativeAvailable: Boolean by lazy {
             try {
@@ -27,6 +28,7 @@ open class MainActivity : FlutterFragmentActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         val messenger = flutterEngine.dartExecutor.binaryMessenger
+        barcodeCamera = BarcodeCameraPlugin(this, flutterEngine)
         val queue = messenger.makeBackgroundTaskQueue()
         MethodChannel(messenger, "kasir_app/pin_kdf", StandardMethodCodec.INSTANCE, queue)
             .setMethodCallHandler { call, result ->
@@ -71,5 +73,21 @@ open class MainActivity : FlutterFragmentActivity() {
                     password.fill(0)
                 }
             }
+    }
+
+    override fun onPause() {
+        barcodeCamera?.pauseAll()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        barcodeCamera?.dispose()
+        barcodeCamera = null
+        super.onDestroy()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        barcodeCamera?.permissionResult(requestCode)
     }
 }

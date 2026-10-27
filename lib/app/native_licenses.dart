@@ -16,6 +16,8 @@ void registerNativeLicenses() {
           'libtomcrypt-LICENSE.txt',
       'Google Tink 1.23.0': 'tink-LICENSE.txt',
       'Mbed TLS (native PIN PBKDF2)': 'mbedtls-LICENSE.txt',
+      'ZXing Android Embedded 4.3.0': 'barcode-embedded-LICENSE.txt',
+      'ZXing core 3.4.1': 'barcode-core-LICENSE.txt',
     }.entries) {
       yield LicenseEntryWithLineBreaks([
         entry.key,

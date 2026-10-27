@@ -88,38 +88,44 @@ void m53SearchWidgetsSuite(DatabaseFactory factory) {
     matching: find.byType(TextField),
   );
   Future<void> revealInput(WidgetTester tester) async {
-    if (input.evaluate().isEmpty) {
-      final element = find.byType(Scrollable).evaluate().firstWhere((element) {
-        final widget = element.widget as Scrollable;
-        return widget.axisDirection == AxisDirection.down &&
-            ModalRoute.of(element)?.isCurrent == true &&
-            element
-                    .findAncestorWidgetOfExactType<ConstrainedBox>()
-                    ?.constraints
-                    .maxHeight !=
-                240;
-      });
-      final position =
-          ((element as StatefulElement).state as ScrollableState).position;
-      position.jumpTo(position.minScrollExtent);
-      await tester.pump(const Duration(milliseconds: 400));
-      for (
-        var attempt = 0;
-        input.evaluate().isEmpty && attempt < 32;
-        attempt++
-      ) {
-        position.jumpTo(
-          (position.pixels + position.viewportDimension * .8).clamp(
-            position.minScrollExtent,
-            position.maxScrollExtent,
-          ),
-        );
+    for (var reveal = 0; reveal < 4; reveal++) {
+      if (input.evaluate().isEmpty) {
+        final element = find.byType(Scrollable).evaluate().firstWhere((
+          element,
+        ) {
+          final widget = element.widget as Scrollable;
+          return widget.axisDirection == AxisDirection.down &&
+              ModalRoute.of(element)?.isCurrent == true &&
+              element
+                      .findAncestorWidgetOfExactType<ConstrainedBox>()
+                      ?.constraints
+                      .maxHeight !=
+                  240;
+        });
+        final position =
+            ((element as StatefulElement).state as ScrollableState).position;
+        position.jumpTo(position.minScrollExtent);
         await tester.pump(const Duration(milliseconds: 400));
+        for (
+          var attempt = 0;
+          input.evaluate().isEmpty && attempt < 32;
+          attempt++
+        ) {
+          position.jumpTo(
+            (position.pixels + position.viewportDimension * .8).clamp(
+              position.minScrollExtent,
+              position.maxScrollExtent,
+            ),
+          );
+          await tester.pump(const Duration(milliseconds: 400));
+        }
       }
+      expectSync(input, findsOneWidget);
+      await tester.ensureVisible(input);
+      await tester.pump(const Duration(milliseconds: 400));
+      if (input.hitTestable().evaluate().isNotEmpty) return;
     }
-    expectSync(input, findsOneWidget);
-    await tester.ensureVisible(input);
-    await tester.pump(const Duration(milliseconds: 400));
+    expectSync(input.hitTestable(), findsOneWidget);
   }
 
   Future<void> tap(WidgetTester tester, Finder target) async {
@@ -235,6 +241,7 @@ void m53SearchWidgetsSuite(DatabaseFactory factory) {
             provider.results.map((p) => p.id.value).toSet().length,
             32,
           );
+          await revealInput(tester);
           await tester.enterText(input, '000040');
           await tester.pump(const Duration(milliseconds: 300));
           await drain(

@@ -3126,4 +3126,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53CashUnclassified => 'Amount without piece details';
+
+  @override
+  String get m53CameraScan => 'Scan with camera';
+
+  @override
+  String get m53CameraHelp =>
+      'Aim one code at the camera. Review the selected text and tap Use code. Tap Scan again for the next item, including the same code. A product barcode cannot prove that a physical item was scanned only once.';
+
+  @override
+  String get m53CameraUnavailable =>
+      'The camera is unavailable or could not open. Use manual search or an external scanner.';
+
+  @override
+  String get m53CameraInvalidCode =>
+      'The code is invalid or its format is unsupported. Use manual entry.';
+
+  @override
+  String get m53CameraPermissionDenied =>
+      'Camera permission has not been granted. Manual search and external scanners remain available. You can retry after allowing camera access.';
+
+  @override
+  String get m53CameraStoreChanged =>
+      'The store data was replaced. Close the scanner and reopen it from the current store.';
+
+  @override
+  String get m53CameraFeatureOff =>
+      'The barcode feature is disabled in store preferences. Manual entry remains available.';
+
+  @override
+  String get m53CameraLookupFailed =>
+      'The code could not be processed. Review the result and try scanning again.';
+
+  @override
+  String get m53CameraStart => 'Start camera';
+
+  @override
+  String get m53CameraScanAgain => 'Scan again';
+
+  @override
+  String get m53CameraAim => 'Camera active. Aim a code at the scan area.';
+
+  @override
+  String get m53CameraPaused =>
+      'Scanning is paused until you start or scan again.';
+
+  @override
+  String get m53CameraSelectedCode => 'Selected code';
+
+  @override
+  String get m53CameraUseCode => 'Use code';
+
+  @override
+  String get m53CameraRegisterProduct => 'Register product using the form';
+
+  @override
+  String get m53CameraManualFallback =>
+      'Back to manual entry / external scanner';
+
+  @override
+  String get m53CameraAdded => 'One item added to the cart.';
+
+  @override
+  String get m53CameraProductOpened =>
+      'Product details opened. Stock is unchanged.';
+
+  @override
+  String get m53CameraCodeCopied =>
+      'The code was filled in the form. The product has not been saved.';
+
+  @override
+  String get m53CameraEquivalentCodes =>
+      'A zero-prefixed EAN-13 and UPC-A can use the same bars. Select the exact code text stored for your product; the app does not silently change it.';
 }

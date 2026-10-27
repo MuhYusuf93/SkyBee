@@ -3131,4 +3131,76 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53CashUnclassified => 'Nominal tanpa rincian pecahan';
+
+  @override
+  String get m53CameraScan => 'Pindai dengan kamera';
+
+  @override
+  String get m53CameraHelp =>
+      'Arahkan satu kode ke kamera. Tinjau kode yang terpilih lalu ketuk Gunakan kode. Ketuk Pindai lagi untuk barang berikutnya, termasuk kode yang sama. Barcode produk tidak membuktikan satu pcs hanya dipindai sekali.';
+
+  @override
+  String get m53CameraUnavailable =>
+      'Kamera tidak tersedia atau tidak dapat dibuka. Gunakan pencarian manual atau scanner eksternal.';
+
+  @override
+  String get m53CameraInvalidCode =>
+      'Kode tidak valid atau format belum didukung. Gunakan input manual.';
+
+  @override
+  String get m53CameraPermissionDenied =>
+      'Izin kamera belum diberikan. Pencarian manual dan scanner eksternal tetap tersedia. Anda dapat mencoba lagi setelah mengizinkan kamera.';
+
+  @override
+  String get m53CameraStoreChanged =>
+      'Data toko telah diganti. Tutup layar scanner lalu buka kembali dari data toko saat ini.';
+
+  @override
+  String get m53CameraFeatureOff =>
+      'Fitur barcode dinonaktifkan pada preferensi toko. Input manual tetap tersedia.';
+
+  @override
+  String get m53CameraLookupFailed =>
+      'Kode belum dapat diproses. Periksa hasil lalu coba pindai lagi.';
+
+  @override
+  String get m53CameraStart => 'Mulai kamera';
+
+  @override
+  String get m53CameraScanAgain => 'Pindai lagi';
+
+  @override
+  String get m53CameraAim => 'Kamera aktif. Arahkan kode ke area pindai.';
+
+  @override
+  String get m53CameraPaused =>
+      'Pemindaian berhenti sampai Anda memulai atau memindai lagi.';
+
+  @override
+  String get m53CameraSelectedCode => 'Kode terpilih';
+
+  @override
+  String get m53CameraUseCode => 'Gunakan kode';
+
+  @override
+  String get m53CameraRegisterProduct => 'Daftarkan barang melalui formulir';
+
+  @override
+  String get m53CameraManualFallback =>
+      'Kembali ke input manual / scanner eksternal';
+
+  @override
+  String get m53CameraAdded => 'Satu pcs ditambahkan ke keranjang.';
+
+  @override
+  String get m53CameraProductOpened =>
+      'Detail barang dibuka. Stok tidak berubah.';
+
+  @override
+  String get m53CameraCodeCopied =>
+      'Kode diisi pada formulir. Barang belum disimpan.';
+
+  @override
+  String get m53CameraEquivalentCodes =>
+      'EAN-13 berawalan nol dan UPC-A dapat memakai pola garis yang sama. Pilih teks kode yang sama dengan data barang Anda; aplikasi tidak mengubah kode secara diam-diam.';
 }

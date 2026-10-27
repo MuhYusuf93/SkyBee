@@ -3798,5 +3798,85 @@
   "m53CashUnclassified": "Nominal tanpa rincian pecahan",
   "@m53CashUnclassified": {
     "description": "M5.3 physical cash declarations and session accounting: m53CashUnclassified"
+  },
+  "m53CameraScan": "Pindai dengan kamera",
+  "@m53CameraScan": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraScan"
+  },
+  "m53CameraHelp": "Arahkan satu kode ke kamera. Tinjau kode yang terpilih lalu ketuk Gunakan kode. Ketuk Pindai lagi untuk barang berikutnya, termasuk kode yang sama. Barcode produk tidak membuktikan satu pcs hanya dipindai sekali.",
+  "@m53CameraHelp": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraHelp"
+  },
+  "m53CameraUnavailable": "Kamera tidak tersedia atau tidak dapat dibuka. Gunakan pencarian manual atau scanner eksternal.",
+  "@m53CameraUnavailable": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraUnavailable"
+  },
+  "m53CameraInvalidCode": "Kode tidak valid atau format belum didukung. Gunakan input manual.",
+  "@m53CameraInvalidCode": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraInvalidCode"
+  },
+  "m53CameraPermissionDenied": "Izin kamera belum diberikan. Pencarian manual dan scanner eksternal tetap tersedia. Anda dapat mencoba lagi setelah mengizinkan kamera.",
+  "@m53CameraPermissionDenied": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraPermissionDenied"
+  },
+  "m53CameraStoreChanged": "Data toko telah diganti. Tutup layar scanner lalu buka kembali dari data toko saat ini.",
+  "@m53CameraStoreChanged": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraStoreChanged"
+  },
+  "m53CameraFeatureOff": "Fitur barcode dinonaktifkan pada preferensi toko. Input manual tetap tersedia.",
+  "@m53CameraFeatureOff": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraFeatureOff"
+  },
+  "m53CameraLookupFailed": "Kode belum dapat diproses. Periksa hasil lalu coba pindai lagi.",
+  "@m53CameraLookupFailed": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraLookupFailed"
+  },
+  "m53CameraStart": "Mulai kamera",
+  "@m53CameraStart": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraStart"
+  },
+  "m53CameraScanAgain": "Pindai lagi",
+  "@m53CameraScanAgain": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraScanAgain"
+  },
+  "m53CameraAim": "Kamera aktif. Arahkan kode ke area pindai.",
+  "@m53CameraAim": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraAim"
+  },
+  "m53CameraPaused": "Pemindaian berhenti sampai Anda memulai atau memindai lagi.",
+  "@m53CameraPaused": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraPaused"
+  },
+  "m53CameraSelectedCode": "Kode terpilih",
+  "@m53CameraSelectedCode": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraSelectedCode"
+  },
+  "m53CameraUseCode": "Gunakan kode",
+  "@m53CameraUseCode": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraUseCode"
+  },
+  "m53CameraRegisterProduct": "Daftarkan barang melalui formulir",
+  "@m53CameraRegisterProduct": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraRegisterProduct"
+  },
+  "m53CameraManualFallback": "Kembali ke input manual / scanner eksternal",
+  "@m53CameraManualFallback": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraManualFallback"
+  },
+  "m53CameraAdded": "Satu pcs ditambahkan ke keranjang.",
+  "@m53CameraAdded": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraAdded"
+  },
+  "m53CameraProductOpened": "Detail barang dibuka. Stok tidak berubah.",
+  "@m53CameraProductOpened": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraProductOpened"
+  },
+  "m53CameraCodeCopied": "Kode diisi pada formulir. Barang belum disimpan.",
+  "@m53CameraCodeCopied": {
+    "description": "M5.3 offline barcode camera and guarded intentional scan: m53CameraCodeCopied"
+  },
+  "m53CameraEquivalentCodes": "EAN-13 berawalan nol dan UPC-A dapat memakai pola garis yang sama. Pilih teks kode yang sama dengan data barang Anda; aplikasi tidak mengubah kode secara diam-diam.",
+  "@m53CameraEquivalentCodes": {
+    "description": "M5.3 explicit choice for equivalent UPC-A/EAN13 bars without silent zero removal"
   }
 }

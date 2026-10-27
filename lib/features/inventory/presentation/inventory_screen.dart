@@ -14,6 +14,8 @@ import 'promotions_screen.dart';
 import 'product_form.dart';
 import 'product_detail_screen.dart';
 import '../domain/inventory_models.dart';
+import '../../barcode/domain/barcode_camera.dart';
+import '../../barcode/presentation/barcode_scanner_screen.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key});
@@ -23,12 +25,55 @@ class InventoryScreen extends StatefulWidget {
 
 class _InventoryScreenState extends State<InventoryScreen> {
   int tab = 0;
+  Future<void> camera() async {
+    final services = context.read<AppServices>();
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (_) => BarcodeScannerScreen(
+          inventory: true,
+          lookup: (code) async {
+            final product = await services.inventory.lookupCode(code);
+            if (product == null) {
+              return const BarcodeFeedback('productNotFound', unknown: true);
+            }
+            if (!mounted) return const BarcodeFeedback('m3OperationFailed');
+            await Navigator.of(context).push<void>(
+              MaterialPageRoute(
+                builder: (_) => ProductDetailScreen(id: product.id),
+              ),
+            );
+            return const BarcodeFeedback(
+              'm53CameraProductOpened',
+              success: true,
+            );
+          },
+          registerUnknown: (code) async {
+            if (!mounted) return;
+            await Navigator.of(context).push<bool>(
+              MaterialPageRoute(
+                builder: (_) => ProductForm(initialBarcode: code),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => ManagementGate(
     capability: ManagementCapability.inventory,
     child: Scaffold(
       appBar: AppBar(
-        actions: const [LanguageButton()],
+        actions: [
+          IconButton(
+            key: const ValueKey('inventory-camera'),
+            tooltip: tr(context, 'm53CameraScan'),
+            onPressed: camera,
+            icon: const Icon(Icons.qr_code_scanner),
+          ),
+          const LanguageButton(),
+        ],
         title: Text(tr(context, 'inventory')),
       ),
       body: SafeArea(

@@ -1,0 +1,35 @@
+{
+  "combined_initial": {
+    "logSha256": "f8f632faa12ea3a9225d114822d0d1b88c7905451ef66ef18f116daf0631a418",
+    "passed": 18,
+    "failed": 2,
+    "elapsed": "00:49",
+    "scope": "Camera12 plus drawerUI6 passed; searchUI2 failed lazy reveal after autofocus/resize"
+  },
+  "search_retest": {
+    "logSha256": "36ff391fd3080a15167330ae282fc105cade5d6a5c24522480c31a07533c505c",
+    "passed": 2,
+    "failed": 0,
+    "elapsed": "00:13",
+    "scope": "Bounded reveal remains hit-testable after pump, and before entering exact code; all query/order assertions retained"
+  },
+  "analyzer": {
+    "logSha256": "00920314deb6ea6f270fb10efe9d5fdfc96ae87f4e620f981127e43810d008a2",
+    "result": "No issues found6.1s"
+  },
+  "formatter": {
+    "logSha256": "902879bc5176ad9711c045ade19d5a5978e124da514f63252cb751945dd05bc0",
+    "result": "443files/0changed"
+  },
+  "localization": {
+    "bilingualKeys": 946,
+    "staticReferences": 636,
+    "originalRequirementIds": 245
+  },
+  "scope": "Synthetic camera transport UI, actual guarded app SQL/routes; host native-adapter token codec mock. Not physical camera decode.",
+  "failuresPreserved": [
+    "Initial analyzer3 errors from awaiting void setMethodCallHandler fixed; style findings cleaned.",
+    "Initial UI0pass3fail8s; focused0pass1fail camera lazy target evicted after ensureVisible. Bounded re-reveal and actual optional-section title fixed; UI3pass19s.",
+    "Initial SQL/controller6pass1fail6s: synchronous denial escaped expectLater argument; callback matcher fixed. Combined camera12 passed."
+  ]
+}

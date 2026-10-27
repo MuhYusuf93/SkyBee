@@ -1,4 +1,6 @@
 import '../../management/domain/management_role.dart';
+import '../../barcode/domain/barcode_camera.dart';
+import '../../barcode/presentation/barcode_scanner_screen.dart';
 import 'whole_quantity_formatter.dart';
 import 'dart:convert';
 import 'package:kasir_app/l10n/localization.dart';
@@ -24,8 +26,9 @@ import '../../settings/domain/store_feature_policy.dart';
 
 /// Form expanded only as needed. Stock/value cannot be edited in master fields.
 class ProductForm extends StatefulWidget {
-  const ProductForm({super.key, this.product});
+  const ProductForm({super.key, this.product, this.initialBarcode});
   final InventoryProduct? product;
+  final String? initialBarcode;
   @override
   State<ProductForm> createState() => _ProductFormState();
 }
@@ -74,6 +77,7 @@ class _ProductFormState extends State<ProductForm> {
   @override
   void initState() {
     super.initState();
+    if (widget.product == null) barcode.text = widget.initialBarcode ?? '';
     final product = widget.product;
     if (product != null) {
       name.text = product.name;
@@ -303,6 +307,9 @@ class _ProductFormState extends State<ProductForm> {
       Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: ManagedTextField(
+          key: identical(c, barcode)
+              ? const ValueKey('product-barcode-input')
+              : null,
           controller: c,
           enabled: !busy,
           keyboardType: number ? TextInputType.number : TextInputType.text,
@@ -310,6 +317,37 @@ class _ProductFormState extends State<ProductForm> {
           decoration: InputDecoration(
             labelText: label,
             border: const OutlineInputBorder(),
+            suffixIcon: identical(c, barcode)
+                ? IconButton(
+                    key: const ValueKey('product-barcode-camera'),
+                    tooltip: tr(context, 'm53CameraScan'),
+                    onPressed: busy
+                        ? null
+                        : () async {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            await Navigator.of(context).push<void>(
+                              MaterialPageRoute(
+                                builder: (_) => BarcodeScannerScreen(
+                                  inventory: true,
+                                  lookup: (code) async {
+                                    if (!mounted) {
+                                      return const BarcodeFeedback(
+                                        'm3OperationFailed',
+                                      );
+                                    }
+                                    setState(() => barcode.text = code);
+                                    return const BarcodeFeedback(
+                                      'm53CameraCodeCopied',
+                                      success: true,
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                    icon: const Icon(Icons.qr_code_scanner),
+                  )
+                : null,
           ),
         ),
       );
@@ -554,6 +592,7 @@ class _ProductFormState extends State<ProductForm> {
         capability: ManagementCapability.inventory,
         busy: busy,
         dirty: _baseline != null && snapshot() != _baseline,
+        dirtyCheck: () => _baseline != null && snapshot() != _baseline,
         child: Scaffold(
           appBar: AppBar(
             actions: const [LanguageButton()],

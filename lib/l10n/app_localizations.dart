@@ -5653,6 +5653,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount without piece details'**
   String get m53CashUnclassified;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraScan
+  ///
+  /// In en, this message translates to:
+  /// **'Scan with camera'**
+  String get m53CameraScan;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Aim one code at the camera. Review the selected text and tap Use code. Tap Scan again for the next item, including the same code. A product barcode cannot prove that a physical item was scanned only once.'**
+  String get m53CameraHelp;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The camera is unavailable or could not open. Use manual search or an external scanner.'**
+  String get m53CameraUnavailable;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraInvalidCode
+  ///
+  /// In en, this message translates to:
+  /// **'The code is invalid or its format is unsupported. Use manual entry.'**
+  String get m53CameraInvalidCode;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraPermissionDenied
+  ///
+  /// In en, this message translates to:
+  /// **'Camera permission has not been granted. Manual search and external scanners remain available. You can retry after allowing camera access.'**
+  String get m53CameraPermissionDenied;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraStoreChanged
+  ///
+  /// In en, this message translates to:
+  /// **'The store data was replaced. Close the scanner and reopen it from the current store.'**
+  String get m53CameraStoreChanged;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraFeatureOff
+  ///
+  /// In en, this message translates to:
+  /// **'The barcode feature is disabled in store preferences. Manual entry remains available.'**
+  String get m53CameraFeatureOff;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraLookupFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The code could not be processed. Review the result and try scanning again.'**
+  String get m53CameraLookupFailed;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraStart
+  ///
+  /// In en, this message translates to:
+  /// **'Start camera'**
+  String get m53CameraStart;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraScanAgain
+  ///
+  /// In en, this message translates to:
+  /// **'Scan again'**
+  String get m53CameraScanAgain;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraAim
+  ///
+  /// In en, this message translates to:
+  /// **'Camera active. Aim a code at the scan area.'**
+  String get m53CameraAim;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraPaused
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning is paused until you start or scan again.'**
+  String get m53CameraPaused;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraSelectedCode
+  ///
+  /// In en, this message translates to:
+  /// **'Selected code'**
+  String get m53CameraSelectedCode;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraUseCode
+  ///
+  /// In en, this message translates to:
+  /// **'Use code'**
+  String get m53CameraUseCode;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraRegisterProduct
+  ///
+  /// In en, this message translates to:
+  /// **'Register product using the form'**
+  String get m53CameraRegisterProduct;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraManualFallback
+  ///
+  /// In en, this message translates to:
+  /// **'Back to manual entry / external scanner'**
+  String get m53CameraManualFallback;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraAdded
+  ///
+  /// In en, this message translates to:
+  /// **'One item added to the cart.'**
+  String get m53CameraAdded;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraProductOpened
+  ///
+  /// In en, this message translates to:
+  /// **'Product details opened. Stock is unchanged.'**
+  String get m53CameraProductOpened;
+
+  /// M5.3 offline barcode camera and guarded intentional scan: m53CameraCodeCopied
+  ///
+  /// In en, this message translates to:
+  /// **'The code was filled in the form. The product has not been saved.'**
+  String get m53CameraCodeCopied;
+
+  /// M5.3 explicit choice for equivalent UPC-A/EAN13 bars without silent zero removal
+  ///
+  /// In en, this message translates to:
+  /// **'A zero-prefixed EAN-13 and UPC-A can use the same bars. Select the exact code text stored for your product; the app does not silently change it.'**
+  String get m53CameraEquivalentCodes;
 }
 
 class _AppLocalizationsDelegate

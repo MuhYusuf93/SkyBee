@@ -1,5 +1,8 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Scanner kamera M5.3 mengikuti [kontrak kamera bersama](decisions/M53_BARCODE_CAMERA.md):
+lookup literal, konfirmasi/rearm, lifecycle/otorisasi dan pilihan EAN13/UPC eksplisit.
+
 Kas fisik M5.3 mengikuti [kontrak jurnal laci](decisions/M53_CASH_DRAWER.md):
 defaultoff, sesi/unknown opening eksplisit, tender/change atomik, provenance
 pelunasan/refund, recount/closure append-only dan audit pemilik ber-PIN baru.

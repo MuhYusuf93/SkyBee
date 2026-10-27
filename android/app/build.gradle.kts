@@ -153,4 +153,6 @@ configurations.configureEach {
 }
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    // Bundled Java decoder: offline, no Play services/model download, SDK24+.
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 }

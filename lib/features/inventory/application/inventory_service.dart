@@ -1563,6 +1563,23 @@ final class InventoryService {
     return _read((db) => _detail(db, id));
   }
 
+  /// The scanner and typed code share literal lookup. No integer conversion,
+  /// URL execution, fuzzy match or placeholder product is performed.
+  Future<InventoryProduct?> lookupCode(String value) => _read((db) async {
+    final code = value.trim();
+    if (code.isEmpty || code.length > 256) {
+      throw const AppError('m53CameraInvalidCode');
+    }
+    final rows = await db.rawQuery(
+      '''SELECT id FROM products WHERE is_deleted=0
+      AND (barcode=? OR sku=?) ORDER BY id COLLATE BINARY LIMIT 2''',
+      [code, code],
+    );
+    if (rows.isEmpty) return null;
+    if (rows.length != 1) throw const AppError('m3AmbiguousCode');
+    return _detail(db, EntityId(rows.single['id'] as String));
+  });
+
   Future<InventoryProduct> _detail(DatabaseExecutor db, EntityId id) async {
     final row = await _product(db, id, active: false);
     final zone =

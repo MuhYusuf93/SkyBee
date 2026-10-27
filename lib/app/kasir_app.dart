@@ -240,6 +240,9 @@ class _ManagementAppState extends State<_ManagementApp> {
         key: ObjectKey(services),
         providers: [
           Provider<AppServices>.value(value: services),
+          Provider<RouteObserver<ModalRoute<dynamic>>>(
+            create: (_) => RouteObserver<ModalRoute<dynamic>>(),
+          ),
           ChangeNotifierProvider(
             create: (_) => LocaleProvider(services.settings, _preferences),
           ),
@@ -260,7 +263,10 @@ class _ManagementAppState extends State<_ManagementApp> {
         child: Consumer<LocaleProvider>(
           builder: (context, preferences, _) => MaterialApp(
             navigatorKey: _navigator,
-            navigatorObservers: [context.read<CashierLockNavigator>()],
+            navigatorObservers: [
+              context.read<CashierLockNavigator>(),
+              context.read<RouteObserver<ModalRoute<dynamic>>>(),
+            ],
             locale: preferences.language == null
                 ? null
                 : Locale(preferences.language!),

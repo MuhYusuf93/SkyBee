@@ -1,5 +1,90 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## E fondasi scanner selesai sesuai scope — lanjut gudang/form/ons
+
+28 Oktober — fondasi scanner kamera source24 tervalidasi: hostkamera12 dan
+regresi drawerUI6 PASS; searchUI retest2 PASS13s. Analyzer bersih6,1s,
+format443/0/l10n946/636/245. DV14 PASS3:10/Poco14 PASS2:24,715/646hash lama
+cocok/controlOff/awakeDVexact; source539 sama. Decoder sintetis Code128/EAN13
+PASS, kameraAPI0/2 denganizinfalse; physicalcamera belum terverifikasi.
+.skybee+12/schema14 tetap tanpa update/reset. Lanjut gudang/form/ons dan
+seluruh sisa E–H. [Laporan scanner](M53_BARCODE_REPORT.md),
+[checkpoint](M53_CHECKPOINT.md).
+
+Keputusan/usage/report dan source539 checksum telah tersimpan di docs.
+Kedua wrapper native telah ditutup exit0. Tidak mengulang14kasus tanpa perubahan
+relevan. Source bisa diedit kembali sesudah normalcommit/push checkpoint kamera.
+Perencanaan detail E ada di build/m53/e-next-design.md; belum implementasi.
+Tahap berikutnya warehouse browse yang batch/keyset (expired lalu trackedempty
+lalu created desc), filter kategori/rak/supplier, tap master→filter, harga beli
+terakhir yang cocok unit/currency serta field errors/lowprice semuajalur. Tambah
+ons100g secara ADITIF tanpa mengubah CHECK migrasi committed atau memalsukan gram:
+kolom size_ons_milli pada products dan snapshot saleitems, originalpairNULL bila
+ons, metadata parse/display mengikuti locale bukan currency; portable validator
+mencakup canonicalnewpair. Jangan mengubah/mereset user .skybee14 sebelum H.
+Sesudahnya draft multiitemreceipt/opname dan supplier finance/returns/schedule;
+F/G/H tetap wajib, tidak berhenti pada fondasi scanner.
+
+## E kamera source539 dibekukan — DV14 PASS, Poco aktif
+
+D5a5fab4 tetap checkpoint selesai source24. Kamera/adapterSQL/UI source24 WIP
+belum commit. Host gabungan20kasus18PASS2FAIL49s,12kamera+6drawerUI lulus;
+2searchUI gagal lazy input client. Helper boundedreveal setelahpump dan sebelum
+enterText, tanpaubahassertquery/order; retest2 PASS13s. Analyzer final Noissues6,1s,
+format443/0changed dan l10n946/636/245. Tokenadapterqueuedframe hostjugaPASS.
+EAN13prefix0 dipertahankan, UPC12 hanyapilihaneksplisit; UIformbarcodecopy/privasi
+lulus. NativeDV14 PASS3:10;715hashprotectedlama cocok/controlOff/awakeDVexact.
+Source539match setelahDV. API SDK30/cameras0/permissionfalse, decoder gambar
+sintetis Code128/EAN13 PASS, physicalCamera=false. Tidak klaim physicalcamera.
+Poco wrapper build/m53/camera-poco-wrapper.txt shell57035 sedangberjalan. Jangan
+editsource sampaiPoco selesai/kurasi/checksum; dokumenboleh. Nativeentry mencakup
+controller6/SQL2/UI3/searchUI2/nativeBridge1. Semuanyafixturebaru numerik/background
+paused lewat auditedwrapper; .skybee+12/schema14 tanpa update/reset.
+
+SesudahPoco: baca result/runner/afterhash, kurasi barcode-poco.json memakai private
+curate_search_run.py dengan manifest build/m53/barcode-source-pre-native.json,
+verify barcode_source_snapshot.py --verify, simpanmanifestke evidence/barcode-source.
+Tambah fieldcameraAPI dari markerM53_BARCODE_NATIVE ke evidence/report (bukan
+physicalcameraPASS). Finalreport/usage/checkpoint, normalcommit/push laluE gudang
+browse/forms/ons25 danoperasidraft/finance/supplier berikut, F/G/H tetapaktif.
+Keputusan kamera docs/decisions/M53_BARCODE_CAMERA.md sudahditulis. Catatan detail
+E berikut build/m53/e-next-design.md, belumimplementasi. Archivedlookup perlu
+membedakan arsip dariunknown sebelum menawarkan pendaftaran baru saatmerapikan
+browse/forms. JanganjalankanulangsuiteD20; nativekamera14 sudah mencakup UIsearch2
+yangterdampak. Hostfailures awal tersimpan di barcode-host-validation.json.
+
+## E kamera sedang diimplementasikan — D5a5fab4 sudah push
+
+D source24 selesai host20/DV20/Poco20,693/624 hash lama cocok, source516 sama;
+commit5a5fab4727e2569862282d59fd29c9f10aa4ad02 cocok dengan origin/main.
+Sekarang kamera bersama WIP, source tetap schema24/+12, .skybee+12/14 tetap.
+Native BarcodeCameraPlugin + platform view pada Activity yang sama, bundled
+JourneyApps4.3.0/core3.4.1, izin terbatas60s, rearm eksplisit/token frame,
+pause on lifecycle/route/lock, literal lookup dan fallback. No Play services/model
+download untuk decoder. Native license assets/provenance ditambahkan. SDK proyek24,
+DV aktual30 camera.external features (belum bukti kamera fisik), Poco36.
+
+Controller awal5 PASS0s, UI3 PASS19s setelah helper boundedreveal stabil melewati
+lazy eviction/autofocus dan membuka judul bagian barcode yang benar. Native APK
+PrepareOnly PASS42,1s/package integration verified, TANPA install. Analyzer awal
+3error await void setMethodCallHandler diperbaiki, style fix berikut masih jalan.
+SQL/controller awal6PASS1FAIL6s: expectLater diberi operasi yang melempar synchronous
+sebelum Future; matcher callback diperbaiki, belum retest. Tambahan EAN/UPC penting:
+core default dapat menghapus nol EAN13 bila UPC_A diaktifkan. Decoder kini memaksa
+hasilEAN13 utuh dan UI memberi pilihan UPC12 eksplisit; synthetic native fixture
+mengecek kedua tipe. Tambahan ini BELUM final host/native. Tidak klaim physical
+camera decode. Native caller/suite integration_test/m53_barcode_test.dart, shared
+controller/SQL/UI pada test/support/m53_barcode*. Scope target12native setelah final.
+
+Aktif sekarang: stylefix build/m53/camera-style-fix.txt shell4627 (baca hasil;
+jangan edit source bersamaan), lalu host seluruh barcode/adapter token + regression
+searchUI/dirtylockedBack terarah, analyze/l10n/format dan auditednative deltaDV/Poco.
+Jangan ulang20kasusD tanpa perubahan relevan. Semua native hanya tools/test_m51_android
+wrapper dengan flagbackgroundpaused; manifest checksum baru setelah source stabil.
+Belum ada native kamera run/ordinary update. E browse/form/ons dan multiitemreceipt/
+opname/supplierfinances/schedules tetap harus diimplementasikan; catatan desain
+privat terperinci build/m53/e-next-design.md. Seluruh E–H tetap aktif sampaihandoff.
+
 ## D24 selesai — native kedua perangkat PASS, lanjut E
 
 28 Oktober 2026 — D kas fisik source24 tervalidasi: acceptance host20 PASS52s,

@@ -1,0 +1,15 @@
+{
+  "retrieved": "2026-10-28",
+  "embedded": "4.3.0",
+  "core": "3.4.1",
+  "files": {
+    "barcode-embedded-LICENSE.txt": {
+      "url": "https://raw.githubusercontent.com/journeyapps/zxing-android-embedded/v4.3.0/COPYING",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "barcode-core-LICENSE.txt": {
+      "url": "https://raw.githubusercontent.com/zxing/zxing/zxing-3.4.1/LICENSE",
+      "sha256": "3f62881f0566227a24b12e5a754cc79f39aaa94883038e95c94812e1f50af42f"
+    }
+  }
+}

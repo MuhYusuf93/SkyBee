@@ -1,5 +1,25 @@
 # Status proyek
 
+28 Oktober — fondasi scanner kamera source24 tervalidasi: hostkamera12 dan
+regresi drawerUI6 PASS; searchUI retest2 PASS13s. Analyzer bersih6,1s,
+format443/0/l10n946/636/245. DV14 PASS3:10/Poco14 PASS2:24,715/646hash lama
+cocok/controlOff/awakeDVexact; source539 sama. Decoder sintetis Code128/EAN13
+PASS, kameraAPI0/2 denganizinfalse; physicalcamera belum terverifikasi.
+.skybee+12/schema14 tetap tanpa update/reset. Lanjut gudang/form/ons dan
+seluruh sisa E–H. [Laporan scanner](M53_BARCODE_REPORT.md),
+[checkpoint](M53_CHECKPOINT.md).
+
+28 Oktober — E kamera source539 dibekukan; hostkamera12+drawerUI6 PASS,
+searchUI retest2 PASS13s; analyze bersih6,1s/format443/0/l10n946/636/245.
+DV14 PASS3:10,715hash lama cocok/controlOff/awakeexact; kameraAPI0, decoder
+sintetis PASS, bukan physicalcamera. Pocoaktif. D5a5fab4 sudahpush; .skybee+12/14
+belumupdate/reset. [Checkpoint](M53_CHECKPOINT.md); sisa E/F/G/H tetapaktif.
+
+28 Oktober — D5a5fab4 sudah push/remote cocok. Kamera E WIP pada source24:
+controller5 PASS, UI3 PASS19s, APK fixture PrepareOnly PASS42,1s tanpa install.
+Tambahan EAN/UPC pilihan eksplisit dan final host/native masih berikutnya;
+[checkpoint](M53_CHECKPOINT.md). .skybee+12/14tetap, E–H tetapaktif.
+
 28 Oktober 2026 — D kas fisik source24 tervalidasi: acceptance host20 PASS52s,
 regresi laporan/koreksi24 PASS55s, analyzer bersih6,7s, l10n926/624/245.
 DV20 PASS8:26/Poco20 PASS06:27; seluruh693/624 hash lama cocok dan

@@ -1,4 +1,6 @@
 import '../features/cashier_lock/application/cashier_lock_service.dart';
+import '../features/barcode/application/native_barcode_camera.dart';
+import '../features/barcode/domain/barcode_camera.dart';
 import '../features/cash_drawer/application/cash_drawer_service.dart';
 import '../features/members/application/member_service.dart';
 import '../features/onboarding/application/onboarding_service.dart';
@@ -38,7 +40,9 @@ final class AppServices {
     StoreClock? clock,
     StrongBiometrics? biometrics,
     PrinterOutputGate? printerGate,
-  }) : printerGate = printerGate ?? defaultPrinterOutputGate() {
+    BarcodeCamera Function()? barcodeCameraFactory,
+  }) : printerGate = printerGate ?? defaultPrinterOutputGate(),
+       barcodeCameraFactory = barcodeCameraFactory ?? NativeBarcodeCamera.new {
     management = ManagementService(
       database,
       clock ?? StoreClock(),
@@ -63,6 +67,7 @@ final class AppServices {
   }
   final DatabaseCoordinator database;
   final PrinterOutputGate printerGate;
+  final BarcodeCamera Function() barcodeCameraFactory;
   late final ManagementService management;
   late final onboarding = OnboardingService(database, management);
   late final cashierLock = CashierLockService(database, management);
