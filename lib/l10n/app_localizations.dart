@@ -6367,6 +6367,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Review count or value'**
   String get m53StocktakeReviewLine;
+
+  /// Supplier terms: Supplier payment terms
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier payment terms'**
+  String get m53SupplierTerms;
+
+  /// Supplier terms: Supplier allows payment on credit
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier allows payment on credit'**
+  String get m53SupplierAllowsCredit;
+
+  /// Supplier terms: This records the agreement at the store, not automatic supplier approval. It defaults to off. Turning it off only blocks new credit invoices; it does not erase existing debts or payments. Historical receipts are not automatically treated as paid or owed.
+  ///
+  /// In en, this message translates to:
+  /// **'This records the agreement at the store, not automatic supplier approval. It defaults to off. Turning it off only blocks new credit invoices; it does not erase existing debts or payments. Historical receipts are not automatically treated as paid or owed.'**
+  String get m53SupplierTermsHelp;
+
+  /// Supplier terms: Warehouse can view these terms. Only the owner can change them.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse can view these terms. Only the owner can change them.'**
+  String get m53SupplierTermsReadOnly;
+
+  /// Supplier terms: Supplier terms changed. Reload and review your choice before saving.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier terms changed. Reload and review your choice before saving.'**
+  String get m53SupplierTermsChanged;
+
+  /// Supplier terms: Supplier not found. Reload the supplier list.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier not found. Reload the supplier list.'**
+  String get m53SupplierMissing;
 }
 
 class _AppLocalizationsDelegate

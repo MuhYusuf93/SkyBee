@@ -3545,4 +3545,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53StocktakeReviewLine => 'Review count or value';
+
+  @override
+  String get m53SupplierTerms => 'Supplier payment terms';
+
+  @override
+  String get m53SupplierAllowsCredit => 'Supplier allows payment on credit';
+
+  @override
+  String get m53SupplierTermsHelp =>
+      'This records the agreement at the store, not automatic supplier approval. It defaults to off. Turning it off only blocks new credit invoices; it does not erase existing debts or payments. Historical receipts are not automatically treated as paid or owed.';
+
+  @override
+  String get m53SupplierTermsReadOnly =>
+      'Warehouse can view these terms. Only the owner can change them.';
+
+  @override
+  String get m53SupplierTermsChanged =>
+      'Supplier terms changed. Reload and review your choice before saving.';
+
+  @override
+  String get m53SupplierMissing =>
+      'Supplier not found. Reload the supplier list.';
 }

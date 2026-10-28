@@ -1,0 +1,42 @@
+{
+  "scope": "M5.3 E3 prerequisite supplier credit agreement; not invoice/payment implementation",
+  "sourceFiles": 598,
+  "sourceManifestSha256": "cf043be777bfe5fdcdf8bbeecaa3d381fd30e276e9e7c8b8e15628de76b740d8",
+  "finalHost": {
+    "passed": 21,
+    "failed": 0,
+    "elapsed": "00:48",
+    "supplierTermsDomain": 4,
+    "supplierTermsUi": 2,
+    "stocktakeRegression": 11,
+    "backupMetadata": 2,
+    "warehouseUi": 2
+  },
+  "analyze": "No issues found (203.4s)",
+  "format": {
+    "files": 502,
+    "changed": 0
+  },
+  "localization": {
+    "bilingualKeys": 1051,
+    "staticReferences": 716,
+    "originalRequirementIds": 245
+  },
+  "pinCrypto": "106 unchanged upstream files; identical license and pinned archive",
+  "earlierResults": "UI initial0PASS2FAIL9s and retest0PASS2FAIL1:35 waiting for unbuilt lazy controls; reveal/owner readiness fixed, UI2PASS34s then all21 reran. Initial analyzer5 style/import diagnostics fixed.",
+  "uiScope": "Synthetic ID/EN at320px/text2, locked dirty Back and role-specific read-only view; no physical OEM input claim.",
+  "migration": "Owned schema29 fixture includes supplier, received100 units and posted stocktake90; every old table/column compared after migration30; no inferred payments/debts.",
+  "logSha256": {
+    "supplier-terms-host1.txt": "ba349735b93c3aeda336a59650ac7e05e17580aa248efc4a2954329d7578b0bb",
+    "supplier-terms-ui-host1.txt": "de5b2a1b8f03df0449dc314e92b56c7f07dd8c866a96ac040bedcf31c317b025",
+    "supplier-terms-ui-host2.txt": "fdd97e427360f02f37ee2924c4437af6e45a08a6dc4b15c044667b989935c44f",
+    "supplier-terms-ui-host3.txt": "54c8e7439396a2e013726b06783d9682160c758c06153fd78183c05497c7eaa7",
+    "supplier-terms-host-final1.txt": "f46f9c66954cb7e1d0c689758e3d305254a1e004d51bed39dfd5cd8bd7d688ca",
+    "supplier-terms-analyze1.txt": "265a0f287f69b159f4d550077d3286289d51dfe4425dd2a8c25ea5b5d98f8bcd",
+    "supplier-terms-analyze2.txt": "232912acc980804f0f0b4bdf9052b9d6688377ad19134d1f81de4b6f9c842eec",
+    "supplier-terms-format-verify.txt": "4a38a179be6efe7cc5bc6e3a347de2fb5ea6f646d142964e2ec17641a2768bfd",
+    "supplier-terms-l10n-final.txt": "3b4c1a39ef387d4a8e21b3302f84118f1e171f5badf2ba0838882a859635a47b",
+    "supplier-terms-pin-final.txt": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+  },
+  "sourceManifestFile": "supplier-terms-source-initial-sha256.json"
+}

@@ -1,5 +1,11 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Prasyarat keuangan supplier E3 memakai izin tempo defaultoff dan riwayat
+perubahan aditif30, owner-only CAS dengan baca operasional Gudang. Tidak
+menginfer payment/utang dari penerimaan lama:
+[keputusan izin tempo](decisions/M53_SUPPLIER_TERMS.md). Invoice/payment/retur/
+kredit disetujui/jadwal tetap wajib sebagai pekerjaan E3 berikutnya.
+
 Opname M5.3 memakai draft/baseline/batch snapshot aditif29, NULL vs0, Undo50,
 recount eksplisit, biaya moving-average serta total pool kosong tepat. Finalisasi
 atomik menolak revisi stok/master yang berubah dan menyimpan snapshot immutable:

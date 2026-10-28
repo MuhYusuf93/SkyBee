@@ -533,3 +533,10 @@ kebetulan sudah dibangun. Pesan konflik panjang jangan menjadi subtitle kartu
 yang seluruh pusat targetnya keluar viewport320px/text2: gunakan caption ringkas
 dan penjelasan lengkap pada area halaman. Helper reveal bounded boleh kembali
 ke awal ketika reload mengubah tinggi list dan target ter-evict di ujung bawah.
+
+133. Suite widget yang mengklaim input sintetis perlu mendaftarkan
+testTextInput secara konsisten pada setiap test, seperti suite gudang lain.
+Terms Poco awal5PASS1ENoverflow148px di akhir; registrasi input sintetis dan
+assertion perlayar kemudian UI2Poco/DV6PASS tanpa perubahan runtime aplikasi.
+Pisahkan bukti harness ini dari klaim keyboard OEM/touch fisik, dan pertahankan
+log/source awal serta hash preservation tiap interval, bukan menimpa kegagalan.

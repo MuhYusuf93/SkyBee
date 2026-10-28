@@ -1,0 +1,21 @@
+{
+  "run": "m53-supplier-terms-dv-20261029-010807",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 6,
+  "failed": 0,
+  "elapsed": "03:08",
+  "preExistingProtectedEntries": 794,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 598,
+  "sourceManifestSha256": "a6f112c88e393ee1359dee5b169198e911f352d970599ae1d21d7bda2fceb8a4",
+  "runnerLogSha256": "ee823d9ffbd6a3bd649e7b1b13ddaf14d382d6b2acb0f3a8d285813d26480f7b",
+  "beforeManifestSha256": "aa0a169bd07f4bb751ae6ae9659808b2057eef4685f011a5b3d337c4a45130ec",
+  "afterManifestSha256": "f27097b0675fb6c5fdc06c206b8ea8e21e69fd6dc5a90d819197c50e81818fdf",
+  "sourceManifestFile": "supplier-terms-source-sha256.json"
+}

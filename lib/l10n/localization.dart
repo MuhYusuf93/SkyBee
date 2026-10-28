@@ -12,6 +12,12 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm53SupplierTerms' => l.m53SupplierTerms,
+    'm53SupplierAllowsCredit' => l.m53SupplierAllowsCredit,
+    'm53SupplierTermsHelp' => l.m53SupplierTermsHelp,
+    'm53SupplierTermsReadOnly' => l.m53SupplierTermsReadOnly,
+    'm53SupplierTermsChanged' => l.m53SupplierTermsChanged,
+    'm53SupplierMissing' => l.m53SupplierMissing,
     'm53StocktakeReviewLine' => l.m53StocktakeReviewLine,
     'm53Stocktakes' => l.m53Stocktakes,
     'm53Stocktake' => l.m53Stocktake,

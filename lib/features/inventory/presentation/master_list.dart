@@ -14,6 +14,7 @@ import '../domain/inventory_models.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/protected_dialog.dart';
 import 'inventory_screen.dart';
+import '../../suppliers/presentation/supplier_terms_screen.dart';
 
 typedef MasterFilter = ({MasterKind kind, String prefix, bool archived});
 
@@ -146,6 +147,19 @@ class _MasterBody extends StatelessWidget {
                       ),
                     ),
                   ],
+                  if (kind == MasterKind.supplier && record != null)
+                    TextButton(
+                      key: const ValueKey('supplier-terms-open'),
+                      onPressed: busy
+                          ? null
+                          : () => Navigator.of(routeContext).push<void>(
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    SupplierTermsScreen(id: record.id),
+                              ),
+                            ),
+                      child: Text(tr(context, 'm53SupplierTerms')),
+                    ),
                   if (error != null) Text(message(context, error!)),
                 ],
               ),

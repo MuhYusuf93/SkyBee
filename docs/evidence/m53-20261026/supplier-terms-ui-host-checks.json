@@ -1,0 +1,27 @@
+{
+  "scope": "Final supplier terms UI harness retest; application runtime unchanged",
+  "sourceFiles": 598,
+  "sourceManifestSha256": "a6f112c88e393ee1359dee5b169198e911f352d970599ae1d21d7bda2fceb8a4",
+  "changedSinceInitialSource": [
+    "test/support/m53_supplier_terms_widgets_suite.dart"
+  ],
+  "hostUiRetest": {
+    "passed": 2,
+    "failed": 0,
+    "elapsed": "00:35"
+  },
+  "analyze": "No issues found (62.6s)",
+  "format": {
+    "files": 502,
+    "changed": 0
+  },
+  "initialHost": "21PASS48s; source initial598, overlap not unique sum",
+  "native": "Initial Poco5PASS1ENUIFAIL148px; final PocoUI2PASS and DV6PASS, each separately curated with preservation evidence",
+  "limits": "Synthetic test input now registered as in other suites, plus per-screen assertions; no physical OEM IME/touch claim",
+  "logSha256": {
+    "supplier-terms-ui-host4.txt": "3ffd92df6e294eb7fb05454f85c02fc98c3df04103b1bd0a4b8426620bbf9340",
+    "supplier-terms-analyze3.txt": "3e565c065f4baedf8bf6aef82b471f686c93615d5546eb88cab363e695a1efd8",
+    "supplier-terms-ui-format-verify.txt": "49a7d3e21fd59fbd349b3d07d2713ca8cd248c0112373a64de2785f39fe868aa"
+  },
+  "sourceManifestFile": "supplier-terms-source-sha256.json"
+}

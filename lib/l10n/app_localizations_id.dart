@@ -3552,4 +3552,26 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53StocktakeReviewLine => 'Perlu tinjau hitungan atau nilai';
+
+  @override
+  String get m53SupplierTerms => 'Syarat pembayaran supplier';
+
+  @override
+  String get m53SupplierAllowsCredit => 'Supplier mengizinkan pembayaran tempo';
+
+  @override
+  String get m53SupplierTermsHelp =>
+      'Pengaturan ini mencatat kesepakatan di toko, bukan persetujuan otomatis supplier. Default nonaktif. Mematikan izin hanya menghentikan tagihan tempo baru; tidak menghapus utang atau pembayaran lama. Penerimaan lama tidak otomatis dianggap lunas ataupun berutang.';
+
+  @override
+  String get m53SupplierTermsReadOnly =>
+      'Gudang dapat melihat syarat ini. Hanya pemilik dapat mengubahnya.';
+
+  @override
+  String get m53SupplierTermsChanged =>
+      'Syarat supplier sudah berubah. Muat ulang dan tinjau pilihan sebelum menyimpan.';
+
+  @override
+  String get m53SupplierMissing =>
+      'Supplier tidak ditemukan. Muat ulang daftar supplier.';
 }

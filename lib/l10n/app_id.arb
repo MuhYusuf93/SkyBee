@@ -4274,5 +4274,29 @@
   "m53StocktakeReviewLine": "Perlu tinjau hitungan atau nilai",
   "@m53StocktakeReviewLine": {
     "description": "Stocktake message: Review count or value"
+  },
+  "m53SupplierTerms": "Syarat pembayaran supplier",
+  "@m53SupplierTerms": {
+    "description": "Supplier terms: Supplier payment terms"
+  },
+  "m53SupplierAllowsCredit": "Supplier mengizinkan pembayaran tempo",
+  "@m53SupplierAllowsCredit": {
+    "description": "Supplier terms: Supplier allows payment on credit"
+  },
+  "m53SupplierTermsHelp": "Pengaturan ini mencatat kesepakatan di toko, bukan persetujuan otomatis supplier. Default nonaktif. Mematikan izin hanya menghentikan tagihan tempo baru; tidak menghapus utang atau pembayaran lama. Penerimaan lama tidak otomatis dianggap lunas ataupun berutang.",
+  "@m53SupplierTermsHelp": {
+    "description": "Supplier terms: This records the agreement at the store, not automatic supplier approval. It defaults to off. Turning it off only blocks new credit invoices; it does not erase existing debts or payments. Historical receipts are not automatically treated as paid or owed."
+  },
+  "m53SupplierTermsReadOnly": "Gudang dapat melihat syarat ini. Hanya pemilik dapat mengubahnya.",
+  "@m53SupplierTermsReadOnly": {
+    "description": "Supplier terms: Warehouse can view these terms. Only the owner can change them."
+  },
+  "m53SupplierTermsChanged": "Syarat supplier sudah berubah. Muat ulang dan tinjau pilihan sebelum menyimpan.",
+  "@m53SupplierTermsChanged": {
+    "description": "Supplier terms: Supplier terms changed. Reload and review your choice before saving."
+  },
+  "m53SupplierMissing": "Supplier tidak ditemukan. Muat ulang daftar supplier.",
+  "@m53SupplierMissing": {
+    "description": "Supplier terms: Supplier not found. Reload the supplier list."
   }
 }

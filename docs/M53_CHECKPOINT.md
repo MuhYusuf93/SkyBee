@@ -1,5 +1,133 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Terms30 tutup — normalcommit/push lalu invoice/payment E3/F/G/H
+
+29Oktober01:15: DV m53-supplier-terms-dv-20261029-010807 exit0/6PASS3:08,
+794oldhashsama/controlOff/awake restored/readbackexact. Poco initial5PASS1UIFAIL
+1:59/716hashsama, retestUI2PASS45s/724hashsama/controlOff. Finalsource598UI
+MATCH (hanya1fixture beda dari598awal; lib/runtimeidentik), initialmanifest
+disimpan terpisah. Host21PASS48s +UI2PASS35s overlap, analyze62,6s bersih,
+format502/0/l10n1051/716/245/PIN106match. Semua native/host runner ditutup.
+Curated supplier-terms-{host-checks,ui-host-checks,poco-initial,ui-poco,dv,
+source-initial-sha256,source-sha256}.json dan laporan/keputusan sudahada.
+
+Auditstaged hanya source/tests/docs/digest, normalcommit/push/verifyremote.
+Setelahcheckpoint ini bolehedit maintainedsource; kedua manifests598 historis
+jangan direfreeze. Opnameparent92dd4b8pushed. Terms prasyarat selesai, BUKAN
+invoice/payment. Berikutnya actualreceipt-linked unique bill, atomicoptional
+receipt+invoice+ownerconfirmedinitialpayment, historicalreconciliation tanpa
+receiveulang, ownerpaymentsappendonly +authoritativecashsource sameTX. Gudang
+boleh tagihan operasional dan declaredpayment draft, tidak boleh actualpayment/
+approvedcredit/dueamendfinal/crosssuppliertotals. Baca matrix§4.1 kontrak agar
+tidak over-restrict pembuatan tagihan operasional yang memang diizinkan.
+Lalu physicalreturn/approvedcredit/schedules H-1 dan F/G/H. Rancangan privat
+supplier-next-design.md membantu; sourceinvoice belumada. .skybee belumupdate/
+reset/reseed; janganberiAPKfixture sebagaihandoffordinary.
+
+## Terms PocoUI2 PASS — DV6 penuh aktif pada source598UI
+
+29Oktober01:08: Poco retest m53-supplier-terms-ui-poco-20261029-010404 exit0,
+UI2PASS45s, semua oldprotectedhash sama/controlOff, source598UIMATCH (hanya
+1fixturebeda dari598awal, runtimeaplikasi sama). Curated supplier-terms-ui-poco.json.
+InitialPoco5PASS1ENoverflow148px tetapdicatat, datahash716sama/controlOff.
+Retest memakai registrasi input sintetis suite lain+assertionperlayar; overflow
+tidakmuncul. Ini tidak membuktikan input OEMfisik sudahterverifikasi.
+
+DV6 full dimulai RunName m53-supplier-terms-dv, entrysupplier_terms_test.dart,
+pauseBackgroundtrue, log supplier-terms-dv-wrapper.txt. Janganedit source sampai
+finally/awakeexact/oldhash tutup, verifyNEWsource598UI dancurateDV dengan
+build/m53/supplier-terms-ui-source-pre-native.json. Setelahituupdatecanonical
+source evidence keUI598, simpaninitialsource terpisah, hostlayer21+UI2/analyze62,6s,
+docs/normalcommit/push/lsremote; lanjutinvoice/payment/remainingE3/F/G/H.
+
+## Terms UI source598patch frozen — Poco UI2 retest aktif
+
+29Oktober01:04: host UI2PASS35s/analyze bersih62,6s/format502/0 sesudah hanya
+satu fixture berubah (test/support/m53_supplier_terms_widgets_suite.dart).
+Runtime produksi identik source598 awal. Manifest BARU
+build/m53/supplier-terms-ui-source-pre-native.json, script
+supplier_terms_ui_source_snapshot.py --verify MATCH598 dan exactdiff1fixture.
+Manifest awal disalin source-initial-sha256.json, janganditimpa/dihapus.
+
+Poco retest DUA bahasa bersama NameFilter 'supplier terms UI', RunName
+m53-supplier-terms-ui-poco, entrysupplier_terms_test.dart, pauseBackgroundtrue,
+shell85972/logsupplier-terms-ui-poco-wrapper.txt. Janganedit maintainedsource
+sampai finallyclose. Setelahexit curatePocoUI2 denganNEW598UI manifest, baca
+assertionperlayar bila gagal; jangan hide error. BilaPASS baru DV6full pada
+sourceUI598 yangsama, freshhash/wrapper/awakefinally. Invoice/E3/F/G/H tetapaktif.
+
+## Supplier terms native Poco5PASS1UIFAIL — semua kontrol tutup, diagnosis berjalan
+
+29Oktober01:01: run m53-supplier-terms-poco-20261029-005345 exit1,5PASS1FAIL1:59
+karena ENUI takeException akhir menemukan RenderFlexoverflow148px. Seluruh716
+oldprotectedhashsama/controlOff, curated supplier-terms-poco-initial.json dan
+manifest598 awal tetap tersimpan supplier-terms-source-sha256.json. DV30 BELUM
+dijalankan. Jangan klaim native30 finalPASS. .skybee tidakupdate/reset/reseed.
+
+Source598 freezeawal boleh dilepas karena finallytutup. Hanya test/support/
+m53_supplier_terms_widgets_suite.dart diedit: register synthetic testTextInput
+seperti suite lain (sebelumnya terlewat), tambah assertion awalKasir/afterunlock/
+afterSave/afterrolewarehouse untuk melokalisasi overflow. Belum ada perubahan
+runtime produksi dari source598 awal. HostUI2retest shell85351 log
+supplier-terms-ui-host4.txt dananalyze shell21372 log supplier-terms-analyze3.txt
+masihberjalan. Setelahexit/perbaikan, buat manifest BARU598patch dengan nama lain,
+janganoverwritefreezeawal; retest nativeUI2 Poco (dua bahasa bersama) sebelum
+DV6 full. Jika masihoverflow, assertion memberi layar asal; perbaiki runtime
+yang nyata dan hostretest relevan, janganmenekan assertion ataublindhidingIMEs.
+Stocktake29 `92dd4b8` tetappushed; terms/invoice/E3/F/G/H belumselesai.
+
+## Supplier terms30 source598 frozen — native6 Poco aktif, DV berikut
+
+29Oktober00:53: host gabungan21PASS48s (terms4/UI2/stocktake11/backupmetadata2/
+warehouseUI2), analyzer bersih203,4s, formatter502/0, l10n1051/716/245 dan
+PIN106match. Source598 frozen/verified melalui supplier_terms_source_snapshot.py,
+target build/m53/supplier-terms-source-pre-native.json. Janganedit maintained
+source hingga kedua wrapper finally selesai dan598 diverifikasi.
+
+Poco7f0edea0 native6 dimulai RunName m53-supplier-terms-poco, entry
+integration_test/m53_supplier_terms_test.dart, pausebackgroundtrue. Log
+build/m53/supplier-terms-poco-wrapper.txt. Setelahexit/finally curate_generic
+curate_search_run.py denganNEWmanifest598 ke supplier-terms-poco.json, lalu
+DV.101:5555 wrapperRunName m53-supplier-terms-dv6. Jangan barefluttertestnative.
+Curate source598/hostchecks, update docs/commit/push/remote verify sesudahnative.
+Opname92dd4b8pushed, semua oldsource588manifest tetap historis.
+
+Scope prasyarat izin tempo selesai host, bukan invoice/payment. Setelahterms
+native tutup lanjut E3 actualreceipt-linked unique invoice + owner payments/
+cash-source sameTX, historicalreconciliation, physicalreturns/approvedcredits/
+schedules H-1; F/G/H tetapaktif. .skybee tanpa update/reset/reseed selama ini.
+
+## E3 izin tempo schema30 WIP — opname `92dd4b8` pushed
+
+29Oktober00:44: HEAD92dd4b84b471e7a0324c32aa9cf9bf168cbf7d36 remote main cocok;
+workingtree awalbersih. Source588 opname29 sudah nativePoco15/DV15PASS dan semua
+kontrol ditutup. Source kini30 WIP; JANGANverify/rewrite manifest588 historis.
+
+File baru supplier_terms_schema.dart (dua tabel dan immutable history triggers),
+features/suppliers/{domain/supplier_terms,application/supplier_service,
+supplier_terms_validation,presentation/supplier_terms_screen}. AppServices.suppliers
+registry service, Schema30 additive, backup register>=30, MasterList existing
+supplier edit dialog tombol terms. Defaultabsentfalse, onlyownerwrite CAS,
+warehouse read-only, auditowner/immutable before-after, tidak ada invoice/debt
+atau payment inference dari receipt lama. UI switch/dirtyguard/generation/ownGate,
+reload saat conflict;6pesan ID/EN. Invoice/payment/credit/return/schedule BELUM
+diimplementasi; rancangan privat supplier-next-design.md menjelaskan langkahnya.
+
+Hostdomain test/m53_supplier_terms_test.dart4PASS22s pada supplier-terms-host1.txt,
+termasuk role/rollback/backup/semua kolom migrasi29. UI2 pertama gagal membaca
+finder setelahresize sebelumreveal, helperditambahreveal; retest
+supplier-terms-ui-host2.txt shell57987 masihberjalan. Analyze shell62110 log
+supplier-terms-analyze1.txt belumditutup. Native entry supplier_terms_test.dart
+6cases sudahdibuat, belumnative30. Tunggu exit host sebelum FFI lain; tangani
+analyzer/l10n/formatter+regresi beforefreeze NEWsupplier-terms manifest; native
+Poco/DV wrapperofficial freshhash. Jangan nativebare atau ordinary install.
+
+Berikutnya selesaikan terms UI/backend/metadata+native/commitcheckpoint, lalu
+invoice unik per actualreceipt, owner actualpayment, atomicreceipt+invoice dan
+historical reconciliation tanpa receiveulang, cashsource validation sameTX.
+Kemudian returphysical vs approvedcredit, schedules H-1, F/G/H. Data eksplorasi
+.skybee belumupdate/reset/reseed dan seluruhujidata hanya fixture baru.
+
 ## Opname29 tutup — normalcommit/push lalu E3/F/G/H
 
 29Oktober00:31: DV run m53-stocktake-dv-20261029-002018 exit0/15PASS7:39,

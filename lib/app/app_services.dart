@@ -32,6 +32,7 @@ import '../features/backup/application/drive_backup_service.dart';
 import '../features/alerts/application/alert_service.dart';
 import '../features/alerts/application/android_stock_notifications.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../features/suppliers/application/supplier_service.dart';
 
 /// Dependency composition only, no shared cart/catalog/report state.
 final class AppServices {
@@ -69,6 +70,7 @@ final class AppServices {
   final PrinterOutputGate printerGate;
   final BarcodeCamera Function() barcodeCameraFactory;
   late final ManagementService management;
+  late final suppliers = SupplierService(database, management);
   late final onboarding = OnboardingService(database, management);
   late final cashierLock = CashierLockService(database, management);
   late final InventoryService inventory;
