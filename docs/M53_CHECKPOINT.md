@@ -1,5 +1,26 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Baseline fungsi `89233f7` pushed — siap lanjut invoice/payment
+
+29Oktober01:20: committerms `89233f72a35c2e601739ddf8a581b0a940bdd51d` sudahpush
+normal main danls-remote cocok; opnameparent `92dd4b8` jugapushed. Workingtree
+fungsi bersih sesudahcommit, seluruh runner host/native sudah exit dan kontrol
+otomatisOff; DVawake restoredexact. Tidak ada sourceinvoice/schema31 ditulis.
+Source30/598UI adalah baseline terakhir tervalidasi, manifests lama historis.
+
+Titik lanjut konkret: baca kontrak§4.1/7.5–7.8 dan sourceSupplierService/receipt/
+drawer/backup; implement actualreceipt-linked invoices dan owner actualpayment
+serta atomic optional receipt+invoice+initial payment. Rancangan lanjutan tersimpan
+privat `build/m53/supplier-invoice-next-checkpoint.md` dan supplier-next-design.md;
+itu rancangan, bukan implementasi. RolesGudang tidak boleh dipersempit dari
+matrix: operationalinvoice boleh, actualpayment/approvedcredit/dueamendfinal/
+crosssuppliertotals tetap owner. Kasus100*10k/pay200k/sell20/pay800k wajib.
+
+Setelahitu physicalreturns vs approvedcredit, schedules H-1; F/G/H tetapwajib.
+Jangan berhenti karena terms selesai atau menyebutM5.3selesai. Kedua perangkat
+tersedia sesuai instruksi terakhir, setiapnativefreshhashofficialwrapper. Seluruh
+data eksplorasi wajibdipertahankan; ordinary/.skybee belumdiupdate/reset/reseed.
+
 ## Terms30 tutup — normalcommit/push lalu invoice/payment E3/F/G/H
 
 29Oktober01:15: DV m53-supplier-terms-dv-20261029-010807 exit0/6PASS3:08,
