@@ -1,5 +1,112 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Opname29 tutup — normalcommit/push lalu E3/F/G/H
+
+29Oktober00:31: DV run m53-stocktake-dv-20261029-002018 exit0/15PASS7:39,
+777oldprotectedhashsama/controlOff/awakeexact. Poco15PASS6:15/699hashsama/controlOff.
+Keduanya source588 MATCH, curated stocktake-{host-checks,poco,dv,source-sha256}.json
+di docs/evidence/m53-20261026. Host final34PASS46s, analyze6s bersih, format492/0,
+l10n1045/710/245, PIN106match. Tidak ada runner/native control aktif. Freeze29
+boleh dilepas SETELAH normalcommit checkpoint; manifest588 historis jangan
+ditimpa ketika E3 dimulai. .skybee tidakupdate/reset/reseed selama scope ini.
+
+Sekarang audit gitdiff/staged (hanya source/tests/docs/digest), commit normal/
+push/ls-remote. Lalu implementasi E3, mulai supplier terms defaultoff, invoice
+unik per receipt/reconciliation historical, pembayaran owner append-only dan
+source kas authoritative sameTX. Rancangan terinci privat supplier-next-design.md
+termasuk warehouse staging, atomicreceipt+invoice, returns vs approved credit,
+schedule H-1/privacy/restore. Itu design, belumimplementasi. F/G/H tetapaktif dan
+Poco/DV tersedia. Jangan memberi artifact fixture sebagai APK handoff ordinary.
+
+## Poco15 PASS — DV15 aktif, source588 tetap frozen
+
+29Oktober00:20 — Poco run m53-stocktake-poco-20261029-001023 sudah exit0,
+15PASS6:15, before/after seluruh protectedhash sama, controlOff. Curated
+docs/evidence/m53-20261026/stocktake-poco.json; source588 MATCH. DV dimulai
+tools/test_m51_android.ps1, DeviceId.101:5555, RunName m53-stocktake-dv,
+test integration_test/m53_stocktake_test.dart, pauseBackgroundtrue. Logwrapper
+build/m53/stocktake-dv-wrapper.txt; janganedit maintainedsource hingga finally.
+Setelahexit/awake exact/hash tutup, verify588 dan curate DV dengan manifest
+build/m53/stocktake-source-pre-native.json, finalreport/status/normalcommit/push
+verifyremote. Lalu E3/F/G/H; rancangan E3 tersimpan privat
+build/m53/supplier-next-design.md (bukanimplementasi). .skybee+12 tidakupdate/reset.
+
+## Source opname29 frozen588 — native Poco aktif, DV berikut
+
+29 Oktober00:10 — host stocktake-host-final4.txt34PASS46s (6file: domain11,
+UI4, hint6, receipt8, stockguard3, backupmetadata2). Analyzer final4 bersih6,0s;
+format492/0; l10n1045/710/245; PIN106match. Source588 frozen melalui
+build/m53/stocktake_source_snapshot.py, target stocktake-source-pre-native.json,
+--verify MATCH. Jangan edit source maintained sampai kedua native tutup.
+Native15 entry m53_stocktake_test.dart dimulai Poco7f0edea0 RunName
+m53-stocktake-poco; shell ID dicatat di log tool, log build/m53/stocktake-poco-wrapper.txt.
+Setelah exit/finally lihat build/m53-stocktake-poco-*/result.json, curate ke
+docs/evidence/m53-20261026/stocktake-poco.json memakai NEWmanifest588, lalu
+DV.101:5555 RunName m53-stocktake-dv dengan pause background true. Selalu
+freshprotectedhashes; tidak reset/uninstall/reseed ordinary/.skybee.
+
+Review perbaris ditambahkan, satu query indexed mendeteksi konflik untuk UI dan
+final tetap revalidasi dbTxn. UI conflictcaption pendek; testcase actualreceipt
+membuat2batch sehingga scan wajib memilih batch dan mengisi0/1 eksplisit.
+Gunakan key zero/plus berbasis observationId; jangan `.first/.last` pada child
+lazy atau menunggu scan yang belum dibangun. Helper bounded kembali0 ketika
+layout berubah dan target ter-evict di ujung daftar. Initial fail tetapbukti.
+
+Setelah native kedua selesai: verify588, curate run+hostsha, update laporan dan
+decision/SPEC/status/matriks, commit normal/push/ls-remote. LANJUT E3 supplier
+finance/returns/schedules, F/G/H sesuai kontrak aktif. Handoff M5.3 belum selesai.
+
+## Resume29Oktober00:03 — opname29 source ada, final UI/native belum tutup
+
+HEAD9c6c66a pushed. Working schema29 belum commit, source baru12file, localized
+49pesan. StocktakeValidation sudah terhubung backup. Domain11 termasuk role
+warehouse, migration seluruh tabel28, 120batch/Undo50/overflow, sale conflict,
+rollback idempotent dan exact total. UI4 ID/EN320/text2 mencakup pack24 total10000,
+past expiry/date picker, locked Back/countNULL/0/Undo/recount/final. Native entry
+integration_test/m53_stocktake_test.dart memakai EncryptedFixtureFactory dan
+background-pause guard (15test). Belum native29, belum ada manifest29 frozen.
+
+Host bukti: stocktake-host-round3.txt16PASS31s, UIhost7.txt4PASS29s, gabungan
+final1.txt32PASS1helperFAIL38s, final2.txt33PASS1fixture-roleFAIL50s; role fixed
+focused stocktake-warehouse-host.txt1PASS14s. final3.txt32PASS2UIFAIL50s: review
+konflik full message membuat kartu terlalu tinggi. Caption49 kini pendek;
+stocktake-ui-review-host.txt saat ini berjalan (shell51241), ID sudah gagal
+menunggu tombol scan lazy setelah kembali dari recount; helper baru reveal code
+sebelum menunggu ready sudah diedit, tunggu exit lama sebelum FFI retest.
+Analyzer final1 bersih153,5s; final2 hanya1style yang sudah diperbaiki.
+Final audit setelah pesan49 belum diulang (pesan48:1044/709/245, PIN106match).
+
+Langkah berikut tepat: tutup shell51241, retest UI4/atau focused2 baru lalu domain
+regresi bila ada source berubah; analyzer/format/l10n/PIN; buat manifest BARU
+stocktake-source-pre-native.json dari receipt legacy manifest576+semua Dart baru.
+Native15 Poco dulu laluDV melalui tools/test_m51_android.ps1, fresh hashes,
+background pause. Jangan edit maintainedsource selama native/freeze. Curate
+curate_search_run.py setelah finally; update laporan/keputusan/SPEC/PLAN/STATUS/
+REQUIREMENTS, normalcommit/push/verify lalu E3/F/G/H. Docs keputusan/rancangan
+opname sudah ada; dokumen lama di bawah historis. ADB23:51 Poco7f0edea0 dan
+DV.101:5555 device. .skybee belumupdate/reset/reseed. Tetap pertahankan semua data.
+
+## Opname29 sedang dikerjakan sesudah receipt `9c6c66a` pushed
+
+Resume 28 Oktober: HEAD `9c6c66a`, normal push/ls-remote sudah cocok.
+Source29 belum commit. Tambahan schema/domain/stocktake_service/posting dan
+test/support/m53_stocktake_suite.dart sudah ada. Host awal7PASS/1FAIL karena
+fixture policy revision lama; perbaikan fixture menghasilkan8PASS23s, tetapi
+invocation memuat path `test/m53_receipt_price_test.dart` yang tidak ada sehingga
+exit keseluruhan FAIL. Gunakan path yang nyata pada retest. Dart fix31 style
+di2file selesai; analyzer terakhir32issue termasuk nullable role yang sudah
+diperbaiki, belum analyze ulang. Tidak ada native29 aktif.
+
+Selanjutnya: StocktakeValidation/backup metadata + bounded streams, UI daftar/
+dokumen/batch/count/total value + localized errors, ganti tombol Count detail
+ke draft, uji host/migrasi/UI, baru manifest BARU dan native official wrapper.
+Poco `7f0edea0`/DV `192.168.0.101:5555` terdeteksi device saat resume. Semua
+manifest receipt lama historis; jangan direfreeze terhadap source29. Jangan
+reset/reseed/install ordinary sebelum H. Setelah opname selesai lanjut E3/F/G/H.
+Rancangan privat `build/m53/stocktake-next-design.md` membantu konteks, source
+lib aktual menjadi acuan. Nilai pool kosong TOTAL tepat, NULL bukan0, recount
+eksplisit menghapus count/undo lama, batch snapshot/keyset100/50 dan Undo50.
+
 ## Receipt27–28 selesai sesuai scope — lanjut stocktake29 dan E3/F/G/H
 
 28Oktober20:28 — seluruh runner ditutup. Source28 finallegacy manifest576

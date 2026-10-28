@@ -3378,4 +3378,171 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53ReceiptDraftHelp => 'Using this draft';
+
+  @override
+  String get m53Stocktakes => 'Stocktake sessions';
+
+  @override
+  String get m53Stocktake => 'Stocktake';
+
+  @override
+  String get m53StocktakeNew => 'Create stocktake draft';
+
+  @override
+  String get m53StocktakeDraft => 'Saved draft · stock unchanged';
+
+  @override
+  String get m53StocktakePosted => 'Completed stocktake · snapshot saved';
+
+  @override
+  String get m53StocktakeSystem => 'System stock at baseline';
+
+  @override
+  String get m53StocktakePhysical => 'Counted physical quantity';
+
+  @override
+  String get m53StocktakeDifference => 'Physical difference';
+
+  @override
+  String get m53StocktakeUncounted => 'Not yet counted';
+
+  @override
+  String get m53StocktakeEdit => 'Edit physical count';
+
+  @override
+  String get m53StocktakeExpiry => 'Observed expiry date';
+
+  @override
+  String get m53StocktakeZeroHelp =>
+      'Blank means not yet counted. Enter 0 only after checking that the stock is absent.';
+
+  @override
+  String get m53StocktakeScan => 'Scan +1 base unit';
+
+  @override
+  String get m53StocktakeScanAdded => 'Draft count increased by 1 base unit.';
+
+  @override
+  String get m53StocktakeInclude => 'Include without counting';
+
+  @override
+  String get m53StocktakeUndo => 'Undo last count';
+
+  @override
+  String get m53StocktakePlus => '+1 base unit';
+
+  @override
+  String get m53StocktakeMinus => '−1 base unit';
+
+  @override
+  String get m53StocktakeZero => 'Set physical count to 0';
+
+  @override
+  String get m53StocktakeReset => 'Reset to not counted';
+
+  @override
+  String get m53StocktakeHelp => 'Counting guide';
+
+  @override
+  String get m53StocktakeHelpBody =>
+      'Drafts are saved without changing stock. A barcode identifies a product type, not each unique piece: the same piece can be counted twice. Choose the physical batch when several exist. Not counted is not 0. After a sale, receipt, product or time zone change, review and recount before finalization. Differences may arise from counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft.';
+
+  @override
+  String get m53StocktakeBatchHelp =>
+      'Choose the correct batch using physical evidence. Quantities here are in base units. Found units retain the observed expiry date, including past dates; costing remains the product moving average.';
+
+  @override
+  String get m53StocktakeBatches => 'Batch observations';
+
+  @override
+  String get m53StocktakeBatchChoice =>
+      'Several batches exist. Choose the physical batch for +1; this scan has not increased the count.';
+
+  @override
+  String get m53StocktakeNewBatch => 'Add a found physical batch';
+
+  @override
+  String get m53StocktakeRecount => 'Capture new baseline and recount';
+
+  @override
+  String get m53StocktakeRecountHelp =>
+      'This product’s counts, entered value and undo will be cleared. Stock and batch baselines will be captured again from current data. Count the physical stock again. Stock is unchanged.';
+
+  @override
+  String get m53StocktakeRemove => 'Remove product from this draft';
+
+  @override
+  String get m53StocktakeValue => 'Total value of all found stock';
+
+  @override
+  String get m53StocktakeValueHelp =>
+      'System stock started at 0, so no previous average exists. Enter the TOTAL value for the full counted quantity, not a price per piece or pack. Blank means unknown and is allowed only when purchase cost is optional. Zero requires free-cost confirmation. Review the value again if the count changes. This is not a new purchase or supplier debt.';
+
+  @override
+  String get m53StocktakeValueDifference => 'Estimated value difference';
+
+  @override
+  String get m53StocktakeFinalize => 'Review and finalize stocktake';
+
+  @override
+  String get m53StocktakeFinalizeHelp =>
+      'Check every product’s baseline, physical count and difference. Stock, batches, value and history update atomically only if the baseline still matches. Results and reason become permanent snapshots. A shortage is not evidence of theft.';
+
+  @override
+  String get m53StocktakeCancel => 'Cancel stocktake draft';
+
+  @override
+  String get m53StocktakeCancelHelp =>
+      'Keep the session as cancelled. Stock is unchanged and previous input remains in the cancelled draft.';
+
+  @override
+  String get m53StocktakeEmpty =>
+      'No products yet. Scan a code or include a product without entering a count.';
+
+  @override
+  String get m53StocktakeRegister =>
+      'Product is not registered. Register it with initial stock 0, then include it in the draft and count its physical stock.';
+
+  @override
+  String get m53StocktakeChanged =>
+      'The stocktake draft or page changed. Reload and review your input before retrying.';
+
+  @override
+  String get m53StocktakeConflict =>
+      'Stock, product, batches or time zone changed since the baseline. Open the affected product, capture a new baseline and recount. Old input stays saved until you choose to recount.';
+
+  @override
+  String get m53StocktakeIncomplete =>
+      'Explicitly count every batch before finalizing. Not counted is not 0.';
+
+  @override
+  String get m53StocktakeLineLimit =>
+      'A draft supports up to 100 products. Continue remaining products in another session.';
+
+  @override
+  String get m53StocktakeUntracked =>
+      'This product is untracked; sentinel 999 is not physical stock. Use the tracking activation flow if needed.';
+
+  @override
+  String get m53StocktakeFrozenBatch =>
+      'A baseline batch date cannot be changed by a count. Add a found physical batch if its date differs.';
+
+  @override
+  String get m53StocktakeNothingUndo =>
+      'No count can be undone. Up to the last 50 count changes are retained.';
+
+  @override
+  String get m53StocktakeValueRequired =>
+      'Enter the total value of found stock because purchase cost is enabled.';
+
+  @override
+  String get m53StocktakeValueReview =>
+      'The physical quantity changed after valuation. Review and save the total value for the current count.';
+
+  @override
+  String get m53StocktakeValueScope =>
+      'This total value applies only when system stock started at 0, every batch is counted and physical quantity is positive.';
+
+  @override
+  String get m53StocktakeReviewLine => 'Review count or value';
 }

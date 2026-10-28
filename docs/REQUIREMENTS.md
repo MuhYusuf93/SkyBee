@@ -1,5 +1,16 @@
 # Matriks persyaratan
 
+29 Oktober00:10 — E opname29 host34PASS46s dan analyzer bersih; draft/baseline/
+batch/Undo/recount/immutablefinal/backup serta UI ID/EN sudah diuji di host.
+Source588 frozen, native15 Poco aktif/DV berikut; belum native acceptance29.
+E3 supplier, laporan F, keselamatan G serta handoff H tetap aktif.
+
+28 Oktober — E opname schema29 WIP: delapan uji domain host PASS setelah
+fixture revision diperbaiki; invocation juga memiliki path test salah (FAIL).
+Belum acceptance UI/backup/native29. Receipt27–28 sudah pushed `9c6c66a`.
+Poco dan DV tersedia; data Paket Eksplorasi Mandiri wajib baseline protected
+baru tanpa reset/reseed. E3/F/G/H tetap aktif sampai handoff M5.3.
+
 28Oktober18:40 — Poco tersedia kembali sesuai pengguna; ADBdevice/model cocok.
 Penundaan historis di bawah berakhir. Delta berikut memakai baseline protected
 baru, tidak mengembalikan data pribadi ke snapshot/seed lama. Receipt27 host23/
@@ -26,10 +37,10 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir schema20:21kasus+API1 native22 per DV/Poco PASS (M53_CASHIER_LOCK_REPORT), defaultoff tanpa grant Kelola |
 | M53-C | Pencarian/popularitas, uang cepat, member/piutang | Tender21 host/native17 per perangkat PASS. Member22 host20/regresi79/native20 per perangkat PASS. Search23 host51 (17search)/M52focus1/native13 per DV/Poco PASS;680/611hash lama cocok. Lihat M53_TENDER_REPORT, M53_MEMBER_REPORT, M53_SEARCH_REPORT |
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
-| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Kamera/ons/browse sebelumnya PASS; physical decode belumverified. Receipt27–28 host71/focused5/legacy14 PASS(overlap), nativeDV23/Poco21PASS2UIFAIL awal lalu focused5+legacy1 PASS perperangkat, oldhashsama/controlOff/awakeexact. Lihat M53_RECEIPT_DOCUMENT_REPORT untuklayeredsource/fail/retest. Opname29 dan keuangan/retur/jadwal supplier masihTODO; seluruhE–Haktif |
+| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Kamera/ons/browse/receipt27–28 sudah checkpoint sesuai laporan. Opname29 host34PASS46s, nativePoco15PASS6:15/DV15PASS7:39/source588match,699/777oldhashsama/controlOff/awakeDVexact; lihat M53_STOCKTAKE_REPORT. Physicalcamera belumverified. E3 keuangan/retur/jadwal supplier masihTODO; F/G/H tetapaktif |
 | M53-F | Label/struk wajib dan laporan/ekspor baru | TODO |
 | M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |
-| M53-H | Build/push/update eksplorasi in-place dan preservasi | Build debug native M5.3 hanya package integration. Build ordinary/release/handoff M5.3 belum; .skybee+12 tidakupdate/reset/reseed, baselineSchema14 historis. Poco tersedia kembali; H installtetapbelum karenaE/F/Gbelumselesai. Artifact ordinary lama bukan bukti handoff source28 |
+| M53-H | Build/push/update eksplorasi in-place dan preservasi | Build debug native M5.3 hanya package integration. Build ordinary/release/handoff M5.3 belum; .skybee+12 tidakupdate/reset/reseed, baselineSchema14 historis. Poco tersedia kembali; H installtetapbelum karenaE/F/Gbelumselesai. Artifact ordinary lama bukan bukti handoff source29 |
 
 Koreksi P25-01 tanggal25Oktober: default6 profil tanpa marker versi harus efektif3 setelah buka ulang. Nilai lama lainnya serta semua pilihan manual tersimpan versi baru tetap; job historis tidak diubah. Kebijakan ini menggantikan frasa bottom lama tetap di histori berikut. Pemeriksaan/handoff+12 selesai; host44/native1 dan profil aktual cold restart PASS.
 

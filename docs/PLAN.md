@@ -1,5 +1,18 @@
 # Rencana milestone
 
+29 Oktober00:31 — opname29 selesai sesuai scope E2, host34/Poco15/DV15PASS;
+source588 sama/hashlama699/777sama/controlOff/awakeexact. Tutup normalcommit/push
+dan lanjut E3 invoice/payment, retur/credit serta jadwal supplier, kemudian F/G/H.
+
+29 Oktober00:10 — opname29 source588 frozen. Host final34PASS46s/analyze6s bersih,
+format492/0/l10n1045/710/245/PIN106match. Native15 Poco aktif, laluDV. Tutup
+hash/finally/manifest, curate bukti dan commit/push sebelum E3/F/G/H berikutnya.
+
+28 Oktober — receipt27–28 `9c6c66a` sudah push. Opname schema29 WIP:
+fondasi draft/baseline/count/undo/posting8 host PASS, invocation keseluruhan
+masih FAIL karena tambahan path test salah. Berikutnya backup validation,
+antarmuka terlindungi, regresi dan native terisolasi DV/Poco, lalu E3/F/G/H.
+
 28Oktober20:28 — receipt28 selesai scope: host71/focused5/legacy14 PASS,
 nativeinitialDV23/Poco21PASS2UIFAIL lalu focused5+legacy1 PASS perperangkat.
 Seluruholdhash sama/controlOff/awakeexact; sourcefinal576verified. Normalcommit/

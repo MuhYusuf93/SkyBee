@@ -92,6 +92,19 @@ final class PurchaseCostHints {
     if (initial.isNotEmpty) {
       return from(initial.single, PurchaseHintSource.reference);
     }
+    // A physical count/reconciliation can establish a known pool without a
+    // purchase receipt. It is only a labelled reference, never an actual last
+    // purchase or a rounded per-piece guess. An empty pool cannot suggest0.
+    if (product['stock_tracking_enabled'] != 0 &&
+        product['cost_complete'] != 0 &&
+        (product['stock_quantity'] as int) > 0) {
+      return PurchaseCostHint(
+        source: PurchaseHintSource.reference,
+        currency: currency,
+        quantityBase: product['stock_quantity'] as int,
+        totalCostMicros: product['inventory_value_micros'] as int,
+      );
+    }
     return PurchaseCostHint(
       source: PurchaseHintSource.unknown,
       currency: currency,

@@ -23,8 +23,11 @@ import '../domain/change_record.dart';
 import '../../settings/application/settings_service.dart';
 import '../../settings/domain/store_feature_policy.dart';
 import '../domain/receipt_draft.dart';
+import '../domain/stocktake_draft.dart';
 
 part 'receipt_draft_service.dart';
+part 'stocktake_service.dart';
+part 'stocktake_posting.dart';
 
 /// Protected master/stock use cases. Every write runs in one dbTxn and checks
 /// access at execution AND before commit. Screen state has no SQL/valuation.
@@ -95,14 +98,20 @@ final class InventoryService {
 
   static const _ids = IdGenerator();
   Future<T> _write<T>(
-    Future<T> Function(Transaction dbTxn) operation,
-  ) => database.transaction((dbTxn) async {
+    Future<T> Function(Transaction dbTxn) operation, {
+    bool inventoryChanged = true,
+  }) => database.transaction((dbTxn) async {
     await access.authorize(dbTxn, capability: ManagementCapability.inventory);
     final result = await operation(dbTxn);
     await access.authorize(dbTxn, capability: ManagementCapability.inventory);
     access.touch();
     return result;
-  }, inventoryChanged: true);
+  }, inventoryChanged: inventoryChanged);
+
+  /// Durable input does not invalidate underlying catalogue pages after every
+  /// scan. Actual finalization still emits the single inventory-change event.
+  Future<T> _draftWrite<T>(Future<T> Function(Transaction dbTxn) operation) =>
+      _write(operation, inventoryChanged: false);
   String? _optional(String? value) =>
       value == null || value.trim().isEmpty ? null : value.trim();
 

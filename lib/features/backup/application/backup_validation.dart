@@ -18,6 +18,7 @@ import '../../cashier/domain/cash_tender.dart';
 import '../../cashier/domain/tender_draft.dart';
 import '../../cashier/domain/quantity_promotion.dart';
 import '../../inventory/application/receipt_draft_validation.dart';
+import '../../inventory/application/stocktake_validation.dart';
 
 /// Archive authentication is necessary but not a substitute for supported
 /// business metadata. Scan bounded rows, preserving all accepted legacy values.
@@ -44,6 +45,7 @@ final class BackupValidation {
     if (schema >= 23) await _productSearch(db);
     if (schema >= 24) await CashDrawerValidation.validate(db);
     if (schema >= 27) await ReceiptDraftValidation.validate(db);
+    if (schema >= 29) await StocktakeValidation.validate(db);
     if (schema >= 26 &&
         (await db.rawQuery('''SELECT 1 FROM products p
       LEFT JOIN suppliers s ON s.id=p.master_supplier_id

@@ -3385,4 +3385,171 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53ReceiptDraftHelp => 'Cara memakai draft';
+
+  @override
+  String get m53Stocktakes => 'Sesi stok opname';
+
+  @override
+  String get m53Stocktake => 'Stok opname';
+
+  @override
+  String get m53StocktakeNew => 'Buat draft opname';
+
+  @override
+  String get m53StocktakeDraft => 'Draft tersimpan · stok belum berubah';
+
+  @override
+  String get m53StocktakePosted => 'Opname selesai · snapshot tersimpan';
+
+  @override
+  String get m53StocktakeSystem => 'Stok sistem saat baseline';
+
+  @override
+  String get m53StocktakePhysical => 'Jumlah fisik terhitung';
+
+  @override
+  String get m53StocktakeDifference => 'Selisih fisik';
+
+  @override
+  String get m53StocktakeUncounted => 'Belum dihitung';
+
+  @override
+  String get m53StocktakeEdit => 'Ubah hitungan fisik';
+
+  @override
+  String get m53StocktakeExpiry => 'Tanggal kedaluwarsa fisik';
+
+  @override
+  String get m53StocktakeZeroHelp =>
+      'Kosong berarti belum dihitung. Isi 0 hanya jika Anda sudah memeriksa dan barang benar-benar tidak ada.';
+
+  @override
+  String get m53StocktakeScan => 'Scan +1 unit dasar';
+
+  @override
+  String get m53StocktakeScanAdded => 'Hitungan draft bertambah 1 unit dasar.';
+
+  @override
+  String get m53StocktakeInclude => 'Tambahkan untuk dihitung';
+
+  @override
+  String get m53StocktakeUndo => 'Urungkan hitungan terakhir';
+
+  @override
+  String get m53StocktakePlus => '+1 unit dasar';
+
+  @override
+  String get m53StocktakeMinus => '−1 unit dasar';
+
+  @override
+  String get m53StocktakeZero => 'Tetapkan fisik 0';
+
+  @override
+  String get m53StocktakeReset => 'Kembali belum dihitung';
+
+  @override
+  String get m53StocktakeHelp => 'Panduan penghitungan';
+
+  @override
+  String get m53StocktakeHelpBody =>
+      'Draft tersimpan tanpa mengubah stok. Barcode mengenali jenis barang, bukan tiap pcs unik: barang yang sama dapat terhitung dua kali. Pilih batch fisik bila ada beberapa batch. Belum dihitung bukan 0. Jika terjadi penjualan, penerimaan, perubahan barang atau zona waktu setelah baseline, tinjau dan hitung ulang sebelum finalisasi. Selisih dapat berasal dari salah hitung, transaksi belum dicatat, kerusakan atau sebab lain; bukan bukti pencurian.';
+
+  @override
+  String get m53StocktakeBatchHelp =>
+      'Pilih batch yang benar dari catatan fisik. Jumlah di sini sudah dalam unit dasar. Tambahan fisik mempertahankan tanggal kedaluwarsa yang diamati, termasuk yang sudah lewat; metode biaya tetap rata-rata produk.';
+
+  @override
+  String get m53StocktakeBatches => 'Hitungan per batch';
+
+  @override
+  String get m53StocktakeBatchChoice =>
+      'Ada beberapa batch. Pilih batch fisik untuk +1; scan ini belum menambah hitungan.';
+
+  @override
+  String get m53StocktakeNewBatch => 'Tambah batch fisik yang ditemukan';
+
+  @override
+  String get m53StocktakeRecount => 'Ambil baseline baru dan hitung ulang';
+
+  @override
+  String get m53StocktakeRecountHelp =>
+      'Hitungan, nilai input dan undo barang ini akan dikosongkan. Baseline stok serta batch diambil ulang dari kondisi saat ini. Anda harus menghitung fisik lagi. Stok belum diubah.';
+
+  @override
+  String get m53StocktakeRemove => 'Hapus barang dari draft ini';
+
+  @override
+  String get m53StocktakeValue => 'Total nilai seluruh fisik yang ditemukan';
+
+  @override
+  String get m53StocktakeValueHelp =>
+      'Stok sistem awal 0 sehingga belum ada biaya rata-rata. Isi TOTAL nilai untuk seluruh jumlah terhitung, bukan harga per pcs atau per kemasan. Kosong berarti belum diketahui dan hanya diizinkan jika biaya pembelian opsional. Angka 0 memerlukan konfirmasi gratis. Jika hitungan berubah, tinjau nilai lagi. Ini bukan pembelian baru atau utang supplier.';
+
+  @override
+  String get m53StocktakeValueDifference => 'Estimasi selisih nilai';
+
+  @override
+  String get m53StocktakeFinalize => 'Tinjau dan finalisasi opname';
+
+  @override
+  String get m53StocktakeFinalizeHelp =>
+      'Periksa baseline, hasil fisik dan selisih setiap barang. Semua stok, batch, nilai serta history akan diperbarui atomik hanya jika baseline masih cocok. Snapshot hasil dan alasan disimpan permanen. Kekurangan bukan bukti pencurian.';
+
+  @override
+  String get m53StocktakeCancel => 'Batalkan draft opname';
+
+  @override
+  String get m53StocktakeCancelHelp =>
+      'Simpan sesi sebagai batal. Stok tidak berubah dan hitungan lama tetap menjadi catatan draft batal.';
+
+  @override
+  String get m53StocktakeEmpty =>
+      'Belum ada barang. Scan kode atau tambahkan barang tanpa mengisi hitungan.';
+
+  @override
+  String get m53StocktakeRegister =>
+      'Barang belum terdaftar. Daftarkan dengan stok awal 0, lalu tambahkan ke draft dan hitung fisiknya.';
+
+  @override
+  String get m53StocktakeChanged =>
+      'Draft atau halaman opname berubah. Muat ulang dan tinjau input sebelum mencoba lagi.';
+
+  @override
+  String get m53StocktakeConflict =>
+      'Stok, barang, batch atau zona waktu berubah sejak baseline. Buka barang yang konflik, ambil baseline baru dan hitung ulang. Input lama tetap tersimpan sampai Anda memilih hitung ulang.';
+
+  @override
+  String get m53StocktakeIncomplete =>
+      'Hitung semua batch secara eksplisit sebelum finalisasi. Belum dihitung bukan 0.';
+
+  @override
+  String get m53StocktakeLineLimit =>
+      'Maksimum 100 barang per draft. Lanjutkan barang berikutnya dalam sesi lain.';
+
+  @override
+  String get m53StocktakeUntracked =>
+      'Barang ini tidak dilacak; sentinel 999 bukan stok fisik. Gunakan alur resmi pengaktifan tracking bila diperlukan.';
+
+  @override
+  String get m53StocktakeFrozenBatch =>
+      'Tanggal batch baseline tidak dapat diubah melalui hitungan. Tambahkan batch fisik baru jika berbeda.';
+
+  @override
+  String get m53StocktakeNothingUndo =>
+      'Tidak ada hitungan yang dapat diurungkan. Maksimum 50 perubahan hitungan terakhir disimpan.';
+
+  @override
+  String get m53StocktakeValueRequired =>
+      'Isi total nilai fisik yang ditemukan karena biaya pembelian diaktifkan.';
+
+  @override
+  String get m53StocktakeValueReview =>
+      'Jumlah fisik berubah sejak nilai diisi. Tinjau dan simpan ulang total nilai untuk hitungan saat ini.';
+
+  @override
+  String get m53StocktakeValueScope =>
+      'Total nilai ini hanya untuk stok sistem awal 0 dengan semua batch sudah dihitung dan hasil fisik positif.';
+
+  @override
+  String get m53StocktakeReviewLine => 'Perlu tinjau hitungan atau nilai';
 }

@@ -4078,5 +4078,201 @@
   "m53ReceiptDraftHelp": "Using this draft",
   "@m53ReceiptDraftHelp": {
     "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftHelp"
+  },
+  "m53Stocktakes": "Stocktake sessions",
+  "m53Stocktake": "Stocktake",
+  "m53StocktakeNew": "Create stocktake draft",
+  "m53StocktakeDraft": "Saved draft · stock unchanged",
+  "m53StocktakePosted": "Completed stocktake · snapshot saved",
+  "m53StocktakeSystem": "System stock at baseline",
+  "m53StocktakePhysical": "Counted physical quantity",
+  "m53StocktakeDifference": "Physical difference",
+  "m53StocktakeUncounted": "Not yet counted",
+  "m53StocktakeEdit": "Edit physical count",
+  "m53StocktakeExpiry": "Observed expiry date",
+  "m53StocktakeZeroHelp": "Blank means not yet counted. Enter 0 only after checking that the stock is absent.",
+  "m53StocktakeScan": "Scan +1 base unit",
+  "m53StocktakeScanAdded": "Draft count increased by 1 base unit.",
+  "m53StocktakeInclude": "Include without counting",
+  "m53StocktakeUndo": "Undo last count",
+  "m53StocktakePlus": "+1 base unit",
+  "m53StocktakeMinus": "−1 base unit",
+  "m53StocktakeZero": "Set physical count to 0",
+  "m53StocktakeReset": "Reset to not counted",
+  "m53StocktakeHelp": "Counting guide",
+  "m53StocktakeHelpBody": "Drafts are saved without changing stock. A barcode identifies a product type, not each unique piece: the same piece can be counted twice. Choose the physical batch when several exist. Not counted is not 0. After a sale, receipt, product or time zone change, review and recount before finalization. Differences may arise from counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft.",
+  "m53StocktakeBatchHelp": "Choose the correct batch using physical evidence. Quantities here are in base units. Found units retain the observed expiry date, including past dates; costing remains the product moving average.",
+  "m53StocktakeBatches": "Batch observations",
+  "m53StocktakeBatchChoice": "Several batches exist. Choose the physical batch for +1; this scan has not increased the count.",
+  "m53StocktakeNewBatch": "Add a found physical batch",
+  "m53StocktakeRecount": "Capture new baseline and recount",
+  "m53StocktakeRecountHelp": "This product’s counts, entered value and undo will be cleared. Stock and batch baselines will be captured again from current data. Count the physical stock again. Stock is unchanged.",
+  "m53StocktakeRemove": "Remove product from this draft",
+  "m53StocktakeValue": "Total value of all found stock",
+  "m53StocktakeValueHelp": "System stock started at 0, so no previous average exists. Enter the TOTAL value for the full counted quantity, not a price per piece or pack. Blank means unknown and is allowed only when purchase cost is optional. Zero requires free-cost confirmation. Review the value again if the count changes. This is not a new purchase or supplier debt.",
+  "m53StocktakeValueDifference": "Estimated value difference",
+  "m53StocktakeFinalize": "Review and finalize stocktake",
+  "m53StocktakeFinalizeHelp": "Check every product’s baseline, physical count and difference. Stock, batches, value and history update atomically only if the baseline still matches. Results and reason become permanent snapshots. A shortage is not evidence of theft.",
+  "m53StocktakeCancel": "Cancel stocktake draft",
+  "m53StocktakeCancelHelp": "Keep the session as cancelled. Stock is unchanged and previous input remains in the cancelled draft.",
+  "m53StocktakeEmpty": "No products yet. Scan a code or include a product without entering a count.",
+  "m53StocktakeRegister": "Product is not registered. Register it with initial stock 0, then include it in the draft and count its physical stock.",
+  "m53StocktakeChanged": "The stocktake draft or page changed. Reload and review your input before retrying.",
+  "m53StocktakeConflict": "Stock, product, batches or time zone changed since the baseline. Open the affected product, capture a new baseline and recount. Old input stays saved until you choose to recount.",
+  "m53StocktakeIncomplete": "Explicitly count every batch before finalizing. Not counted is not 0.",
+  "m53StocktakeLineLimit": "A draft supports up to 100 products. Continue remaining products in another session.",
+  "m53StocktakeUntracked": "This product is untracked; sentinel 999 is not physical stock. Use the tracking activation flow if needed.",
+  "m53StocktakeFrozenBatch": "A baseline batch date cannot be changed by a count. Add a found physical batch if its date differs.",
+  "m53StocktakeNothingUndo": "No count can be undone. Up to the last 50 count changes are retained.",
+  "m53StocktakeValueRequired": "Enter the total value of found stock because purchase cost is enabled.",
+  "m53StocktakeValueReview": "The physical quantity changed after valuation. Review and save the total value for the current count.",
+  "m53StocktakeValueScope": "This total value applies only when system stock started at 0, every batch is counted and physical quantity is positive.",
+  "@m53Stocktakes": {
+    "description": "Stocktake message: Stocktake sessions"
+  },
+  "@m53Stocktake": {
+    "description": "Stocktake message: Stocktake"
+  },
+  "@m53StocktakeNew": {
+    "description": "Stocktake message: Create stocktake draft"
+  },
+  "@m53StocktakeDraft": {
+    "description": "Stocktake message: Saved draft · stock unchanged"
+  },
+  "@m53StocktakePosted": {
+    "description": "Stocktake message: Completed stocktake · snapshot saved"
+  },
+  "@m53StocktakeSystem": {
+    "description": "Stocktake message: System stock at baseline"
+  },
+  "@m53StocktakePhysical": {
+    "description": "Stocktake message: Counted physical quantity"
+  },
+  "@m53StocktakeDifference": {
+    "description": "Stocktake message: Physical difference"
+  },
+  "@m53StocktakeUncounted": {
+    "description": "Stocktake message: Not yet counted"
+  },
+  "@m53StocktakeEdit": {
+    "description": "Stocktake message: Edit physical count"
+  },
+  "@m53StocktakeExpiry": {
+    "description": "Stocktake message: Observed expiry date"
+  },
+  "@m53StocktakeZeroHelp": {
+    "description": "Stocktake message: Blank means not yet counted. Enter 0 only after checking that the stock is absent."
+  },
+  "@m53StocktakeScan": {
+    "description": "Stocktake message: Scan +1 base unit"
+  },
+  "@m53StocktakeScanAdded": {
+    "description": "Stocktake message: Draft count increased by 1 base unit."
+  },
+  "@m53StocktakeInclude": {
+    "description": "Stocktake message: Include without counting"
+  },
+  "@m53StocktakeUndo": {
+    "description": "Stocktake message: Undo last count"
+  },
+  "@m53StocktakePlus": {
+    "description": "Stocktake message: +1 base unit"
+  },
+  "@m53StocktakeMinus": {
+    "description": "Stocktake message: −1 base unit"
+  },
+  "@m53StocktakeZero": {
+    "description": "Stocktake message: Set physical count to 0"
+  },
+  "@m53StocktakeReset": {
+    "description": "Stocktake message: Reset to not counted"
+  },
+  "@m53StocktakeHelp": {
+    "description": "Stocktake message: Counting guide"
+  },
+  "@m53StocktakeHelpBody": {
+    "description": "Stocktake message: Drafts are saved without changing stock. A barcode identifies a product type, not each unique piece: the same piece can be counted twice. Choose the physical batch when several exist. Not counted is not 0. After a sale, receipt, product or time zone change, review and recount before finalization. Differences may arise from counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft."
+  },
+  "@m53StocktakeBatchHelp": {
+    "description": "Stocktake message: Choose the correct batch using physical evidence. Quantities here are in base units. Found units retain the observed expiry date, including past dates; costing remains the product moving average."
+  },
+  "@m53StocktakeBatches": {
+    "description": "Stocktake message: Batch observations"
+  },
+  "@m53StocktakeBatchChoice": {
+    "description": "Stocktake message: Several batches exist. Choose the physical batch for +1; this scan has not increased the count."
+  },
+  "@m53StocktakeNewBatch": {
+    "description": "Stocktake message: Add a found physical batch"
+  },
+  "@m53StocktakeRecount": {
+    "description": "Stocktake message: Capture new baseline and recount"
+  },
+  "@m53StocktakeRecountHelp": {
+    "description": "Stocktake message: This product’s counts, entered value and undo will be cleared. Stock and batch baselines will be captured again from current data. Count the physical stock again. Stock is unchanged."
+  },
+  "@m53StocktakeRemove": {
+    "description": "Stocktake message: Remove product from this draft"
+  },
+  "@m53StocktakeValue": {
+    "description": "Stocktake message: Total value of all found stock"
+  },
+  "@m53StocktakeValueHelp": {
+    "description": "Stocktake message: System stock started at 0, so no previous average exists. Enter the TOTAL value for the full counted quantity, not a price per piece or pack. Blank means unknown and is allowed only when purchase cost is optional. Zero requires free-cost confirmation. Review the value again if the count changes. This is not a new purchase or supplier debt."
+  },
+  "@m53StocktakeValueDifference": {
+    "description": "Stocktake message: Estimated value difference"
+  },
+  "@m53StocktakeFinalize": {
+    "description": "Stocktake message: Review and finalize stocktake"
+  },
+  "@m53StocktakeFinalizeHelp": {
+    "description": "Stocktake message: Check every product’s baseline, physical count and difference. Stock, batches, value and history update atomically only if the baseline still matches. Results and reason become permanent snapshots. A shortage is not evidence of theft."
+  },
+  "@m53StocktakeCancel": {
+    "description": "Stocktake message: Cancel stocktake draft"
+  },
+  "@m53StocktakeCancelHelp": {
+    "description": "Stocktake message: Keep the session as cancelled. Stock is unchanged and previous input remains in the cancelled draft."
+  },
+  "@m53StocktakeEmpty": {
+    "description": "Stocktake message: No products yet. Scan a code or include a product without entering a count."
+  },
+  "@m53StocktakeRegister": {
+    "description": "Stocktake message: Product is not registered. Register it with initial stock 0, then include it in the draft and count its physical stock."
+  },
+  "@m53StocktakeChanged": {
+    "description": "Stocktake message: The stocktake draft or page changed. Reload and review your input before retrying."
+  },
+  "@m53StocktakeConflict": {
+    "description": "Stocktake message: Stock, product, batches or time zone changed since the baseline. Open the affected product, capture a new baseline and recount. Old input stays saved until you choose to recount."
+  },
+  "@m53StocktakeIncomplete": {
+    "description": "Stocktake message: Explicitly count every batch before finalizing. Not counted is not 0."
+  },
+  "@m53StocktakeLineLimit": {
+    "description": "Stocktake message: A draft supports up to 100 products. Continue remaining products in another session."
+  },
+  "@m53StocktakeUntracked": {
+    "description": "Stocktake message: This product is untracked; sentinel 999 is not physical stock. Use the tracking activation flow if needed."
+  },
+  "@m53StocktakeFrozenBatch": {
+    "description": "Stocktake message: A baseline batch date cannot be changed by a count. Add a found physical batch if its date differs."
+  },
+  "@m53StocktakeNothingUndo": {
+    "description": "Stocktake message: No count can be undone. Up to the last 50 count changes are retained."
+  },
+  "@m53StocktakeValueRequired": {
+    "description": "Stocktake message: Enter the total value of found stock because purchase cost is enabled."
+  },
+  "@m53StocktakeValueReview": {
+    "description": "Stocktake message: The physical quantity changed after valuation. Review and save the total value for the current count."
+  },
+  "@m53StocktakeValueScope": {
+    "description": "Stocktake message: This total value applies only when system stock started at 0, every batch is counted and physical quantity is positive."
+  },
+  "m53StocktakeReviewLine": "Review count or value",
+  "@m53StocktakeReviewLine": {
+    "description": "Stocktake message: Review count or value"
   }
 }

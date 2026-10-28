@@ -1,0 +1,20 @@
+{
+  "run": "m53-stocktake-poco-20261029-001023",
+  "device": "7f0edea0",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 15,
+  "failed": 0,
+  "elapsed": "06:15",
+  "preExistingProtectedEntries": 699,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "not applied",
+  "sourceFiles": 588,
+  "sourceManifestSha256": "59f34f4769622708f2c1066adfcdfe135dd88a4fe204e97c3f727925418215ab",
+  "runnerLogSha256": "0e4ddb8f71701f9b9a699abb74fa058ca31f263ca2a64249a6d031dfed675acf",
+  "beforeManifestSha256": "a000f4359f8c1881867efe1cf3abaec0443c479b30c4d6201e66cf8f4837493a",
+  "afterManifestSha256": "3e5f8dea5fcc6f4056289981c734d5b5fba2e17a41460ba88641b8c146439f3e"
+}

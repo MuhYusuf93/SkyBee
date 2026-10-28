@@ -1,0 +1,56 @@
+{
+  "scope": "M5.3 E2 stocktake schema29 and receiving/backup regressions",
+  "sourceFiles": 588,
+  "sourceManifestSha256": "59f34f4769622708f2c1066adfcdfe135dd88a4fe204e97c3f727925418215ab",
+  "finalHost": {
+    "passed": 34,
+    "failed": 0,
+    "elapsed": "00:46",
+    "domainStocktake": 11,
+    "uiStocktake": 4,
+    "purchaseHints": 6,
+    "receiptDocuments": 8,
+    "receiptStockGuards": 3,
+    "backupMetadata": 2
+  },
+  "analyze": "No issues found (6.0s)",
+  "format": {
+    "files": 492,
+    "changed": 0
+  },
+  "localization": {
+    "bilingualKeys": 1045,
+    "staticReferences": 710,
+    "originalRequirementIds": 245
+  },
+  "pinCrypto": "106 unchanged upstream files; identical license and pinned archive",
+  "earlierResults": "Retained digests include fixture revision/role failures, missing test path, UI helper failures and tall conflict-card layout failure. Final34 reran all six files. Layered earlier counts are not added as unique tests.",
+  "uiScope": "Synthetic widget input at320px/text2 in ID/EN, including locked Back, recount after actual receipt, explicit two-batch choice, past expiry and exact pack total. Not physical camera/OEM IME/touch evidence.",
+  "dataScope": "Host fixtures are newly owned paths. Native protection is reported separately after wrapper finally.",
+  "logSha256": {
+    "stocktake-host-initial.txt": "c6a2e9bd37bbd682298accfe310503e644179fcba058581168ceacf7a7e37849",
+    "stocktake-host-round2.txt": "a052be849db80c2d94919467f732db77ff70506dfee5ce1826f22a3fa6d3563c",
+    "stocktake-host-round3.txt": "8f787b8b283267245cb53eb04c17536175a88ee614275b3ce59c413209b767ef",
+    "stocktake-ui-host1.txt": "0b032462b3f1b9ff65fa17cd6be05317cf6617dc1833bbff4abe89015c6a1040",
+    "stocktake-ui-host2.txt": "38b12460a874291fccad655fdf489df182da6c6378701a83761e2f01e322fcb3",
+    "stocktake-ui-host3.txt": "941167d29ca8940f3e4cb628f6f9ec1b9a6e6daa2088ece6c4edde8f96219bc1",
+    "stocktake-ui-host4.txt": "4aeeb61f6c3f70b204b3bb14f465200bd1331545aa69f04c7828dc9b47e40323",
+    "stocktake-ui-host5.txt": "12385b421daef7106e13b934dc694940978f3fa9150ae5655f2ceb3262d7764e",
+    "stocktake-ui-host6.txt": "fd4d18984c66985ca1499c34d65ba259611faabd4f59c883baadbae793b92624",
+    "stocktake-ui-host7.txt": "3c49b64fdfa10966b19a430f035988e9e0d18bf0b701a63460831d391a8ad181",
+    "stocktake-host-final1.txt": "772d793b833360d4258b23e7edc38b7b67163d5e479db03e9b424667b6bbace8",
+    "stocktake-host-final2.txt": "4efcddb58bc77963662dfdc796d7b2d591eff39f340c9872074326437c7ce1f7",
+    "stocktake-warehouse-host.txt": "6f95c0ac7fb7837cedba0ae4428525403a8c206e818646f0e3a033d78d9fe2fe",
+    "stocktake-host-final3.txt": "9ecbfe7b24ae2f3571946231a95288cb5e5c019bc6705606deefcc03a8c33607",
+    "stocktake-ui-review-host.txt": "1415aced0f656f7895fa45dd703314daf02e2cef953e8587a7f2466af9dbed73",
+    "stocktake-ui-review-retest.txt": "19749f14c0caa2c43dd211508b74e9b33eee128bc58d9d0c51130f6ebb9034c6",
+    "stocktake-ui-review-diagnostic.txt": "35ac90a6727aa55ffd36c024d317ade86ea6ce2c05e8f6ffe827cbbd0b6f561d",
+    "stocktake-ui-review-final.txt": "10b93cda3f70bdf35cf9ee26421585f58a3d64e23a96dde87eba7c30eb244141",
+    "stocktake-ui-review-final2.txt": "eccf2dbc2e8600c71c0206e23bde0fd660973fb09df2a10f48c28f592d2ff357",
+    "stocktake-host-final4.txt": "21d5556b1d1b399c025d0fffb5dc740b041f85341dc075b2dce3fa4c76ee62eb",
+    "stocktake-analyze-final4.txt": "024acbf6f1e54ad601c0158f6a911fc5f8ffd4ed6340197cc58b59b5a54a85d9",
+    "stocktake-format-verify.txt": "b073e91e4b47c106b7fa4722099e308e06e1f91269126bc883ab70848be93af5",
+    "stocktake-l10n-final2.txt": "a9de3d7a4b347767de8cf335bd0ef9ca5089ecc3b4e4a6a4e08db13d987ab6cd",
+    "stocktake-pin-final2.txt": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+  }
+}

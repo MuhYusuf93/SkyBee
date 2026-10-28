@@ -1,5 +1,6 @@
 import '../../management/domain/management_role.dart';
 import 'whole_quantity_formatter.dart';
+import 'stocktake_screen.dart';
 import 'package:kasir_app/l10n/localized_notice.dart';
 import '../../../core/money/money_field.dart';
 import 'package:kasir_app/features/settings/presentation/language_button.dart';
@@ -385,7 +386,10 @@ class _DetailBody extends StatelessWidget {
                       OutlinedButton(
                         onPressed: state.busy || !product.stockTracked
                             ? null
-                            : () => _operation(context, state, 'count'),
+                            : () async {
+                                await openProductStocktake(context, product.id);
+                                await state.load();
+                              },
                         child: Text(tr(context, 'stockCount')),
                       ),
                       OutlinedButton(

@@ -513,3 +513,23 @@ stok saat migrasi. Receipt28 menguji sale nyata, retry dan kolom lama8tabel.
 Untuk harga latest legacy ambigu, jangan keluarkan kandidat ambigu dari urutan:
 itu malah mempromosikan harga known lama. Pertahankan sumber terbaru dengan
 unknown/itempackNULL; directlink baru tetaptepat dan hint tidakmenulis history.
+
+130. Pada draft opname, jangan mengisi NULL dengan saldo sistem atau0. Capture
+seluruh batch secara chunked tanpa cap total yang memotong fisik; count/Undo
+memakai BigInt sebelum SQL SUM. Penambahan fisik tidak boleh menaikkan fakta
+received_quantity pembelian lama: buat batch adjustment terpisah, pertahankan
+expiry nyata termasuk lampau dan gunakan moving-average pool produk. Total
+manual pool awal0 harus terikat count, bukan pembulatan harga perpack/pcs.
+
+131. Finder `.first.evaluate()` melempar bila parent lazy hilang selama menunggu.
+Periksa finder dasar sebelum `.first`, reveal ulang dan verifikasi tombol aktif
+di tiap iterasi bounded. Indikator busy yang tidak dibangun di luar viewport
+bukan bukti writer selesai. Assertion NULL vs0 tetap harus memeriksa DTO/DB nyata.
+
+132. Actualreceipt di tengah pengujian opname menambah batch. Sesudah recount,
+scan produk harus meminta pilihan batch, bukan melanjutkan asumsi satu target.
+Pilih tombol berbasis observationId; `.last` pada child lazy hanya memilih yang
+kebetulan sudah dibangun. Pesan konflik panjang jangan menjadi subtitle kartu
+yang seluruh pusat targetnya keluar viewport320px/text2: gunakan caption ringkas
+dan penjelasan lengkap pada area halaman. Helper reveal bounded boleh kembali
+ke awal ketika reload mengubah tinggi list dan target ter-evict di ujung bawah.

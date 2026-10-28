@@ -1,5 +1,11 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Opname M5.3 memakai draft/baseline/batch snapshot aditif29, NULL vs0, Undo50,
+recount eksplisit, biaya moving-average serta total pool kosong tepat. Finalisasi
+atomik menolak revisi stok/master yang berubah dan menyimpan snapshot immutable:
+[keputusan opname](decisions/M53_STOCKTAKE.md). Barang temuan bukan pembelian
+atau utang supplier; laporan selisih konsolidasi mengikuti F.
+
 Draft penerimaan banyak barang M5.3 memakai persistensi aditif27–28, scan1unit dasar,
 baseline/CAS, satu writer atomic dan direct receipt item provenance. Reversal
 seluruh dokumen memerlukan tinjauan semua baris dan dependency check:

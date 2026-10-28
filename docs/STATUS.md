@@ -1,5 +1,41 @@
 # Status proyek
 
+29 Oktober00:31 — opname29 selesai scope E2: host34PASS46s, Poco15PASS6:15 /
+DV15PASS7:39;699/777protectedhashlama sama/controlOff/awakeDVexact. Source588
+verified, analyze6s bersih/format492/0/l10n1045/710/245/PIN106match. Semua runner
+ditutup; normalcommit/push lalu E3 supplier/F/G/H. .skybee belumupdate/reset/reseed.
+[Laporan](M53_STOCKTAKE_REPORT.md), [checkpoint](M53_CHECKPOINT.md).
+
+29 Oktober00:20 — native opname Poco15PASS6:15, seluruh hash file lama yang
+dilindungi identik dan kontrol otomatis sudah berhenti. Source588 MATCH.
+DV15 kini dimulai; host34PASS/analyze bersih tetap. Tidak ada update/reset/reseed
+.skybee. [Bukti Poco](evidence/m53-20261026/stocktake-poco.json),
+[checkpoint](M53_CHECKPOINT.md); E3/F/G/H tetap aktif.
+
+29 Oktober00:10 — opname29 host final34PASS46s, analyzer bersih6,0s, formatter
+492/0, l10n1045/710/245 dan PIN106match. Source588 frozen/verified. Native15
+Poco aktif melalui wrapper resmi, DV berikut; belum acceptance/native akhir.
+.skybee belumupdate/reset/reseed. [Checkpoint](M53_CHECKPOINT.md),
+[laporan opname](M53_STOCKTAKE_REPORT.md); E3/F/G/H tetap aktif.
+
+29 Oktober00:03 — opname29 source/UI/backup sudah ditulis. Host domain10+hint6
+PASS31s; UI4PASS29s sebelum tambahan review konflik. Regresi33 awal32PASS1
+helperFAIL; sesudah itu34=33PASS1fixture warehouseFAIL, fixture role eksplisit
+sudah focused1PASS14s. Review perbaris kini ikut uji sale/restock/conflict;
+regresi terbaru32PASS2UIFAIL karena kartu pesan panjang, lalu uji UI mencapai
+recount namun menunggu scan lazy yang belum dibangun. Caption sudah dipendekkan,
+helper diungkap ulang; retest belum selesai. Jangan klaim native/acceptance29.
+Poco/DV tersedia, belum ada native29/ordinary update/reset/reseed. HEAD9c6c66a.
+[Checkpoint](M53_CHECKPOINT.md), [laporan opname](M53_STOCKTAKE_REPORT.md).
+
+28 Oktober — receipt27–28 sudah commit/push `9c6c66a` dan remote cocok.
+Opname schema29 sedang dikerjakan; host awal7PASS/1FAIL fixture revisi policy,
+sesudah perbaikan8PASS tetapi invocation juga memuat satu path test yang tidak
+ada sehingga exit keseluruhan FAIL. Belum native/antarmuka/validasi backup29.
+Poco `7f0edea0` dan DV `.101:5555` terdeteksi device; pengujian berikut wajib
+fresh baseline protected. Tidak ada update/reset/reseed `.skybee` pada langkah ini.
+Lanjut [checkpoint](M53_CHECKPOINT.md) hingga E3/F/G/H; M5.3 belum selesai.
+
 28Oktober20:28 — receipt27–28 tervalidasi: host71+focused5+legacy14 PASS
 (overlap), finalanalyze68,7s bersih/format480/0/l10n996/669/245/PIN106match.
 Native docDV23PASS/Poco21PASS2UIFAIL lalu guard/UI5 PASSperperangkat, legacySQL1

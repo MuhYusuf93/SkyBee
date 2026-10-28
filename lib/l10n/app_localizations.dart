@@ -6073,6 +6073,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Using this draft'**
   String get m53ReceiptDraftHelp;
+
+  /// Stocktake message: Stocktake sessions
+  ///
+  /// In en, this message translates to:
+  /// **'Stocktake sessions'**
+  String get m53Stocktakes;
+
+  /// Stocktake message: Stocktake
+  ///
+  /// In en, this message translates to:
+  /// **'Stocktake'**
+  String get m53Stocktake;
+
+  /// Stocktake message: Create stocktake draft
+  ///
+  /// In en, this message translates to:
+  /// **'Create stocktake draft'**
+  String get m53StocktakeNew;
+
+  /// Stocktake message: Saved draft · stock unchanged
+  ///
+  /// In en, this message translates to:
+  /// **'Saved draft · stock unchanged'**
+  String get m53StocktakeDraft;
+
+  /// Stocktake message: Completed stocktake · snapshot saved
+  ///
+  /// In en, this message translates to:
+  /// **'Completed stocktake · snapshot saved'**
+  String get m53StocktakePosted;
+
+  /// Stocktake message: System stock at baseline
+  ///
+  /// In en, this message translates to:
+  /// **'System stock at baseline'**
+  String get m53StocktakeSystem;
+
+  /// Stocktake message: Counted physical quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Counted physical quantity'**
+  String get m53StocktakePhysical;
+
+  /// Stocktake message: Physical difference
+  ///
+  /// In en, this message translates to:
+  /// **'Physical difference'**
+  String get m53StocktakeDifference;
+
+  /// Stocktake message: Not yet counted
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet counted'**
+  String get m53StocktakeUncounted;
+
+  /// Stocktake message: Edit physical count
+  ///
+  /// In en, this message translates to:
+  /// **'Edit physical count'**
+  String get m53StocktakeEdit;
+
+  /// Stocktake message: Observed expiry date
+  ///
+  /// In en, this message translates to:
+  /// **'Observed expiry date'**
+  String get m53StocktakeExpiry;
+
+  /// Stocktake message: Blank means not yet counted. Enter 0 only after checking that the stock is absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Blank means not yet counted. Enter 0 only after checking that the stock is absent.'**
+  String get m53StocktakeZeroHelp;
+
+  /// Stocktake message: Scan +1 base unit
+  ///
+  /// In en, this message translates to:
+  /// **'Scan +1 base unit'**
+  String get m53StocktakeScan;
+
+  /// Stocktake message: Draft count increased by 1 base unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft count increased by 1 base unit.'**
+  String get m53StocktakeScanAdded;
+
+  /// Stocktake message: Include without counting
+  ///
+  /// In en, this message translates to:
+  /// **'Include without counting'**
+  String get m53StocktakeInclude;
+
+  /// Stocktake message: Undo last count
+  ///
+  /// In en, this message translates to:
+  /// **'Undo last count'**
+  String get m53StocktakeUndo;
+
+  /// Stocktake message: +1 base unit
+  ///
+  /// In en, this message translates to:
+  /// **'+1 base unit'**
+  String get m53StocktakePlus;
+
+  /// Stocktake message: −1 base unit
+  ///
+  /// In en, this message translates to:
+  /// **'−1 base unit'**
+  String get m53StocktakeMinus;
+
+  /// Stocktake message: Set physical count to 0
+  ///
+  /// In en, this message translates to:
+  /// **'Set physical count to 0'**
+  String get m53StocktakeZero;
+
+  /// Stocktake message: Reset to not counted
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to not counted'**
+  String get m53StocktakeReset;
+
+  /// Stocktake message: Counting guide
+  ///
+  /// In en, this message translates to:
+  /// **'Counting guide'**
+  String get m53StocktakeHelp;
+
+  /// Stocktake message: Drafts are saved without changing stock. A barcode identifies a product type, not each unique piece: the same piece can be counted twice. Choose the physical batch when several exist. Not counted is not 0. After a sale, receipt, product or time zone change, review and recount before finalization. Differences may arise from counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft.
+  ///
+  /// In en, this message translates to:
+  /// **'Drafts are saved without changing stock. A barcode identifies a product type, not each unique piece: the same piece can be counted twice. Choose the physical batch when several exist. Not counted is not 0. After a sale, receipt, product or time zone change, review and recount before finalization. Differences may arise from counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft.'**
+  String get m53StocktakeHelpBody;
+
+  /// Stocktake message: Choose the correct batch using physical evidence. Quantities here are in base units. Found units retain the observed expiry date, including past dates; costing remains the product moving average.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the correct batch using physical evidence. Quantities here are in base units. Found units retain the observed expiry date, including past dates; costing remains the product moving average.'**
+  String get m53StocktakeBatchHelp;
+
+  /// Stocktake message: Batch observations
+  ///
+  /// In en, this message translates to:
+  /// **'Batch observations'**
+  String get m53StocktakeBatches;
+
+  /// Stocktake message: Several batches exist. Choose the physical batch for +1; this scan has not increased the count.
+  ///
+  /// In en, this message translates to:
+  /// **'Several batches exist. Choose the physical batch for +1; this scan has not increased the count.'**
+  String get m53StocktakeBatchChoice;
+
+  /// Stocktake message: Add a found physical batch
+  ///
+  /// In en, this message translates to:
+  /// **'Add a found physical batch'**
+  String get m53StocktakeNewBatch;
+
+  /// Stocktake message: Capture new baseline and recount
+  ///
+  /// In en, this message translates to:
+  /// **'Capture new baseline and recount'**
+  String get m53StocktakeRecount;
+
+  /// Stocktake message: This product’s counts, entered value and undo will be cleared. Stock and batch baselines will be captured again from current data. Count the physical stock again. Stock is unchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'This product’s counts, entered value and undo will be cleared. Stock and batch baselines will be captured again from current data. Count the physical stock again. Stock is unchanged.'**
+  String get m53StocktakeRecountHelp;
+
+  /// Stocktake message: Remove product from this draft
+  ///
+  /// In en, this message translates to:
+  /// **'Remove product from this draft'**
+  String get m53StocktakeRemove;
+
+  /// Stocktake message: Total value of all found stock
+  ///
+  /// In en, this message translates to:
+  /// **'Total value of all found stock'**
+  String get m53StocktakeValue;
+
+  /// Stocktake message: System stock started at 0, so no previous average exists. Enter the TOTAL value for the full counted quantity, not a price per piece or pack. Blank means unknown and is allowed only when purchase cost is optional. Zero requires free-cost confirmation. Review the value again if the count changes. This is not a new purchase or supplier debt.
+  ///
+  /// In en, this message translates to:
+  /// **'System stock started at 0, so no previous average exists. Enter the TOTAL value for the full counted quantity, not a price per piece or pack. Blank means unknown and is allowed only when purchase cost is optional. Zero requires free-cost confirmation. Review the value again if the count changes. This is not a new purchase or supplier debt.'**
+  String get m53StocktakeValueHelp;
+
+  /// Stocktake message: Estimated value difference
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated value difference'**
+  String get m53StocktakeValueDifference;
+
+  /// Stocktake message: Review and finalize stocktake
+  ///
+  /// In en, this message translates to:
+  /// **'Review and finalize stocktake'**
+  String get m53StocktakeFinalize;
+
+  /// Stocktake message: Check every product’s baseline, physical count and difference. Stock, batches, value and history update atomically only if the baseline still matches. Results and reason become permanent snapshots. A shortage is not evidence of theft.
+  ///
+  /// In en, this message translates to:
+  /// **'Check every product’s baseline, physical count and difference. Stock, batches, value and history update atomically only if the baseline still matches. Results and reason become permanent snapshots. A shortage is not evidence of theft.'**
+  String get m53StocktakeFinalizeHelp;
+
+  /// Stocktake message: Cancel stocktake draft
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel stocktake draft'**
+  String get m53StocktakeCancel;
+
+  /// Stocktake message: Keep the session as cancelled. Stock is unchanged and previous input remains in the cancelled draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the session as cancelled. Stock is unchanged and previous input remains in the cancelled draft.'**
+  String get m53StocktakeCancelHelp;
+
+  /// Stocktake message: No products yet. Scan a code or include a product without entering a count.
+  ///
+  /// In en, this message translates to:
+  /// **'No products yet. Scan a code or include a product without entering a count.'**
+  String get m53StocktakeEmpty;
+
+  /// Stocktake message: Product is not registered. Register it with initial stock 0, then include it in the draft and count its physical stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Product is not registered. Register it with initial stock 0, then include it in the draft and count its physical stock.'**
+  String get m53StocktakeRegister;
+
+  /// Stocktake message: The stocktake draft or page changed. Reload and review your input before retrying.
+  ///
+  /// In en, this message translates to:
+  /// **'The stocktake draft or page changed. Reload and review your input before retrying.'**
+  String get m53StocktakeChanged;
+
+  /// Stocktake message: Stock, product, batches or time zone changed since the baseline. Open the affected product, capture a new baseline and recount. Old input stays saved until you choose to recount.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock, product, batches or time zone changed since the baseline. Open the affected product, capture a new baseline and recount. Old input stays saved until you choose to recount.'**
+  String get m53StocktakeConflict;
+
+  /// Stocktake message: Explicitly count every batch before finalizing. Not counted is not 0.
+  ///
+  /// In en, this message translates to:
+  /// **'Explicitly count every batch before finalizing. Not counted is not 0.'**
+  String get m53StocktakeIncomplete;
+
+  /// Stocktake message: A draft supports up to 100 products. Continue remaining products in another session.
+  ///
+  /// In en, this message translates to:
+  /// **'A draft supports up to 100 products. Continue remaining products in another session.'**
+  String get m53StocktakeLineLimit;
+
+  /// Stocktake message: This product is untracked; sentinel 999 is not physical stock. Use the tracking activation flow if needed.
+  ///
+  /// In en, this message translates to:
+  /// **'This product is untracked; sentinel 999 is not physical stock. Use the tracking activation flow if needed.'**
+  String get m53StocktakeUntracked;
+
+  /// Stocktake message: A baseline batch date cannot be changed by a count. Add a found physical batch if its date differs.
+  ///
+  /// In en, this message translates to:
+  /// **'A baseline batch date cannot be changed by a count. Add a found physical batch if its date differs.'**
+  String get m53StocktakeFrozenBatch;
+
+  /// Stocktake message: No count can be undone. Up to the last 50 count changes are retained.
+  ///
+  /// In en, this message translates to:
+  /// **'No count can be undone. Up to the last 50 count changes are retained.'**
+  String get m53StocktakeNothingUndo;
+
+  /// Stocktake message: Enter the total value of found stock because purchase cost is enabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the total value of found stock because purchase cost is enabled.'**
+  String get m53StocktakeValueRequired;
+
+  /// Stocktake message: The physical quantity changed after valuation. Review and save the total value for the current count.
+  ///
+  /// In en, this message translates to:
+  /// **'The physical quantity changed after valuation. Review and save the total value for the current count.'**
+  String get m53StocktakeValueReview;
+
+  /// Stocktake message: This total value applies only when system stock started at 0, every batch is counted and physical quantity is positive.
+  ///
+  /// In en, this message translates to:
+  /// **'This total value applies only when system stock started at 0, every batch is counted and physical quantity is positive.'**
+  String get m53StocktakeValueScope;
+
+  /// Stocktake message: Review count or value
+  ///
+  /// In en, this message translates to:
+  /// **'Review count or value'**
+  String get m53StocktakeReviewLine;
 }
 
 class _AppLocalizationsDelegate

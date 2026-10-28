@@ -1,0 +1,20 @@
+{
+  "run": "m53-stocktake-dv-20261029-002018",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 15,
+  "failed": 0,
+  "elapsed": "07:39",
+  "preExistingProtectedEntries": 777,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 588,
+  "sourceManifestSha256": "59f34f4769622708f2c1066adfcdfe135dd88a4fe204e97c3f727925418215ab",
+  "runnerLogSha256": "0f5b0f6c928d65b3ab8ea66654d6b8ac9a4bcc5ace3df5881de5d6d18576bb9b",
+  "beforeManifestSha256": "fc55f6208a7a2b39dd796fb3f547183a990198b7d115cb49b48b931da6eb5cca",
+  "afterManifestSha256": "aa0a169bd07f4bb751ae6ae9659808b2057eef4685f011a5b3d337c4a45130ec"
+}
