@@ -1,4 +1,6 @@
 import 'dart:convert';
+import '../../suppliers/application/supplier_service.dart';
+import '../../suppliers/domain/supplier_invoice.dart';
 import '../../../core/domain/contact_validation.dart';
 import 'package:cryptography/cryptography.dart';
 import 'package:sqflite/sqflite.dart';
@@ -100,13 +102,23 @@ final class InventoryService {
   Future<T> _write<T>(
     Future<T> Function(Transaction dbTxn) operation, {
     bool inventoryChanged = true,
-  }) => database.transaction((dbTxn) async {
-    await access.authorize(dbTxn, capability: ManagementCapability.inventory);
-    final result = await operation(dbTxn);
-    await access.authorize(dbTxn, capability: ManagementCapability.inventory);
-    access.touch();
-    return result;
-  }, inventoryChanged: inventoryChanged);
+    ManagementCapability capability = ManagementCapability.inventory,
+  }) {
+    final generation = access.generation;
+    return database.transaction((dbTxn) async {
+      await access.authorize(dbTxn, capability: capability);
+      if (access.generation != generation) {
+        throw const AppError('m53SupplierAccessChanged');
+      }
+      final result = await operation(dbTxn);
+      await access.authorize(dbTxn, capability: capability);
+      if (access.generation != generation) {
+        throw const AppError('m53SupplierAccessChanged');
+      }
+      access.touch();
+      return result;
+    }, inventoryChanged: inventoryChanged);
+  }
 
   /// Durable input does not invalidate underlying catalogue pages after every
   /// scan. Actual finalization still emits the single inventory-change event.
@@ -1256,6 +1268,16 @@ final class InventoryService {
       if (entireDocument) 'entire_document',
     ]);
     if (await _retry(dbTxn, operationKey, hash) != null) return;
+    if (database.schemaVersion >= 31 &&
+        (await dbTxn.query(
+          'supplier_invoices',
+          columns: ['id'],
+          where: "receipt_id=? AND status='posted'",
+          whereArgs: [receipt.value],
+          limit: 1,
+        )).isNotEmpty) {
+      throw const AppError('m53SupplierInvoiceBlocksReceiptReversal');
+    }
     if (database.schemaVersion >= 27 &&
         (await dbTxn.query(
           'receipt_drafts',

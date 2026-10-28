@@ -4,6 +4,7 @@ import '../../../core/domain/value_types.dart';
 import '../../cashier/application/cashier_store.dart';
 import '../domain/cash_pieces.dart';
 import '../domain/cash_drawer_models.dart';
+import '../../suppliers/application/supplier_cash_sources.dart';
 
 /// Transaction-local primitives. Callers must hold their cashier/owner proof
 /// and complete its final validation before committing any financial result.
@@ -142,6 +143,17 @@ abstract final class CashDrawerLedger {
         throw const AppError('m3AttemptChanged');
       }
       return EntityId(prior.single['id'] as String);
+    }
+    if (sourceKind == 'supplier_payment') {
+      await SupplierCashSources.validateOn(
+        dbTxn,
+        kind: sourceKind,
+        id: sourceId,
+        currency: currency,
+        session: sessionId,
+        incoming: incoming,
+        outgoing: outgoing,
+      );
     }
     final policy = await policyOn(dbTxn);
     if (!policy.active ||

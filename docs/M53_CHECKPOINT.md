@@ -1,5 +1,32 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+29 Oktober05:31 — checkpoint host E3 tagihan/payment schema31 tersimpan.
+Domain11PASS37s; regresi49PASS2UIFAIL lalu focused UI6PASS49s (finance ID/EN,
+terms ID/EN, receipt ID/EN). Failures dipertahankan; readiness lazy dan form
+histori sudah diperbaiki, fokus nominal/alasan invalid ikut diuji. Analyzer7s
+bersih, format519/0, l10n1131/773/245, PIN106match. Source615 dicatat sebagai
+bukti host historis, bukan native. [Bukti](evidence/m53-20261026/supplier-finance-host-checks.json).
+Berikutnya implement retur fisik/kredit/refund/jadwal E3. Native delta E3 digabung
+sebelum F agar satu build mencakup rangkaian supplier yang utuh; tidak mengurangi
+kewajiban wrapper, fresh hash, SQLCipher, kedua perangkat tersedia dan finally.
+Belum ada update/reset/reseed .skybee. Sesudah seluruh M5.3, handoff baru terinstal
+sesuai ralat100produk/50transaksi dan backup lama. Jangan berhenti pada checkpoint.
+
+29 Oktober05:12 — E3 source31 tagihan/payment/atomic receiving dan UI ID/EN
+sudah ditulis. Host domain11PASS37s, UI awal2PASS39s. Regresi49PASS2UIFAIL1:47
+karena helper menunggu kartu lazy yang terdorong ringkasan penuh; helper kini
+menunggu loading lalu reveal, focused UI retest berjalan. Analyzer9 bersih6,7s,
+format519/0; auditl10n setelah perbaikan key1131/773/245, PIN106match. Native31
+belum dimulai. .skybee belum update/reset/reseed. Lanjut native/commit lalu
+retur/kredit/jadwal E3, F(QR)/G/H; checkpoint bukan akhir pekerjaan.
+[Laporan](M53_SUPPLIER_FINANCE_REPORT.md), [keputusan](decisions/M53_SUPPLIER_FINANCE.md).
+
+29 Oktober — ralat langsung pengguna: setelah seluruh M5.3 selesai, handoff
+.skybee kondisi pertama dibuka dengan reset database lama dan seed sintetis
+100 produk beragam, beberapa supplier/pelanggan, 50 transaksi. Cadangan lama
+harus dibuat/diverifikasi dahulu; reset belum dilakukan. Lihat
+[keputusan handoff baru](decisions/M53_FRESH_EXPLORATION_AMENDMENT.md).
+
 ## Baseline fungsi `89233f7` pushed — siap lanjut invoice/payment
 
 29Oktober01:20: committerms `89233f72a35c2e601739ddf8a581b0a940bdd51d` sudahpush

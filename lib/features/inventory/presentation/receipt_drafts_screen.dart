@@ -19,6 +19,8 @@ import '../domain/receipt_draft.dart';
 import 'product_form.dart';
 import 'receipt_line_editor.dart';
 import 'relation_field.dart';
+import '../../suppliers/presentation/supplier_billing_screen.dart';
+import '../../suppliers/presentation/supplier_invoice_screen.dart';
 
 /// One bounded page of durable drafts. Leaving a document retains its saved
 /// lines; only the transient typed code needs the ordinary unsaved-input guard.
@@ -204,6 +206,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
   ReceiptDraft? doc;
   String? error;
   bool busy = false, started = false;
+  bool billingCosts = false;
   int generation = 0;
   MasterRecord? get supplier => doc?.supplierId == null
       ? null
@@ -369,6 +372,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
             initialLine: line,
             draftSupplier: supplier,
             supplierLocked: true,
+            forceCost: billingCosts,
             onSave: (value) async {
               await app.inventory.updateReceiptDraftLine(
                 widget.id,
@@ -403,6 +407,24 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
     if (mounted && doc?.status == 'posted') code.clear();
   }
 
+  Future<void> confirmWithInvoice() async {
+    if (busy || doc?.status != 'draft') return;
+    setState(() => billingCosts = true);
+    if (doc!.supplierId == null || doc!.totalMicros == null) {
+      setState(
+        () => error = doc!.supplierId == null
+            ? 'm53SupplierInvoiceNeedsSupplier'
+            : 'm53SupplierInvoiceCostUnknown',
+      );
+      return;
+    }
+    await Navigator.of(context).push<EntityId>(
+      MaterialPageRoute(builder: (_) => SupplierBillingScreen(draft: doc)),
+    );
+    if (mounted) await load();
+    if (mounted && doc?.status == 'posted') code.clear();
+  }
+
   Future<void> reverse() async {
     if (busy || doc == null || doc!.reversed) return;
     if (reason.text.trim().isEmpty) {
@@ -426,6 +448,30 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
       return app.inventory.receiptDraft(widget.id);
     });
     if (doc?.reversed == true) reason.clear();
+  }
+
+  Future<void> openInvoice() async {
+    if (busy || doc?.receiptId == null) return;
+    final app = context.read<AppServices>(), receipt = doc!.receiptId!;
+    await run(() async {
+      final invoice = await app.suppliers.invoiceForReceipt(receipt);
+      if (mounted) {
+        if (invoice == null) {
+          await Navigator.of(context).push<EntityId>(
+            MaterialPageRoute(
+              builder: (_) => SupplierBillingScreen(receipt: receipt),
+            ),
+          );
+        } else {
+          await Navigator.of(context).push<void>(
+            MaterialPageRoute(
+              builder: (_) => SupplierInvoiceScreen(id: invoice.id),
+            ),
+          );
+        }
+      }
+      return app.inventory.receiptDraft(widget.id);
+    });
   }
 
   @override
@@ -482,6 +528,8 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                   Text(tr(context, 'm53ReceiptDraftCancelled')),
                 if (error != null) Text(tr(context, error!)),
                 if (doc?.status == 'draft') ...[
+                  if (billingCosts)
+                    Text(tr(context, 'm53SupplierBillingCostsHelp')),
                   RelationField(
                     key: ValueKey(doc!.supplierId),
                     kind: MasterKind.supplier,
@@ -523,6 +571,10 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                   ),
                 ],
                 if (doc?.status == 'posted' && doc?.reversed != true) ...[
+                  TextButton(
+                    onPressed: busy ? null : openInvoice,
+                    child: Text(tr(context, 'm53SupplierInvoices')),
+                  ),
                   ManagedTextField(
                     controller: reason,
                     enabled: !busy,
@@ -571,6 +623,13 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                     '${tr(context, "total")}: ${doc!.totalMicros == null ? tr(context, "m53CostIncomplete") : moneyCodec(context, currency: doc!.currency).formatSignedCost(doc!.totalMicros!)}',
                   ),
                 if (doc?.status == 'draft') ...[
+                  OutlinedButton(
+                    key: const ValueKey('receipt-draft-confirm-invoice'),
+                    onPressed: busy || doc!.lines.isEmpty
+                        ? null
+                        : confirmWithInvoice,
+                    child: Text(tr(context, 'm53SupplierReceiveInvoice')),
+                  ),
                   FilledButton(
                     key: const ValueKey('receipt-draft-confirm'),
                     onPressed: busy || doc!.lines.isEmpty ? null : confirm,

@@ -4298,5 +4298,325 @@
   "m53SupplierMissing": "Supplier not found. Reload the supplier list.",
   "@m53SupplierMissing": {
     "description": "Supplier terms: Supplier not found. Reload the supplier list."
+  },
+  "m53SupplierInputInvalid": "Check the invoice or payment fields.",
+  "@m53SupplierInputInvalid": {
+    "description": "Supplier finance: Check the invoice or payment fields."
+  },
+  "m53SupplierAccessChanged": "Access changed while saving. Unlock and review the result before retrying.",
+  "@m53SupplierAccessChanged": {
+    "description": "Supplier finance: Access changed while saving. Unlock and review the result before retrying."
+  },
+  "m53SupplierInvoiceMissing": "Invoice not found.",
+  "@m53SupplierInvoiceMissing": {
+    "description": "Supplier finance: Invoice not found."
+  },
+  "m53SupplierInvoiceChanged": "The invoice or list changed. Reload and review before continuing.",
+  "@m53SupplierInvoiceChanged": {
+    "description": "Supplier finance: The invoice or list changed. Reload and review before continuing."
+  },
+  "m53SupplierReceiptMissing": "Receipt not found or contains no items.",
+  "@m53SupplierReceiptMissing": {
+    "description": "Supplier finance: Receipt not found or contains no items."
+  },
+  "m53SupplierReceiptNotPurchase": "This document is not a purchase receipt eligible for invoicing.",
+  "@m53SupplierReceiptNotPurchase": {
+    "description": "Supplier finance: This document is not a purchase receipt eligible for invoicing."
+  },
+  "m53SupplierInvoiceSourceMismatch": "Supplier must match the receiving document.",
+  "@m53SupplierInvoiceSourceMismatch": {
+    "description": "Supplier finance: Supplier must match the receiving document."
+  },
+  "m53SupplierInvoiceNeedsSupplier": "Choose a supplier on the document before creating an invoice.",
+  "@m53SupplierInvoiceNeedsSupplier": {
+    "description": "Supplier finance: Choose a supplier on the document before creating an invoice."
+  },
+  "m53SupplierArchived": "Supplier is archived. Reactivate it before creating a new invoice.",
+  "@m53SupplierArchived": {
+    "description": "Supplier finance: Supplier is archived. Reactivate it before creating a new invoice."
+  },
+  "m53SupplierCreditNotAllowed": "This supplier does not allow credit yet. The owner can update supplier terms.",
+  "@m53SupplierCreditNotAllowed": {
+    "description": "Supplier finance: This supplier does not allow credit yet. The owner can update supplier terms."
+  },
+  "m53SupplierDueInvalid": "Credit requires a due date on or after the invoice date.",
+  "@m53SupplierDueInvalid": {
+    "description": "Supplier finance: Credit requires a due date on or after the invoice date."
+  },
+  "m53SupplierInvoiceCostUnknown": "Complete the costs of all receiving lines to create an invoice. The owner can separately reconcile a historical total if old costs are incomplete.",
+  "@m53SupplierInvoiceCostUnknown": {
+    "description": "Supplier finance: Complete the costs of all receiving lines to create an invoice. The owner can separately reconcile a historical total if old costs are incomplete."
+  },
+  "m53SupplierInvoicePrecision": "The source total is finer than one minor currency unit. Review document costs; debt cannot be silently rounded.",
+  "@m53SupplierInvoicePrecision": {
+    "description": "Supplier finance: The source total is finer than one minor currency unit. Review document costs; debt cannot be silently rounded."
+  },
+  "m53SupplierPaymentInvalid": "Amount must be positive, within the remaining balance, with matching cash details.",
+  "@m53SupplierPaymentInvalid": {
+    "description": "Supplier finance: Amount must be positive, within the remaining balance, with matching cash details."
+  },
+  "m53SupplierInvoiceExists": "This receipt already has an active invoice. Open that invoice.",
+  "@m53SupplierInvoiceExists": {
+    "description": "Supplier finance: This receipt already has an active invoice. Open that invoice."
+  },
+  "m53SupplierPaymentDateInvalid": "Payment date cannot be in the future.",
+  "@m53SupplierPaymentDateInvalid": {
+    "description": "Supplier finance: Payment date cannot be in the future."
+  },
+  "m53SupplierPaymentMissing": "Payment not found.",
+  "@m53SupplierPaymentMissing": {
+    "description": "Supplier finance: Payment not found."
+  },
+  "m53SupplierPaymentReversed": "This payment has already been reversed.",
+  "@m53SupplierPaymentReversed": {
+    "description": "Supplier finance: This payment has already been reversed."
+  },
+  "m53SupplierCashReturnRequired": "Record the cash actually returned to the drawer, with exact pieces and an active cash session.",
+  "@m53SupplierCashReturnRequired": {
+    "description": "Supplier finance: Record the cash actually returned to the drawer, with exact pieces and an active cash session."
+  },
+  "m53SupplierInvoiceDependencies": "Reverse effective payments or credits before voiding the invoice.",
+  "@m53SupplierInvoiceDependencies": {
+    "description": "Supplier finance: Reverse effective payments or credits before voiding the invoice."
+  },
+  "m53SupplierInvoiceBlocksReceiptReversal": "The owner must void the linked invoice before reversing the receipt.",
+  "@m53SupplierInvoiceBlocksReceiptReversal": {
+    "description": "Supplier finance: The owner must void the linked invoice before reversing the receipt."
+  },
+  "backupSupplierFinanceInvalid": "The archive contains inconsistent supplier invoice, payment or cash relationships.",
+  "@backupSupplierFinanceInvalid": {
+    "description": "Supplier finance: The archive contains inconsistent supplier invoice, payment or cash relationships."
+  },
+  "m53SupplierCashOut": "Cash pieces paid from drawer",
+  "@m53SupplierCashOut": {
+    "description": "Supplier finance: Cash pieces paid from drawer"
+  },
+  "m53SupplierPaymentConfirm": "Confirm payment already made for this single invoice. The app does not execute transfers.",
+  "@m53SupplierPaymentConfirm": {
+    "description": "Supplier finance: Confirm payment already made for this single invoice. The app does not execute transfers."
+  },
+  "m53SupplierSourcedrawer": "From cash drawer",
+  "@m53SupplierSourcedrawer": {
+    "description": "Supplier finance: From cash drawer"
+  },
+  "m53SupplierSourcebank": "Transfer / bank",
+  "@m53SupplierSourcebank": {
+    "description": "Supplier finance: Transfer / bank"
+  },
+  "m53SupplierSourceownerFunds": "Owner funds",
+  "@m53SupplierSourceownerFunds": {
+    "description": "Supplier finance: Owner funds"
+  },
+  "m53SupplierPay": "Record payment",
+  "@m53SupplierPay": {
+    "description": "Supplier finance: Record payment"
+  },
+  "m53SupplierPaymentHelp": "Record an actual payment for one invoice. Transfers do not change drawer balance. When cash tracking is active, drawer payments require a session and outgoing pieces.",
+  "@m53SupplierPaymentHelp": {
+    "description": "Supplier finance: Record an actual payment for one invoice. Transfers do not change drawer balance. When cash tracking is active, drawer payments require a session and outgoing pieces."
+  },
+  "m53SupplierPayRemaining": "Fill remaining balance",
+  "@m53SupplierPayRemaining": {
+    "description": "Supplier finance: Fill remaining balance"
+  },
+  "m53SupplierPaymentDate": "Payment date",
+  "@m53SupplierPaymentDate": {
+    "description": "Supplier finance: Payment date"
+  },
+  "m53SupplierPaymentSource": "Payment source",
+  "@m53SupplierPaymentSource": {
+    "description": "Supplier finance: Payment source"
+  },
+  "m53SupplierPaymentReference": "Payment reference (optional)",
+  "@m53SupplierPaymentReference": {
+    "description": "Supplier finance: Payment reference (optional)"
+  },
+  "m53SupplierPaymentNote": "Payment note (optional)",
+  "@m53SupplierPaymentNote": {
+    "description": "Supplier finance: Payment note (optional)"
+  },
+  "m53SupplierInitialActual": "Initial payment confirmed by owner",
+  "@m53SupplierInitialActual": {
+    "description": "Supplier finance: Initial payment confirmed by owner"
+  },
+  "m53SupplierInvoiceConfirm": "Save an invoice from this document? Existing stock is not received again. For a new draft, receipt and invoice are posted together.",
+  "@m53SupplierInvoiceConfirm": {
+    "description": "Supplier finance: Save an invoice from this document? Existing stock is not received again. For a new draft, receipt and invoice are posted together."
+  },
+  "m53SupplierInvoiceNew": "Create / reconcile invoice",
+  "@m53SupplierInvoiceNew": {
+    "description": "Supplier finance: Create / reconcile invoice"
+  },
+  "m53SupplierInvoiceHelp": "Invoicing is optional. Its value follows document costs. Cash terms alone do not prove payment; only actual payments reduce the balance.",
+  "@m53SupplierInvoiceHelp": {
+    "description": "Supplier finance: Invoicing is optional. Its value follows document costs. Cash terms alone do not prove payment; only actual payments reduce the balance."
+  },
+  "m53SupplierHistoricalHelp": "The historical document has no supplier or incomplete item costs. Only the owner can confirm the supplier, financial total and reconciliation reason. This does not complete HPP or guess per-item cost allocations.",
+  "@m53SupplierHistoricalHelp": {
+    "description": "Supplier finance: The historical document has no supplier or incomplete item costs. Only the owner can confirm the supplier, financial total and reconciliation reason. This does not complete HPP or guess per-item cost allocations."
+  },
+  "m53SupplierInvoiceNumber": "Invoice number (optional)",
+  "@m53SupplierInvoiceNumber": {
+    "description": "Supplier finance: Invoice number (optional)"
+  },
+  "m53SupplierInvoiceDate": "Invoice date",
+  "@m53SupplierInvoiceDate": {
+    "description": "Supplier finance: Invoice date"
+  },
+  "m53SupplierInvoiceTerms": "Payment terms",
+  "@m53SupplierInvoiceTerms": {
+    "description": "Supplier finance: Payment terms"
+  },
+  "m53SupplierTermsCash": "Cash / paid in full",
+  "@m53SupplierTermsCash": {
+    "description": "Supplier finance: Cash / paid in full"
+  },
+  "m53SupplierTermsCredit": "Credit / partial payment",
+  "@m53SupplierTermsCredit": {
+    "description": "Supplier finance: Credit / partial payment"
+  },
+  "m53SupplierDue": "Due date",
+  "@m53SupplierDue": {
+    "description": "Supplier finance: Due date"
+  },
+  "m53SupplierReportedInitial": "Reported paid amount (optional)",
+  "@m53SupplierReportedInitial": {
+    "description": "Supplier finance: Reported paid amount (optional)"
+  },
+  "m53SupplierReportedHelp": "This reported amount is not an actual payment and does not reduce debt. The owner must separately confirm an actual payment.",
+  "@m53SupplierReportedHelp": {
+    "description": "Supplier finance: This reported amount is not an actual payment and does not reduce debt. The owner must separately confirm an actual payment."
+  },
+  "m53SupplierBillingCostsHelp": "Costs are shown for invoicing even when purchase prices are hidden. Tap a line to complete costs.",
+  "@m53SupplierBillingCostsHelp": {
+    "description": "Supplier finance: Costs are shown for invoicing even when purchase prices are hidden. Tap a line to complete costs."
+  },
+  "m53SupplierReceiveInvoice": "Confirm receipt + invoice (optional)",
+  "@m53SupplierReceiveInvoice": {
+    "description": "Supplier finance: Confirm receipt + invoice (optional)"
+  },
+  "m53SupplierInvoices": "Supplier invoices",
+  "@m53SupplierInvoices": {
+    "description": "Supplier finance: Supplier invoices"
+  },
+  "m53SupplierUnreconciled": "Unreconciled receipts",
+  "@m53SupplierUnreconciled": {
+    "description": "Supplier finance: Unreconciled receipts"
+  },
+  "m53SupplierFilterall": "All invoices",
+  "@m53SupplierFilterall": {
+    "description": "Supplier finance: All invoices"
+  },
+  "m53SupplierFilteropen": "Open balance",
+  "@m53SupplierFilteropen": {
+    "description": "Supplier finance: Open balance"
+  },
+  "m53SupplierFilterpaid": "Paid",
+  "@m53SupplierFilterpaid": {
+    "description": "Supplier finance: Paid"
+  },
+  "m53SupplierFilteroverdue": "Overdue",
+  "@m53SupplierFilteroverdue": {
+    "description": "Supplier finance: Overdue"
+  },
+  "m53SupplierStatusunpaid": "Unpaid",
+  "@m53SupplierStatusunpaid": {
+    "description": "Supplier finance: Unpaid"
+  },
+  "m53SupplierStatuspartial": "Partly paid",
+  "@m53SupplierStatuspartial": {
+    "description": "Supplier finance: Partly paid"
+  },
+  "m53SupplierStatuspaid": "Paid",
+  "@m53SupplierStatuspaid": {
+    "description": "Supplier finance: Paid"
+  },
+  "m53SupplierStatusvoided": "Voided",
+  "@m53SupplierStatusvoided": {
+    "description": "Supplier finance: Voided"
+  },
+  "m53SupplierNext": "Next page",
+  "@m53SupplierNext": {
+    "description": "Supplier finance: Next page"
+  },
+  "m53SupplierFirst": "Back to first page",
+  "@m53SupplierFirst": {
+    "description": "Supplier finance: Back to first page"
+  },
+  "m53SupplierEmpty": "No documents match this filter.",
+  "@m53SupplierEmpty": {
+    "description": "Supplier finance: No documents match this filter."
+  },
+  "m53SupplierPaid": "Effective payments",
+  "@m53SupplierPaid": {
+    "description": "Supplier finance: Effective payments"
+  },
+  "m53SupplierCredit": "Applied credit",
+  "@m53SupplierCredit": {
+    "description": "Supplier finance: Applied credit"
+  },
+  "m53SupplierRemaining": "Remaining balance",
+  "@m53SupplierRemaining": {
+    "description": "Supplier finance: Remaining balance"
+  },
+  "m53SupplierDueToday": "Due today",
+  "@m53SupplierDueToday": {
+    "description": "Supplier finance: Due today"
+  },
+  "m53SupplierNotDue": "Not due yet",
+  "@m53SupplierNotDue": {
+    "description": "Supplier finance: Not due yet"
+  },
+  "m53SupplierOverdue": "Past due",
+  "@m53SupplierOverdue": {
+    "description": "Supplier finance: Past due"
+  },
+  "m53SupplierInvoiceVoid": "Void invoice",
+  "@m53SupplierInvoiceVoid": {
+    "description": "Supplier finance: Void invoice"
+  },
+  "m53SupplierAmendDue": "Amend due date with reason",
+  "@m53SupplierAmendDue": {
+    "description": "Supplier finance: Amend due date with reason"
+  },
+  "m53SupplierPayments": "Payment history",
+  "@m53SupplierPayments": {
+    "description": "Supplier finance: Payment history"
+  },
+  "m53SupplierReversePayment": "Reverse payment",
+  "@m53SupplierReversePayment": {
+    "description": "Supplier finance: Reverse payment"
+  },
+  "m53SupplierPaymentReversedLabel": "Payment reversed",
+  "@m53SupplierPaymentReversedLabel": {
+    "description": "Supplier finance: Payment reversed"
+  },
+  "m53SupplierCashReturned": "Cash pieces actually returned",
+  "@m53SupplierCashReturned": {
+    "description": "Supplier finance: Cash pieces actually returned"
+  },
+  "m53SupplierCorrectionHelp": "Corrections append a new trace. Enter a reason before voiding, reversing payment or changing the due date.",
+  "@m53SupplierCorrectionHelp": {
+    "description": "Supplier finance: Corrections append a new trace. Enter a reason before voiding, reversing payment or changing the due date."
+  },
+  "m53SupplierRetryPayment": "Retry the same payment",
+  "@m53SupplierRetryPayment": {
+    "description": "Supplier finance: Retry the same payment"
+  },
+  "m53SupplierCancelPendingPayment": "Discard pending payment input",
+  "@m53SupplierCancelPendingPayment": {
+    "description": "Supplier finance: Discard pending payment input"
+  },
+  "m53SupplierItems": "Source document items",
+  "@m53SupplierItems": {
+    "description": "Supplier finance: Source document items"
+  },
+  "m53SupplierSummaryScope": "All active invoices for this supplier, current balance; effective payments net of reversals. Unreconciled receipts are separate.",
+  "@m53SupplierSummaryScope": {
+    "description": "Supplier finance: All active invoices for this supplier, current balance; effective payments net of reversals. Unreconciled receipts are separate."
+  },
+  "m53SupplierPurchases": "Gross invoiced purchases",
+  "@m53SupplierPurchases": {
+    "description": "Supplier finance: Gross invoiced purchases"
   }
 }

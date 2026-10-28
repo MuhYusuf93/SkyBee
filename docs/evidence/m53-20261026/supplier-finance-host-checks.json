@@ -1,0 +1,269 @@
+{
+  "schema": 31,
+  "sourceFiles": 615,
+  "sourceManifestSha256": "24b93653ae11a629cbfe912638d92f482c24803a017ffb6923f312d41e2db209",
+  "domainSuite": {
+    "cases": 11,
+    "initialExpandedElapsed": "00:37",
+    "regression": "49 passed / 2 UI failures; all domain cases passed"
+  },
+  "finalFocusedUI": {
+    "passed": 6,
+    "failed": 0,
+    "elapsed": "00:49",
+    "suites": [
+      "finance ID/EN with atomic receiving, initial payment, dirty lock Back, warehouse restrictions, missing-supplier historical reconciliation, first invalid amount/reason focus",
+      "supplier terms ID/EN",
+      "receipt document ID/EN"
+    ]
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 7.0
+  },
+  "localization": {
+    "keys": 1131,
+    "staticReferences": 773,
+    "originalRequirements": 245
+  },
+  "pinCrypto": {
+    "upstreamFilesUnchanged": 106,
+    "licenseAndPinnedArchive": "match"
+  },
+  "failureDisposition": "Preserve failures. Lazy loading indicator below long summary caused premature readiness; loading key fixed. Historical supplier selector could be unmounted in lazy form; bounded forms now render all inputs, retain field keys and reveal/focus invalid fields. Initial draft BigInt type and missing localization key corrected.",
+  "native": "PENDING: batch with remaining E3 returns/credits/schedules before F; not a native acceptance record",
+  "ordinarySkybee": "No install/reset/reseed in this host checkpoint. Future reset authorized only after all M5.3, verified backup, seed100 products and50 transactions with onboarding pending.",
+  "logs": {
+    "supplier-finance-analyze1.txt": {
+      "sha256": "b8303d98ab10349d97c81a3ebf66f0d0696ba5de6acce0b5972dcc02dad6c5ec"
+    },
+    "supplier-finance-analyze15.txt": {
+      "sha256": "f4fcccbe4cf070ab20ccb0294463ba80b5cc73c68a867c1ff363a851338f9a93"
+    },
+    "supplier-finance-analyze22.txt": {
+      "sha256": "c3a2d9bdc8cc9963b9133af2454870ed3dcf3dbb507b2eaf220c16cc25b46b53"
+    },
+    "supplier-finance-analyze24.txt": {
+      "sha256": "60cb722e153cb93749e3e41fc0f3c93893ee1ce61938fe5297441a00a66505ae"
+    },
+    "supplier-finance-analyze4.txt": {
+      "sha256": "1dfa5f028974bb7f216a5a8c54cf48d566c58681153e06d284b10b5e84d01670"
+    },
+    "supplier-finance-analyze7.txt": {
+      "sha256": "e8cea3f1868195e4f5210c495261badf53dc62e13ddf0e3f61324ae248c5c2a6"
+    },
+    "supplier-finance-analyze8.txt": {
+      "sha256": "934b3e1c2cfebba8ca80f162970acf71667495b287897c74fa23ff505a6d54be"
+    },
+    "supplier-finance-analyze9.txt": {
+      "sha256": "1b1304b633097f51b4f4319f3c3dd8504d45b9bfc3f1c948f9d8598e023d9e38"
+    },
+    "supplier-finance-fix6.txt": {
+      "sha256": "6155a153856992813646bc4260c722b12e352e78da5900ae70ee917d534555c3"
+    },
+    "supplier-finance-focus-format.txt": {
+      "sha256": "8af45e304091c2ce9e233f9efab77ca975eb4f0204e0cf2d55fcd5ef353df994"
+    },
+    "supplier-finance-focus-format22.txt": {
+      "sha256": "aaa489a1a3e46081d2e13fe4bc55647ea330277619a0b70a8734029810dee140"
+    },
+    "supplier-finance-format1.txt": {
+      "sha256": "0d721e8c56b5fe2fc2c55e21fa3693229601a306c1ffb3872c9a13531fc0980e"
+    },
+    "supplier-finance-format10.txt": {
+      "sha256": "1dd88ae90c0a4f85ffbd6e5c32703479e2d74efa6617ab27e43f52c48370809d"
+    },
+    "supplier-finance-format15.txt": {
+      "sha256": "a451918b5ac9c1da0efedb872ab43a617a807cbd3c3c349388f4c1a5f9897cc5"
+    },
+    "supplier-finance-format2.txt": {
+      "sha256": "20f9b1c13a591dfce487b990923cde1f1b3f2287cd2651dd7167627b9061fa55"
+    },
+    "supplier-finance-format24.txt": {
+      "sha256": "0bad5ec75a74bdd362524ab602df2f6a3ad9ba716264bce953d07b711a0b11b9"
+    },
+    "supplier-finance-format3.txt": {
+      "sha256": "15e0c60021a6a646592990a53c941accaf90a6441ba844e85c1b8a0ebcf2fe2b"
+    },
+    "supplier-finance-format4.txt": {
+      "sha256": "5174401fd28dc74f8490dab0d58b783bcdadb90b5e89480a618e3f51cd250dbb"
+    },
+    "supplier-finance-format5.txt": {
+      "sha256": "646de6de02155209492322576739b50a8a2d010d0140c656730a4db512a415ed"
+    },
+    "supplier-finance-format6.txt": {
+      "sha256": "3ea35992bf65db132a8af1cd0c10dbca8147d9679dc86dd701ee06648964dfec"
+    },
+    "supplier-finance-format8.txt": {
+      "sha256": "1974b1afc4ab552fca66f3d05b2f40d4ef84fdae59ec02467d8466b0050a17b8"
+    },
+    "supplier-finance-format9.txt": {
+      "sha256": "d975acc6aead6e1f435c332cbeee34c89321f80157d9391896bad2647bf62f5a"
+    },
+    "supplier-finance-gen15.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "supplier-finance-gen4.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "supplier-finance-gen8.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "supplier-finance-host1.txt": {
+      "sha256": "cbb1b9de153cc75dac697150c445b898636e6e15e91763acc8cd2028d67117bc",
+      "passed": 4,
+      "failed": 2,
+      "elapsed": "00:28"
+    },
+    "supplier-finance-host2.txt": {
+      "sha256": "2722c74213b40d9f5d4bf8a00163fb5454a880f40cfe3e88ebe18e01a24e55ea",
+      "passed": 6,
+      "failed": 0,
+      "elapsed": "00:25"
+    },
+    "supplier-finance-host3.txt": {
+      "sha256": "304f9aaf5fa3f407d05b6c9dc42543e130c44293463bb908e28910377d88a5d0",
+      "passed": 6,
+      "failed": 0,
+      "elapsed": "00:29"
+    },
+    "supplier-finance-host5.txt": {
+      "sha256": "020327e9772a14e400d4db4a83579560a5c0cee3299337155019f1040365ea8e",
+      "passed": 6,
+      "failed": 0,
+      "elapsed": "00:24"
+    },
+    "supplier-finance-host6.txt": {
+      "sha256": "5bdcc66032782fe12492e244b8659b3db03876e8b7b3f4e393de93dec75b3e59",
+      "passed": 11,
+      "failed": 0,
+      "elapsed": "00:37"
+    },
+    "supplier-finance-l10n10.txt": {
+      "sha256": "a199c697f21034c82c9a822781b7d616ed49668ba69ec83037d3f9a71fb3bbf2"
+    },
+    "supplier-finance-l10n15.txt": {
+      "sha256": "a199c697f21034c82c9a822781b7d616ed49668ba69ec83037d3f9a71fb3bbf2"
+    },
+    "supplier-finance-l10n24.txt": {
+      "sha256": "a199c697f21034c82c9a822781b7d616ed49668ba69ec83037d3f9a71fb3bbf2"
+    },
+    "supplier-finance-l10n9.txt": {
+      "sha256": "924da767889452024f1b7e58369ccbc9529f11ef6ac0ed21d7e15ccf469934c0"
+    },
+    "supplier-finance-pin24.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+    },
+    "supplier-finance-pin9.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+    },
+    "supplier-finance-regression9.txt": {
+      "sha256": "7b161e91ea301f65f2770e76710eed615d2915f09f398fb55ab6452a514866ed",
+      "passed": 49,
+      "failed": 2,
+      "elapsed": "01:47"
+    },
+    "supplier-finance-ui-format.txt": {
+      "sha256": "e8ec4f8b17d8731b0674d371d2515f3fbbf2a111843cd654eb34e414ee0553b5"
+    },
+    "supplier-finance-ui-format11.txt": {
+      "sha256": "b1570e2feae4f6afc381e6d5e8ce06238238f1cd22812adca7d2e5f9ac7e679b"
+    },
+    "supplier-finance-ui-format12.txt": {
+      "sha256": "b1570e2feae4f6afc381e6d5e8ce06238238f1cd22812adca7d2e5f9ac7e679b"
+    },
+    "supplier-finance-ui-format14.txt": {
+      "sha256": "5685431cfe93271aa994c02a38eafcc8554e171e00ceabc8da3e9bedb6575bf3"
+    },
+    "supplier-finance-ui-format16.txt": {
+      "sha256": "6a6042f1b34f8e3934feab3dea72aa684754c5de23eaf77a5538cc1d4b48fcad"
+    },
+    "supplier-finance-ui-format17.txt": {
+      "sha256": "b1570e2feae4f6afc381e6d5e8ce06238238f1cd22812adca7d2e5f9ac7e679b"
+    },
+    "supplier-finance-ui-format18.txt": {
+      "sha256": "6a6042f1b34f8e3934feab3dea72aa684754c5de23eaf77a5538cc1d4b48fcad"
+    },
+    "supplier-finance-ui-format20.txt": {
+      "sha256": "b1570e2feae4f6afc381e6d5e8ce06238238f1cd22812adca7d2e5f9ac7e679b"
+    },
+    "supplier-finance-ui-format21.txt": {
+      "sha256": "500d1bb7eb2bdb9c68d22d0939166be7283a6e0f4da3eb75a1954d70917ba7a8"
+    },
+    "supplier-finance-ui-format23.txt": {
+      "sha256": "b1570e2feae4f6afc381e6d5e8ce06238238f1cd22812adca7d2e5f9ac7e679b"
+    },
+    "supplier-finance-ui-host1.txt": {
+      "sha256": "75f7e7e367eae5fb52d2d7314b5ab51a7092b62b0ba56c06aed0ddb673a97cb3",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:39"
+    },
+    "supplier-finance-ui-host11.txt": {
+      "sha256": "b79fb0a5156f21990cd96bb6458ad668b02a1772af0c928ccf5bdd5d6bd8b1a0",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:45"
+    },
+    "supplier-finance-ui-host12.txt": {
+      "sha256": "537f08aeb29c37fe38149a682a76e66cf5551fe266af16b357478d44575f48b0",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:00"
+    },
+    "supplier-finance-ui-host13.txt": {
+      "sha256": "00c5f493f706ecdf73e68f37e87745b817512f65c1c31c7f2866b00b27e5542e",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:19"
+    },
+    "supplier-finance-ui-host14.txt": {
+      "sha256": "b1e223aef4bf0b6521384f48f206c304d5905653d8cab652fa0e7cba7f70aeee",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:38"
+    },
+    "supplier-finance-ui-host16.txt": {
+      "sha256": "c6b9a7d84a35f7386279cbda8e27e36823d8279aa9234124cf7677d4d770b9c9",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "01:44"
+    },
+    "supplier-finance-ui-host17.txt": {
+      "sha256": "12d81e03332bb87bc9712f0aa552709bfe959eab8942a95bd17ffca4dca28894",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:52"
+    },
+    "supplier-finance-ui-host18.txt": {
+      "sha256": "12d81e03332bb87bc9712f0aa552709bfe959eab8942a95bd17ffca4dca28894",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:52"
+    },
+    "supplier-finance-ui-host19.txt": {
+      "sha256": "47b8de5bf6f225ed1b60c5d6e1201ea81577a84dcda916657a389a7455a0db7e",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:53"
+    },
+    "supplier-finance-ui-host20.txt": {
+      "sha256": "fab986c97809006f05b1726c87514923e27486c44fb0e1ce29026e22bf102851",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:54"
+    },
+    "supplier-finance-ui-host21.txt": {
+      "sha256": "19c145c1823182288786ad1e1706113cd8b1faa5708f3379cf06df6982126d2a",
+      "passed": 1,
+      "failed": 0,
+      "elapsed": "00:23"
+    },
+    "supplier-finance-ui-host23.txt": {
+      "sha256": "5c17d9d483711bf8c519221f7143e0ee80a93ff2ee5e981e99a92f2ab041f17f",
+      "passed": 6,
+      "failed": 0,
+      "elapsed": "00:49"
+    }
+  }
+}

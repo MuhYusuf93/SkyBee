@@ -6403,6 +6403,486 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplier not found. Reload the supplier list.'**
   String get m53SupplierMissing;
+
+  /// Supplier finance: Check the invoice or payment fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the invoice or payment fields.'**
+  String get m53SupplierInputInvalid;
+
+  /// Supplier finance: Access changed while saving. Unlock and review the result before retrying.
+  ///
+  /// In en, this message translates to:
+  /// **'Access changed while saving. Unlock and review the result before retrying.'**
+  String get m53SupplierAccessChanged;
+
+  /// Supplier finance: Invoice not found.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice not found.'**
+  String get m53SupplierInvoiceMissing;
+
+  /// Supplier finance: The invoice or list changed. Reload and review before continuing.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice or list changed. Reload and review before continuing.'**
+  String get m53SupplierInvoiceChanged;
+
+  /// Supplier finance: Receipt not found or contains no items.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt not found or contains no items.'**
+  String get m53SupplierReceiptMissing;
+
+  /// Supplier finance: This document is not a purchase receipt eligible for invoicing.
+  ///
+  /// In en, this message translates to:
+  /// **'This document is not a purchase receipt eligible for invoicing.'**
+  String get m53SupplierReceiptNotPurchase;
+
+  /// Supplier finance: Supplier must match the receiving document.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier must match the receiving document.'**
+  String get m53SupplierInvoiceSourceMismatch;
+
+  /// Supplier finance: Choose a supplier on the document before creating an invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a supplier on the document before creating an invoice.'**
+  String get m53SupplierInvoiceNeedsSupplier;
+
+  /// Supplier finance: Supplier is archived. Reactivate it before creating a new invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier is archived. Reactivate it before creating a new invoice.'**
+  String get m53SupplierArchived;
+
+  /// Supplier finance: This supplier does not allow credit yet. The owner can update supplier terms.
+  ///
+  /// In en, this message translates to:
+  /// **'This supplier does not allow credit yet. The owner can update supplier terms.'**
+  String get m53SupplierCreditNotAllowed;
+
+  /// Supplier finance: Credit requires a due date on or after the invoice date.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit requires a due date on or after the invoice date.'**
+  String get m53SupplierDueInvalid;
+
+  /// Supplier finance: Complete the costs of all receiving lines to create an invoice. The owner can separately reconcile a historical total if old costs are incomplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the costs of all receiving lines to create an invoice. The owner can separately reconcile a historical total if old costs are incomplete.'**
+  String get m53SupplierInvoiceCostUnknown;
+
+  /// Supplier finance: The source total is finer than one minor currency unit. Review document costs; debt cannot be silently rounded.
+  ///
+  /// In en, this message translates to:
+  /// **'The source total is finer than one minor currency unit. Review document costs; debt cannot be silently rounded.'**
+  String get m53SupplierInvoicePrecision;
+
+  /// Supplier finance: Amount must be positive, within the remaining balance, with matching cash details.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount must be positive, within the remaining balance, with matching cash details.'**
+  String get m53SupplierPaymentInvalid;
+
+  /// Supplier finance: This receipt already has an active invoice. Open that invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'This receipt already has an active invoice. Open that invoice.'**
+  String get m53SupplierInvoiceExists;
+
+  /// Supplier finance: Payment date cannot be in the future.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment date cannot be in the future.'**
+  String get m53SupplierPaymentDateInvalid;
+
+  /// Supplier finance: Payment not found.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment not found.'**
+  String get m53SupplierPaymentMissing;
+
+  /// Supplier finance: This payment has already been reversed.
+  ///
+  /// In en, this message translates to:
+  /// **'This payment has already been reversed.'**
+  String get m53SupplierPaymentReversed;
+
+  /// Supplier finance: Record the cash actually returned to the drawer, with exact pieces and an active cash session.
+  ///
+  /// In en, this message translates to:
+  /// **'Record the cash actually returned to the drawer, with exact pieces and an active cash session.'**
+  String get m53SupplierCashReturnRequired;
+
+  /// Supplier finance: Reverse effective payments or credits before voiding the invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse effective payments or credits before voiding the invoice.'**
+  String get m53SupplierInvoiceDependencies;
+
+  /// Supplier finance: The owner must void the linked invoice before reversing the receipt.
+  ///
+  /// In en, this message translates to:
+  /// **'The owner must void the linked invoice before reversing the receipt.'**
+  String get m53SupplierInvoiceBlocksReceiptReversal;
+
+  /// Supplier finance: The archive contains inconsistent supplier invoice, payment or cash relationships.
+  ///
+  /// In en, this message translates to:
+  /// **'The archive contains inconsistent supplier invoice, payment or cash relationships.'**
+  String get backupSupplierFinanceInvalid;
+
+  /// Supplier finance: Cash pieces paid from drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Cash pieces paid from drawer'**
+  String get m53SupplierCashOut;
+
+  /// Supplier finance: Confirm payment already made for this single invoice. The app does not execute transfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm payment already made for this single invoice. The app does not execute transfers.'**
+  String get m53SupplierPaymentConfirm;
+
+  /// Supplier finance: From cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'From cash drawer'**
+  String get m53SupplierSourcedrawer;
+
+  /// Supplier finance: Transfer / bank
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer / bank'**
+  String get m53SupplierSourcebank;
+
+  /// Supplier finance: Owner funds
+  ///
+  /// In en, this message translates to:
+  /// **'Owner funds'**
+  String get m53SupplierSourceownerFunds;
+
+  /// Supplier finance: Record payment
+  ///
+  /// In en, this message translates to:
+  /// **'Record payment'**
+  String get m53SupplierPay;
+
+  /// Supplier finance: Record an actual payment for one invoice. Transfers do not change drawer balance. When cash tracking is active, drawer payments require a session and outgoing pieces.
+  ///
+  /// In en, this message translates to:
+  /// **'Record an actual payment for one invoice. Transfers do not change drawer balance. When cash tracking is active, drawer payments require a session and outgoing pieces.'**
+  String get m53SupplierPaymentHelp;
+
+  /// Supplier finance: Fill remaining balance
+  ///
+  /// In en, this message translates to:
+  /// **'Fill remaining balance'**
+  String get m53SupplierPayRemaining;
+
+  /// Supplier finance: Payment date
+  ///
+  /// In en, this message translates to:
+  /// **'Payment date'**
+  String get m53SupplierPaymentDate;
+
+  /// Supplier finance: Payment source
+  ///
+  /// In en, this message translates to:
+  /// **'Payment source'**
+  String get m53SupplierPaymentSource;
+
+  /// Supplier finance: Payment reference (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reference (optional)'**
+  String get m53SupplierPaymentReference;
+
+  /// Supplier finance: Payment note (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment note (optional)'**
+  String get m53SupplierPaymentNote;
+
+  /// Supplier finance: Initial payment confirmed by owner
+  ///
+  /// In en, this message translates to:
+  /// **'Initial payment confirmed by owner'**
+  String get m53SupplierInitialActual;
+
+  /// Supplier finance: Save an invoice from this document? Existing stock is not received again. For a new draft, receipt and invoice are posted together.
+  ///
+  /// In en, this message translates to:
+  /// **'Save an invoice from this document? Existing stock is not received again. For a new draft, receipt and invoice are posted together.'**
+  String get m53SupplierInvoiceConfirm;
+
+  /// Supplier finance: Create / reconcile invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Create / reconcile invoice'**
+  String get m53SupplierInvoiceNew;
+
+  /// Supplier finance: Invoicing is optional. Its value follows document costs. Cash terms alone do not prove payment; only actual payments reduce the balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoicing is optional. Its value follows document costs. Cash terms alone do not prove payment; only actual payments reduce the balance.'**
+  String get m53SupplierInvoiceHelp;
+
+  /// Supplier finance: The historical document has no supplier or incomplete item costs. Only the owner can confirm the supplier, financial total and reconciliation reason. This does not complete HPP or guess per-item cost allocations.
+  ///
+  /// In en, this message translates to:
+  /// **'The historical document has no supplier or incomplete item costs. Only the owner can confirm the supplier, financial total and reconciliation reason. This does not complete HPP or guess per-item cost allocations.'**
+  String get m53SupplierHistoricalHelp;
+
+  /// Supplier finance: Invoice number (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice number (optional)'**
+  String get m53SupplierInvoiceNumber;
+
+  /// Supplier finance: Invoice date
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice date'**
+  String get m53SupplierInvoiceDate;
+
+  /// Supplier finance: Payment terms
+  ///
+  /// In en, this message translates to:
+  /// **'Payment terms'**
+  String get m53SupplierInvoiceTerms;
+
+  /// Supplier finance: Cash / paid in full
+  ///
+  /// In en, this message translates to:
+  /// **'Cash / paid in full'**
+  String get m53SupplierTermsCash;
+
+  /// Supplier finance: Credit / partial payment
+  ///
+  /// In en, this message translates to:
+  /// **'Credit / partial payment'**
+  String get m53SupplierTermsCredit;
+
+  /// Supplier finance: Due date
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get m53SupplierDue;
+
+  /// Supplier finance: Reported paid amount (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Reported paid amount (optional)'**
+  String get m53SupplierReportedInitial;
+
+  /// Supplier finance: This reported amount is not an actual payment and does not reduce debt. The owner must separately confirm an actual payment.
+  ///
+  /// In en, this message translates to:
+  /// **'This reported amount is not an actual payment and does not reduce debt. The owner must separately confirm an actual payment.'**
+  String get m53SupplierReportedHelp;
+
+  /// Supplier finance: Costs are shown for invoicing even when purchase prices are hidden. Tap a line to complete costs.
+  ///
+  /// In en, this message translates to:
+  /// **'Costs are shown for invoicing even when purchase prices are hidden. Tap a line to complete costs.'**
+  String get m53SupplierBillingCostsHelp;
+
+  /// Supplier finance: Confirm receipt + invoice (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm receipt + invoice (optional)'**
+  String get m53SupplierReceiveInvoice;
+
+  /// Supplier finance: Supplier invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier invoices'**
+  String get m53SupplierInvoices;
+
+  /// Supplier finance: Unreconciled receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Unreconciled receipts'**
+  String get m53SupplierUnreconciled;
+
+  /// Supplier finance: All invoices
+  ///
+  /// In en, this message translates to:
+  /// **'All invoices'**
+  String get m53SupplierFilterall;
+
+  /// Supplier finance: Open balance
+  ///
+  /// In en, this message translates to:
+  /// **'Open balance'**
+  String get m53SupplierFilteropen;
+
+  /// Supplier finance: Paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get m53SupplierFilterpaid;
+
+  /// Supplier finance: Overdue
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get m53SupplierFilteroverdue;
+
+  /// Supplier finance: Unpaid
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get m53SupplierStatusunpaid;
+
+  /// Supplier finance: Partly paid
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid'**
+  String get m53SupplierStatuspartial;
+
+  /// Supplier finance: Paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get m53SupplierStatuspaid;
+
+  /// Supplier finance: Voided
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get m53SupplierStatusvoided;
+
+  /// Supplier finance: Next page
+  ///
+  /// In en, this message translates to:
+  /// **'Next page'**
+  String get m53SupplierNext;
+
+  /// Supplier finance: Back to first page
+  ///
+  /// In en, this message translates to:
+  /// **'Back to first page'**
+  String get m53SupplierFirst;
+
+  /// Supplier finance: No documents match this filter.
+  ///
+  /// In en, this message translates to:
+  /// **'No documents match this filter.'**
+  String get m53SupplierEmpty;
+
+  /// Supplier finance: Effective payments
+  ///
+  /// In en, this message translates to:
+  /// **'Effective payments'**
+  String get m53SupplierPaid;
+
+  /// Supplier finance: Applied credit
+  ///
+  /// In en, this message translates to:
+  /// **'Applied credit'**
+  String get m53SupplierCredit;
+
+  /// Supplier finance: Remaining balance
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining balance'**
+  String get m53SupplierRemaining;
+
+  /// Supplier finance: Due today
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get m53SupplierDueToday;
+
+  /// Supplier finance: Not due yet
+  ///
+  /// In en, this message translates to:
+  /// **'Not due yet'**
+  String get m53SupplierNotDue;
+
+  /// Supplier finance: Past due
+  ///
+  /// In en, this message translates to:
+  /// **'Past due'**
+  String get m53SupplierOverdue;
+
+  /// Supplier finance: Void invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Void invoice'**
+  String get m53SupplierInvoiceVoid;
+
+  /// Supplier finance: Amend due date with reason
+  ///
+  /// In en, this message translates to:
+  /// **'Amend due date with reason'**
+  String get m53SupplierAmendDue;
+
+  /// Supplier finance: Payment history
+  ///
+  /// In en, this message translates to:
+  /// **'Payment history'**
+  String get m53SupplierPayments;
+
+  /// Supplier finance: Reverse payment
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse payment'**
+  String get m53SupplierReversePayment;
+
+  /// Supplier finance: Payment reversed
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reversed'**
+  String get m53SupplierPaymentReversedLabel;
+
+  /// Supplier finance: Cash pieces actually returned
+  ///
+  /// In en, this message translates to:
+  /// **'Cash pieces actually returned'**
+  String get m53SupplierCashReturned;
+
+  /// Supplier finance: Corrections append a new trace. Enter a reason before voiding, reversing payment or changing the due date.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrections append a new trace. Enter a reason before voiding, reversing payment or changing the due date.'**
+  String get m53SupplierCorrectionHelp;
+
+  /// Supplier finance: Retry the same payment
+  ///
+  /// In en, this message translates to:
+  /// **'Retry the same payment'**
+  String get m53SupplierRetryPayment;
+
+  /// Supplier finance: Discard pending payment input
+  ///
+  /// In en, this message translates to:
+  /// **'Discard pending payment input'**
+  String get m53SupplierCancelPendingPayment;
+
+  /// Supplier finance: Source document items
+  ///
+  /// In en, this message translates to:
+  /// **'Source document items'**
+  String get m53SupplierItems;
+
+  /// Supplier finance: All active invoices for this supplier, current balance; effective payments net of reversals. Unreconciled receipts are separate.
+  ///
+  /// In en, this message translates to:
+  /// **'All active invoices for this supplier, current balance; effective payments net of reversals. Unreconciled receipts are separate.'**
+  String get m53SupplierSummaryScope;
+
+  /// Supplier finance: Gross invoiced purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Gross invoiced purchases'**
+  String get m53SupplierPurchases;
 }
 
 class _AppLocalizationsDelegate

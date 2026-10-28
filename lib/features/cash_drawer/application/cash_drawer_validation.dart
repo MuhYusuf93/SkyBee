@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../core/time/store_clock.dart';
 import '../domain/cash_pieces.dart';
+import '../../suppliers/application/supplier_cash_sources.dart';
 
 /// Checks imported facts and reconstructs the bounded piece cache without
 /// changing the archive. Missing metadata never becomes a guessed opening.
@@ -405,6 +406,29 @@ abstract final class CashDrawerValidation {
     CurrencyPolicy currency,
   ) async {
     final kind = event['source_kind'];
+    if (kind == 'supplier_payment') {
+      try {
+        await SupplierCashSources.validateOn(
+          db,
+          kind: 'supplier_payment',
+          id: EntityId(event['source_id'] as String),
+          currency: currency,
+          session: EntityId(event['session_id'] as String),
+          historical: true,
+          incoming: CashPieces.decode(
+            currency,
+            event['in_counts_json'] as String,
+          ),
+          outgoing: CashPieces.decode(
+            currency,
+            event['out_counts_json'] as String,
+          ),
+        );
+      } catch (_) {
+        throw _invalid;
+      }
+      return;
+    }
     if (['journal_in', 'journal_out', 'handover'].contains(kind)) {
       _text(event['reason'], 1000, required: true);
       if (kind == 'journal_in'
@@ -510,8 +534,7 @@ abstract final class CashDrawerValidation {
       }
       return;
     }
-    // Supplier posting is added with its authoritative invoice/payment facts in
-    // stage E. A fabricated unsupported source cannot be silently accepted now.
+    // Unsupported sources cannot be silently accepted.
     throw _invalid;
   }
 

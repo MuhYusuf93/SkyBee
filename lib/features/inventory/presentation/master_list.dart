@@ -15,6 +15,7 @@ import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/protected_dialog.dart';
 import 'inventory_screen.dart';
 import '../../suppliers/presentation/supplier_terms_screen.dart';
+import '../../suppliers/presentation/supplier_invoices_screen.dart';
 
 typedef MasterFilter = ({MasterKind kind, String prefix, bool archived});
 
@@ -309,6 +310,15 @@ class _MasterBody extends StatelessWidget {
                       managementProtected: true,
                     ),
                   if (record.email != null) Text(record.email!),
+                  if (!picker && kind == MasterKind.supplier)
+                    TextButton(
+                      onPressed: () => Navigator.of(context).push<void>(
+                        MaterialPageRoute(
+                          builder: (_) => SupplierInvoicesScreen(id: record.id),
+                        ),
+                      ),
+                      child: Text(tr(context, 'm53SupplierInvoices')),
+                    ),
                   if (record.website != null)
                     ContactOutputLink.website(
                       record.website!,

@@ -33,12 +33,14 @@ class ReceiptLineEditor extends StatefulWidget {
     this.initialLine,
     this.draftSupplier,
     this.supplierLocked = false,
+    this.forceCost = false,
   });
   final InventoryProduct product;
   final Future<void> Function(ReceiptLineInput input) onSave;
   final ReceiptDraftLine? initialLine;
   final MasterRecord? draftSupplier;
   final bool supplierLocked;
+  final bool forceCost;
   @override
   State<ReceiptLineEditor> createState() => _ReceiptLineEditorState();
 }
@@ -71,7 +73,8 @@ class _ReceiptLineEditorState extends State<ReceiptLineEditor> {
   final errors = <String, String>{};
   bool loading = true, busy = false, started = false, hintPending = false;
   bool get fieldsEnabled => !loading && (!busy || errors.isNotEmpty);
-  bool get showCost => policy.cost || widget.initialLine?.cost != null;
+  bool get showCost =>
+      widget.forceCost || policy.cost || widget.initialLine?.cost != null;
   int generation = 0, hintRequest = 0;
   @override
   void initState() {

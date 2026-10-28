@@ -1,5 +1,15 @@
 # Matriks persyaratan
 
+29 Oktober — ralat langsung pengguna: setelah seluruh M5.3 selesai, handoff
+.skybee kondisi pertama dibuka dengan reset database lama dan seed sintetis
+100 produk beragam, beberapa supplier/pelanggan, 50 transaksi. Cadangan lama
+harus dibuat/diverifikasi dahulu; reset belum dilakukan. Lihat
+[keputusan handoff baru](decisions/M53_FRESH_EXPLORATION_AMENDMENT.md).
+
+29 Oktober — M53-F bagian8 label diubah pengguna menjadi QR code, menggantikan
+barcode; syarat quietzone/modul/scaling/protokol/preview dan bukti hardware tetap.
+E3 tetap lebih dahulu dan seluruh F/G/H tetap aktif sampai handoff.
+
 29 Oktober01:15 — prasyarat terms supplier30 selesai scope: host21+UI2PASS,
 Poco5PASS1UIFAIL awal lalu UI2PASS, DV6PASS;716/724/794oldhashsama/controlOff/
 awakeexact. Source598UIhanyabeda1fixture, runtime sama. Invoice/payment/return/
@@ -50,10 +60,10 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir schema20:21kasus+API1 native22 per DV/Poco PASS (M53_CASHIER_LOCK_REPORT), defaultoff tanpa grant Kelola |
 | M53-C | Pencarian/popularitas, uang cepat, member/piutang | Tender21 host/native17 per perangkat PASS. Member22 host20/regresi79/native20 per perangkat PASS. Search23 host51 (17search)/M52focus1/native13 per DV/Poco PASS;680/611hash lama cocok. Lihat M53_TENDER_REPORT, M53_MEMBER_REPORT, M53_SEARCH_REPORT |
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
-| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Kamera/ons/browse/receipt27–28 sudah checkpoint sesuai laporan. Opname29 host34/native15 per perangkat PASS, source588/oldhashsama. Terms30 prasyarat host21+UI2/PocoUI2/DV6PASS sesudah initialPoco5PASS1UIFAIL, source598/oldhashsama/controlOff/awakeexact. Lihat M53_STOCKTAKE_REPORT dan M53_SUPPLIER_TERMS_REPORT. Physicalcamera belumverified. Invoice/payment/return/approvedcredit/schedules masihTODO; F/G/H tetapaktif |
+| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Receipt27–28/opname29/terms30 checkpoint native terdahulu selesai scope. Tagihan/payment31 + atomic receiving/UI/validator kini host11domain dan focused6UI PASS; regresi49PASS2UIFAIL dipertahankan dan fixed. Analyzer7s bersih/source615 host; native delta E3 dibatch sebelum F. Retur/kredit/refund/jadwal belum ditulis. Lihat M53_SUPPLIER_FINANCE_REPORT |
 | M53-F | Label/struk wajib dan laporan/ekspor baru | TODO |
 | M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |
-| M53-H | Build/push/update eksplorasi in-place dan preservasi | Build debug native M5.3 hanya package integration. Build ordinary/release/handoff M5.3 belum; .skybee+12 tidakupdate/reset/reseed, baselineSchema14 historis. Poco tersedia kembali; H installtetapbelum karenaE/F/Gbelumselesai. Artifact ordinary lama bukan bukti handoff source29 |
+| M53-H | Build/push/handoff baru terinstal .skybee dengan backup lama dan seed100/50 | TODO setelah E/F/G lengkap. Ralat langsung pengguna mengotorisasi reset .skybee pada akhir saja: backup lama verified dahulu, onboarding pending, 100produk beragam/beberapa supplier/pelanggan/50transaksi. Belum ada update/reset/reseed. Build ordinary/release/handoff M5.3 dan dua startup belum dilakukan; artefak lama bukan bukti source31 |
 
 Koreksi P25-01 tanggal25Oktober: default6 profil tanpa marker versi harus efektif3 setelah buka ulang. Nilai lama lainnya serta semua pilihan manual tersimpan versi baru tetap; job historis tidak diubah. Kebijakan ini menggantikan frasa bottom lama tetap di histori berikut. Pemeriksaan/handoff+12 selesai; host44/native1 dan profil aktual cold restart PASS.
 

@@ -4298,5 +4298,325 @@
   "m53SupplierMissing": "Supplier tidak ditemukan. Muat ulang daftar supplier.",
   "@m53SupplierMissing": {
     "description": "Supplier terms: Supplier not found. Reload the supplier list."
+  },
+  "m53SupplierInputInvalid": "Periksa isian tagihan atau pembayaran.",
+  "@m53SupplierInputInvalid": {
+    "description": "Supplier finance: Check the invoice or payment fields."
+  },
+  "m53SupplierAccessChanged": "Akses berubah saat menyimpan. Buka kembali akses dan tinjau hasil sebelum mencoba lagi.",
+  "@m53SupplierAccessChanged": {
+    "description": "Supplier finance: Access changed while saving. Unlock and review the result before retrying."
+  },
+  "m53SupplierInvoiceMissing": "Tagihan tidak ditemukan.",
+  "@m53SupplierInvoiceMissing": {
+    "description": "Supplier finance: Invoice not found."
+  },
+  "m53SupplierInvoiceChanged": "Tagihan atau daftar berubah. Muat ulang dan tinjau sebelum melanjutkan.",
+  "@m53SupplierInvoiceChanged": {
+    "description": "Supplier finance: The invoice or list changed. Reload and review before continuing."
+  },
+  "m53SupplierReceiptMissing": "Penerimaan tidak ditemukan atau tidak memiliki barang.",
+  "@m53SupplierReceiptMissing": {
+    "description": "Supplier finance: Receipt not found or contains no items."
+  },
+  "m53SupplierReceiptNotPurchase": "Dokumen ini bukan penerimaan pembelian yang dapat ditagihkan.",
+  "@m53SupplierReceiptNotPurchase": {
+    "description": "Supplier finance: This document is not a purchase receipt eligible for invoicing."
+  },
+  "m53SupplierInvoiceSourceMismatch": "Supplier harus sesuai dokumen penerimaan.",
+  "@m53SupplierInvoiceSourceMismatch": {
+    "description": "Supplier finance: Supplier must match the receiving document."
+  },
+  "m53SupplierInvoiceNeedsSupplier": "Pilih supplier pada dokumen sebelum membuat tagihan.",
+  "@m53SupplierInvoiceNeedsSupplier": {
+    "description": "Supplier finance: Choose a supplier on the document before creating an invoice."
+  },
+  "m53SupplierArchived": "Supplier diarsipkan. Aktifkan kembali sebelum membuat tagihan baru.",
+  "@m53SupplierArchived": {
+    "description": "Supplier finance: Supplier is archived. Reactivate it before creating a new invoice."
+  },
+  "m53SupplierCreditNotAllowed": "Supplier belum mengizinkan pembayaran tempo. Pemilik dapat memperbarui syarat supplier.",
+  "@m53SupplierCreditNotAllowed": {
+    "description": "Supplier finance: This supplier does not allow credit yet. The owner can update supplier terms."
+  },
+  "m53SupplierDueInvalid": "Tanggal jatuh tempo wajib untuk tempo dan tidak boleh sebelum tanggal tagihan.",
+  "@m53SupplierDueInvalid": {
+    "description": "Supplier finance: Credit requires a due date on or after the invoice date."
+  },
+  "m53SupplierInvoiceCostUnknown": "Lengkapi biaya seluruh baris penerimaan untuk membuat tagihan. Pemilik dapat merekonsiliasi total historis terpisah bila biaya lama tidak lengkap.",
+  "@m53SupplierInvoiceCostUnknown": {
+    "description": "Supplier finance: Complete the costs of all receiving lines to create an invoice. The owner can separately reconcile a historical total if old costs are incomplete."
+  },
+  "m53SupplierInvoicePrecision": "Total sumber belum tepat pada satuan mata uang terkecil. Tinjau biaya dokumen; jangan membulatkan utang secara diam-diam.",
+  "@m53SupplierInvoicePrecision": {
+    "description": "Supplier finance: The source total is finer than one minor currency unit. Review document costs; debt cannot be silently rounded."
+  },
+  "m53SupplierPaymentInvalid": "Nominal harus positif, tidak melebihi sisa tagihan, dan rincian kas harus cocok.",
+  "@m53SupplierPaymentInvalid": {
+    "description": "Supplier finance: Amount must be positive, within the remaining balance, with matching cash details."
+  },
+  "m53SupplierInvoiceExists": "Penerimaan ini sudah memiliki tagihan aktif. Buka tagihan tersebut.",
+  "@m53SupplierInvoiceExists": {
+    "description": "Supplier finance: This receipt already has an active invoice. Open that invoice."
+  },
+  "m53SupplierPaymentDateInvalid": "Tanggal pembayaran tidak boleh di masa depan.",
+  "@m53SupplierPaymentDateInvalid": {
+    "description": "Supplier finance: Payment date cannot be in the future."
+  },
+  "m53SupplierPaymentMissing": "Pembayaran tidak ditemukan.",
+  "@m53SupplierPaymentMissing": {
+    "description": "Supplier finance: Payment not found."
+  },
+  "m53SupplierPaymentReversed": "Pembayaran ini sudah dibalik.",
+  "@m53SupplierPaymentReversed": {
+    "description": "Supplier finance: This payment has already been reversed."
+  },
+  "m53SupplierCashReturnRequired": "Catat uang yang benar-benar kembali ke laci, dengan pecahan tepat dan sesi kas aktif.",
+  "@m53SupplierCashReturnRequired": {
+    "description": "Supplier finance: Record the cash actually returned to the drawer, with exact pieces and an active cash session."
+  },
+  "m53SupplierInvoiceDependencies": "Balik pembayaran atau kredit efektif sebelum membatalkan tagihan.",
+  "@m53SupplierInvoiceDependencies": {
+    "description": "Supplier finance: Reverse effective payments or credits before voiding the invoice."
+  },
+  "m53SupplierInvoiceBlocksReceiptReversal": "Batalkan tagihan terkait melalui pemilik sebelum membalik penerimaan.",
+  "@m53SupplierInvoiceBlocksReceiptReversal": {
+    "description": "Supplier finance: The owner must void the linked invoice before reversing the receipt."
+  },
+  "backupSupplierFinanceInvalid": "Arsip memiliki tagihan, pembayaran, atau hubungan kas supplier yang tidak konsisten.",
+  "@backupSupplierFinanceInvalid": {
+    "description": "Supplier finance: The archive contains inconsistent supplier invoice, payment or cash relationships."
+  },
+  "m53SupplierCashOut": "Pecahan uang keluar dari laci",
+  "@m53SupplierCashOut": {
+    "description": "Supplier finance: Cash pieces paid from drawer"
+  },
+  "m53SupplierPaymentConfirm": "Konfirmasi pembayaran yang sudah dilakukan untuk satu tagihan ini. Aplikasi tidak mengeksekusi transfer.",
+  "@m53SupplierPaymentConfirm": {
+    "description": "Supplier finance: Confirm payment already made for this single invoice. The app does not execute transfers."
+  },
+  "m53SupplierSourcedrawer": "Dari laci kas",
+  "@m53SupplierSourcedrawer": {
+    "description": "Supplier finance: From cash drawer"
+  },
+  "m53SupplierSourcebank": "Transfer / bank",
+  "@m53SupplierSourcebank": {
+    "description": "Supplier finance: Transfer / bank"
+  },
+  "m53SupplierSourceownerFunds": "Dana pemilik",
+  "@m53SupplierSourceownerFunds": {
+    "description": "Supplier finance: Owner funds"
+  },
+  "m53SupplierPay": "Catat pembayaran",
+  "@m53SupplierPay": {
+    "description": "Supplier finance: Record payment"
+  },
+  "m53SupplierPaymentHelp": "Catat pembayaran nyata untuk satu tagihan. Transfer tidak mengubah saldo laci. Jika pencatatan kas aktif, pembayaran dari laci memerlukan sesi dan pecahan uang keluar.",
+  "@m53SupplierPaymentHelp": {
+    "description": "Supplier finance: Record an actual payment for one invoice. Transfers do not change drawer balance. When cash tracking is active, drawer payments require a session and outgoing pieces."
+  },
+  "m53SupplierPayRemaining": "Lunasi seluruh sisa",
+  "@m53SupplierPayRemaining": {
+    "description": "Supplier finance: Fill remaining balance"
+  },
+  "m53SupplierPaymentDate": "Tanggal pembayaran",
+  "@m53SupplierPaymentDate": {
+    "description": "Supplier finance: Payment date"
+  },
+  "m53SupplierPaymentSource": "Sumber pembayaran",
+  "@m53SupplierPaymentSource": {
+    "description": "Supplier finance: Payment source"
+  },
+  "m53SupplierPaymentReference": "Referensi pembayaran (opsional)",
+  "@m53SupplierPaymentReference": {
+    "description": "Supplier finance: Payment reference (optional)"
+  },
+  "m53SupplierPaymentNote": "Catatan pembayaran (opsional)",
+  "@m53SupplierPaymentNote": {
+    "description": "Supplier finance: Payment note (optional)"
+  },
+  "m53SupplierInitialActual": "Pembayaran awal yang dikonfirmasi pemilik",
+  "@m53SupplierInitialActual": {
+    "description": "Supplier finance: Initial payment confirmed by owner"
+  },
+  "m53SupplierInvoiceConfirm": "Simpan tagihan dari dokumen ini? Stok tidak diterima ulang. Untuk draft baru, penerimaan dan tagihan diposting bersama.",
+  "@m53SupplierInvoiceConfirm": {
+    "description": "Supplier finance: Save an invoice from this document? Existing stock is not received again. For a new draft, receipt and invoice are posted together."
+  },
+  "m53SupplierInvoiceNew": "Buat / rekonsiliasi tagihan",
+  "@m53SupplierInvoiceNew": {
+    "description": "Supplier finance: Create / reconcile invoice"
+  },
+  "m53SupplierInvoiceHelp": "Tagihan bersifat opsional. Nilainya mengikuti biaya dokumen. Syarat tunai saja tidak membuktikan pembayaran; hanya pembayaran aktual yang mengurangi saldo.",
+  "@m53SupplierInvoiceHelp": {
+    "description": "Supplier finance: Invoicing is optional. Its value follows document costs. Cash terms alone do not prove payment; only actual payments reduce the balance."
+  },
+  "m53SupplierHistoricalHelp": "Dokumen lama belum mencatat supplier atau biaya barangnya belum lengkap. Hanya pemilik dapat mengonfirmasi supplier, total keuangan dan alasan rekonsiliasi. Ini tidak melengkapi HPP atau membagi biaya per barang secara tebakan.",
+  "@m53SupplierHistoricalHelp": {
+    "description": "Supplier finance: The historical document has no supplier or incomplete item costs. Only the owner can confirm the supplier, financial total and reconciliation reason. This does not complete HPP or guess per-item cost allocations."
+  },
+  "m53SupplierInvoiceNumber": "Nomor faktur (opsional)",
+  "@m53SupplierInvoiceNumber": {
+    "description": "Supplier finance: Invoice number (optional)"
+  },
+  "m53SupplierInvoiceDate": "Tanggal tagihan",
+  "@m53SupplierInvoiceDate": {
+    "description": "Supplier finance: Invoice date"
+  },
+  "m53SupplierInvoiceTerms": "Kesepakatan pembayaran",
+  "@m53SupplierInvoiceTerms": {
+    "description": "Supplier finance: Payment terms"
+  },
+  "m53SupplierTermsCash": "Tunai / dibayar lunas",
+  "@m53SupplierTermsCash": {
+    "description": "Supplier finance: Cash / paid in full"
+  },
+  "m53SupplierTermsCredit": "Tempo / bayar sebagian",
+  "@m53SupplierTermsCredit": {
+    "description": "Supplier finance: Credit / partial payment"
+  },
+  "m53SupplierDue": "Jatuh tempo",
+  "@m53SupplierDue": {
+    "description": "Supplier finance: Due date"
+  },
+  "m53SupplierReportedInitial": "Sudah dibayar menurut catatan (opsional)",
+  "@m53SupplierReportedInitial": {
+    "description": "Supplier finance: Reported paid amount (optional)"
+  },
+  "m53SupplierReportedHelp": "Nominal catatan ini bukan pembayaran aktual dan tidak mengurangi utang. Pemilik harus mengonfirmasi pembayaran nyata secara terpisah.",
+  "@m53SupplierReportedHelp": {
+    "description": "Supplier finance: This reported amount is not an actual payment and does not reduce debt. The owner must separately confirm an actual payment."
+  },
+  "m53SupplierBillingCostsHelp": "Biaya ditampilkan khusus untuk tagihan, walau preferensi harga beli tersembunyi. Ketuk baris untuk melengkapi biaya.",
+  "@m53SupplierBillingCostsHelp": {
+    "description": "Supplier finance: Costs are shown for invoicing even when purchase prices are hidden. Tap a line to complete costs."
+  },
+  "m53SupplierReceiveInvoice": "Konfirmasi penerimaan + tagihan (opsional)",
+  "@m53SupplierReceiveInvoice": {
+    "description": "Supplier finance: Confirm receipt + invoice (optional)"
+  },
+  "m53SupplierInvoices": "Tagihan supplier",
+  "@m53SupplierInvoices": {
+    "description": "Supplier finance: Supplier invoices"
+  },
+  "m53SupplierUnreconciled": "Penerimaan belum direkonsiliasi",
+  "@m53SupplierUnreconciled": {
+    "description": "Supplier finance: Unreconciled receipts"
+  },
+  "m53SupplierFilterall": "Semua tagihan",
+  "@m53SupplierFilterall": {
+    "description": "Supplier finance: All invoices"
+  },
+  "m53SupplierFilteropen": "Belum lunas",
+  "@m53SupplierFilteropen": {
+    "description": "Supplier finance: Open balance"
+  },
+  "m53SupplierFilterpaid": "Lunas",
+  "@m53SupplierFilterpaid": {
+    "description": "Supplier finance: Paid"
+  },
+  "m53SupplierFilteroverdue": "Terlambat",
+  "@m53SupplierFilteroverdue": {
+    "description": "Supplier finance: Overdue"
+  },
+  "m53SupplierStatusunpaid": "Belum dibayar",
+  "@m53SupplierStatusunpaid": {
+    "description": "Supplier finance: Unpaid"
+  },
+  "m53SupplierStatuspartial": "Dibayar sebagian",
+  "@m53SupplierStatuspartial": {
+    "description": "Supplier finance: Partly paid"
+  },
+  "m53SupplierStatuspaid": "Lunas",
+  "@m53SupplierStatuspaid": {
+    "description": "Supplier finance: Paid"
+  },
+  "m53SupplierStatusvoided": "Dibatalkan",
+  "@m53SupplierStatusvoided": {
+    "description": "Supplier finance: Voided"
+  },
+  "m53SupplierNext": "Halaman berikutnya",
+  "@m53SupplierNext": {
+    "description": "Supplier finance: Next page"
+  },
+  "m53SupplierFirst": "Kembali ke halaman pertama",
+  "@m53SupplierFirst": {
+    "description": "Supplier finance: Back to first page"
+  },
+  "m53SupplierEmpty": "Tidak ada dokumen pada filter ini.",
+  "@m53SupplierEmpty": {
+    "description": "Supplier finance: No documents match this filter."
+  },
+  "m53SupplierPaid": "Pembayaran efektif",
+  "@m53SupplierPaid": {
+    "description": "Supplier finance: Effective payments"
+  },
+  "m53SupplierCredit": "Kredit diterapkan",
+  "@m53SupplierCredit": {
+    "description": "Supplier finance: Applied credit"
+  },
+  "m53SupplierRemaining": "Sisa tagihan",
+  "@m53SupplierRemaining": {
+    "description": "Supplier finance: Remaining balance"
+  },
+  "m53SupplierDueToday": "Jatuh tempo hari ini",
+  "@m53SupplierDueToday": {
+    "description": "Supplier finance: Due today"
+  },
+  "m53SupplierNotDue": "Belum jatuh tempo",
+  "@m53SupplierNotDue": {
+    "description": "Supplier finance: Not due yet"
+  },
+  "m53SupplierOverdue": "Lewat jatuh tempo",
+  "@m53SupplierOverdue": {
+    "description": "Supplier finance: Past due"
+  },
+  "m53SupplierInvoiceVoid": "Batalkan tagihan",
+  "@m53SupplierInvoiceVoid": {
+    "description": "Supplier finance: Void invoice"
+  },
+  "m53SupplierAmendDue": "Ubah jatuh tempo dengan alasan",
+  "@m53SupplierAmendDue": {
+    "description": "Supplier finance: Amend due date with reason"
+  },
+  "m53SupplierPayments": "Riwayat pembayaran",
+  "@m53SupplierPayments": {
+    "description": "Supplier finance: Payment history"
+  },
+  "m53SupplierReversePayment": "Balik pembayaran",
+  "@m53SupplierReversePayment": {
+    "description": "Supplier finance: Reverse payment"
+  },
+  "m53SupplierPaymentReversedLabel": "Pembayaran sudah dibalik",
+  "@m53SupplierPaymentReversedLabel": {
+    "description": "Supplier finance: Payment reversed"
+  },
+  "m53SupplierCashReturned": "Pecahan uang yang benar-benar dikembalikan",
+  "@m53SupplierCashReturned": {
+    "description": "Supplier finance: Cash pieces actually returned"
+  },
+  "m53SupplierCorrectionHelp": "Koreksi menyimpan jejak baru. Tulis alasan sebelum membatalkan, membalik pembayaran, atau mengubah jatuh tempo.",
+  "@m53SupplierCorrectionHelp": {
+    "description": "Supplier finance: Corrections append a new trace. Enter a reason before voiding, reversing payment or changing the due date."
+  },
+  "m53SupplierRetryPayment": "Coba lagi pembayaran yang sama",
+  "@m53SupplierRetryPayment": {
+    "description": "Supplier finance: Retry the same payment"
+  },
+  "m53SupplierCancelPendingPayment": "Batalkan isian pembayaran tertunda",
+  "@m53SupplierCancelPendingPayment": {
+    "description": "Supplier finance: Discard pending payment input"
+  },
+  "m53SupplierItems": "Barang pada dokumen sumber",
+  "@m53SupplierItems": {
+    "description": "Supplier finance: Source document items"
+  },
+  "m53SupplierSummaryScope": "Seluruh tagihan aktif supplier ini, saldo saat ini; pembayaran efektif bersih setelah pembalikan. Belum direkonsiliasi terpisah.",
+  "@m53SupplierSummaryScope": {
+    "description": "Supplier finance: All active invoices for this supplier, current balance; effective payments net of reversals. Unreconciled receipts are separate."
+  },
+  "m53SupplierPurchases": "Pembelian bruto dalam tagihan",
+  "@m53SupplierPurchases": {
+    "description": "Supplier finance: Gross invoiced purchases"
   }
 }

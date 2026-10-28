@@ -347,70 +347,152 @@ extension ReceiptDocuments on InventoryService {
 
   /// Whole-document atomic commit. Validate every baseline before the first
   /// write; repeated same-product lines then use the single valuation writer.
-  Future<EntityId> confirmReceiptDraft(EntityId id, int revision) => _write((
-    db,
-  ) async {
-    final current = await _receiptDraftOn(db, id);
-    if (current.status == 'posted') {
-      if (current.row['confirmed_revision'] != revision) {
+  Future<EntityId> confirmReceiptDraft(
+    EntityId id,
+    int revision, {
+    SupplierInvoiceInput? billing,
+    SupplierPaymentInput? initialPayment,
+  }) => _write(
+    (db) async {
+      final current = await _receiptDraftOn(db, id);
+      if (current.status == 'posted') {
+        if (current.row['confirmed_revision'] != revision) {
+          throw const AppError('m53ReceiptDraftChanged');
+        }
+        if (database.schemaVersion >= 31) {
+          final links = await db.query(
+            'receipt_invoice_confirmations',
+            where: 'draft_id=?',
+            whereArgs: [id.value],
+          );
+          if (links.isEmpty) {
+            if (billing != null || initialPayment != null) {
+              throw const AppError('m53ReceiptDraftChanged');
+            }
+          } else if (billing == null ||
+              links.single['request_hash'] !=
+                  SupplierService.fingerprint([
+                    billing.fingerprint,
+                    initialPayment?.fingerprint,
+                  ])) {
+            throw const AppError('m53ReceiptDraftChanged');
+          }
+        } else if (billing != null || initialPayment != null) {
+          throw const AppError('m53SupplierInputInvalid');
+        }
+        return current.receiptId!;
+      }
+      if (initialPayment != null && billing == null) {
+        throw const AppError('m53SupplierInputInvalid');
+      }
+      if (billing != null &&
+          (database.schemaVersion < 31 || billing.historicalTotal != null)) {
+        throw const AppError('m53SupplierInputInvalid');
+      }
+      if (initialPayment != null) await access.authorize(db);
+      final doc = await _editableReceiptOn(db, id, revision);
+      if (doc.lines.isEmpty) throw const AppError('m53ReceiptDraftEmpty');
+      final settings = (await db.query(
+        'store_settings',
+        columns: ['time_zone'],
+      )).single;
+      if (settings['time_zone'] != doc.row['time_zone']) {
         throw const AppError('m53ReceiptDraftChanged');
       }
-      return current.receiptId!;
-    }
-    final doc = await _editableReceiptOn(db, id, revision);
-    if (doc.lines.isEmpty) throw const AppError('m53ReceiptDraftEmpty');
-    final settings = (await db.query(
-      'store_settings',
-      columns: ['time_zone'],
-    )).single;
-    if (settings['time_zone'] != doc.row['time_zone']) {
-      throw const AppError('m53ReceiptDraftChanged');
-    }
-    await _relation(db, 'suppliers', doc.supplierId);
-    for (final line in doc.lines) {
-      final master = await _product(db, line.productId);
-      if (master['revision'] != line.productRevision ||
-          (database.schemaVersion >= 28 &&
-              (line.stockRevision == null ||
-                  master['stock_revision'] != line.stockRevision))) {
-        throw const AppError('productChangedReloadFirst');
+      await _relation(db, 'suppliers', doc.supplierId);
+      for (final line in doc.lines) {
+        final master = await _product(db, line.productId);
+        if (master['revision'] != line.productRevision ||
+            (database.schemaVersion >= 28 &&
+                (line.stockRevision == null ||
+                    master['stock_revision'] != line.stockRevision))) {
+          throw const AppError('productChangedReloadFirst');
+        }
       }
-    }
-    final receipt = InventoryService._ids.next();
-    await db.insert('stock_receipts', {
-      'id': receipt.value,
-      ...await _currency(db),
-      'supplier_id': doc.supplierId?.value,
-      'operation_key': 'receipt-draft/${id.value}',
-      'created_at': access.clock.milliseconds,
-    });
-    for (final line in doc.lines) {
-      final purchase = line.cost == null
-          ? null
-          : StockPurchase(line.input, line.cost!);
-      await _receive(
+      final receipt = InventoryService._ids.next();
+      await db.insert('stock_receipts', {
+        'id': receipt.value,
+        ...await _currency(db),
+        'supplier_id': doc.supplierId?.value,
+        'operation_key': 'receipt-draft/${id.value}',
+        'created_at': access.clock.milliseconds,
+      });
+      for (final line in doc.lines) {
+        final purchase = line.cost == null
+            ? null
+            : StockPurchase(line.input, line.cost!);
+        await _receive(
+          db,
+          line.productId,
+          line.input.quantityBase,
+          purchase?.unitCost,
+          purchase: purchase,
+          unknownInput: purchase == null ? line.input : null,
+          confirmedFree: line.confirmedFree,
+          supplierId: doc.supplierId,
+          expiry: line.expiry,
+          operationKey: 'receipt-draft-line/${line.id.value}',
+          document: _ReceiptDocumentContext(receipt, line.id),
+        );
+      }
+      if (billing != null) {
+        final finance = SupplierService(database, access);
+        final invoice = await finance.createInvoiceOn(
+          db,
+          receipt,
+          billing,
+          operationKey: 'receipt-invoice/${id.value}',
+        );
+        EntityId? payment;
+        if (initialPayment != null) {
+          SupplierService.optional(initialPayment.reference, 80);
+          SupplierService.optional(initialPayment.note, 300);
+          if (initialPayment.amount.currencyCode != invoice.currency.code ||
+              initialPayment.amount.scale != invoice.currency.scale) {
+            throw const AppError('currencyMismatch');
+          }
+          if (initialPayment.amount.amountMinor > 0) {
+            payment = await finance.postPaymentOn(
+              db,
+              invoice.id,
+              invoice.revision,
+              initialPayment,
+              operationKey: 'receipt-invoice-payment/${id.value}',
+            );
+          }
+        }
+        await db.insert('receipt_invoice_confirmations', {
+          'draft_id': id.value,
+          'receipt_id': receipt.value,
+          'invoice_id': invoice.id.value,
+          'payment_id': payment?.value,
+          'billing_json': jsonEncode(billing.fingerprint),
+          'payment_json': initialPayment == null
+              ? null
+              : jsonEncode(initialPayment.fingerprint),
+          'request_hash': SupplierService.fingerprint([
+            billing.fingerprint,
+            initialPayment?.fingerprint,
+          ]),
+        });
+      }
+      await _bumpReceiptOn(db, doc, {
+        'status': 'posted',
+        'receipt_id': receipt.value,
+        'confirmed_revision': revision,
+        'posted_at': access.clock.milliseconds,
+      });
+      await access.audit(
         db,
-        line.productId,
-        line.input.quantityBase,
-        purchase?.unitCost,
-        purchase: purchase,
-        unknownInput: purchase == null ? line.input : null,
-        confirmedFree: line.confirmedFree,
-        supplierId: doc.supplierId,
-        expiry: line.expiry,
-        operationKey: 'receipt-draft-line/${line.id.value}',
-        document: _ReceiptDocumentContext(receipt, line.id),
+        'receipt_document_posted',
+        entityId: receipt.value,
       );
-    }
-    await _bumpReceiptOn(db, doc, {
-      'status': 'posted',
-      'receipt_id': receipt.value,
-      'confirmed_revision': revision,
-      'posted_at': access.clock.milliseconds,
-    });
-    await access.audit(db, 'receipt_document_posted', entityId: receipt.value);
-    return receipt;
-  });
+      return receipt;
+    },
+    capability: initialPayment == null
+        ? ManagementCapability.inventory
+        : ManagementCapability.owner,
+  );
 
   Future<void> _receiptReferenceOn(
     DatabaseExecutor db,

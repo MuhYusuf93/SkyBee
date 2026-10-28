@@ -10,6 +10,7 @@ import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/management_session_provider.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/supplier_terms.dart';
+import 'supplier_invoices_screen.dart';
 
 /// Warehouse can read the supplier's agreement, but every mutation is owner
 /// authorized again by the service. No old receipt becomes paid or indebted.
@@ -128,6 +129,18 @@ class _SupplierTermsScreenState extends State<SupplierTermsScreen> {
                     key: const ValueKey('supplier-terms-error'),
                   ),
                 Text(tr(context, 'm53SupplierTermsHelp')),
+                TextButton(
+                  key: const ValueKey('supplier-invoices-open'),
+                  onPressed: busy
+                      ? null
+                      : () => Navigator.of(context).push<void>(
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                SupplierInvoicesScreen(id: widget.id),
+                          ),
+                        ),
+                  child: Text(tr(context, 'm53SupplierInvoices')),
+                ),
                 if (!owner) Text(tr(context, 'm53SupplierTermsReadOnly')),
                 if (terms != null)
                   SwitchListTile(

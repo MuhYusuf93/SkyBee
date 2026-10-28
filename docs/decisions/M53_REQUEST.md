@@ -1,5 +1,14 @@
 # Prompt Codex — SkyBee M5.3
 
+Ralat langsung pengguna 29 Oktober: §8 output label memakai QR code;
+[ketentuan QR](M53_QR_LABEL_AMENDMENT.md). Setelah **seluruh** M5.3 selesai,
+handoff `.skybee` pada kondisi pertama dibuka: backup lama terverifikasi dahulu,
+reset database paket tersebut, seed100produk beragam/beberapa supplier/pelanggan
+dan50transaksi, onboarding pending. Ini menggantikan larangan reset `.skybee`
+pada handoff akhir saja; data lama tetap dilindungi sampai tahap itu.
+[Ketentuan handoff baru](M53_FRESH_EXPLORATION_AMENDMENT.md). Dokumen lampiran
+asli di Downloads tidak diubah.
+
 Tanggal penyusunan: 26 Oktober 2026, WIB.
 Dasar: catatan pengguna `milestone 5.3` dan `STATUS(8).md` yang dilampirkan.
 Revisi 26 Oktober 2026: ditambahkan tagihan/pembayaran supplier, tempo, jadwal kedatangan, pengingat H-1 dan laporan utang supplier. Seluruh bagian di bawah sudah disesuaikan; gunakan dokumen lengkap ini sebagai pengganti versi sebelumnya.
@@ -262,10 +271,14 @@ Ini pencatatan pembelian dan utang supplier yang sederhana, **bukan integrasi tr
 
 ## 8. cetak, label dan kebijakan struk
 
+Ralat langsung pengguna29Oktober: label baru memakai **QR code**, bukan barcode.
+Semua ketentuan lain tetap, implementasi setelah E3 sesuai urutan. Lihat
+[ralat QR](M53_QR_LABEL_AMENDMENT.md); keterbacaan fisik tetap perlu bukti.
+
 1. Hilangkan informasi **“hampir kedaluwarsa”** dari template struk konsumen. Pengingat internal tetap ada di aplikasi/notifikasi. Jangan menghilangkan pemeriksaan kelayakan jual atau mengubah fakta transaksi.
-2. Tambahkan cetak label barcode dengan template terbatas: nama barang, kode/barcode dan harga opsional. Code128 untuk kode internal yang sesuai; EAN/UPC hanya jika data memenuhi format/check digit. Jangan mengarang kode GS1/EAN resmi untuk produk internal.
-3. Label harus mempunyai quiet zone, ukuran minimum modul yang terbaca, scaling benar, panjang nama dibatasi/wrap, dan preview jumlah label/ukuran fisik. Uji hasil encoder dengan decoder independen bila tersedia. Barcode yang terlalu padat harus ditolak/diubah ukuran template, bukan diperkecil sampai tidak terbaca.
-4. Dukungan label bergantung kemampuan printer/protokol. Reuse profil per printer yang sudah mendukung ESC/POS raster/kolom, TSPL/CPCL; cek kemampuan nyata. **Adanya opsi TSPL/CPCL tidak membuktikan printer mendukung sensor gap.** Printer struk continuous boleh mencetak barcode pada kertas biasa, tetapi bukan otomatis menjadi printer label gap.
+2. Tambahkan cetak label **QR code** dengan template terbatas: nama barang, identitas/kode produk dan harga opsional. Payload memakai identitas produk stabil untuk lookup literal, bukan URL/perintah. Jangan mengarang kode GS1/EAN resmi atau mengubah identitas produk lama.
+3. Label harus mempunyai quiet zone, ukuran minimum modul yang terbaca, scaling benar, panjang nama dibatasi/wrap, dan preview jumlah label/ukuran fisik. Uji hasil encoder dengan decoder independen bila tersedia. QR code yang terlalu padat harus ditolak/diubah ukuran template, bukan diperkecil sampai tidak terbaca.
+4. Dukungan label bergantung kemampuan printer/protokol. Reuse profil per printer yang sudah mendukung ESC/POS raster/kolom, TSPL/CPCL; cek kemampuan nyata. **Adanya opsi TSPL/CPCL tidak membuktikan printer mendukung sensor gap.** Printer struk continuous boleh mencetak QR code pada kertas biasa, tetapi bukan otomatis menjadi printer label gap.
 5. Pada printer label yang mendukungnya, sediakan ukuran label, gap, offset dan test/kalibrasi terbatas. Kirim perintah protokol hanya jika profil/kemampuan cocok. Jangan mengirim empat protokol coba-coba ke satu printer, melakukan factory reset, atau merusak profil struk lama. Simpan pengaturan label terpisah dari layout struk.
 6. Pertahankan lebar58/80mm, dots/profile, pilihan transport, padding/alignment dan **feed manual0–8/default3 sesuai baseline terbaru**, termasuk migrasi profil legacy yang sudah diperbaiki. Jangan mengembalikan default6 tanpa alasan baru yang diuji.
 7. Tambahkan pengaturan pemilik **“Wajib mencetak struk sebelum transaksi berikutnya”**, default nonaktif. Status sale selesai/commit tidak bergantung keberhasilan printer; stok/piutang/uang hanya berubah sekali. Saat diwajibkan, tombol “Belanja berikutnya” memberi peringatan dan tetap di hasil transaksi bila syarat belum terpenuhi, dengan akses langsung pengaturan printer publik dan cetak ulang.

@@ -3567,4 +3567,273 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m53SupplierMissing =>
       'Supplier not found. Reload the supplier list.';
+
+  @override
+  String get m53SupplierInputInvalid => 'Check the invoice or payment fields.';
+
+  @override
+  String get m53SupplierAccessChanged =>
+      'Access changed while saving. Unlock and review the result before retrying.';
+
+  @override
+  String get m53SupplierInvoiceMissing => 'Invoice not found.';
+
+  @override
+  String get m53SupplierInvoiceChanged =>
+      'The invoice or list changed. Reload and review before continuing.';
+
+  @override
+  String get m53SupplierReceiptMissing =>
+      'Receipt not found or contains no items.';
+
+  @override
+  String get m53SupplierReceiptNotPurchase =>
+      'This document is not a purchase receipt eligible for invoicing.';
+
+  @override
+  String get m53SupplierInvoiceSourceMismatch =>
+      'Supplier must match the receiving document.';
+
+  @override
+  String get m53SupplierInvoiceNeedsSupplier =>
+      'Choose a supplier on the document before creating an invoice.';
+
+  @override
+  String get m53SupplierArchived =>
+      'Supplier is archived. Reactivate it before creating a new invoice.';
+
+  @override
+  String get m53SupplierCreditNotAllowed =>
+      'This supplier does not allow credit yet. The owner can update supplier terms.';
+
+  @override
+  String get m53SupplierDueInvalid =>
+      'Credit requires a due date on or after the invoice date.';
+
+  @override
+  String get m53SupplierInvoiceCostUnknown =>
+      'Complete the costs of all receiving lines to create an invoice. The owner can separately reconcile a historical total if old costs are incomplete.';
+
+  @override
+  String get m53SupplierInvoicePrecision =>
+      'The source total is finer than one minor currency unit. Review document costs; debt cannot be silently rounded.';
+
+  @override
+  String get m53SupplierPaymentInvalid =>
+      'Amount must be positive, within the remaining balance, with matching cash details.';
+
+  @override
+  String get m53SupplierInvoiceExists =>
+      'This receipt already has an active invoice. Open that invoice.';
+
+  @override
+  String get m53SupplierPaymentDateInvalid =>
+      'Payment date cannot be in the future.';
+
+  @override
+  String get m53SupplierPaymentMissing => 'Payment not found.';
+
+  @override
+  String get m53SupplierPaymentReversed =>
+      'This payment has already been reversed.';
+
+  @override
+  String get m53SupplierCashReturnRequired =>
+      'Record the cash actually returned to the drawer, with exact pieces and an active cash session.';
+
+  @override
+  String get m53SupplierInvoiceDependencies =>
+      'Reverse effective payments or credits before voiding the invoice.';
+
+  @override
+  String get m53SupplierInvoiceBlocksReceiptReversal =>
+      'The owner must void the linked invoice before reversing the receipt.';
+
+  @override
+  String get backupSupplierFinanceInvalid =>
+      'The archive contains inconsistent supplier invoice, payment or cash relationships.';
+
+  @override
+  String get m53SupplierCashOut => 'Cash pieces paid from drawer';
+
+  @override
+  String get m53SupplierPaymentConfirm =>
+      'Confirm payment already made for this single invoice. The app does not execute transfers.';
+
+  @override
+  String get m53SupplierSourcedrawer => 'From cash drawer';
+
+  @override
+  String get m53SupplierSourcebank => 'Transfer / bank';
+
+  @override
+  String get m53SupplierSourceownerFunds => 'Owner funds';
+
+  @override
+  String get m53SupplierPay => 'Record payment';
+
+  @override
+  String get m53SupplierPaymentHelp =>
+      'Record an actual payment for one invoice. Transfers do not change drawer balance. When cash tracking is active, drawer payments require a session and outgoing pieces.';
+
+  @override
+  String get m53SupplierPayRemaining => 'Fill remaining balance';
+
+  @override
+  String get m53SupplierPaymentDate => 'Payment date';
+
+  @override
+  String get m53SupplierPaymentSource => 'Payment source';
+
+  @override
+  String get m53SupplierPaymentReference => 'Payment reference (optional)';
+
+  @override
+  String get m53SupplierPaymentNote => 'Payment note (optional)';
+
+  @override
+  String get m53SupplierInitialActual => 'Initial payment confirmed by owner';
+
+  @override
+  String get m53SupplierInvoiceConfirm =>
+      'Save an invoice from this document? Existing stock is not received again. For a new draft, receipt and invoice are posted together.';
+
+  @override
+  String get m53SupplierInvoiceNew => 'Create / reconcile invoice';
+
+  @override
+  String get m53SupplierInvoiceHelp =>
+      'Invoicing is optional. Its value follows document costs. Cash terms alone do not prove payment; only actual payments reduce the balance.';
+
+  @override
+  String get m53SupplierHistoricalHelp =>
+      'The historical document has no supplier or incomplete item costs. Only the owner can confirm the supplier, financial total and reconciliation reason. This does not complete HPP or guess per-item cost allocations.';
+
+  @override
+  String get m53SupplierInvoiceNumber => 'Invoice number (optional)';
+
+  @override
+  String get m53SupplierInvoiceDate => 'Invoice date';
+
+  @override
+  String get m53SupplierInvoiceTerms => 'Payment terms';
+
+  @override
+  String get m53SupplierTermsCash => 'Cash / paid in full';
+
+  @override
+  String get m53SupplierTermsCredit => 'Credit / partial payment';
+
+  @override
+  String get m53SupplierDue => 'Due date';
+
+  @override
+  String get m53SupplierReportedInitial => 'Reported paid amount (optional)';
+
+  @override
+  String get m53SupplierReportedHelp =>
+      'This reported amount is not an actual payment and does not reduce debt. The owner must separately confirm an actual payment.';
+
+  @override
+  String get m53SupplierBillingCostsHelp =>
+      'Costs are shown for invoicing even when purchase prices are hidden. Tap a line to complete costs.';
+
+  @override
+  String get m53SupplierReceiveInvoice =>
+      'Confirm receipt + invoice (optional)';
+
+  @override
+  String get m53SupplierInvoices => 'Supplier invoices';
+
+  @override
+  String get m53SupplierUnreconciled => 'Unreconciled receipts';
+
+  @override
+  String get m53SupplierFilterall => 'All invoices';
+
+  @override
+  String get m53SupplierFilteropen => 'Open balance';
+
+  @override
+  String get m53SupplierFilterpaid => 'Paid';
+
+  @override
+  String get m53SupplierFilteroverdue => 'Overdue';
+
+  @override
+  String get m53SupplierStatusunpaid => 'Unpaid';
+
+  @override
+  String get m53SupplierStatuspartial => 'Partly paid';
+
+  @override
+  String get m53SupplierStatuspaid => 'Paid';
+
+  @override
+  String get m53SupplierStatusvoided => 'Voided';
+
+  @override
+  String get m53SupplierNext => 'Next page';
+
+  @override
+  String get m53SupplierFirst => 'Back to first page';
+
+  @override
+  String get m53SupplierEmpty => 'No documents match this filter.';
+
+  @override
+  String get m53SupplierPaid => 'Effective payments';
+
+  @override
+  String get m53SupplierCredit => 'Applied credit';
+
+  @override
+  String get m53SupplierRemaining => 'Remaining balance';
+
+  @override
+  String get m53SupplierDueToday => 'Due today';
+
+  @override
+  String get m53SupplierNotDue => 'Not due yet';
+
+  @override
+  String get m53SupplierOverdue => 'Past due';
+
+  @override
+  String get m53SupplierInvoiceVoid => 'Void invoice';
+
+  @override
+  String get m53SupplierAmendDue => 'Amend due date with reason';
+
+  @override
+  String get m53SupplierPayments => 'Payment history';
+
+  @override
+  String get m53SupplierReversePayment => 'Reverse payment';
+
+  @override
+  String get m53SupplierPaymentReversedLabel => 'Payment reversed';
+
+  @override
+  String get m53SupplierCashReturned => 'Cash pieces actually returned';
+
+  @override
+  String get m53SupplierCorrectionHelp =>
+      'Corrections append a new trace. Enter a reason before voiding, reversing payment or changing the due date.';
+
+  @override
+  String get m53SupplierRetryPayment => 'Retry the same payment';
+
+  @override
+  String get m53SupplierCancelPendingPayment => 'Discard pending payment input';
+
+  @override
+  String get m53SupplierItems => 'Source document items';
+
+  @override
+  String get m53SupplierSummaryScope =>
+      'All active invoices for this supplier, current balance; effective payments net of reversals. Unreconciled receipts are separate.';
+
+  @override
+  String get m53SupplierPurchases => 'Gross invoiced purchases';
 }

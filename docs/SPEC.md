@@ -1,5 +1,18 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Tagihan/payment supplier memakai schema31 aditif, receipt-source snapshot, owner actualpayment, atomic receiving dan validator replay bounded: [keputusan](decisions/M53_SUPPLIER_FINANCE.md). Retur/kredit/jadwal E3 berikutnya; native E3 wajib sebelum F.
+
+29 Oktober — ralat langsung pengguna: setelah seluruh M5.3 selesai, handoff
+.skybee kondisi pertama dibuka dengan reset database lama dan seed sintetis
+100 produk beragam, beberapa supplier/pelanggan, 50 transaksi. Cadangan lama
+harus dibuat/diverifikasi dahulu; reset belum dilakukan. Lihat
+[keputusan handoff baru](decisions/M53_FRESH_EXPLORATION_AMENDMENT.md).
+
+Ralat pengguna29Oktober untuk M5.3 bagian8: output label baru **QR code**,
+menggantikan barcode; ketentuan lain tetap. Dikerjakan setelah E3 sesuai urutan,
+payload produk stabil/lookup literal dan kualitas fisik tetap diverifikasi:
+[keputusan QR label](decisions/M53_QR_LABEL_AMENDMENT.md).
+
 Prasyarat keuangan supplier E3 memakai izin tempo defaultoff dan riwayat
 perubahan aditif30, owner-only CAS dengan baca operasional Gudang. Tidak
 menginfer payment/utang dari penerimaan lama:

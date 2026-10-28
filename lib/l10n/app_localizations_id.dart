@@ -3574,4 +3574,277 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m53SupplierMissing =>
       'Supplier tidak ditemukan. Muat ulang daftar supplier.';
+
+  @override
+  String get m53SupplierInputInvalid =>
+      'Periksa isian tagihan atau pembayaran.';
+
+  @override
+  String get m53SupplierAccessChanged =>
+      'Akses berubah saat menyimpan. Buka kembali akses dan tinjau hasil sebelum mencoba lagi.';
+
+  @override
+  String get m53SupplierInvoiceMissing => 'Tagihan tidak ditemukan.';
+
+  @override
+  String get m53SupplierInvoiceChanged =>
+      'Tagihan atau daftar berubah. Muat ulang dan tinjau sebelum melanjutkan.';
+
+  @override
+  String get m53SupplierReceiptMissing =>
+      'Penerimaan tidak ditemukan atau tidak memiliki barang.';
+
+  @override
+  String get m53SupplierReceiptNotPurchase =>
+      'Dokumen ini bukan penerimaan pembelian yang dapat ditagihkan.';
+
+  @override
+  String get m53SupplierInvoiceSourceMismatch =>
+      'Supplier harus sesuai dokumen penerimaan.';
+
+  @override
+  String get m53SupplierInvoiceNeedsSupplier =>
+      'Pilih supplier pada dokumen sebelum membuat tagihan.';
+
+  @override
+  String get m53SupplierArchived =>
+      'Supplier diarsipkan. Aktifkan kembali sebelum membuat tagihan baru.';
+
+  @override
+  String get m53SupplierCreditNotAllowed =>
+      'Supplier belum mengizinkan pembayaran tempo. Pemilik dapat memperbarui syarat supplier.';
+
+  @override
+  String get m53SupplierDueInvalid =>
+      'Tanggal jatuh tempo wajib untuk tempo dan tidak boleh sebelum tanggal tagihan.';
+
+  @override
+  String get m53SupplierInvoiceCostUnknown =>
+      'Lengkapi biaya seluruh baris penerimaan untuk membuat tagihan. Pemilik dapat merekonsiliasi total historis terpisah bila biaya lama tidak lengkap.';
+
+  @override
+  String get m53SupplierInvoicePrecision =>
+      'Total sumber belum tepat pada satuan mata uang terkecil. Tinjau biaya dokumen; jangan membulatkan utang secara diam-diam.';
+
+  @override
+  String get m53SupplierPaymentInvalid =>
+      'Nominal harus positif, tidak melebihi sisa tagihan, dan rincian kas harus cocok.';
+
+  @override
+  String get m53SupplierInvoiceExists =>
+      'Penerimaan ini sudah memiliki tagihan aktif. Buka tagihan tersebut.';
+
+  @override
+  String get m53SupplierPaymentDateInvalid =>
+      'Tanggal pembayaran tidak boleh di masa depan.';
+
+  @override
+  String get m53SupplierPaymentMissing => 'Pembayaran tidak ditemukan.';
+
+  @override
+  String get m53SupplierPaymentReversed => 'Pembayaran ini sudah dibalik.';
+
+  @override
+  String get m53SupplierCashReturnRequired =>
+      'Catat uang yang benar-benar kembali ke laci, dengan pecahan tepat dan sesi kas aktif.';
+
+  @override
+  String get m53SupplierInvoiceDependencies =>
+      'Balik pembayaran atau kredit efektif sebelum membatalkan tagihan.';
+
+  @override
+  String get m53SupplierInvoiceBlocksReceiptReversal =>
+      'Batalkan tagihan terkait melalui pemilik sebelum membalik penerimaan.';
+
+  @override
+  String get backupSupplierFinanceInvalid =>
+      'Arsip memiliki tagihan, pembayaran, atau hubungan kas supplier yang tidak konsisten.';
+
+  @override
+  String get m53SupplierCashOut => 'Pecahan uang keluar dari laci';
+
+  @override
+  String get m53SupplierPaymentConfirm =>
+      'Konfirmasi pembayaran yang sudah dilakukan untuk satu tagihan ini. Aplikasi tidak mengeksekusi transfer.';
+
+  @override
+  String get m53SupplierSourcedrawer => 'Dari laci kas';
+
+  @override
+  String get m53SupplierSourcebank => 'Transfer / bank';
+
+  @override
+  String get m53SupplierSourceownerFunds => 'Dana pemilik';
+
+  @override
+  String get m53SupplierPay => 'Catat pembayaran';
+
+  @override
+  String get m53SupplierPaymentHelp =>
+      'Catat pembayaran nyata untuk satu tagihan. Transfer tidak mengubah saldo laci. Jika pencatatan kas aktif, pembayaran dari laci memerlukan sesi dan pecahan uang keluar.';
+
+  @override
+  String get m53SupplierPayRemaining => 'Lunasi seluruh sisa';
+
+  @override
+  String get m53SupplierPaymentDate => 'Tanggal pembayaran';
+
+  @override
+  String get m53SupplierPaymentSource => 'Sumber pembayaran';
+
+  @override
+  String get m53SupplierPaymentReference => 'Referensi pembayaran (opsional)';
+
+  @override
+  String get m53SupplierPaymentNote => 'Catatan pembayaran (opsional)';
+
+  @override
+  String get m53SupplierInitialActual =>
+      'Pembayaran awal yang dikonfirmasi pemilik';
+
+  @override
+  String get m53SupplierInvoiceConfirm =>
+      'Simpan tagihan dari dokumen ini? Stok tidak diterima ulang. Untuk draft baru, penerimaan dan tagihan diposting bersama.';
+
+  @override
+  String get m53SupplierInvoiceNew => 'Buat / rekonsiliasi tagihan';
+
+  @override
+  String get m53SupplierInvoiceHelp =>
+      'Tagihan bersifat opsional. Nilainya mengikuti biaya dokumen. Syarat tunai saja tidak membuktikan pembayaran; hanya pembayaran aktual yang mengurangi saldo.';
+
+  @override
+  String get m53SupplierHistoricalHelp =>
+      'Dokumen lama belum mencatat supplier atau biaya barangnya belum lengkap. Hanya pemilik dapat mengonfirmasi supplier, total keuangan dan alasan rekonsiliasi. Ini tidak melengkapi HPP atau membagi biaya per barang secara tebakan.';
+
+  @override
+  String get m53SupplierInvoiceNumber => 'Nomor faktur (opsional)';
+
+  @override
+  String get m53SupplierInvoiceDate => 'Tanggal tagihan';
+
+  @override
+  String get m53SupplierInvoiceTerms => 'Kesepakatan pembayaran';
+
+  @override
+  String get m53SupplierTermsCash => 'Tunai / dibayar lunas';
+
+  @override
+  String get m53SupplierTermsCredit => 'Tempo / bayar sebagian';
+
+  @override
+  String get m53SupplierDue => 'Jatuh tempo';
+
+  @override
+  String get m53SupplierReportedInitial =>
+      'Sudah dibayar menurut catatan (opsional)';
+
+  @override
+  String get m53SupplierReportedHelp =>
+      'Nominal catatan ini bukan pembayaran aktual dan tidak mengurangi utang. Pemilik harus mengonfirmasi pembayaran nyata secara terpisah.';
+
+  @override
+  String get m53SupplierBillingCostsHelp =>
+      'Biaya ditampilkan khusus untuk tagihan, walau preferensi harga beli tersembunyi. Ketuk baris untuk melengkapi biaya.';
+
+  @override
+  String get m53SupplierReceiveInvoice =>
+      'Konfirmasi penerimaan + tagihan (opsional)';
+
+  @override
+  String get m53SupplierInvoices => 'Tagihan supplier';
+
+  @override
+  String get m53SupplierUnreconciled => 'Penerimaan belum direkonsiliasi';
+
+  @override
+  String get m53SupplierFilterall => 'Semua tagihan';
+
+  @override
+  String get m53SupplierFilteropen => 'Belum lunas';
+
+  @override
+  String get m53SupplierFilterpaid => 'Lunas';
+
+  @override
+  String get m53SupplierFilteroverdue => 'Terlambat';
+
+  @override
+  String get m53SupplierStatusunpaid => 'Belum dibayar';
+
+  @override
+  String get m53SupplierStatuspartial => 'Dibayar sebagian';
+
+  @override
+  String get m53SupplierStatuspaid => 'Lunas';
+
+  @override
+  String get m53SupplierStatusvoided => 'Dibatalkan';
+
+  @override
+  String get m53SupplierNext => 'Halaman berikutnya';
+
+  @override
+  String get m53SupplierFirst => 'Kembali ke halaman pertama';
+
+  @override
+  String get m53SupplierEmpty => 'Tidak ada dokumen pada filter ini.';
+
+  @override
+  String get m53SupplierPaid => 'Pembayaran efektif';
+
+  @override
+  String get m53SupplierCredit => 'Kredit diterapkan';
+
+  @override
+  String get m53SupplierRemaining => 'Sisa tagihan';
+
+  @override
+  String get m53SupplierDueToday => 'Jatuh tempo hari ini';
+
+  @override
+  String get m53SupplierNotDue => 'Belum jatuh tempo';
+
+  @override
+  String get m53SupplierOverdue => 'Lewat jatuh tempo';
+
+  @override
+  String get m53SupplierInvoiceVoid => 'Batalkan tagihan';
+
+  @override
+  String get m53SupplierAmendDue => 'Ubah jatuh tempo dengan alasan';
+
+  @override
+  String get m53SupplierPayments => 'Riwayat pembayaran';
+
+  @override
+  String get m53SupplierReversePayment => 'Balik pembayaran';
+
+  @override
+  String get m53SupplierPaymentReversedLabel => 'Pembayaran sudah dibalik';
+
+  @override
+  String get m53SupplierCashReturned =>
+      'Pecahan uang yang benar-benar dikembalikan';
+
+  @override
+  String get m53SupplierCorrectionHelp =>
+      'Koreksi menyimpan jejak baru. Tulis alasan sebelum membatalkan, membalik pembayaran, atau mengubah jatuh tempo.';
+
+  @override
+  String get m53SupplierRetryPayment => 'Coba lagi pembayaran yang sama';
+
+  @override
+  String get m53SupplierCancelPendingPayment =>
+      'Batalkan isian pembayaran tertunda';
+
+  @override
+  String get m53SupplierItems => 'Barang pada dokumen sumber';
+
+  @override
+  String get m53SupplierSummaryScope =>
+      'Seluruh tagihan aktif supplier ini, saldo saat ini; pembayaran efektif bersih setelah pembalikan. Belum direkonsiliasi terpisah.';
+
+  @override
+  String get m53SupplierPurchases => 'Pembelian bruto dalam tagihan';
 }
