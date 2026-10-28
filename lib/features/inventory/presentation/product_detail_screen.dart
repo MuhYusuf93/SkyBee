@@ -17,13 +17,12 @@ import '../domain/stock_rules.dart';
 import '../domain/stock_input.dart';
 import 'stock_input_fields.dart';
 import 'confirm_free_cost.dart';
-import 'expiry_date_field.dart';
 import 'product_detail_provider.dart';
 import 'product_form.dart';
 import 'valuation_reconciliation_screen.dart';
 import 'stock_tracking_screen.dart';
-import 'relation_field.dart';
 import 'inventory_history_screen.dart';
+import 'receipt_line_editor.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key, required this.id});
@@ -61,6 +60,30 @@ class _DetailBody extends StatelessWidget {
     String kind, {
     StockBatch? batch,
   }) async {
+    if (kind == 'receive') {
+      final services = parent.read<AppServices>();
+      await Navigator.of(parent).push<bool>(
+        MaterialPageRoute(
+          builder: (_) => ReceiptLineEditor(
+            product: state.product!,
+            onSave: (line) async {
+              await services.inventory.receiveInput(
+                line.productId,
+                line.stock,
+                line.cost,
+                expectedRevision: line.expectedRevision,
+                operationKey: line.operationKey,
+                confirmedFree: line.confirmedFree,
+                supplierId: line.supplierId,
+                expiry: line.expiry,
+              );
+            },
+          ),
+        ),
+      );
+      if (parent.mounted) await state.load();
+      return;
+    }
     final policy = await parent.read<AppServices>().settings.featurePolicy();
     if (!parent.mounted) return;
     final stockInput = StockInputController(
@@ -72,9 +95,7 @@ class _DetailBody extends StatelessWidget {
           text: kind == 'count' ? state.product!.quantity.toString() : '',
         ),
         cost = MoneyEditingController(),
-        reason = TextEditingController(),
-        expiry = TextEditingController();
-    MasterRecord? supplier;
+        reason = TextEditingController();
     String? error;
     bool busy = false;
     final key = const IdGenerator().next().value;
@@ -85,7 +106,6 @@ class _DetailBody extends StatelessWidget {
           capability: ManagementCapability.inventory,
           child: AlertDialog(
             title: Text(switch (kind) {
-              'receive' => tr(context, 'receiveStock'),
               'count' => tr(context, 'stockCount'),
               'reverse' => tr(context, 'reverseLatestReceipt'),
               _ => tr(context, 'removeStock'),
@@ -94,19 +114,14 @@ class _DetailBody extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (kind == 'receive' || kind == 'count')
+                  if (kind == 'count')
                     StockInputFields(
                       controller: stockInput,
                       enabled: !busy,
-                      quantityLabel: tr(
-                        context,
-                        kind == 'count'
-                            ? 'currentPhysicalQuantity'
-                            : 'unitQuantity',
-                      ),
+                      quantityLabel: tr(context, 'currentPhysicalQuantity'),
                       onUnitChanged: () => setState(() {}),
                     ),
-                  if (kind != 'reverse' && kind != 'receive' && kind != 'count')
+                  if (kind != 'reverse' && kind != 'count')
                     ManagedTextField(
                       controller: quantity,
                       keyboardType: TextInputType.number,
@@ -117,44 +132,23 @@ class _DetailBody extends StatelessWidget {
                             : tr(context, 'unitQuantity'),
                       ),
                     ),
-                  if (policy.cost &&
-                      (kind == 'receive' ||
-                          kind == 'count' ||
-                          kind == 'valuation'))
+                  if (policy.cost && (kind == 'count' || kind == 'valuation'))
                     MoneyField(
                       controller: cost,
                       enabled: !busy,
-                      label: kind == 'receive'
-                          ? tr(
-                              context,
-                              stockInput.unit == StockInputUnit.pack
-                                  ? 'm31PurchasePerPack'
-                                  : 'purchasePricePerUnit',
-                            )
-                          : tr(
-                              context,
-                              kind == 'valuation'
-                                  ? 'm53PoolTotalCost'
-                                  : 'purchasePriceWhenStockIsEmpty',
-                            ),
-                    ),
-                  if (kind == 'receive') ...[
-                    if (state.product!.expiryEnabled)
-                      ExpiryDateField(controller: expiry, enabled: !busy),
-                    RelationField(
-                      kind: MasterKind.supplier,
-                      value: supplier,
-                      enabled: !busy,
-                      onChanged: (value) => setState(() => supplier = value),
-                    ),
-                  ],
-                  if (kind != 'receive')
-                    ManagedTextField(
-                      controller: reason,
-                      decoration: InputDecoration(
-                        labelText: tr(context, 'correctionReason'),
+                      label: tr(
+                        context,
+                        kind == 'valuation'
+                            ? 'm53PoolTotalCost'
+                            : 'purchasePriceWhenStockIsEmpty',
                       ),
                     ),
+                  ManagedTextField(
+                    controller: reason,
+                    decoration: InputDecoration(
+                      labelText: tr(context, 'correctionReason'),
+                    ),
+                  ),
                   if (kind == 'reverse')
                     Text(tr(context, 'aReceiptCanBeReversedOnlyIf')),
                   if (error != null) Text(message(context, error!)),
@@ -193,18 +187,6 @@ class _DetailBody extends StatelessWidget {
                         final success = await state.run(() async {
                           final service = state.service;
                           switch (kind) {
-                            case 'receive':
-                              await service.receiveInput(
-                                state.id,
-                                stockInput.parse(positive: true),
-                                enteredCost,
-                                confirmedFree: confirmedFree,
-                                operationKey: key,
-                                supplierId: supplier?.id,
-                                expiry: expiry.text.trim().isEmpty
-                                    ? null
-                                    : CalendarDate(expiry.text.trim()),
-                              );
                             case 'count':
                               await service.adjustInput(
                                 state.id,
@@ -249,7 +231,7 @@ class _DetailBody extends StatelessWidget {
       ),
     );
     stockInput.dispose();
-    for (final c in [quantity, cost, reason, expiry]) {
+    for (final c in [quantity, cost, reason]) {
       c.dispose();
     }
   }

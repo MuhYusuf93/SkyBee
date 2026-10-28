@@ -39,12 +39,19 @@ class StockInputFields extends StatelessWidget {
     required this.quantityLabel,
     this.enabled = true,
     this.errorText,
+    this.packErrorText,
+    this.quantityFocus,
+    this.packFocus,
+    this.packFieldKey,
   });
   final StockInputController controller;
   final VoidCallback onUnitChanged;
   final String quantityLabel;
   final bool enabled;
   final String? errorText;
+  final String? packErrorText;
+  final FocusNode? quantityFocus, packFocus;
+  final Key? packFieldKey;
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,6 +83,7 @@ class StockInputFields extends StatelessWidget {
       ),
       ManagedTextField(
         controller: controller.quantity,
+        focusNode: quantityFocus,
         enabled: enabled,
         keyboardType: TextInputType.number,
         inputFormatters: const [WholeQuantityFormatter()],
@@ -90,12 +98,15 @@ class StockInputFields extends StatelessWidget {
       if (controller.unit == StockInputUnit.pack) ...[
         ManagedTextField(
           controller: controller.size,
+          key: packFieldKey,
+          focusNode: packFocus,
           enabled: enabled,
           keyboardType: TextInputType.number,
           inputFormatters: const [WholeQuantityFormatter()],
           decoration: InputDecoration(
             labelText: tr(context, 'm31PackSize'),
             helperText: tr(context, 'm31ReceiptOverride'),
+            errorText: packErrorText,
           ),
         ),
         ListenableBuilder(

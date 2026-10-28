@@ -481,3 +481,11 @@ disclosure pada state form ketika lazy row dibuang. Dialog teks besar memerlukan
 AlertDialog.scrollable agar title+content dapat bergulir; hanya membungkus content
 belum menjamin title/actions muat. Kasus grosir99/threshold100 mempertahankan
 draft saat Review dan menjadi bersih lagi ketika kembali100, ID/EN320px/text2x.
+
+126. Field pertama invalid tidak menerima focus ketika Save masih membuatnya
+disabled. Pertahankan guard busy untuk submit ganda, bangun field error dalam
+keadaan enabled, tunggu endOfFrame lalu reveal/focus. Pada test gratis0, dialog
+konfirmasi menutupi Save: jangan menganggap tombol route bawah hit-testable.
+Cancel/confirm modal aktual, dan uji rapid tap sebelum modal pada kasus terpisah.
+Partial decimal/composing tetap input pengguna ketika basis harga berubah;
+simpan basis asal, jangan menghapus atau melabel ulang angka yang belum selesai.

@@ -1,5 +1,10 @@
 # Matriks persyaratan
 
+28Oktober14:00 — Poco F6 dipakai pribadi. [Checkpoint terakhir](M53_POCO_CHECKPOINT.md)
+menyimpan d5f7210/schema26 dan7PASS/659hash lama cocok. Delta berikut serta
+pemasangan H pada Poco DEFERRED sampai perangkat tersedia kembali. Hasil
+historis di bawah tidak menyatakan perubahan baru sudah diuji pada Poco.
+
 26 Oktober — klarifikasi pengguna: Back terkunci dengan form berubah tetap
 memunculkan peringatan generik. Tetap terkunci atau buang dan kembali ke Kasir;
 tidak commit, tidak membuka data tanpa autentikasi, cart/tender tetap.
@@ -16,7 +21,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir schema20:21kasus+API1 native22 per DV/Poco PASS (M53_CASHIER_LOCK_REPORT), defaultoff tanpa grant Kelola |
 | M53-C | Pencarian/popularitas, uang cepat, member/piutang | Tender21 host/native17 per perangkat PASS. Member22 host20/regresi79/native20 per perangkat PASS. Search23 host51 (17search)/M52focus1/native13 per DV/Poco PASS;680/611hash lama cocok. Lihat M53_TENDER_REPORT, M53_MEMBER_REPORT, M53_SEARCH_REPORT |
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
-| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Kamera host12/native14 per DV/Poco PASS; physical decode belum verified. Ons25 host31/native6 per perangkat PASS. Browse26 host32+inventory2/native7 per DV/Poco PASS;728/659hash sama/source551match. Lastpurchase/formoperasi, dokumen/supplier masih TODO. Lihat M53_BARCODE_REPORT, M53_ONS_REPORT, M53_WAREHOUSE_REPORT dan checkpoint |
+| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Kamera host12/native14 per DV/Poco PASS; physical decode belum verified. Ons25 host31/native6 per perangkat PASS. Browse26 host32+inventory2/native7 per DV/Poco PASS. Lastpurchase/editor26 host13/regresi43/DV13 PASS;737hash lama cocok/source563match, Poco delta DEFERRED. Dokumen/opname/supplier masih TODO. Lihat M53_BARCODE_REPORT, M53_ONS_REPORT, M53_WAREHOUSE_REPORT, M53_RECEIPT_REPORT dan checkpoint |
 | M53-F | Label/struk wajib dan laporan/ekspor baru | TODO |
 | M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |
 | M53-H | Build/push/update eksplorasi in-place dan preservasi | Build debug native M5.3 hanya package integration. Build ordinary/release/handoff M5.3 belum; .skybee eksplorasi+12/schema14 tetap tanpa update/reset. Artifact ordinary lama bukan bukti handoff source26 |

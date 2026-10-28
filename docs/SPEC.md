@@ -1,5 +1,10 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Harga pembelian terakhir dan editor penerimaan tunggal M5.3 mengikuti
+[keputusan editor](decisions/M53_RECEIPT_EDITOR.md): sumber actual/reference/
+unknown, konversi tepat per basis input, ownership draft dan revision guard.
+Dokumen multi-item/opname serta keuangan supplier tetap kebutuhan E berikutnya.
+
 Daftar gudang/supplier master M5.3 mengikuti [keputusan browse](decisions/M53_WAREHOUSE_BROWSE.md):
 ranking expiry/stockout/terbaru di SQL, cursor berkonteks, filter gabungan,
 supplier master terpisah penerimaan dan peringatan grosir sesuai currency.

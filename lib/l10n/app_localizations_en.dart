@@ -1846,6 +1846,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get m53Ons => 'ons (100 g)';
 
   @override
+  String get m53LastPurchaseReminder =>
+      'This price comes from the last purchase. Check and change it if the current price differs.';
+
+  @override
+  String get m53ReceiptReferenceHint =>
+      'Reference cost, not the last purchase price. Check the current price.';
+
+  @override
+  String get m53ReceiptUnknownHint =>
+      'The last purchase price is unknown. Enter the current price.';
+
+  @override
+  String get m53ReceiptInexactHint =>
+      'The previous price cannot be entered exactly in this unit. Enter the current price or change the unit.';
+
+  @override
+  String get m53ReceiptOriginalPack => 'Pack size on the previous purchase';
+
+  @override
+  String get m53ReceiptQuantityInvalid =>
+      'Enter a whole received quantity greater than 0.';
+
+  @override
+  String get m53ReceiptPackInvalid => 'Enter a whole pack size greater than 0.';
+
+  @override
+  String get m53ReceiptCostRequired =>
+      'Enter the purchase price for the selected unit.';
+
+  @override
+  String get m53ReceiptCostInvalid =>
+      'Enter a valid purchase price for the selected unit.';
+
+  @override
   String get m53WarehouseChanged =>
       'Warehouse data or date changed. Reload the list.';
 

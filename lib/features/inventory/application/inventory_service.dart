@@ -14,6 +14,8 @@ import '../domain/stock_rules.dart';
 import '../domain/stock_valuation.dart';
 import 'stock_tracking_service.dart';
 import 'warehouse_query.dart';
+import 'purchase_cost_hints.dart';
+import '../domain/purchase_cost_hint.dart';
 import '../domain/warehouse_filter.dart';
 import '../domain/stock_input.dart';
 import '../domain/product_entry_rules.dart';
@@ -813,6 +815,7 @@ final class InventoryService {
     required String operationKey,
     EntityId? supplierId,
     CalendarDate? expiry,
+    int? expectedRevision,
   }) => _write(
     (dbTxn) => _receive(
       dbTxn,
@@ -824,6 +827,7 @@ final class InventoryService {
       expiry: expiry,
       purchase: purchase,
       confirmedFree: confirmedFree,
+      expectedRevision: expectedRevision,
     ),
   );
 
@@ -836,6 +840,7 @@ final class InventoryService {
     EntityId? supplierId,
     CalendarDate? expiry,
     bool confirmedFree = false,
+    int? expectedRevision,
   }) => cost != null
       ? receivePurchase(
           id,
@@ -844,6 +849,7 @@ final class InventoryService {
           supplierId: supplierId,
           expiry: expiry,
           confirmedFree: confirmedFree,
+          expectedRevision: expectedRevision,
         )
       : _write(
           (dbTxn) => _receive(
@@ -855,6 +861,7 @@ final class InventoryService {
             supplierId: supplierId,
             expiry: expiry,
             unknownInput: input,
+            expectedRevision: expectedRevision,
           ),
         );
 
@@ -931,6 +938,7 @@ final class InventoryService {
     bool existingTrackingExpiry = false,
     StockPurchase? purchase,
     StockInput? unknownInput,
+    int? expectedRevision,
   }) async {
     Quantity.positive(quantity);
     final hash = await _hash([
@@ -940,6 +948,10 @@ final class InventoryService {
       unitCost?.micros,
       supplierId?.value,
       expiry?.iso,
+      if (expectedRevision != null) ...[
+        'expected_product_revision',
+        expectedRevision,
+      ],
       if (unknownInput != null && unitCost == null) ...[
         unknownInput.unit.name,
         unknownInput.count,
@@ -964,6 +976,9 @@ final class InventoryService {
     );
 
     final old = await _product(dbTxn, id);
+    if (expectedRevision != null && old['revision'] != expectedRevision) {
+      throw const AppError('productChangedReloadFirst');
+    }
     if (old['stock_tracking_enabled'] == 0) {
       throw const AppError('m52StockOperationRequiresTracking');
     }
@@ -1647,6 +1662,23 @@ final class InventoryService {
     access.requireAccess(capability: ManagementCapability.inventory);
     return _read((db) => _detail(db, id));
   }
+
+  /// Read-only purchase suggestion, scoped by literal product and optional
+  /// transaction supplier. Hidden-cost UI can leave it unused; no price, stock,
+  /// receipt or draft is written merely by opening the receiving form.
+  Future<PurchaseCostHint> purchaseCostHint(
+    EntityId id, {
+    EntityId? supplierId,
+  }) => _read(
+    (db) => db.transaction(
+      (dbTxn) async => PurchaseCostHints.readOn(
+        dbTxn,
+        await _product(dbTxn, id),
+        supplierId: supplierId,
+      ),
+      exclusive: false,
+    ),
+  );
 
   /// The scanner and typed code share literal lookup. No integer conversion,
   /// URL execution, fuzzy match or placeholder product is performed.

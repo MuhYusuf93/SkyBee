@@ -1,5 +1,40 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Instruksi perangkat terbaru — Poco dipakai pribadi, hanya DV untuk native
+
+28Oktober14:00 — pengguna menarik Poco dari pengujian sementara. Checkpoint
+Poco source26/d5f7210 sudahditutup7PASS2:29/659hashsama/controlOff. Jangan
+akses/force-stop/install/sandbox Poco sampai tersedia kembali; gunakan host dan
+DV8910 saja. [Checkpoint khusus Poco](M53_POCO_CHECKPOINT.md). H pemasangan
+Poco dan delta setelahsource551 DEFERRED, bukanPASS; fitur lain tetapdikerjakan.
+
+Working source26 setelahd5f7210: readonly purchase hints/BigInt conversion,
+ReceiptPriceState/ReceiptLineEditor dari ProductDetail Receive. Optional
+expectedRevision hanya menambah hash bila diberikan; retry lama tetap. Field
+errors/focus, hidden cost unknown, free consent, opaque lock/dirty Back dan
+konversi/prefill/provenance diuji, termasuk unfinished decimal/IME saat basis
+berubah. Cabang receive dialog lama sudah dibuang.
+28Oktober14:21 — host acceptance13PASS24s (SQL5/state5/UI3), regresi43PASS1:20,
+analyzer bersih6,5s, format467/0changed, l10n965/649/245/PIN106match. Free-case
+harness diperbaiki cancel/confirm modal aktual; rapid doubletap tetap diuji di
+kasus lain. Failure awal tetap dipertahankan dalam evidence host. Native DV13
+PASS2:51 melalui wrapper run m53-receipt-dv-20261028-141216; seluruh737hash lama
+cocok, wrapper exit0/controlOff/awake restored exact, source563 verified.
+Tidak ada runner aktif. Manifest FINAL baru
+build/m53/receipt-source-final-native.json; script receipt_source_final_snapshot.py.
+Manifest receipt-source-pre-native.json historis sebelum brace-only style fix,
+jangan overwrite/refreeze. Warehouse551 dan Poco checkpoint tetap.
+[Laporan](M53_RECEIPT_REPORT.md), [keputusan](decisions/M53_RECEIPT_EDITOR.md).
+Evidence host/DV/source sudah terkurasi. Normal commit/push checkpoint berikut,
+lalu lanjut dokumen/opname/supplier dan F/G/H. .skybee+12/schema14 belum
+update/reset. Poco DEFERRED; jangan query/install/force-stop sampai tersedia.
+Langkah implementasi berikut: E2 durable receipt multi-item dan stocktake draft,
+reuse service atomic/valuation, authoritative receipt_item link untuk hint saat
+same-product multi-batch, CAS stok/uncountedNULL, batch ambiguity dan scan1base.
+Catatan private build/m53/form-next-design.md berisi rancangan, bukan source
+yang boleh menimpa file aktual. Jangan mengulang native checkpoint ini tanpa
+perubahan yang relevan atau menjadikan Poco prasyarat implementasi E–H.
+
 ## E browse26 selesai sesuai scope — lanjut biaya/form penerimaan dan sisa E–H
 
 28Oktober13:26 — host32PASS1:28+legacyinventory2PASS10s, analyze bersih176,1s,

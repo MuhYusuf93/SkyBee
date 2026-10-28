@@ -3398,6 +3398,60 @@ abstract class AppLocalizations {
   /// **'ons (100 g)'**
   String get m53Ons;
 
+  /// Reminder while canonical price equals last purchase suggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'This price comes from the last purchase. Check and change it if the current price differs.'**
+  String get m53LastPurchaseReminder;
+
+  /// Reference cost is not presented as a purchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference cost, not the last purchase price. Check the current price.'**
+  String get m53ReceiptReferenceHint;
+
+  /// Unknown price remains blank.
+  ///
+  /// In en, this message translates to:
+  /// **'The last purchase price is unknown. Enter the current price.'**
+  String get m53ReceiptUnknownHint;
+
+  /// Do not round unit price conversion.
+  ///
+  /// In en, this message translates to:
+  /// **'The previous price cannot be entered exactly in this unit. Enter the current price or change the unit.'**
+  String get m53ReceiptInexactHint;
+
+  /// Historical pack size label.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack size on the previous purchase'**
+  String get m53ReceiptOriginalPack;
+
+  /// Received quantity field error.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole received quantity greater than 0.'**
+  String get m53ReceiptQuantityInvalid;
+
+  /// Pack size field error.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole pack size greater than 0.'**
+  String get m53ReceiptPackInvalid;
+
+  /// Empty purchase price field error.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the purchase price for the selected unit.'**
+  String get m53ReceiptCostRequired;
+
+  /// Invalid purchase price field error.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid purchase price for the selected unit.'**
+  String get m53ReceiptCostInvalid;
+
   /// Warehouse cursor must be refreshed.
   ///
   /// In en, this message translates to:

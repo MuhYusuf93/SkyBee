@@ -60,6 +60,7 @@ Future<void> _confirmExit(
       context: context,
       barrierDismissible: false,
       builder: (dialog) => AlertDialog(
+        scrollable: true,
         title: Text(tr(dialog, 'm52UnsavedTitle')),
         content: Text(tr(dialog, 'm53LockedUnsavedBody')),
         actions: [

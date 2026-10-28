@@ -12,6 +12,7 @@ Future<bool> confirmFreeCost(BuildContext context, int? micros) async {
         builder: (dialog) => ProtectedDialog(
           capability: ManagementCapability.inventory,
           child: AlertDialog(
+            scrollable: true,
             title: Text(tr(dialog, 'm53ConfirmFreeTitle')),
             content: Text(tr(dialog, 'm53ConfirmFreeBody')),
             actions: [

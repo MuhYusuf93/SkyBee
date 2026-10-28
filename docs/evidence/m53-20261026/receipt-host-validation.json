@@ -1,0 +1,99 @@
+{
+  "scope": "E latest purchase suggestion/shared single-product receiving editor, schema26; remaining E/F/G/H active",
+  "hostLogs": {
+    "receipt-price-host.txt": {
+      "sha256": "06d92dd218bdea8346ed7e312119314c843af5cbe6c5cf69f069f553470037aa",
+      "status": "PASS",
+      "passed": 8,
+      "failed": 0,
+      "elapsed": "00:10"
+    },
+    "receipt-ui-initial.txt": {
+      "sha256": "9c5a7adceb366c7643988c584caeb10a3c8560d729762e5b376657a35bdbd98d",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 3,
+      "elapsed": "00:15"
+    },
+    "receipt-ui-retest.txt": {
+      "sha256": "a40547138d0a97e33b1b6d3fe28e4008133f5c8c8aa588726e6c831e2e8d7625",
+      "status": "FAIL",
+      "passed": 2,
+      "failed": 1,
+      "elapsed": "00:18"
+    },
+    "receipt-ui-final.txt": {
+      "sha256": "54402e7c77770560f96cac1d43c97968081f95b886213389d397da75dd16f114",
+      "status": "PASS",
+      "passed": 3,
+      "failed": 0,
+      "elapsed": "00:18"
+    },
+    "receipt-acceptance-initial.txt": {
+      "sha256": "2a1d47c56de5d52d34a9cc912f4f09ce99ac9e3e1bdbc267b0bf5a4f6d3aaa6e",
+      "status": "FAIL",
+      "passed": 11,
+      "failed": 1,
+      "elapsed": "00:20"
+    },
+    "receipt-acceptance-final.txt": {
+      "sha256": "c7c98ec2c93465097101aa13532b5c043ca27ad9fd460ad90fd876cbdb57a101",
+      "status": "PASS",
+      "passed": 12,
+      "failed": 0,
+      "elapsed": "00:20"
+    },
+    "receipt-acceptance-final2.txt": {
+      "sha256": "098b4004bd8aa3b9cfde4381a217bcef749d530ac0dcbb7c491774677a2be3b3",
+      "status": "PASS",
+      "passed": 13,
+      "failed": 0,
+      "elapsed": "00:24"
+    },
+    "receipt-regression-final.txt": {
+      "sha256": "9b15675a2e789d0108f05b8c20e1fe98a3d2e07dbf40a936ca8efee47e1759c1",
+      "status": "PASS",
+      "passed": 43,
+      "failed": 0,
+      "elapsed": "01:20"
+    },
+    "receipt-editor-analyze-initial.txt": {
+      "sha256": "45c3f20add2936ae1000785b04f9ca77822355766de562b554d66ca19bc2d683",
+      "summary": "10 issues found. (ran in 159.4s)"
+    },
+    "receipt-editor-analyze-final.txt": {
+      "sha256": "748d922a26cccf564070c1a5796ab525a059e393a49d95f03f4dca982adb3f6b",
+      "summary": "1 issue found. (ran in 70.9s)"
+    },
+    "receipt-editor-analyze-clean.txt": {
+      "sha256": "f4fcccbe4cf070ab20ccb0294463ba80b5cc73c68a867c1ff363a851338f9a93",
+      "summary": "No issues found! (ran in 6.5s)"
+    },
+    "receipt-format-final.txt": {
+      "sha256": "3ba04db0e7d5f9d777d1309a3bf53fc7b73a2a6aa9d05f037c82dbb8f8e6a8c4",
+      "summary": "Formatted 467 files (0 changed) in 1.46 seconds."
+    },
+    "receipt-l10n.txt": {
+      "sha256": "6929bef3ae9f68ceb02c4fc66699288067eeb43a28bf018cf879f40593d09d3b",
+      "summary": "OK: 965 bilingual semantic keys, matching metadata/placeholders; 649 static message references; 245 original requirement IDs."
+    },
+    "receipt-pin.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137",
+      "summary": "PASS: 106 unchanged upstream files; APK license identical; Mbed TLS 3.6.7 archive pinned."
+    }
+  },
+  "failures": [
+    "Initial SQL assertion compared Money object identity; corrected to exact minor/currency/scale. No domain rule weakened.",
+    "UI0PASS3FAIL15s: first-invalid input was disabled while requesting focus. Keep error fields enabled and await the rebuilt frame before reveal/focus.",
+    "UI2PASS1FAIL18s: generic locked dirty-Back dialog overflowed at320px/text2x. Made AlertDialog scrollable. UI3PASS18s.",
+    "Free-cost acceptance11PASS1FAIL20s: second synthetic rapid tap targeted Save hidden behind the free-cost modal. Harness now cancels and confirms that modal; rapid double-tap remains on the ordinary case. Acceptance12PASS20s.",
+    "Added unfinished decimal/composing basis/locale regression and shared suite native entry: acceptance13PASS24s.",
+    "Analyzer first10 style infos159.4s; later1 brace info70.9s in newly extended widget fixture. Fixed braces; final No issues6.5s."
+  ],
+  "limits": [
+    "Only new owned fixtures; no exploration reset/update/initialization.",
+    "Native DV evidence separate; Poco delta deferred because device is in private use.",
+    "Widget gestures synthetic, not physical camera/ADB input or printer proof.",
+    "Multi-item drafts, stocktake, supplier invoices/payments/returns/schedules, F/G/H remain active."
+  ]
+}

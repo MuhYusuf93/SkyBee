@@ -80,6 +80,7 @@ class MoneyField extends StatefulWidget {
     this.currency,
     this.errorText,
     this.focusNode,
+    this.onChanged,
   });
   final TextEditingController controller;
   final String label;
@@ -87,6 +88,7 @@ class MoneyField extends StatefulWidget {
   final CurrencyPolicy? currency;
   final String? errorText;
   final FocusNode? focusNode;
+  final ValueChanged<String>? onChanged;
   @override
   State<MoneyField> createState() => _MoneyFieldState();
 }
@@ -224,6 +226,7 @@ class _MoneyFieldState extends State<MoneyField> {
       if (pending != null && widget.controller.value.composing.isCollapsed) {
         setState(() => relocalize(pending!));
       }
+      widget.onChanged?.call(widget.controller.text);
     },
     onSubmitted: (_) => normalize(),
     decoration: InputDecoration(

@@ -13,15 +13,19 @@ class ExpiryDateField extends StatelessWidget {
     super.key,
     required this.controller,
     this.enabled = true,
+    this.errorText,
   });
   final TextEditingController controller;
   final bool enabled;
+  final String? errorText;
   @override
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: controller,
     builder: (context, _) => InputDecorator(
       decoration: InputDecoration(
         labelText: tr(context, 'expiryDateYyyyMmDdOptional'),
+        errorText: errorText,
+        border: const OutlineInputBorder(),
       ),
       child: Row(
         children: [

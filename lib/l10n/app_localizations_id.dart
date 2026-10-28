@@ -1855,6 +1855,42 @@ class AppLocalizationsId extends AppLocalizations {
   String get m53Ons => 'ons (100 g)';
 
   @override
+  String get m53LastPurchaseReminder =>
+      'Harga ini diambil dari pembelian terakhir. Periksa dan ubah jika harga saat ini berbeda.';
+
+  @override
+  String get m53ReceiptReferenceHint =>
+      'Biaya acuan, bukan harga pembelian terakhir. Periksa harga saat ini.';
+
+  @override
+  String get m53ReceiptUnknownHint =>
+      'Harga pembelian terakhir belum diketahui. Masukkan harga saat ini.';
+
+  @override
+  String get m53ReceiptInexactHint =>
+      'Harga sebelumnya tidak dapat diisikan tepat untuk satuan ini. Masukkan harga saat ini atau ubah satuan.';
+
+  @override
+  String get m53ReceiptOriginalPack =>
+      'Ukuran kemasan pada pembelian sebelumnya';
+
+  @override
+  String get m53ReceiptQuantityInvalid =>
+      'Masukkan jumlah penerimaan berupa bilangan bulat lebih dari 0.';
+
+  @override
+  String get m53ReceiptPackInvalid =>
+      'Masukkan isi kemasan berupa bilangan bulat lebih dari 0.';
+
+  @override
+  String get m53ReceiptCostRequired =>
+      'Masukkan harga pembelian untuk satuan yang dipilih.';
+
+  @override
+  String get m53ReceiptCostInvalid =>
+      'Masukkan harga pembelian yang sah untuk satuan yang dipilih.';
+
+  @override
   String get m53WarehouseChanged =>
       'Data atau tanggal gudang berubah. Muat ulang daftar.';
 
