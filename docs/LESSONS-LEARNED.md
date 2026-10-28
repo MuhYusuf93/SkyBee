@@ -467,3 +467,17 @@ translasi atomik dan composing selesai; jangan membuang pemeriksaan dirty.
 pemalsuan snapshot harus menanam item yang nyata di fixture baru. Regresi M52
 pelunasan harus memiliki member valid dan melewati deklarasi sumber D24 sebelum
 dialog final; jangan melemahkan aturan member atau menghapus stale-balance test.
+
+124. Daftar lazy pada320px/text2x dapat belum membangun baris ketika query sudah
+selesai. Tunggu pemilik paging tidak busy, periksa error/data, lalu reveal secara
+bounded. Jangan menunggu teks di luar viewport sebelum menggulir. Nama label
+field harus dibaca dari widget aktual; gudang memakai searchProductNamePrefix,
+bukan searchNamePrefix master. Fixture SQL harus membawa created_at dan pasangan
+cost/reference yang valid; jangan menurunkan invariant agar fixture lolos.
+
+125. PageStorageKey ExpansionTile dapat diwarisi scrollable kolom teks di
+dalamnya: bool status panel lalu terbaca sebagai double posisi scroll. Simpan
+disclosure pada state form ketika lazy row dibuang. Dialog teks besar memerlukan
+AlertDialog.scrollable agar title+content dapat bergulir; hanya membungkus content
+belum menjamin title/actions muat. Kasus grosir99/threshold100 mempertahankan
+draft saat Review dan menjadi bersih lagi ketika kembali100, ID/EN320px/text2x.

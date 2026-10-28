@@ -3398,6 +3398,60 @@ abstract class AppLocalizations {
   /// **'ons (100 g)'**
   String get m53Ons;
 
+  /// Warehouse cursor must be refreshed.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse data or date changed. Reload the list.'**
+  String get m53WarehouseChanged;
+
+  /// Warehouse stock status filter label.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock condition'**
+  String get m53WarehouseStockFilter;
+
+  /// All stock states.
+  ///
+  /// In en, this message translates to:
+  /// **'All conditions'**
+  String get m53WarehouseAll;
+
+  /// Expired stock or reference date.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired stock / reference date'**
+  String get m53WarehouseExpired;
+
+  /// Only tracked products with zero physical stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked stock is empty'**
+  String get m53WarehouseEmpty;
+
+  /// Warehouse relation filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter category, shelf and master supplier'**
+  String get m53WarehouseRelations;
+
+  /// Untracked expiry without fictitious count.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired reference date; physical quantity is not tracked'**
+  String get m53WarehouseReferenceExpired;
+
+  /// Distinguish master and transaction suppliers.
+  ///
+  /// In en, this message translates to:
+  /// **'The optional master supplier groups products. Each receipt records its own transaction supplier.'**
+  String get m53MasterSupplierHelp;
+
+  /// Gesture help with accessible alternative.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press to rename a category; an edit button is also available.'**
+  String get m53CategoryLongPress;
+
   /// M5.1 management, printer or inventory interface. English meaning: Shelf location
   ///
   /// In en, this message translates to:

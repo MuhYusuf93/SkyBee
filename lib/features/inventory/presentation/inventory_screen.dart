@@ -14,6 +14,8 @@ import 'promotions_screen.dart';
 import 'product_form.dart';
 import 'product_detail_screen.dart';
 import '../domain/inventory_models.dart';
+import '../domain/warehouse_filter.dart';
+import 'relation_field.dart';
 import '../../barcode/domain/barcode_camera.dart';
 import '../../barcode/presentation/barcode_scanner_screen.dart';
 
@@ -128,8 +130,64 @@ class _InventoryScreenState extends State<InventoryScreen> {
   );
 }
 
-class _Products extends StatelessWidget {
+/// Master taps open a separate filtered route with its own bounded page owner.
+class InventoryBrowseScreen extends StatelessWidget {
+  const InventoryBrowseScreen({
+    super.key,
+    this.category,
+    this.supplier,
+    this.shelf,
+  });
+  final MasterRecord? category, supplier, shelf;
+  @override
+  Widget build(BuildContext context) => ManagementGate(
+    capability: ManagementCapability.inventory,
+    child: Scaffold(
+      appBar: AppBar(
+        title: Text(tr(context, 'products')),
+        actions: const [LanguageButton()],
+      ),
+      body: SafeArea(
+        child: ChangeNotifierProvider(
+          create: (_) => InventoryProvider(
+            context.read<AppServices>().inventory,
+            category: category,
+            supplier: supplier,
+            shelf: shelf,
+          )..refresh(),
+          child: const _Products(),
+        ),
+      ),
+    ),
+  );
+}
+
+class _Products extends StatefulWidget {
   const _Products();
+  @override
+  State<_Products> createState() => _ProductsState();
+}
+
+class _ProductsState extends State<_Products> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && mounted) {
+      context.read<InventoryProvider>().refresh();
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Consumer<InventoryProvider>(
     builder: (context, state, _) {
@@ -148,8 +206,7 @@ class _Products extends StatelessWidget {
                       labelText: tr(context, 'searchProductNamePrefix'),
                       prefixIcon: Icon(Icons.search),
                     ),
-                    onChanged: (text) =>
-                        state.filter(text, paging.filter.isDeleted),
+                    onChanged: state.search,
                   ),
                   SwitchListTile(
                     title: Text(tr(context, 'showArchived')),
@@ -161,6 +218,7 @@ class _Products extends StatelessWidget {
                   ),
                   Wrap(
                     spacing: 12,
+                    // Every filter remains part of the same SQL query.
                     children: [
                       FilledButton.icon(
                         onPressed: () async {
@@ -179,6 +237,47 @@ class _Products extends StatelessWidget {
                         onPressed: state.refresh,
                         child: Text(tr(context, 'reload')),
                       ),
+                    ],
+                  ),
+                  DropdownButtonFormField<WarehouseStockFilter>(
+                    key: ValueKey(paging.filter.stock),
+                    initialValue: paging.filter.stock,
+                    isExpanded: true,
+                    decoration: InputDecoration(
+                      labelText: tr(context, 'm53WarehouseStockFilter'),
+                    ),
+                    items: [
+                      for (final value in WarehouseStockFilter.values)
+                        DropdownMenuItem(
+                          value: value,
+                          child: Text(
+                            tr(context, switch (value) {
+                              WarehouseStockFilter.all => 'm53WarehouseAll',
+                              WarehouseStockFilter.expired =>
+                                'm53WarehouseExpired',
+                              WarehouseStockFilter.empty => 'm53WarehouseEmpty',
+                            }),
+                          ),
+                        ),
+                    ],
+                    onChanged: (v) {
+                      if (v != null) state.stock(v);
+                    },
+                  ),
+                  ExpansionTile(
+                    title: Text(tr(context, 'm53WarehouseRelations')),
+                    children: [
+                      for (final entry in [
+                        (MasterKind.category, state.selectedCategory),
+                        (MasterKind.shelf, state.selectedShelf),
+                        (MasterKind.supplier, state.selectedSupplier),
+                      ])
+                        RelationField(
+                          kind: entry.$1,
+                          value: entry.$2,
+                          onChanged: (v) => state.relation(entry.$1, v),
+                        ),
+                      Text(tr(context, 'm53MasterSupplierHelp')),
                     ],
                   ),
                 ],
@@ -203,6 +302,8 @@ class _Products extends StatelessWidget {
               }
               final InventoryProduct product = paging.items[index];
               final warnings = [
+                if (product.referenceExpired)
+                  tr(context, 'm53WarehouseReferenceExpired'),
                 if (product.lowStock) tr(context, 'lowStock'),
                 if (product.expired > 0)
                   AppLocalizations.of(context)!.expiredUnits(product.expired),

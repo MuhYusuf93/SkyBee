@@ -1,5 +1,56 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## E browse26 selesai sesuai scope — lanjut biaya/form penerimaan dan sisa E–H
+
+28Oktober13:26 — host32PASS1:28+legacyinventory2PASS10s, analyze bersih176,1s,
+format455/0/l10n956/643/245/PIN106match. DV7PASS3:02/Poco7PASS2:29;
+728/659hash lama cocok/controlOff/awakeDVexact, source551sama, keduarunnerexit0.
+Source26 bisa diedit setelah normalcommit/push checkpoint. .skybee+12/schema14
+belumupdate/reset. Laporan/keputusan/evidencewarehouse tersimpan. Janganrefreeze
+warehouse_source_snapshot.py untuksourcebaru. Seluruh E/F/G/H tetapaktif.
+Berikutnya lastpurchase domain+readonlyAPI+shared editor, lalu receipt/opname/
+supplierfinance/returns/schedules; catatan terinci build/m53/form-next-design.md
+dan kandidat BARU purchase_cost_hint.next.dart belum diterapkan/diuji. Kandidat
+warehouse_*.next.dart usang; source26 aktual pada lib/test. SPEC dan matriks wajib
+tetapkonsisten. Jangan berhenti di checkpoint ini atau menunggu review pengguna.
+
+## E browse26 source551 dibekukan — native DV aktif
+
+28Oktober13:16 — host acceptance32PASS1:28 + legacyinventory2PASS10s. Analyzer
+Noissues176,1s, format455/0/l10n956/643/245/PIN106match. Source551 dibekukan
+build/m53/warehouse-source-pre-native.json; JANGAN edit lib/test/integration/
+Android/pubspec sampai DV/Poco selesai dan warehouse_source_snapshot.py --verify.
+Native7=SQL5/UI2 via wrapper/backgroundpaused. DV run
+build/m53-warehouse-dv-20261028-131109 shell85928 aktif; prepareAPK integration
+verified, runnerbaru selesai build. Poco7f0edea0 berikut. KeduaADBdevice kini
+authorized (user13:05 mengizinkanDV). .skybee+12/schema14 belumupdate/reset.
+Hostcurator build/m53/curate_warehouse_host.py dan generic curate_search_run.py
+untuknative. Simpan warehouse-{host-validation,dv,poco,source-sha256}.json,
+finalreport/STATUS/PLAN/REQUIREMENTS dan normalcommit/push. HEADcf3e315pushed.
+Setelahnyalastpurchase/formfields/dokumen/supplier dan F/G/H tetapaktif; catatan
+private warehouse-next-notes.md dan form-next-design.md bila sudahditulis.
+
+## E browse26 WIP — host acceptance aktif, native berikut
+
+28Oktober13:08 — HEADcf3e315 (ons25) sudahpush/remoteverified. Working source26:
+warehouse SQL ranking/keyset/context dan batch DTO, filter gabungan, tapmaster
+ke produk/visibleedit/longpress, suppliermasteropsional tanpa infer receiptlama;
+detail saleablefailclosed/archivedliteral lookup dan backupFKpreflight. Ons
+dropdown bounded, wholesale lowprice99 vs100 dan dialog scrollable/formlocal
+disclosure. [Keputusan](decisions/M53_WAREHOUSE_BROWSE.md).
+Host domain4PASS10s; tambahan backup5th dan ons/barcode lulus di acceptance awal
+13PASS2UIFAIL16s karena overflow dropdownons, diperbaiki UI2PASS12s. Tambahan
+wholesale warning sempat2FAIL (dialogoverflow/lazysection; lalu PageStorage bool
+bertabrakan textscroll double), final UI2PASS13s. Acceptance penuh sedangaktif
+build/m53/warehouse-acceptance-final.txt shell69977, analyzer/audit shell11865.
+Native26 belumdimulai; kedua perangkatdevice setelah user mengizinkan kembaliDV.
+.skybee+12/schema14 belum update/reset. Jangan freeze source sebelum hostbersih.
+Setelah host: entry native warehouse SQL5/UI2, freeze manifestBARU (ons544tetap),
+auditedwrapper device/modelchecks/oldhash/controlOff/awakeexact. Finaldocs/evidence,
+normalcommit/push. Lalu lastpurchase/form operasi, dokumen/supplier dan F/G/H.
+Private warehouse-next-notes.md berguna, kandidat .next.dart SUDAH diterapkan
+dan tertinggal dari source aktual; jangan menimpanya ke lib lagi.
+
 ## E ons25 selesai sesuai scope — lanjut gudang dan sisa E–H
 
 28Oktober06:26 — ons source25 host31PASS59s +localeuang1PASS5s dan

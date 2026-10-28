@@ -7,7 +7,17 @@ import '../../core/domain/contact_validation.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 25;
+  static const version = 26;
+
+  // A receipt's supplier is a transaction fact, not the master relationship.
+  // Legacy products deliberately keep NULL rather than inferring a supplier.
+  static const _warehouseBrowse = [
+    'ALTER TABLE products ADD COLUMN master_supplier_id TEXT REFERENCES suppliers(id) ON DELETE RESTRICT',
+    'CREATE INDEX products_warehouse_created ON products(is_deleted,created_at DESC,id COLLATE BINARY DESC)',
+    'CREATE INDEX products_warehouse_supplier ON products(master_supplier_id,is_deleted,created_at DESC,id COLLATE BINARY DESC)',
+    'CREATE INDEX products_warehouse_shelf ON products(shelf_id,is_deleted,created_at DESC,id COLLATE BINARY DESC)',
+    'CREATE INDEX products_warehouse_category ON products(category_id,is_deleted,created_at DESC,id COLLATE BINARY DESC)',
+  ];
 
   // Keep the original unit CHECK and all populated columns unchanged. The
   // mutually exclusive addition works for products and immutable sale facts.
@@ -56,6 +66,7 @@ final class Schema {
         23 => _productSearch,
         24 => cashDrawerSchema,
         25 => _onsMetadata,
+        26 => _warehouseBrowse,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);

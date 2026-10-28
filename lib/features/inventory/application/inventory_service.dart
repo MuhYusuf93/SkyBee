@@ -6,7 +6,6 @@ import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../core/pagination/page.dart';
 import '../../../data/database/database_coordinator.dart';
-import '../../../data/repositories/sqlite_product_repository.dart';
 import '../../../data/repositories/keyset_queries.dart';
 import '../../catalog/domain/product_repository.dart';
 import '../../management/application/management_service.dart';
@@ -14,6 +13,8 @@ import '../domain/inventory_models.dart';
 import '../domain/stock_rules.dart';
 import '../domain/stock_valuation.dart';
 import 'stock_tracking_service.dart';
+import 'warehouse_query.dart';
+import '../domain/warehouse_filter.dart';
 import '../domain/stock_input.dart';
 import '../domain/product_entry_rules.dart';
 import '../domain/change_record.dart';
@@ -176,6 +177,17 @@ final class InventoryService {
     if (database.schemaVersion >= 14) {
       await _relation(db, 'shelves', input.shelfId);
     }
+    if (database.schemaVersion >= 26) {
+      final previous = exclude == null ? null : await _product(db, exclude);
+      // Archiving a supplier preserves existing products. Changing the master
+      // still requires an active supplier; an unchanged archived link survives.
+      if (previous == null ||
+          previous['master_supplier_id'] != input.masterSupplierId?.value) {
+        await _relation(db, 'suppliers', input.masterSupplierId);
+      }
+    } else if (input.masterSupplierId != null) {
+      throw const AppError('categoryOrSupplierUnavailableSelectAgain');
+    }
     final sku =
         _optional(input.sku) ?? 'BRG-${_ids.next().value.toUpperCase()}';
     final barcode = _optional(input.barcode);
@@ -201,6 +213,8 @@ final class InventoryService {
       'sku': sku,
       'barcode': barcode,
       'category_id': input.categoryId?.value,
+      if (database.schemaVersion >= 26)
+        'master_supplier_id': input.masterSupplierId?.value,
       'selling_price_rupiah': input.sellingPrice.amountMinor,
       'wholesale_price_minor': input.wholesalePrice?.amountMinor,
       'pack_label': packLabel,
@@ -1544,21 +1558,90 @@ final class InventoryService {
   Future<Page<InventoryProduct, CatalogCursor>> page(
     CatalogFilter filter,
     CatalogCursor? after,
-  ) async {
-    access.requireAccess(capability: ManagementCapability.inventory);
-    final products = await SqliteProductRepository(
-      database,
-    ).page(filter: filter, after: after);
-    final items = <InventoryProduct>[];
-    // A bounded page (50) is enriched, never the whole catalog.
-    await _read((db) async {
-      for (final product in products.items) {
-        items.add(await _detail(db, product.id));
+  ) => _read(
+    (db) => db.transaction((dbTxn) async {
+      final query = catalogQuery(filter, after, 50);
+      final rows = await dbTxn.rawQuery(query.sql, query.arguments);
+      final selected = rows.take(50).toList();
+      if (selected.isEmpty) {
+        return Page(items: <InventoryProduct>[], nextCursor: null);
       }
-      access.requireAccess(capability: ManagementCapability.inventory);
-    });
-    return Page(items: items, nextCursor: products.nextCursor);
-  }
+      final ids = selected.map((r) => r['id']).toList();
+      final full = await dbTxn.rawQuery('''SELECT p.*,c.name AS category_name
+      FROM products p LEFT JOIN categories c ON c.id=p.category_id
+      WHERE p.id IN(${List.filled(ids.length, '?').join(',')})''', ids);
+      final byId = {for (final row in full) row['id']: row};
+      final zone =
+          (await dbTxn.query(
+                'store_settings',
+                columns: ['time_zone'],
+              )).single['time_zone']
+              as String;
+      final items = await warehouseProductsOn(dbTxn, [
+        for (final id in ids) byId[id]!,
+      ], access.clock.today(zone).iso);
+      return Page(
+        items: items,
+        nextCursor: rows.length > 50
+            ? CatalogCursor(
+                normalizedName: selected.last['normalized_name'] as String,
+                id: EntityId(selected.last['id'] as String),
+                filter: filter,
+              )
+            : null,
+      );
+    }, exclusive: false),
+  );
+
+  /// Warehouse ranking/filtering and DTO enrichment share one SQL snapshot.
+  /// Context-bound cursors reject changes instead of appending a reordered page.
+  Future<Page<InventoryProduct, WarehouseCursor>> warehousePage(
+    WarehouseFilter filter,
+    WarehouseCursor? after, {
+    int pageSize = 50,
+  }) => _read(
+    (db) => db.transaction((dbTxn) async {
+      final context = (await dbTxn.rawQuery(
+        '''SELECT s.time_zone,v.catalogue_epoch
+      FROM store_settings s CROSS JOIN cashier_search_versions v WHERE s.id=1 AND v.id=1''',
+      )).single;
+      final zone = context['time_zone'] as String,
+          day = access.clock.today(zone).iso,
+          epoch = context['catalogue_epoch'] as int,
+          generation = database.generation;
+      if (after != null &&
+          (after.filter != filter ||
+              after.day != day ||
+              after.zone != zone ||
+              after.catalogueEpoch != epoch ||
+              after.generation != generation)) {
+        throw const AppError('m53WarehouseChanged');
+      }
+      final query = warehouseQuery(filter, after, day, pageSize);
+      final rows = await dbTxn.rawQuery(query.sql, query.arguments);
+      final selected = rows.take(pageSize).toList();
+      final items = await warehouseProductsOn(dbTxn, selected, day);
+      if (access.clock.today(zone).iso != day ||
+          database.generation != generation) {
+        throw const AppError('m53WarehouseChanged');
+      }
+      return Page(
+        items: items,
+        nextCursor: rows.length > pageSize
+            ? WarehouseCursor(
+                filter: filter,
+                day: day,
+                zone: zone,
+                generation: generation,
+                catalogueEpoch: epoch,
+                rank: selected.last['warehouse_rank'] as int,
+                createdAt: selected.last['created_at'] as int,
+                id: EntityId(selected.last['id'] as String),
+              )
+            : null,
+      );
+    }, exclusive: false),
+  );
 
   Future<InventoryProduct> detail(EntityId id) async {
     access.requireAccess(capability: ManagementCapability.inventory);
@@ -1573,8 +1656,8 @@ final class InventoryService {
       throw const AppError('m53CameraInvalidCode');
     }
     final rows = await db.rawQuery(
-      '''SELECT id FROM products WHERE is_deleted=0
-      AND (barcode=? OR sku=?) ORDER BY id COLLATE BINARY LIMIT 2''',
+      '''SELECT id FROM products WHERE barcode=? OR sku=?
+      ORDER BY id COLLATE BINARY LIMIT 2''',
       [code, code],
     );
     if (rows.isEmpty) return null;
@@ -1591,18 +1674,6 @@ final class InventoryService {
             )).single['time_zone']
             as String;
     final today = access.clock.today(zone).iso;
-    final upcoming = DateTime.parse(
-      today,
-    ).add(const Duration(days: 5)).toIso8601String().substring(0, 10);
-    final summary = (await db.rawQuery(
-      '''SELECT
-      COALESCE(SUM(CASE WHEN expiry_date IS NOT NULL AND expiry_date<=? THEN remaining_quantity ELSE 0 END),0) AS expired,
-      COALESCE(SUM(CASE WHEN expiry_date IS NULL THEN remaining_quantity ELSE 0 END),0) AS undated,
-      COALESCE(SUM(CASE WHEN expiry_date>? AND expiry_date<=? THEN remaining_quantity ELSE 0 END),0) AS upcoming
-      FROM stock_batches WHERE product_id=? AND remaining_quantity>0''',
-      [today, today, upcoming, id.value],
-    )).single;
-    final expired = row['expiry_enabled'] == 1 ? summary['expired'] as int : 0;
     final details = Map<String, Object?>.of(row);
     details['aliases'] = (await db.query(
       'product_aliases',
@@ -1618,13 +1689,15 @@ final class InventoryService {
         whereArgs: [row['category_id']],
       )).firstOrNull?['name'];
     }
-    return InventoryProduct(
-      details,
-      saleable: (row['stock_quantity'] as int) - expired,
-      expired: expired,
-      undated: row['expiry_enabled'] == 1 ? summary['undated'] as int : 0,
-      nearExpiry: row['expiry_enabled'] == 1 ? summary['upcoming'] as int : 0,
-    );
+    if (row['master_supplier_id'] != null) {
+      details['master_supplier_name'] = (await db.query(
+        'suppliers',
+        columns: ['name'],
+        where: 'id=?',
+        whereArgs: [row['master_supplier_id']],
+      )).firstOrNull?['name'];
+    }
+    return (await warehouseProductsOn(db, [details], today)).single;
   }
 
   Future<Page<StockBatch, BatchCursor>> batches(

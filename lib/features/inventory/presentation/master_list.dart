@@ -13,6 +13,7 @@ import '../../../core/pagination/paged_controller.dart';
 import '../domain/inventory_models.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/protected_dialog.dart';
+import 'inventory_screen.dart';
 
 typedef MasterFilter = ({MasterKind kind, String prefix, bool archived});
 
@@ -217,95 +218,117 @@ class _MasterBody extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Consumer<PagedController<MasterRecord, MasterCursor, MasterFilter>>(
-        builder: (context, state, _) => CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  children: [
-                    ManagedTextField(
-                      decoration: InputDecoration(
-                        labelText: tr(context, 'searchNamePrefix'),
-                        prefixIcon: Icon(Icons.search),
-                      ),
-                      onChanged: (text) => state.reset((
-                        kind: kind,
-                        prefix: text,
-                        archived: state.filter.archived,
-                      )),
-                    ),
-                    if (!picker)
-                      SwitchListTile(
-                        title: Text(tr(context, 'showArchived')),
-                        value: state.filter.archived,
-                        onChanged: (value) => state.reset((
-                          kind: kind,
-                          prefix: state.filter.prefix,
-                          archived: value,
-                        )),
-                      ),
-                    FilledButton.icon(
-                      onPressed: () => _edit(context),
-                      icon: const Icon(Icons.add),
-                      label: Text(
-                        tr(
-                          context,
-                          kind == MasterKind.category
-                              ? 'addCategory'
-                              : 'addSupplier',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (state.isLoading)
-              SliverToBoxAdapter(
-                child: LinearProgressIndicator(
-                  semanticsLabel: tr(context, 'loading'),
-                ),
-              ),
-            if (state.error != null)
-              SliverToBoxAdapter(child: Text(message(context, state.error!))),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                if (index == state.items.length) {
-                  return TextButton(
-                    onPressed: state.isLoading ? null : state.loadMore,
-                    child: Text(tr(context, 'loadMore')),
-                  );
-                }
-                final record = state.items[index];
-                return ListTile(
-                  title: Text(record.name),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (record.contact != null)
-                        ContactOutputLink.phone(
-                          record.contact!,
-                          managementProtected: true,
-                        ),
-                      if (record.email != null) Text(record.email!),
-                      if (record.website != null)
-                        ContactOutputLink.website(
-                          record.website!,
-                          managementProtected: true,
-                        ),
-                    ],
+  Widget build(
+    BuildContext context,
+  ) => Consumer<PagedController<MasterRecord, MasterCursor, MasterFilter>>(
+    builder: (context, state, _) => CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              children: [
+                ManagedTextField(
+                  decoration: InputDecoration(
+                    labelText: tr(context, 'searchNamePrefix'),
+                    prefixIcon: Icon(Icons.search),
                   ),
-                  onTap: picker
-                      ? () => Navigator.pop(context, record)
-                      : record.isDeleted
-                      ? null
-                      : () => _edit(context, record: record),
-                  trailing: picker
-                      ? null
-                      : IconButton(
+                  onChanged: (text) => state.reset((
+                    kind: kind,
+                    prefix: text,
+                    archived: state.filter.archived,
+                  )),
+                ),
+                if (!picker)
+                  SwitchListTile(
+                    title: Text(tr(context, 'showArchived')),
+                    value: state.filter.archived,
+                    onChanged: (value) => state.reset((
+                      kind: kind,
+                      prefix: state.filter.prefix,
+                      archived: value,
+                    )),
+                  ),
+                if (!picker && kind == MasterKind.category)
+                  Text(tr(context, 'm53CategoryLongPress')),
+                FilledButton.icon(
+                  onPressed: () => _edit(context),
+                  icon: const Icon(Icons.add),
+                  label: Text(
+                    tr(
+                      context,
+                      kind == MasterKind.category
+                          ? 'addCategory'
+                          : 'addSupplier',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (state.isLoading)
+          SliverToBoxAdapter(
+            child: LinearProgressIndicator(
+              semanticsLabel: tr(context, 'loading'),
+            ),
+          ),
+        if (state.error != null)
+          SliverToBoxAdapter(child: Text(message(context, state.error!))),
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            if (index == state.items.length) {
+              return TextButton(
+                onPressed: state.isLoading ? null : state.loadMore,
+                child: Text(tr(context, 'loadMore')),
+              );
+            }
+            final record = state.items[index];
+            return ListTile(
+              title: Text(record.name),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (record.contact != null)
+                    ContactOutputLink.phone(
+                      record.contact!,
+                      managementProtected: true,
+                    ),
+                  if (record.email != null) Text(record.email!),
+                  if (record.website != null)
+                    ContactOutputLink.website(
+                      record.website!,
+                      managementProtected: true,
+                    ),
+                ],
+              ),
+              onTap: picker
+                  ? () => Navigator.pop(context, record)
+                  : () => Navigator.of(context).push<void>(
+                      MaterialPageRoute(
+                        builder: (_) => InventoryBrowseScreen(
+                          category: kind == MasterKind.category ? record : null,
+                          supplier: kind == MasterKind.supplier ? record : null,
+                          shelf: kind == MasterKind.shelf ? record : null,
+                        ),
+                      ),
+                    ),
+              onLongPress:
+                  !picker && !record.isDeleted && kind == MasterKind.category
+                  ? () => _edit(context, record: record)
+                  : null,
+              trailing: picker
+                  ? null
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (!record.isDeleted)
+                          IconButton(
+                            tooltip: tr(context, 'editRecord'),
+                            icon: const Icon(Icons.edit_outlined),
+                            onPressed: () => _edit(context, record: record),
+                          ),
+                        IconButton(
                           tooltip: record.isDeleted
                               ? tr(context, 'restore')
                               : tr(context, 'archive'),
@@ -362,19 +385,21 @@ class _MasterBody extends StatelessWidget {
                             }
                           },
                         ),
-                );
-              }, childCount: state.items.length + (state.hasMore ? 1 : 0)),
-            ),
-            if (state.items.isEmpty && !state.isLoading && state.error == null)
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(tr(context, 'noRecordsYet')),
-                ),
-              ),
-          ],
+                      ],
+                    ),
+            );
+          }, childCount: state.items.length + (state.hasMore ? 1 : 0)),
         ),
-      );
+        if (state.items.isEmpty && !state.isLoading && state.error == null)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(tr(context, 'noRecordsYet')),
+            ),
+          ),
+      ],
+    ),
+  );
 }
 
 Future<MasterRecord?> pickMaster(BuildContext context, MasterKind kind) =>

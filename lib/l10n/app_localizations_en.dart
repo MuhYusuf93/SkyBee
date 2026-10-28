@@ -1846,6 +1846,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get m53Ons => 'ons (100 g)';
 
   @override
+  String get m53WarehouseChanged =>
+      'Warehouse data or date changed. Reload the list.';
+
+  @override
+  String get m53WarehouseStockFilter => 'Stock condition';
+
+  @override
+  String get m53WarehouseAll => 'All conditions';
+
+  @override
+  String get m53WarehouseExpired => 'Expired stock / reference date';
+
+  @override
+  String get m53WarehouseEmpty => 'Tracked stock is empty';
+
+  @override
+  String get m53WarehouseRelations =>
+      'Filter category, shelf and master supplier';
+
+  @override
+  String get m53WarehouseReferenceExpired =>
+      'Expired reference date; physical quantity is not tracked';
+
+  @override
+  String get m53MasterSupplierHelp =>
+      'The optional master supplier groups products. Each receipt records its own transaction supplier.';
+
+  @override
+  String get m53CategoryLongPress =>
+      'Long-press to rename a category; an edit button is also available.';
+
+  @override
   String get m51Shelf => 'Shelf location';
 
   @override

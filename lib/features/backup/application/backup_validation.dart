@@ -42,6 +42,14 @@ final class BackupValidation {
     if (schema >= 22) await _members(db);
     if (schema >= 23) await _productSearch(db);
     if (schema >= 24) await CashDrawerValidation.validate(db);
+    if (schema >= 26 &&
+        (await db.rawQuery('''SELECT 1 FROM products p
+      LEFT JOIN suppliers s ON s.id=p.master_supplier_id
+      WHERE p.master_supplier_id IS NOT NULL AND
+      (typeof(p.master_supplier_id)<>'text' OR length(p.master_supplier_id)<>36 OR s.id IS NULL)
+      LIMIT 1''')).isNotEmpty) {
+      throw const FormatException('backupProductMetadataInvalid');
+    }
     final settings = (await db.query('store_settings')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,

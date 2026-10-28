@@ -1,0 +1,140 @@
+{
+  "scope": "E warehouse browse/master supplier/form wholesale warning schema26; remaining E/F/G/H active",
+  "hostLogs": {
+    "warehouse-host-initial.txt": {
+      "sha256": "f8791657351999e6e1d704fc713c18cb391703a7e7dbf077242af9a42e280148",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:00"
+    },
+    "warehouse-host-retest.txt": {
+      "sha256": "7ed5e3eb8d3a697ad789e6bf71e713cd2f3b5bdd7e1c2dfa6f4372ef0eda3c4b",
+      "status": "FAIL",
+      "passed": 1,
+      "failed": 3,
+      "elapsed": "00:11"
+    },
+    "warehouse-host-final.txt": {
+      "sha256": "42d213b3c5e0be2baeaf24f4b12fcd798cf2813a61c802494310d2a9bc467ebd",
+      "status": "FAIL",
+      "passed": 2,
+      "failed": 2,
+      "elapsed": "00:11"
+    },
+    "warehouse-host-retest2.txt": {
+      "sha256": "69be18e93ff342a9610bc508f006b162aa09795f372987957bbb1cdda006870b",
+      "status": "FAIL",
+      "passed": 3,
+      "failed": 1,
+      "elapsed": "00:10"
+    },
+    "warehouse-host-pass.txt": {
+      "sha256": "1112771ca6e657c84392e32b9fa05f351724be5bc8eb19ef98a5d802aecbfd49",
+      "status": "PASS",
+      "passed": 4,
+      "failed": 0,
+      "elapsed": "00:10"
+    },
+    "warehouse-ui-initial.txt": {
+      "sha256": "9826902a183a34a0b32c181875f186def6c351d531ededefb5ffc19ea57f1b52",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "01:39"
+    },
+    "warehouse-ui-retest.txt": {
+      "sha256": "d23373d3aad1a45614b1d03caa419e950e4521b683dfee0c244baa9e3f69cae0",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:09"
+    },
+    "warehouse-ui-retest2.txt": {
+      "sha256": "a5d33da98e9b7ffb6abc3d558c9dad8812f0d51b2c9e60a2696f689ceb5d46ac",
+      "status": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:11"
+    },
+    "warehouse-acceptance.txt": {
+      "sha256": "a445dda53c6740492e336e2c9c1380debb40fc4811c21bfd453055b0acd606b9",
+      "status": "FAIL",
+      "passed": 13,
+      "failed": 2,
+      "elapsed": "00:16"
+    },
+    "warehouse-ui-final.txt": {
+      "sha256": "4efb17ed11d77743f27eccecaf7a3219135aaf2662311863680d05611a7875db",
+      "status": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:12"
+    },
+    "warehouse-ui-wholesale.txt": {
+      "sha256": "518b05f494971607b4c8bab838f3a2364196798a1f40be1adbad2723c5c22283",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:12"
+    },
+    "warehouse-ui-wholesale-final.txt": {
+      "sha256": "c4993ea3f77867a872a8323dff6eb340f7752ad18d6038158def8adad87ff186",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:12"
+    },
+    "warehouse-ui-wholesale-retest2.txt": {
+      "sha256": "940907d646259c94914ff16217f8b8c4e123055327a8f8ea206f2fd8aacb50c6",
+      "status": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:13"
+    },
+    "warehouse-acceptance-final.txt": {
+      "sha256": "05e146b770654efb4d789f9798df660338ae2a3a5467ed884fdbb5f08eb0058b",
+      "status": "PASS",
+      "passed": 32,
+      "failed": 0,
+      "elapsed": "01:28"
+    },
+    "warehouse-inventory-regression.txt": {
+      "sha256": "1fc011d791ff26867c0571cbccdf72a6c8e9eb0e43988aa567eb10ba8fa30f1f",
+      "status": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:10"
+    },
+    "warehouse-analyze-final.txt": {
+      "sha256": "d9c953653931c2acad83498043c5ce171303cc08070a273c717694df2876a823",
+      "summary": "No issues found! (ran in 176.1s)"
+    },
+    "warehouse-format-final2.txt": {
+      "sha256": "e0cae1853eb4fd3535dd37d8cf05fbc2e48f6510b4e8e5bcebaa8b562e975905",
+      "summary": "Formatted 455 files (0 changed) in 1.22 seconds."
+    },
+    "warehouse-l10n-final.txt": {
+      "sha256": "34965707b39a9d82bd74f077db65e97e724cdd37afe96517e1be51fc47faf914",
+      "summary": "OK: 956 bilingual semantic keys, matching metadata/placeholders; 643 static message references; 245 original requirement IDs."
+    },
+    "warehouse-pin-final.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137",
+      "summary": "PASS: 106 unchanged upstream files; APK license identical; Mbed TLS 3.6.7 archive pinned."
+    }
+  },
+  "failures": [
+    "Initial SQL test load failed: fixture used wrong existing API signature. Corrected saveMaster name position and archive revision; stock cleared through authorized adjustment before archive.",
+    "SQL1PASS3FAIL11s: synthetic master rows omitted required created_at; added actual columns.",
+    "SQL2PASS2FAIL11s: untracked fixture lacked known reference cost; added valid explicit reference, did not weaken sentinel constraints.",
+    "SQL3PASS1FAIL10s: UTC alias absent from bundled zone names. Fixture uses valid Asia/Makassar; exact cursor rejection assertion retained. SQL4PASS10s.",
+    "UI0PASS2FAIL1:39 and retest0PASS2FAIL9s: lazy master rows were awaited before scroll; wait actual page owner/data then reveal; corrected actual product-search label. UI2PASS11s.",
+    "Acceptance13PASS2FAIL16s: expanded ons form overflow at320px/text2x. Bounded expanded unit dropdown fixed it; UI2PASS12s.",
+    "Added wholesale warning cases0PASS2FAIL12s: dialog overflow and lazy disclosure; entire dialog made scrollable. PageStorage attempt0PASS2FAIL12s collided bool disclosure with double text-scroll offset; replaced with local form state. UI2PASS13s."
+  ],
+  "limits": [
+    "All databases new owned fixtures; no exploration update/reset",
+    "Native SQLCipher/widget evidence recorded separately; widget gestures are synthetic",
+    "Last purchase/form operation validation and supplier documents/finance/schedules remain later E; portable recovery G and handoff H remain required"
+  ]
+}

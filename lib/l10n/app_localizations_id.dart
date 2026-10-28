@@ -1855,6 +1855,38 @@ class AppLocalizationsId extends AppLocalizations {
   String get m53Ons => 'ons (100 g)';
 
   @override
+  String get m53WarehouseChanged =>
+      'Data atau tanggal gudang berubah. Muat ulang daftar.';
+
+  @override
+  String get m53WarehouseStockFilter => 'Kondisi stok';
+
+  @override
+  String get m53WarehouseAll => 'Semua kondisi';
+
+  @override
+  String get m53WarehouseExpired => 'Ada stok / referensi kedaluwarsa';
+
+  @override
+  String get m53WarehouseEmpty => 'Stok dilacak habis';
+
+  @override
+  String get m53WarehouseRelations =>
+      'Filter kategori, rak dan supplier master';
+
+  @override
+  String get m53WarehouseReferenceExpired =>
+      'Tanggal acuan kedaluwarsa; jumlah fisik tidak dilacak';
+
+  @override
+  String get m53MasterSupplierHelp =>
+      'Supplier master opsional untuk pengelompokan produk. Supplier pada setiap penerimaan dicatat terpisah.';
+
+  @override
+  String get m53CategoryLongPress =>
+      'Tekan lama untuk mengubah nama kategori; tombol edit juga tersedia.';
+
+  @override
   String get m51Shelf => 'Letak rak';
 
   @override

@@ -38,6 +38,7 @@ final class InventoryProduct {
   int? get packSize => row['pack_size'] as int?;
   String get baseUnit => row['base_unit_label'] as String? ?? 'pcs';
   bool get isDeleted => row['is_deleted'] == 1;
+  bool get referenceExpired => row['reference_expired'] == 1;
   bool get stockTracked => row['stock_tracking_enabled'] != 0;
   int? get referenceCostMicros => row['reference_cost_micros'] as int?;
   ProductAttributes get attributes => ProductAttributes.fromRow(row);
@@ -64,6 +65,7 @@ final class ProductInput {
     this.expiryEnabled = false,
     this.attributes,
     this.shelfId,
+    this.masterSupplierId,
   });
   final String name;
   final Money sellingPrice;
@@ -79,6 +81,7 @@ final class ProductInput {
   final bool expiryEnabled;
   final ProductAttributes? attributes;
   final EntityId? shelfId;
+  final EntityId? masterSupplierId;
 }
 
 enum MasterKind { category, supplier, shelf }

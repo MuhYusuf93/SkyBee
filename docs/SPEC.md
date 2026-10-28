@@ -1,5 +1,9 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Daftar gudang/supplier master M5.3 mengikuti [keputusan browse](decisions/M53_WAREHOUSE_BROWSE.md):
+ranking expiry/stockout/terbaru di SQL, cursor berkonteks, filter gabungan,
+supplier master terpisah penerimaan dan peringatan grosir sesuai currency.
+
 Metadata ons100g dan parser ukuran M5.3 mengikuti locale UI terpisah dari
 currency, dengan migrasi aditif25 dan snapshot immutable:
 [keputusan implementasi](decisions/M53_ONS_LOCALE.md).

@@ -1,0 +1,20 @@
+{
+  "run": "m53-warehouse-poco-20261028-132030",
+  "device": "7f0edea0",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 7,
+  "failed": 0,
+  "elapsed": "02:29",
+  "preExistingProtectedEntries": 659,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "not applied",
+  "sourceFiles": 551,
+  "sourceManifestSha256": "e1b5626be5696ab9064c9c87084f12d4e5688be19c676b6dd92bbe2c56ca47b8",
+  "runnerLogSha256": "22727dd2464e605d0e699c9396a65004b9b6a7bfece65b659949e2e5aeabf7df",
+  "beforeManifestSha256": "f8b62d80e8926cfabb749844b97c0dcf6251bbcce10ee376004e16be3e6a6994",
+  "afterManifestSha256": "39df2a4fada9404b0257368b0561d8e80ef4c76f47bd659bbe61d8cba46d4a7c"
+}

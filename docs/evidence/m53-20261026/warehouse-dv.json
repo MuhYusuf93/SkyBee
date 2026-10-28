@@ -1,0 +1,20 @@
+{
+  "run": "m53-warehouse-dv-20261028-131109",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 7,
+  "failed": 0,
+  "elapsed": "03:02",
+  "preExistingProtectedEntries": 728,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 551,
+  "sourceManifestSha256": "e1b5626be5696ab9064c9c87084f12d4e5688be19c676b6dd92bbe2c56ca47b8",
+  "runnerLogSha256": "2bde8e1e7cd618b2343e79224da228b698715ee921de8e64f2b9837e09ff2ac6",
+  "beforeManifestSha256": "d8961bc2cbf436cc37f46e533d752881f70898b531b4487d4f9ecfd3915eabd2",
+  "afterManifestSha256": "e22dd25568c6ff596582d019e934468ece78bb0913d63494381ed5e702eaba5c"
+}

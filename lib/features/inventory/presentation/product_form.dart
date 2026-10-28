@@ -52,10 +52,11 @@ class _ProductFormState extends State<ProductForm> {
   final costFocus = FocusNode(),
       wholesaleFocus = FocusNode(),
       retailFocus = FocusNode();
-  MasterRecord? category, selectedShelf;
+  MasterRecord? category, selectedShelf, masterSupplier;
   String? _baseline, _originalReferenceText;
   String? sizeUnit;
   bool tracking = false, low = true, busy = false;
+  bool _wholesaleExpanded = false;
   String? error;
   StoreFeaturePolicy _policy = const StoreFeaturePolicy();
   bool _policyRequested = false, _policyLoading = true, _trackStock = true;
@@ -99,6 +100,12 @@ class _ProductFormState extends State<ProductForm> {
       sku.text = product.sku;
       barcode.text = product.barcode ?? '';
       aliases.text = product.row['aliases'] as String? ?? '';
+      if (product.row['master_supplier_id'] != null) {
+        masterSupplier = MasterRecord(
+          id: EntityId(product.row['master_supplier_id'] as String),
+          name: product.row['master_supplier_name'] as String? ?? '',
+        );
+      }
       minimum.text = product.row['min_stock'].toString();
       tracking = product.expiryEnabled;
       low = product.row['low_stock_enabled'] == 1;
@@ -231,6 +238,7 @@ class _ProductFormState extends State<ProductForm> {
       stockInput.unit.name,
       stockInput.packLabel,
       category?.id.value,
+      masterSupplier?.id.value,
       tracking,
       low,
       _trackStock,
@@ -406,6 +414,7 @@ class _ProductFormState extends State<ProductForm> {
         sku: sku.text,
         barcode: barcode.text,
         categoryId: category?.id,
+        masterSupplierId: masterSupplier?.id,
         aliases: aliases.text.split(','),
         minStock: parseWholeQuantity(minimum.text),
         lowStockEnabled: low,
@@ -486,16 +495,28 @@ class _ProductFormState extends State<ProductForm> {
       if (!mounted) return;
       var suppress = false;
       if (!preference.suppressed &&
-          input.sellingPrice.amountMinor < preference.threshold) {
+          (input.sellingPrice.amountMinor < preference.threshold ||
+              (input.wholesalePrice != null &&
+                  input.wholesalePrice!.amountMinor < preference.threshold))) {
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => StatefulBuilder(
             builder: (context, update) => AlertDialog(
+              scrollable: true,
               title: Text(tr(context, 'm52LowPriceTitle')),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(tr(context, 'm52LowPriceBody')),
+                  if (input.sellingPrice.amountMinor < preference.threshold)
+                    Text(
+                      '${tr(context, 'sellingPrice')}: ${moneyLabel(context, input.sellingPrice.amountMinor)}',
+                    ),
+                  if (input.wholesalePrice != null &&
+                      input.wholesalePrice!.amountMinor < preference.threshold)
+                    Text(
+                      '${tr(context, 'm31WholesalePrice')}: ${moneyLabel(context, input.wholesalePrice!.amountMinor)}',
+                    ),
                   CheckboxListTile(
                     value: suppress,
                     onChanged:
@@ -643,6 +664,8 @@ class _ProductFormState extends State<ProductForm> {
                     ),
                     DropdownButtonFormField<String>(
                       initialValue: sizeUnit,
+                      isExpanded: true,
+                      itemHeight: null,
                       key: const ValueKey('product-size-unit'),
                       decoration: InputDecoration(
                         labelText: tr(context, 'm51Unit'),
@@ -650,7 +673,11 @@ class _ProductFormState extends State<ProductForm> {
                       items: [
                         DropdownMenuItem<String>(
                           value: null,
-                          child: Text(tr(context, 'm51NoUnit')),
+                          child: Text(
+                            tr(context, 'm51NoUnit'),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         for (final unit in ProductAttributes.units)
                           DropdownMenuItem(
@@ -661,6 +688,8 @@ class _ProductFormState extends State<ProductForm> {
                                   : unit == 'ons'
                                   ? tr(context, 'm53Ons')
                                   : unit,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                       ],
@@ -677,6 +706,14 @@ class _ProductFormState extends State<ProductForm> {
                         shelf.text = value?.name ?? '';
                       }),
                     ),
+                    RelationField(
+                      kind: MasterKind.supplier,
+                      value: masterSupplier,
+                      enabled: !busy,
+                      onChanged: (value) =>
+                          setState(() => masterSupplier = value),
+                    ),
+                    Text(tr(context, 'm53MasterSupplierHelp')),
                     ManagedTextField(
                       controller: note,
                       enabled: !busy,
@@ -708,7 +745,12 @@ class _ProductFormState extends State<ProductForm> {
                     key: ValueKey(
                       'wholesale-${error == 'm52WholesaleAboveRetail'}',
                     ),
-                    initiallyExpanded: error == 'm52WholesaleAboveRetail',
+                    // Keep disclosure with the form when a lazy row is evicted.
+                    // A shared PageStorage entry also reaches text scrollables.
+                    initiallyExpanded:
+                        error == 'm52WholesaleAboveRetail' ||
+                        _wholesaleExpanded,
+                    onExpansionChanged: (value) => _wholesaleExpanded = value,
                     title: Text(tr(context, 'm31WholesaleOptional')),
                     children: [
                       MoneyField(
