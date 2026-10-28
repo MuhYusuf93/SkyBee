@@ -19,6 +19,7 @@ import '../../cashier/domain/tender_draft.dart';
 import '../../cashier/domain/quantity_promotion.dart';
 import '../../inventory/application/receipt_draft_validation.dart';
 import '../../inventory/application/stocktake_validation.dart';
+import '../../inventory/application/supplier_return_validation.dart';
 import '../../suppliers/application/supplier_terms_validation.dart';
 import '../../suppliers/application/supplier_service.dart';
 
@@ -50,6 +51,7 @@ final class BackupValidation {
     if (schema >= 29) await StocktakeValidation.validate(db);
     if (schema >= 30) await SupplierTermsValidation.validate(db);
     if (schema >= 31) await SupplierFinanceValidation.validate(db);
+    if (schema >= 32) await SupplierReturnValidation.validate(db);
     if (schema >= 26 &&
         (await db.rawQuery('''SELECT 1 FROM products p
       LEFT JOIN suppliers s ON s.id=p.master_supplier_id

@@ -4618,5 +4618,165 @@
   "m53SupplierPurchases": "Gross invoiced purchases",
   "@m53SupplierPurchases": {
     "description": "Supplier finance: Gross invoiced purchases"
+  },
+  "m53ReturnSourceUnavailable": "The source receipt, item or batch cannot be traced for this return. Do not guess a batch; review the source document.",
+  "@m53ReturnSourceUnavailable": {
+    "description": "Supplier return: The source receipt, item or batch cannot be traced for this return. Do not guess a batch; review the source document."
+  },
+  "m53ReturnSupplierRequired": "The historical document has no supplier. The owner must explicitly reconcile its supplier before a return can be created.",
+  "@m53ReturnSupplierRequired": {
+    "description": "Supplier return: The historical document has no supplier. The owner must explicitly reconcile its supplier before a return can be created."
+  },
+  "m53ReturnQuantityInvalid": "Quantity must be positive and within the source quantity still eligible for return.",
+  "@m53ReturnQuantityInvalid": {
+    "description": "Supplier return: Quantity must be positive and within the source quantity still eligible for return."
+  },
+  "m53ReturnStockUnavailable": "The source batch has insufficient physical stock for this return.",
+  "@m53ReturnStockUnavailable": {
+    "description": "Supplier return: The source batch has insufficient physical stock for this return."
+  },
+  "m53ReturnChanged": "The return draft, document or list changed. Reload and review before continuing.",
+  "@m53ReturnChanged": {
+    "description": "Supplier return: The return draft, document or list changed. Reload and review before continuing."
+  },
+  "m53ReturnLimit": "A return document is limited to 100 lines. Create another document for additional items.",
+  "@m53ReturnLimit": {
+    "description": "Supplier return: A return document is limited to 100 lines. Create another document for additional items."
+  },
+  "m53ReturnLineExists": "This source item is already in the draft. Tap its line to change the quantity.",
+  "@m53ReturnLineExists": {
+    "description": "Supplier return: This source item is already in the draft. Tap its line to change the quantity."
+  },
+  "m53ReturnEmpty": "Add at least one item from the source receipt.",
+  "@m53ReturnEmpty": {
+    "description": "Supplier return: Add at least one item from the source receipt."
+  },
+  "m53ReturnConflict": "Stock or product data changed since the line was selected. Review the quantity and balance before confirming; stock is not overwritten.",
+  "@m53ReturnConflict": {
+    "description": "Supplier return: Stock or product data changed since the line was selected. Review the quantity and balance before confirming; stock is not overwritten."
+  },
+  "m53ReturnAlreadyReversed": "This return document has already been reversed.",
+  "@m53ReturnAlreadyReversed": {
+    "description": "Supplier return: This return document has already been reversed."
+  },
+  "m53ReturnCreditDependency": "This return has approved supplier credit. The owner must resolve credit reversal and its allocations first.",
+  "@m53ReturnCreditDependency": {
+    "description": "Supplier return: This return has approved supplier credit. The owner must resolve credit reversal and its allocations first."
+  },
+  "m53ReturnReversalDependency": "Stock or batch changes occurred after this return. An exact reversal is unavailable; review the history and goods.",
+  "@m53ReturnReversalDependency": {
+    "description": "Supplier return: Stock or batch changes occurred after this return. An exact reversal is unavailable; review the history and goods."
+  },
+  "m53ReturnBlocksReceiptReversal": "This receipt has an active physical return. Resolve a valid return reversal before reversing the receipt.",
+  "@m53ReturnBlocksReceiptReversal": {
+    "description": "Supplier return: This receipt has an active physical return. Resolve a valid return reversal before reversing the receipt."
+  },
+  "backupSupplierReturnsInvalid": "The archive contains inconsistent supplier return sources, batches, values or event order.",
+  "@backupSupplierReturnsInvalid": {
+    "description": "Supplier return: The archive contains inconsistent supplier return sources, batches, values or event order."
+  },
+  "m53SupplierReturn": "Return to supplier",
+  "@m53SupplierReturn": {
+    "description": "Supplier return: Return to supplier"
+  },
+  "m53SupplierReturns": "Supplier returns",
+  "@m53SupplierReturns": {
+    "description": "Supplier return: Supplier returns"
+  },
+  "m53ReturnQuantity": "Return quantity (base units)",
+  "@m53ReturnQuantity": {
+    "description": "Supplier return: Return quantity (base units)"
+  },
+  "m53ReturnConfirmHelp": "Confirm the entire return document? Source batch stock will be removed at its current average inventory value. This return is not yet approved credit or incoming money.",
+  "@m53ReturnConfirmHelp": {
+    "description": "Supplier return: Confirm the entire return document? Source batch stock will be removed at its current average inventory value. This return is not yet approved credit or incoming money."
+  },
+  "m53ReturnUndoHelp": "Reverse this entire return with the entered reason? This requires no dependent stock changes or credit. History is retained and customer sales are not cancelled.",
+  "@m53ReturnUndoHelp": {
+    "description": "Supplier return: Reverse this entire return with the entered reason? This requires no dependent stock changes or credit. History is retained and customer sales are not cancelled."
+  },
+  "m53ReturnNoAutomaticCredit": "Physical returns and supplier credit approval are separate events. Returning goods does not automatically reduce debt or add drawer cash.",
+  "@m53ReturnNoAutomaticCredit": {
+    "description": "Supplier return: Physical returns and supplier credit approval are separate events. Returning goods does not automatically reduce debt or add drawer cash."
+  },
+  "m53ReturnStatusdraft": "Return draft — stock unchanged",
+  "@m53ReturnStatusdraft": {
+    "description": "Supplier return: Return draft — stock unchanged"
+  },
+  "m53ReturnStatusposted": "Return posted",
+  "@m53ReturnStatusposted": {
+    "description": "Supplier return: Return posted"
+  },
+  "m53ReturnStatuscancelled": "Return draft cancelled",
+  "@m53ReturnStatuscancelled": {
+    "description": "Supplier return: Return draft cancelled"
+  },
+  "m53ReturnUntrackedHelp": "Untracked: physical balance not validated",
+  "@m53ReturnUntrackedHelp": {
+    "description": "Supplier return: Untracked: physical balance not validated"
+  },
+  "m53ReturnSaveReason": "Save reason to draft",
+  "@m53ReturnSaveReason": {
+    "description": "Supplier return: Save reason to draft"
+  },
+  "m53ReturnConfirm": "Confirm physical return",
+  "@m53ReturnConfirm": {
+    "description": "Supplier return: Confirm physical return"
+  },
+  "m53ReturnReview": "Review draft balances and quantities",
+  "@m53ReturnReview": {
+    "description": "Supplier return: Review draft balances and quantities"
+  },
+  "m53ReturnCancel": "Cancel return draft",
+  "@m53ReturnCancel": {
+    "description": "Supplier return: Cancel return draft"
+  },
+  "m53ReturnCancelHelp": "Cancel this draft? Stock is unchanged and the draft remains recorded as cancelled.",
+  "@m53ReturnCancelHelp": {
+    "description": "Supplier return: Cancel this draft? Stock is unchanged and the draft remains recorded as cancelled."
+  },
+  "m53ReturnSourceItems": "Choose items from the source receipt",
+  "@m53ReturnSourceItems": {
+    "description": "Supplier return: Choose items from the source receipt"
+  },
+  "m53ReturnEligible": "Still eligible for return",
+  "@m53ReturnEligible": {
+    "description": "Supplier return: Still eligible for return"
+  },
+  "m53ReturnPhysicalAvailable": "Available in source batch",
+  "@m53ReturnPhysicalAvailable": {
+    "description": "Supplier return: Available in source batch"
+  },
+  "m53ReturnReversed": "Return reversed",
+  "@m53ReturnReversed": {
+    "description": "Supplier return: Return reversed"
+  },
+  "m53ReturnPendingCredit": "Physical return recorded; credit value not approved",
+  "@m53ReturnPendingCredit": {
+    "description": "Supplier return: Physical return recorded; credit value not approved"
+  },
+  "m53ReturnInventoryValue": "Inventory value removed",
+  "@m53ReturnInventoryValue": {
+    "description": "Supplier return: Inventory value removed"
+  },
+  "m53ReturnUndo": "Reverse return with reason",
+  "@m53ReturnUndo": {
+    "description": "Supplier return: Reverse return with reason"
+  },
+  "m53ReturnListdrafts": "Return drafts",
+  "@m53ReturnListdrafts": {
+    "description": "Supplier return: Return drafts"
+  },
+  "m53ReturnListposted": "Return history",
+  "@m53ReturnListposted": {
+    "description": "Supplier return: Return history"
+  },
+  "m53ReturnListreceipts": "Source receipts",
+  "@m53ReturnListreceipts": {
+    "description": "Supplier return: Source receipts"
+  },
+  "m53ReturnChooseReceipt": "Create a draft from this receipt",
+  "@m53ReturnChooseReceipt": {
+    "description": "Supplier return: Create a draft from this receipt"
   }
 }

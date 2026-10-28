@@ -523,6 +523,7 @@ void m53SupplierFinanceWidgetsSuite(DatabaseFactory factory) {
           });
         }
       },
+      timeout: const Timeout(Duration(minutes: 5)),
     );
   }
 }

@@ -1,0 +1,152 @@
+{
+  "schema": 32,
+  "sourceFiles": 627,
+  "sourceManifestSha256": "30d00e9f06b4046513247ba43c83b42254804ed5cff472ac2bcc3e7ae0ed1b69",
+  "regression": {
+    "passed": 26,
+    "failed": 0,
+    "elapsed": "00:55",
+    "suites": [
+      "returns domain6",
+      "returns UI ID/EN2",
+      "finance domain11",
+      "finance UI ID/EN2",
+      "receipt stock guard3",
+      "backup metadata2"
+    ]
+  },
+  "finalMetadata": {
+    "passed": 17,
+    "failed": 0,
+    "elapsed": "00:39",
+    "scope": "overlaps regression; adds UUID and absent untracked-batch metadata checks"
+  },
+  "initialReturnUI": {
+    "passed": 2,
+    "failed": 0,
+    "elapsed": "00:16",
+    "scope": "320px/text2, dirty locked Back, durable source/quantity draft, atomic post, exact undo"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 56.0
+  },
+  "localization": {
+    "keys": 1171,
+    "references": 798,
+    "originalRequirements": 245
+  },
+  "pinCrypto": {
+    "upstreamUnchanged": 106,
+    "licenseAndPinnedArchive": "match"
+  },
+  "native": "PENDING: combined E3 campaign before F; host only",
+  "ordinarySkybee": "No install/reset/reseed; new final reset authorization applies only after all M5.3 and verified backup",
+  "logs": {
+    "supplier-returns-analyze1.txt": {
+      "sha256": "040c648045c075e819ee96e901e6353fd07308889785b8b7e6866e69c915c13d"
+    },
+    "supplier-returns-analyze10.txt": {
+      "sha256": "e034dcbe1d4b6cbe513d8c68a63b12c5585eb67ed5073dc2c96ce2b5c3f7ea81"
+    },
+    "supplier-returns-analyze4.txt": {
+      "sha256": "43fc75d5829f5a6558bfe259751d2de6fa5917de921150d2ba8ac424eefe8ad4"
+    },
+    "supplier-returns-analyze5.txt": {
+      "sha256": "93c0d4b0736b107344e16e408b5ff2f3245db7619fd397c26610e87c5822d751"
+    },
+    "supplier-returns-analyze9.txt": {
+      "sha256": "5bb88a4a1b8984b7c1ea557416fd8ae548b9a1f9e35a0f8842435067a12f356c"
+    },
+    "supplier-returns-fix3.txt": {
+      "sha256": "df029b3e74cae8452e898bcd1475f3b99abab51906722125f378199b06f4be83"
+    },
+    "supplier-returns-fix7.txt": {
+      "sha256": "195fc3655a8b5fe02aedc2f804745ecb27c50ddfcefd382c4cafc4d437bb4c46"
+    },
+    "supplier-returns-fix8.txt": {
+      "sha256": "116c0ca0a62a742eaf7c5f2673a7aefc7f44eea083d355377571839c5fe58ba0"
+    },
+    "supplier-returns-format1.txt": {
+      "sha256": "286179a01365f8e0eaaaf1ccfcffde7250441f4ed614b239cb07840da1849e96"
+    },
+    "supplier-returns-format10.txt": {
+      "sha256": "626ccfdad958c340c34e7c405a0c26150461a093c1ee03efc4c5dcbf011fa00a"
+    },
+    "supplier-returns-format2.txt": {
+      "sha256": "b89355c46f1a8786337e3744e203c2d3eecf65d05a19fd4d0037895a566cf4ea"
+    },
+    "supplier-returns-format4.txt": {
+      "sha256": "bdc293b21499ca6098b211a0efa9c5545e53ca476f9610c0bdbb33497956daae"
+    },
+    "supplier-returns-format5.txt": {
+      "sha256": "6869d3582d738e6af4eee5a66c838a653d983967ad72804838bea143ed9fc5ab"
+    },
+    "supplier-returns-format9.txt": {
+      "sha256": "0c5b6b35bcfad61c72bdb0c49a4dac1e4ef60f75df2ca81538ade4bcb5f05d1a"
+    },
+    "supplier-returns-gen5.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "supplier-returns-host1.txt": {
+      "sha256": "a4e8191235d4fa3e4d67b71859e3fae100a0fafe0e592a102473f873d026cef3",
+      "passed": 4,
+      "failed": 0,
+      "elapsed": "00:20"
+    },
+    "supplier-returns-host2.txt": {
+      "sha256": "79dc03dcc1c20918a4f481e3ea776a820a9400515888f39b059c67fb5d15772e",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:00"
+    },
+    "supplier-returns-host3.txt": {
+      "sha256": "3d7083ab4507aa1dcb3eb26f940dbad57d15259b4ced74a22756a3b318b8aeea",
+      "passed": 5,
+      "failed": 0,
+      "elapsed": "00:23"
+    },
+    "supplier-returns-l10n10.txt": {
+      "sha256": "47a8a3567d19087e00f5a79c3e1c395ed6243ad069894aa1768b743e8d8a5648"
+    },
+    "supplier-returns-l10n5.txt": {
+      "sha256": "47a8a3567d19087e00f5a79c3e1c395ed6243ad069894aa1768b743e8d8a5648"
+    },
+    "supplier-returns-l10n9.txt": {
+      "sha256": "47a8a3567d19087e00f5a79c3e1c395ed6243ad069894aa1768b743e8d8a5648"
+    },
+    "supplier-returns-metadata-host10.txt": {
+      "sha256": "ebdb98c23d7f7c7f1868f25296f88575a2cbe5571d6617dac147c8a3f3aea37d",
+      "passed": 17,
+      "failed": 0,
+      "elapsed": "00:39"
+    },
+    "supplier-returns-pin10.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+    },
+    "supplier-returns-pin9.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+    },
+    "supplier-returns-regression9.txt": {
+      "sha256": "78d9de2b2f03ac702c8b2e5f4cbc0f6f03a13e1208d201e9584c68255df9de08",
+      "passed": 26,
+      "failed": 0,
+      "elapsed": "00:55"
+    },
+    "supplier-returns-test-format1.txt": {
+      "sha256": "39314fc8e290eda40278e78b8c0220860c495f9689baef51f50410dda1f1c3f5"
+    },
+    "supplier-returns-ui-format1.txt": {
+      "sha256": "2bd811062f6861cbf86abfffb1adf320c91c5ea99d499b3c7bf14cf3c7a5b2ff"
+    },
+    "supplier-returns-ui-format6.txt": {
+      "sha256": "e7a555b4660d9c88e8cf108ad44250789196afa22603dcd28182b910ffeefcb1"
+    },
+    "supplier-returns-ui-host1.txt": {
+      "sha256": "ca6fae7a9d46132ef5a9acc905928878dfb661907a41303159fd0067517f3c12",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:16"
+    }
+  }
+}

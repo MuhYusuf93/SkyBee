@@ -6883,6 +6883,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Gross invoiced purchases'**
   String get m53SupplierPurchases;
+
+  /// Supplier return: The source receipt, item or batch cannot be traced for this return. Do not guess a batch; review the source document.
+  ///
+  /// In en, this message translates to:
+  /// **'The source receipt, item or batch cannot be traced for this return. Do not guess a batch; review the source document.'**
+  String get m53ReturnSourceUnavailable;
+
+  /// Supplier return: The historical document has no supplier. The owner must explicitly reconcile its supplier before a return can be created.
+  ///
+  /// In en, this message translates to:
+  /// **'The historical document has no supplier. The owner must explicitly reconcile its supplier before a return can be created.'**
+  String get m53ReturnSupplierRequired;
+
+  /// Supplier return: Quantity must be positive and within the source quantity still eligible for return.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity must be positive and within the source quantity still eligible for return.'**
+  String get m53ReturnQuantityInvalid;
+
+  /// Supplier return: The source batch has insufficient physical stock for this return.
+  ///
+  /// In en, this message translates to:
+  /// **'The source batch has insufficient physical stock for this return.'**
+  String get m53ReturnStockUnavailable;
+
+  /// Supplier return: The return draft, document or list changed. Reload and review before continuing.
+  ///
+  /// In en, this message translates to:
+  /// **'The return draft, document or list changed. Reload and review before continuing.'**
+  String get m53ReturnChanged;
+
+  /// Supplier return: A return document is limited to 100 lines. Create another document for additional items.
+  ///
+  /// In en, this message translates to:
+  /// **'A return document is limited to 100 lines. Create another document for additional items.'**
+  String get m53ReturnLimit;
+
+  /// Supplier return: This source item is already in the draft. Tap its line to change the quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'This source item is already in the draft. Tap its line to change the quantity.'**
+  String get m53ReturnLineExists;
+
+  /// Supplier return: Add at least one item from the source receipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one item from the source receipt.'**
+  String get m53ReturnEmpty;
+
+  /// Supplier return: Stock or product data changed since the line was selected. Review the quantity and balance before confirming; stock is not overwritten.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock or product data changed since the line was selected. Review the quantity and balance before confirming; stock is not overwritten.'**
+  String get m53ReturnConflict;
+
+  /// Supplier return: This return document has already been reversed.
+  ///
+  /// In en, this message translates to:
+  /// **'This return document has already been reversed.'**
+  String get m53ReturnAlreadyReversed;
+
+  /// Supplier return: This return has approved supplier credit. The owner must resolve credit reversal and its allocations first.
+  ///
+  /// In en, this message translates to:
+  /// **'This return has approved supplier credit. The owner must resolve credit reversal and its allocations first.'**
+  String get m53ReturnCreditDependency;
+
+  /// Supplier return: Stock or batch changes occurred after this return. An exact reversal is unavailable; review the history and goods.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock or batch changes occurred after this return. An exact reversal is unavailable; review the history and goods.'**
+  String get m53ReturnReversalDependency;
+
+  /// Supplier return: This receipt has an active physical return. Resolve a valid return reversal before reversing the receipt.
+  ///
+  /// In en, this message translates to:
+  /// **'This receipt has an active physical return. Resolve a valid return reversal before reversing the receipt.'**
+  String get m53ReturnBlocksReceiptReversal;
+
+  /// Supplier return: The archive contains inconsistent supplier return sources, batches, values or event order.
+  ///
+  /// In en, this message translates to:
+  /// **'The archive contains inconsistent supplier return sources, batches, values or event order.'**
+  String get backupSupplierReturnsInvalid;
+
+  /// Supplier return: Return to supplier
+  ///
+  /// In en, this message translates to:
+  /// **'Return to supplier'**
+  String get m53SupplierReturn;
+
+  /// Supplier return: Supplier returns
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier returns'**
+  String get m53SupplierReturns;
+
+  /// Supplier return: Return quantity (base units)
+  ///
+  /// In en, this message translates to:
+  /// **'Return quantity (base units)'**
+  String get m53ReturnQuantity;
+
+  /// Supplier return: Confirm the entire return document? Source batch stock will be removed at its current average inventory value. This return is not yet approved credit or incoming money.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the entire return document? Source batch stock will be removed at its current average inventory value. This return is not yet approved credit or incoming money.'**
+  String get m53ReturnConfirmHelp;
+
+  /// Supplier return: Reverse this entire return with the entered reason? This requires no dependent stock changes or credit. History is retained and customer sales are not cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse this entire return with the entered reason? This requires no dependent stock changes or credit. History is retained and customer sales are not cancelled.'**
+  String get m53ReturnUndoHelp;
+
+  /// Supplier return: Physical returns and supplier credit approval are separate events. Returning goods does not automatically reduce debt or add drawer cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical returns and supplier credit approval are separate events. Returning goods does not automatically reduce debt or add drawer cash.'**
+  String get m53ReturnNoAutomaticCredit;
+
+  /// Supplier return: Return draft — stock unchanged
+  ///
+  /// In en, this message translates to:
+  /// **'Return draft — stock unchanged'**
+  String get m53ReturnStatusdraft;
+
+  /// Supplier return: Return posted
+  ///
+  /// In en, this message translates to:
+  /// **'Return posted'**
+  String get m53ReturnStatusposted;
+
+  /// Supplier return: Return draft cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Return draft cancelled'**
+  String get m53ReturnStatuscancelled;
+
+  /// Supplier return: Untracked: physical balance not validated
+  ///
+  /// In en, this message translates to:
+  /// **'Untracked: physical balance not validated'**
+  String get m53ReturnUntrackedHelp;
+
+  /// Supplier return: Save reason to draft
+  ///
+  /// In en, this message translates to:
+  /// **'Save reason to draft'**
+  String get m53ReturnSaveReason;
+
+  /// Supplier return: Confirm physical return
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm physical return'**
+  String get m53ReturnConfirm;
+
+  /// Supplier return: Review draft balances and quantities
+  ///
+  /// In en, this message translates to:
+  /// **'Review draft balances and quantities'**
+  String get m53ReturnReview;
+
+  /// Supplier return: Cancel return draft
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel return draft'**
+  String get m53ReturnCancel;
+
+  /// Supplier return: Cancel this draft? Stock is unchanged and the draft remains recorded as cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this draft? Stock is unchanged and the draft remains recorded as cancelled.'**
+  String get m53ReturnCancelHelp;
+
+  /// Supplier return: Choose items from the source receipt
+  ///
+  /// In en, this message translates to:
+  /// **'Choose items from the source receipt'**
+  String get m53ReturnSourceItems;
+
+  /// Supplier return: Still eligible for return
+  ///
+  /// In en, this message translates to:
+  /// **'Still eligible for return'**
+  String get m53ReturnEligible;
+
+  /// Supplier return: Available in source batch
+  ///
+  /// In en, this message translates to:
+  /// **'Available in source batch'**
+  String get m53ReturnPhysicalAvailable;
+
+  /// Supplier return: Return reversed
+  ///
+  /// In en, this message translates to:
+  /// **'Return reversed'**
+  String get m53ReturnReversed;
+
+  /// Supplier return: Physical return recorded; credit value not approved
+  ///
+  /// In en, this message translates to:
+  /// **'Physical return recorded; credit value not approved'**
+  String get m53ReturnPendingCredit;
+
+  /// Supplier return: Inventory value removed
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory value removed'**
+  String get m53ReturnInventoryValue;
+
+  /// Supplier return: Reverse return with reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse return with reason'**
+  String get m53ReturnUndo;
+
+  /// Supplier return: Return drafts
+  ///
+  /// In en, this message translates to:
+  /// **'Return drafts'**
+  String get m53ReturnListdrafts;
+
+  /// Supplier return: Return history
+  ///
+  /// In en, this message translates to:
+  /// **'Return history'**
+  String get m53ReturnListposted;
+
+  /// Supplier return: Source receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Source receipts'**
+  String get m53ReturnListreceipts;
+
+  /// Supplier return: Create a draft from this receipt
+  ///
+  /// In en, this message translates to:
+  /// **'Create a draft from this receipt'**
+  String get m53ReturnChooseReceipt;
 }
 
 class _AppLocalizationsDelegate

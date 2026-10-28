@@ -3836,4 +3836,143 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53SupplierPurchases => 'Gross invoiced purchases';
+
+  @override
+  String get m53ReturnSourceUnavailable =>
+      'The source receipt, item or batch cannot be traced for this return. Do not guess a batch; review the source document.';
+
+  @override
+  String get m53ReturnSupplierRequired =>
+      'The historical document has no supplier. The owner must explicitly reconcile its supplier before a return can be created.';
+
+  @override
+  String get m53ReturnQuantityInvalid =>
+      'Quantity must be positive and within the source quantity still eligible for return.';
+
+  @override
+  String get m53ReturnStockUnavailable =>
+      'The source batch has insufficient physical stock for this return.';
+
+  @override
+  String get m53ReturnChanged =>
+      'The return draft, document or list changed. Reload and review before continuing.';
+
+  @override
+  String get m53ReturnLimit =>
+      'A return document is limited to 100 lines. Create another document for additional items.';
+
+  @override
+  String get m53ReturnLineExists =>
+      'This source item is already in the draft. Tap its line to change the quantity.';
+
+  @override
+  String get m53ReturnEmpty => 'Add at least one item from the source receipt.';
+
+  @override
+  String get m53ReturnConflict =>
+      'Stock or product data changed since the line was selected. Review the quantity and balance before confirming; stock is not overwritten.';
+
+  @override
+  String get m53ReturnAlreadyReversed =>
+      'This return document has already been reversed.';
+
+  @override
+  String get m53ReturnCreditDependency =>
+      'This return has approved supplier credit. The owner must resolve credit reversal and its allocations first.';
+
+  @override
+  String get m53ReturnReversalDependency =>
+      'Stock or batch changes occurred after this return. An exact reversal is unavailable; review the history and goods.';
+
+  @override
+  String get m53ReturnBlocksReceiptReversal =>
+      'This receipt has an active physical return. Resolve a valid return reversal before reversing the receipt.';
+
+  @override
+  String get backupSupplierReturnsInvalid =>
+      'The archive contains inconsistent supplier return sources, batches, values or event order.';
+
+  @override
+  String get m53SupplierReturn => 'Return to supplier';
+
+  @override
+  String get m53SupplierReturns => 'Supplier returns';
+
+  @override
+  String get m53ReturnQuantity => 'Return quantity (base units)';
+
+  @override
+  String get m53ReturnConfirmHelp =>
+      'Confirm the entire return document? Source batch stock will be removed at its current average inventory value. This return is not yet approved credit or incoming money.';
+
+  @override
+  String get m53ReturnUndoHelp =>
+      'Reverse this entire return with the entered reason? This requires no dependent stock changes or credit. History is retained and customer sales are not cancelled.';
+
+  @override
+  String get m53ReturnNoAutomaticCredit =>
+      'Physical returns and supplier credit approval are separate events. Returning goods does not automatically reduce debt or add drawer cash.';
+
+  @override
+  String get m53ReturnStatusdraft => 'Return draft — stock unchanged';
+
+  @override
+  String get m53ReturnStatusposted => 'Return posted';
+
+  @override
+  String get m53ReturnStatuscancelled => 'Return draft cancelled';
+
+  @override
+  String get m53ReturnUntrackedHelp =>
+      'Untracked: physical balance not validated';
+
+  @override
+  String get m53ReturnSaveReason => 'Save reason to draft';
+
+  @override
+  String get m53ReturnConfirm => 'Confirm physical return';
+
+  @override
+  String get m53ReturnReview => 'Review draft balances and quantities';
+
+  @override
+  String get m53ReturnCancel => 'Cancel return draft';
+
+  @override
+  String get m53ReturnCancelHelp =>
+      'Cancel this draft? Stock is unchanged and the draft remains recorded as cancelled.';
+
+  @override
+  String get m53ReturnSourceItems => 'Choose items from the source receipt';
+
+  @override
+  String get m53ReturnEligible => 'Still eligible for return';
+
+  @override
+  String get m53ReturnPhysicalAvailable => 'Available in source batch';
+
+  @override
+  String get m53ReturnReversed => 'Return reversed';
+
+  @override
+  String get m53ReturnPendingCredit =>
+      'Physical return recorded; credit value not approved';
+
+  @override
+  String get m53ReturnInventoryValue => 'Inventory value removed';
+
+  @override
+  String get m53ReturnUndo => 'Reverse return with reason';
+
+  @override
+  String get m53ReturnListdrafts => 'Return drafts';
+
+  @override
+  String get m53ReturnListposted => 'Return history';
+
+  @override
+  String get m53ReturnListreceipts => 'Source receipts';
+
+  @override
+  String get m53ReturnChooseReceipt => 'Create a draft from this receipt';
 }

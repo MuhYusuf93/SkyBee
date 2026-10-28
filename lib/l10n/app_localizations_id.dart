@@ -3847,4 +3847,143 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53SupplierPurchases => 'Pembelian bruto dalam tagihan';
+
+  @override
+  String get m53ReturnSourceUnavailable =>
+      'Penerimaan, barang atau batch asal tidak dapat ditelusuri untuk retur ini. Jangan menebak batch; tinjau dokumen asal.';
+
+  @override
+  String get m53ReturnSupplierRequired =>
+      'Dokumen lama belum memiliki supplier. Pemilik perlu merekonsiliasi supplier secara eksplisit sebelum membuat retur.';
+
+  @override
+  String get m53ReturnQuantityInvalid =>
+      'Jumlah harus positif dan tidak melebihi jumlah sumber yang masih boleh diretur.';
+
+  @override
+  String get m53ReturnStockUnavailable =>
+      'Stok fisik pada batch asal tidak cukup untuk jumlah retur ini.';
+
+  @override
+  String get m53ReturnChanged =>
+      'Draft, dokumen atau daftar retur berubah. Muat ulang dan tinjau sebelum melanjutkan.';
+
+  @override
+  String get m53ReturnLimit =>
+      'Satu dokumen retur dibatasi 100 baris. Buat dokumen berikutnya untuk barang tambahan.';
+
+  @override
+  String get m53ReturnLineExists =>
+      'Barang sumber sudah ada di draft. Ketuk baris untuk mengubah jumlahnya.';
+
+  @override
+  String get m53ReturnEmpty =>
+      'Tambahkan setidaknya satu barang dari penerimaan asal.';
+
+  @override
+  String get m53ReturnConflict =>
+      'Stok atau data barang berubah sejak baris dipilih. Tinjau jumlah dan saldo lagi sebelum konfirmasi; stok tidak ditimpa.';
+
+  @override
+  String get m53ReturnAlreadyReversed => 'Dokumen retur ini sudah dibalik.';
+
+  @override
+  String get m53ReturnCreditDependency =>
+      'Retur ini memiliki kredit supplier yang disetujui. Pemilik harus menyelesaikan pembalikan kredit dan alokasinya dahulu.';
+
+  @override
+  String get m53ReturnReversalDependency =>
+      'Ada mutasi stok atau perubahan batch setelah retur. Pembalikan persis tidak dapat dilakukan; tinjau riwayat dan kondisi barang.';
+
+  @override
+  String get m53ReturnBlocksReceiptReversal =>
+      'Penerimaan ini memiliki retur fisik aktif. Selesaikan pembalikan retur yang sah sebelum membalik penerimaan.';
+
+  @override
+  String get backupSupplierReturnsInvalid =>
+      'Arsip memiliki sumber, batch, nilai atau urutan retur supplier yang tidak konsisten.';
+
+  @override
+  String get m53SupplierReturn => 'Retur ke supplier';
+
+  @override
+  String get m53SupplierReturns => 'Retur supplier';
+
+  @override
+  String get m53ReturnQuantity => 'Jumlah retur (unit dasar)';
+
+  @override
+  String get m53ReturnConfirmHelp =>
+      'Konfirmasi seluruh dokumen retur? Stok batch asal akan dikeluarkan memakai nilai rata-rata persediaan saat ini. Retur ini belum menjadi kredit yang disetujui atau uang masuk.';
+
+  @override
+  String get m53ReturnUndoHelp =>
+      'Balik seluruh retur ini dengan alasan yang ditulis? Hanya dapat dilakukan bila belum ada mutasi stok atau kredit yang bergantung padanya. Tidak menghapus histori atau membatalkan penjualan pelanggan.';
+
+  @override
+  String get m53ReturnNoAutomaticCredit =>
+      'Retur fisik dan persetujuan nilai kredit supplier adalah kejadian berbeda. Mengembalikan barang tidak otomatis mengurangi utang atau menambah uang laci.';
+
+  @override
+  String get m53ReturnStatusdraft => 'Draft retur — stok belum berubah';
+
+  @override
+  String get m53ReturnStatusposted => 'Retur diposting';
+
+  @override
+  String get m53ReturnStatuscancelled => 'Draft retur dibatalkan';
+
+  @override
+  String get m53ReturnUntrackedHelp =>
+      'Untracked: saldo fisik tidak divalidasi';
+
+  @override
+  String get m53ReturnSaveReason => 'Simpan alasan pada draft';
+
+  @override
+  String get m53ReturnConfirm => 'Konfirmasi retur fisik';
+
+  @override
+  String get m53ReturnReview => 'Tinjau ulang saldo dan jumlah draft';
+
+  @override
+  String get m53ReturnCancel => 'Batalkan draft retur';
+
+  @override
+  String get m53ReturnCancelHelp =>
+      'Batalkan draft ini? Stok belum berubah dan isian draft tetap tercatat sebagai dibatalkan.';
+
+  @override
+  String get m53ReturnSourceItems => 'Pilih barang dari penerimaan asal';
+
+  @override
+  String get m53ReturnEligible => 'Masih boleh diretur';
+
+  @override
+  String get m53ReturnPhysicalAvailable => 'Tersedia di batch asal';
+
+  @override
+  String get m53ReturnReversed => 'Retur sudah dibalik';
+
+  @override
+  String get m53ReturnPendingCredit =>
+      'Retur fisik tercatat; nilai kredit belum disetujui';
+
+  @override
+  String get m53ReturnInventoryValue => 'Nilai persediaan yang keluar';
+
+  @override
+  String get m53ReturnUndo => 'Balik retur dengan alasan';
+
+  @override
+  String get m53ReturnListdrafts => 'Draft retur';
+
+  @override
+  String get m53ReturnListposted => 'Riwayat retur';
+
+  @override
+  String get m53ReturnListreceipts => 'Penerimaan asal';
+
+  @override
+  String get m53ReturnChooseReceipt => 'Buat draft dari penerimaan ini';
 }

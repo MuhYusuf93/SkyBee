@@ -12,6 +12,7 @@ import '../application/supplier_service.dart';
 import '../domain/supplier_invoice.dart';
 import 'supplier_billing_screen.dart';
 import 'supplier_invoice_screen.dart';
+import 'supplier_returns_screen.dart';
 
 /// A warehouse route is always scoped to one supplier. Each page replaces the
 /// previous one, so browsing long histories does not retain an unbounded list.
@@ -121,6 +122,18 @@ class _SupplierInvoicesScreenState extends State<SupplierInvoicesScreen> {
           padding: const EdgeInsets.all(16),
           children: [
             Text(name),
+            TextButton(
+              key: const ValueKey('supplier-returns-open'),
+              onPressed: busy
+                  ? null
+                  : () => Navigator.of(context).push<void>(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            SupplierReturnsScreen(supplier: widget.id),
+                      ),
+                    ),
+              child: Text(tr(context, 'm53SupplierReturns')),
+            ),
             if (summary != null) ...[
               Text(
                 '${tr(context, "m53SupplierSummaryScope")} · ${summary!.today.iso}',

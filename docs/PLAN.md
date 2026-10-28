@@ -1,5 +1,14 @@
 # Rencana milestone
 
+29 Oktober06:04 — retur fisik schema32 checkpoint host: regresi26PASS55s,
+finalmetadata17PASS39s(overlap), UI2PASS16s, analyzer56s bersih, format531files,
+l10n1171/798/245 danPIN106match. Source627 historis host (bukan native).
+Posting/reversal physical/source-ledger/backup validator dan UI ID/EN sudah ada;
+kredit/refund/jadwal berikutnya masih E3, native gabungan wajib sebelum F.
+Checkpoint31 5d19777 sudah push. Tidak ada update/reset/reseed .skybee.
+[Laporan](M53_SUPPLIER_RETURNS_REPORT.md), [bukti](evidence/m53-20261026/supplier-returns-host-checks.json).
+Lanjut persetujuan kredit/refund, lalu jadwal H-1; F QR/struk/laporan, G/H tetapaktif.
+
 29 Oktober05:31 — checkpoint host E3 tagihan/payment schema31 tersimpan.
 Domain11PASS37s; regresi49PASS2UIFAIL lalu focused UI6PASS49s (finance ID/EN,
 terms ID/EN, receipt ID/EN). Failures dipertahankan; readiness lazy dan form

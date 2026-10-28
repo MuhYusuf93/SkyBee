@@ -42,6 +42,7 @@ abstract final class SupplierFinanceValidation {
         limit: 100,
       );
       for (final row in rows) {
+        EntityId(row['id'] as String);
         yield row;
       }
       if (rows.length < 100) break;

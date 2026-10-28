@@ -26,10 +26,13 @@ import '../../settings/application/settings_service.dart';
 import '../../settings/domain/store_feature_policy.dart';
 import '../domain/receipt_draft.dart';
 import '../domain/stocktake_draft.dart';
+import '../../suppliers/domain/supplier_return.dart';
 
 part 'receipt_draft_service.dart';
 part 'stocktake_service.dart';
 part 'stocktake_posting.dart';
+part 'supplier_returns.dart';
+part 'supplier_return_posting.dart';
 
 /// Protected master/stock use cases. Every write runs in one dbTxn and checks
 /// access at execution AND before commit. Screen state has no SQL/valuation.
@@ -1277,6 +1280,14 @@ final class InventoryService {
           limit: 1,
         )).isNotEmpty) {
       throw const AppError('m53SupplierInvoiceBlocksReceiptReversal');
+    }
+    if (database.schemaVersion >= 32 &&
+        (await dbTxn.rawQuery(
+          '''SELECT 1 FROM supplier_returns r WHERE r.receipt_id=?
+      AND NOT EXISTS(SELECT 1 FROM supplier_return_reversals v WHERE v.return_id=r.id) LIMIT 1''',
+          [receipt.value],
+        )).isNotEmpty) {
+      throw const AppError('m53ReturnBlocksReceiptReversal');
     }
     if (database.schemaVersion >= 27 &&
         (await dbTxn.query(
