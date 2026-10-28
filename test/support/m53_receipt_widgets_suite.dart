@@ -245,7 +245,7 @@ void m53ReceiptWidgetsSuite(DatabaseFactory factory) {
               await tester.binding.handlePopRoute();
               await tester.pump();
               await drain(tester, () => find.text(stay).evaluate().isNotEmpty);
-              await tester.tap(find.text(stay));
+              await tap(tester, find.text(stay));
               await io(tester, () => app.management.unlock('0001'));
               await drain(
                 tester,
@@ -318,7 +318,16 @@ void m53ReceiptWidgetsSuite(DatabaseFactory factory) {
           // A free-price confirmation now covers the route. Rapid taps on the
           // visible receiving action are exercised by the other two cases.
           if (!(config.$2 && config.$1 == 'id')) {
-            await tester.tap(save.hitTestable(), warnIfMissed: false);
+            if (save.hitTestable().evaluate().isNotEmpty) {
+              await tester.tap(save.hitTestable());
+            } else {
+              expectSync(
+                find.byType(ReceiptLineEditor),
+                findsNothing,
+                reason:
+                    'The first save already completed before the second pointer gesture',
+              );
+            }
           }
           if (config.$2 && config.$1 == 'id') {
             final freeTitle = tr(ctx, 'm53ConfirmFreeTitle');

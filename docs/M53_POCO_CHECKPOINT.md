@@ -1,4 +1,26 @@
-# Checkpoint Poco F6 — ditunda untuk penggunaan pribadi
+# Checkpoint Poco F6 — tersedia kembali
+
+Checkpoint aktif28Oktober20:28: receipt28 sudahtercakup native awal21PASS2UIFAIL
+4:04/668hashsama, retestguard+UI5PASS2:09/689hashsama, deltaSQLlegacy1PASS31s/
+696hashsama. Semua wrappercontrolOff danoldhash cocok perinterval. Failure awal
+tetaptersimpan; [laporan/bukti](M53_RECEIPT_DOCUMENT_REPORT.md) membedakan source573,
+guard576 danfinallegacy576 (hashberbeda). Jangan rollbackdata kehash659 lama.
+.skybee metadata0.5.2+12/arm64 masihterpasang tanpa update/reset/reseed oleh
+pekerjaan ini. H install belum, stokopname/E3/F/G/H masihaktif. Pengujian berikut
+danH selalu mengambil baseline baru untukmempertahankan semua data tambahan.
+
+28Oktober2026 sekitar18:40 WIB: pengguna menyatakan Poco tersedia kembali.
+ADB7f0edea0 device/model24069PC21G terverifikasi. Penundaan historis di bawah
+berakhir; pengujian delta boleh dilanjutkan dengan baseline protected BARU,
+tanpa mengembalikan data pribadi ke seed/hash lama. Source27 E2 masih WIP,
+belum native; [checkpoint aktif](M53_CHECKPOINT.md) menentukan langkah berikut.
+
+28Oktober19:28 — pembacaan package metadata saja mengonfirmasi .skybee masih
+versionName0.5.2/versionCode12/arm64-v8a (min24/target36). Tidak membuka DB atau
+memasang update pada paket eksplorasi. Source27 host23/regresi45 PASS; native23
+DV berjalan dan Poco berikutnya dengan freshbaseline. H belum dipasang.
+
+Riwayat jeda dan checkpoint yang ditutup sebelum pemakaian pribadi:
 
 28 Oktober 2026 sekitar14:00 WIB: pengguna memakai Poco F6 untuk kebutuhan
 pribadi. Pengujian berikutnya memakai host dan DV8910 saja. Jangan memilih Poco,

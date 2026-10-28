@@ -2283,15 +2283,33 @@
   "m53ReceiptPackInvalid": "Masukkan isi kemasan berupa bilangan bulat lebih dari 0.",
   "m53ReceiptCostRequired": "Masukkan harga pembelian untuk satuan yang dipilih.",
   "m53ReceiptCostInvalid": "Masukkan harga pembelian yang sah untuk satuan yang dipilih.",
-  "@m53LastPurchaseReminder": {"description": "Pengingat harga kanonis sama dengan saran pembelian terakhir."},
-  "@m53ReceiptReferenceHint": {"description": "Biaya acuan tidak diklaim sebagai pembelian."},
-  "@m53ReceiptUnknownHint": {"description": "Harga unknown tetap kosong."},
-  "@m53ReceiptInexactHint": {"description": "Jangan membulatkan konversi biaya satuan."},
-  "@m53ReceiptOriginalPack": {"description": "Label ukuran kemasan historis."},
-  "@m53ReceiptQuantityInvalid": {"description": "Error field jumlah penerimaan."},
-  "@m53ReceiptPackInvalid": {"description": "Error field isi kemasan."},
-  "@m53ReceiptCostRequired": {"description": "Error field harga pembelian kosong."},
-  "@m53ReceiptCostInvalid": {"description": "Error field harga pembelian invalid."},
+  "@m53LastPurchaseReminder": {
+    "description": "Pengingat harga kanonis sama dengan saran pembelian terakhir."
+  },
+  "@m53ReceiptReferenceHint": {
+    "description": "Biaya acuan tidak diklaim sebagai pembelian."
+  },
+  "@m53ReceiptUnknownHint": {
+    "description": "Harga unknown tetap kosong."
+  },
+  "@m53ReceiptInexactHint": {
+    "description": "Jangan membulatkan konversi biaya satuan."
+  },
+  "@m53ReceiptOriginalPack": {
+    "description": "Label ukuran kemasan historis."
+  },
+  "@m53ReceiptQuantityInvalid": {
+    "description": "Error field jumlah penerimaan."
+  },
+  "@m53ReceiptPackInvalid": {
+    "description": "Error field isi kemasan."
+  },
+  "@m53ReceiptCostRequired": {
+    "description": "Error field harga pembelian kosong."
+  },
+  "@m53ReceiptCostInvalid": {
+    "description": "Error field harga pembelian invalid."
+  },
   "m53WarehouseChanged": "Data atau tanggal gudang berubah. Muat ulang daftar.",
   "m53WarehouseStockFilter": "Kondisi stok",
   "m53WarehouseAll": "Semua kondisi",
@@ -2301,16 +2319,36 @@
   "m53WarehouseReferenceExpired": "Tanggal acuan kedaluwarsa; jumlah fisik tidak dilacak",
   "m53MasterSupplierHelp": "Supplier master opsional untuk pengelompokan produk. Supplier pada setiap penerimaan dicatat terpisah.",
   "m53CategoryLongPress": "Tekan lama untuk mengubah nama kategori; tombol edit juga tersedia.",
-  "@m53WarehouseChanged": {"description": "Cursor daftar gudang perlu dimuat ulang."},
-  "@m53WarehouseStockFilter": {"description": "Label filter status stok gudang."},
-  "@m53WarehouseAll": {"description": "Semua status stok."},
-  "@m53WarehouseExpired": {"description": "Stok atau referensi expiry yang sudah kedaluwarsa."},
-  "@m53WarehouseEmpty": {"description": "Hanya produk dilacak dengan stok fisik nol."},
-  "@m53WarehouseRelations": {"description": "Grup filter relasi gudang."},
-  "@m53WarehouseReferenceExpired": {"description": "Expiry untracked tanpa quantity fiktif."},
-  "@m53MasterSupplierHelp": {"description": "Bedakan supplier master dan supplier transaksi."},
-  "@m53CategoryLongPress": {"description": "Petunjuk gestur dengan alternatif aksesibel."},
-  "@m53Ons": {"description": "Satuan metadata Indonesia; bukan ounce atau satuan stok pecahan."},
+  "@m53WarehouseChanged": {
+    "description": "Cursor daftar gudang perlu dimuat ulang."
+  },
+  "@m53WarehouseStockFilter": {
+    "description": "Label filter status stok gudang."
+  },
+  "@m53WarehouseAll": {
+    "description": "Semua status stok."
+  },
+  "@m53WarehouseExpired": {
+    "description": "Stok atau referensi expiry yang sudah kedaluwarsa."
+  },
+  "@m53WarehouseEmpty": {
+    "description": "Hanya produk dilacak dengan stok fisik nol."
+  },
+  "@m53WarehouseRelations": {
+    "description": "Grup filter relasi gudang."
+  },
+  "@m53WarehouseReferenceExpired": {
+    "description": "Expiry untracked tanpa quantity fiktif."
+  },
+  "@m53MasterSupplierHelp": {
+    "description": "Bedakan supplier master dan supplier transaksi."
+  },
+  "@m53CategoryLongPress": {
+    "description": "Petunjuk gestur dengan alternatif aksesibel."
+  },
+  "@m53Ons": {
+    "description": "Satuan metadata Indonesia; bukan ounce atau satuan stok pecahan."
+  },
   "m51Shelf": "Letak rak",
   "m51Note": "Keterangan barang",
   "m51AttributesHelp": "Ukuran hanya keterangan; stok tetap pcs. Rak maks. 80 karakter, keterangan maks. 1.000. Kosongkan nilai dan satuan untuk menghapus ukuran.",
@@ -3916,5 +3954,129 @@
   "m53CameraEquivalentCodes": "EAN-13 berawalan nol dan UPC-A dapat memakai pola garis yang sama. Pilih teks kode yang sama dengan data barang Anda; aplikasi tidak mengubah kode secara diam-diam.",
   "@m53CameraEquivalentCodes": {
     "description": "M5.3 explicit choice for equivalent UPC-A/EAN13 bars without silent zero removal"
+  },
+  "m53ReceiptDrafts": "Draft barang masuk",
+  "@m53ReceiptDrafts": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDrafts"
+  },
+  "m53ReceiptDraftNew": "Buat draft barang masuk",
+  "@m53ReceiptDraftNew": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftNew"
+  },
+  "m53ReceiptDraft": "Draft penerimaan",
+  "@m53ReceiptDraft": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraft"
+  },
+  "m53ReceiptDraftSaved": "Draft tersimpan. Stok belum berubah.",
+  "@m53ReceiptDraftSaved": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftSaved"
+  },
+  "m53ReceiptDraftNoStockYet": "Scan dan edit hanya mengubah draft. Stok berubah sekali saat seluruh dokumen dikonfirmasi. Barcode produk tidak membuktikan batch fisik.",
+  "@m53ReceiptDraftNoStockYet": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftNoStockYet"
+  },
+  "m53ReceiptDraftPosted": "Penerimaan sudah dikonfirmasi. Stok dan riwayat telah dicatat.",
+  "@m53ReceiptDraftPosted": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftPosted"
+  },
+  "m53ReceiptDraftChanged": "Draft berubah atau sudah ditutup. Muat ulang dan periksa sebelum melanjutkan.",
+  "@m53ReceiptDraftChanged": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftChanged"
+  },
+  "m53ReceiptDraftLimit": "Satu draft dibatasi 100 baris. Selesaikan atau pisahkan dokumen ini.",
+  "@m53ReceiptDraftLimit": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftLimit"
+  },
+  "m53ReceiptChooseLine": "Pilih baris atau batch penerimaan",
+  "@m53ReceiptChooseLine": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptChooseLine"
+  },
+  "m53ReceiptSeparateLine": "Ada beberapa baris yang dapat menerima kode ini. Buat baris baru lalu isi quantity dan batch yang benar?",
+  "@m53ReceiptSeparateLine": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptSeparateLine"
+  },
+  "m53ReceiptDraftEmpty": "Tambahkan paling sedikit satu barang sebelum konfirmasi.",
+  "@m53ReceiptDraftEmpty": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftEmpty"
+  },
+  "m53ReceiptDraftCode": "Barcode atau SKU persis (scanner eksternal boleh)",
+  "@m53ReceiptDraftCode": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftCode"
+  },
+  "m53ReceiptDraftAddCode": "Tambah 1 unit dasar",
+  "@m53ReceiptDraftAddCode": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftAddCode"
+  },
+  "m53ReceiptDraftScanAdded": "Satu unit dasar ditambahkan ke draft. Stok belum berubah.",
+  "@m53ReceiptDraftScanAdded": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftScanAdded"
+  },
+  "m53ReceiptDraftConfirm": "Konfirmasi barang masuk",
+  "@m53ReceiptDraftConfirm": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftConfirm"
+  },
+  "m53ReceiptDraftConfirmHelp": "Periksa seluruh quantity, satuan, isi kemasan, biaya, supplier transaksi dan expiry. Konfirmasi mencatat semua baris sekaligus; gagal satu baris membatalkan seluruh pencatatan.",
+  "@m53ReceiptDraftConfirmHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftConfirmHelp"
+  },
+  "m53ReceiptDraftReview": "Tinjau ulang data barang terbaru",
+  "@m53ReceiptDraftReview": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReview"
+  },
+  "m53ReceiptDraftReviewHelp": "Perbarui baseline data barang dan stok ke kondisi saat ini. Input draft dipertahankan; periksa harga, satuan dan quantity sebelum konfirmasi lagi.",
+  "@m53ReceiptDraftReviewHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReviewHelp"
+  },
+  "m53ReceiptDraftCancel": "Batalkan draft penerimaan",
+  "@m53ReceiptDraftCancel": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftCancel"
+  },
+  "m53ReceiptDraftCancelHelp": "Tutup draft ini tanpa menambah stok? Draft yang dibatalkan disimpan sebagai jejak dan tidak dapat diedit lagi.",
+  "@m53ReceiptDraftCancelHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftCancelHelp"
+  },
+  "m53ReceiptRegisterUnknown": "Kode belum terdaftar. Buat barang melalui formulir dengan stok awal 0, lalu kembali ke draft?",
+  "@m53ReceiptRegisterUnknown": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptRegisterUnknown"
+  },
+  "m53ReceiptNewProductZero": "Barang baru untuk draft ini memakai stok awal 0. Quantity barang masuk diisi dan dikonfirmasi pada dokumen penerimaan.",
+  "@m53ReceiptNewProductZero": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptNewProductZero"
+  },
+  "m53ReceiptDraftExistingCost": "Biaya yang sudah diisi pada draft ditampilkan agar tidak terhapus saat Anda mengedit satuan atau quantity.",
+  "@m53ReceiptDraftExistingCost": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftExistingCost"
+  },
+  "m53ReceiptReverseWholeDocument": "Penerimaan ini berisi dokumen lengkap. Buka dokumennya dan tinjau semua baris untuk reversal.",
+  "@m53ReceiptReverseWholeDocument": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptReverseWholeDocument"
+  },
+  "m53ReceiptDraftReversed": "Seluruh penerimaan telah direversal; bukti asli tetap tersimpan.",
+  "@m53ReceiptDraftReversed": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReversed"
+  },
+  "m53ReceiptDraftReverse": "Reversal seluruh penerimaan ini",
+  "@m53ReceiptDraftReverse": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReverse"
+  },
+  "m53ReceiptDraftReverseHelp": "Tindakan ini mengembalikan seluruh baris dokumen, bukan hanya satu produk. Hanya dapat dilakukan jika belum ada mutasi stok/biaya yang bergantung padanya. Riwayat asli dipertahankan.",
+  "@m53ReceiptDraftReverseHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReverseHelp"
+  },
+  "m53ReceiptDraftCancelled": "Draft dibatalkan tanpa pencatatan stok.",
+  "@m53ReceiptDraftCancelled": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftCancelled"
+  },
+  "m53ReceiptStatusPosted": "Terkonfirmasi",
+  "@m53ReceiptStatusPosted": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptStatusPosted"
+  },
+  "m53ReceiptStatusCancelled": "Dibatalkan",
+  "@m53ReceiptStatusCancelled": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptStatusCancelled"
+  },
+  "m53ReceiptDraftHelp": "Cara memakai draft",
+  "@m53ReceiptDraftHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftHelp"
   }
 }

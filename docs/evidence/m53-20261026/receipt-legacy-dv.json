@@ -1,0 +1,20 @@
+{
+  "run": "m53-receipt-legacy-dv-20261028-202056",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "legacy ambiguity",
+  "runnerStatus": "PASS",
+  "passed": 1,
+  "failed": 0,
+  "elapsed": "00:40",
+  "preExistingProtectedEntries": 774,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 576,
+  "sourceManifestSha256": "8ca33731f2c5360025668f4bc26e18ad0af10621b745b2f17faf5630f618b830",
+  "runnerLogSha256": "821c8dfa57738d8938937c9a5299228c87d28f2a710e012d313530dd1f03e9cb",
+  "beforeManifestSha256": "d815619210b983e180a9953210dd6a13b944351a7d97da37abab021280d1d455",
+  "afterManifestSha256": "fc55f6208a7a2b39dd796fb3f547183a990198b7d115cb49b48b931da6eb5cca"
+}

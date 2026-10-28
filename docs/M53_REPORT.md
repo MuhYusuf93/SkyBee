@@ -1,10 +1,11 @@
 # Laporan M5.3 — checkpoint fondasi dan akses, belum handoff akhir
 
-Laporan ini menyimpan fondasi schema16 historis. Progres aktif sudah source26;
+Laporan ini menyimpan fondasi schema16 historis. Progres aktif sudah source28;
 lihat [checkpoint terkini](M53_CHECKPOINT.md), [browse](M53_WAREHOUSE_REPORT.md)
-dan [editor penerimaan](M53_RECEIPT_REPORT.md). Sejak28Oktober14:00 Poco dipakai
+dan [dokumen penerimaan](M53_RECEIPT_DOCUMENT_REPORT.md). Sejak28Oktober14:00 Poco dipakai
 pribadi; [checkpoint Poco](M53_POCO_CHECKPOINT.md) tersimpan, delta/handoff
-pemasangan berikutnya ditunda. Host dan DV tetap tersedia. Seluruh E–H aktif.
+pemasangan sempat ditunda. Pengguna menyediakan Poco kembali18:40; baseline
+baru dan native delta telah ditutup sesuai laporan penerimaan. Seluruh E–H aktif.
 
 26 Oktober 2026. Kontrak aktif [M53_REQUEST](decisions/M53_REQUEST.md),
 klarifikasi [Back terkunci](decisions/M53_LOCKED_BACK.md), kelanjutan pada

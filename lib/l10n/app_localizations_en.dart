@@ -3267,4 +3267,115 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m53CameraEquivalentCodes =>
       'A zero-prefixed EAN-13 and UPC-A can use the same bars. Select the exact code text stored for your product; the app does not silently change it.';
+
+  @override
+  String get m53ReceiptDrafts => 'Receiving drafts';
+
+  @override
+  String get m53ReceiptDraftNew => 'New receiving draft';
+
+  @override
+  String get m53ReceiptDraft => 'Receiving draft';
+
+  @override
+  String get m53ReceiptDraftSaved => 'Draft saved. Stock has not changed.';
+
+  @override
+  String get m53ReceiptDraftNoStockYet =>
+      'Scanning and editing change only the draft. Stock changes once when the entire document is confirmed. A product barcode does not identify its physical batch.';
+
+  @override
+  String get m53ReceiptDraftPosted =>
+      'Receiving confirmed. Stock and history have been recorded.';
+
+  @override
+  String get m53ReceiptDraftChanged =>
+      'The draft changed or is closed. Reload and review before continuing.';
+
+  @override
+  String get m53ReceiptDraftLimit =>
+      'A draft supports up to 100 lines. Finish or split this document.';
+
+  @override
+  String get m53ReceiptChooseLine => 'Choose a receiving line or batch';
+
+  @override
+  String get m53ReceiptSeparateLine =>
+      'Several lines could receive this code. Create a separate line, then enter the correct quantity and batch?';
+
+  @override
+  String get m53ReceiptDraftEmpty =>
+      'Add at least one product before confirming.';
+
+  @override
+  String get m53ReceiptDraftCode =>
+      'Exact barcode or SKU (external scanner supported)';
+
+  @override
+  String get m53ReceiptDraftAddCode => 'Add 1 base unit';
+
+  @override
+  String get m53ReceiptDraftScanAdded =>
+      'One base unit added to the draft. Stock has not changed.';
+
+  @override
+  String get m53ReceiptDraftConfirm => 'Confirm receiving';
+
+  @override
+  String get m53ReceiptDraftConfirmHelp =>
+      'Review every quantity, unit, pack size, cost, purchase supplier and expiry. Confirmation posts all lines together; any failed line rolls back the entire posting.';
+
+  @override
+  String get m53ReceiptDraftReview => 'Review current product data';
+
+  @override
+  String get m53ReceiptDraftReviewHelp =>
+      'Refresh product and stock baselines to their current state. Draft input is retained; review prices, units and quantities before confirming again.';
+
+  @override
+  String get m53ReceiptDraftCancel => 'Cancel receiving draft';
+
+  @override
+  String get m53ReceiptDraftCancelHelp =>
+      'Close this draft without changing stock? Cancelled drafts are retained as a record and cannot be edited again.';
+
+  @override
+  String get m53ReceiptRegisterUnknown =>
+      'This code is not registered. Create a product with opening stock 0, then return to the draft?';
+
+  @override
+  String get m53ReceiptNewProductZero =>
+      'New products for this draft use opening stock 0. Enter and confirm received quantities in the receiving document.';
+
+  @override
+  String get m53ReceiptDraftExistingCost =>
+      'The cost already entered in this draft is shown so editing units or quantity does not erase it.';
+
+  @override
+  String get m53ReceiptReverseWholeDocument =>
+      'This receipt belongs to a complete document. Open it and review all lines before reversing.';
+
+  @override
+  String get m53ReceiptDraftReversed =>
+      'The entire receipt has been reversed; original records are retained.';
+
+  @override
+  String get m53ReceiptDraftReverse => 'Reverse this entire receipt';
+
+  @override
+  String get m53ReceiptDraftReverseHelp =>
+      'This reverses every line in the document, not just one product. It is allowed only when no later stock or cost mutation depends on it. Original history is retained.';
+
+  @override
+  String get m53ReceiptDraftCancelled =>
+      'Draft cancelled without posting stock.';
+
+  @override
+  String get m53ReceiptStatusPosted => 'Confirmed';
+
+  @override
+  String get m53ReceiptStatusCancelled => 'Cancelled';
+
+  @override
+  String get m53ReceiptDraftHelp => 'Using this draft';
 }

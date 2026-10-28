@@ -1,0 +1,20 @@
+{
+  "run": "m53-receipt-stock-dv-20261028-200135",
+  "device": "192.168.0.101:5555",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 5,
+  "failed": 0,
+  "elapsed": "02:58",
+  "preExistingProtectedEntries": 767,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "Original DV settings restored and read back exactly.",
+  "sourceFiles": 576,
+  "sourceManifestSha256": "be603397cd2d8d4432e4de1622064a2a84a5ed49ad79b3dbff116619691785be",
+  "runnerLogSha256": "0486b93ebc6bb3aab6d4e088188282d178b683608aad641a104dbedd36768a5a",
+  "beforeManifestSha256": "1adab9badf96d6a0bf412131a475eb6f77e67a206a191dfb034e25eaaf0ce67f",
+  "afterManifestSha256": "d815619210b983e180a9953210dd6a13b944351a7d97da37abab021280d1d455"
+}

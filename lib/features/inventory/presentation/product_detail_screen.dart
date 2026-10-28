@@ -72,6 +72,7 @@ class _DetailBody extends StatelessWidget {
                 line.stock,
                 line.cost,
                 expectedRevision: line.expectedRevision,
+                expectedStockRevision: line.expectedStockRevision,
                 operationKey: line.operationKey,
                 confirmedFree: line.confirmedFree,
                 supplierId: line.supplierId,

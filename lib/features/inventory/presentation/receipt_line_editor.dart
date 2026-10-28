@@ -15,6 +15,7 @@ import '../domain/inventory_models.dart';
 import '../domain/product_entry_rules.dart';
 import '../domain/purchase_cost_hint.dart';
 import '../domain/receipt_line_input.dart';
+import '../domain/receipt_draft.dart';
 import '../domain/stock_input.dart';
 import 'confirm_free_cost.dart';
 import 'expiry_date_field.dart';
@@ -29,9 +30,15 @@ class ReceiptLineEditor extends StatefulWidget {
     super.key,
     required this.product,
     required this.onSave,
+    this.initialLine,
+    this.draftSupplier,
+    this.supplierLocked = false,
   });
   final InventoryProduct product;
   final Future<void> Function(ReceiptLineInput input) onSave;
+  final ReceiptDraftLine? initialLine;
+  final MasterRecord? draftSupplier;
+  final bool supplierLocked;
   @override
   State<ReceiptLineEditor> createState() => _ReceiptLineEditorState();
 }
@@ -64,10 +71,21 @@ class _ReceiptLineEditorState extends State<ReceiptLineEditor> {
   final errors = <String, String>{};
   bool loading = true, busy = false, started = false, hintPending = false;
   bool get fieldsEnabled => !loading && (!busy || errors.isNotEmpty);
+  bool get showCost => policy.cost || widget.initialLine?.cost != null;
   int generation = 0, hintRequest = 0;
   @override
   void initState() {
     super.initState();
+    supplier = widget.draftSupplier;
+    final initial = widget.initialLine;
+    if (initial != null) {
+      stock.quantity.text = initial.input.count.toString();
+      stock.unit = initial.input.unit;
+      stock.size.text =
+          (initial.input.packSize ?? widget.product.packSize)?.toString() ?? '';
+      stock.packLabel = initial.input.packLabel ?? stock.packLabel;
+      expiry.text = initial.expiry?.iso ?? '';
+    }
     stock.size.addListener(basisChanged);
   }
 
@@ -83,6 +101,17 @@ class _ReceiptLineEditorState extends State<ReceiptLineEditor> {
     if (!started) {
       started = true;
       generation = context.read<AppServices>().database.generation;
+      final initial = widget.initialLine;
+      if (initial != null) {
+        price.changeBasis(initial.input.packSize ?? 1);
+        if (initial.cost != null) {
+          price.input.text = price.input.codec!.format(
+            initial.cost!.roundToMoney(price.input.codec!.policy),
+            label: false,
+          );
+          price.userChanged();
+        }
+      }
       load();
     }
   }
@@ -90,7 +119,7 @@ class _ReceiptLineEditorState extends State<ReceiptLineEditor> {
   Future<void> load() async {
     try {
       policy = await context.read<AppServices>().settings.featurePolicy();
-      if (policy.cost) await loadHint();
+      if (showCost) await loadHint();
       if (!mounted) return;
       setState(() {
         loading = false;
@@ -227,7 +256,7 @@ class _ReceiptLineEditorState extends State<ReceiptLineEditor> {
         }
       }
       CostAmount? cost;
-      if (policy.cost) {
+      if (showCost) {
         if (price.input.text.isEmpty) {
           errors['cost'] = 'm53ReceiptCostRequired';
         } else {
@@ -291,6 +320,7 @@ class _ReceiptLineEditorState extends State<ReceiptLineEditor> {
         ReceiptLineInput(
           productId: widget.product.id,
           expectedRevision: widget.product.revision,
+          expectedStockRevision: widget.product.stockRevision,
           operationKey: operationKey,
           stock: entered!,
           cost: cost,
@@ -375,7 +405,9 @@ class _ReceiptLineEditorState extends State<ReceiptLineEditor> {
                           : tr(context, errors['pack']!),
                     ),
                   ),
-                  if (policy.cost) ...[
+                  if (showCost) ...[
+                    if (!policy.cost)
+                      Text(tr(context, 'm53ReceiptDraftExistingCost')),
                     Container(
                       key: costKey,
                       child: MoneyField(
@@ -434,27 +466,28 @@ class _ReceiptLineEditorState extends State<ReceiptLineEditor> {
                             : tr(context, errors['expiry']!),
                       ),
                     ),
-                  RelationField(
-                    kind: MasterKind.supplier,
-                    value: supplier,
-                    enabled: fieldsEnabled,
-                    onChanged: (v) async {
-                      setState(() {
-                        supplier = v;
-                      });
-                      if (policy.cost) {
-                        try {
-                          await loadHint();
-                        } catch (e) {
-                          if (mounted) {
-                            setState(() {
-                              error = safeError(e);
-                            });
+                  if (!widget.supplierLocked)
+                    RelationField(
+                      kind: MasterKind.supplier,
+                      value: supplier,
+                      enabled: fieldsEnabled,
+                      onChanged: (v) async {
+                        setState(() {
+                          supplier = v;
+                        });
+                        if (policy.cost) {
+                          try {
+                            await loadHint();
+                          } catch (e) {
+                            if (mounted) {
+                              setState(() {
+                                error = safeError(e);
+                              });
+                            }
                           }
                         }
-                      }
-                    },
-                  ),
+                      },
+                    ),
                   if (error != null) Text(tr(context, error!)),
                   FilledButton(
                     key: const ValueKey('receipt-line-save'),

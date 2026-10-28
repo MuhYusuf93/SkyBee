@@ -1,0 +1,47 @@
+{
+  "scope": "Final schema28 read-only latest purchase hint for ambiguous legacy item attribution",
+  "hostLogs": {
+    "receipt-legacy-analyze.txt": {
+      "sha256": "6505b5f1e5774ab52daeb52888f2d4ec554c3ad212b9d138a1b1591dfde9a561",
+      "summary": "No issues found! (ran in 68.7s)"
+    },
+    "receipt-legacy-format-final.txt": {
+      "sha256": "7ae8a39e621a755df89cd0b58fc9d6461b2faef8b7b894ec3f3917659dd683ae",
+      "summary": "Formatted 480 files (0 changed) in 1.31 seconds."
+    },
+    "receipt-legacy-host-initial.txt": {
+      "sha256": "a1d013a24b44d92fd7744679e973011a555666c8eadf4d03300030a537245d57",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:09"
+    },
+    "receipt-legacy-host-retest.txt": {
+      "sha256": "b9f25b9ce62ea20fe21c09228ecc2afdb1e33964bd58d86a3b8dd14f544b6ac9",
+      "status": "PASS",
+      "passed": 14,
+      "failed": 0,
+      "elapsed": "00:38"
+    },
+    "receipt-legacy-l10n.txt": {
+      "sha256": "74ea3d05cd50fb7d5b64d6d30085ba84ce40451029fea95ebb65678e9933c8f0",
+      "summary": "OK: 996 bilingual semantic keys, matching metadata/placeholders; 669 static message references; 245 original requirement IDs."
+    },
+    "receipt-legacy-pin.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137",
+      "summary": "PASS: 106 unchanged upstream files; APK license identical; Mbed TLS 3.6.7 archive pinned."
+    }
+  },
+  "changedFromStockGuardSource": [
+    "lib/features/inventory/application/purchase_cost_hints.dart",
+    "test/support/m53_purchase_hint_suite.dart"
+  ],
+  "finding": "A newer legacy receipt with multiple same-product items and no authoritative item link was excluded by the query, promoting an older known purchase to latest. Schema26 could also select a random item.",
+  "repair": "Retain the latest operation, mark ambiguous attribution, return unknown total and no item/pack instead of choosing old or random known cost. Direct new item links remain exact.",
+  "evidence": "New owned schema26 fixture with different-cost duplicate item, then migrate28; red0PASS1FAIL9s and green hint6+doc8=14PASS38s. Compare all six business tables before/after both hint reads; no stock, receipt, ledger or cost history rewrite.",
+  "limits": [
+    "The ambiguous input is constructed only in an owned fixture; exploration not changed.",
+    "Earlier source573/source576 device runs retained; only this new SQL case needs final native delta per available DV/Poco.",
+    "No camera, physical ADB/OEM gestures, printer or Drive claims. Stocktake/E3/F/G/H remain active."
+  ]
+}

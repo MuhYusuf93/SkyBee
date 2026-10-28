@@ -2283,15 +2283,33 @@
   "m53ReceiptPackInvalid": "Enter a whole pack size greater than 0.",
   "m53ReceiptCostRequired": "Enter the purchase price for the selected unit.",
   "m53ReceiptCostInvalid": "Enter a valid purchase price for the selected unit.",
-  "@m53LastPurchaseReminder": {"description": "Reminder while canonical price equals last purchase suggestion."},
-  "@m53ReceiptReferenceHint": {"description": "Reference cost is not presented as a purchase."},
-  "@m53ReceiptUnknownHint": {"description": "Unknown price remains blank."},
-  "@m53ReceiptInexactHint": {"description": "Do not round unit price conversion."},
-  "@m53ReceiptOriginalPack": {"description": "Historical pack size label."},
-  "@m53ReceiptQuantityInvalid": {"description": "Received quantity field error."},
-  "@m53ReceiptPackInvalid": {"description": "Pack size field error."},
-  "@m53ReceiptCostRequired": {"description": "Empty purchase price field error."},
-  "@m53ReceiptCostInvalid": {"description": "Invalid purchase price field error."},
+  "@m53LastPurchaseReminder": {
+    "description": "Reminder while canonical price equals last purchase suggestion."
+  },
+  "@m53ReceiptReferenceHint": {
+    "description": "Reference cost is not presented as a purchase."
+  },
+  "@m53ReceiptUnknownHint": {
+    "description": "Unknown price remains blank."
+  },
+  "@m53ReceiptInexactHint": {
+    "description": "Do not round unit price conversion."
+  },
+  "@m53ReceiptOriginalPack": {
+    "description": "Historical pack size label."
+  },
+  "@m53ReceiptQuantityInvalid": {
+    "description": "Received quantity field error."
+  },
+  "@m53ReceiptPackInvalid": {
+    "description": "Pack size field error."
+  },
+  "@m53ReceiptCostRequired": {
+    "description": "Empty purchase price field error."
+  },
+  "@m53ReceiptCostInvalid": {
+    "description": "Invalid purchase price field error."
+  },
   "m53WarehouseChanged": "Warehouse data or date changed. Reload the list.",
   "m53WarehouseStockFilter": "Stock condition",
   "m53WarehouseAll": "All conditions",
@@ -2301,16 +2319,36 @@
   "m53WarehouseReferenceExpired": "Expired reference date; physical quantity is not tracked",
   "m53MasterSupplierHelp": "The optional master supplier groups products. Each receipt records its own transaction supplier.",
   "m53CategoryLongPress": "Long-press to rename a category; an edit button is also available.",
-  "@m53WarehouseChanged": {"description": "Warehouse cursor must be refreshed."},
-  "@m53WarehouseStockFilter": {"description": "Warehouse stock status filter label."},
-  "@m53WarehouseAll": {"description": "All stock states."},
-  "@m53WarehouseExpired": {"description": "Expired stock or reference date."},
-  "@m53WarehouseEmpty": {"description": "Only tracked products with zero physical stock."},
-  "@m53WarehouseRelations": {"description": "Warehouse relation filters."},
-  "@m53WarehouseReferenceExpired": {"description": "Untracked expiry without fictitious count."},
-  "@m53MasterSupplierHelp": {"description": "Distinguish master and transaction suppliers."},
-  "@m53CategoryLongPress": {"description": "Gesture help with accessible alternative."},
-  "@m53Ons": {"description": "Indonesian metadata unit, not an ounce or fractional stock unit."},
+  "@m53WarehouseChanged": {
+    "description": "Warehouse cursor must be refreshed."
+  },
+  "@m53WarehouseStockFilter": {
+    "description": "Warehouse stock status filter label."
+  },
+  "@m53WarehouseAll": {
+    "description": "All stock states."
+  },
+  "@m53WarehouseExpired": {
+    "description": "Expired stock or reference date."
+  },
+  "@m53WarehouseEmpty": {
+    "description": "Only tracked products with zero physical stock."
+  },
+  "@m53WarehouseRelations": {
+    "description": "Warehouse relation filters."
+  },
+  "@m53WarehouseReferenceExpired": {
+    "description": "Untracked expiry without fictitious count."
+  },
+  "@m53MasterSupplierHelp": {
+    "description": "Distinguish master and transaction suppliers."
+  },
+  "@m53CategoryLongPress": {
+    "description": "Gesture help with accessible alternative."
+  },
+  "@m53Ons": {
+    "description": "Indonesian metadata unit, not an ounce or fractional stock unit."
+  },
   "m51Shelf": "Shelf location",
   "m51Note": "Product note",
   "m51AttributesHelp": "Size is descriptive; stock stays in pcs. Shelf: 80 characters; note: 1,000. Clear both value and unit to remove size.",
@@ -3916,5 +3954,129 @@
   "m53CameraEquivalentCodes": "A zero-prefixed EAN-13 and UPC-A can use the same bars. Select the exact code text stored for your product; the app does not silently change it.",
   "@m53CameraEquivalentCodes": {
     "description": "M5.3 explicit choice for equivalent UPC-A/EAN13 bars without silent zero removal"
+  },
+  "m53ReceiptDrafts": "Receiving drafts",
+  "@m53ReceiptDrafts": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDrafts"
+  },
+  "m53ReceiptDraftNew": "New receiving draft",
+  "@m53ReceiptDraftNew": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftNew"
+  },
+  "m53ReceiptDraft": "Receiving draft",
+  "@m53ReceiptDraft": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraft"
+  },
+  "m53ReceiptDraftSaved": "Draft saved. Stock has not changed.",
+  "@m53ReceiptDraftSaved": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftSaved"
+  },
+  "m53ReceiptDraftNoStockYet": "Scanning and editing change only the draft. Stock changes once when the entire document is confirmed. A product barcode does not identify its physical batch.",
+  "@m53ReceiptDraftNoStockYet": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftNoStockYet"
+  },
+  "m53ReceiptDraftPosted": "Receiving confirmed. Stock and history have been recorded.",
+  "@m53ReceiptDraftPosted": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftPosted"
+  },
+  "m53ReceiptDraftChanged": "The draft changed or is closed. Reload and review before continuing.",
+  "@m53ReceiptDraftChanged": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftChanged"
+  },
+  "m53ReceiptDraftLimit": "A draft supports up to 100 lines. Finish or split this document.",
+  "@m53ReceiptDraftLimit": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftLimit"
+  },
+  "m53ReceiptChooseLine": "Choose a receiving line or batch",
+  "@m53ReceiptChooseLine": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptChooseLine"
+  },
+  "m53ReceiptSeparateLine": "Several lines could receive this code. Create a separate line, then enter the correct quantity and batch?",
+  "@m53ReceiptSeparateLine": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptSeparateLine"
+  },
+  "m53ReceiptDraftEmpty": "Add at least one product before confirming.",
+  "@m53ReceiptDraftEmpty": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftEmpty"
+  },
+  "m53ReceiptDraftCode": "Exact barcode or SKU (external scanner supported)",
+  "@m53ReceiptDraftCode": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftCode"
+  },
+  "m53ReceiptDraftAddCode": "Add 1 base unit",
+  "@m53ReceiptDraftAddCode": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftAddCode"
+  },
+  "m53ReceiptDraftScanAdded": "One base unit added to the draft. Stock has not changed.",
+  "@m53ReceiptDraftScanAdded": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftScanAdded"
+  },
+  "m53ReceiptDraftConfirm": "Confirm receiving",
+  "@m53ReceiptDraftConfirm": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftConfirm"
+  },
+  "m53ReceiptDraftConfirmHelp": "Review every quantity, unit, pack size, cost, purchase supplier and expiry. Confirmation posts all lines together; any failed line rolls back the entire posting.",
+  "@m53ReceiptDraftConfirmHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftConfirmHelp"
+  },
+  "m53ReceiptDraftReview": "Review current product data",
+  "@m53ReceiptDraftReview": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReview"
+  },
+  "m53ReceiptDraftReviewHelp": "Refresh product and stock baselines to their current state. Draft input is retained; review prices, units and quantities before confirming again.",
+  "@m53ReceiptDraftReviewHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReviewHelp"
+  },
+  "m53ReceiptDraftCancel": "Cancel receiving draft",
+  "@m53ReceiptDraftCancel": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftCancel"
+  },
+  "m53ReceiptDraftCancelHelp": "Close this draft without changing stock? Cancelled drafts are retained as a record and cannot be edited again.",
+  "@m53ReceiptDraftCancelHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftCancelHelp"
+  },
+  "m53ReceiptRegisterUnknown": "This code is not registered. Create a product with opening stock 0, then return to the draft?",
+  "@m53ReceiptRegisterUnknown": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptRegisterUnknown"
+  },
+  "m53ReceiptNewProductZero": "New products for this draft use opening stock 0. Enter and confirm received quantities in the receiving document.",
+  "@m53ReceiptNewProductZero": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptNewProductZero"
+  },
+  "m53ReceiptDraftExistingCost": "The cost already entered in this draft is shown so editing units or quantity does not erase it.",
+  "@m53ReceiptDraftExistingCost": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftExistingCost"
+  },
+  "m53ReceiptReverseWholeDocument": "This receipt belongs to a complete document. Open it and review all lines before reversing.",
+  "@m53ReceiptReverseWholeDocument": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptReverseWholeDocument"
+  },
+  "m53ReceiptDraftReversed": "The entire receipt has been reversed; original records are retained.",
+  "@m53ReceiptDraftReversed": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReversed"
+  },
+  "m53ReceiptDraftReverse": "Reverse this entire receipt",
+  "@m53ReceiptDraftReverse": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReverse"
+  },
+  "m53ReceiptDraftReverseHelp": "This reverses every line in the document, not just one product. It is allowed only when no later stock or cost mutation depends on it. Original history is retained.",
+  "@m53ReceiptDraftReverseHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftReverseHelp"
+  },
+  "m53ReceiptDraftCancelled": "Draft cancelled without posting stock.",
+  "@m53ReceiptDraftCancelled": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftCancelled"
+  },
+  "m53ReceiptStatusPosted": "Confirmed",
+  "@m53ReceiptStatusPosted": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptStatusPosted"
+  },
+  "m53ReceiptStatusCancelled": "Cancelled",
+  "@m53ReceiptStatusCancelled": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptStatusCancelled"
+  },
+  "m53ReceiptDraftHelp": "Using this draft",
+  "@m53ReceiptDraftHelp": {
+    "description": "M5.3 durable bounded receiving draft: m53ReceiptDraftHelp"
   }
 }

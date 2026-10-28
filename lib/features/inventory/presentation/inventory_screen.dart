@@ -16,6 +16,7 @@ import 'product_detail_screen.dart';
 import '../domain/inventory_models.dart';
 import '../domain/warehouse_filter.dart';
 import 'relation_field.dart';
+import 'receipt_drafts_screen.dart';
 import '../../barcode/domain/barcode_camera.dart';
 import '../../barcode/presentation/barcode_scanner_screen.dart';
 
@@ -68,6 +69,14 @@ class _InventoryScreenState extends State<InventoryScreen> {
     child: Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+            key: const ValueKey('inventory-receipt-drafts'),
+            tooltip: tr(context, 'm53ReceiptDrafts'),
+            icon: const Icon(Icons.playlist_add),
+            onPressed: () => Navigator.of(context).push<void>(
+              MaterialPageRoute(builder: (_) => const ReceiptDraftsScreen()),
+            ),
+          ),
           IconButton(
             key: const ValueKey('inventory-camera'),
             tooltip: tr(context, 'm53CameraScan'),

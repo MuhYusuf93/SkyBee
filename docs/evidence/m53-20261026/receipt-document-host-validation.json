@@ -1,0 +1,285 @@
+{
+  "scope": "E2 schema27 durable multi-item receiving drafts; stocktake, E3 supplier finance/schedules and F/G/H remain active",
+  "hostLogs": {
+    "receipt-doc-acceptance-final-attempt.txt": {
+      "sha256": "5194231e0c0ebb3c87c15248a638f0456596c72335114e3448560b6d4a13f382",
+      "status": "FAIL",
+      "passed": 21,
+      "failed": 2,
+      "elapsed": "00:30"
+    },
+    "receipt-doc-acceptance-final.txt": {
+      "sha256": "bd8ce77b5668c17cbc766ac39d954044d8f85e69c52b4eaea6f9f4e0af521ea1",
+      "status": "PASS",
+      "passed": 23,
+      "failed": 0,
+      "elapsed": "00:30"
+    },
+    "receipt-doc-acceptance-initial.txt": {
+      "sha256": "86bdb84a455ff32829fbaa65e4104acd58999afbd94a4d5e7f622f65b1243648",
+      "status": "FAIL",
+      "passed": 7,
+      "failed": 2,
+      "elapsed": "00:26"
+    },
+    "receipt-doc-analyze-final-attempt.txt": {
+      "sha256": "3d77b051f8f6414f424877ef7b2e0193ad90ebf27850917ea783786e3bb71417",
+      "summary": "2 issues found. (ran in 34.7s)"
+    },
+    "receipt-doc-analyze-final.txt": {
+      "sha256": "4972286f685178cccdad684150a8c1a19df6ff3cb86928bc9ba4864d12180d06",
+      "summary": "No issues found! (ran in 7.2s)"
+    },
+    "receipt-doc-analyze-final2.txt": {
+      "sha256": "5190ff44bfcf53a6bff149f0d2b0f5d852eec1c914ce308831e424af48f5cf7e",
+      "summary": "No issues found! (ran in 6.3s)"
+    },
+    "receipt-doc-analyze-final3.txt": {
+      "sha256": "e7fab1272f14d19f8b371e84c5e0e542b1f1f702db9afa4bd5726eb8cc40bb40",
+      "summary": "No issues found! (ran in 206.8s)"
+    },
+    "receipt-doc-analyze-final4.txt": {
+      "sha256": "0fd98261f442513be3881d2de1d6e0acbe02e01099b8201a02b69c59d7e8298e",
+      "summary": "No issues found! (ran in 8.0s)"
+    },
+    "receipt-doc-analyze-initial.txt": {
+      "sha256": "a562d50f471e3b8f9d9ff3d4ea54b2db7bb7cdb3f8504f2c73ae7f5b7512b446",
+      "summary": "22 issues found. (ran in 116.0s)"
+    },
+    "receipt-doc-format-acceptance.txt": {
+      "sha256": "55dd465e8cda9ece05d38653cebb6b6efea192960d6d77f3b9b31d11d8fd5670",
+      "summary": "Formatted 228 files (2 changed) in 0.89 seconds."
+    },
+    "receipt-doc-format-after-fix.txt": {
+      "sha256": "31e06221473782bc1d69ca1599d001c9a346903a50095694c4cdf516c91a4b7c",
+      "summary": "Formatted 227 files (1 changed) in 0.90 seconds."
+    },
+    "receipt-doc-format-final-attempt.txt": {
+      "sha256": "bd86a567390d5c881ea6aec4b525148ef6e8a4847c9c42ee101bb3d1a807699f",
+      "summary": "Formatted 227 files (1 changed) in 0.87 seconds."
+    },
+    "receipt-doc-format-final.txt": {
+      "sha256": "73e25b14450db6c2b1e519913a41ed9b44c56c9ab3e8de82c68c6d83f0c2e9de",
+      "summary": "Formatted 477 files (0 changed) in 1.24 seconds."
+    },
+    "receipt-doc-format-initial.txt": {
+      "sha256": "dd13e3a87cd391f85cd31a04eb4f1d70b6eea0bf5cf4700689b43d2e1527645f",
+      "summary": "Formatted 8 files (4 changed) in 0.06 seconds."
+    },
+    "receipt-doc-format-next.txt": {
+      "sha256": "529d45090be59d73108a9fdefcae8c594f49a7531cd87edcaec7fe1ef7c3a56d",
+      "summary": "Formatted 9 files (4 changed) in 0.07 seconds."
+    },
+    "receipt-doc-format-suite.txt": {
+      "sha256": "339e0ebd3e0454dffb3e664bc44363ec45680c0c71d5c693856e1fcdf5d3ec79",
+      "summary": "Formatted 224 files (4 changed) in 0.86 seconds."
+    },
+    "receipt-doc-host-initial.txt": {
+      "sha256": "164f34eeae0c4f63925bfe527bb598f35db59157b61f870f96a59f9008c552d7",
+      "status": "FAIL",
+      "passed": 3,
+      "failed": 1,
+      "elapsed": "00:12"
+    },
+    "receipt-doc-host-retest.txt": {
+      "sha256": "b88a5d5f9e538b2e910d05839f98b8bbc54cc1b6b337784a904f9d8e659bc2db",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:00"
+    },
+    "receipt-doc-host-retest2.txt": {
+      "sha256": "6cb8bbcb474a92775988f154273fd0479eab8d0e06d4742276f3d4fcbddab217",
+      "status": "PASS",
+      "passed": 9,
+      "failed": 0,
+      "elapsed": "00:14"
+    },
+    "receipt-doc-host-seven.txt": {
+      "sha256": "70c817abb8e857a1838f7903b3bd0b6108b67b70a1da66d27b2b8b0a40ba9388",
+      "status": "FAIL",
+      "passed": 6,
+      "failed": 1,
+      "elapsed": "00:24"
+    },
+    "receipt-doc-l10n-final.txt": {
+      "sha256": "74ea3d05cd50fb7d5b64d6d30085ba84ce40451029fea95ebb65678e9933c8f0",
+      "summary": "OK: 996 bilingual semantic keys, matching metadata/placeholders; 669 static message references; 245 original requirement IDs."
+    },
+    "receipt-doc-pin-final.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137",
+      "summary": "PASS: 106 unchanged upstream files; APK license identical; Mbed TLS 3.6.7 archive pinned."
+    },
+    "receipt-doc-regression-final.txt": {
+      "sha256": "1601f96f7ca5ccdc19c1d4c6c6cc6fac95adf13ac726dd141bcf84f247b3b43f",
+      "status": "PASS",
+      "passed": 45,
+      "failed": 0,
+      "elapsed": "01:19"
+    },
+    "receipt-doc-style-format.txt": {
+      "sha256": "d2460eb45239c556b4afa8fbb6e23a9e151e8de366e765f281e02b4aafa648c7",
+      "summary": "Formatted 39 files (2 changed) in 0.18 seconds."
+    },
+    "receipt-doc-ui-analyze-next.txt": {
+      "sha256": "c378b66db799e9bd1cf22c93750fb167496728decf1f76028a8cae7fe767e2d8",
+      "summary": "13 issues found. (ran in 6.7s)"
+    },
+    "receipt-doc-ui-analyze.txt": {
+      "sha256": "99121db301850d85d81cfdeea5318588b5609d4c4453973adc0dc8e487197796",
+      "summary": "8 issues found. (ran in 7.1s)"
+    },
+    "receipt-doc-ui-en-retest12.txt": {
+      "sha256": "a171a7e88cf9d12c48149489307511894d7177c0093cd5496a9e0c6583f6b205",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:06"
+    },
+    "receipt-doc-ui-en-retest13.txt": {
+      "sha256": "bea88ad74bb336cdea38084a3546d5e305d5b5bd256a1db823c76457d35a3387",
+      "status": "PASS",
+      "passed": 1,
+      "failed": 0,
+      "elapsed": "00:08"
+    },
+    "receipt-doc-ui-format-next.txt": {
+      "sha256": "babeb3c750a85dcd4f5f4a5c0af39de2768c0b0695d6df1ced8b34c37d75f092",
+      "summary": "Formatted 224 files (3 changed) in 0.86 seconds."
+    },
+    "receipt-doc-ui-format-ready.txt": {
+      "sha256": "20e660ffacc82a0d9adbb1e40dd085daa0cf91a0cfec476b76d076f2aabc17ee",
+      "summary": "Formatted 225 files (3 changed) in 1.02 seconds."
+    },
+    "receipt-doc-ui-format-retest10.txt": {
+      "sha256": "11b6f2a5922b86de89e9b7fd8be9a213cfd172d25c70b67968e1457770e9bd6c",
+      "summary": "Formatted 3 files (2 changed) in 0.03 seconds."
+    },
+    "receipt-doc-ui-format-retest11.txt": {
+      "sha256": "ab09bcb678111ff56340ab5847fbaecc1093bd8fe19d53997d769763c934639d",
+      "summary": "Formatted 2 files (2 changed) in 0.01 seconds."
+    },
+    "receipt-doc-ui-format-retest12.txt": {
+      "sha256": "ab09bcb678111ff56340ab5847fbaecc1093bd8fe19d53997d769763c934639d",
+      "summary": "Formatted 2 files (2 changed) in 0.01 seconds."
+    },
+    "receipt-doc-ui-format-retest2.txt": {
+      "sha256": "59438a0aa743080639e7a425645c841ee215db87636009451195351ddb1fec47",
+      "summary": "Formatted 2 files (1 changed) in 0.02 seconds."
+    },
+    "receipt-doc-ui-format-retest5.txt": {
+      "sha256": "bb463a3ba651d3164d56026b4533b579169279eb7e7a2b16a178da9f2a978b57",
+      "summary": "Formatted 2 files (2 changed) in 0.03 seconds."
+    },
+    "receipt-doc-ui-format-retest6.txt": {
+      "sha256": "bb463a3ba651d3164d56026b4533b579169279eb7e7a2b16a178da9f2a978b57",
+      "summary": "Formatted 2 files (2 changed) in 0.03 seconds."
+    },
+    "receipt-doc-ui-format-retest7.txt": {
+      "sha256": "3bfe8402abd35d4e53df53c188e9510bfeb4d19bfe3fa43b6c0b3c3988560a2c",
+      "summary": "Formatted 224 files (2 changed) in 0.83 seconds."
+    },
+    "receipt-doc-ui-format-retest8.txt": {
+      "sha256": "f51af600bb1c57746b97a2a25001ad90d69e2ac7e8f4c2e400f87aa481ba137e",
+      "summary": "Formatted 2 files (2 changed) in 0.02 seconds."
+    },
+    "receipt-doc-ui-format.txt": {
+      "sha256": "25be071a8cf6d93e57252359f1a52898e6cee68ad55399b6ff5e535f76c43aeb",
+      "summary": "Formatted 224 files (5 changed) in 0.84 seconds."
+    },
+    "receipt-doc-ui-id-retest10.txt": {
+      "sha256": "d45970f2f04f50cef2dc4a38d13ef70dd88927c5e1c1f2287cbeed8c6659ee03",
+      "status": "PASS",
+      "passed": 1,
+      "failed": 0,
+      "elapsed": "00:08"
+    },
+    "receipt-doc-ui-id-retest6.txt": {
+      "sha256": "8dad51aff80e682cb7363454afae071254a4679510f204255a48dfdd6447dd35",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:08"
+    },
+    "receipt-doc-ui-id-retest7.txt": {
+      "sha256": "78792c42dd2abd81fc34980b9269eef1f5722e83a5e43d558bb97d798d28dcbe",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:06"
+    },
+    "receipt-doc-ui-id-retest8.txt": {
+      "sha256": "268e628afa89f1be9d3e03fd53866ea06c3bcede19dcfe3b1530735fb11a1384",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:06"
+    },
+    "receipt-doc-ui-id-retest9.txt": {
+      "sha256": "e5ad9bfc49cf09847cf578cf865c460c8feeb2d57c5594a178951d2015b0cd77",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:08"
+    },
+    "receipt-doc-ui-retest.txt": {
+      "sha256": "d29e5bf3856b695027bf81449b1ae0434d60b9f44083659904fcc766359da918",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:11"
+    },
+    "receipt-doc-ui-retest11.txt": {
+      "sha256": "5c49235e06ee7acd860237a04da4166df5789f0db0bad39e30e63d6efbff24df",
+      "status": "FAIL",
+      "passed": 4,
+      "failed": 1,
+      "elapsed": "00:44"
+    },
+    "receipt-doc-ui-retest2.txt": {
+      "sha256": "e8aa74a0e52abab0f90c0cccd23ed9558eaf1228fe98e67ac3f142d94426c4f6",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:10"
+    },
+    "receipt-doc-ui-retest3.txt": {
+      "sha256": "25eade1efbec526dc47222e8a0f0c8701ac0555749d94e67c6a0086dd501c1e3",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:00"
+    },
+    "receipt-doc-ui-retest4.txt": {
+      "sha256": "f81134ca8b022ff1b5b90d3da92bc29d85c8afc58efbf654cebe52c8551a41d9",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "01:41"
+    },
+    "receipt-doc-ui-retest5.txt": {
+      "sha256": "84c6d7f48117729a85d01a2558bd6ce2abd30d86966fec8c79d85ac5dd0ca8a3",
+      "status": "FAIL",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "03:10"
+    }
+  },
+  "failuresAndRepairs": [
+    "Initial domain3PASS1FAIL12s: synchronous protected read denial must be caught as a closure; preserved authorization requirement. Later doc4+hint5 PASS14s.",
+    "Nullable fold type, bracket and unsupported WidgetTester.ensureVisible alignment argument caused compile failures. Use typed BigInt fold and actual local Flutter Scrollable API; no business assertions weakened.",
+    "Expanded domain6PASS1FAIL24s exposed actual latest-price bug when two receipts share a timestamp: random UUID ordering picked older known cost. Changed to monotonic product stock_revision_after with provenance index; latest unknown remains unknown.",
+    "Initial combined7PASS2FAIL26s and focused UI failures exposed harness using a horizontal text scroll, waiting for evicted lazy children or offscreen progress. Select vertical owner, restart/reveal bounded, wait actual enabled action/loaded state, recheck hit testing.",
+    "Small-screen list used a fixed header and a long status subtitle; row could exceed remaining viewport. Changed to one scrolling page and short status. Optional help expands separately.",
+    "ID locked Back exposed12px AlertDialog overflow. PIN screen itself passed; long translated actions now scroll with the explanation. ID1PASS8s and full acceptance23PASS30s after fix. Unlocked dirty warning also scrollable.",
+    "Acceptance21PASS2FAIL30s and UI4PASS1FAIL44s: unknown-product form had not finished policy IO and its opening-stock panel was farther down the long form than the helper bound. Pump policy IO and bounded48 vertical reveal, prove actual disabled stock0. EN1PASS8s.",
+    "Old receiving regression tapped a stay-locked label before reveal and could attempt a second pointer after first Save completed. Reveal actual action; if editor already closed, assert it is absent. Retain exactly-one receipt assertions and no suppressed hit-test warnings."
+  ],
+  "limits": [
+    "All mutated databases are new owned fixtures. No exploration reset/update/reseed.",
+    "Native DV/Poco SQLCipher and preservation evidence recorded separately with fresh protected baselines.",
+    "Widget gestures synthetic; no physical camera, OEM keyboard, ADB input or paper proof.",
+    "All old columns from every populated schema26 table compared before new authentication; native covered separately.",
+    "Poco became available again28Oct18:40; personal-use data must never be rolled back to old checkpoint."
+  ]
+}

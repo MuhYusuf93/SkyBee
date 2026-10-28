@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'cash_drawer_schema.dart';
+import 'receipt_draft_schema.dart';
 import '../../core/domain/value_types.dart';
 import '../../core/domain/app_error.dart';
 import '../../core/domain/contact_validation.dart';
@@ -7,7 +8,7 @@ import '../../core/domain/contact_validation.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 26;
+  static const version = 28;
 
   // A receipt's supplier is a transaction fact, not the master relationship.
   // Legacy products deliberately keep NULL rather than inferring a supplier.
@@ -67,6 +68,12 @@ final class Schema {
         24 => cashDrawerSchema,
         25 => _onsMetadata,
         26 => _warehouseBrowse,
+        27 => receiptDraftSchema,
+        28 => const [
+          // NULL means the old draft did not capture a stock baseline. Only
+          // explicit review may capture it; migration must not guess one.
+          'ALTER TABLE receipt_draft_lines ADD COLUMN stock_revision INTEGER CHECK(stock_revision IS NULL OR (typeof(stock_revision)=\'integer\' AND stock_revision>=0))',
+        ],
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);

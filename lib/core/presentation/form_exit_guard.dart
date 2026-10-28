@@ -85,6 +85,7 @@ class _FormExitGuardState extends State<FormExitGuard> {
         final route = DialogRoute<bool>(
           context: context,
           builder: (dialog) => AlertDialog(
+            scrollable: true,
             title: Text(tr(dialog, 'm52UnsavedTitle')),
             content: Text(tr(dialog, 'm52UnsavedBody')),
             actions: [

@@ -1,0 +1,20 @@
+{
+  "run": "m53-receipt-stock-poco-20261028-195505",
+  "device": "7f0edea0",
+  "nameFilter": "",
+  "runnerStatus": "PASS",
+  "passed": 5,
+  "failed": 0,
+  "elapsed": "02:09",
+  "preExistingProtectedEntries": 689,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "not applied",
+  "sourceFiles": 576,
+  "sourceManifestSha256": "be603397cd2d8d4432e4de1622064a2a84a5ed49ad79b3dbff116619691785be",
+  "runnerLogSha256": "94750a7edc4dd9d75fc60517876dafd7a648411d2059fc2d6f18e94587622d64",
+  "beforeManifestSha256": "2f1fda3b13b93fde3b944e21e305b30450938d9f7eddb129a6aaf362632efd3d",
+  "afterManifestSha256": "3469221630bd18c8840b5b6d4bca6ae9ea65b35cc4b3eb26b121b79e011b9a0c"
+}

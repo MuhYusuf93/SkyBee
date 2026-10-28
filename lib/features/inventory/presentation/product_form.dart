@@ -26,9 +26,15 @@ import '../../settings/domain/store_feature_policy.dart';
 
 /// Form expanded only as needed. Stock/value cannot be edited in master fields.
 class ProductForm extends StatefulWidget {
-  const ProductForm({super.key, this.product, this.initialBarcode});
+  const ProductForm({
+    super.key,
+    this.product,
+    this.initialBarcode,
+    this.forReceiptDraft = false,
+  });
   final InventoryProduct? product;
   final String? initialBarcode;
+  final bool forReceiptDraft;
   @override
   State<ProductForm> createState() => _ProductFormState();
 }
@@ -79,6 +85,9 @@ class _ProductFormState extends State<ProductForm> {
   void initState() {
     super.initState();
     if (widget.product == null) barcode.text = widget.initialBarcode ?? '';
+    if (widget.product == null && widget.forReceiptDraft) {
+      stockInput.quantity.text = '0';
+    }
     final product = widget.product;
     if (product != null) {
       name.text = product.name;
@@ -439,6 +448,9 @@ class _ProductFormState extends State<ProductForm> {
         throw const AppError('m53InitialQuantityRequired');
       }
       final entered = product == null && !untracked ? stockInput.parse() : null;
+      if (widget.forReceiptDraft && (entered?.quantityBase ?? 0) != 0) {
+        throw const AppError('m53ReceiptNewProductZero');
+      }
       final purchase =
           entered != null &&
               entered.quantityBase > 0 &&
@@ -801,7 +813,7 @@ class _ProductFormState extends State<ProductForm> {
                           (!untracked || !_policy.enforced))
                         StockInputFields(
                           controller: stockInput,
-                          enabled: !busy,
+                          enabled: !busy && !widget.forReceiptDraft,
                           quantityLabel: tr(context, 'initialQuantity'),
                           errorText: initialError == null
                               ? null
@@ -818,6 +830,8 @@ class _ProductFormState extends State<ProductForm> {
                             }
                           }),
                         ),
+                      if (widget.forReceiptDraft)
+                        Text(tr(context, 'm53ReceiptNewProductZero')),
                       if (_policy.cost)
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),

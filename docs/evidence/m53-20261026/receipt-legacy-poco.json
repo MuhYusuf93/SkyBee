@@ -1,0 +1,20 @@
+{
+  "run": "m53-receipt-legacy-poco-20261028-201631",
+  "device": "7f0edea0",
+  "nameFilter": "legacy ambiguity",
+  "runnerStatus": "PASS",
+  "passed": 1,
+  "failed": 0,
+  "elapsed": "00:31",
+  "preExistingProtectedEntries": 696,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "not applied",
+  "sourceFiles": 576,
+  "sourceManifestSha256": "8ca33731f2c5360025668f4bc26e18ad0af10621b745b2f17faf5630f618b830",
+  "runnerLogSha256": "51ffc7ecfde49ffbdc5b6b9028d8f8063ace50bb171d372ad9e4bf24ddc6ddc0",
+  "beforeManifestSha256": "3469221630bd18c8840b5b6d4bca6ae9ea65b35cc4b3eb26b121b79e011b9a0c",
+  "afterManifestSha256": "a000f4359f8c1881867efe1cf3abaec0443c479b30c4d6201e66cf8f4837493a"
+}

@@ -1,0 +1,99 @@
+{
+  "scope": "Receipt schema28 stock baseline guard plus focused document UI retest, after source573 native campaign",
+  "hostLogs": {
+    "receipt-stock-acceptance-regression-final.txt": {
+      "sha256": "8e27b170fb7e4e4d824623ae6ede495b5450ef13c4eb98e1ca9502b04dbb8b88",
+      "status": "PASS",
+      "passed": 71,
+      "failed": 0,
+      "elapsed": "01:31"
+    },
+    "receipt-stock-analyze-clean.txt": {
+      "sha256": "87ad77daec68dbb145c8f2c6e179166fff52d4f6cac2b715bc9710484e720dcc",
+      "summary": "No issues found! (ran in 5.5s)"
+    },
+    "receipt-stock-analyze-final.txt": {
+      "sha256": "49b3ac38c95f40c1196d69ed8f8ee1a7a4316bb9d4d18223e0a689c6fe17e540",
+      "summary": "No issues found! (ran in 41.1s)"
+    },
+    "receipt-stock-analyze-frozen.txt": {
+      "sha256": "4972286f685178cccdad684150a8c1a19df6ff3cb86928bc9ba4864d12180d06",
+      "summary": "No issues found! (ran in 7.2s)"
+    },
+    "receipt-stock-analyze-initial.txt": {
+      "sha256": "0d32fb66ab55ff734575f107032336e1fa6f077bc9019d81db96433c60d36a55",
+      "summary": "1 issue found. (ran in 116.2s)"
+    },
+    "receipt-stock-focused-final.txt": {
+      "sha256": "da9b01907d3c02c8aa6491c997b3ae87b3f44b9cb75dee1ab72fed318e240983",
+      "status": "PASS",
+      "passed": 5,
+      "failed": 0,
+      "elapsed": "00:19"
+    },
+    "receipt-stock-format-clean.txt": {
+      "sha256": "7ae8a39e621a755df89cd0b58fc9d6461b2faef8b7b894ec3f3917659dd683ae",
+      "summary": "Formatted 480 files (0 changed) in 1.31 seconds."
+    },
+    "receipt-stock-format-final.txt": {
+      "sha256": "c0b6fbb118719f004e09971c10464af83fc798adab2db37659a4bfd4e805fec4",
+      "summary": "Formatted 480 files (0 changed) in 1.32 seconds."
+    },
+    "receipt-stock-format-frozen.txt": {
+      "sha256": "07d328b6b5cd86a7800c8ea3debea29dfd290f13938671483b053b4a4f3ba4b1",
+      "summary": "Formatted 480 files (0 changed) in 1.24 seconds."
+    },
+    "receipt-stock-format-initial.txt": {
+      "sha256": "c0e19ad47bb621461d8524f5bb47206b25b49488a1016a2aad4c33eca7e168ec",
+      "summary": "Formatted 227 files (8 changed) in 0.92 seconds."
+    },
+    "receipt-stock-host-initial.txt": {
+      "sha256": "63050015d40332b7d3c4593ff1d33b1b6d83f363220d7889040eecdf5ba25e77",
+      "status": "FAIL",
+      "passed": 2,
+      "failed": 1,
+      "elapsed": "00:17"
+    },
+    "receipt-stock-host-retest.txt": {
+      "sha256": "dadc14293ea06419c0bd0fed258f375785f869bbfee4ce91dcee32b7cd4c838c",
+      "status": "PASS",
+      "passed": 5,
+      "failed": 0,
+      "elapsed": "00:23"
+    },
+    "receipt-stock-l10n.txt": {
+      "sha256": "74ea3d05cd50fb7d5b64d6d30085ba84ce40451029fea95ebb65678e9933c8f0",
+      "summary": "OK: 996 bilingual semantic keys, matching metadata/placeholders; 669 static message references; 245 original requirement IDs."
+    },
+    "receipt-stock-pin.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137",
+      "summary": "PASS: 106 unchanged upstream files; APK license identical; Mbed TLS 3.6.7 archive pinned."
+    },
+    "receipt-stock-scroll-format.txt": {
+      "sha256": "d4e62bd5537dc784288f78e899199c0595767384dbd6d866a63c9f20de29f264",
+      "summary": "Formatted 2 files (1 changed) in 0.01 seconds."
+    },
+    "receipt-stock-scroll-host.txt": {
+      "sha256": "146f5ba6f51c9fd7f8f20df1445a2c8eb38d11fa008a3c357ce74e6db93e826e",
+      "status": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:18"
+    }
+  },
+  "sourceAuditFinding": "Checkout increments stock_revision independently of product/master revision. Receipt27 checked only master revision. Its additive writer did not overwrite stock, but strict draft review after a sale was not enforced.",
+  "repair": "Additive28 nullable stock_revision baseline; never backfill an unrecorded legacy baseline. Add/review capture both revisions; confirm rejects mismatch/NULL. Single editor also forwards optional expectedStockRevision; old null-argument hashes remain identical.",
+  "migrationEvidence": "Owned schema27 fixture reproduces a receipt committing after a real sale with unchanged master revision, retains a posted receipt and pending draft, then compares old columns in8 tables across28. NULL pending baseline must be explicitly reviewed before posting; old sale snapshots remain unchanged.",
+  "failures": [
+    "Initial focused fixture used nonexistent initialUnitCost named argument; corrected to actual unitCost API. No application rule changed to satisfy the fixture.",
+    "Analyzer1 brace-style info on the new integration flag guard fixed; final source analysis clean."
+  ],
+  "nativeUiRetest": "Source573 Poco21PASS2UIFAIL4:04 with668 protected hashes unchanged/controlOff. The helper drag did not reveal a lazy code field under forced viewport. Focused retest uses bounded programmatic reveal while retaining real widget hit testing, and tests a synthetic drag at original window geometry before resizing.",
+  "limits": [
+    "Mutations only in new owned fixtures; exploration has no update/reset/reseed.",
+    "Source573 initial device evidence and failures retained separately. New focused source manifest and native evidence required.",
+    "Original-geometry synthetic gestures and programmatic reveal are not physical ADB/OEM input or camera/printer proof.",
+    "Host71 preceded additional normal-window scroll assertions and expanded migration fixture; focused5 and UI2 cover those additions without repeating unrelated checks.",
+    "Stocktake next schema29, supplier E3 and F/G/H remain active."
+  ]
+}

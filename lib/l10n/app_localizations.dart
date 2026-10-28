@@ -5887,6 +5887,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A zero-prefixed EAN-13 and UPC-A can use the same bars. Select the exact code text stored for your product; the app does not silently change it.'**
   String get m53CameraEquivalentCodes;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDrafts
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving drafts'**
+  String get m53ReceiptDrafts;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftNew
+  ///
+  /// In en, this message translates to:
+  /// **'New receiving draft'**
+  String get m53ReceiptDraftNew;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraft
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving draft'**
+  String get m53ReceiptDraft;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftSaved
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved. Stock has not changed.'**
+  String get m53ReceiptDraftSaved;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftNoStockYet
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning and editing change only the draft. Stock changes once when the entire document is confirmed. A product barcode does not identify its physical batch.'**
+  String get m53ReceiptDraftNoStockYet;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftPosted
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving confirmed. Stock and history have been recorded.'**
+  String get m53ReceiptDraftPosted;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftChanged
+  ///
+  /// In en, this message translates to:
+  /// **'The draft changed or is closed. Reload and review before continuing.'**
+  String get m53ReceiptDraftChanged;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftLimit
+  ///
+  /// In en, this message translates to:
+  /// **'A draft supports up to 100 lines. Finish or split this document.'**
+  String get m53ReceiptDraftLimit;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptChooseLine
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a receiving line or batch'**
+  String get m53ReceiptChooseLine;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptSeparateLine
+  ///
+  /// In en, this message translates to:
+  /// **'Several lines could receive this code. Create a separate line, then enter the correct quantity and batch?'**
+  String get m53ReceiptSeparateLine;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one product before confirming.'**
+  String get m53ReceiptDraftEmpty;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftCode
+  ///
+  /// In en, this message translates to:
+  /// **'Exact barcode or SKU (external scanner supported)'**
+  String get m53ReceiptDraftCode;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftAddCode
+  ///
+  /// In en, this message translates to:
+  /// **'Add 1 base unit'**
+  String get m53ReceiptDraftAddCode;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftScanAdded
+  ///
+  /// In en, this message translates to:
+  /// **'One base unit added to the draft. Stock has not changed.'**
+  String get m53ReceiptDraftScanAdded;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm receiving'**
+  String get m53ReceiptDraftConfirm;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftConfirmHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Review every quantity, unit, pack size, cost, purchase supplier and expiry. Confirmation posts all lines together; any failed line rolls back the entire posting.'**
+  String get m53ReceiptDraftConfirmHelp;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftReview
+  ///
+  /// In en, this message translates to:
+  /// **'Review current product data'**
+  String get m53ReceiptDraftReview;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftReviewHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh product and stock baselines to their current state. Draft input is retained; review prices, units and quantities before confirming again.'**
+  String get m53ReceiptDraftReviewHelp;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftCancel
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel receiving draft'**
+  String get m53ReceiptDraftCancel;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftCancelHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Close this draft without changing stock? Cancelled drafts are retained as a record and cannot be edited again.'**
+  String get m53ReceiptDraftCancelHelp;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptRegisterUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'This code is not registered. Create a product with opening stock 0, then return to the draft?'**
+  String get m53ReceiptRegisterUnknown;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptNewProductZero
+  ///
+  /// In en, this message translates to:
+  /// **'New products for this draft use opening stock 0. Enter and confirm received quantities in the receiving document.'**
+  String get m53ReceiptNewProductZero;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftExistingCost
+  ///
+  /// In en, this message translates to:
+  /// **'The cost already entered in this draft is shown so editing units or quantity does not erase it.'**
+  String get m53ReceiptDraftExistingCost;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptReverseWholeDocument
+  ///
+  /// In en, this message translates to:
+  /// **'This receipt belongs to a complete document. Open it and review all lines before reversing.'**
+  String get m53ReceiptReverseWholeDocument;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftReversed
+  ///
+  /// In en, this message translates to:
+  /// **'The entire receipt has been reversed; original records are retained.'**
+  String get m53ReceiptDraftReversed;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftReverse
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse this entire receipt'**
+  String get m53ReceiptDraftReverse;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftReverseHelp
+  ///
+  /// In en, this message translates to:
+  /// **'This reverses every line in the document, not just one product. It is allowed only when no later stock or cost mutation depends on it. Original history is retained.'**
+  String get m53ReceiptDraftReverseHelp;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Draft cancelled without posting stock.'**
+  String get m53ReceiptDraftCancelled;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptStatusPosted
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get m53ReceiptStatusPosted;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptStatusCancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get m53ReceiptStatusCancelled;
+
+  /// M5.3 durable bounded receiving draft: m53ReceiptDraftHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Using this draft'**
+  String get m53ReceiptDraftHelp;
 }
 
 class _AppLocalizationsDelegate

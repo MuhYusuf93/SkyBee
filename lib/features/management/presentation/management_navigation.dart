@@ -62,17 +62,23 @@ Future<void> _confirmExit(
       builder: (dialog) => AlertDialog(
         scrollable: true,
         title: Text(tr(dialog, 'm52UnsavedTitle')),
-        content: Text(tr(dialog, 'm53LockedUnsavedBody')),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialog, false),
-            child: Text(tr(dialog, 'm53StayLocked')),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(dialog, true),
-            child: Text(tr(dialog, 'm53DiscardToCashier')),
-          ),
-        ],
+        // Long translated actions must scroll with the explanation too; an
+        // AlertDialog actions bar can exceed the whole small keyboard viewport.
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(tr(dialog, 'm53LockedUnsavedBody')),
+            TextButton(
+              onPressed: () => Navigator.pop(dialog, false),
+              child: Text(tr(dialog, 'm53StayLocked')),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(dialog, true),
+              child: Text(tr(dialog, 'm53DiscardToCashier')),
+            ),
+          ],
+        ),
       ),
     );
     if (discard != true) return;

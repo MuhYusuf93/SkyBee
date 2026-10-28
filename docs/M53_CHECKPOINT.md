@@ -1,5 +1,201 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+## Receipt27–28 selesai sesuai scope — lanjut stocktake29 dan E3/F/G/H
+
+28Oktober20:28 — seluruh runner ditutup. Source28 finallegacy manifest576
+verified; currentqueryambiguityfix hanya2fileberbeda daristockguard576. Host71
+PASS1:31 +focused5PASS19s +legacyhint6/doc8=14PASS38s (overlap, bukanuniquesum).
+Finalanalyze68,7s bersih/format480/0/l10n996/669/245/PIN106match.
+Native docsource573 DV23PASS6:04/746hashsama/awakeexact; Poco21PASS2UIFAIL4:04/
+668hashsama/controlOff. Focusedguard28+UIretetst5 DV5PASS2:58/767hashsama/
+awakeexact danPoco5PASS2:09/689hashsama/controlOff. Readonlylegacydelta1 DV1PASS40s/
+774hashsama/awakeexact danPoco1PASS31s/696hashsama/controlOff. Semua interval
+before/afteroldhashsama, initialPocoFAIL dipertahankan. .skybee+12 tidakupdate/
+reset/reseed; Poco tersedia. Nativegestures/programmaticreveal bukanADBfisik.
+
+Laporan docs/M53_RECEIPT_DOCUMENT_REPORT.md, decisions, evidence host/native/
+sourceberlapis sudahada. Currentnormalcommit/push belumdilakukan; HEADda719c8
+pushed. Auditdiff/checkstagedmetadata lalu commit/push danverifyremote. Setelah
+itu LANGSUNG implementasi stocktake schema29, lalu E3supplier/returns/schedules
+dan F/G/H. Private build/m53/stocktake-next-design.md memuat rancangan terinci;
+bukan source/tes. Janganmenimpa file lib dari kandidat .next.dart lama atau
+mengulang semua23/5/1native tanpa perubahanrelevan. Manifestfrozen terakhir
+receipt_legacy_source_snapshot.py, targetreceipt-legacy-source-pre-native.json;
+sourcebolehdiedit setelahnormalcommit checkpoint, gunakanmanifestBARU kemudian.
+
+28Oktober20:25 — legacyhintPoco1PASS31s/696hash lama cocok/controlOff, source
+finallegacy576verified+curated receipt-legacy-poco.json. DV1 shell46104 aktif
+run m53-receipt-legacy-dv-20261028-202056; build/m53/receipt-legacy-dv-wrapper.txt.
+JANGANedit maintainedsource hingga finallyDV+receipt_legacy_source_snapshot.py
+--verify. Guard28DV5PASS2:58/767hashlama sama/awakeexact, Poco5PASS2:09/689hash
+sama sudahditutup. Tidak adaFFIrunner. Legacyhost14PASS38s/red0PASS1FAIL9s/
+analyze68,7s/format480/0/l10n996/669/245/PIN106match; curator legacyhost berhasil.
+SetelahDVclose: curate receipt-legacy-dv.json dan finalreport aktual layered
+source573/stock576/legacy576 (hashberbeda, janganrefreeze), requirementmatrix/
+Pococheckpoint/SPEC/PLAN/STATUS/LESSONS. Auditdiff/normalcommit/push, lalu LANGSUNG
+lanjut stocktake29/E3/F/G/H. Stocktake private design ditambah past-expiry physical
+count, includeNULL-vsScan1, packmetadata, totalvaluation untukpoolkosong agar
+tidakround-perunit×qty. Belum diimplementasikan. HEADda719c8pushed; seluruh
+receipt27–28WIPbelumcommit. .skybee+12 tidakupdate/reset/reseed.
+
+## Legacy hint readonly final — source576 berbeda hash, Poco1 aktif
+
+28Oktober20:16 — guard28 native5 selesai DV5PASS2:58/767hash lama sama/
+controlOff/awakeexact danPoco5PASS2:09/689hashsama/controlOff, evidencecurated.
+Lalu audit readonly legacyambiguity direproduksi host0PASS1FAIL9s: query lama
+mengeluarkan receipt ambigu dari kandidat lalu melabel harga olderknown sebagai
+latest. Perbaikan hanya purchase_cost_hints.dart +testexisting suite: kandidat
+latest tetapdipertahankan denganflagambiguous, DTOunknown/itempackNULL, bukan
+olderknown. Directitemlinkbaru tetaptepat; businessrows26/28unchanged verified.
+Host hint6+doc8=14PASS38s, analyzeNoissues68,7s/format480/0/l10n996/669/245/
+PIN106match. Sourcefinal576 frozen lagi dengan HASH BERBEDA, manifest baru
+build/m53/receipt-legacy-source-pre-native.json dan receipt_legacy_source_snapshot.py.
+Stock576 dandoc573manifest lama JANGANditimpa/refreeze.
+
+Native focused1 saja via m53_receipt_document_test.dart NameFilter 'legacy ambiguity',
+Poco shell14686 aktif (build/m53/receipt-legacy-poco-wrapper.txt), DV berikut.
+JANGANedit maintainedsource sampai kedua finally+manifestverified. Tidak perlu
+ulang23/5 yang sudahditutup untuk readquery ini tanpa kegagalan baru. Capture
+legacy-{host-validation,poco,dv,source-sha256} evidence setelahwrapperclose.
+Normalcommit/push receipt27–28 setelah semua finaldocs/requirementmatrix sesuai
+layered evidence (initialPocoFAIL tetaptersimpan). Kemudian lanjutstocktake29,
+E3supplier/F/G/H. .skybee+12 belum update/reset; seluruhPaketEksplorasi dipertahankan.
+
+## Source28 stock baseline guard — source576 frozen, Poco focused aktif
+
+28Oktober19:55 — setelah source573 native DV23PASS6:04/746hashsama/controlOff/
+awakeexact dan Poco21PASS2FAIL4:04/668hashsama/controlOff, gap strict stock CAS
+ditutup dengan migrasi ADITIF28. Receipt_draft_lines.stock_revision nullable;
+legacyNULL wajibReview, tidak dibackfill tebakan. Add/review capturestockrev,
+confirm memeriksa master+stock; standaloneeditor forwards expectedStockRevision
+dengan optionalhashmarker (oldcallsnullbyteidentik). Legacy27 fixture sekarang
+mereproduksi stock-sale gap sebelum migrasi, menyimpan receiptposted+draftpending,
+memverifikasi oldcolumns8tabel tetap dan pendingNULL ditolak sampaiReview28.
+
+Host71PASS1:31 (receipt26+reg45; termasukstock3) lalu focused5PASS19s setelah
+penambahan native-size scrollgesture dan migrationfixture lebih lengkap.
+Analyzer bersih7,2s/format480/0/l10n996/669/245/PIN106match. Source576 frozen
+build/m53/receipt-stock-source-pre-native.json; script receipt_stock_source_snapshot.py.
+JANGANedit maintainedsource sampai focusedPoco danDV finally selesai+verified.
+Native5 entry m53_receipt_stock_guard_test.dart =stockbaseline3+docUI2; Poco
+shell2319 aktif (build/m53/receipt-stock-poco-wrapper.txt), DV berikut. Wrapper
+resmi/backgroundpaused/freshbaseline. Source573 manifest dan initialPocoFAIL
+tetapdipertahankan. Source28 normal-size gesture juga memeriksa pointerdrag
+mengubah scrollposition ketikaadaoverflow; forced320px reveal memakai jumpTo
+bounded, actualbuttons tetaptap/hittest. Tidak mengklaimADBfisik/OEMgesture.
+
+Belum commit source27/28. HEADda719c8 pushed; .skybee+12 belumupdate/reset.
+SesudahNative5: curate receipt-stock-{host-validation,poco,dv,source-sha256}.json,
+perbarui laporan/decisions/SPEC/PLAN/STATUS/REQUIREMENTS/LESSONS danPococheckpoint,
+auditdiff lalu normalcommit/push. Lanjut stocktake schema29 (bukan28), E3/F/G/H
+tetapaktif sampaihandoff. Private stocktake-next-design.md hanya rancangan.
+
+28Oktober19:39 — source573 DV23PASS6:04/746hashsama/controlOff/awakeexact;
+Poco21PASS2FAIL4:04, seluruh668hash lama cocok/controlOff, runnerexit1 karena
+dua UI baru gagal helper reveal (vertical offset tetap0 walau syntheticdrag,
+kodefield belumdibangun). Domain8/price5/state5/oldUI3 PASS diPoco. Evidence
+receipt-document-poco-initial.json menyimpanFAIL, jangan ditimpa. Keduarunner
+sudahditutup, manifest573verified; sourcebolehdiedit untukCAS28 danhelperfix.
+Gunakan jumpTo bounded180 untuk reveal lazy child pada helper (seperti helper
+programmatic proyek lain), tetapactual widgettap/hit-test+nilai/stok assertions;
+bukan klaimADBfisik. Tambah focused native entry CAS3+docUI2 perDV/Poco sesudah
+hostfull26+regresi relevan PASS dan manifest BARU. Janganulang23 tanpa sebab.
+
+## Audit lanjutan wajib sebelum menutup receipt checkpoint
+
+28Oktober19:36 — native source573 DV23PASS6:04/746hash lama sama/controlOff/
+awakeexact sudahditutup/curated. Poco23 shell83985 aktif run
+m53-receipt-document-poco-20261028-193206 dengan freshbaseline. JANGANedit
+maintainedsource sampai finallyPoco selesai dan manifest573verified.
+Audit source menemukan gap baseline: CheckoutService mengubah stock_revision
+tetapi bukan product.revision. Draft receipt27 hanya menyimpan product_revision,
+sehingga penjualan setelah draft tidak meminta review seperti kontrak. Writer
+tetap membaca stok kini/additive/atomic (bukan overwrite/lostdata), tetapi strict
+draft-baseline acceptance belum lengkap. Jangan tandai receipt selesai/commit
+hanya karena native23PASS. SesudahPoco close: reproduce pakai checkout nyata,
+tambahkan migrasi ADITIF28 receipt_draft_lines.stock_revision nullable (legacy27
+NULL wajibReview, jangan backfill baseline tebakan). Add/review capture kedua
+revision; confirm cek keduanya. Perubahan schema27 yang telahdiuji tetaputuh.
+
+Tambahkan expectedStockRevision optional pada receiveInput/receivePurchase/
+_receive dengan hashmarker hanya bila diberikan (retry lama tetapbyte-identik),
+ReceiptLineInput/editor/ProductDetail meneruskan snapshot stockRevision agar
+editor tunggal juga menolak perubahan stok setelah dibuka. Doc callback tetap
+memakai baseline dokumennya sendiri. Validator aware schema27/28, NULL legacy
+boleh disimpan/restored tetapi confirm28 memerlukanReview. Uji migrate27 populated
+draft: oldcolumns tetap, baselineNULL tidakdianggapknown, Review lalu confirm.
+Uji sale sesudahdoc/single-editor snapshot, same confirmedretry no secondstock,
+role/rollback. Hostregresi relevan lalu manifest BARU (573 janganrefreeze) dan
+native focused delta DV/Poco; tidak perluulang23 tanpa alasan tambahan.
+
+Lalu finalreport/evidence/SPEC/PLAN/STATUS/REQUIREMENTS, normalcommit/push receipt.
+Stocktake berikut menjadi schema29 bila28 dipakai guard; sesuaikan private
+stocktake-next-design.md. E3/F/G/H tetapaktif. .skybee+12 belumupdate/reset.
+
+## Receipt27 source573 dibekukan — native DV aktif, Poco berikut
+
+28Oktober19:19 — source+12/schema27 host acceptance23PASS30s (doc8/UI2/hint5/
+priceState5/oldeditorUI3), regresi45PASS1:19 (inventory/M52/money/backupmetadata),
+analyzer bersih7,2s, format477/0changed/l10n996/669/245/PIN106match. Fresh
+source573 dibekukan pada build/m53/receipt-document-source-pre-native.json,
+script receipt_document_source_snapshot.py. JANGAN edit maintained Dart/Android/
+pubspec sampai DV/Poco wrapper akhirnya selesai dan manifest verified. Native23
+entry integration_test/m53_receipt_document_test.dart melalui officialwrapper,
+DV shell10393 aktif (build/m53/receipt-doc-dv-wrapper.txt), Poco berikut dengan
+freshbaseline. KeduaADBdevice terakhir authorized; pengguna menyediakan Poco
+kembali18:40. .skybee+12/schema14 belumupdate/reset/reseed. Tidak ada FFIrunner.
+
+E2 receipt implemented: durable capped drafts, cursor context, code1base,
+unknown realProductForm stock0disabled, existing costpreserved, directitemlink,
+atomic sameproductmulti-batchconfirm/retry/CAS, untracked actualreceipts tanpa
+aset999, whole-document reversal guarded+preview/deps, readonlybackupmetadata.
+Harga latest kini stock_revision_after (timestampsama/randomUUIDbug fixed).
+UI helpers sudah mengikuti verticalscroll, loadedstate dan enabledaction;
+48bound untuk ProductForm panjang. Header/subtitle daftar menjadi satu area
+gulir/statusringkas; bantuan expandable. ID BackAlert12px overflow terbukti
+di dialog (PINscreenPASSclean), action panjang kini ikutscroll; generic unlocked
+dirtydialog juga scrollable. Old rapidpointer bilaeditoralreadyclosed harus
+assertabsent, tidak men-tap route bawah; hit-testwarnings tidakdisembunyikan.
+Seluruh fail/retest logs di build/m53 dan hostcurated JSON.
+
+Keputusan docs/decisions/M53_RECEIPT_DOCUMENTS.md dan laporan awal
+docs/M53_RECEIPT_DOCUMENT_REPORT.md sudahditulis. Hostcurator
+build/m53/curate_receipt_document_host.py sudahberhasil; nativecurator generik
+curate_search_run.py pakai manifestBARU dan hanya sesudah finally/controlOff.
+Simpan receipt-document-{dv,poco,source-sha256}.json, finalreport/STATUS/PLAN/
+SPEC/REQUIREMENTS/LESSONS, auditdiff lalu normalcommit/push. HEADda719c8 pushed.
+Sesudahnya lanjut stocktake schema28 dari build/m53/stocktake-next-design.md
+(rancangan belumimplementasi), E3 supplier finance/returns/schedules, F/G/H.
+Jangan berhenti hanya pada checkpoint ini; Poco kini tersedia untuk H nanti.
+
+## Kelanjutan28Oktober18:40 — Poco tersedia kembali; source27 E2 WIP
+
+Pengguna menyediakan Poco kembali. ADB7f0edea0 device/model24069PC21G sudah
+terbaca; boleh kembali memakai host/DV/Poco. Ambil baseline protected baru lewat
+wrapper sebelum native, pertahankan semua data aktivitas pribadi sejak d5f7210.
+Instruksi penundaan Poco di bagian historis berikut sudah digantikan ini.
+HEADda719c8 sudahpush/remoteverified. Working schema27: receipt_drafts/lines
+aditif, direct receipt_item provenance pada inventory_operations dan reference
+history; extension ReceiptDocuments pada part receipt_draft_service.dart memakai
+private writer _receive yang sama. Draft cap100, durable/CAS/literal scan1base,
+multi-same-product/batch, atomic confirm/idempotency, untracked actual purchase
+tanpa aset999, seluruh-document reversal dengan explicit flag/preview dan deps.
+Validator backup metadata bounded; UI list draft/posted/cancelled + editor
+bersama, new product forReceiptDraft stock0. BELUM native27/commit/finalanalyze.
+Host awal3PASS1FAIL12s (sync locked _read harus expectclosure), retest9PASS14s
+(doc4+hint5), perluasan doc7 menghasilkan6PASS1FAIL24s: timestamp sama membuat
+receiptID acak memilih known lama. Diubah latest hint ke stock_revision_after
+DESC dengan index baru, belum retest. Log compile/format/analyze awal disimpan;
+syntax bracket/nullable fold telah diperbaiki. UI baru2case belum dijalankan.
+Tidak ada native/FFI runner aktif. Langkah berikut: fix analyzer style dan
+BuildContext cancel handler; run doc7+UI2+oldreceipt13/legacyreceiving+M52/regresi
+backup relevan tanpa FFI overlap. Tambah native entry22(doc7/UI2+receipt13) dan
+manifest BARU hanya setelah finalsource hostbersih; auditedwrapper DV/Poco
+freshbaseline/backgroundpaused, closefinally/controlOff/awake restore, curate.
+Jangan refreeze source manifest receipt563/warehouse551 lama. Receipt27 docs/
+SPEC/PLAN/REQUIREMENTS dan keputusan masih harus ditulis berdasarkan hasil akhir.
+Opname/keuangan supplier E3/F/G/H tetap aktif, .skybee+12/schema14 belumupdate.
+
 ## Instruksi perangkat terbaru — Poco dipakai pribadi, hanya DV untuk native
 
 28Oktober14:00 — pengguna menarik Poco dari pengujian sementara. Checkpoint

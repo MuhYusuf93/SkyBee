@@ -1,5 +1,12 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Draft penerimaan banyak barang M5.3 memakai persistensi aditif27–28, scan1unit dasar,
+baseline/CAS, satu writer atomic dan direct receipt item provenance. Reversal
+seluruh dokumen memerlukan tinjauan semua baris dan dependency check:
+[keputusan penerimaan](decisions/M53_RECEIPT_DOCUMENTS.md). Opname dan E3 tetapaktif.
+Baseline master dan stok berbeda; NULL baseline stok legacy wajib ditinjau ulang,
+tidak dibackfill sebagai angka yang seolah pernah dihitung.
+
 Harga pembelian terakhir dan editor penerimaan tunggal M5.3 mengikuti
 [keputusan editor](decisions/M53_RECEIPT_EDITOR.md): sumber actual/reference/
 unknown, konversi tepat per basis input, ownership draft dan revision guard.

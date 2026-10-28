@@ -1,0 +1,20 @@
+{
+  "run": "m53-receipt-document-poco-20261028-193206",
+  "device": "7f0edea0",
+  "nameFilter": "",
+  "runnerStatus": "FAILED_OR_BLOCKED",
+  "passed": 21,
+  "failed": 2,
+  "elapsed": "04:04",
+  "preExistingProtectedEntries": 668,
+  "everyPreExistingHashUnchanged": true,
+  "automaticDeviceControlActive": false,
+  "reset": false,
+  "downgrade": false,
+  "awake": "not applied",
+  "sourceFiles": 573,
+  "sourceManifestSha256": "23659f3a88ff68109c06caf46bd0a562b7316ecb1be8ffc3d460373a338c9468",
+  "runnerLogSha256": "e1e9ba9c4700973df43776b3737e4c55d61b71fd05fcdd61df3c0b59f61f6a77",
+  "beforeManifestSha256": "39df2a4fada9404b0257368b0561d8e80ef4c76f47bd659bbe61d8cba46d4a7c",
+  "afterManifestSha256": "2f1fda3b13b93fde3b944e21e305b30450938d9f7eddb129a6aaf362632efd3d"
+}

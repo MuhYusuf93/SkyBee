@@ -3274,4 +3274,115 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m53CameraEquivalentCodes =>
       'EAN-13 berawalan nol dan UPC-A dapat memakai pola garis yang sama. Pilih teks kode yang sama dengan data barang Anda; aplikasi tidak mengubah kode secara diam-diam.';
+
+  @override
+  String get m53ReceiptDrafts => 'Draft barang masuk';
+
+  @override
+  String get m53ReceiptDraftNew => 'Buat draft barang masuk';
+
+  @override
+  String get m53ReceiptDraft => 'Draft penerimaan';
+
+  @override
+  String get m53ReceiptDraftSaved => 'Draft tersimpan. Stok belum berubah.';
+
+  @override
+  String get m53ReceiptDraftNoStockYet =>
+      'Scan dan edit hanya mengubah draft. Stok berubah sekali saat seluruh dokumen dikonfirmasi. Barcode produk tidak membuktikan batch fisik.';
+
+  @override
+  String get m53ReceiptDraftPosted =>
+      'Penerimaan sudah dikonfirmasi. Stok dan riwayat telah dicatat.';
+
+  @override
+  String get m53ReceiptDraftChanged =>
+      'Draft berubah atau sudah ditutup. Muat ulang dan periksa sebelum melanjutkan.';
+
+  @override
+  String get m53ReceiptDraftLimit =>
+      'Satu draft dibatasi 100 baris. Selesaikan atau pisahkan dokumen ini.';
+
+  @override
+  String get m53ReceiptChooseLine => 'Pilih baris atau batch penerimaan';
+
+  @override
+  String get m53ReceiptSeparateLine =>
+      'Ada beberapa baris yang dapat menerima kode ini. Buat baris baru lalu isi quantity dan batch yang benar?';
+
+  @override
+  String get m53ReceiptDraftEmpty =>
+      'Tambahkan paling sedikit satu barang sebelum konfirmasi.';
+
+  @override
+  String get m53ReceiptDraftCode =>
+      'Barcode atau SKU persis (scanner eksternal boleh)';
+
+  @override
+  String get m53ReceiptDraftAddCode => 'Tambah 1 unit dasar';
+
+  @override
+  String get m53ReceiptDraftScanAdded =>
+      'Satu unit dasar ditambahkan ke draft. Stok belum berubah.';
+
+  @override
+  String get m53ReceiptDraftConfirm => 'Konfirmasi barang masuk';
+
+  @override
+  String get m53ReceiptDraftConfirmHelp =>
+      'Periksa seluruh quantity, satuan, isi kemasan, biaya, supplier transaksi dan expiry. Konfirmasi mencatat semua baris sekaligus; gagal satu baris membatalkan seluruh pencatatan.';
+
+  @override
+  String get m53ReceiptDraftReview => 'Tinjau ulang data barang terbaru';
+
+  @override
+  String get m53ReceiptDraftReviewHelp =>
+      'Perbarui baseline data barang dan stok ke kondisi saat ini. Input draft dipertahankan; periksa harga, satuan dan quantity sebelum konfirmasi lagi.';
+
+  @override
+  String get m53ReceiptDraftCancel => 'Batalkan draft penerimaan';
+
+  @override
+  String get m53ReceiptDraftCancelHelp =>
+      'Tutup draft ini tanpa menambah stok? Draft yang dibatalkan disimpan sebagai jejak dan tidak dapat diedit lagi.';
+
+  @override
+  String get m53ReceiptRegisterUnknown =>
+      'Kode belum terdaftar. Buat barang melalui formulir dengan stok awal 0, lalu kembali ke draft?';
+
+  @override
+  String get m53ReceiptNewProductZero =>
+      'Barang baru untuk draft ini memakai stok awal 0. Quantity barang masuk diisi dan dikonfirmasi pada dokumen penerimaan.';
+
+  @override
+  String get m53ReceiptDraftExistingCost =>
+      'Biaya yang sudah diisi pada draft ditampilkan agar tidak terhapus saat Anda mengedit satuan atau quantity.';
+
+  @override
+  String get m53ReceiptReverseWholeDocument =>
+      'Penerimaan ini berisi dokumen lengkap. Buka dokumennya dan tinjau semua baris untuk reversal.';
+
+  @override
+  String get m53ReceiptDraftReversed =>
+      'Seluruh penerimaan telah direversal; bukti asli tetap tersimpan.';
+
+  @override
+  String get m53ReceiptDraftReverse => 'Reversal seluruh penerimaan ini';
+
+  @override
+  String get m53ReceiptDraftReverseHelp =>
+      'Tindakan ini mengembalikan seluruh baris dokumen, bukan hanya satu produk. Hanya dapat dilakukan jika belum ada mutasi stok/biaya yang bergantung padanya. Riwayat asli dipertahankan.';
+
+  @override
+  String get m53ReceiptDraftCancelled =>
+      'Draft dibatalkan tanpa pencatatan stok.';
+
+  @override
+  String get m53ReceiptStatusPosted => 'Terkonfirmasi';
+
+  @override
+  String get m53ReceiptStatusCancelled => 'Dibatalkan';
+
+  @override
+  String get m53ReceiptDraftHelp => 'Cara memakai draft';
 }

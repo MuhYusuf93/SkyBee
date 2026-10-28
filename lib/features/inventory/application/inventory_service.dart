@@ -22,6 +22,9 @@ import '../domain/product_entry_rules.dart';
 import '../domain/change_record.dart';
 import '../../settings/application/settings_service.dart';
 import '../../settings/domain/store_feature_policy.dart';
+import '../domain/receipt_draft.dart';
+
+part 'receipt_draft_service.dart';
 
 /// Protected master/stock use cases. Every write runs in one dbTxn and checks
 /// access at execution AND before commit. Screen state has no SQL/valuation.
@@ -816,6 +819,7 @@ final class InventoryService {
     EntityId? supplierId,
     CalendarDate? expiry,
     int? expectedRevision,
+    int? expectedStockRevision,
   }) => _write(
     (dbTxn) => _receive(
       dbTxn,
@@ -828,6 +832,7 @@ final class InventoryService {
       purchase: purchase,
       confirmedFree: confirmedFree,
       expectedRevision: expectedRevision,
+      expectedStockRevision: expectedStockRevision,
     ),
   );
 
@@ -841,6 +846,7 @@ final class InventoryService {
     CalendarDate? expiry,
     bool confirmedFree = false,
     int? expectedRevision,
+    int? expectedStockRevision,
   }) => cost != null
       ? receivePurchase(
           id,
@@ -850,6 +856,7 @@ final class InventoryService {
           expiry: expiry,
           confirmedFree: confirmedFree,
           expectedRevision: expectedRevision,
+          expectedStockRevision: expectedStockRevision,
         )
       : _write(
           (dbTxn) => _receive(
@@ -862,6 +869,7 @@ final class InventoryService {
             expiry: expiry,
             unknownInput: input,
             expectedRevision: expectedRevision,
+            expectedStockRevision: expectedStockRevision,
           ),
         );
 
@@ -939,6 +947,8 @@ final class InventoryService {
     StockPurchase? purchase,
     StockInput? unknownInput,
     int? expectedRevision,
+    int? expectedStockRevision,
+    _ReceiptDocumentContext? document,
   }) async {
     Quantity.positive(quantity);
     final hash = await _hash([
@@ -948,9 +958,18 @@ final class InventoryService {
       unitCost?.micros,
       supplierId?.value,
       expiry?.iso,
+      if (document != null) ...[
+        'receipt_document',
+        document.receipt.value,
+        document.item.value,
+      ],
       if (expectedRevision != null) ...[
         'expected_product_revision',
         expectedRevision,
+      ],
+      if (expectedStockRevision != null) ...[
+        'expected_stock_revision',
+        expectedStockRevision,
       ],
       if (unknownInput != null && unitCost == null) ...[
         unknownInput.unit.name,
@@ -976,10 +995,12 @@ final class InventoryService {
     );
 
     final old = await _product(dbTxn, id);
-    if (expectedRevision != null && old['revision'] != expectedRevision) {
+    if ((expectedRevision != null && old['revision'] != expectedRevision) ||
+        (expectedStockRevision != null &&
+            old['stock_revision'] != expectedStockRevision)) {
       throw const AppError('productChangedReloadFirst');
     }
-    if (old['stock_tracking_enabled'] == 0) {
+    if (old['stock_tracking_enabled'] == 0 && document == null) {
       throw const AppError('m52StockOperationRequiresTracking');
     }
     if (database.schemaVersion >= 14) {
@@ -1009,24 +1030,32 @@ final class InventoryService {
         checkedNonNegative(
           BigInt.from(unitCost?.micros ?? 0) * BigInt.from(quantity),
         );
-    final newQty = checkedNonNegative(
-      BigInt.from(old['stock_quantity'] as int) + BigInt.from(quantity),
-    );
-    final newValue = checkedNonNegative(
-      BigInt.from(old['inventory_value_micros'] as int) + BigInt.from(value),
-    );
-    final receipt = _ids.next(),
-        item = _ids.next(),
+    final tracked = old['stock_tracking_enabled'] != 0;
+    final newQty = !tracked
+        ? 999
+        : checkedNonNegative(
+            BigInt.from(old['stock_quantity'] as int) + BigInt.from(quantity),
+          );
+    final newValue = !tracked
+        ? 0
+        : checkedNonNegative(
+            BigInt.from(old['inventory_value_micros'] as int) +
+                BigInt.from(value),
+          );
+    final receipt = document?.receipt ?? _ids.next(),
+        item = document?.item ?? _ids.next(),
         batch = _ids.next(),
         operation = _ids.next();
     final now = access.clock.milliseconds;
-    await dbTxn.insert('stock_receipts', {
-      'id': receipt.value,
-      ...await _currency(dbTxn),
-      'supplier_id': supplierId?.value,
-      'operation_key': operationKey,
-      'created_at': now,
-    });
+    if (document == null) {
+      await dbTxn.insert('stock_receipts', {
+        'id': receipt.value,
+        ...await _currency(dbTxn),
+        'supplier_id': supplierId?.value,
+        'operation_key': operationKey,
+        'created_at': now,
+      });
+    }
     await dbTxn.insert('stock_receipt_items', {
       'id': item.value,
       'stock_receipt_id': receipt.value,
@@ -1049,15 +1078,17 @@ final class InventoryService {
           purchase?.costPerInput.micros ?? unitCost?.micros ?? 0,
       ...await _currency(dbTxn),
     });
-    await dbTxn.insert('stock_batches', {
-      'id': batch.value,
-      'product_id': id.value,
-      'stock_receipt_item_id': item.value,
-      'received_quantity': quantity,
-      'remaining_quantity': quantity,
-      'expiry_date': expiry?.iso,
-      'received_at': now,
-    });
+    if (tracked) {
+      await dbTxn.insert('stock_batches', {
+        'id': batch.value,
+        'product_id': id.value,
+        'stock_receipt_item_id': item.value,
+        'received_quantity': quantity,
+        'remaining_quantity': quantity,
+        'expiry_date': expiry?.iso,
+        'received_at': now,
+      });
+    }
     await _operation(
       dbTxn,
       operation,
@@ -1067,27 +1098,32 @@ final class InventoryService {
       initial ? 'initial' : 'receipt',
       old,
       receiptId: receipt,
+      receiptItem: item,
     );
-    await _stock(
-      dbTxn,
-      id,
-      old,
-      newQty,
-      newValue,
-      complete: _complete(old) && unitCost != null,
-    );
-    await _history(
-      dbTxn,
-      id,
-      operation,
-      quantity,
-      value,
-      initial ? 'initial' : 'receipt',
-      initial ? 'initialStock' : 'receiveStock',
-      batch: batch,
-      receipt: receipt,
-      complete: unitCost != null,
-    );
+    if (!tracked) {
+      await _receiptReferenceOn(dbTxn, id, old, unitCost, item: item);
+    } else {
+      await _stock(
+        dbTxn,
+        id,
+        old,
+        newQty,
+        newValue,
+        complete: _complete(old) && unitCost != null,
+      );
+      await _history(
+        dbTxn,
+        id,
+        operation,
+        quantity,
+        value,
+        initial ? 'initial' : 'receipt',
+        initial ? 'initialStock' : 'receiveStock',
+        batch: batch,
+        receipt: receipt,
+        complete: unitCost != null,
+      );
+    }
     await access.audit(
       dbTxn,
       initial ? 'stock_initial' : 'stock_received',
@@ -1106,6 +1142,7 @@ final class InventoryService {
     Map<String, Object?> before, {
     EntityId? receiptId,
     EntityId? reverses,
+    EntityId? receiptItem,
   }) async => db
       .insert('inventory_operations', {
         ...await _currency(db),
@@ -1115,6 +1152,10 @@ final class InventoryService {
         'kind': kind,
         'product_id': product.value,
         'stock_receipt_id': receiptId?.value,
+        if (database.schemaVersion >= 27) ...{
+          'stock_receipt_item_id': receiptItem?.value,
+          'before_reference_cost_micros': before['reference_cost_micros'],
+        },
         'reverses_operation_id': reverses?.value,
         'before_quantity': before['stock_quantity'],
         'before_value_micros': before['inventory_value_micros'],
@@ -1194,12 +1235,38 @@ final class InventoryService {
     EntityId receipt, {
     required String operationKey,
     required String reason,
+    bool entireDocument = false,
   }) => _write((dbTxn) async {
     if (reason.trim().isEmpty) {
       throw const AppError('correctionReasonIsRequired');
     }
-    final hash = await _hash(['reversal', receipt.value, reason.trim()]);
+    final hash = await _hash([
+      'reversal',
+      receipt.value,
+      reason.trim(),
+      if (entireDocument) 'entire_document',
+    ]);
     if (await _retry(dbTxn, operationKey, hash) != null) return;
+    if (database.schemaVersion >= 27 &&
+        (await dbTxn.query(
+          'receipt_drafts',
+          columns: ['id'],
+          where: 'receipt_id=?',
+          whereArgs: [receipt.value],
+          limit: 1,
+        )).isNotEmpty) {
+      if (!entireDocument) {
+        throw const AppError('m53ReceiptReverseWholeDocument');
+      }
+      await _reverseReceiptDocumentOn(
+        dbTxn,
+        receipt,
+        operationKey,
+        hash,
+        reason.trim(),
+      );
+      return;
+    }
     final rows = await dbTxn.query(
       'inventory_operations',
       where: "stock_receipt_id=? AND kind IN ('initial','receipt')",

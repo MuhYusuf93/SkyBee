@@ -489,3 +489,27 @@ konfirmasi menutupi Save: jangan menganggap tombol route bawah hit-testable.
 Cancel/confirm modal aktual, dan uji rapid tap sebelum modal pada kasus terpisah.
 Partial decimal/composing tetap input pengguna ketika basis harga berubah;
 simpan basis asal, jangan menghapus atau melabel ulang angka yang belum selesai.
+
+127. Waktu receipt yang sama tidak dapat diurutkan secara kronologis memakai
+UUID acak. Untuk latest purchase per produk, gunakan urutan mutasi stok yang
+monoton dan provenance item langsung; beberapa baris/batch produk dalam satu
+receipt tidak boleh digabung lewat product_id saja. Legacy ambigu harus gagal
+tertutup, bukan memilih harga known lama ketika latest sebenarnya unknown.
+
+128. AlertDialog.scrollable hanya menggulir title/content, bukan action bar.
+Action berbahasaID yang panjang masih overflow12px pada320px/text2x/keyboard;
+uji terpisah memastikan layar PIN sendiri bersih. Letakkan action bersama
+penjelasan dalam area gulir untuk peringatan dirty Back tersebut. Daftar dengan
+header tetap dan subtitle panjang juga dapat menyisakan viewport terlalu kecil;
+gunakan satu area gulir dan status ringkas. Dalam helper UI, tunggu state/aksi
+enabled, jangan child lazy sebelum reveal atau indikator di luar viewport.
+Scroll panjang ProductForm membutuhkan batas langkah yang memadai dan pemilik
+vertikal yang benar; bandingkan label aktual sesudah policy IO selesai.
+
+129. Checkout menaikkan stock_revision tanpa menaikkan revisi master. Draft yang
+menjanjikan review setelah stok berubah harus menangkap keduanya. Baseline lama
+yang belum pernah disimpan tetapNULL saat migrasi dan wajibReview, bukan diisi
+stok saat migrasi. Receipt28 menguji sale nyata, retry dan kolom lama8tabel.
+Untuk harga latest legacy ambigu, jangan keluarkan kandidat ambigu dari urutan:
+itu malah mempromosikan harga known lama. Pertahankan sumber terbaru dengan
+unknown/itempackNULL; directlink baru tetaptepat dan hint tidakmenulis history.

@@ -1,5 +1,22 @@
 # Rencana milestone
 
+28Oktober20:28 — receipt28 selesai scope: host71/focused5/legacy14 PASS,
+nativeinitialDV23/Poco21PASS2UIFAIL lalu focused5+legacy1 PASS perperangkat.
+Seluruholdhash sama/controlOff/awakeexact; sourcefinal576verified. Normalcommit/
+push lalu implementasi stocktake29/E3supplier/F/G/H; [checkpoint](M53_CHECKPOINT.md).
+
+28Oktober19:55 — receipt28 host71+focused5 PASS, source576 frozen untuknative5
+Poco laluDV. Native573 awal DV23PASS/Poco21PASS2UIFAIL dipertahankan; datahash
+lama746/668sama. Stocktake berikut schema29, kemudian E3/F/G/H; [checkpoint](M53_CHECKPOINT.md).
+
+28Oktober19:19 — receipt27 host23/regresi45 PASS, analyzer7,2s bersih;
+source573 frozen untuknative23DV laluPoco. Setelah bukti/commit lanjut stocktake
+schema28, E3supplierfinance/returns/schedules, F/G/H; [checkpoint](M53_CHECKPOINT.md).
+
+28Oktober18:40 — Poco tersedia lagi sesuai pengguna; host/DV/Poco untuk delta
+relevan setelah source27 hostbersih. Receipt draft E2 WIP; langkah rinci pada
+[checkpoint aktif](M53_CHECKPOINT.md), lalu opname/keuangan supplier/F/G/H.
+
 28Oktober14:21 — editor penerimaan26 host13/regresi43/nativeDV13 PASS;
 737hash lama cocok/controlOff/awakeexact/source563sama. Analyzer bersih6,5s.
 Poco checkpoint tersimpan, delta/H install DEFERRED karena dipakai pribadi.

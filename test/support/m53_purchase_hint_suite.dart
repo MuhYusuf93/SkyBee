@@ -72,6 +72,101 @@ void m53PurchaseHintSuite(DatabaseFactory factory) {
     masterSupplierId: supplier,
   );
   test(
+    'M53 purchase hint legacy ambiguity stays unknown without falling back to an older known purchase',
+    () async {
+      final legacyPath = path();
+      var legacy = DatabaseCoordinator(
+        factory: factory,
+        databasePath: legacyPath,
+        schemaVersion: 26,
+      );
+      final oldApp = AppServices(
+        legacy,
+        clock: StoreClock(now: () => now, elapsedMilliseconds: () => 0),
+      );
+      await legacy.transaction(
+        (sql) => sql.insert('management_credentials', credential),
+      );
+      await oldApp.management.unlock('0001');
+      final id = await oldApp.inventory.create(input(), initialQuantity: 0);
+      await oldApp.inventory.receive(
+        id,
+        1,
+        cost(1000),
+        operationKey: 'public-legacy-first',
+      );
+      tick();
+      final recent = await oldApp.inventory.receive(
+        id,
+        1,
+        cost(2000),
+        operationKey: 'public-legacy-recent',
+      );
+      await legacy.transaction((sql) async {
+        final item = (await sql.query(
+          'stock_receipt_items',
+          where: 'stock_receipt_id=?',
+          whereArgs: [recent.value],
+        )).single;
+        await sql.insert('stock_receipt_items', {
+          ...item,
+          'id': const IdGenerator().next().value,
+          'unit_cost_micros': cost(2500).micros,
+          'total_cost_micros': cost(2500).micros,
+          'input_unit_cost_micros': cost(2500).micros,
+        });
+      });
+      const tables = [
+        'products',
+        'stock_receipts',
+        'stock_receipt_items',
+        'stock_batches',
+        'stock_history',
+        'inventory_operations',
+      ];
+      Future<Map<String, List<Map<String, Object?>>>> snapshot(
+        DatabaseCoordinator source,
+      ) async => source.read((sql) async {
+        final result = <String, List<Map<String, Object?>>>{};
+        for (final table in tables) {
+          result[table] = await sql.query(table, orderBy: 'id');
+        }
+        return result;
+      });
+      final before = await snapshot(legacy);
+      final oldHint = await oldApp.inventory.purchaseCostHint(id);
+      expect(await snapshot(legacy), before);
+      await legacy.close();
+      legacy = DatabaseCoordinator(factory: factory, databasePath: legacyPath);
+      try {
+        final upgraded = AppServices(
+          legacy,
+          clock: StoreClock(now: () => now, elapsedMilliseconds: () => 0),
+        );
+        await upgraded.management.unlock('0001');
+        final migratedBefore = await snapshot(legacy);
+        final hint = await upgraded.inventory.purchaseCostHint(id);
+        expect(await snapshot(legacy), migratedBefore);
+        expect(
+          hint.source,
+          PurchaseHintSource.unknown,
+          reason:
+              'Do not label the older1000 as latest after skipping an ambiguous recent receipt',
+        );
+        for (final value in [oldHint, hint]) {
+          expect(value.totalCostMicros, isNull);
+          expect(value.receiptItemId, isNull);
+          expect(value.originalPackSize, isNull);
+          expect(value.forInput(piecesPerInput: 1), isNull);
+        }
+        expect(oldHint.source, PurchaseHintSource.unknown);
+      } finally {
+        await legacy.close();
+        await factory.deleteDatabase(legacyPath);
+      }
+    },
+  );
+  test(
     'M53 receipt revision guard rejects stale master and same confirmed retry never receives twice',
     () async {
       final id = await app.inventory.create(input(), initialQuantity: 0);

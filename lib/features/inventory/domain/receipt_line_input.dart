@@ -7,6 +7,7 @@ final class ReceiptLineInput {
   const ReceiptLineInput({
     required this.productId,
     required this.expectedRevision,
+    required this.expectedStockRevision,
     required this.operationKey,
     required this.stock,
     required this.cost,
@@ -15,7 +16,7 @@ final class ReceiptLineInput {
     this.expiry,
   });
   final EntityId productId;
-  final int expectedRevision;
+  final int expectedRevision, expectedStockRevision;
   final String operationKey;
   final StockInput stock;
   final CostAmount? cost;
