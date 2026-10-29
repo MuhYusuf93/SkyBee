@@ -44,7 +44,12 @@ final class DatabaseCoordinator {
   int get generation => _generation;
   final _replacements = StreamController<DatabaseReplacement>.broadcast();
   final _inventoryChanges = StreamController<int>.broadcast();
+  final _supplierChanges = StreamController<int>.broadcast();
   Stream<int> get inventoryChanges => _inventoryChanges.stream;
+
+  /// Financial/visit writers opt in after commit. Draft keystrokes must not
+  /// trigger a full supplier reminder reconciliation.
+  Stream<int> get supplierChanges => _supplierChanges.stream;
   Stream<DatabaseReplacement> get replacements => _replacements.stream;
   int get revision => _revision;
 
@@ -175,11 +180,13 @@ final class DatabaseCoordinator {
   Future<T> transaction<T>(
     Future<T> Function(Transaction dbTxn) operation, {
     bool inventoryChanged = false,
+    bool supplierChanged = false,
     int? expectedGeneration,
   }) => _serialize(() async {
     final result = await (await _open()).transaction(operation);
     _commits.add(++_revision);
     if (inventoryChanged) _inventoryChanges.add(_revision);
+    if (supplierChanged) _supplierChanges.add(_revision);
     return result;
   }, generation: expectedGeneration);
 
@@ -249,5 +256,6 @@ final class DatabaseCoordinator {
     unawaited(_commits.close());
     unawaited(_replacements.close());
     unawaited(_inventoryChanges.close());
+    unawaited(_supplierChanges.close());
   }, acceptReplacement: true);
 }

@@ -7459,6 +7459,204 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credit value approved; review its allocations and balance'**
   String get m53CreditApprovedStatus;
+
+  /// Supplier schedules: Visit plan not found.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit plan not found.'**
+  String get m53VisitMissing;
+
+  /// Supplier schedules: Check the visit time and note (up to 1,000 characters).
+  ///
+  /// In en, this message translates to:
+  /// **'Check the visit time and note (up to 1,000 characters).'**
+  String get m53VisitInputInvalid;
+
+  /// Supplier schedules: The plan or reminder preference changed. Reload before continuing.
+  ///
+  /// In en, this message translates to:
+  /// **'The plan or reminder preference changed. Reload before continuing.'**
+  String get m53VisitChanged;
+
+  /// Supplier schedules: The archive contains inconsistent supplier plans or reminder preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'The archive contains inconsistent supplier plans or reminder preferences.'**
+  String get backupSupplierScheduleInvalid;
+
+  /// Supplier schedules: Reminders are unavailable. Plans and invoices remain saved; check notification permission and battery restrictions.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are unavailable. Plans and invoices remain saved; check notification permission and battery restrictions.'**
+  String get m53ReminderUnavailable;
+
+  /// Supplier schedules: Supplier plans and reminders
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier plans and reminders'**
+  String get m53SupplierSchedules;
+
+  /// Supplier schedules: H-1 reminders at 09:00 shop time depend on Android permission and restrictions and may be delayed. Past H-1 targets are not sent as catch-up alerts. General notifications can be enabled in Reminder settings.
+  ///
+  /// In en, this message translates to:
+  /// **'H-1 reminders at 09:00 shop time depend on Android permission and restrictions and may be delayed. Past H-1 targets are not sent as catch-up alerts. General notifications can be enabled in Reminder settings.'**
+  String get m53SupplierReminderHelp;
+
+  /// Supplier schedules: Reminder settings
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder settings'**
+  String get m53ReminderPermissionSettings;
+
+  /// Supplier schedules: Invoices with due dates
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices with due dates'**
+  String get m53DueReminderList;
+
+  /// Supplier schedules: Add visit plan
+  ///
+  /// In en, this message translates to:
+  /// **'Add visit plan'**
+  String get m53VisitAdd;
+
+  /// Supplier schedules: Visit status
+  ///
+  /// In en, this message translates to:
+  /// **'Visit status'**
+  String get m53VisitFilter;
+
+  /// Supplier schedules: Planned
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get m53VisitStatusplanned;
+
+  /// Supplier schedules: Completed
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get m53VisitStatuscompleted;
+
+  /// Supplier schedules: Cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get m53VisitStatuscancelled;
+
+  /// Supplier schedules: All statuses
+  ///
+  /// In en, this message translates to:
+  /// **'All statuses'**
+  String get m53VisitStatusall;
+
+  /// Supplier schedules: No visit plans match this selection.
+  ///
+  /// In en, this message translates to:
+  /// **'No visit plans match this selection.'**
+  String get m53VisitEmpty;
+
+  /// Supplier schedules: Needs attention: the H-1 target has passed. Review the visit date and status.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention: the H-1 target has passed. Review the visit date and status.'**
+  String get m53VisitAttention;
+
+  /// Supplier schedules: Review visit plan
+  ///
+  /// In en, this message translates to:
+  /// **'Review visit plan'**
+  String get m53VisitReview;
+
+  /// Supplier schedules: A visit plan does not create a receipt, invoice or payment. This date is separate from invoice due dates.
+  ///
+  /// In en, this message translates to:
+  /// **'A visit plan does not create a receipt, invoice or payment. This date is separate from invoice due dates.'**
+  String get m53VisitNoPosting;
+
+  /// Supplier schedules: Visit date
+  ///
+  /// In en, this message translates to:
+  /// **'Visit date'**
+  String get m53VisitDate;
+
+  /// Supplier schedules: Visit time (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Visit time (optional)'**
+  String get m53VisitTime;
+
+  /// Supplier schedules: No specific time
+  ///
+  /// In en, this message translates to:
+  /// **'No specific time'**
+  String get m53VisitNoTime;
+
+  /// Supplier schedules: Clear visit time
+  ///
+  /// In en, this message translates to:
+  /// **'Clear visit time'**
+  String get m53VisitClearTime;
+
+  /// Supplier schedules: Remind me H-1 before the visit
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me H-1 before the visit'**
+  String get m53VisitReminder;
+
+  /// Supplier schedules: Visit note (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Visit note (optional)'**
+  String get m53VisitNote;
+
+  /// Supplier schedules: These invoices still have a balance. Invoices due today or overdue need attention even if a reminder was not shown. Partial payment keeps the reminder; full settlement cancels it.
+  ///
+  /// In en, this message translates to:
+  /// **'These invoices still have a balance. Invoices due today or overdue need attention even if a reminder was not shown. Partial payment keeps the reminder; full settlement cancels it.'**
+  String get m53DueAttentionHelp;
+
+  /// Supplier schedules: No invoices with due dates have an outstanding balance.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices with due dates have an outstanding balance.'**
+  String get m53DueReminderEmpty;
+
+  /// Supplier schedules: Remind me H-1 before payment is due
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me H-1 before payment is due'**
+  String get m53DueReminder;
+
+  /// Supplier schedules: Supplier payment due tomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier payment due tomorrow'**
+  String get m53ReminderDueTitle;
+
+  /// Supplier schedules: Supplier visit tomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier visit tomorrow'**
+  String get m53ReminderVisitTitle;
+
+  /// Supplier schedules: {supplier} · Open with management access.
+  ///
+  /// In en, this message translates to:
+  /// **'{supplier} · Open with management access.'**
+  String m53ReminderPrivateBody(String supplier);
+
+  /// Supplier schedules: Next planned visit date
+  ///
+  /// In en, this message translates to:
+  /// **'Next planned visit date'**
+  String get m53VisitNextDate;
+
+  /// Supplier schedules: No plans for today or a later date
+  ///
+  /// In en, this message translates to:
+  /// **'No plans for today or a later date'**
+  String get m53VisitNoFuture;
 }
 
 class _AppLocalizationsDelegate

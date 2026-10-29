@@ -554,3 +554,15 @@ sesudah busy menonaktifkan field dan lazy scroll melepas klien teks. Kredit UI
 awal gagal isian alasan kosong atau Back tertahan, lalu ID/EN2PASS21s dengan
 assertion saldo dan reversal yang sama. Catat batas harness, jangan menyatakan
 bukti keyboard OEM/touch fisik. Domain/cash invariant tidak diubah untuk tes.
+136. Jangan memakai semua commit sebagai pemicu efek samping baru. Edit cart
+juga commit, sehingga subscription umum melakukan scan ledger supplier walau
+faktanya tidak berubah. Gunakan event scoped setelah commit sukses, gabungkan
+inventory/settings yang relevan dan resume/startup; rollback tidak emit. Uji
+runtime nyata membandingkan generation cache sesudah banyak edit cart dan
+sesudah simpan kunjungan. Ini bukti trigger, bukan benchmark ARM32/CCTV.
+
+137. Probe native mempunyai namespace ID sendiri. Metadata notifikasi fixture
+hanya menerima1777000000..1777999999. Poco permissionSKIP dapat menyembunyikan
+ID probe yang salah; review memperbaiki dua literal fixture, tanpa melebarkan
+API produksi. Source652 lama/newfixture/runtimeidentical dicatat terpisah, DV45
+kemudian PASS termasuk privateOSmetadata. SKIP tidak dianggap notifikasi tampil.

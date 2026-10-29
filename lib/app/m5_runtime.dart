@@ -7,23 +7,39 @@ import 'app_services.dart';
 /// cashier submissions. Draft/search/payment-form edits do not scan all products.
 /// Headless workers use the same services with short-lived gated DB connections.
 final class M5Runtime with WidgetsBindingObserver {
-  M5Runtime(this.app, this.onNotification, {BackupScheduler? scheduler})
-    : scheduler = scheduler ?? BackupScheduler(app.database, app.drive);
+  M5Runtime(
+    this.app,
+    this.onNotification, {
+    BackupScheduler? scheduler,
+    this.onSupplierNotification,
+  }) : scheduler = scheduler ?? BackupScheduler(app.database, app.drive);
   final AppServices app;
   final void Function() onNotification;
+  final void Function()? onSupplierNotification;
   final BackupScheduler scheduler;
   StreamSubscription<int>? _inventory;
+  StreamSubscription<int>? _commits;
+  Timer? _supplierCoalesce;
+  bool _supplierRunning = false, _supplierDirty = false, _ready = false;
   Timer? _coalesce;
   bool _disposed = false, _running = false, _dirty = false;
   Future<void> start() async {
     var initialized = true;
     WidgetsBinding.instance.addObserver(this);
-    _inventory = app.database.inventoryChanges.listen((_) => refresh());
+    _inventory = app.database.inventoryChanges.listen((_) {
+      refresh();
+      _refreshSupplier();
+    });
+    _commits = app.database.supplierChanges.listen((_) => _refreshSupplier());
     for (final action in <Future<void> Function()>[
       app.printing.recoverInterrupted,
       app.backups.recoverLocalCatalog,
-      () => app.notifications.initialize(onNotification),
+      () => app.notifications.initialize(
+        onNotification,
+        onSupplierTap: onSupplierNotification,
+      ),
       scheduler.initialize,
+      () => app.supplierReminders.refresh(resetPlatform: true),
     ]) {
       if (_disposed) return;
       try {
@@ -37,7 +53,14 @@ final class M5Runtime with WidgetsBindingObserver {
     try {
       final details = await app.notifications.plugin
           .getNotificationAppLaunchDetails();
-      if (details?.didNotificationLaunchApp == true) onNotification();
+      if (details?.didNotificationLaunchApp == true) {
+        if (details?.notificationResponse?.payload == 'supplier-reminders' &&
+            onSupplierNotification != null) {
+          onSupplierNotification!();
+        } else {
+          onNotification();
+        }
+      }
     } catch (_) {
       initialized = false;
       await _error();
@@ -60,7 +83,38 @@ final class M5Runtime with WidgetsBindingObserver {
         await _error();
       }
     }
+    _ready = true;
     refresh();
+    _refreshSupplier();
+  }
+
+  // Financial/visit commits refresh only supplier jobs, not a full stock scan.
+  void _refreshSupplier() {
+    if (_disposed) return;
+    _supplierDirty = true;
+    if (!_ready) return;
+    _supplierCoalesce?.cancel();
+    _supplierCoalesce = Timer(
+      const Duration(milliseconds: 50),
+      () => unawaited(_evaluateSupplier()),
+    );
+  }
+
+  Future<void> _evaluateSupplier() async {
+    if (_supplierRunning || _disposed) return;
+    _supplierRunning = true;
+    try {
+      while (_supplierDirty && !_disposed) {
+        _supplierDirty = false;
+        try {
+          await app.supplierReminders.refresh();
+        } catch (_) {
+          await _error();
+        }
+      }
+    } finally {
+      _supplierRunning = false;
+    }
   }
 
   Future<void> _error() async {
@@ -106,13 +160,18 @@ final class M5Runtime with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) refresh();
+    if (state == AppLifecycleState.resumed) {
+      refresh();
+      _refreshSupplier();
+    }
   }
 
   Future<void> dispose() async {
     _disposed = true;
     _coalesce?.cancel();
+    _supplierCoalesce?.cancel();
     await _inventory?.cancel();
+    await _commits?.cancel();
     WidgetsBinding.instance.removeObserver(this);
   }
 }

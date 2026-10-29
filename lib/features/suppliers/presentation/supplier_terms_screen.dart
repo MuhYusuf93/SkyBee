@@ -10,9 +10,11 @@ import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/management_session_provider.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/supplier_terms.dart';
+import '../application/supplier_service.dart';
 import 'supplier_invoices_screen.dart';
 import 'supplier_returns_screen.dart';
 import 'supplier_credits_screen.dart';
+import 'supplier_schedules_screen.dart';
 
 /// Warehouse can read the supplier's agreement, but every mutation is owner
 /// authorized again by the service. No old receipt becomes paid or indebted.
@@ -25,6 +27,7 @@ class SupplierTermsScreen extends StatefulWidget {
 
 class _SupplierTermsScreenState extends State<SupplierTermsScreen> {
   SupplierTerms? terms;
+  CalendarDate? nextDay;
   bool allowed = false, busy = false, started = false;
   int generation = 0;
   String? error;
@@ -56,17 +59,42 @@ class _SupplierTermsScreenState extends State<SupplierTermsScreen> {
       final value = await context.read<AppServices>().suppliers.terms(
         widget.id,
       );
+      if (!mounted) return;
+      final nextDate = await context.read<AppServices>().suppliers.nextVisitDay(
+        supplier: widget.id,
+      );
       if (mounted) {
         check();
         setState(() {
           terms = value;
           allowed = value.allowsCredit;
+          nextDay = nextDate;
         });
       }
     } catch (e) {
       if (mounted) setState(() => error = safeError(e));
     } finally {
       if (mounted) setState(() => busy = false);
+    }
+  }
+
+  Future<void> openSchedules() async {
+    final service = context.read<AppServices>().suppliers;
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (_) => SupplierSchedulesScreen(supplier: widget.id),
+      ),
+    );
+    if (!mounted) return;
+    try {
+      check();
+      final value = await service.nextVisitDay(supplier: widget.id);
+      if (mounted) {
+        check();
+        setState(() => nextDay = value);
+      }
+    } catch (e) {
+      if (mounted) setState(() => error = safeError(e));
     }
   }
 
@@ -131,6 +159,15 @@ class _SupplierTermsScreenState extends State<SupplierTermsScreen> {
                     key: const ValueKey('supplier-terms-error'),
                   ),
                 Text(tr(context, 'm53SupplierTermsHelp')),
+                if (terms != null)
+                  Text(
+                    '${tr(context, 'm53VisitNextDate')}: ${nextDay?.iso ?? tr(context, 'm53VisitNoFuture')}',
+                  ),
+                TextButton(
+                  key: const ValueKey('supplier-schedules-open'),
+                  onPressed: busy ? null : openSchedules,
+                  child: Text(tr(context, 'm53SupplierSchedules')),
+                ),
                 if (owner)
                   TextButton(
                     onPressed: busy

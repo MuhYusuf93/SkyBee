@@ -11,6 +11,8 @@ import '../../../core/time/store_clock.dart';
 import '../../../data/database/database_coordinator.dart';
 import '../../alerts/application/alert_service.dart';
 import '../../alerts/application/android_stock_notifications.dart';
+import '../../suppliers/application/supplier_reminder_service.dart';
+import '../../suppliers/application/android_supplier_reminders.dart';
 import 'backup_service.dart';
 import 'drive_backup_service.dart';
 import 'drive_authorization.dart';
@@ -267,6 +269,21 @@ void m5BackgroundDispatcher() {
         return true; // A skipped/error maintenance never starts a backup loop.
       }
       await notification.initialize(() {});
+      final supplierReminders = SupplierReminderService(
+        database,
+        app.management.clock,
+        AndroidSupplierReminders(notification.plugin),
+      );
+      if (task == AndroidSupplierReminders.task) {
+        if (input?['key'] is String && input?['fingerprint'] is String) {
+          await supplierReminders.execute(
+            input!['key'] as String,
+            input['fingerprint'] as String,
+          );
+        }
+        await supplierReminders.refresh();
+        return true;
+      }
       final alerts = AlertService(database, app.management.clock, notification);
       final backup = BackupService(database, app.management);
       final drive = DriveBackupService(database, app.management, backup);
@@ -277,6 +294,7 @@ void m5BackgroundDispatcher() {
       );
       if (task == BackupScheduler.alertsTask) {
         await alerts.evaluate();
+        await supplierReminders.refresh();
         await scheduler.refresh();
         return true;
       }

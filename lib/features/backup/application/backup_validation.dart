@@ -53,6 +53,7 @@ final class BackupValidation {
     if (schema >= 31) await SupplierFinanceValidation.validate(db);
     if (schema >= 32) await SupplierReturnValidation.validate(db);
     if (schema >= 33) await SupplierCreditValidation.validate(db);
+    if (schema >= 34) await SupplierScheduleValidation.validate(db);
     if (schema >= 26 &&
         (await db.rawQuery('''SELECT 1 FROM products p
       LEFT JOIN suppliers s ON s.id=p.master_supplier_id

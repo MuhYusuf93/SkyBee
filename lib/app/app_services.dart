@@ -33,6 +33,8 @@ import '../features/alerts/application/alert_service.dart';
 import '../features/alerts/application/android_stock_notifications.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../features/suppliers/application/supplier_service.dart';
+import '../features/suppliers/application/supplier_reminder_service.dart';
+import '../features/suppliers/application/android_supplier_reminders.dart';
 
 /// Dependency composition only, no shared cart/catalog/report state.
 final class AppServices {
@@ -42,6 +44,7 @@ final class AppServices {
     StrongBiometrics? biometrics,
     PrinterOutputGate? printerGate,
     BarcodeCamera Function()? barcodeCameraFactory,
+    this.supplierReminderSink,
   }) : printerGate = printerGate ?? defaultPrinterOutputGate(),
        barcodeCameraFactory = barcodeCameraFactory ?? NativeBarcodeCamera.new {
     management = ManagementService(
@@ -69,8 +72,14 @@ final class AppServices {
   final DatabaseCoordinator database;
   final PrinterOutputGate printerGate;
   final BarcodeCamera Function() barcodeCameraFactory;
+  final SupplierReminderSink? supplierReminderSink;
   late final ManagementService management;
   late final suppliers = SupplierService(database, management);
+  late final supplierReminders = SupplierReminderService(
+    database,
+    management.clock,
+    supplierReminderSink ?? AndroidSupplierReminders(notifications.plugin),
+  );
   late final onboarding = OnboardingService(database, management);
   late final cashierLock = CashierLockService(database, management);
   late final InventoryService inventory;

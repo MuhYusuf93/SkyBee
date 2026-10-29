@@ -1,5 +1,46 @@
 # Matriks persyaratan
 
+29 Oktober16:14 — E3 native ditutup: Poco44PASS1permissionSKIP13:03/726hashsama;
+DV45PASS16:48/802hashsama/awakeexact, semua kontrolOff. Source652-platform bukti
+native historis. Review sesudahnya menambah event supplier khusus (edit cart
+bukan pemicu) dan ringkasan tanggal kunjungan mendatang; host20 terverifikasi,
+analyze72,3s bersih/l10n1260/858/245/PIN106match. Source652-post-review terpisah;
+regresi jadwal delta masuk nativeF, jangan klaim native lama menjalankan delta.
+Normalcommit/pushcheckpoint lalu F QR/struk/laporan, G/H. .skybee tidak diupdate,
+reset atau reseed. [Laporan jadwal](M53_SUPPLIER_SCHEDULES_REPORT.md).
+
+29 Oktober15:40 — analyzer probe8 bersih130,3s/source652-platform MATCH.
+Full45DV (.101) kini aktif melalui wrapper, BackgroundPaused=true; shellsession
+23164. Pertahankan freeze source sampai trueexit/hash/finally/awakeexact.
+Poco44PASS1permissionSKIP/726hashsama/controlOff; produksi identik antarmanifest.
+Selanjutnya curate hasilDV, commit/pushE3 lalu langsung F/G/H; tidak ada reset.
+
+29 Oktober15:39 — Poco E3 gabungan exit0:44PASS/1SKIP13:03. Notifikasi paket uji
+nonaktif sehingga probe OS-notification SKIP; native WorkManager dan seluruh
+skenario bisnis/UI lulus. 726oldprotectedhashsama/controlOff. Source652 awal
+historis disimpan. Review kemudian memperbaiki dua literalID pada probe agar
+sesuai namespace native1777; source652-platform hanya beda satu fixture,
+produksi/runtime identik. Analyzer8 sedang ditutup; selanjutnya full45DV memakai
+wrapper/freshbaseline. Mengulang probe notifikasi Poco akan skip lagi, sehingga
+tidak diulang tanpa perubahan izin. .skybee tidak update/reset/reseed; F/G/H lanjut
+setelah nativeDV/finally/hash. Bukti supplier-e3-poco-initial.json.
+
+29 Oktober15:20 — jadwal/pengingat schema34 host ditutup: regresi51PASS63s,
+final15PASS51s(overlap, jadwal9/UI2/runtime4), analyze17s bersih, format556,
+l10n1258/856/245/PIN106match. Source652 frozen; native E3 gabungan45 Poco aktif
+melalui wrapper/fresh protected hash, DV berikutnya. Belum hasil native/hash/finally.
+[Keputusan jadwal](decisions/M53_SUPPLIER_SCHEDULES.md),
+[laporan](M53_SUPPLIER_SCHEDULES_REPORT.md). .skybee belum update/reset/reseed.
+Setelah native ditutup, lanjut F QR/struk/laporan, G dan H, jangan stop checkpoint.
+
+29 Oktober — lanjut dari kredit33 `30a0afa` pushed. Jadwal supplier schema34 WIP:
+projection+riwayat kunjungan, preferensi H-1 tagihan, worker/notifikasi berbagi
+runtime, antarmuka ID/EN dan validasi backup sedang diperiksa. Host schedules
+awal gagal compile (signature fixture dan conditional map), diperbaiki; retest
+aktif, belum hasil lulus/native. Source640 kredit tetap historis, jangan ditimpa.
+Setelah host/UI bersih, native gabungan E3 kedua perangkat melalui wrapper/fresh
+hash, kemudian F QR/struk/laporan, G dan H. .skybee belum update/reset/reseed.
+
 29 Oktober14:53 — kredit/refund schema33 checkpoint host selesai: regresi37PASS57s,
 focused UI2PASS21s(overlap), analyzer105,5s bersih, format544files, l10n1227/833/245,
 PIN106match. Source640 host historis; native31–33 belum, jadwal/H-1 E3 berikutnya
@@ -78,7 +119,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir schema20:21kasus+API1 native22 per DV/Poco PASS (M53_CASHIER_LOCK_REPORT), defaultoff tanpa grant Kelola |
 | M53-C | Pencarian/popularitas, uang cepat, member/piutang | Tender21 host/native17 per perangkat PASS. Member22 host20/regresi79/native20 per perangkat PASS. Search23 host51 (17search)/M52focus1/native13 per DV/Poco PASS;680/611hash lama cocok. Lihat M53_TENDER_REPORT, M53_MEMBER_REPORT, M53_SEARCH_REPORT |
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
-| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Receipt27–28/opname29/terms30 native terdahulu selesai scope. Invoice/payment31 checkpoint host 5d19777. Retur fisik32 kini regresi26PASS/finalmetadata17PASS(overlap)/UI2PASS, analyzer56s bersih/source627 host. Native delta E3 dibatch sebelum F. Kredit/refund/jadwal belum; lihat M53_SUPPLIER_RETURNS_REPORT |
+| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Schema31–34 E3 core: host51PASS/final15PASS(overlap), Poco44PASS1permissionSKIP/726hashsama, DV45PASS/802hashsama/awakeexact/controlOff; source652-platform historis. Post-review scoped reminder event/next visit date host20 + analyze bersih/source652-post-review, delta native masuk F. Bukti supplier-e3-{poco-initial,dv}.json dan supplier-schedules-post-review-checks.json. F/G/H tetap aktif. |
 | M53-F | Label/struk wajib dan laporan/ekspor baru | TODO |
 | M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |
 | M53-H | Build/push/handoff baru terinstal .skybee dengan backup lama dan seed100/50 | TODO setelah E/F/G lengkap. Ralat langsung pengguna mengotorisasi reset .skybee pada akhir saja: backup lama verified dahulu, onboarding pending, 100produk beragam/beberapa supplier/pelanggan/50transaksi. Belum ada update/reset/reseed. Build ordinary/release/handoff M5.3 dan dua startup belum dilakukan; artefak lama bukan bukti source31 |

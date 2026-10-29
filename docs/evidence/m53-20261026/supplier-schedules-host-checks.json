@@ -1,0 +1,147 @@
+{
+  "schema": 34,
+  "sourceFiles": 652,
+  "sourceManifestSha256": "87a540da6001b32d73dbf871519aac928e170af26c21050b105c7dbd93462fb2",
+  "regression": {
+    "passed": 51,
+    "failed": 0,
+    "elapsed": "01:03",
+    "scope": "credit/finance/returns/schedules domain+UI, backup metadata, receipt stock guard, runtime"
+  },
+  "finalDelta": {
+    "passed": 15,
+    "failed": 0,
+    "elapsed": "00:51",
+    "scope": "schedule domain9 including migration33->34, UI2, runtime4; overlaps regression"
+  },
+  "previousFinalDelta": {
+    "passed": 17,
+    "failed": 0,
+    "elapsed": "00:51",
+    "scope": "schedule domain9/UI2, finance UI2, runtime4; overlaps"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 17.0
+  },
+  "format": {
+    "files": 556,
+    "changed": 4
+  },
+  "localization": {
+    "keys": 1258,
+    "staticReferences": 856,
+    "originalRequirements": 245
+  },
+  "pinCrypto": {
+    "upstreamUnchanged": 106,
+    "licenseAndArchive": "match"
+  },
+  "native": "PENDING coherent E3 45 cases through protected wrapper, both devices",
+  "notificationEvidence": "Synthetic clock/reboot/restore-plan tests use fake sink; not natural H-1 or actual OS delivery",
+  "ordinarySkybee": "No update/reset/reseed; final authorized reset100/50 only after all M5.3 and verified backup",
+  "logs": {
+    "supplier-schedules-analyze1.txt": {
+      "sha256": "771f7a72758772cbad4d4c785d92173191bef82b536ea5f3a845a03ad0d741cc"
+    },
+    "supplier-schedules-analyze2.txt": {
+      "sha256": "4caa827cb9ec301934be56994e99eb52d8bb4398c50aba8259776ffb7b261a98"
+    },
+    "supplier-schedules-analyze5.txt": {
+      "sha256": "d843881d28b24c215e0680a4670be3ecd0a57f7a3aed4632ec49b828e05d3fdd"
+    },
+    "supplier-schedules-analyze6.txt": {
+      "sha256": "cbeeffb613409aa5969c4bc065d057ae0307f58d6bedff3a69b5d7ce2dcba04b"
+    },
+    "supplier-schedules-analyze7.txt": {
+      "sha256": "53cddd28e1a22c4c5f72d0dfe3a244daeda23a8dc7bd24854356a867103a8ca9"
+    },
+    "supplier-schedules-final6.txt": {
+      "sha256": "18a795d1ded24d81752656557317536f87192b88a4657b338bc413c9116c414d",
+      "passed": 17,
+      "failed": 0,
+      "elapsed": "00:51"
+    },
+    "supplier-schedules-final7.txt": {
+      "sha256": "1c73c82a3c31e7b85166c535f97bde1b6d8cd81ce95267dda53dd42937f6231a",
+      "passed": 15,
+      "failed": 0,
+      "elapsed": "00:51"
+    },
+    "supplier-schedules-fix4.txt": {
+      "sha256": "ac100429486edbaf95218b160f6dbf4b2a526397ea517e8af8bf003c9a33d1bf"
+    },
+    "supplier-schedules-format1.txt": {
+      "sha256": "41c1d2b1bd1e40fcd9719a435417811fb858329a472ae00e54e6d08a702918be"
+    },
+    "supplier-schedules-format2.txt": {
+      "sha256": "f9b1affc11b9ef3a92fe71b581053a6870a814084253dd74b129421958d2dc07"
+    },
+    "supplier-schedules-format3.txt": {
+      "sha256": "db417098bc71e1a474eb37637619c8a2d71bd3dfe79b389cf103594e156ef322"
+    },
+    "supplier-schedules-format5.txt": {
+      "sha256": "98472bcf6b45c82b4971e1853bc12a9cd4bb05084f2a0689a9fc4f24b4f28746"
+    },
+    "supplier-schedules-format6.txt": {
+      "sha256": "c9b870e809ac84ebde6d3e6003a6a553d6a87374b074a3c7f77efd4c1d88da26"
+    },
+    "supplier-schedules-format7.txt": {
+      "sha256": "b01a5e9a76eee4fe0e1b93afc257e94bfba3c8bbce723861ff1d06cdca09bc45"
+    },
+    "supplier-schedules-gen2.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "supplier-schedules-gen7.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "supplier-schedules-host1.txt": {
+      "sha256": "f8bfe7765b8e09c7d94bd17085bfea3d7800eba510fa91be1ef5e21920c407c5",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:00"
+    },
+    "supplier-schedules-host2.txt": {
+      "sha256": "4f82438af4a84c8964fabb77fced011cbeb7380aac2a70dc1c8ad6790919aa5b",
+      "passed": 8,
+      "failed": 0,
+      "elapsed": "00:31"
+    },
+    "supplier-schedules-l10n5.txt": {
+      "sha256": "3c9fe4017ed9eb4b337d6f1d48f74fe15e9433c79c2c884191de09be9799947c"
+    },
+    "supplier-schedules-l10n7.txt": {
+      "sha256": "c7ebc105a5f404f3f5c7e997ce65756ce98fbf78a5ab07654ccbdb5d1c729213"
+    },
+    "supplier-schedules-pin5.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+    },
+    "supplier-schedules-pin7.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+    },
+    "supplier-schedules-regression5.txt": {
+      "sha256": "d7d06ce6d9de6bd14b365ae4525d053faf6e5190808a1c4450d3b37e0cdfdb4a",
+      "passed": 51,
+      "failed": 0,
+      "elapsed": "01:03"
+    },
+    "supplier-schedules-testformat1.txt": {
+      "sha256": "0c653d4ab84c651a710ff917faa65e6a63a1c6b96b157b6a721c640d8fa94030"
+    },
+    "supplier-schedules-ui-format1.txt": {
+      "sha256": "5ad2423630df21349b2f29a1a68fadef56218e1b37f0eabe8d1af7d962cbda46"
+    },
+    "supplier-schedules-ui-host1.txt": {
+      "sha256": "46e1c553e0dc46c75558c548f20f3bf20271a1e58c0e4161232d7ce6a97a3b6a",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:00"
+    },
+    "supplier-schedules-ui-host2.txt": {
+      "sha256": "cb0d50875c6c9c99826cc8b43c6ecf8439572c07adc6a4e20d2e05b430a837c6",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:46"
+    }
+  }
+}

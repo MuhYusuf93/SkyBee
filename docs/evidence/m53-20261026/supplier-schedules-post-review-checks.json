@@ -1,0 +1,75 @@
+{
+  "schema": 34,
+  "sourceFiles": 652,
+  "sourceManifestSha256": "d38d48d6957f712674bd3bac2af0baf1cd1e5976a9bb3781beddd9fc53eac5ab",
+  "changedPathsFromNative": [
+    "lib/app/m5_runtime.dart",
+    "lib/data/database/database_coordinator.dart",
+    "lib/features/alerts/application/alert_service.dart",
+    "lib/features/suppliers/application/supplier_service.dart",
+    "lib/features/suppliers/application/supplier_visits.dart",
+    "lib/features/suppliers/presentation/supplier_schedules_screen.dart",
+    "lib/features/suppliers/presentation/supplier_terms_screen.dart",
+    "lib/l10n/app_en.arb",
+    "lib/l10n/app_id.arb",
+    "lib/l10n/app_localizations.dart",
+    "lib/l10n/app_localizations_en.dart",
+    "lib/l10n/app_localizations_id.dart",
+    "lib/l10n/localization.dart",
+    "test/m5_runtime_test.dart",
+    "test/support/m53_supplier_schedules_suite.dart",
+    "test/support/m53_supplier_schedules_widgets_suite.dart"
+  ],
+  "postReviewScope": "Dedicated supplier post-commit invalidation instead of all cart commits; explicit nearest future visit date beyond past first pages",
+  "verifiedUniqueHostCases": 20,
+  "suites": [
+    "schedule domain11",
+    "schedule UI2",
+    "terms UI2",
+    "runtime5"
+  ],
+  "initialDelta": "15PASS3compile-loadFAIL: missing extension import, fixed",
+  "delta10": "19PASS1fixture-cleanupFAIL52s; behavioral runtime assertions passed before cleanup",
+  "runtimeFinal": "5PASS14s including previously failed cleanup",
+  "analyzer": {
+    "issues": 0,
+    "seconds": 72.3
+  },
+  "localization": {
+    "keys": 1260,
+    "staticReferences": 858,
+    "originalRequirements": 245
+  },
+  "nativeBaseline": "Poco44PASS1permissionSKIP726hashsame; DV45PASS802hashsame/awakeexact/controlOff on prior source652-platform",
+  "nativeDelta": "Post-review runtime/UI is HOST verified; include relevant schedule regression in F native bundle. Financial writers/ledger/schema unchanged except emitting scoped post-commit event.",
+  "ordinarySkybee": "No install/reset/reseed",
+  "logs": {
+    "supplier-schedules-delta9.txt": {
+      "sha256": "d78d6ed9a5b0695cca172a634a83cf4970660dde6c56b4598c0788752502c603",
+      "passed": 15,
+      "failed": 3,
+      "elapsed": "00:41"
+    },
+    "supplier-schedules-delta10.txt": {
+      "sha256": "f3edb8f5bd72b7daa4605e266a6fd2ee9ef5e7d9d12f9e4ebe12358d97493f1e",
+      "passed": 19,
+      "failed": 1,
+      "elapsed": "00:52"
+    },
+    "supplier-schedules-runtime11.txt": {
+      "sha256": "f3dacf8997a4aacc97c3a009850c7ef86bca4eb5d54fec9c77177d18796c5be2",
+      "passed": 5,
+      "failed": 0,
+      "elapsed": "00:14"
+    },
+    "supplier-schedules-analyze10.txt": {
+      "sha256": "8ba6710808c6bf966788b414350879c2992d86ac35e772ece070e953109dfcc1"
+    },
+    "supplier-schedules-l10n10.txt": {
+      "sha256": "3e9eb902cf018473ada79dd74100097bad2f2be6dcac6aa0187c8c54c056b582"
+    },
+    "supplier-schedules-runtime-format11.txt": {
+      "sha256": "56d314280a92aac617eeeacbfee28ae9d98c01fb997840fdb15f112fcf773615"
+    }
+  }
+}

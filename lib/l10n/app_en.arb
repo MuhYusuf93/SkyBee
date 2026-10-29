@@ -5002,5 +5002,142 @@
   "m53CreditApprovedStatus": "Credit value approved; review its allocations and balance",
   "@m53CreditApprovedStatus": {
     "description": "Supplier credit: Credit value approved; review its allocations and balance"
+  },
+  "m53VisitMissing": "Visit plan not found.",
+  "@m53VisitMissing": {
+    "description": "Supplier schedules: Visit plan not found."
+  },
+  "m53VisitInputInvalid": "Check the visit time and note (up to 1,000 characters).",
+  "@m53VisitInputInvalid": {
+    "description": "Supplier schedules: Check the visit time and note (up to 1,000 characters)."
+  },
+  "m53VisitChanged": "The plan or reminder preference changed. Reload before continuing.",
+  "@m53VisitChanged": {
+    "description": "Supplier schedules: The plan or reminder preference changed. Reload before continuing."
+  },
+  "backupSupplierScheduleInvalid": "The archive contains inconsistent supplier plans or reminder preferences.",
+  "@backupSupplierScheduleInvalid": {
+    "description": "Supplier schedules: The archive contains inconsistent supplier plans or reminder preferences."
+  },
+  "m53ReminderUnavailable": "Reminders are unavailable. Plans and invoices remain saved; check notification permission and battery restrictions.",
+  "@m53ReminderUnavailable": {
+    "description": "Supplier schedules: Reminders are unavailable. Plans and invoices remain saved; check notification permission and battery restrictions."
+  },
+  "m53SupplierSchedules": "Supplier plans and reminders",
+  "@m53SupplierSchedules": {
+    "description": "Supplier schedules: Supplier plans and reminders"
+  },
+  "m53SupplierReminderHelp": "H-1 reminders at 09:00 shop time depend on Android permission and restrictions and may be delayed. Past H-1 targets are not sent as catch-up alerts. General notifications can be enabled in Reminder settings.",
+  "@m53SupplierReminderHelp": {
+    "description": "Supplier schedules: H-1 reminders at 09:00 shop time depend on Android permission and restrictions and may be delayed. Past H-1 targets are not sent as catch-up alerts. General notifications can be enabled in Reminder settings."
+  },
+  "m53ReminderPermissionSettings": "Reminder settings",
+  "@m53ReminderPermissionSettings": {
+    "description": "Supplier schedules: Reminder settings"
+  },
+  "m53DueReminderList": "Invoices with due dates",
+  "@m53DueReminderList": {
+    "description": "Supplier schedules: Invoices with due dates"
+  },
+  "m53VisitAdd": "Add visit plan",
+  "@m53VisitAdd": {
+    "description": "Supplier schedules: Add visit plan"
+  },
+  "m53VisitFilter": "Visit status",
+  "@m53VisitFilter": {
+    "description": "Supplier schedules: Visit status"
+  },
+  "m53VisitStatusplanned": "Planned",
+  "@m53VisitStatusplanned": {
+    "description": "Supplier schedules: Planned"
+  },
+  "m53VisitStatuscompleted": "Completed",
+  "@m53VisitStatuscompleted": {
+    "description": "Supplier schedules: Completed"
+  },
+  "m53VisitStatuscancelled": "Cancelled",
+  "@m53VisitStatuscancelled": {
+    "description": "Supplier schedules: Cancelled"
+  },
+  "m53VisitStatusall": "All statuses",
+  "@m53VisitStatusall": {
+    "description": "Supplier schedules: All statuses"
+  },
+  "m53VisitEmpty": "No visit plans match this selection.",
+  "@m53VisitEmpty": {
+    "description": "Supplier schedules: No visit plans match this selection."
+  },
+  "m53VisitAttention": "Needs attention: the H-1 target has passed. Review the visit date and status.",
+  "@m53VisitAttention": {
+    "description": "Supplier schedules: Needs attention: the H-1 target has passed. Review the visit date and status."
+  },
+  "m53VisitReview": "Review visit plan",
+  "@m53VisitReview": {
+    "description": "Supplier schedules: Review visit plan"
+  },
+  "m53VisitNoPosting": "A visit plan does not create a receipt, invoice or payment. This date is separate from invoice due dates.",
+  "@m53VisitNoPosting": {
+    "description": "Supplier schedules: A visit plan does not create a receipt, invoice or payment. This date is separate from invoice due dates."
+  },
+  "m53VisitDate": "Visit date",
+  "@m53VisitDate": {
+    "description": "Supplier schedules: Visit date"
+  },
+  "m53VisitTime": "Visit time (optional)",
+  "@m53VisitTime": {
+    "description": "Supplier schedules: Visit time (optional)"
+  },
+  "m53VisitNoTime": "No specific time",
+  "@m53VisitNoTime": {
+    "description": "Supplier schedules: No specific time"
+  },
+  "m53VisitClearTime": "Clear visit time",
+  "@m53VisitClearTime": {
+    "description": "Supplier schedules: Clear visit time"
+  },
+  "m53VisitReminder": "Remind me H-1 before the visit",
+  "@m53VisitReminder": {
+    "description": "Supplier schedules: Remind me H-1 before the visit"
+  },
+  "m53VisitNote": "Visit note (optional)",
+  "@m53VisitNote": {
+    "description": "Supplier schedules: Visit note (optional)"
+  },
+  "m53DueAttentionHelp": "These invoices still have a balance. Invoices due today or overdue need attention even if a reminder was not shown. Partial payment keeps the reminder; full settlement cancels it.",
+  "@m53DueAttentionHelp": {
+    "description": "Supplier schedules: These invoices still have a balance. Invoices due today or overdue need attention even if a reminder was not shown. Partial payment keeps the reminder; full settlement cancels it."
+  },
+  "m53DueReminderEmpty": "No invoices with due dates have an outstanding balance.",
+  "@m53DueReminderEmpty": {
+    "description": "Supplier schedules: No invoices with due dates have an outstanding balance."
+  },
+  "m53DueReminder": "Remind me H-1 before payment is due",
+  "@m53DueReminder": {
+    "description": "Supplier schedules: Remind me H-1 before payment is due"
+  },
+  "m53ReminderDueTitle": "Supplier payment due tomorrow",
+  "@m53ReminderDueTitle": {
+    "description": "Supplier schedules: Supplier payment due tomorrow"
+  },
+  "m53ReminderVisitTitle": "Supplier visit tomorrow",
+  "@m53ReminderVisitTitle": {
+    "description": "Supplier schedules: Supplier visit tomorrow"
+  },
+  "m53ReminderPrivateBody": "{supplier} · Open with management access.",
+  "@m53ReminderPrivateBody": {
+    "description": "Supplier schedules: {supplier} · Open with management access.",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "m53VisitNextDate": "Next planned visit date",
+  "@m53VisitNextDate": {
+    "description": "Supplier schedules: Next planned visit date"
+  },
+  "m53VisitNoFuture": "No plans for today or a later date",
+  "@m53VisitNoFuture": {
+    "description": "Supplier schedules: No plans for today or a later date"
   }
 }

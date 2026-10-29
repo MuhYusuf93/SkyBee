@@ -6,7 +6,10 @@ import '../test/support/m53_supplier_returns_suite.dart';
 import '../test/support/m53_supplier_returns_widgets_suite.dart';
 import '../test/support/m53_supplier_credits_suite.dart';
 import '../test/support/m53_supplier_credits_widgets_suite.dart';
+import '../test/support/m53_supplier_schedules_suite.dart';
+import '../test/support/m53_supplier_schedules_widgets_suite.dart';
 import 'support/encrypted_fixture_factory.dart';
+import 'support/supplier_reminder_platform_probe.dart';
 
 /// One coherent E3 campaign; always launch through the protected Android wrapper.
 void main() {
@@ -39,4 +42,13 @@ void main() {
     'M53 supplier credits UI',
     () => m53SupplierCreditsWidgetsSuite(EncryptedFixtureFactory()),
   );
+  group(
+    'M53 supplier schedules',
+    () => m53SupplierSchedulesSuite(EncryptedFixtureFactory()),
+  );
+  group(
+    'M53 supplier schedules UI',
+    () => m53SupplierSchedulesWidgetsSuite(EncryptedFixtureFactory()),
+  );
+  supplierReminderPlatformProbe();
 }

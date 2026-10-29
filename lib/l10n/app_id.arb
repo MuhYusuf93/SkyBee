@@ -5002,5 +5002,142 @@
   "m53CreditApprovedStatus": "Nilai kredit disetujui; lihat alokasi dan saldonya",
   "@m53CreditApprovedStatus": {
     "description": "Supplier credit: Credit value approved; review its allocations and balance"
+  },
+  "m53VisitMissing": "Jadwal kunjungan tidak ditemukan.",
+  "@m53VisitMissing": {
+    "description": "Supplier schedules: Visit plan not found."
+  },
+  "m53VisitInputInvalid": "Periksa jam dan catatan kunjungan (maksimal 1.000 karakter).",
+  "@m53VisitInputInvalid": {
+    "description": "Supplier schedules: Check the visit time and note (up to 1,000 characters)."
+  },
+  "m53VisitChanged": "Jadwal atau pilihan pengingat berubah. Muat ulang sebelum melanjutkan.",
+  "@m53VisitChanged": {
+    "description": "Supplier schedules: The plan or reminder preference changed. Reload before continuing."
+  },
+  "backupSupplierScheduleInvalid": "Riwayat jadwal atau pengingat supplier pada arsip tidak konsisten.",
+  "@backupSupplierScheduleInvalid": {
+    "description": "Supplier schedules: The archive contains inconsistent supplier plans or reminder preferences."
+  },
+  "m53ReminderUnavailable": "Pengingat belum tersedia. Jadwal dan tagihan tetap tersimpan; periksa izin notifikasi dan pembatasan baterai.",
+  "@m53ReminderUnavailable": {
+    "description": "Supplier schedules: Reminders are unavailable. Plans and invoices remain saved; check notification permission and battery restrictions."
+  },
+  "m53SupplierSchedules": "Jadwal dan pengingat supplier",
+  "@m53SupplierSchedules": {
+    "description": "Supplier schedules: Supplier plans and reminders"
+  },
+  "m53SupplierReminderHelp": "Pengingat H-1 pukul 09.00 waktu toko mengikuti izin dan pembatasan Android; waktunya dapat terlambat. H-1 yang sudah lewat tidak dikirim susulan. Pilihan notifikasi umum ada di Pengaturan pengingat.",
+  "@m53SupplierReminderHelp": {
+    "description": "Supplier schedules: H-1 reminders at 09:00 shop time depend on Android permission and restrictions and may be delayed. Past H-1 targets are not sent as catch-up alerts. General notifications can be enabled in Reminder settings."
+  },
+  "m53ReminderPermissionSettings": "Pengaturan pengingat",
+  "@m53ReminderPermissionSettings": {
+    "description": "Supplier schedules: Reminder settings"
+  },
+  "m53DueReminderList": "Tagihan dengan jatuh tempo",
+  "@m53DueReminderList": {
+    "description": "Supplier schedules: Invoices with due dates"
+  },
+  "m53VisitAdd": "Tambah jadwal kunjungan",
+  "@m53VisitAdd": {
+    "description": "Supplier schedules: Add visit plan"
+  },
+  "m53VisitFilter": "Status kunjungan",
+  "@m53VisitFilter": {
+    "description": "Supplier schedules: Visit status"
+  },
+  "m53VisitStatusplanned": "Direncanakan",
+  "@m53VisitStatusplanned": {
+    "description": "Supplier schedules: Planned"
+  },
+  "m53VisitStatuscompleted": "Selesai",
+  "@m53VisitStatuscompleted": {
+    "description": "Supplier schedules: Completed"
+  },
+  "m53VisitStatuscancelled": "Dibatalkan",
+  "@m53VisitStatuscancelled": {
+    "description": "Supplier schedules: Cancelled"
+  },
+  "m53VisitStatusall": "Semua status",
+  "@m53VisitStatusall": {
+    "description": "Supplier schedules: All statuses"
+  },
+  "m53VisitEmpty": "Tidak ada jadwal pada pilihan ini.",
+  "@m53VisitEmpty": {
+    "description": "Supplier schedules: No visit plans match this selection."
+  },
+  "m53VisitAttention": "Perlu perhatian: target H-1 sudah lewat. Tinjau tanggal dan status kunjungan.",
+  "@m53VisitAttention": {
+    "description": "Supplier schedules: Needs attention: the H-1 target has passed. Review the visit date and status."
+  },
+  "m53VisitReview": "Tinjau jadwal kunjungan",
+  "@m53VisitReview": {
+    "description": "Supplier schedules: Review visit plan"
+  },
+  "m53VisitNoPosting": "Jadwal kunjungan tidak membuat penerimaan, tagihan atau pembayaran. Tanggal ini terpisah dari jatuh tempo tagihan.",
+  "@m53VisitNoPosting": {
+    "description": "Supplier schedules: A visit plan does not create a receipt, invoice or payment. This date is separate from invoice due dates."
+  },
+  "m53VisitDate": "Tanggal kunjungan",
+  "@m53VisitDate": {
+    "description": "Supplier schedules: Visit date"
+  },
+  "m53VisitTime": "Jam kunjungan (opsional)",
+  "@m53VisitTime": {
+    "description": "Supplier schedules: Visit time (optional)"
+  },
+  "m53VisitNoTime": "Tanpa jam tertentu",
+  "@m53VisitNoTime": {
+    "description": "Supplier schedules: No specific time"
+  },
+  "m53VisitClearTime": "Hapus jam kunjungan",
+  "@m53VisitClearTime": {
+    "description": "Supplier schedules: Clear visit time"
+  },
+  "m53VisitReminder": "Ingatkan H-1 kunjungan",
+  "@m53VisitReminder": {
+    "description": "Supplier schedules: Remind me H-1 before the visit"
+  },
+  "m53VisitNote": "Catatan kunjungan (opsional)",
+  "@m53VisitNote": {
+    "description": "Supplier schedules: Visit note (optional)"
+  },
+  "m53DueAttentionHelp": "Tagihan berikut masih bersaldo. Tagihan hari ini atau terlambat tetap perlu ditinjau walau pengingat tidak tampil. Pembayaran sebagian mempertahankan pengingat; pelunasan membatalkannya.",
+  "@m53DueAttentionHelp": {
+    "description": "Supplier schedules: These invoices still have a balance. Invoices due today or overdue need attention even if a reminder was not shown. Partial payment keeps the reminder; full settlement cancels it."
+  },
+  "m53DueReminderEmpty": "Tidak ada tagihan jatuh tempo yang masih bersaldo.",
+  "@m53DueReminderEmpty": {
+    "description": "Supplier schedules: No invoices with due dates have an outstanding balance."
+  },
+  "m53DueReminder": "Ingatkan H-1 jatuh tempo",
+  "@m53DueReminder": {
+    "description": "Supplier schedules: Remind me H-1 before payment is due"
+  },
+  "m53ReminderDueTitle": "Tagihan supplier jatuh tempo besok",
+  "@m53ReminderDueTitle": {
+    "description": "Supplier schedules: Supplier payment due tomorrow"
+  },
+  "m53ReminderVisitTitle": "Kunjungan supplier besok",
+  "@m53ReminderVisitTitle": {
+    "description": "Supplier schedules: Supplier visit tomorrow"
+  },
+  "m53ReminderPrivateBody": "{supplier} · Buka melalui akses Kelola.",
+  "@m53ReminderPrivateBody": {
+    "description": "Supplier schedules: {supplier} · Open with management access.",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "m53VisitNextDate": "Tanggal kunjungan berikutnya",
+  "@m53VisitNextDate": {
+    "description": "Supplier schedules: Next planned visit date"
+  },
+  "m53VisitNoFuture": "Belum ada jadwal hari ini atau mendatang",
+  "@m53VisitNoFuture": {
+    "description": "Supplier schedules: No plans for today or a later date"
   }
 }

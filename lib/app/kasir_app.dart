@@ -17,6 +17,7 @@ import '../data/database/database_security_error.dart';
 import '../features/alerts/presentation/alerts_screen.dart';
 import 'm5_runtime.dart';
 import 'native_licenses.dart';
+import '../features/suppliers/presentation/supplier_schedules_screen.dart';
 
 /// Composition root: shared services are dependencies, never shared feature
 /// state. Production owns the M3 cashier flow; injected readiness retains the
@@ -75,6 +76,12 @@ class _ManagementAppState extends State<_ManagementApp> {
   StreamSubscription<DatabaseReplacement>? _replacements;
   GlobalKey<NavigatorState> _navigator = GlobalKey<NavigatorState>();
   bool _pendingAlert = false;
+  bool _pendingSupplier = false;
+  void _openSupplierReminders() {
+    _pendingSupplier = true;
+    if (mounted) setState(() {});
+  }
+
   String? _replacementNotice;
   void _openAlerts() {
     _pendingAlert = true;
@@ -90,6 +97,7 @@ class _ManagementAppState extends State<_ManagementApp> {
       setState(() {
         _navigator = GlobalKey<NavigatorState>();
         _pendingAlert = false;
+        _pendingSupplier = false;
         _replacementNotice = event.succeeded
             ? 'm5RestoreComplete'
             : 'm5RestoreOutcomeCheck';
@@ -97,7 +105,11 @@ class _ManagementAppState extends State<_ManagementApp> {
       });
     });
     if (native && !_onboardingNeeded) {
-      _runtime = M5Runtime(services, _openAlerts);
+      _runtime = M5Runtime(
+        services,
+        _openAlerts,
+        onSupplierNotification: _openSupplierReminders,
+      );
       unawaited(_runtime!.start());
     }
   }
@@ -120,7 +132,11 @@ class _ManagementAppState extends State<_ManagementApp> {
       } catch (_) {
         /* optional Android delivery must not prevent cashier startup */
       }
-      _runtime = M5Runtime(services, _openAlerts);
+      _runtime = M5Runtime(
+        services,
+        _openAlerts,
+        onSupplierNotification: _openSupplierReminders,
+      );
       unawaited(_runtime!.start());
     }
     return services;
@@ -215,13 +231,21 @@ class _ManagementAppState extends State<_ManagementApp> {
           ),
         );
       }
-      if (_pendingAlert || _replacementNotice != null) {
+      if (_pendingAlert || _pendingSupplier || _replacementNotice != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (!mounted || _navigator.currentState == null) return;
           if (_pendingAlert) {
             _pendingAlert = false;
             _navigator.currentState!.push(
               MaterialPageRoute<void>(builder: (_) => const AlertsScreen()),
+            );
+          }
+          if (_pendingSupplier) {
+            _pendingSupplier = false;
+            _navigator.currentState!.push(
+              MaterialPageRoute<void>(
+                builder: (_) => const SupplierSchedulesScreen(),
+              ),
             );
           }
           final notice = _replacementNotice;
@@ -284,7 +308,11 @@ class _ManagementAppState extends State<_ManagementApp> {
                     onCompleted: () {
                       setState(() => _onboardingNeeded = false);
                       if (_nativeWanted && _runtime == null) {
-                        _runtime = M5Runtime(services, _openAlerts);
+                        _runtime = M5Runtime(
+                          services,
+                          _openAlerts,
+                          onSupplierNotification: _openSupplierReminders,
+                        );
                         unawaited(_runtime!.start());
                       }
                     },

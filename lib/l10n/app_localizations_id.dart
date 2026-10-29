@@ -4173,4 +4173,114 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m53CreditApprovedStatus =>
       'Nilai kredit disetujui; lihat alokasi dan saldonya';
+
+  @override
+  String get m53VisitMissing => 'Jadwal kunjungan tidak ditemukan.';
+
+  @override
+  String get m53VisitInputInvalid =>
+      'Periksa jam dan catatan kunjungan (maksimal 1.000 karakter).';
+
+  @override
+  String get m53VisitChanged =>
+      'Jadwal atau pilihan pengingat berubah. Muat ulang sebelum melanjutkan.';
+
+  @override
+  String get backupSupplierScheduleInvalid =>
+      'Riwayat jadwal atau pengingat supplier pada arsip tidak konsisten.';
+
+  @override
+  String get m53ReminderUnavailable =>
+      'Pengingat belum tersedia. Jadwal dan tagihan tetap tersimpan; periksa izin notifikasi dan pembatasan baterai.';
+
+  @override
+  String get m53SupplierSchedules => 'Jadwal dan pengingat supplier';
+
+  @override
+  String get m53SupplierReminderHelp =>
+      'Pengingat H-1 pukul 09.00 waktu toko mengikuti izin dan pembatasan Android; waktunya dapat terlambat. H-1 yang sudah lewat tidak dikirim susulan. Pilihan notifikasi umum ada di Pengaturan pengingat.';
+
+  @override
+  String get m53ReminderPermissionSettings => 'Pengaturan pengingat';
+
+  @override
+  String get m53DueReminderList => 'Tagihan dengan jatuh tempo';
+
+  @override
+  String get m53VisitAdd => 'Tambah jadwal kunjungan';
+
+  @override
+  String get m53VisitFilter => 'Status kunjungan';
+
+  @override
+  String get m53VisitStatusplanned => 'Direncanakan';
+
+  @override
+  String get m53VisitStatuscompleted => 'Selesai';
+
+  @override
+  String get m53VisitStatuscancelled => 'Dibatalkan';
+
+  @override
+  String get m53VisitStatusall => 'Semua status';
+
+  @override
+  String get m53VisitEmpty => 'Tidak ada jadwal pada pilihan ini.';
+
+  @override
+  String get m53VisitAttention =>
+      'Perlu perhatian: target H-1 sudah lewat. Tinjau tanggal dan status kunjungan.';
+
+  @override
+  String get m53VisitReview => 'Tinjau jadwal kunjungan';
+
+  @override
+  String get m53VisitNoPosting =>
+      'Jadwal kunjungan tidak membuat penerimaan, tagihan atau pembayaran. Tanggal ini terpisah dari jatuh tempo tagihan.';
+
+  @override
+  String get m53VisitDate => 'Tanggal kunjungan';
+
+  @override
+  String get m53VisitTime => 'Jam kunjungan (opsional)';
+
+  @override
+  String get m53VisitNoTime => 'Tanpa jam tertentu';
+
+  @override
+  String get m53VisitClearTime => 'Hapus jam kunjungan';
+
+  @override
+  String get m53VisitReminder => 'Ingatkan H-1 kunjungan';
+
+  @override
+  String get m53VisitNote => 'Catatan kunjungan (opsional)';
+
+  @override
+  String get m53DueAttentionHelp =>
+      'Tagihan berikut masih bersaldo. Tagihan hari ini atau terlambat tetap perlu ditinjau walau pengingat tidak tampil. Pembayaran sebagian mempertahankan pengingat; pelunasan membatalkannya.';
+
+  @override
+  String get m53DueReminderEmpty =>
+      'Tidak ada tagihan jatuh tempo yang masih bersaldo.';
+
+  @override
+  String get m53DueReminder => 'Ingatkan H-1 jatuh tempo';
+
+  @override
+  String get m53ReminderDueTitle => 'Tagihan supplier jatuh tempo besok';
+
+  @override
+  String get m53ReminderVisitTitle => 'Kunjungan supplier besok';
+
+  @override
+  String m53ReminderPrivateBody(String supplier) {
+    return '$supplier · Buka melalui akses Kelola.';
+  }
+
+  @override
+  String get m53VisitNextDate => 'Tanggal kunjungan berikutnya';
+
+  @override
+  String get m53VisitNoFuture => 'Belum ada jadwal hari ini atau mendatang';
 }

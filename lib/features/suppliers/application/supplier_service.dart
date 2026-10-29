@@ -8,6 +8,7 @@ import '../../management/application/management_service.dart';
 import '../domain/supplier_terms.dart';
 import '../domain/supplier_invoice.dart';
 import '../domain/supplier_credit.dart';
+import '../domain/supplier_visit.dart';
 import '../../../core/pagination/page.dart';
 import '../../cashier/application/cashier_store.dart';
 import '../../cash_drawer/application/cash_drawer_ledger.dart';
@@ -20,6 +21,8 @@ part 'supplier_credit_posting.dart';
 part 'supplier_credit_refunds.dart';
 part 'supplier_credit_validation.dart';
 part 'supplier_credit_queries.dart';
+part 'supplier_visits.dart';
+part 'supplier_schedule_validation.dart';
 
 /// Supplier operational facts and owner-controlled financial configuration.
 /// Future invoice/payment writers must consume these terms inside their own
@@ -81,9 +84,12 @@ final class SupplierService {
       }
       access.touch();
       return result;
-    });
+    }, supplierChanged: true);
   }
 
+  /// Shared read-only projection keeps reminders and supplier screens on the
+  /// same effective payment/credit/due-date authority.
+  static String get invoiceProjectionSql => _invoiceSelect;
   static const _invoiceSelect = '''SELECT i.*,
     COALESCE((SELECT SUM(p.amount_minor) FROM supplier_payments p WHERE p.invoice_id=i.id
       AND NOT EXISTS(SELECT 1 FROM supplier_payment_reversals r WHERE r.payment_id=p.id)),0) AS paid_minor,

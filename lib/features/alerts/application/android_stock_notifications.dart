@@ -6,12 +6,18 @@ import 'alert_service.dart';
 final class AndroidStockNotifications implements StockNotificationSink {
   AndroidStockNotifications(this.plugin);
   final FlutterLocalNotificationsPlugin plugin;
-  Future<void> initialize(void Function() onTap) async {
+  Future<void> initialize(
+    void Function() onTap, {
+    void Function()? onSupplierTap,
+  }) async {
     await plugin.initialize(
       settings: const InitializationSettings(
         android: AndroidInitializationSettings('ic_stock_notification'),
       ),
-      onDidReceiveNotificationResponse: (_) => onTap(),
+      onDidReceiveNotificationResponse: (response) =>
+          response.payload == 'supplier-reminders' && onSupplierTap != null
+          ? onSupplierTap()
+          : onTap(),
     );
   }
 

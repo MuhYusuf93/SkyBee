@@ -272,5 +272,5 @@ final class AlertService {
           'notifications_enabled': enabled ? 1 : 0,
           'expiry_warning_days': days,
         }, where: 'id=1');
-      });
+      }, supplierChanged: true);
 }

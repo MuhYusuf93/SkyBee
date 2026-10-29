@@ -1,5 +1,15 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+E3 core31–34 lulus nativePoco44+1permissionSKIP danDV45, datahashlama sama/
+kontrolOff. Review scoped supplier event dan nextvisitdate host20 lulus; delta
+UI/runtime diuji native bersama F. [Bukti/laporan](M53_SUPPLIER_SCHEDULES_REPORT.md).
+
+Jadwal supplier schema34 memakai projection/riwayat revisi operasional, H-1
+kalender toko09.00 terpisah dari due-date dan worker/notification bersama.
+Owner preference keuangan, Gudang kunjungan; izin ditolak tidak membatalkan
+simpan. [Keputusan](decisions/M53_SUPPLIER_SCHEDULES.md). Host selesai, native
+E3 gabungan pending sebelum F.
+
 Kredit supplier E3 schema33 ([keputusan](decisions/M53_SUPPLIER_CREDITS.md)): persetujuan keuangan owner terpisah dari nilai
 inventori retur; alokasi awal hanya tagihan asal yang masih tersisa, kelebihan
 menjadi kredit belum dialokasikan. Alokasi lintas tagihan eksplisit supplier dan

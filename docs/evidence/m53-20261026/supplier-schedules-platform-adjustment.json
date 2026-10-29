@@ -1,0 +1,18 @@
+{
+  "sourceFiles": 652,
+  "oldManifest": "supplier-schedules-source-sha256.json",
+  "newManifest": "supplier-schedules-platform-source-sha256.json",
+  "changedPaths": [
+    "integration_test/support/supplier_reminder_platform_probe.dart"
+  ],
+  "change": "Use the existing isolated notification metadata probe ID namespace 1777000000..1777999999 instead of 1400000000 range",
+  "productionSourceUnchanged": true,
+  "pocoInitial": "44 PASS, 1 notification permission SKIP; 726 protected entries unchanged, controlsOff",
+  "pocoRepeatDecision": "No repeat of unchanged registration or disabled-permission path; a repeated notification probe would skip again. All executed Poco paths are unchanged. Full DV campaign validates the corrected isolated probe when permitted.",
+  "dv": "45PASS16:48;802protectedhashsame;controlOff;awake restored/readbackexact",
+  "analyzer": {
+    "issues": 0,
+    "seconds": 130.3,
+    "logSha256": "76c890d5302a343511e92b43716daacd99be9ec71cd22d07840a5c2f81b40339"
+  }
+}

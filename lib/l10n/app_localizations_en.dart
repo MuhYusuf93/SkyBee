@@ -4164,4 +4164,114 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m53CreditApprovedStatus =>
       'Credit value approved; review its allocations and balance';
+
+  @override
+  String get m53VisitMissing => 'Visit plan not found.';
+
+  @override
+  String get m53VisitInputInvalid =>
+      'Check the visit time and note (up to 1,000 characters).';
+
+  @override
+  String get m53VisitChanged =>
+      'The plan or reminder preference changed. Reload before continuing.';
+
+  @override
+  String get backupSupplierScheduleInvalid =>
+      'The archive contains inconsistent supplier plans or reminder preferences.';
+
+  @override
+  String get m53ReminderUnavailable =>
+      'Reminders are unavailable. Plans and invoices remain saved; check notification permission and battery restrictions.';
+
+  @override
+  String get m53SupplierSchedules => 'Supplier plans and reminders';
+
+  @override
+  String get m53SupplierReminderHelp =>
+      'H-1 reminders at 09:00 shop time depend on Android permission and restrictions and may be delayed. Past H-1 targets are not sent as catch-up alerts. General notifications can be enabled in Reminder settings.';
+
+  @override
+  String get m53ReminderPermissionSettings => 'Reminder settings';
+
+  @override
+  String get m53DueReminderList => 'Invoices with due dates';
+
+  @override
+  String get m53VisitAdd => 'Add visit plan';
+
+  @override
+  String get m53VisitFilter => 'Visit status';
+
+  @override
+  String get m53VisitStatusplanned => 'Planned';
+
+  @override
+  String get m53VisitStatuscompleted => 'Completed';
+
+  @override
+  String get m53VisitStatuscancelled => 'Cancelled';
+
+  @override
+  String get m53VisitStatusall => 'All statuses';
+
+  @override
+  String get m53VisitEmpty => 'No visit plans match this selection.';
+
+  @override
+  String get m53VisitAttention =>
+      'Needs attention: the H-1 target has passed. Review the visit date and status.';
+
+  @override
+  String get m53VisitReview => 'Review visit plan';
+
+  @override
+  String get m53VisitNoPosting =>
+      'A visit plan does not create a receipt, invoice or payment. This date is separate from invoice due dates.';
+
+  @override
+  String get m53VisitDate => 'Visit date';
+
+  @override
+  String get m53VisitTime => 'Visit time (optional)';
+
+  @override
+  String get m53VisitNoTime => 'No specific time';
+
+  @override
+  String get m53VisitClearTime => 'Clear visit time';
+
+  @override
+  String get m53VisitReminder => 'Remind me H-1 before the visit';
+
+  @override
+  String get m53VisitNote => 'Visit note (optional)';
+
+  @override
+  String get m53DueAttentionHelp =>
+      'These invoices still have a balance. Invoices due today or overdue need attention even if a reminder was not shown. Partial payment keeps the reminder; full settlement cancels it.';
+
+  @override
+  String get m53DueReminderEmpty =>
+      'No invoices with due dates have an outstanding balance.';
+
+  @override
+  String get m53DueReminder => 'Remind me H-1 before payment is due';
+
+  @override
+  String get m53ReminderDueTitle => 'Supplier payment due tomorrow';
+
+  @override
+  String get m53ReminderVisitTitle => 'Supplier visit tomorrow';
+
+  @override
+  String m53ReminderPrivateBody(String supplier) {
+    return '$supplier · Open with management access.';
+  }
+
+  @override
+  String get m53VisitNextDate => 'Next planned visit date';
+
+  @override
+  String get m53VisitNoFuture => 'No plans for today or a later date';
 }

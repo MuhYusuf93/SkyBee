@@ -15,6 +15,7 @@ import '../../management/presentation/management_session_provider.dart';
 import '../../settings/presentation/language_button.dart';
 import '../application/supplier_service.dart';
 import '../domain/supplier_invoice.dart';
+import '../domain/supplier_visit.dart';
 import 'supplier_finance_forms.dart';
 import 'supplier_payment_screen.dart';
 
@@ -27,6 +28,7 @@ class SupplierInvoiceScreen extends StatefulWidget {
 
 class _SupplierInvoiceScreenState extends State<SupplierInvoiceScreen> {
   SupplierInvoice? invoice;
+  SupplierInvoiceReminder? reminder;
   CalendarDate? today;
   List<Map<String, Object?>> payments = [], items = [];
   SupplierPaymentCursor? paymentNext;
@@ -58,14 +60,17 @@ class _SupplierInvoiceScreenState extends State<SupplierInvoiceScreen> {
 
   Future<void> refresh() async {
     check();
-    final service = context.read<AppServices>().suppliers;
+    final app = context.read<AppServices>(), service = app.suppliers;
+    final owner = app.management.role == ManagementRole.owner;
     final value = await service.invoice(widget.id), day = await service.today();
+    final preference = owner ? await service.invoiceReminder(widget.id) : null;
     final page = await service.payments(widget.id),
         lines = await service.invoiceItems(widget.id);
     if (mounted) {
       check();
       setState(() {
         invoice = value;
+        reminder = preference;
         today = day;
         payments = page.items;
         paymentNext = page.nextCursor;
@@ -312,6 +317,31 @@ class _SupplierInvoiceScreenState extends State<SupplierInvoiceScreen> {
                             : "m53SupplierNotDue")}',
                       ),
                     if (owner && i.status == 'posted') ...[
+                      if (i.due != null && reminder != null)
+                        SwitchListTile(
+                          key: const ValueKey('supplier-invoice-reminder'),
+                          title: Text(tr(context, 'm53DueReminder')),
+                          subtitle: Text(
+                            tr(context, 'm53SupplierReminderHelp'),
+                          ),
+                          value: reminder!.enabled,
+                          onChanged: busy
+                              ? null
+                              : (enabled) => run(() async {
+                                  await context
+                                      .read<AppServices>()
+                                      .suppliers
+                                      .setInvoiceReminder(
+                                        widget.id,
+                                        enabled,
+                                        reminder!.revision,
+                                        operationKey: const IdGenerator()
+                                            .next()
+                                            .value,
+                                      );
+                                  await refresh();
+                                }),
+                        ),
                       if (i.remaining > 0 || pending != null)
                         FilledButton(
                           key: const ValueKey('supplier-invoice-pay'),
