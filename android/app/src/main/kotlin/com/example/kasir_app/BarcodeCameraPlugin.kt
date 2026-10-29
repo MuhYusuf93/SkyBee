@@ -90,6 +90,31 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
                         }, 60000)
                     }
                 }
+                "decodeQrRasterFixture" -> {
+                    // Disposable integration package only. Decode actual Dart
+                    // printer pixels with an independent Java decoder;
+                    // this is never a production camera-frame injection path.
+                    if (activity.packageName != "com.example.kasir_app.integration") result.notImplemented()
+                    else try {
+                        val width = call.argument<Int>("width") ?: 0
+                        val height = call.argument<Int>("height") ?: 0
+                        val packed = call.argument<ByteArray>("pixels")
+                        require(width in 192..640 && height in 192..960)
+                        val stride = (width + 7) / 8
+                        require(packed != null && packed.size == stride * height)
+                        val pixels = IntArray(width * height) { i ->
+                            val x = i % width
+                            val y = i / width
+                            val dark = (packed[y * stride + x / 8].toInt() and (128 shr (x % 8))) != 0
+                            if (dark) 0xff000000.toInt() else 0xffffffff.toInt()
+                        }
+                        val decoded = MultiFormatReader().decode(
+                            BinaryBitmap(HybridBinarizer(RGBLuminanceSource(width, height, pixels))),
+                            mapOf(DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE)))
+                        result.success(mapOf("text" to decoded.text,
+                            "format" to decoded.barcodeFormat.name, "physicalCamera" to false))
+                    } catch (_: Exception) { result.error("DECODE_FAILED", null, null) }
+                }
                 "decodeFixture" -> {
                     // No production injection of camera frames or fake scans.
                     if (activity.packageName != "com.example.kasir_app.integration") result.notImplemented()

@@ -24,6 +24,7 @@ import 'valuation_reconciliation_screen.dart';
 import 'stock_tracking_screen.dart';
 import 'inventory_history_screen.dart';
 import 'receipt_line_editor.dart';
+import '../../labels/presentation/product_label_screen.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key, required this.id});
@@ -260,6 +261,15 @@ class _DetailBody extends StatelessWidget {
                   child: Text(tr(context, 'tryAgain')),
                 ),
               if (product != null) ...[
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.qr_code),
+                  label: Text(tr(context, 'm53Labels')),
+                  onPressed: () => Navigator.of(context).push<void>(
+                    MaterialPageRoute(
+                      builder: (_) => ProductLabelScreen(product: product.id),
+                    ),
+                  ),
+                ),
                 ProductAttributesView(
                   attributes: product.attributes,
                   currency: CurrencyPolicy.forCode(

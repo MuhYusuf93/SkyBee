@@ -7,6 +7,7 @@ import 'dart:convert';
 import '../../../core/money/money_codec.dart';
 import '../../../core/money/money.dart';
 import '../domain/printer_profile.dart';
+import 'printer_raster_source.dart';
 
 final class ReceiptLine {
   const ReceiptLine(
@@ -23,11 +24,12 @@ final class ReceiptLine {
 /// Both preview and ESC/POS use these exact lines and raster tiles. Unicode is
 /// rendered by Flutter fonts instead of guessing a printer code page. Monetary
 /// fields get a complete dedicated line, never substring/ellipsis truncation.
-final class ReceiptLayout {
+final class ReceiptLayout implements PrinterRasterSource {
   /// At 640 dots a complete command stays below 2 KiB. Small raster strips
   /// bound receiver pressure independently of its brand and the paper width.
   static const rasterRows = 24;
   ReceiptLayout(this.profile, this.lines);
+  @override
   final PrinterProfile profile;
   final List<ReceiptLine> lines;
   double logoX(int width) =>
@@ -305,6 +307,7 @@ final class ReceiptLayout {
     }
   }
 
+  @override
   Stream<ui.Image> tiles({Uint8List? logo}) async* {
     profile.validate();
     if (profile.logo && logo != null) {

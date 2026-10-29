@@ -431,10 +431,7 @@ extension StocktakeDraftOperations on InventoryService {
     if (code.isEmpty || code.length > 256) {
       throw const AppError('m53CameraInvalidCode');
     }
-    final products = await db.rawQuery(
-      'SELECT id FROM products WHERE barcode=? OR sku=? ORDER BY id COLLATE BINARY LIMIT 2',
-      [code, code],
-    );
+    final products = await ProductCodeResolver.lookup(db, code);
     if (products.isEmpty) throw const AppError('productNotFound');
     if (products.length != 1) throw const AppError('m3AmbiguousCode');
     final line = await _includeStocktakeProductOn(

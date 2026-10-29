@@ -7657,6 +7657,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No plans for today or a later date'**
   String get m53VisitNoFuture;
+
+  /// M5.3 product QR labels. English meaning: Product QR labels
+  ///
+  /// In en, this message translates to:
+  /// **'Product QR labels'**
+  String get m53Labels;
+
+  /// M5.3 product QR labels. English meaning: QR contains a stable SkyBee product identity even after its name, SKU or price changes. Existing barcodes still work. Physical scanners must support QR (2D).
+  ///
+  /// In en, this message translates to:
+  /// **'QR contains a stable SkyBee product identity even after its name, SKU or price changes. Existing barcodes still work. Physical scanners must support QR (2D).'**
+  String get m53LabelHelp;
+
+  /// M5.3 product QR labels. English meaning: Connect or configure printer
+  ///
+  /// In en, this message translates to:
+  /// **'Connect or configure printer'**
+  String get m53LabelPrinterSettings;
+
+  /// M5.3 product QR labels. English meaning: Label printer
+  ///
+  /// In en, this message translates to:
+  /// **'Label printer'**
+  String get m53LabelPrinter;
+
+  /// M5.3 product QR labels. English meaning: Command language supported by the printer
+  ///
+  /// In en, this message translates to:
+  /// **'Command language supported by the printer'**
+  String get m53LabelProtocol;
+
+  /// M5.3 product QR labels. English meaning: Label width (mm)
+  ///
+  /// In en, this message translates to:
+  /// **'Label width (mm)'**
+  String get m53LabelwidthMm;
+
+  /// M5.3 product QR labels. English meaning: Label height (mm)
+  ///
+  /// In en, this message translates to:
+  /// **'Label height (mm)'**
+  String get m53LabelheightMm;
+
+  /// M5.3 product QR labels. English meaning: Inter-label gap (mm)
+  ///
+  /// In en, this message translates to:
+  /// **'Inter-label gap (mm)'**
+  String get m53LabelgapMm;
+
+  /// M5.3 product QR labels. English meaning: Right offset (mm)
+  ///
+  /// In en, this message translates to:
+  /// **'Right offset (mm)'**
+  String get m53LabeloffsetXmm;
+
+  /// M5.3 product QR labels. English meaning: Down offset (mm)
+  ///
+  /// In en, this message translates to:
+  /// **'Down offset (mm)'**
+  String get m53LabeloffsetYmm;
+
+  /// M5.3 product QR labels. English meaning: QR module size (4–12 printer dots)
+  ///
+  /// In en, this message translates to:
+  /// **'QR module size (4–12 printer dots)'**
+  String get m53LabelmoduleDots;
+
+  /// M5.3 product QR labels. English meaning: Trailing feed for continuous paper (0–8 lines)
+  ///
+  /// In en, this message translates to:
+  /// **'Trailing feed for continuous paper (0–8 lines)'**
+  String get m53Labelfeed;
+
+  /// M5.3 product QR labels. English meaning: Label copies (1–100)
+  ///
+  /// In en, this message translates to:
+  /// **'Label copies (1–100)'**
+  String get m53Labelcopies;
+
+  /// M5.3 product QR labels. English meaning: Show current retail price
+  ///
+  /// In en, this message translates to:
+  /// **'Show current retail price'**
+  String get m53LabelPrice;
+
+  /// M5.3 product QR labels. English meaning: Use gap label media (TSPL)
+  ///
+  /// In en, this message translates to:
+  /// **'Use gap label media (TSPL)'**
+  String get m53LabelGap;
+
+  /// M5.3 product QR labels. English meaning: I have confirmed the printer supports TSPL and this media size/gap.
+  ///
+  /// In en, this message translates to:
+  /// **'I have confirmed the printer supports TSPL and this media size/gap.'**
+  String get m53LabelGapAck;
+
+  /// M5.3 product QR labels. English meaning: Label settings are separate from receipts. QR uses a four-module white margin and integer modules of at least four dots. Media that is too small is rejected. Test one label first; physical dimensions depend on the printer specifications. No automatic calibration is performed.
+  ///
+  /// In en, this message translates to:
+  /// **'Label settings are separate from receipts. QR uses a four-module white margin and integer modules of at least four dots. Media that is too small is rejected. Test one label first; physical dimensions depend on the printer specifications. No automatic calibration is performed.'**
+  String get m53LabelMediaHelp;
+
+  /// M5.3 product QR labels. English meaning: Save label settings
+  ///
+  /// In en, this message translates to:
+  /// **'Save label settings'**
+  String get m53LabelSaveProfile;
+
+  /// M5.3 product QR labels. English meaning: Preview label
+  ///
+  /// In en, this message translates to:
+  /// **'Preview label'**
+  String get m53LabelPreview;
+
+  /// M5.3 product QR labels. English meaning: Media including feed/gap
+  ///
+  /// In en, this message translates to:
+  /// **'Media including feed/gap'**
+  String get m53LabelTotalMedia;
+
+  /// M5.3 product QR labels. English meaning: Send labels to printer
+  ///
+  /// In en, this message translates to:
+  /// **'Send labels to printer'**
+  String get m53LabelPrint;
+
+  /// M5.3 product QR labels. English meaning: Sent data does not prove a label printed. Check the paper and scan the QR. A new job may produce additional labels, especially when the previous delivery is unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent data does not prove a label printed. Check the paper and scan the QR. A new job may produce additional labels, especially when the previous delivery is unknown.'**
+  String get m53LabelPaperWarning;
+
+  /// M5.3 product QR labels. English meaning: Create a new label job
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new label job'**
+  String get m53LabelNewJob;
+
+  /// M5.3 product QR labels. English meaning: Select and save a printer first.
+  ///
+  /// In en, this message translates to:
+  /// **'Select and save a printer first.'**
+  String get m53LabelPrinterMissing;
+
+  /// M5.3 product QR labels. English meaning: Label settings changed. Reopen this screen to load the current version.
+  ///
+  /// In en, this message translates to:
+  /// **'Label settings changed. Reopen this screen to load the current version.'**
+  String get m53LabelProfileChanged;
+
+  /// M5.3 product QR labels. English meaning: Product details changed. Review a fresh preview before printing.
+  ///
+  /// In en, this message translates to:
+  /// **'Product details changed. Review a fresh preview before printing.'**
+  String get m53LabelProductChanged;
+
+  /// M5.3 product QR labels. English meaning: Label copies must be between 1 and 100.
+  ///
+  /// In en, this message translates to:
+  /// **'Label copies must be between 1 and 100.'**
+  String get m53LabelCopiesInvalid;
+
+  /// M5.3 product QR labels. English meaning: Label size, offsets, QR module size or feed are invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Label size, offsets, QR module size or feed are invalid.'**
+  String get m53LabelProfileInvalid;
+
+  /// M5.3 product QR labels. English meaning: Gap labels require TSPL and confirmation of printer support.
+  ///
+  /// In en, this message translates to:
+  /// **'Gap labels require TSPL and confirmation of printer support.'**
+  String get m53LabelGapUnsupported;
+
+  /// M5.3 product QR labels. English meaning: Label width exceeds the selected printer’s printable area.
+  ///
+  /// In en, this message translates to:
+  /// **'Label width exceeds the selected printer’s printable area.'**
+  String get m53LabelWidthExceeded;
+
+  /// M5.3 product QR labels. English meaning: The label content does not fit. Increase media size or reduce offsets/optional price. QR modules are never automatically shrunk.
+  ///
+  /// In en, this message translates to:
+  /// **'The label content does not fit. Increase media size or reduce offsets/optional price. QR modules are never automatically shrunk.'**
+  String get m53LabelDoesNotFit;
+
+  /// M5.3 product QR labels. English meaning: The label snapshot is invalid. Create a new job from valid product details.
+  ///
+  /// In en, this message translates to:
+  /// **'The label snapshot is invalid. Create a new job from valid product details.'**
+  String get m53LabelSnapshotInvalid;
+
+  /// M5.3 product QR labels. English meaning: The backup contains invalid label settings.
+  ///
+  /// In en, this message translates to:
+  /// **'The backup contains invalid label settings.'**
+  String get backupLabelProfileInvalid;
+
+  /// M5.3 product QR labels. English meaning: Continue the same label job
+  ///
+  /// In en, this message translates to:
+  /// **'Continue the same label job'**
+  String get m53LabelResume;
+
+  /// M5.3 product QR labels. English meaning: TSPL (continuous or confirmed gap media)
+  ///
+  /// In en, this message translates to:
+  /// **'TSPL (continuous or confirmed gap media)'**
+  String get m53LabelTspl;
+
+  /// M5.3 product QR labels. English meaning: This product identity is not supported for QR labels. Product data was not changed.
+  ///
+  /// In en, this message translates to:
+  /// **'This product identity is not supported for QR labels. Product data was not changed.'**
+  String get m53LabelIdentityInvalid;
 }
 
 class _AppLocalizationsDelegate

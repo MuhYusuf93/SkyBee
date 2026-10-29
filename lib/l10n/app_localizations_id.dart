@@ -4283,4 +4283,126 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53VisitNoFuture => 'Belum ada jadwal hari ini atau mendatang';
+
+  @override
+  String get m53Labels => 'Label QR barang';
+
+  @override
+  String get m53LabelHelp =>
+      'QR berisi identitas barang SkyBee yang tetap sama saat nama, SKU atau harga berubah. Barcode lama tetap dapat dipakai. Scanner fisik harus mendukung QR (2D).';
+
+  @override
+  String get m53LabelPrinterSettings => 'Hubungkan atau atur printer';
+
+  @override
+  String get m53LabelPrinter => 'Printer label';
+
+  @override
+  String get m53LabelProtocol => 'Bahasa perintah yang didukung printer';
+
+  @override
+  String get m53LabelwidthMm => 'Lebar label (mm)';
+
+  @override
+  String get m53LabelheightMm => 'Tinggi label (mm)';
+
+  @override
+  String get m53LabelgapMm => 'Jarak antarkertas label (mm)';
+
+  @override
+  String get m53LabeloffsetXmm => 'Geser ke kanan (mm)';
+
+  @override
+  String get m53LabeloffsetYmm => 'Geser ke bawah (mm)';
+
+  @override
+  String get m53LabelmoduleDots => 'Ukuran modul QR (4–12 titik printer)';
+
+  @override
+  String get m53Labelfeed => 'Feed akhir untuk kertas kontinu (0–8 baris)';
+
+  @override
+  String get m53Labelcopies => 'Jumlah label (1–100)';
+
+  @override
+  String get m53LabelPrice => 'Tampilkan harga eceran saat ini';
+
+  @override
+  String get m53LabelGap => 'Gunakan kertas label dengan celah (TSPL)';
+
+  @override
+  String get m53LabelGapAck =>
+      'Saya sudah memastikan printer mendukung TSPL dan ukuran/celah kertas ini.';
+
+  @override
+  String get m53LabelMediaHelp =>
+      'Profil label terpisah dari struk. QR memakai ruang putih empat modul dan modul bulat minimal empat titik. Media yang terlalu kecil ditolak. Uji satu label terlebih dahulu; ukuran fisik mengikuti spesifikasi printer. Tidak ada kalibrasi otomatis.';
+
+  @override
+  String get m53LabelSaveProfile => 'Simpan pengaturan label';
+
+  @override
+  String get m53LabelPreview => 'Pratinjau label';
+
+  @override
+  String get m53LabelTotalMedia => 'Media termasuk feed/celah';
+
+  @override
+  String get m53LabelPrint => 'Kirim label ke printer';
+
+  @override
+  String get m53LabelPaperWarning =>
+      'Data terkirim belum membuktikan label tercetak. Periksa kertas dan pindai QR. Membuat pekerjaan baru dapat menghasilkan label tambahan, terutama jika hasil sebelumnya tidak diketahui.';
+
+  @override
+  String get m53LabelNewJob => 'Buat pekerjaan label baru';
+
+  @override
+  String get m53LabelPrinterMissing =>
+      'Pilih dan simpan printer terlebih dahulu.';
+
+  @override
+  String get m53LabelProfileChanged =>
+      'Pengaturan label berubah. Buka ulang layar untuk memuat versi terbaru.';
+
+  @override
+  String get m53LabelProductChanged =>
+      'Data barang berubah. Tinjau pratinjau terbaru sebelum mencetak.';
+
+  @override
+  String get m53LabelCopiesInvalid => 'Jumlah label harus antara 1 dan 100.';
+
+  @override
+  String get m53LabelProfileInvalid =>
+      'Ukuran, offset, modul QR atau feed label tidak valid.';
+
+  @override
+  String get m53LabelGapUnsupported =>
+      'Celah label hanya didukung untuk TSPL setelah kemampuan printer dikonfirmasi.';
+
+  @override
+  String get m53LabelWidthExceeded =>
+      'Lebar label melebihi area cetak printer yang dipilih.';
+
+  @override
+  String get m53LabelDoesNotFit =>
+      'Isi label tidak muat. Perbesar media atau kurangi offset/harga opsional. Modul QR tidak diperkecil otomatis.';
+
+  @override
+  String get m53LabelSnapshotInvalid =>
+      'Snapshot label tidak valid. Buat pekerjaan baru dari data barang yang valid.';
+
+  @override
+  String get backupLabelProfileInvalid =>
+      'Pengaturan label dalam cadangan tidak valid.';
+
+  @override
+  String get m53LabelResume => 'Lanjutkan pekerjaan label yang sama';
+
+  @override
+  String get m53LabelTspl => 'TSPL (kontinu atau celah terkonfirmasi)';
+
+  @override
+  String get m53LabelIdentityInvalid =>
+      'Identitas barang ini belum didukung untuk label QR. Data barang tidak diubah.';
 }

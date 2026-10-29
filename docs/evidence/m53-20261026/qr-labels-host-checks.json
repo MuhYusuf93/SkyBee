@@ -1,0 +1,194 @@
+{
+  "schema": 35,
+  "sourceFiles": 672,
+  "sourceManifestSha256": "b513b7fc746dbaebb5b7518508baca229c4699cd2e095e8b070a5f9dea524c7e",
+  "regression": {
+    "passed": 46,
+    "failed": 0,
+    "elapsed": "01:01",
+    "scope": "QR lookup5/raster8/queue13/UI2; E3 schedules11/UI2/runtime5"
+  },
+  "legacyPrinterRegression": {
+    "passed": 33,
+    "failed": 0,
+    "elapsed": "01:09"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 12.0
+  },
+  "format": {
+    "files": 282,
+    "changed": 2
+  },
+  "localization": {
+    "keys": 1296,
+    "staticReferences": 877,
+    "originalRequirements": 245
+  },
+  "pinCrypto": {
+    "upstreamUnchanged": 106,
+    "licenseAndArchive": "match"
+  },
+  "native": "PENDING protected wrapper both devices, 42 cases including independent ZXing actual raster decode",
+  "ordinarySkybee": "No update reset reseed; final100/50 only H after all M5.3 and verified encrypted backup/recovery",
+  "physicalEvidence": "No paper print, physical scanner or photographed QR evidence",
+  "logs": {
+    "qr-label-analyze1.txt": {
+      "sha256": "6b9a329d8d3cc45ea195f3a43c0fd4d9486edabc3a6b9cf02c04f4ccf66a0e1c"
+    },
+    "qr-label-analyze2.txt": {
+      "sha256": "469d00ea55ed4ac804d8e9c7dad0731ea98c820e2b70f5db1543e67cd2d461d8"
+    },
+    "qr-label-analyze3.txt": {
+      "sha256": "aed3ce212c307144cffbce3bcb87b2770b64ea95d096c1391d73d0d821d05a48"
+    },
+    "qr-label-analyze4.txt": {
+      "sha256": "b0340b8bc997ad59d6bccda026dc9d6e4c7a1d5cf547d78192e1ebd55c4e14b0"
+    },
+    "qr-label-analyze5.txt": {
+      "sha256": "9979f4af7e7970c48a278ec38045e1b05a75131fecb08f8d796878129bbd2aff"
+    },
+    "qr-label-analyze6.txt": {
+      "sha256": "acc86054cfa02cb08481c571d688da75554a9e63676bb690e0c48f94a400d500"
+    },
+    "qr-label-final-host2.txt": {
+      "sha256": "d5f535fe90eac9e36cb8c6431a84f8d7f5628d3a44a7bc3da733a613d49a6f26",
+      "passed": 10,
+      "failed": 3,
+      "elapsed": "03:09"
+    },
+    "qr-label-final-host3.txt": {
+      "sha256": "e0a49656753e223e78de9b5dea1a5a321f611067ae50d7bbf966058ad4114f86",
+      "passed": 25,
+      "failed": 2,
+      "elapsed": "03:17"
+    },
+    "qr-label-fix1.txt": {
+      "sha256": "a35ea9f5cb9fe6aefb96e4fb7a4ff3e442798d9310f98958aabb5fea4849ec27"
+    },
+    "qr-label-format1.txt": {
+      "sha256": "1f7ff7a56b479bd1f1f7b3d28dc92172c326ad34eb6a6be9e35811e315c92820"
+    },
+    "qr-label-format2.txt": {
+      "sha256": "7cf17723cd2df7a689c8168679313172a5512ae7db32e8f79bf22e3b0f0726c5"
+    },
+    "qr-label-format3.txt": {
+      "sha256": "c6b61beafd4ecf77a0afb93a28960a385f1229c95dd6a05637148fef2846c07a"
+    },
+    "qr-label-format4.txt": {
+      "sha256": "8fd0561379eb979613174ea77e7019279a54ed435ad7b3f766e834050379b375"
+    },
+    "qr-label-format5.txt": {
+      "sha256": "96bdda4c90c4f51c3dcee240f7939a6cd05bd6237d1e8ed337c331db743202c9"
+    },
+    "qr-label-format6.txt": {
+      "sha256": "03fbfb613204773c03a398d233dea41dc35898dbfa87c5d35dfc790a51addc34"
+    },
+    "qr-label-format7.txt": {
+      "sha256": "9ebb4e32fb85c5287438dec599d9b35cb720d8b975185898217cd65ca1f08441"
+    },
+    "qr-label-l10n1.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "qr-label-l10n2.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "qr-label-l10n3.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "qr-label-layout-format1.txt": {
+      "sha256": "8356b6723c8fa84d909ac1e2f8f0c62dc831d7f758feffd1cab5318d0cd11cd2"
+    },
+    "qr-label-layout-format2.txt": {
+      "sha256": "a0b6b05dfb6ec8e6b413ca723ba2784675afdd3797e600902dfda38a858e9a0e"
+    },
+    "qr-label-layout-format3.txt": {
+      "sha256": "db1a51a6edc40f7d81e589c1f082307c64cc9783cdabea6feeef7b0dcbed97ad"
+    },
+    "qr-label-lookup-format1.txt": {
+      "sha256": "4867cc96b156ad6f97d3891292444cd1a90b34d9c4d703fc72aef5a7fbbd9fba"
+    },
+    "qr-label-lookup-format2.txt": {
+      "sha256": "1e2f7379494ff9a025b5c6dc4b1ebec52af04491d3e1a5e90a08723fce83ae31"
+    },
+    "qr-label-lookup-host1.txt": {
+      "sha256": "3b92b7f1089423e663e2fa46c25aea8ca937c3c9310eec62a8e1ed9781aa186b",
+      "passed": 3,
+      "failed": 2,
+      "elapsed": "00:12"
+    },
+    "qr-label-lookup-host2.txt": {
+      "sha256": "52573da640e205a71f7937109aab7a7e01cd2d74ffc80f7db9fcc5667710fd3b",
+      "passed": 7,
+      "failed": 1,
+      "elapsed": "00:13"
+    },
+    "qr-label-printer-regression3.txt": {
+      "sha256": "2a6ea846e1ff42ef781d22580d2843d3d763fb625a40854c8bbf65ec7b967d35",
+      "passed": 20,
+      "failed": 13,
+      "elapsed": "00:56"
+    },
+    "qr-label-printer-regression4.txt": {
+      "sha256": "84d265c6977221c32cd0e7d0475b1ef18d256a6dc4ad3fca24ce9f7681afa0ef",
+      "passed": 33,
+      "failed": 0,
+      "elapsed": "01:09"
+    },
+    "qr-label-pub1.txt": {
+      "sha256": "2fde812fb80da4b973b1db56c8df9e6f154ba3ef485a002820a23ffc3ddeae14"
+    },
+    "qr-label-queue-host1.txt": {
+      "sha256": "67558dcf395bf93e17c3363610af47ea64594c1d68934939f1649f8ba748224c",
+      "passed": 1,
+      "failed": 7,
+      "elapsed": "00:19"
+    },
+    "qr-label-queue-host2.txt": {
+      "sha256": "49a4539d027413e08959dcebe5f0173710c7dd33d91be2a6e515922def9f453d",
+      "passed": 7,
+      "failed": 1,
+      "elapsed": "00:19"
+    },
+    "qr-label-queue-renderer-host3.txt": {
+      "sha256": "e16862b609162cb37e786cc910eb9a463857c8a2dca12212b16d63358e608806",
+      "passed": 16,
+      "failed": 0,
+      "elapsed": "00:19"
+    },
+    "qr-label-regression-host5.txt": {
+      "sha256": "0090e2aae69aec7a450bd832a1c09bdb164d63f1f121ff9be7babdcee5d60666",
+      "passed": 46,
+      "failed": 0,
+      "elapsed": "01:01"
+    },
+    "qr-label-renderer-format1.txt": {
+      "sha256": "1b8e088768a0e1fc1a6922a38b6838c7742a9169f23644ada431b54ad35ae6af"
+    },
+    "qr-label-renderer-host1.txt": {
+      "sha256": "8b8c3dcdf29de52a1c783a01d82975a4ee0bc3dcb35a0d7828053a83d901abdf",
+      "passed": 8,
+      "failed": 0,
+      "elapsed": "00:00"
+    },
+    "qr-label-search-host3.txt": {
+      "sha256": "9fd2b9c164ed6313593c537f7cfe67c808efc528d0be5e806cbfab5b5a8c0de8",
+      "passed": 11,
+      "failed": 0,
+      "elapsed": "00:11"
+    },
+    "qr-label-widgets-host1.txt": {
+      "sha256": "9deb3180e13e6166e7dc5714b8892471ad191a5ea6266836f5fcec09e1802af3",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "03:09"
+    },
+    "qr-label-widgets-host4.txt": {
+      "sha256": "3c55db492747f9f930e5b603578eb0c267e4eb8e0178182bb422ca7915b805d9",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "01:15"
+    }
+  }
+}

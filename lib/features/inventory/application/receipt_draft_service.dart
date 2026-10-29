@@ -230,10 +230,7 @@ extension ReceiptDocuments on InventoryService {
     if (code.isEmpty || code.length > 256) {
       throw const AppError('m53CameraInvalidCode');
     }
-    final rows = await db.rawQuery(
-      'SELECT id FROM products WHERE barcode=? OR sku=? ORDER BY id COLLATE BINARY LIMIT 2',
-      [code, code],
-    );
+    final rows = await ProductCodeResolver.lookup(db, code);
     if (rows.isEmpty) throw const AppError('productNotFound');
     if (rows.length != 1) throw const AppError('m3AmbiguousCode');
     return _addReceiptProductOn(

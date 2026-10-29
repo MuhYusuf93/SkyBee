@@ -2,20 +2,24 @@ import 'dart:convert';
 import 'dart:typed_data';
 import '../domain/printer_profile.dart';
 import 'receipt_layout.dart';
+import 'printer_raster_source.dart';
+import '../domain/printer_page_media.dart';
 
 /// Shared bounded encoder for sales, calibration and sensitive recovery output.
 /// User text only enters rendered pixels. No firmware switching, automatic
 /// fallback, cutter, flash download, repeat printing or model-name detection.
 /// TSPL/CPCL use continuous media; a feed line occupies 24 dots in page mode.
 final class PrinterDocument {
-  const PrinterDocument(this.layout);
-  final ReceiptLayout layout;
+  const PrinterDocument(this.layout, {this.pageMedia});
+  final PrinterRasterSource layout;
+  final PrinterPageMedia? pageMedia;
   PrinterProfile get profile => layout.profile;
 
   /// Packets remain bounded and are borrowed until iteration resumes. Sensitive
   /// packets, raster strips and page buffers are wiped even on cancellation.
   Stream<Uint8List> frames({Uint8List? logo, bool sensitive = false}) async* {
     profile.validate();
+    pageMedia?.validate(profile);
     if (profile.protocol.paged) {
       yield* _pages(logo, sensitive);
       return;
@@ -151,7 +155,7 @@ final class PrinterDocument {
   ) async* {
     final tspl = profile.protocol == PrinterProtocol.tspl;
     final header = tspl
-        ? 'SIZE ${(profile.dots / 8).toStringAsFixed(3)} mm,${(rows / 8).toStringAsFixed(3)} mm\r\nGAP 0,0\r\nDIRECTION 1\r\nREFERENCE 0,0\r\nCLS\r\n'
+        ? 'SIZE ${(profile.dots / 8).toStringAsFixed(3)} mm,${(rows / 8).toStringAsFixed(3)} mm\r\nGAP ${pageMedia?.gapMm ?? 0},0\r\nDIRECTION 1\r\nREFERENCE 0,0\r\nCLS\r\n'
         : '! 0 200 200 $rows 1\r\nPW ${profile.dots}\r\nJOURNAL\r\n';
     yield* _owned(Uint8List.fromList(ascii.encode(header)), sensitive);
     for (var y = 0; y < rows; y += ReceiptLayout.rasterRows) {

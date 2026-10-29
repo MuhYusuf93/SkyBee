@@ -4274,4 +4274,125 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53VisitNoFuture => 'No plans for today or a later date';
+
+  @override
+  String get m53Labels => 'Product QR labels';
+
+  @override
+  String get m53LabelHelp =>
+      'QR contains a stable SkyBee product identity even after its name, SKU or price changes. Existing barcodes still work. Physical scanners must support QR (2D).';
+
+  @override
+  String get m53LabelPrinterSettings => 'Connect or configure printer';
+
+  @override
+  String get m53LabelPrinter => 'Label printer';
+
+  @override
+  String get m53LabelProtocol => 'Command language supported by the printer';
+
+  @override
+  String get m53LabelwidthMm => 'Label width (mm)';
+
+  @override
+  String get m53LabelheightMm => 'Label height (mm)';
+
+  @override
+  String get m53LabelgapMm => 'Inter-label gap (mm)';
+
+  @override
+  String get m53LabeloffsetXmm => 'Right offset (mm)';
+
+  @override
+  String get m53LabeloffsetYmm => 'Down offset (mm)';
+
+  @override
+  String get m53LabelmoduleDots => 'QR module size (4–12 printer dots)';
+
+  @override
+  String get m53Labelfeed => 'Trailing feed for continuous paper (0–8 lines)';
+
+  @override
+  String get m53Labelcopies => 'Label copies (1–100)';
+
+  @override
+  String get m53LabelPrice => 'Show current retail price';
+
+  @override
+  String get m53LabelGap => 'Use gap label media (TSPL)';
+
+  @override
+  String get m53LabelGapAck =>
+      'I have confirmed the printer supports TSPL and this media size/gap.';
+
+  @override
+  String get m53LabelMediaHelp =>
+      'Label settings are separate from receipts. QR uses a four-module white margin and integer modules of at least four dots. Media that is too small is rejected. Test one label first; physical dimensions depend on the printer specifications. No automatic calibration is performed.';
+
+  @override
+  String get m53LabelSaveProfile => 'Save label settings';
+
+  @override
+  String get m53LabelPreview => 'Preview label';
+
+  @override
+  String get m53LabelTotalMedia => 'Media including feed/gap';
+
+  @override
+  String get m53LabelPrint => 'Send labels to printer';
+
+  @override
+  String get m53LabelPaperWarning =>
+      'Sent data does not prove a label printed. Check the paper and scan the QR. A new job may produce additional labels, especially when the previous delivery is unknown.';
+
+  @override
+  String get m53LabelNewJob => 'Create a new label job';
+
+  @override
+  String get m53LabelPrinterMissing => 'Select and save a printer first.';
+
+  @override
+  String get m53LabelProfileChanged =>
+      'Label settings changed. Reopen this screen to load the current version.';
+
+  @override
+  String get m53LabelProductChanged =>
+      'Product details changed. Review a fresh preview before printing.';
+
+  @override
+  String get m53LabelCopiesInvalid => 'Label copies must be between 1 and 100.';
+
+  @override
+  String get m53LabelProfileInvalid =>
+      'Label size, offsets, QR module size or feed are invalid.';
+
+  @override
+  String get m53LabelGapUnsupported =>
+      'Gap labels require TSPL and confirmation of printer support.';
+
+  @override
+  String get m53LabelWidthExceeded =>
+      'Label width exceeds the selected printer’s printable area.';
+
+  @override
+  String get m53LabelDoesNotFit =>
+      'The label content does not fit. Increase media size or reduce offsets/optional price. QR modules are never automatically shrunk.';
+
+  @override
+  String get m53LabelSnapshotInvalid =>
+      'The label snapshot is invalid. Create a new job from valid product details.';
+
+  @override
+  String get backupLabelProfileInvalid =>
+      'The backup contains invalid label settings.';
+
+  @override
+  String get m53LabelResume => 'Continue the same label job';
+
+  @override
+  String get m53LabelTspl => 'TSPL (continuous or confirmed gap media)';
+
+  @override
+  String get m53LabelIdentityInvalid =>
+      'This product identity is not supported for QR labels. Product data was not changed.';
 }

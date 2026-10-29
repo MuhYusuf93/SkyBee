@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../../data/repositories/product_code_resolver.dart';
 import '../../suppliers/application/supplier_service.dart';
 import '../../suppliers/domain/supplier_invoice.dart';
 import '../../../core/domain/contact_validation.dart';
@@ -1799,11 +1800,7 @@ final class InventoryService {
     if (code.isEmpty || code.length > 256) {
       throw const AppError('m53CameraInvalidCode');
     }
-    final rows = await db.rawQuery(
-      '''SELECT id FROM products WHERE barcode=? OR sku=?
-      ORDER BY id COLLATE BINARY LIMIT 2''',
-      [code, code],
-    );
+    final rows = await ProductCodeResolver.lookup(db, code);
     if (rows.isEmpty) return null;
     if (rows.length != 1) throw const AppError('m3AmbiguousCode');
     return _detail(db, EntityId(rows.single['id'] as String));

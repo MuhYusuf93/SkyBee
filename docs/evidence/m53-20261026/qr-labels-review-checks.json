@@ -1,0 +1,42 @@
+{
+  "schema": 35,
+  "sourceFiles": 672,
+  "changedPathsFromInitialNativeSource": [
+    "lib/features/labels/presentation/product_label_screen.dart",
+    "test/support/m53_qr_label_widgets_suite.dart"
+  ],
+  "sourceManifestSha256": "376f2c2cda7c3df42b6ea14e4af95b7bf37d7972c5ead2dec8f0e3693ae7ea32",
+  "host": {
+    "passed": 2,
+    "failed": 0,
+    "elapsed": "00:21",
+    "scope": "ID/EN child printer return keeps width43, invalidmedia, lockeddirtyBack, viewport-aware unfiltered preview, profileCAS"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 129.9
+  },
+  "format": {
+    "files": 2,
+    "changed": 0
+  },
+  "localization": {
+    "keys": 1296,
+    "staticReferences": 877,
+    "originalRequirements": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "productionDelta": "Only QR UI: preserve unsaved controls/original label CAS after child printer route; refresh peripheral geometry; selected item outside first page stays separate from keyset cursor",
+  "testDelta": "Reveal actual preview image before assertion, yielding real IO in bounded lazy scroller; add child-return preservation assertion",
+  "initialNative": {
+    "poco": "42PASS08:19/776protected hashes unchanged/controlOff",
+    "dv": "41PASS1UIhelperFAIL12:17/852protected hashes unchanged/controlOff/awakeexact"
+  },
+  "nativeReview": "PENDING protected wrapper --plain-name=M53 QR label UI on both devices with fresh baselines",
+  "logs": {
+    "qr-label-review-analyze7.txt": "6b82e3ad2274c7bac266313a5e146786edd6e2f6e5c12b41752558a060dab4db",
+    "qr-label-review-format8.txt": "ac82b88deee3bef84d0bd49dc0542354c9a869ccef5597e4602d8573f7092ff8",
+    "qr-label-review-format9.txt": "5992cf2445f2e5d9b1278a90c801bf529073f97f1498c16b936a06275812cbcd",
+    "qr-label-review-widgets-host6.txt": "77b85cd2241dedc407a0e295e93c2518d0d32a06a695e5b44b117acf9db775b4"
+  }
+}

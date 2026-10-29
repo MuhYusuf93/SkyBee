@@ -1,0 +1,34 @@
+{
+  "schema": 35,
+  "sourceFiles": 672,
+  "changedPathsFromUiReview": [
+    "lib/features/labels/application/qr_label_layout.dart",
+    "test/support/m53_qr_label_renderer_suite.dart"
+  ],
+  "sourceManifestSha256": "c53abc97a928f5b16993690d38b085fba7f1ba236401babab33d58f590b91a1b",
+  "reproduction": "3mm horizontal offset moved only12dots instead of24; centered content halves one-sided inset",
+  "fix": "Centered region consumes twice horizontal inset; actual content moves by8dots/mm; same integer modules/quiet zone/no clipping",
+  "host": {
+    "passed": 9,
+    "failed": 0,
+    "elapsed": "00:00",
+    "scope": "Full RGBA pixel translation24/16dots and actual raster wire plus existing8 renderer cases"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 62.8
+  },
+  "format": {
+    "files": 2,
+    "changed": 1
+  },
+  "native": "PENDING focused M53 QR raster9 both devices with fresh protected hashes",
+  "uiReview": "Poco2PASS1:00/815hashsama; DV2PASS1:44/891hashsama/awakeexact; both controlOff, original failed UI assertion resolved",
+  "noDataMutation": "No operational or .skybee update/reset/reseed",
+  "logs": {
+    "qr-label-offset-analyze8.txt": "b66b3e62fc545fd670ebfd4b68c4cd4edc03e922edca0282f83488bc0ee626dd",
+    "qr-label-offset-format10.txt": "1b8e088768a0e1fc1a6922a38b6838c7742a9169f23644ada431b54ad35ae6af",
+    "qr-label-offset-probe1.txt": "47a74e0c360a11d6dc28f22cd4456498de0bc52531f1da6e9fd2466a7a6b31f9",
+    "qr-label-offset-renderer-host7.txt": "6696af0bc0fd9aca2f0a945575e95d08a0a3e4c5bc8d3cbd5eb3aff5dbad7e2b"
+  }
+}

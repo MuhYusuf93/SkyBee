@@ -35,6 +35,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../features/suppliers/application/supplier_service.dart';
 import '../features/suppliers/application/supplier_reminder_service.dart';
 import '../features/suppliers/application/android_supplier_reminders.dart';
+import '../features/labels/application/product_label_service.dart';
 
 /// Dependency composition only, no shared cart/catalog/report state.
 final class AppServices {
@@ -75,6 +76,7 @@ final class AppServices {
   final SupplierReminderSink? supplierReminderSink;
   late final ManagementService management;
   late final suppliers = SupplierService(database, management);
+  late final labels = ProductLabelService(database, management);
   late final supplierReminders = SupplierReminderService(
     database,
     management.clock,

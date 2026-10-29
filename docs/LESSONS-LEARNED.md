@@ -566,3 +566,30 @@ hanya menerima1777000000..1777999999. Poco permissionSKIP dapat menyembunyikan
 ID probe yang salah; review memperbaiki dua literal fixture, tanpa melebarkan
 API produksi. Source652 lama/newfixture/runtimeidentical dicatat terpisah, DV45
 kemudian PASS termasuk privateOSmetadata. SKIP tidak dianggap notifikasi tampil.
+
+138. Produk baru tanpa penerimaan memakai revision0. Fixture stok awal positif
+dapat menaikkannya dan menyembunyikan validasi snapshot yang salah. Label menerima
+revision>=0 sesuai schema produk; uji stok0 nyata sebelum pengujian UI. Biaya0
+tetap membutuhkan konfirmasi gratis pada writer asli, bukan mengubah aturan
+bisnis agar fixture migrasi lulus.
+
+139. UUID TEXT tersimpan harus dipertahankan case/hyphen persis untuk lookup.
+Uppercase/canonicalize dapat membuat label lama tidak menemukan primary key.
+Teks UUID yang mengandalkan word-wrap hyphen dapat menjadi3baris pada identitas
+tertentu; dua potongan20karakter menampilkan seluruh40karakter. Modul QR integer
+dan quiet zone tidak dikecilkan demi teks. Batas teks label diterapkan ke snapshot,
+bukan menulis ulang nama/SKU master yang panjang.
+
+140. Error atau preview baru dapat menggeser child tombol/gambar keluar cache
+ListView. Caption preview bukan jaminan RawImage sudah dibangun di viewport.
+DV awal UIID menunggu90s meski caption muncul, sedangkan UIEN lulus. Helper
+bounded harus reveal gambar dan memberi kesempatan IO, lalu memeriksa hasil
+nyata. Host reviewIDEN2PASS21s; native review dicatat terpisah pada laporanF1.
+Ini masalah observasi UI, bukan bukti penyebab ARM32/CCTV atau kegagalan QR fisik.
+
+141. Inset satu sisi pada area yang seluruh isinya centered hanya menggeser
+pusat setengah inset. Probe3mm menuntut24dots tetapi mendapat12. Uji tambahan
+harus menentukan perpindahan dari kontrak8dots/mm dan membandingkan seluruh
+RGBA/wire, bukan memakai qrBounds produksi sebagai satu-satunya oracle.
+Renderer memakai inset area dua kali offset agar pusat bergeser tepat; template
+terlalu sempit tetap ditolak. Ukuran nominal bukan bukti kalibrasi kertas.

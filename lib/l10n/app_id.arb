@@ -5139,5 +5139,149 @@
   "m53VisitNoFuture": "Belum ada jadwal hari ini atau mendatang",
   "@m53VisitNoFuture": {
     "description": "Supplier schedules: No plans for today or a later date"
+  },
+  "m53Labels": "Label QR barang",
+  "@m53Labels": {
+    "description": "M5.3 product QR labels. English meaning: Product QR labels"
+  },
+  "m53LabelHelp": "QR berisi identitas barang SkyBee yang tetap sama saat nama, SKU atau harga berubah. Barcode lama tetap dapat dipakai. Scanner fisik harus mendukung QR (2D).",
+  "@m53LabelHelp": {
+    "description": "M5.3 product QR labels. English meaning: QR contains a stable SkyBee product identity even after its name, SKU or price changes. Existing barcodes still work. Physical scanners must support QR (2D)."
+  },
+  "m53LabelPrinterSettings": "Hubungkan atau atur printer",
+  "@m53LabelPrinterSettings": {
+    "description": "M5.3 product QR labels. English meaning: Connect or configure printer"
+  },
+  "m53LabelPrinter": "Printer label",
+  "@m53LabelPrinter": {
+    "description": "M5.3 product QR labels. English meaning: Label printer"
+  },
+  "m53LabelProtocol": "Bahasa perintah yang didukung printer",
+  "@m53LabelProtocol": {
+    "description": "M5.3 product QR labels. English meaning: Command language supported by the printer"
+  },
+  "m53LabelwidthMm": "Lebar label (mm)",
+  "@m53LabelwidthMm": {
+    "description": "M5.3 product QR labels. English meaning: Label width (mm)"
+  },
+  "m53LabelheightMm": "Tinggi label (mm)",
+  "@m53LabelheightMm": {
+    "description": "M5.3 product QR labels. English meaning: Label height (mm)"
+  },
+  "m53LabelgapMm": "Jarak antarkertas label (mm)",
+  "@m53LabelgapMm": {
+    "description": "M5.3 product QR labels. English meaning: Inter-label gap (mm)"
+  },
+  "m53LabeloffsetXmm": "Geser ke kanan (mm)",
+  "@m53LabeloffsetXmm": {
+    "description": "M5.3 product QR labels. English meaning: Right offset (mm)"
+  },
+  "m53LabeloffsetYmm": "Geser ke bawah (mm)",
+  "@m53LabeloffsetYmm": {
+    "description": "M5.3 product QR labels. English meaning: Down offset (mm)"
+  },
+  "m53LabelmoduleDots": "Ukuran modul QR (4–12 titik printer)",
+  "@m53LabelmoduleDots": {
+    "description": "M5.3 product QR labels. English meaning: QR module size (4–12 printer dots)"
+  },
+  "m53Labelfeed": "Feed akhir untuk kertas kontinu (0–8 baris)",
+  "@m53Labelfeed": {
+    "description": "M5.3 product QR labels. English meaning: Trailing feed for continuous paper (0–8 lines)"
+  },
+  "m53Labelcopies": "Jumlah label (1–100)",
+  "@m53Labelcopies": {
+    "description": "M5.3 product QR labels. English meaning: Label copies (1–100)"
+  },
+  "m53LabelPrice": "Tampilkan harga eceran saat ini",
+  "@m53LabelPrice": {
+    "description": "M5.3 product QR labels. English meaning: Show current retail price"
+  },
+  "m53LabelGap": "Gunakan kertas label dengan celah (TSPL)",
+  "@m53LabelGap": {
+    "description": "M5.3 product QR labels. English meaning: Use gap label media (TSPL)"
+  },
+  "m53LabelGapAck": "Saya sudah memastikan printer mendukung TSPL dan ukuran/celah kertas ini.",
+  "@m53LabelGapAck": {
+    "description": "M5.3 product QR labels. English meaning: I have confirmed the printer supports TSPL and this media size/gap."
+  },
+  "m53LabelMediaHelp": "Profil label terpisah dari struk. QR memakai ruang putih empat modul dan modul bulat minimal empat titik. Media yang terlalu kecil ditolak. Uji satu label terlebih dahulu; ukuran fisik mengikuti spesifikasi printer. Tidak ada kalibrasi otomatis.",
+  "@m53LabelMediaHelp": {
+    "description": "M5.3 product QR labels. English meaning: Label settings are separate from receipts. QR uses a four-module white margin and integer modules of at least four dots. Media that is too small is rejected. Test one label first; physical dimensions depend on the printer specifications. No automatic calibration is performed."
+  },
+  "m53LabelSaveProfile": "Simpan pengaturan label",
+  "@m53LabelSaveProfile": {
+    "description": "M5.3 product QR labels. English meaning: Save label settings"
+  },
+  "m53LabelPreview": "Pratinjau label",
+  "@m53LabelPreview": {
+    "description": "M5.3 product QR labels. English meaning: Preview label"
+  },
+  "m53LabelTotalMedia": "Media termasuk feed/celah",
+  "@m53LabelTotalMedia": {
+    "description": "M5.3 product QR labels. English meaning: Media including feed/gap"
+  },
+  "m53LabelPrint": "Kirim label ke printer",
+  "@m53LabelPrint": {
+    "description": "M5.3 product QR labels. English meaning: Send labels to printer"
+  },
+  "m53LabelPaperWarning": "Data terkirim belum membuktikan label tercetak. Periksa kertas dan pindai QR. Membuat pekerjaan baru dapat menghasilkan label tambahan, terutama jika hasil sebelumnya tidak diketahui.",
+  "@m53LabelPaperWarning": {
+    "description": "M5.3 product QR labels. English meaning: Sent data does not prove a label printed. Check the paper and scan the QR. A new job may produce additional labels, especially when the previous delivery is unknown."
+  },
+  "m53LabelNewJob": "Buat pekerjaan label baru",
+  "@m53LabelNewJob": {
+    "description": "M5.3 product QR labels. English meaning: Create a new label job"
+  },
+  "m53LabelPrinterMissing": "Pilih dan simpan printer terlebih dahulu.",
+  "@m53LabelPrinterMissing": {
+    "description": "M5.3 product QR labels. English meaning: Select and save a printer first."
+  },
+  "m53LabelProfileChanged": "Pengaturan label berubah. Buka ulang layar untuk memuat versi terbaru.",
+  "@m53LabelProfileChanged": {
+    "description": "M5.3 product QR labels. English meaning: Label settings changed. Reopen this screen to load the current version."
+  },
+  "m53LabelProductChanged": "Data barang berubah. Tinjau pratinjau terbaru sebelum mencetak.",
+  "@m53LabelProductChanged": {
+    "description": "M5.3 product QR labels. English meaning: Product details changed. Review a fresh preview before printing."
+  },
+  "m53LabelCopiesInvalid": "Jumlah label harus antara 1 dan 100.",
+  "@m53LabelCopiesInvalid": {
+    "description": "M5.3 product QR labels. English meaning: Label copies must be between 1 and 100."
+  },
+  "m53LabelProfileInvalid": "Ukuran, offset, modul QR atau feed label tidak valid.",
+  "@m53LabelProfileInvalid": {
+    "description": "M5.3 product QR labels. English meaning: Label size, offsets, QR module size or feed are invalid."
+  },
+  "m53LabelGapUnsupported": "Celah label hanya didukung untuk TSPL setelah kemampuan printer dikonfirmasi.",
+  "@m53LabelGapUnsupported": {
+    "description": "M5.3 product QR labels. English meaning: Gap labels require TSPL and confirmation of printer support."
+  },
+  "m53LabelWidthExceeded": "Lebar label melebihi area cetak printer yang dipilih.",
+  "@m53LabelWidthExceeded": {
+    "description": "M5.3 product QR labels. English meaning: Label width exceeds the selected printer’s printable area."
+  },
+  "m53LabelDoesNotFit": "Isi label tidak muat. Perbesar media atau kurangi offset/harga opsional. Modul QR tidak diperkecil otomatis.",
+  "@m53LabelDoesNotFit": {
+    "description": "M5.3 product QR labels. English meaning: The label content does not fit. Increase media size or reduce offsets/optional price. QR modules are never automatically shrunk."
+  },
+  "m53LabelSnapshotInvalid": "Snapshot label tidak valid. Buat pekerjaan baru dari data barang yang valid.",
+  "@m53LabelSnapshotInvalid": {
+    "description": "M5.3 product QR labels. English meaning: The label snapshot is invalid. Create a new job from valid product details."
+  },
+  "backupLabelProfileInvalid": "Pengaturan label dalam cadangan tidak valid.",
+  "@backupLabelProfileInvalid": {
+    "description": "M5.3 product QR labels. English meaning: The backup contains invalid label settings."
+  },
+  "m53LabelResume": "Lanjutkan pekerjaan label yang sama",
+  "@m53LabelResume": {
+    "description": "M5.3 product QR labels. English meaning: Continue the same label job"
+  },
+  "m53LabelTspl": "TSPL (kontinu atau celah terkonfirmasi)",
+  "@m53LabelTspl": {
+    "description": "M5.3 product QR labels. English meaning: TSPL (continuous or confirmed gap media)"
+  },
+  "m53LabelIdentityInvalid": "Identitas barang ini belum didukung untuk label QR. Data barang tidak diubah.",
+  "@m53LabelIdentityInvalid": {
+    "description": "M5.3 product QR labels. English meaning: This product identity is not supported for QR labels. Product data was not changed."
   }
 }

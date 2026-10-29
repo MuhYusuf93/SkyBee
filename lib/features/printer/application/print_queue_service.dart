@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 import '../../../core/domain/value_types.dart';
+import '../../../core/domain/app_error.dart';
 import '../../../data/database/database_coordinator.dart';
 import '../../cashier/application/checkout_service.dart';
 import '../../management/application/management_service.dart';
@@ -13,6 +14,9 @@ import 'receipt_layout.dart';
 import 'receipt_snapshots.dart';
 import 'printer_output_gate.dart';
 import 'printer_document.dart';
+import 'printer_raster_source.dart';
+import '../../labels/application/qr_label_layout.dart';
+import '../../labels/domain/product_label.dart';
 
 final class SalePrintPreview {
   const SalePrintPreview(this.layout, this.logo);
@@ -228,11 +232,19 @@ final class PrintQueueService {
         if (!publicPrinter) await access.authorize(dbTxn);
         return id;
       });
-  Future<Map<String, Object?>> job(String id) => database.read(
-    (db) async => Map.unmodifiable(
-      (await db.query('print_jobs', where: 'id=?', whereArgs: [id])).single,
-    ),
-  );
+  Future<Map<String, Object?>> job(String id) => database.read((db) async {
+    final row = (await db.query(
+      'print_jobs',
+      where: 'id=?',
+      whereArgs: [id],
+    )).single;
+    if ((jsonDecode(row['snapshot_json'] as String) as Map).containsKey(
+      'productLabel',
+    )) {
+      await access.authorize(db, capability: ManagementCapability.inventory);
+    }
+    return Map.unmodifiable(row);
+  });
   Future<void> _status(String id, String status, [String? error]) =>
       database.exclusive((db) async {
         await db.update(
@@ -259,8 +271,29 @@ final class PrintQueueService {
 
   Future<String> _send(String id) async {
     if (_suspended) return 'cancelled';
-    final claimed = await database.exclusive(
-      (db) => db.update(
+    final initial = await job(id);
+    final isLabel = (jsonDecode(initial['snapshot_json'] as String) as Map)
+        .containsKey('productLabel');
+    final grant = access.generation, store = database.generation;
+    Future<void> checkLabel() async {
+      if (!isLabel) return;
+      if (grant != access.generation || store != database.generation) {
+        throw const AppError('m3DraftChanged');
+      }
+      await access.authorizeCurrent(capability: ManagementCapability.inventory);
+      if (grant != access.generation || store != database.generation) {
+        throw const AppError('m3DraftChanged');
+      }
+    }
+
+    final claimed = await database.exclusive((db) async {
+      if (isLabel) {
+        await access.authorize(db, capability: ManagementCapability.inventory);
+        if (grant != access.generation || store != database.generation) {
+          throw const AppError('m3DraftChanged');
+        }
+      }
+      return db.update(
         'print_jobs',
         {
           'status': 'sending',
@@ -268,8 +301,8 @@ final class PrintQueueService {
         },
         where: "id=? AND status='prepared'",
         whereArgs: [id],
-      ),
-    );
+      );
+    });
     if (claimed != 1) return (await job(id))['status'] as String;
     var attempted = false;
     try {
@@ -279,7 +312,24 @@ final class PrintQueueService {
       );
       final snapshot =
           jsonDecode(row['snapshot_json'] as String) as Map<String, dynamic>;
-      final layout = snapshot['test'] == true
+      final labelMedia = isLabel
+          ? ProductLabelProfile.fromJson(
+              snapshot['labelProfile'] as Map<String, dynamic>,
+            )
+          : null;
+      final copies = isLabel ? snapshot['copies'] as int : 1;
+      if (copies < 1 || copies > 100) {
+        throw const FormatException('m53LabelCopiesInvalid');
+      }
+      final PrinterRasterSource layout = isLabel
+          ? QrLabelLayout(
+              ProductLabelSnapshot.fromJson(
+                snapshot['productLabel'] as Map<String, dynamic>,
+              ),
+              labelMedia!,
+              profile,
+            )
+          : snapshot['test'] == true
           ? ReceiptLayout.calibration(profile)
           : ReceiptLayout.sale(
               snapshot,
@@ -299,15 +349,27 @@ final class PrintQueueService {
           return rows.single['bytes'] as Uint8List;
         });
       }
+      await checkLabel();
       await transport.connect(row['device_id'] as String);
       attempted = true;
-      await for (final bytes in PrinterDocument(layout).frames(logo: logo)) {
-        for (var i = 0; i < bytes.length; i += 4096) {
-          await transport.write(
-            Uint8List.sublistView(bytes, i, (i + 4096).clamp(0, bytes.length)),
-          );
+      for (var copy = 0; copy < copies; copy++) {
+        await for (final bytes in PrinterDocument(
+          layout,
+          pageMedia: labelMedia?.pageMedia,
+        ).frames(logo: logo)) {
+          for (var i = 0; i < bytes.length; i += 4096) {
+            await checkLabel();
+            await transport.write(
+              Uint8List.sublistView(
+                bytes,
+                i,
+                (i + 4096).clamp(0, bytes.length),
+              ),
+            );
+          }
         }
       }
+      await checkLabel();
       await transport.finish();
       await _status(id, 'submitted');
       return 'submitted';

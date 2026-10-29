@@ -11,21 +11,32 @@ import '../../cashier_lock/application/cashier_lock_service.dart';
 import 'cashier_store.dart';
 import 'product_popularity_store.dart';
 import 'product_search_queries.dart';
+import '../../../data/repositories/product_code_resolver.dart';
+import '../../../core/domain/product_label_code.dart';
 
 /// Actual ranked search query; token filtering is indexed, while GROUP BY/
 /// ranking still has work proportional to its candidates. No O(1) promise.
 SqlQuery rankedProductSearchQuery(String text) {
   final query = normalizeName(text), end = prefixEnd(normalizeName(text));
+  final labelId = ProductLabelCode.productId(text.trim());
   return SqlQuery(
     '''WITH candidates AS (
         SELECT id AS product_id,0 AS priority FROM products WHERE is_deleted=0 AND barcode=?
         UNION ALL SELECT id,0 FROM products WHERE is_deleted=0 AND sku=?
+        ${labelId == null ? '' : 'UNION ALL SELECT id,0 FROM products WHERE is_deleted=0 AND id=?'}
         UNION ALL SELECT id,1 FROM products WHERE is_deleted=0 AND normalized_name=?
         UNION ALL SELECT product_id,priority FROM cashier_search_terms
         WHERE term COLLATE BINARY>=? ${end == null ? '' : 'AND term COLLATE BINARY<?'})
         SELECT p.id,MIN(c.priority) AS rank FROM candidates c JOIN products p ON p.id=c.product_id
         WHERE p.is_deleted=0 GROUP BY p.id ORDER BY rank,p.normalized_name COLLATE BINARY,p.id COLLATE BINARY LIMIT 16''',
-    [text.trim(), text.trim(), query, query, ?end],
+    [
+      text.trim(),
+      text.trim(),
+      if (labelId != null) labelId.value,
+      query,
+      query,
+      ?end,
+    ],
   );
 }
 
@@ -80,13 +91,8 @@ final class ProductSearchService implements PagedProductSearch {
       return fts5Available = false;
     }
   });
-  Future<List<Map<String, Object?>>> _exact(
-    DatabaseExecutor db,
-    String code,
-  ) => db.rawQuery(
-    'SELECT id FROM products WHERE is_deleted=0 AND barcode=? UNION SELECT id FROM products WHERE is_deleted=0 AND sku=?',
-    [code, code],
-  );
+  Future<List<Map<String, Object?>>> _exact(DatabaseExecutor db, String code) =>
+      ProductCodeResolver.lookup(db, code, includeArchived: false);
   @override
   Future<CashierProduct> scan(String code) => database.read((db) async {
     final proof = await CashierLockService.beginOn(db, store.cashierAccess);
@@ -97,6 +103,7 @@ final class ProductSearchService implements PagedProductSearch {
       db,
       EntityId(rows.single['id'] as String),
     );
+    if (product.archived) throw const AppError('productNotFound');
     await CashierLockService.endOn(db, proof);
     return product;
   });

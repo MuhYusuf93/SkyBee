@@ -1,5 +1,75 @@
 # Matriks persyaratan
 
+29 Oktober21:17 — F1 QR35 ditutup perinterval: host46PASS61s/printer33PASS69s;
+Pocoawal42PASS, DVawal41PASS1helperFAIL, diselesaikan UIreview2Poco/DV PASS
+(815/891hashsama). Offset3mm→12dots direproduksi/diperbaiki: hostrenderer9PASS,
+nativePoco9PASS<1s/817hashsama danDV9PASS2s/893hashsama/awakeexact. Semua kontrol
+Off/trueexit0; source672-offset final, bukan klaimfullrun tunggal sourcebaru.
+Analyzer62,8s bersih/l10n1296/877/245/PIN106match. [Laporan F1](M53_QR_LABELS_REPORT.md).
+Normalcommit/pushcheckpoint F1 kemudian langsung F2 struk wajib, F3 laporan,
+G/H; checkpoint bukan stop. Belum kertas/scannerfisik. .skybee belum update/
+reset/reseed;100produk/50transaksi hanyaH sesudah semuaM5.3 danbackup/keylama
+verified. OrdinaryPoco0.5.1+8/.skybee0.5.2+12 readonly, tetaputuh.
+
+29 Oktober21:06 — F1 UIreview selesai: Poco2PASS1:00/815hashsama;
+DV2PASS1:44/891hashsama/awakeexact, semua controlOff/trueexit0. FailurehelperID
+awal teratasi. Probegeometri kemudian mereproduksi offset3mm→12dots (harus24);
+renderer diperbaiki, host9PASS<1s/analyze62,8s bersih. Source672-offset frozen
+(2file layout/fixture dari672-review), native raster9 Poco aktif di
+`build/m53-qr-offset-poco-20261029-2106-20261029-210612` (session21766),
+DVraster9 berikutnya. Tunggu trueexit/hash/finally sebelum edit. UI/SQL/offset0
+tidak berubah. [Laporan](M53_QR_LABELS_REPORT.md). Setelahnative tutup F1commit/
+push lalu F2/F3/G/H, checkpoint bukan stop. .skybee belum update/reset/reseed.
+
+29 Oktober20:53 — F1 review nativePocoUI2PASS1:00/815protectedhashsama/
+controlOff/trueexit0. Source672-review frozen (hanya2fileUI/fixture dari awal).
+DVfocusedUI2 aktif di
+`build/m53-qr-ui-review-dv-20261029-2053-20261029-205253` (session94437),
+BackgroundPaused=true. Tunggu trueexit/finally/hash/awakeexact sebelum edit.
+Host46PASS61s/printer33PASS69s; reviewhost2PASS21s/analyze129,9s/format2/0.
+NativeawalPoco42PASS; DV41PASS1helperUIIDFAIL12:17, decoder lulus/hashes852sama.
+[Laporan F1](M53_QR_LABELS_REPORT.md). SetelahDVcurate, normalcommit/push F1,
+lalu F2/F3/G/H. Tidak ada update/reset/reseed .skybee; checkpoint bukan stop.
+
+29 Oktober20:47 — F1 native awal source672 ditutup: Poco42PASS8:19/776hashsama;
+DV41PASS1UI-helperFAIL12:17/852hashsama/controlOff/awakeexact. Decoder kedua
+perangkat lulus. Review memperbaiki form childprinterReturn dan helper reveal
+gambar sebelumassert; hostUI2PASS21s/analyze129,9s bersih/format2/0.
+Source672-review (hanya2fileUI/fixture berbeda) frozen. Focused nativeUI2 Poco
+aktif di `build/m53-qr-ui-review-poco-20261029-2049-20261029-204740`
+(session97286); DVfocused berikutnya. Tunggu trueexit/finally/hash sebelum edit.
+[Laporan](M53_QR_LABELS_REPORT.md). .skybee belum update/reset/reseed.
+F2/F3/G/H tetapaktif; checkpoint bukan stop. OrdinaryPoco aktual0.5.1+8,
+.skybee0.5.2+12 (readonly); tidak mengupdate/downgrade package lama.
+
+29 Oktober20:24 — F1 Poco42PASS8:19, termasuk decoder ZXing independen;
+776protected entries hashsama/controlOff/trueexit0. Source672 tetap frozen.
+DV42 aktif melalui wrapper freshbaseline di
+`build/m53-qr-labels-dv-20261029-2024-20261029-202430` (session49596),
+BackgroundPaused=true. Tunggu native/finally/hash/awakeexact sebelum edit source.
+Host46PASS61s/printerlama33PASS69s/analyze12s/l10n1296/PIN106match.
+[Laporan](M53_QR_LABELS_REPORT.md), [panduan ID/EN](M53_QR_LABELS_GUIDE.md).
+F2/F3/G/H tetapaktif; .skybee belum update/reset/reseed. Draft audit F2 privat
+di build/m53/m53-f2-implementation-notes.md. Checkpoint bukan stop.
+
+29 Oktober — F1 host ditutup46PASS61s (QR28 +E3 jadwal13/runtime5),
+regresi printerlama33PASS69s, analyzer12s bersih, l10n1296/877/245/PIN106match.
+Source672 frozen. Native42 Poco aktif melalui wrapper di
+`build/m53-qr-labels-poco-20261029-2014-20261029-201245` (session3279),
+BackgroundPaused=true; tunggu trueexit/finally/hash sebelum perubahan source.
+DV berikutnya dengan freshbaseline. [Laporan F1](M53_QR_LABELS_REPORT.md).
+Belum kertas/scannerfisik; .skybee belum update/reset/reseed. Lanjut F2/F3/G/H.
+
+29 Oktober19:58 — F1 QR label schema35 WIP setelah E3 `6124326` pushed.
+Identitas UUID40karakter case-preserved/lookup bersama, renderer modul integer/
+quiet4, profil label terpisah dan existing print queue sudah ditulis. Hostlookup5,
+search11, renderer8+queue8 PASS19s; regresi cetaklama33PASS69s setelah fixture
+member wajib nomor diperbaiki. UI ID/EN320px/text2, analyzer, validator/migrasi
+dan native masih diperiksa; belum kertas/scannerfisik. Delta jadwal E3 wajib
+dalam nativeF. [Keputusan F1](decisions/M53_QR_LABELS.md). Lanjut F2/F3/G/H,
+checkpoint bukan stop. .skybee belum update/reset/reseed;100produk/50transaksi
+hanyaH sesudah backup/keylama terverifikasi.
+
 29 Oktober16:14 — E3 native ditutup: Poco44PASS1permissionSKIP13:03/726hashsama;
 DV45PASS16:48/802hashsama/awakeexact, semua kontrolOff. Source652-platform bukti
 native historis. Review sesudahnya menambah event supplier khusus (edit cart
@@ -119,8 +189,8 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-B2 | Role/capability terpisah, Back dan kunci kasir | Role/capability dan Back warning tersedia; native UI3 per DV/Poco PASS; kunci kasir schema20:21kasus+API1 native22 per DV/Poco PASS (M53_CASHIER_LOCK_REPORT), defaultoff tanpa grant Kelola |
 | M53-C | Pencarian/popularitas, uang cepat, member/piutang | Tender21 host/native17 per perangkat PASS. Member22 host20/regresi79/native20 per perangkat PASS. Search23 host51 (17search)/M52focus1/native13 per DV/Poco PASS;680/611hash lama cocok. Lihat M53_TENDER_REPORT, M53_MEMBER_REPORT, M53_SEARCH_REPORT |
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
-| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Schema31–34 E3 core: host51PASS/final15PASS(overlap), Poco44PASS1permissionSKIP/726hashsama, DV45PASS/802hashsama/awakeexact/controlOff; source652-platform historis. Post-review scoped reminder event/next visit date host20 + analyze bersih/source652-post-review, delta native masuk F. Bukti supplier-e3-{poco-initial,dv}.json dan supplier-schedules-post-review-checks.json. F/G/H tetap aktif. |
-| M53-F | Label/struk wajib dan laporan/ekspor baru | TODO |
+| M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Schema31–34 E3 core: host51PASS/final15PASS(overlap), Poco44PASS1permissionSKIP/726hashsama, DV45PASS/802hashsama/awakeexact/controlOff; source652-platform historis. Post-review scoped reminder event/next visit date host20 + analyze bersih/source652-post-review, delta jadwal11/UI2 nativePoco/DV lulus padaF1; runtime5 tetapbukti host. Bukti supplier-e3-{poco-initial,dv}.json dan supplier-schedules-post-review-checks.json. F/G/H tetap aktif. |
+| M53-F | Label/struk wajib dan laporan/ekspor baru | F1 QR35 selesai software perinterval: host46/printer33, nativeawal Poco42/DV41+1helperFAIL, UIreview2 masing-masing PASS/815&891hashsama; offset9 masing-masing PASS/817&893hashsama, semua controlOff/DVawakeexact. Laporan M53_QR_LABELS_REPORT.md menjelaskan manifest awal/review/offset dan failure teratasi; tidak klaim satufullrun atau fisik. F2 struk wajib dan F3 laporan/ekspor tetap TODO. |
 | M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |
 | M53-H | Build/push/handoff baru terinstal .skybee dengan backup lama dan seed100/50 | TODO setelah E/F/G lengkap. Ralat langsung pengguna mengotorisasi reset .skybee pada akhir saja: backup lama verified dahulu, onboarding pending, 100produk beragam/beberapa supplier/pelanggan/50transaksi. Belum ada update/reset/reseed. Build ordinary/release/handoff M5.3 dan dua startup belum dilakukan; artefak lama bukan bukti source31 |
 

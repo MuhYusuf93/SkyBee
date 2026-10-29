@@ -22,6 +22,7 @@ import '../../inventory/application/stocktake_validation.dart';
 import '../../inventory/application/supplier_return_validation.dart';
 import '../../suppliers/application/supplier_terms_validation.dart';
 import '../../suppliers/application/supplier_service.dart';
+import '../../labels/application/product_label_validation.dart';
 
 /// Archive authentication is necessary but not a substitute for supported
 /// business metadata. Scan bounded rows, preserving all accepted legacy values.
@@ -54,6 +55,7 @@ final class BackupValidation {
     if (schema >= 32) await SupplierReturnValidation.validate(db);
     if (schema >= 33) await SupplierCreditValidation.validate(db);
     if (schema >= 34) await SupplierScheduleValidation.validate(db);
+    if (schema >= 35) await ProductLabelValidation.validate(db);
     if (schema >= 26 &&
         (await db.rawQuery('''SELECT 1 FROM products p
       LEFT JOIN suppliers s ON s.id=p.master_supplier_id

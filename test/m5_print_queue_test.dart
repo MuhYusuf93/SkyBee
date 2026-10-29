@@ -100,7 +100,10 @@ void m5PrintQueueSuite(
         draft.revision,
         const CheckoutInput(
           mode: PaymentMode.debt,
-          customer: CustomerChoice(name: 'Synthetic print debtor'),
+          customer: CustomerChoice(
+            name: 'Synthetic print debtor',
+            phone: '081234567890',
+          ),
         ),
       )).id;
       transport = Transport();

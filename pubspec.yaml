@@ -30,6 +30,7 @@ dependencies:
   crypto: 3.0.7
   archive: 4.5.2
   dlibphonenumber: ^1.1.74
+  qr: 4.0.0
 
 dev_dependencies:
   flutter_test:
