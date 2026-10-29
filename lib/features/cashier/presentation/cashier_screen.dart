@@ -241,6 +241,7 @@ class _CashierBodyState extends State<_CashierBody>
                 )
               : ReceiptView(
                   receipt: receipt!,
+                  nextError: cart.error,
                   recovered: receiptWasRecovered,
                   time: context
                       .read<AppServices>()

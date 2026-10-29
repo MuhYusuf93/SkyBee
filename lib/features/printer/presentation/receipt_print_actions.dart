@@ -6,6 +6,8 @@ import '../../../core/domain/value_types.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../l10n/localization.dart';
 import 'receipt_preview.dart';
+import 'receipt_exception_screen.dart';
+import '../domain/receipt_print_policy.dart';
 
 /// UI progress only. The persistent queue guards repeated taps and survives route
 /// disposal; a print failure cannot re-enter checkout or change a saved sale.
@@ -24,6 +26,101 @@ class ReceiptPrintActions extends StatefulWidget {
 class _ReceiptPrintActionsState extends State<ReceiptPrintActions> {
   bool busy = false;
   String? status;
+  ReceiptPrintState? paper;
+  @override
+  void initState() {
+    super.initState();
+    refreshPaper();
+  }
+
+  @override
+  void didUpdateWidget(covariant ReceiptPrintActions oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.saleId != widget.saleId) {
+      paper = null;
+      status = null;
+      refreshPaper();
+    }
+  }
+
+  Future<void> refreshPaper() async {
+    final app = context.read<AppServices>(), sale = widget.saleId;
+    final generation = app.database.generation;
+    try {
+      final value = await app.receiptPolicy.status(sale);
+      if (mounted &&
+          widget.saleId == sale &&
+          generation == app.database.generation) {
+        setState(() => paper = value);
+      }
+    } catch (e) {
+      if (mounted) setState(() => status = safeError(e));
+    }
+  }
+
+  Future<void> confirmPaper() async {
+    final job = paper?.confirmableJob;
+    if (busy || job == null) return;
+    setState(() => busy = true);
+    try {
+      final yes = await showDialog<bool>(
+        context: context,
+        builder: (dialog) => AlertDialog(
+          scrollable: true,
+          title: Text(tr(dialog, 'm53ReceiptPaperQuestion')),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(tr(dialog, 'm53ReceiptPaperInspect')),
+              Wrap(
+                spacing: 8,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(dialog, false),
+                    child: Text(tr(dialog, 'cancel')),
+                  ),
+                  FilledButton(
+                    key: const ValueKey('receipt-paper-yes'),
+                    onPressed: () => Navigator.pop(dialog, true),
+                    child: Text(tr(dialog, 'm53ReceiptPaperYes')),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+      if (yes != true || !mounted) return;
+      await context.read<AppServices>().receiptPolicy.confirmPaper(
+        widget.saleId,
+        job,
+        operationKey: const IdGenerator().next().value,
+        management: widget.history,
+      );
+      if (mounted) setState(() => status = 'm53ReceiptOperatorConfirmed');
+      if (mounted) await refreshPaper();
+    } catch (e) {
+      if (mounted) setState(() => status = safeError(e));
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
+  Future<void> exception() async {
+    if (busy) return;
+    setState(() => busy = true);
+    try {
+      await Navigator.of(context).push<bool>(
+        MaterialPageRoute(
+          builder: (_) => ReceiptExceptionScreen(sale: widget.saleId),
+        ),
+      );
+      if (mounted) await refreshPaper();
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
   Future<void> printReceipt(bool copy) async {
     if (busy) return;
     setState(() => busy = true);
@@ -65,6 +162,7 @@ class _ReceiptPrintActionsState extends State<ReceiptPrintActions> {
             _ => 'm5PrintPrepared',
           },
         );
+        await refreshPaper();
       }
     } on AppError catch (error) {
       if (mounted) setState(() => status = error.message);
@@ -126,19 +224,59 @@ class _ReceiptPrintActionsState extends State<ReceiptPrintActions> {
     children: [
       if (busy) LinearProgressIndicator(semanticsLabel: tr(context, 'loading')),
       if (status != null) Text(tr(context, status!)),
+      if (status == null && paper?.latestStatus != null)
+        Text(
+          tr(context, switch (paper!.latestStatus) {
+            'submitted' => 'm5DataSent',
+            'unknown' => 'm5DeliveryUnknown',
+            'sending' => 'm5PrintSending',
+            'prepared' => 'm5PrintPrepared',
+            _ => 'm5NotSent',
+          }),
+        ),
+      if (paper?.required == true) ...[
+        Text(
+          tr(
+            context,
+            paper!.pending
+                ? 'm53ReceiptRequiredPending'
+                : paper!.resolution == 'operator_confirmation'
+                ? 'm53ReceiptOperatorConfirmed'
+                : 'm53ReceiptOwnerExcepted',
+          ),
+          key: const ValueKey('receipt-paper-state'),
+        ),
+        if (paper!.pending) ...[
+          Text(tr(context, 'm53ReceiptPaperHelp')),
+          if (paper!.confirmableJob != null)
+            OutlinedButton(
+              key: const ValueKey('receipt-paper-confirm'),
+              onPressed: busy ? null : confirmPaper,
+              child: Text(tr(context, 'm53ReceiptPaperQuestion')),
+            ),
+          OutlinedButton(
+            key: const ValueKey('receipt-paper-exception'),
+            onPressed: busy ? null : exception,
+            child: Text(tr(context, 'm53ReceiptException')),
+          ),
+        ],
+      ],
       Wrap(
         spacing: 8,
         children: [
           OutlinedButton.icon(
             onPressed: busy
                 ? null
-                : () => Navigator.push<void>(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          const PrinterSettingsScreen(publicAccess: true),
-                    ),
-                  ),
+                : () async {
+                    await Navigator.push<void>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            const PrinterSettingsScreen(publicAccess: true),
+                      ),
+                    );
+                    if (mounted) await refreshPaper();
+                  },
             icon: const Icon(Icons.settings_outlined),
             label: Text(tr(context, 'm51PrinterTitle')),
           ),

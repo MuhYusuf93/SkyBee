@@ -1,5 +1,31 @@
 # Checkpoint aktif M5.3 — AKTIF
 
+30 Oktober — F2 schema36 ditutup: host43PASS77s/final16PASS26s,
+analyze42s bersih/l10n1316/892/245/PIN106match. NativePoco41PASS7:54/817hashsama,
+DV41PASS11:27/893hashsama/awakeexact; source683 sama, semua kontrolOff/trueexit0.
+[Laporan F2](M53_RECEIPT_POLICY_REPORT.md). Commit/push checkpoint F2 lalu F3
+laporan/ekspor, G dan H; checkpoint bukan stop. .skybee belum update/reset/reseed;
+100produk/50transaksi hanyaH sesudah seluruh M5.3 dan backup/recovery lama verified.
+F3 audit tersimpan di build/m53/m53-f3-audit-next.md. F1 dce435c pushed.
+
+29 Oktober22:08 — F2 host43PASS77s/final16PASS26s/analyze42s bersih,
+l10n1316/892/245/PIN106match; source683 schema36 frozen. NativePoco41PASS7:54/
+817protectedhashsama/controlOff/trueexit0. DV41 aktif melalui wrapper di
+`build/m53-receipt-policy-dv-20261029-2208-20261029-220819` (session93466),
+BackgroundPaused=true. Tunggu trueexit/finally/hash/awakeexact sebelum editsource.
+[Laporan F2](M53_RECEIPT_POLICY_REPORT.md). F1 dce435c pushed. F3 audit privat
+build/m53/m53-f3-audit-next.md; G/H tetapwajib. .skybee belum update/reset/reseed.
+Checkpoint bukan stop; lanjut sesudahDV keF2commit/push danF3/G/H.
+
+29 Oktober — F1 checkpoint `dce435ccabb0386421167ff15eac59cad43ccfab`
+pushed main. F2 struk wajib schema36 WIP: defaultoff ownerCAS, atomic requirement,
+O(1)pendinggate, manualpaper confirmation dan single-sale freshowner exception,
+append-only witness/validator portable. Hostdomain13PASS56s; UI IDEN320/text2
+sedang diperbaiki harness scoping/async zones, belumnative36. Analyzer awal hanya
+curlystyleinfos; finalformat/analyze/native masih wajib. [Keputusan F2](decisions/M53_RECEIPT_POLICY.md).
+Tidakada nativeaktif; F1 semua kontrolOff/hashlama sama/DVawakeexact. .skybee
+belum update/reset/reseed. Lanjut tutupF2/UI/native laluF3/G/H, jangan stop.
+
 29 Oktober21:17 — F1 QR35 ditutup perinterval: host46PASS61s/printer33PASS69s;
 Pocoawal42PASS, DVawal41PASS1helperFAIL, diselesaikan UIreview2Poco/DV PASS
 (815/891hashsama). Offset3mm→12dots direproduksi/diperbaiki: hostrenderer9PASS,

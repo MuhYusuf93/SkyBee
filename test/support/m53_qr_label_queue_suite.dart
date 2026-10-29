@@ -414,6 +414,7 @@ void m53QrLabelQueueSuite(DatabaseFactory factory) {
         upgraded = DatabaseCoordinator(
           factory: factory,
           databasePath: old.databasePath,
+          schemaVersion: 35,
         );
         for (final entry in before.entries) {
           expect(

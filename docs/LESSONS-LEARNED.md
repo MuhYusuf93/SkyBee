@@ -593,3 +593,15 @@ harus menentukan perpindahan dari kontrak8dots/mm dan membandingkan seluruh
 RGBA/wire, bukan memakai qrBounds produksi sebagai satu-satunya oracle.
 Renderer memakai inset area dua kali offset agar pusat bergeser tepat; template
 terlalu sempit tetap ditolak. Ukuran nominal bukan bukti kalibrasi kertas.
+
+142. Static Future FIFO desktop tidak boleh tertinggal pada FakeAsync zone
+widgettest sebelumnya. UI setup cetak sintetis memakai lease milik fixture;
+uji domain/native tetap memakai output gate produksi. Menjalankan seluruh DB
+callback dengan runAsync malah dapat menunggu callback UI tanpa pump. Bedakan
+isolasi harness dari perubahan penguncian produksi; jangan melemahkan gate.
+
+143. Parent route offstage hilang dari finder default saat layar PIN di atasnya.
+Itu bukan bukti autentikasi atau persetujuan sudah selesai. Tunggu layar PIN
+dan route pengecualian benar-benar tutup serta receipt kembali, lalu periksa
+resolution SQL. F2 ID/EN membuktikan owner grant kembali terkunci dan hanya satu
+exception tercatat; laporan fisik tetap berdasarkan batas bukti yang nyata.

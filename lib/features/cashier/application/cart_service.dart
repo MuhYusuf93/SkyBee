@@ -5,6 +5,7 @@ import '../../../core/domain/value_types.dart';
 import '../../../data/database/database_coordinator.dart';
 import '../domain/cashier_models.dart';
 import 'cashier_store.dart';
+import '../../printer/application/receipt_policy_service.dart';
 
 /// Durable cart mutations; no stock is reserved or removed by a draft.
 final class CartService {
@@ -29,6 +30,22 @@ final class CartService {
     final pointer =
         (await dbTxn.query('cashier_state')).single['draft_id'] as String?;
     EntityId? id = pointer == null ? null : EntityId(pointer);
+    if (database.schemaVersion >= 36) {
+      final pending = await ReceiptPolicyService.pendingOn(dbTxn);
+      if (pending != null) {
+        final row = (await dbTxn.query(
+          'sale_transactions',
+          columns: ['draft_id'],
+          where: 'id=?',
+          whereArgs: [pending],
+        )).single;
+        id = EntityId(row['draft_id'] as String);
+        await dbTxn.update('cashier_state', {
+          'draft_id': id.value,
+        }, where: 'id=1');
+        return store.cart(dbTxn, id);
+      }
+    }
     if (id == null) {
       final old = await dbTxn.query(
         'cart_drafts',
@@ -56,6 +73,9 @@ final class CartService {
     if (pointer != completedId.value) throw const AppError('m3DraftChanged');
     final old = await store.draft(dbTxn, completedId, active: false);
     if (old['state'] != 'completed') throw const AppError('m3DraftUnavailable');
+    if (database.schemaVersion >= 36) {
+      await ReceiptPolicyService.requireNoPendingOn(dbTxn);
+    }
     return store.cart(dbTxn, await _create(dbTxn));
   });
   Future<void> _changed(DatabaseExecutor db, EntityId id, int revision) async {

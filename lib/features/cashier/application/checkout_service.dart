@@ -11,6 +11,7 @@ import '../../inventory/domain/stock_rules.dart';
 import '../domain/cashier_models.dart';
 import 'cashier_store.dart';
 import '../../printer/application/receipt_snapshots.dart';
+import '../../printer/application/receipt_policy_service.dart';
 
 /// A checkout is one local SQL transaction. Draft identity is the durable
 /// checkout key; retry reads immutable result before looking at current stock.
@@ -146,6 +147,9 @@ final class CheckoutService {
             dbTxn,
             EntityId(existing.single['id'] as String),
           );
+        }
+        if (database.schemaVersion >= 36) {
+          await ReceiptPolicyService.requireNoPendingOn(dbTxn);
         }
         final draft = await store.draft(dbTxn, draftId);
         if (draft['revision'] != revision) {
@@ -499,6 +503,9 @@ final class CheckoutService {
         final receipt = await store.receipt(dbTxn, saleId);
         if (database.schemaVersion >= 8) {
           await ReceiptSnapshots.record(dbTxn, receipt);
+        }
+        if (database.schemaVersion >= 36) {
+          await ReceiptPolicyService.recordOn(dbTxn, saleId, now);
         }
         return receipt;
       },

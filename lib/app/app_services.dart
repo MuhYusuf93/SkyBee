@@ -23,6 +23,7 @@ import '../features/reports/application/reports_service.dart';
 import '../features/corrections/application/correction_service.dart';
 import '../features/cash_drawer/application/cash_drawer_history_service.dart';
 import '../features/printer/application/print_queue_service.dart';
+import '../features/printer/application/receipt_policy_service.dart';
 import '../features/printer/application/printer_settings_service.dart';
 import '../features/printer/application/printer_transport.dart';
 import '../features/printer/application/printer_output_gate.dart';
@@ -76,6 +77,11 @@ final class AppServices {
   final SupplierReminderSink? supplierReminderSink;
   late final ManagementService management;
   late final suppliers = SupplierService(database, management);
+  late final receiptPolicy = ReceiptPolicyService(
+    database,
+    management,
+    cashierLock,
+  );
   late final labels = ProductLabelService(database, management);
   late final supplierReminders = SupplierReminderService(
     database,

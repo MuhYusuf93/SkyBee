@@ -5204,7 +5204,7 @@
   "@m53LabelGapAck": {
     "description": "M5.3 product QR labels. English meaning: I have confirmed the printer supports TSPL and this media size/gap."
   },
-  "m53LabelMediaHelp": "Profil label terpisah dari struk. QR memakai ruang putih empat modul dan modul bulat minimal empat titik. Media yang terlalu kecil ditolak. Uji satu label terlebih dahulu; ukuran fisik mengikuti spesifikasi printer. Tidak ada kalibrasi otomatis.",
+  "m53LabelMediaHelp": "Profil label terpisah dari struk. QR memakai ruang putih empat modul dan ukuran modul minimal empat titik. Media yang terlalu kecil ditolak. Uji satu label terlebih dahulu; ukuran fisik mengikuti spesifikasi printer. Tidak ada kalibrasi otomatis.",
   "@m53LabelMediaHelp": {
     "description": "M5.3 product QR labels. English meaning: Label settings are separate from receipts. QR uses a four-module white margin and integer modules of at least four dots. Media that is too small is rejected. Test one label first; physical dimensions depend on the printer specifications. No automatic calibration is performed."
   },
@@ -5283,5 +5283,85 @@
   "m53LabelIdentityInvalid": "Identitas barang ini belum didukung untuk label QR. Data barang tidak diubah.",
   "@m53LabelIdentityInvalid": {
     "description": "M5.3 product QR labels. English meaning: This product identity is not supported for QR labels. Product data was not changed."
+  },
+  "m53ReceiptPolicy": "Kebijakan struk",
+  "@m53ReceiptPolicy": {
+    "description": "M5.3 receipt policy. English meaning: Receipt policy"
+  },
+  "m53ReceiptPolicyRequired": "Wajib mencetak struk sebelum transaksi berikutnya",
+  "@m53ReceiptPolicyRequired": {
+    "description": "M5.3 receipt policy. English meaning: Require a receipt before the next sale"
+  },
+  "m53ReceiptPolicyHelp": "Default nonaktif. Jika aktif saat penjualan disimpan, kasir tetap di hasil transaksi sampai struk dikonfirmasi sudah keluar atau pemilik menyetujui pengecualian satu transaksi. Stok, piutang dan uang tetap tersimpan sekali meski printer gagal. Mematikan kebijakan hanya berlaku untuk penjualan berikutnya; kewajiban yang sudah dicatat tetap harus diselesaikan.",
+  "@m53ReceiptPolicyHelp": {
+    "description": "M5.3 receipt policy. English meaning: Off by default. When enabled as a sale is saved, the cashier remains on its receipt until paper output is confirmed or the owner approves a single-sale exception. Stock, debt and money are committed once even if the printer fails. Disabling the policy affects future sales; existing obligations still need resolution."
+  },
+  "m53ReceiptRequiredPending": "Struk transaksi ini belum dipenuhi. Periksa kertas dan konfirmasikan, cetak ulang secara eksplisit, atau minta pengecualian pemilik sebelum belanja berikutnya.",
+  "@m53ReceiptRequiredPending": {
+    "description": "M5.3 receipt policy. English meaning: This sale’s receipt is still required. Inspect and confirm the paper, explicitly print a copy, or request an owner exception before the next basket."
+  },
+  "m53ReceiptPolicyUnavailable": "Kebijakan struk memerlukan pembaruan database.",
+  "@m53ReceiptPolicyUnavailable": {
+    "description": "M5.3 receipt policy. English meaning: The receipt policy requires a database upgrade."
+  },
+  "m53ReceiptPolicyChanged": "Kebijakan struk berubah. Muat ulang pengaturan sebelum menyimpan.",
+  "@m53ReceiptPolicyChanged": {
+    "description": "M5.3 receipt policy. English meaning: The receipt policy changed. Reload settings before saving."
+  },
+  "m53ReceiptNotPending": "Transaksi ini tidak lagi menunggu penyelesaian struk. Muat ulang hasil transaksi.",
+  "@m53ReceiptNotPending": {
+    "description": "M5.3 receipt policy. English meaning: This sale is no longer waiting for receipt fulfillment. Reload the receipt."
+  },
+  "m53ReceiptConfirmationUnavailable": "Pekerjaan ini belum dapat menjadi konfirmasi struk. Gunakan pengiriman struk untuk transaksi yang sama; label, kalibrasi dan pengiriman gagal tidak memenuhi syarat.",
+  "@m53ReceiptConfirmationUnavailable": {
+    "description": "M5.3 receipt policy. English meaning: This job cannot confirm the receipt. Use a receipt delivery for the same sale; label, calibration and failed deliveries do not qualify."
+  },
+  "m53ReceiptPaperQuestion": "Struk sudah tercetak?",
+  "@m53ReceiptPaperQuestion": {
+    "description": "M5.3 receipt policy. English meaning: Has the receipt printed?"
+  },
+  "m53ReceiptPaperInspect": "Periksa kertas struk transaksi ini secara langsung. Sukses menulis byte, ACK atau status terkirim tidak membuktikan kertas keluar. Konfirmasi ini adalah pernyataan operator, bukan verifikasi fisik otomatis dari printer.",
+  "@m53ReceiptPaperInspect": {
+    "description": "M5.3 receipt policy. English meaning: Inspect this sale’s paper receipt yourself. Successful writes, ACK or sent status do not prove paper delivery. This confirmation is an operator statement, not automatic physical verification by the printer."
+  },
+  "m53ReceiptPaperYes": "Ya, saya sudah memeriksa struknya",
+  "@m53ReceiptPaperYes": {
+    "description": "M5.3 receipt policy. English meaning: Yes, I inspected the paper receipt"
+  },
+  "m53ReceiptPaperHelp": "Tidak ada cetak ulang otomatis ketika hasil ambigu. Konfirmasi hanya jika kertas benar-benar sudah keluar, termasuk dari pengiriman sebelumnya. Jika printer rusak atau kertas habis, pemilik dapat menyetujui pengecualian satu transaksi dengan alasan.",
+  "@m53ReceiptPaperHelp": {
+    "description": "M5.3 receipt policy. English meaning: Unknown delivery never retries automatically. Confirm only after paper actually comes out, including from an earlier attempt. If the printer is broken or out of paper, the owner may approve a single-sale exception with a reason."
+  },
+  "m53ReceiptOperatorConfirmed": "Struk dikonfirmasi operator setelah pemeriksaan kertas.",
+  "@m53ReceiptOperatorConfirmed": {
+    "description": "M5.3 receipt policy. English meaning: The operator confirmed the receipt after inspecting the paper."
+  },
+  "m53ReceiptOwnerExcepted": "Pengecualian struk satu transaksi telah disetujui pemilik.",
+  "@m53ReceiptOwnerExcepted": {
+    "description": "M5.3 receipt policy. English meaning: The owner approved a receipt exception for this sale only."
+  },
+  "m53ReceiptException": "Minta pengecualian struk satu transaksi",
+  "@m53ReceiptException": {
+    "description": "M5.3 receipt policy. English meaning: Request a single-sale receipt exception"
+  },
+  "m53ReceiptExceptionHelp": "Penjualan sudah tersimpan. Pengecualian ini tidak membatalkan, menagih ulang atau mengubah stok/piutang/uang. Tulis alasan, lalu minta pemilik memasukkan ulang PIN untuk menyetujui transaksi ini saja. Alasan dan persetujuan dicatat; sesi pemilik dikunci kembali sesudah tindakan.",
+  "@m53ReceiptExceptionHelp": {
+    "description": "M5.3 receipt policy. English meaning: The sale is already saved. This exception does not cancel, charge again or change stock/debt/money. Enter a reason, then ask the owner to authenticate again to approve this sale only. The reason and approval are recorded; the owner session is locked again after the action."
+  },
+  "m53ReceiptExceptionReason": "Alasan pengecualian",
+  "@m53ReceiptExceptionReason": {
+    "description": "M5.3 receipt policy. English meaning: Exception reason"
+  },
+  "m53ReceiptExceptionReasonRequired": "Isi alasan pengecualian, maksimal 1000 karakter.",
+  "@m53ReceiptExceptionReasonRequired": {
+    "description": "M5.3 receipt policy. English meaning: Enter an exception reason, up to 1000 characters."
+  },
+  "m53ReceiptExceptionAuthenticate": "Minta autentikasi pemilik dan setujui sekali",
+  "@m53ReceiptExceptionAuthenticate": {
+    "description": "M5.3 receipt policy. English meaning: Authenticate the owner and approve once"
+  },
+  "backupReceiptPolicyInvalid": "Kebijakan, kewajiban atau konfirmasi struk dalam cadangan tidak valid.",
+  "@backupReceiptPolicyInvalid": {
+    "description": "M5.3 receipt policy. English meaning: The backup contains invalid receipt policy, obligation or confirmation records."
   }
 }

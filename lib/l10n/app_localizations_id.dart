@@ -4336,7 +4336,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53LabelMediaHelp =>
-      'Profil label terpisah dari struk. QR memakai ruang putih empat modul dan modul bulat minimal empat titik. Media yang terlalu kecil ditolak. Uji satu label terlebih dahulu; ukuran fisik mengikuti spesifikasi printer. Tidak ada kalibrasi otomatis.';
+      'Profil label terpisah dari struk. QR memakai ruang putih empat modul dan ukuran modul minimal empat titik. Media yang terlalu kecil ditolak. Uji satu label terlebih dahulu; ukuran fisik mengikuti spesifikasi printer. Tidak ada kalibrasi otomatis.';
 
   @override
   String get m53LabelSaveProfile => 'Simpan pengaturan label';
@@ -4405,4 +4405,79 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m53LabelIdentityInvalid =>
       'Identitas barang ini belum didukung untuk label QR. Data barang tidak diubah.';
+
+  @override
+  String get m53ReceiptPolicy => 'Kebijakan struk';
+
+  @override
+  String get m53ReceiptPolicyRequired =>
+      'Wajib mencetak struk sebelum transaksi berikutnya';
+
+  @override
+  String get m53ReceiptPolicyHelp =>
+      'Default nonaktif. Jika aktif saat penjualan disimpan, kasir tetap di hasil transaksi sampai struk dikonfirmasi sudah keluar atau pemilik menyetujui pengecualian satu transaksi. Stok, piutang dan uang tetap tersimpan sekali meski printer gagal. Mematikan kebijakan hanya berlaku untuk penjualan berikutnya; kewajiban yang sudah dicatat tetap harus diselesaikan.';
+
+  @override
+  String get m53ReceiptRequiredPending =>
+      'Struk transaksi ini belum dipenuhi. Periksa kertas dan konfirmasikan, cetak ulang secara eksplisit, atau minta pengecualian pemilik sebelum belanja berikutnya.';
+
+  @override
+  String get m53ReceiptPolicyUnavailable =>
+      'Kebijakan struk memerlukan pembaruan database.';
+
+  @override
+  String get m53ReceiptPolicyChanged =>
+      'Kebijakan struk berubah. Muat ulang pengaturan sebelum menyimpan.';
+
+  @override
+  String get m53ReceiptNotPending =>
+      'Transaksi ini tidak lagi menunggu penyelesaian struk. Muat ulang hasil transaksi.';
+
+  @override
+  String get m53ReceiptConfirmationUnavailable =>
+      'Pekerjaan ini belum dapat menjadi konfirmasi struk. Gunakan pengiriman struk untuk transaksi yang sama; label, kalibrasi dan pengiriman gagal tidak memenuhi syarat.';
+
+  @override
+  String get m53ReceiptPaperQuestion => 'Struk sudah tercetak?';
+
+  @override
+  String get m53ReceiptPaperInspect =>
+      'Periksa kertas struk transaksi ini secara langsung. Sukses menulis byte, ACK atau status terkirim tidak membuktikan kertas keluar. Konfirmasi ini adalah pernyataan operator, bukan verifikasi fisik otomatis dari printer.';
+
+  @override
+  String get m53ReceiptPaperYes => 'Ya, saya sudah memeriksa struknya';
+
+  @override
+  String get m53ReceiptPaperHelp =>
+      'Tidak ada cetak ulang otomatis ketika hasil ambigu. Konfirmasi hanya jika kertas benar-benar sudah keluar, termasuk dari pengiriman sebelumnya. Jika printer rusak atau kertas habis, pemilik dapat menyetujui pengecualian satu transaksi dengan alasan.';
+
+  @override
+  String get m53ReceiptOperatorConfirmed =>
+      'Struk dikonfirmasi operator setelah pemeriksaan kertas.';
+
+  @override
+  String get m53ReceiptOwnerExcepted =>
+      'Pengecualian struk satu transaksi telah disetujui pemilik.';
+
+  @override
+  String get m53ReceiptException => 'Minta pengecualian struk satu transaksi';
+
+  @override
+  String get m53ReceiptExceptionHelp =>
+      'Penjualan sudah tersimpan. Pengecualian ini tidak membatalkan, menagih ulang atau mengubah stok/piutang/uang. Tulis alasan, lalu minta pemilik memasukkan ulang PIN untuk menyetujui transaksi ini saja. Alasan dan persetujuan dicatat; sesi pemilik dikunci kembali sesudah tindakan.';
+
+  @override
+  String get m53ReceiptExceptionReason => 'Alasan pengecualian';
+
+  @override
+  String get m53ReceiptExceptionReasonRequired =>
+      'Isi alasan pengecualian, maksimal 1000 karakter.';
+
+  @override
+  String get m53ReceiptExceptionAuthenticate =>
+      'Minta autentikasi pemilik dan setujui sekali';
+
+  @override
+  String get backupReceiptPolicyInvalid =>
+      'Kebijakan, kewajiban atau konfirmasi struk dalam cadangan tidak valid.';
 }

@@ -16,6 +16,7 @@ import '../../management/presentation/task_pattern_screen.dart';
 import 'settings_provider.dart';
 import 'currency_selector.dart';
 import '../../printer/presentation/printer_settings_screen.dart';
+import '../../printer/presentation/receipt_policy_screen.dart';
 import '../../backup/presentation/backup_settings_screen.dart';
 import '../../alerts/presentation/alerts_screen.dart';
 import '../../cash_drawer/presentation/cash_drawer_policy_screen.dart';
@@ -122,6 +123,7 @@ class _SettingsFormState extends State<_SettingsForm> {
                     (const FeatureSettingsScreen(), 'm53Features'),
                     (const LowPriceSettingsScreen(), 'm52LowPriceSettings'),
                     (const PrinterSettingsScreen(), 'm5Printer'),
+                    (const ReceiptPolicyScreen(), 'm53ReceiptPolicy'),
                     (const AlertsScreen(), 'm5Alerts'),
                     (const BackupSettingsScreen(), 'm5Backup'),
                   ])

@@ -5283,5 +5283,85 @@
   "m53LabelIdentityInvalid": "This product identity is not supported for QR labels. Product data was not changed.",
   "@m53LabelIdentityInvalid": {
     "description": "M5.3 product QR labels. English meaning: This product identity is not supported for QR labels. Product data was not changed."
+  },
+  "m53ReceiptPolicy": "Receipt policy",
+  "@m53ReceiptPolicy": {
+    "description": "M5.3 receipt policy. English meaning: Receipt policy"
+  },
+  "m53ReceiptPolicyRequired": "Require a receipt before the next sale",
+  "@m53ReceiptPolicyRequired": {
+    "description": "M5.3 receipt policy. English meaning: Require a receipt before the next sale"
+  },
+  "m53ReceiptPolicyHelp": "Off by default. When enabled as a sale is saved, the cashier remains on its receipt until paper output is confirmed or the owner approves a single-sale exception. Stock, debt and money are committed once even if the printer fails. Disabling the policy affects future sales; existing obligations still need resolution.",
+  "@m53ReceiptPolicyHelp": {
+    "description": "M5.3 receipt policy. English meaning: Off by default. When enabled as a sale is saved, the cashier remains on its receipt until paper output is confirmed or the owner approves a single-sale exception. Stock, debt and money are committed once even if the printer fails. Disabling the policy affects future sales; existing obligations still need resolution."
+  },
+  "m53ReceiptRequiredPending": "This sale’s receipt is still required. Inspect and confirm the paper, explicitly print a copy, or request an owner exception before the next basket.",
+  "@m53ReceiptRequiredPending": {
+    "description": "M5.3 receipt policy. English meaning: This sale’s receipt is still required. Inspect and confirm the paper, explicitly print a copy, or request an owner exception before the next basket."
+  },
+  "m53ReceiptPolicyUnavailable": "The receipt policy requires a database upgrade.",
+  "@m53ReceiptPolicyUnavailable": {
+    "description": "M5.3 receipt policy. English meaning: The receipt policy requires a database upgrade."
+  },
+  "m53ReceiptPolicyChanged": "The receipt policy changed. Reload settings before saving.",
+  "@m53ReceiptPolicyChanged": {
+    "description": "M5.3 receipt policy. English meaning: The receipt policy changed. Reload settings before saving."
+  },
+  "m53ReceiptNotPending": "This sale is no longer waiting for receipt fulfillment. Reload the receipt.",
+  "@m53ReceiptNotPending": {
+    "description": "M5.3 receipt policy. English meaning: This sale is no longer waiting for receipt fulfillment. Reload the receipt."
+  },
+  "m53ReceiptConfirmationUnavailable": "This job cannot confirm the receipt. Use a receipt delivery for the same sale; label, calibration and failed deliveries do not qualify.",
+  "@m53ReceiptConfirmationUnavailable": {
+    "description": "M5.3 receipt policy. English meaning: This job cannot confirm the receipt. Use a receipt delivery for the same sale; label, calibration and failed deliveries do not qualify."
+  },
+  "m53ReceiptPaperQuestion": "Has the receipt printed?",
+  "@m53ReceiptPaperQuestion": {
+    "description": "M5.3 receipt policy. English meaning: Has the receipt printed?"
+  },
+  "m53ReceiptPaperInspect": "Inspect this sale’s paper receipt yourself. Successful writes, ACK or sent status do not prove paper delivery. This confirmation is an operator statement, not automatic physical verification by the printer.",
+  "@m53ReceiptPaperInspect": {
+    "description": "M5.3 receipt policy. English meaning: Inspect this sale’s paper receipt yourself. Successful writes, ACK or sent status do not prove paper delivery. This confirmation is an operator statement, not automatic physical verification by the printer."
+  },
+  "m53ReceiptPaperYes": "Yes, I inspected the paper receipt",
+  "@m53ReceiptPaperYes": {
+    "description": "M5.3 receipt policy. English meaning: Yes, I inspected the paper receipt"
+  },
+  "m53ReceiptPaperHelp": "Unknown delivery never retries automatically. Confirm only after paper actually comes out, including from an earlier attempt. If the printer is broken or out of paper, the owner may approve a single-sale exception with a reason.",
+  "@m53ReceiptPaperHelp": {
+    "description": "M5.3 receipt policy. English meaning: Unknown delivery never retries automatically. Confirm only after paper actually comes out, including from an earlier attempt. If the printer is broken or out of paper, the owner may approve a single-sale exception with a reason."
+  },
+  "m53ReceiptOperatorConfirmed": "The operator confirmed the receipt after inspecting the paper.",
+  "@m53ReceiptOperatorConfirmed": {
+    "description": "M5.3 receipt policy. English meaning: The operator confirmed the receipt after inspecting the paper."
+  },
+  "m53ReceiptOwnerExcepted": "The owner approved a receipt exception for this sale only.",
+  "@m53ReceiptOwnerExcepted": {
+    "description": "M5.3 receipt policy. English meaning: The owner approved a receipt exception for this sale only."
+  },
+  "m53ReceiptException": "Request a single-sale receipt exception",
+  "@m53ReceiptException": {
+    "description": "M5.3 receipt policy. English meaning: Request a single-sale receipt exception"
+  },
+  "m53ReceiptExceptionHelp": "The sale is already saved. This exception does not cancel, charge again or change stock/debt/money. Enter a reason, then ask the owner to authenticate again to approve this sale only. The reason and approval are recorded; the owner session is locked again after the action.",
+  "@m53ReceiptExceptionHelp": {
+    "description": "M5.3 receipt policy. English meaning: The sale is already saved. This exception does not cancel, charge again or change stock/debt/money. Enter a reason, then ask the owner to authenticate again to approve this sale only. The reason and approval are recorded; the owner session is locked again after the action."
+  },
+  "m53ReceiptExceptionReason": "Exception reason",
+  "@m53ReceiptExceptionReason": {
+    "description": "M5.3 receipt policy. English meaning: Exception reason"
+  },
+  "m53ReceiptExceptionReasonRequired": "Enter an exception reason, up to 1000 characters.",
+  "@m53ReceiptExceptionReasonRequired": {
+    "description": "M5.3 receipt policy. English meaning: Enter an exception reason, up to 1000 characters."
+  },
+  "m53ReceiptExceptionAuthenticate": "Authenticate the owner and approve once",
+  "@m53ReceiptExceptionAuthenticate": {
+    "description": "M5.3 receipt policy. English meaning: Authenticate the owner and approve once"
+  },
+  "backupReceiptPolicyInvalid": "The backup contains invalid receipt policy, obligation or confirmation records.",
+  "@backupReceiptPolicyInvalid": {
+    "description": "M5.3 receipt policy. English meaning: The backup contains invalid receipt policy, obligation or confirmation records."
   }
 }

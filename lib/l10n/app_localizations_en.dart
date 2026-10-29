@@ -4395,4 +4395,79 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m53LabelIdentityInvalid =>
       'This product identity is not supported for QR labels. Product data was not changed.';
+
+  @override
+  String get m53ReceiptPolicy => 'Receipt policy';
+
+  @override
+  String get m53ReceiptPolicyRequired =>
+      'Require a receipt before the next sale';
+
+  @override
+  String get m53ReceiptPolicyHelp =>
+      'Off by default. When enabled as a sale is saved, the cashier remains on its receipt until paper output is confirmed or the owner approves a single-sale exception. Stock, debt and money are committed once even if the printer fails. Disabling the policy affects future sales; existing obligations still need resolution.';
+
+  @override
+  String get m53ReceiptRequiredPending =>
+      'This sale’s receipt is still required. Inspect and confirm the paper, explicitly print a copy, or request an owner exception before the next basket.';
+
+  @override
+  String get m53ReceiptPolicyUnavailable =>
+      'The receipt policy requires a database upgrade.';
+
+  @override
+  String get m53ReceiptPolicyChanged =>
+      'The receipt policy changed. Reload settings before saving.';
+
+  @override
+  String get m53ReceiptNotPending =>
+      'This sale is no longer waiting for receipt fulfillment. Reload the receipt.';
+
+  @override
+  String get m53ReceiptConfirmationUnavailable =>
+      'This job cannot confirm the receipt. Use a receipt delivery for the same sale; label, calibration and failed deliveries do not qualify.';
+
+  @override
+  String get m53ReceiptPaperQuestion => 'Has the receipt printed?';
+
+  @override
+  String get m53ReceiptPaperInspect =>
+      'Inspect this sale’s paper receipt yourself. Successful writes, ACK or sent status do not prove paper delivery. This confirmation is an operator statement, not automatic physical verification by the printer.';
+
+  @override
+  String get m53ReceiptPaperYes => 'Yes, I inspected the paper receipt';
+
+  @override
+  String get m53ReceiptPaperHelp =>
+      'Unknown delivery never retries automatically. Confirm only after paper actually comes out, including from an earlier attempt. If the printer is broken or out of paper, the owner may approve a single-sale exception with a reason.';
+
+  @override
+  String get m53ReceiptOperatorConfirmed =>
+      'The operator confirmed the receipt after inspecting the paper.';
+
+  @override
+  String get m53ReceiptOwnerExcepted =>
+      'The owner approved a receipt exception for this sale only.';
+
+  @override
+  String get m53ReceiptException => 'Request a single-sale receipt exception';
+
+  @override
+  String get m53ReceiptExceptionHelp =>
+      'The sale is already saved. This exception does not cancel, charge again or change stock/debt/money. Enter a reason, then ask the owner to authenticate again to approve this sale only. The reason and approval are recorded; the owner session is locked again after the action.';
+
+  @override
+  String get m53ReceiptExceptionReason => 'Exception reason';
+
+  @override
+  String get m53ReceiptExceptionReasonRequired =>
+      'Enter an exception reason, up to 1000 characters.';
+
+  @override
+  String get m53ReceiptExceptionAuthenticate =>
+      'Authenticate the owner and approve once';
+
+  @override
+  String get backupReceiptPolicyInvalid =>
+      'The backup contains invalid receipt policy, obligation or confirmation records.';
 }

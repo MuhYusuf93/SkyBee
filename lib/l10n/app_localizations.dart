@@ -7873,6 +7873,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This product identity is not supported for QR labels. Product data was not changed.'**
   String get m53LabelIdentityInvalid;
+
+  /// M5.3 receipt policy. English meaning: Receipt policy
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt policy'**
+  String get m53ReceiptPolicy;
+
+  /// M5.3 receipt policy. English meaning: Require a receipt before the next sale
+  ///
+  /// In en, this message translates to:
+  /// **'Require a receipt before the next sale'**
+  String get m53ReceiptPolicyRequired;
+
+  /// M5.3 receipt policy. English meaning: Off by default. When enabled as a sale is saved, the cashier remains on its receipt until paper output is confirmed or the owner approves a single-sale exception. Stock, debt and money are committed once even if the printer fails. Disabling the policy affects future sales; existing obligations still need resolution.
+  ///
+  /// In en, this message translates to:
+  /// **'Off by default. When enabled as a sale is saved, the cashier remains on its receipt until paper output is confirmed or the owner approves a single-sale exception. Stock, debt and money are committed once even if the printer fails. Disabling the policy affects future sales; existing obligations still need resolution.'**
+  String get m53ReceiptPolicyHelp;
+
+  /// M5.3 receipt policy. English meaning: This sale’s receipt is still required. Inspect and confirm the paper, explicitly print a copy, or request an owner exception before the next basket.
+  ///
+  /// In en, this message translates to:
+  /// **'This sale’s receipt is still required. Inspect and confirm the paper, explicitly print a copy, or request an owner exception before the next basket.'**
+  String get m53ReceiptRequiredPending;
+
+  /// M5.3 receipt policy. English meaning: The receipt policy requires a database upgrade.
+  ///
+  /// In en, this message translates to:
+  /// **'The receipt policy requires a database upgrade.'**
+  String get m53ReceiptPolicyUnavailable;
+
+  /// M5.3 receipt policy. English meaning: The receipt policy changed. Reload settings before saving.
+  ///
+  /// In en, this message translates to:
+  /// **'The receipt policy changed. Reload settings before saving.'**
+  String get m53ReceiptPolicyChanged;
+
+  /// M5.3 receipt policy. English meaning: This sale is no longer waiting for receipt fulfillment. Reload the receipt.
+  ///
+  /// In en, this message translates to:
+  /// **'This sale is no longer waiting for receipt fulfillment. Reload the receipt.'**
+  String get m53ReceiptNotPending;
+
+  /// M5.3 receipt policy. English meaning: This job cannot confirm the receipt. Use a receipt delivery for the same sale; label, calibration and failed deliveries do not qualify.
+  ///
+  /// In en, this message translates to:
+  /// **'This job cannot confirm the receipt. Use a receipt delivery for the same sale; label, calibration and failed deliveries do not qualify.'**
+  String get m53ReceiptConfirmationUnavailable;
+
+  /// M5.3 receipt policy. English meaning: Has the receipt printed?
+  ///
+  /// In en, this message translates to:
+  /// **'Has the receipt printed?'**
+  String get m53ReceiptPaperQuestion;
+
+  /// M5.3 receipt policy. English meaning: Inspect this sale’s paper receipt yourself. Successful writes, ACK or sent status do not prove paper delivery. This confirmation is an operator statement, not automatic physical verification by the printer.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspect this sale’s paper receipt yourself. Successful writes, ACK or sent status do not prove paper delivery. This confirmation is an operator statement, not automatic physical verification by the printer.'**
+  String get m53ReceiptPaperInspect;
+
+  /// M5.3 receipt policy. English meaning: Yes, I inspected the paper receipt
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, I inspected the paper receipt'**
+  String get m53ReceiptPaperYes;
+
+  /// M5.3 receipt policy. English meaning: Unknown delivery never retries automatically. Confirm only after paper actually comes out, including from an earlier attempt. If the printer is broken or out of paper, the owner may approve a single-sale exception with a reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown delivery never retries automatically. Confirm only after paper actually comes out, including from an earlier attempt. If the printer is broken or out of paper, the owner may approve a single-sale exception with a reason.'**
+  String get m53ReceiptPaperHelp;
+
+  /// M5.3 receipt policy. English meaning: The operator confirmed the receipt after inspecting the paper.
+  ///
+  /// In en, this message translates to:
+  /// **'The operator confirmed the receipt after inspecting the paper.'**
+  String get m53ReceiptOperatorConfirmed;
+
+  /// M5.3 receipt policy. English meaning: The owner approved a receipt exception for this sale only.
+  ///
+  /// In en, this message translates to:
+  /// **'The owner approved a receipt exception for this sale only.'**
+  String get m53ReceiptOwnerExcepted;
+
+  /// M5.3 receipt policy. English meaning: Request a single-sale receipt exception
+  ///
+  /// In en, this message translates to:
+  /// **'Request a single-sale receipt exception'**
+  String get m53ReceiptException;
+
+  /// M5.3 receipt policy. English meaning: The sale is already saved. This exception does not cancel, charge again or change stock/debt/money. Enter a reason, then ask the owner to authenticate again to approve this sale only. The reason and approval are recorded; the owner session is locked again after the action.
+  ///
+  /// In en, this message translates to:
+  /// **'The sale is already saved. This exception does not cancel, charge again or change stock/debt/money. Enter a reason, then ask the owner to authenticate again to approve this sale only. The reason and approval are recorded; the owner session is locked again after the action.'**
+  String get m53ReceiptExceptionHelp;
+
+  /// M5.3 receipt policy. English meaning: Exception reason
+  ///
+  /// In en, this message translates to:
+  /// **'Exception reason'**
+  String get m53ReceiptExceptionReason;
+
+  /// M5.3 receipt policy. English meaning: Enter an exception reason, up to 1000 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an exception reason, up to 1000 characters.'**
+  String get m53ReceiptExceptionReasonRequired;
+
+  /// M5.3 receipt policy. English meaning: Authenticate the owner and approve once
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate the owner and approve once'**
+  String get m53ReceiptExceptionAuthenticate;
+
+  /// M5.3 receipt policy. English meaning: The backup contains invalid receipt policy, obligation or confirmation records.
+  ///
+  /// In en, this message translates to:
+  /// **'The backup contains invalid receipt policy, obligation or confirmation records.'**
+  String get backupReceiptPolicyInvalid;
 }
 
 class _AppLocalizationsDelegate

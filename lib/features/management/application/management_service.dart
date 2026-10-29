@@ -194,6 +194,7 @@ final class ManagementService {
       'security',
       'restore',
       'recoveryPrint',
+      'receiptException',
     ].contains(purpose)) {
       throw ArgumentError('Unknown authentication purpose');
     }

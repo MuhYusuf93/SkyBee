@@ -1,0 +1,153 @@
+{
+  "schema": 36,
+  "sourceFiles": 683,
+  "sourceManifestSha256": "8cb9c6e2797b39b22bcb8e0939c28487b28937662aeb91108382ca8a7abe8dd3",
+  "regression": {
+    "passed": 43,
+    "failed": 0,
+    "elapsed": "01:17",
+    "scope": "Receipt policy15 including consumer expiry2, legacyqueue13, QRqueue13, QRUI2"
+  },
+  "final": {
+    "passed": 16,
+    "failed": 0,
+    "elapsed": "00:26",
+    "scope": "ReceiptUI2 IDEN320/text2, runtime5, QRraster9"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 42.0
+  },
+  "format": {
+    "files": 289,
+    "changed": 1
+  },
+  "localization": {
+    "keys": 1316,
+    "staticReferences": 892,
+    "originalRequirementIds": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "native": "PENDING coherent41 through protected wrapper, SQLCipher, both devices, background paused",
+  "uiProof": "Synthetic input and transport, owned UI fixture lease; no physical paper/OEM input claim. Domain/native queues keep production output gate.",
+  "ordinarySkybee": "No update/reset/reseed; all user data retained until final H after verified backup/recovery",
+  "logs": {
+    "receipt-policy-analyze1.txt": {
+      "sha256": "8a75c5da14e1578d21de9692e7da65dc78802bbe0a1c7f53bd033d22a2c02fde"
+    },
+    "receipt-policy-analyze2.txt": {
+      "sha256": "d904db3fe10f82940362c0d559796508ef4b8cdfbfbb9885d3c17d821c8252be"
+    },
+    "receipt-policy-analyze3.txt": {
+      "sha256": "28c70bc3a87920a8e63566a52bece68e65196c7c34758d5f7ce61c52f7711589"
+    },
+    "receipt-policy-final-host6.txt": {
+      "sha256": "d141504cba11bfa03b2f643dbf8c6f467a827c34d436c58ea0449fdf9edb5de0",
+      "passed": 16,
+      "failed": 0,
+      "elapsed": "00:26"
+    },
+    "receipt-policy-fix1.txt": {
+      "sha256": "8435ce6f8055d0dc5fe2d8b1b1e25a20d6e10c62a2d7714aef308189c375d7f3"
+    },
+    "receipt-policy-fix2.txt": {
+      "sha256": "93c7a6e5e8baf79afedfb0e9ef289d7d461bb97215b700910ccd03540f7ba728"
+    },
+    "receipt-policy-format1.txt": {
+      "sha256": "23a5ac4b1801b172bc957e01edb86265dc8c94af47d92a1446450a266eb2475e"
+    },
+    "receipt-policy-format10.txt": {
+      "sha256": "fa905efb2eda5ce45c33dd5f153bbe58129ad613d99f6de45871ba2043fc92ad"
+    },
+    "receipt-policy-format11.txt": {
+      "sha256": "233623de88d4f46649fc79c9240e659300c008da215270988cd25d8e57621353"
+    },
+    "receipt-policy-format12.txt": {
+      "sha256": "219a23becf4832123d44341068df82e952e0bcb61990e0fa6236a8d71c099324"
+    },
+    "receipt-policy-format2.txt": {
+      "sha256": "a4c9deb0e5420c0a4542722573ada27445bd0b492ff6ecca97a71fe89e1f86ef"
+    },
+    "receipt-policy-format3.txt": {
+      "sha256": "88ed9ea3a859421cfed027e2e016b63871bbb1734715891f8fc26369bd12ec87"
+    },
+    "receipt-policy-format4.txt": {
+      "sha256": "8d23e0905caa81477652d82e9217512c741ae43b8ca0cdd1e31530e4a89f0b1f"
+    },
+    "receipt-policy-format5.txt": {
+      "sha256": "b6ab9c4dc9a5b5f0e0d5adaa9dd130b6d9d01b3baa7d2f49280d505f9177f538"
+    },
+    "receipt-policy-format6.txt": {
+      "sha256": "1417d67b9d7b2e81d525a3df0e09dad6516e665e4db6dfd0c1d32075b6bf1e87"
+    },
+    "receipt-policy-format7.txt": {
+      "sha256": "fa905efb2eda5ce45c33dd5f153bbe58129ad613d99f6de45871ba2043fc92ad"
+    },
+    "receipt-policy-format8.txt": {
+      "sha256": "fa905efb2eda5ce45c33dd5f153bbe58129ad613d99f6de45871ba2043fc92ad"
+    },
+    "receipt-policy-format9.txt": {
+      "sha256": "fa905efb2eda5ce45c33dd5f153bbe58129ad613d99f6de45871ba2043fc92ad"
+    },
+    "receipt-policy-host1.txt": {
+      "sha256": "ae5690bb332a10ccbb6e62bf1f8b54662f2617b990fdc465c54692e3a592c104",
+      "passed": 9,
+      "failed": 0,
+      "elapsed": "00:38"
+    },
+    "receipt-policy-host3.txt": {
+      "sha256": "f354464a88923020be7565b28f1bcc27497988739e60fcddf0af469f534e6e4a",
+      "passed": 13,
+      "failed": 0,
+      "elapsed": "00:56"
+    },
+    "receipt-policy-l10n1.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "receipt-policy-l10n2.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "receipt-policy-regression2.txt": {
+      "sha256": "d6234587bd5e4b9268948ad736947c70907d492902f7fc33cb4355ac449ebefd",
+      "passed": 13,
+      "failed": 1,
+      "elapsed": "01:08"
+    },
+    "receipt-policy-regression4.txt": {
+      "sha256": "0f75c27f911795fcda7f060add2f75763346a2809010c5d79fdf0b5841f194d2",
+      "passed": 43,
+      "failed": 0,
+      "elapsed": "01:17"
+    },
+    "receipt-policy-widgets-host1.txt": {
+      "sha256": "ef64886b9a0c6fda26ee090ea13382eed95d9b24b4d467017561d14f38c1df7d",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:09"
+    },
+    "receipt-policy-widgets-host2.txt": {
+      "sha256": "ab45318479dc3731e3ac6f7a6997e6dbc981d5fad4e3d4a2e20c6e2b452c04a7",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "00:50"
+    },
+    "receipt-policy-widgets-host3.txt": {
+      "sha256": "f609a137b504a5b3625b6ea8c7eec27e9904e88606ef7d584c56f392dae04eb1",
+      "passed": 1,
+      "failed": 1,
+      "elapsed": "00:50"
+    },
+    "receipt-policy-widgets-host4.txt": {
+      "sha256": "2218317831ceefc511352e92d5117a5558b5f3753f2a6fbef0636a7bfac6d0af",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "03:14"
+    },
+    "receipt-policy-widgets-host5.txt": {
+      "sha256": "8f32155a4174870cd9d12e96c5b5cbdf9553f9d85310fd1918beb83203c21bd5",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:26"
+    }
+  }
+}

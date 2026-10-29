@@ -18,12 +18,14 @@ class ReceiptView extends StatelessWidget {
     this.onNext,
     this.recovered = false,
     this.embedded = false,
+    this.nextError,
   });
   final SaleReceipt receipt;
   final String time;
   final VoidCallback? onNext;
   final bool recovered;
   final bool embedded;
+  final String? nextError;
   @override
   Widget build(BuildContext context) {
     final currency = CurrencyPolicy.forCode(receipt.total.currencyCode);
@@ -103,6 +105,11 @@ class ReceiptView extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         ReceiptPrintActions(saleId: receipt.id, history: embedded),
+        if (nextError != null)
+          Text(
+            tr(context, nextError!),
+            key: const ValueKey('receipt-next-error'),
+          ),
         if (onNext != null)
           FilledButton(
             onPressed: onNext,
