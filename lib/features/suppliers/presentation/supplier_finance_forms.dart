@@ -37,17 +37,16 @@ final class SupplierFormFocus {
 /// They deliberately do not reuse the expiry picker's minimum-tomorrow rule.
 Future<CalendarDate?> pickSupplierDate(
   BuildContext context,
-  CalendarDate value,
-) async {
+  CalendarDate value, {
+  ManagementCapability capability = ManagementCapability.inventory,
+}) async {
   final selected = await showDatePicker(
     context: context,
     initialDate: DateTime.parse(value.iso),
     firstDate: DateTime(1900),
     lastDate: DateTime(2199),
-    builder: (context, child) => ProtectedDialog(
-      capability: ManagementCapability.inventory,
-      child: child!,
-    ),
+    builder: (context, child) =>
+        ProtectedDialog(capability: capability, child: child!),
   );
   return selected == null
       ? null

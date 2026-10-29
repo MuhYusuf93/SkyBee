@@ -1,5 +1,12 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+Kredit supplier E3 schema33 ([keputusan](decisions/M53_SUPPLIER_CREDITS.md)): persetujuan keuangan owner terpisah dari nilai
+inventori retur; alokasi awal hanya tagihan asal yang masih tersisa, kelebihan
+menjadi kredit belum dialokasikan. Alokasi lintas tagihan eksplisit supplier dan
+currency sama. Refund hanya uang aktual diterima, jurnal laci bila benar terlacak;
+koreksi append-only membatalkan dependensi finansial sebelum undo fisik.
+Validator replay saldo dan snapshot historis wajib; UI host lulus, native E3 pending.
+
 Retur fisik supplier memakai draft aditif32, source-item/batch trace, current average, bounded source eligibility ledger dan exact dependent reversal: [keputusan](decisions/M53_SUPPLIER_RETURNS.md). Kredit/refund tetap fakta keuangan owner terpisah yang dikerjakan berikutnya.
 
 Tagihan/payment supplier memakai schema31 aditif, receipt-source snapshot, owner actualpayment, atomic receiving dan validator replay bounded: [keputusan](decisions/M53_SUPPLIER_FINANCE.md). Retur/kredit/jadwal E3 berikutnya; native E3 wajib sebelum F.

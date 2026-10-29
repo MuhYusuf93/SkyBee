@@ -29,6 +29,7 @@ extension SupplierReturnPosting on InventoryService {
     int delta, {
     EntityId? item,
     EntityId? reversalItem,
+    required int recordedAt,
   }) async {
     final next = (source['returned_quantity'] as int) + delta;
     if (next < 0 || next > (source['source_quantity'] as int)) {
@@ -43,7 +44,7 @@ extension SupplierReturnPosting on InventoryService {
       'quantity_delta': delta,
       'return_item_id': item?.value,
       'reversal_item_id': reversalItem?.value,
-      'created_at': access.clock.milliseconds,
+      'created_at': recordedAt,
     });
   }
 
@@ -117,6 +118,7 @@ extension SupplierReturnPosting on InventoryService {
       sources[line.id.value] = source;
       products.putIfAbsent(line.product.value, () => _returnProduct(source));
     }
+    final recordedAt = access.clock.milliseconds;
     await db.insert('supplier_returns', {
       'id': id.value,
       'draft_id': id.value,
@@ -131,7 +133,7 @@ extension SupplierReturnPosting on InventoryService {
       'operation_key': operationKey,
       'payload_hash': hash,
       'actor_role': access.role!.name,
-      'created_at': access.clock.milliseconds,
+      'created_at': recordedAt,
     });
     for (final line in doc.lines) {
       final source = sources[line.id.value]!,
@@ -158,6 +160,7 @@ extension SupplierReturnPosting on InventoryService {
         'adjustment',
         before,
         receiptItem: line.item,
+        recordedAt: recordedAt,
       );
       if (line.tracked &&
           await db.update(
@@ -179,6 +182,7 @@ extension SupplierReturnPosting on InventoryService {
         nextQuantity,
         nextValue,
         complete: complete,
+        recordedAt: recordedAt,
       );
       if (line.tracked) {
         await _history(
@@ -192,6 +196,7 @@ extension SupplierReturnPosting on InventoryService {
           batch: line.batch,
           receipt: doc.receipt,
           complete: _complete(before),
+          recordedAt: recordedAt,
         );
       }
       await db.insert('supplier_return_items', {
@@ -224,7 +229,13 @@ extension SupplierReturnPosting on InventoryService {
         'inventory_operation_id': operation.value,
         'position': line.row['position'],
       });
-      await _returnSourceEventOn(db, source, line.quantity, item: item);
+      await _returnSourceEventOn(
+        db,
+        source,
+        line.quantity,
+        item: item,
+        recordedAt: recordedAt,
+      );
       products[line.product.value] = _returnedProduct(
         before,
         nextQuantity,
@@ -232,7 +243,14 @@ extension SupplierReturnPosting on InventoryService {
         complete,
       );
     }
-    await _bumpReturnOn(db, doc, reason: note, status: 'posted', posted: id);
+    await _bumpReturnOn(
+      db,
+      doc,
+      reason: note,
+      status: 'posted',
+      posted: id,
+      recordedAt: recordedAt,
+    );
     await access.audit(db, 'supplier_return_posted', entityId: id.value);
     return _returnDocumentOn(db, id);
   });
@@ -306,7 +324,8 @@ extension SupplierReturnPosting on InventoryService {
         }
       }
     }
-    final reversal = InventoryService._ids.next();
+    final reversal = InventoryService._ids.next(),
+        recordedAt = access.clock.milliseconds;
     await db.insert('supplier_return_reversals', {
       'id': reversal.value,
       'return_id': id.value,
@@ -314,7 +333,7 @@ extension SupplierReturnPosting on InventoryService {
       'payload_hash': hash,
       'reason': note,
       'actor_role': access.role!.name,
-      'created_at': access.clock.milliseconds,
+      'created_at': recordedAt,
     });
     for (final line in ordered) {
       final before = products[line.product.value]!;
@@ -338,6 +357,7 @@ extension SupplierReturnPosting on InventoryService {
         before,
         reverses: EntityId(line.row['inventory_operation_id'] as String),
         receiptItem: line.item,
+        recordedAt: recordedAt,
       );
       if (line.tracked) {
         if (await db.update(
@@ -368,6 +388,7 @@ extension SupplierReturnPosting on InventoryService {
           receipt: doc.receipt,
           reverses: EntityId(history.single['id'] as String),
           complete: complete,
+          recordedAt: recordedAt,
         );
       }
       await _stock(
@@ -377,6 +398,7 @@ extension SupplierReturnPosting on InventoryService {
         nextQuantity,
         nextValue,
         complete: complete,
+        recordedAt: recordedAt,
       );
       await db.insert('supplier_return_reversal_items', {
         'id': link.value,
@@ -390,6 +412,7 @@ extension SupplierReturnPosting on InventoryService {
         source,
         -line.quantity,
         reversalItem: link,
+        recordedAt: recordedAt,
       );
       products[line.product.value] = _returnedProduct(
         before,

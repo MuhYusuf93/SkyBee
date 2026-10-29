@@ -4,6 +4,8 @@ import '../test/support/m53_supplier_finance_suite.dart';
 import '../test/support/m53_supplier_finance_widgets_suite.dart';
 import '../test/support/m53_supplier_returns_suite.dart';
 import '../test/support/m53_supplier_returns_widgets_suite.dart';
+import '../test/support/m53_supplier_credits_suite.dart';
+import '../test/support/m53_supplier_credits_widgets_suite.dart';
 import 'support/encrypted_fixture_factory.dart';
 
 /// One coherent E3 campaign; always launch through the protected Android wrapper.
@@ -28,5 +30,13 @@ void main() {
   group(
     'M53 supplier physical returns UI',
     () => m53SupplierReturnsWidgetsSuite(EncryptedFixtureFactory()),
+  );
+  group(
+    'M53 supplier credits',
+    () => m53SupplierCreditsSuite(EncryptedFixtureFactory()),
+  );
+  group(
+    'M53 supplier credits UI',
+    () => m53SupplierCreditsWidgetsSuite(EncryptedFixtureFactory()),
   );
 }

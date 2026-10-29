@@ -1,5 +1,23 @@
 # Matriks persyaratan
 
+29 Oktober14:53 — kredit/refund schema33 checkpoint host selesai: regresi37PASS57s,
+focused UI2PASS21s(overlap), analyzer105,5s bersih, format544files, l10n1227/833/245,
+PIN106match. Source640 host historis; native31–33 belum, jadwal/H-1 E3 berikutnya
+lalu native gabungan sebelum F. Producer retur memakai satu timestamp agar aman
+pada clock bergerak. Kedua ADB device terdeteksi; .skybee tidak update/reset/reseed.
+[Laporan kredit](M53_SUPPLIER_CREDITS_REPORT.md); F QR/struk/laporan, G/H tetapaktif.
+
+29 Oktober — E3 schema33 kredit/refund supplier WIP, melanjutkan checkpoint
+retur32 `8882d0a` yang sudah pushed. Host domain kredit9PASS31s dan regresi
+finance/return17PASS38s; UI ID/EN awal gagal dan sedang diperbaiki, belum native.
+Approval owner, alokasi eksplisit, refund aktual dan reversal append-only sudah
+ada bersama validator replay. Advancing-clock test mengungkap timestamp posting
+retur32 tidak konsisten; producer kini memakai satu timestamp per operasi dan
+uji siklus host lulus. Log kegagalan awal dipertahankan. Bukti host bukan bukti
+Android; native gabungan E3 masih wajib sebelum F. Tidak ada update/reset/reseed
+.skybee. Lanjut tutup kredit/UI, jadwal H-1, F QR/struk/laporan, G lalu handoff H
+100produk/50transaksi setelah backup lama terverifikasi. Checkpoint bukan stop.
+
 29 Oktober — ralat langsung pengguna: setelah seluruh M5.3 selesai, handoff
 .skybee kondisi pertama dibuka dengan reset database lama dan seed sintetis
 100 produk beragam, beberapa supplier/pelanggan, 50 transaksi. Cadangan lama

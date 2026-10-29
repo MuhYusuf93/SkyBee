@@ -3986,4 +3986,191 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53ReturnChooseReceipt => 'Buat draft dari penerimaan ini';
+
+  @override
+  String get m53CreditMissing => 'Kredit supplier tidak ditemukan.';
+
+  @override
+  String get m53CreditChanged =>
+      'Saldo atau riwayat kredit berubah. Muat ulang dan tinjau sebelum melanjutkan.';
+
+  @override
+  String get m53CreditReturnUnavailable =>
+      'Retur fisik belum tersedia atau sudah dibalik. Kredit baru tidak dapat disetujui.';
+
+  @override
+  String get m53CreditAlreadyApproved =>
+      'Retur ini sudah memiliki kredit yang disetujui. Buka kredit tersebut.';
+
+  @override
+  String get m53CreditDateInvalid =>
+      'Periksa tanggal. Tidak boleh di masa depan atau sebelum tanggal persetujuan/kegiatan asal yang dibalik.';
+
+  @override
+  String get m53CreditAmountInvalid =>
+      'Nominal harus positif dan tidak melebihi kredit tersedia maupun sisa tagihan tujuan.';
+
+  @override
+  String get m53CreditTargetInvalid =>
+      'Pilih tagihan aktif dari supplier dan mata uang yang sama.';
+
+  @override
+  String get m53CreditAllocationMissing => 'Alokasi kredit tidak ditemukan.';
+
+  @override
+  String get m53CreditAllocationReversed => 'Alokasi kredit sudah dibalik.';
+
+  @override
+  String get m53CreditDependencies =>
+      'Balik alokasi dan refund efektif sebelum membalik persetujuan kredit.';
+
+  @override
+  String get m53CreditRefundMissing => 'Refund supplier tidak ditemukan.';
+
+  @override
+  String get m53CreditRefundReversed => 'Refund ini sudah dibalik.';
+
+  @override
+  String get m53CreditCashOutRequired =>
+      'Masukkan pecahan uang yang benar-benar dikembalikan ke supplier dari sesi laci aktif.';
+
+  @override
+  String get backupSupplierCreditInvalid =>
+      'Arsip memiliki persetujuan, alokasi, refund atau saldo kredit supplier yang tidak konsisten.';
+
+  @override
+  String get m53CreditApprove => 'Setujui nilai kredit supplier';
+
+  @override
+  String get m53CreditApproveConfirm =>
+      'Konfirmasi nilai yang benar-benar disetujui supplier? Nilai ini berbeda dari nilai persediaan yang keluar. Alokasi ke tagihan asal dilakukan bersama, tanpa menerima uang otomatis.';
+
+  @override
+  String get m53CreditAppliedNow => 'Diterapkan ke tagihan asal sekarang';
+
+  @override
+  String get m53CreditAvailable => 'Kredit belum dialokasikan';
+
+  @override
+  String get m53CreditApprovalHelp =>
+      'Isi nilai dan alasan berdasarkan persetujuan supplier, bukan perkiraan harga barang. Jumlah boleh berbeda dari nilai persediaan yang keluar. Sisa tagihan asal dikurangi paling banyak sebesar saldonya; kelebihan tetap menjadi kredit belum dialokasikan.';
+
+  @override
+  String get m53CreditNoInvoice =>
+      'Tidak ada tagihan aktif asal. Kredit yang disetujui disimpan terpisah untuk alokasi atau refund berikutnya.';
+
+  @override
+  String get m53CreditApprovedValue => 'Nilai kredit disetujui';
+
+  @override
+  String get m53CreditApprovalDate => 'Tanggal persetujuan supplier';
+
+  @override
+  String get m53CreditAgreementReason => 'Alasan / bukti kesepakatan supplier';
+
+  @override
+  String get m53SupplierCredits => 'Kredit dan refund supplier';
+
+  @override
+  String get m53CreditRefund => 'Catat refund diterima';
+
+  @override
+  String get m53CreditAllocate => 'Terapkan ke satu tagihan';
+
+  @override
+  String get m53CreditCashReceived => 'Pecahan refund yang diterima laci';
+
+  @override
+  String get m53CreditRefundConfirm =>
+      'Catat uang refund yang sudah diterima dari supplier? Ini memakai kredit tersedia, bukan pembayaran supplier baru atau transfer otomatis.';
+
+  @override
+  String get m53CreditAllocateConfirm =>
+      'Terapkan kredit ke satu tagihan yang dipilih? Tidak ada pergerakan uang atau perubahan stok.';
+
+  @override
+  String get m53CreditRefundHelp =>
+      'Hanya catat uang yang benar-benar diterima dari supplier. Kredit yang dipakai refund tidak dapat dialokasikan lagi ke tagihan. Transfer/bank tidak mengubah saldo laci.';
+
+  @override
+  String get m53CreditAllocateHelp =>
+      'Satu alokasi untuk satu tagihan supplier yang sama. Saldo kredit dan tagihan diperiksa ulang saat konfirmasi. Alokasi ini tidak membayar uang dari laci.';
+
+  @override
+  String get m53CreditRefundAmount => 'Nominal refund diterima';
+
+  @override
+  String get m53CreditAllocationAmount => 'Nominal kredit diterapkan';
+
+  @override
+  String get m53CreditFillMaximum => 'Isi batas yang dapat digunakan';
+
+  @override
+  String get m53CreditRefundDate => 'Tanggal refund diterima';
+
+  @override
+  String get m53CreditAllocationDate => 'Tanggal alokasi kredit';
+
+  @override
+  String get m53CreditRefundDestination => 'Tujuan uang yang diterima';
+
+  @override
+  String get m53CreditDestinationdrawer => 'Masuk ke laci kas';
+
+  @override
+  String get m53CreditDestinationbank => 'Diterima melalui bank';
+
+  @override
+  String get m53CreditDestinationownerFunds => 'Diterima pemilik di luar laci';
+
+  @override
+  String get m53CreditDrawerOff =>
+      'Pencatatan laci nonaktif. Nominal refund tetap dicatat, tetapi rincian dan saldo laci tidak dibuat. Buka pengaturan kas bila ingin mencatat pecahan dan sesi laci.';
+
+  @override
+  String get m53CreditSummaryScope =>
+      'Seluruh kredit efektif supplier ini, saldo saat ini, terpisah per mata uang. Riwayat persetujuan yang dibalik tetap ada pada daftar.';
+
+  @override
+  String get m53CreditSummaryapproved => 'Total kredit efektif disetujui';
+
+  @override
+  String get m53CreditSummaryallocated => 'Kredit efektif diterapkan';
+
+  @override
+  String get m53CreditSummaryrefunded => 'Refund efektif diterima';
+
+  @override
+  String get m53CreditSummaryavailable => 'Kredit belum dialokasikan';
+
+  @override
+  String get m53CreditReversed => 'Persetujuan kredit dibalik';
+
+  @override
+  String get m53CreditChooseInvoice => 'Pilih satu tagihan tujuan';
+
+  @override
+  String get m53CreditReverseAllocation => 'Balik alokasi kredit';
+
+  @override
+  String get m53CreditCashSentBack => 'Pecahan uang dikembalikan ke supplier';
+
+  @override
+  String get m53CreditReverseRefund => 'Balik refund diterima';
+
+  @override
+  String get m53CreditReverse => 'Balik persetujuan kredit';
+
+  @override
+  String get m53CreditAllocations => 'Riwayat alokasi kredit';
+
+  @override
+  String get m53CreditRefunds => 'Riwayat refund supplier';
+
+  @override
+  String get m53CreditRefundReversedLabel => 'Refund sudah dibalik';
+
+  @override
+  String get m53CreditApprovedStatus =>
+      'Nilai kredit disetujui; lihat alokasi dan saldonya';
 }

@@ -3975,4 +3975,193 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53ReturnChooseReceipt => 'Create a draft from this receipt';
+
+  @override
+  String get m53CreditMissing => 'Supplier credit not found.';
+
+  @override
+  String get m53CreditChanged =>
+      'The credit balance or history changed. Reload and review before continuing.';
+
+  @override
+  String get m53CreditReturnUnavailable =>
+      'The physical return is unavailable or reversed. New credit cannot be approved.';
+
+  @override
+  String get m53CreditAlreadyApproved =>
+      'This return already has approved credit. Open that credit.';
+
+  @override
+  String get m53CreditDateInvalid =>
+      'Check the date. It cannot be in the future or before the approval or original reversed event.';
+
+  @override
+  String get m53CreditAmountInvalid =>
+      'Amount must be positive and within both available credit and the target invoice balance.';
+
+  @override
+  String get m53CreditTargetInvalid =>
+      'Choose an active invoice for the same supplier and currency.';
+
+  @override
+  String get m53CreditAllocationMissing => 'Credit allocation not found.';
+
+  @override
+  String get m53CreditAllocationReversed => 'Credit allocation reversed.';
+
+  @override
+  String get m53CreditDependencies =>
+      'Reverse effective allocations and refunds before reversing credit approval.';
+
+  @override
+  String get m53CreditRefundMissing => 'Supplier refund not found.';
+
+  @override
+  String get m53CreditRefundReversed =>
+      'This refund has already been reversed.';
+
+  @override
+  String get m53CreditCashOutRequired =>
+      'Enter the cash pieces actually sent back to the supplier from an active drawer session.';
+
+  @override
+  String get backupSupplierCreditInvalid =>
+      'The archive contains inconsistent supplier credit approvals, allocations, refunds or balances.';
+
+  @override
+  String get m53CreditApprove => 'Approve supplier credit value';
+
+  @override
+  String get m53CreditApproveConfirm =>
+      'Confirm the value actually approved by the supplier? This is separate from inventory removed. Allocation to the original invoice is posted together, without automatically receiving money.';
+
+  @override
+  String get m53CreditAppliedNow => 'Applied to original invoice now';
+
+  @override
+  String get m53CreditAvailable => 'Unallocated credit';
+
+  @override
+  String get m53CreditApprovalHelp =>
+      'Enter a value and reason based on supplier approval, not an estimated goods price. It may differ from inventory removed. Allocation is capped by the original invoice balance; excess stays unallocated.';
+
+  @override
+  String get m53CreditNoInvoice =>
+      'No active original invoice exists. Approved credit is kept separately for later allocation or refund.';
+
+  @override
+  String get m53CreditApprovedValue => 'Approved credit value';
+
+  @override
+  String get m53CreditApprovalDate => 'Supplier approval date';
+
+  @override
+  String get m53CreditAgreementReason => 'Reason / supplier agreement evidence';
+
+  @override
+  String get m53SupplierCredits => 'Supplier credits and refunds';
+
+  @override
+  String get m53CreditRefund => 'Record refund received';
+
+  @override
+  String get m53CreditAllocate => 'Apply to one invoice';
+
+  @override
+  String get m53CreditCashReceived => 'Refund cash pieces received in drawer';
+
+  @override
+  String get m53CreditRefundConfirm =>
+      'Record refund money already received from the supplier? This uses available credit, not a new supplier payment or an automatic transfer.';
+
+  @override
+  String get m53CreditAllocateConfirm =>
+      'Apply credit to the selected single invoice? No money or stock is moved.';
+
+  @override
+  String get m53CreditRefundHelp =>
+      'Record only money actually received from the supplier. Refunded credit cannot also be allocated to invoices. Bank transfers do not change drawer balance.';
+
+  @override
+  String get m53CreditAllocateHelp =>
+      'One allocation targets one invoice for the same supplier. Both balances are rechecked at confirmation. This allocation does not pay drawer cash.';
+
+  @override
+  String get m53CreditRefundAmount => 'Refund amount received';
+
+  @override
+  String get m53CreditAllocationAmount => 'Credit amount applied';
+
+  @override
+  String get m53CreditFillMaximum => 'Fill available maximum';
+
+  @override
+  String get m53CreditRefundDate => 'Refund receipt date';
+
+  @override
+  String get m53CreditAllocationDate => 'Credit allocation date';
+
+  @override
+  String get m53CreditRefundDestination => 'Destination of received money';
+
+  @override
+  String get m53CreditDestinationdrawer => 'Into cash drawer';
+
+  @override
+  String get m53CreditDestinationbank => 'Received through bank';
+
+  @override
+  String get m53CreditDestinationownerFunds =>
+      'Received by owner outside drawer';
+
+  @override
+  String get m53CreditDrawerOff =>
+      'Drawer tracking is off. The refund amount is recorded, but no drawer pieces or balance are created. Open cash settings to track pieces and a drawer session.';
+
+  @override
+  String get m53CreditSummaryScope =>
+      'All effective credits for this supplier, current balance, separated by currency. Reversed approvals remain in the list history.';
+
+  @override
+  String get m53CreditSummaryapproved => 'Total effective approved credit';
+
+  @override
+  String get m53CreditSummaryallocated => 'Effective credit applied';
+
+  @override
+  String get m53CreditSummaryrefunded => 'Effective refunds received';
+
+  @override
+  String get m53CreditSummaryavailable => 'Unallocated credit';
+
+  @override
+  String get m53CreditReversed => 'Credit approval reversed';
+
+  @override
+  String get m53CreditChooseInvoice => 'Choose one target invoice';
+
+  @override
+  String get m53CreditReverseAllocation => 'Reverse credit allocation';
+
+  @override
+  String get m53CreditCashSentBack => 'Cash pieces sent back to supplier';
+
+  @override
+  String get m53CreditReverseRefund => 'Reverse received refund';
+
+  @override
+  String get m53CreditReverse => 'Reverse credit approval';
+
+  @override
+  String get m53CreditAllocations => 'Credit allocation history';
+
+  @override
+  String get m53CreditRefunds => 'Supplier refund history';
+
+  @override
+  String get m53CreditRefundReversedLabel => 'Refund reversed';
+
+  @override
+  String get m53CreditApprovedStatus =>
+      'Credit value approved; review its allocations and balance';
 }

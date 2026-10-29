@@ -7,6 +7,7 @@ import '../../../data/database/database_coordinator.dart';
 import '../../management/application/management_service.dart';
 import '../domain/supplier_terms.dart';
 import '../domain/supplier_invoice.dart';
+import '../domain/supplier_credit.dart';
 import '../../../core/pagination/page.dart';
 import '../../cashier/application/cashier_store.dart';
 import '../../cash_drawer/application/cash_drawer_ledger.dart';
@@ -15,6 +16,10 @@ part 'supplier_invoice_posting.dart';
 part 'supplier_payment_posting.dart';
 part 'supplier_finance_validation.dart';
 part 'supplier_finance_queries.dart';
+part 'supplier_credit_posting.dart';
+part 'supplier_credit_refunds.dart';
+part 'supplier_credit_validation.dart';
+part 'supplier_credit_queries.dart';
 
 /// Supplier operational facts and owner-controlled financial configuration.
 /// Future invoice/payment writers must consume these terms inside their own
@@ -82,7 +87,10 @@ final class SupplierService {
   static const _invoiceSelect = '''SELECT i.*,
     COALESCE((SELECT SUM(p.amount_minor) FROM supplier_payments p WHERE p.invoice_id=i.id
       AND NOT EXISTS(SELECT 1 FROM supplier_payment_reversals r WHERE r.payment_id=p.id)),0) AS paid_minor,
-    0 AS credit_minor,COALESCE((SELECT a.due_date FROM supplier_due_amendments a
+    COALESCE((SELECT SUM(a.amount_minor) FROM supplier_credit_allocations a WHERE a.invoice_id=i.id
+      AND NOT EXISTS(SELECT 1 FROM supplier_credit_allocation_reversals v WHERE v.allocation_id=a.id)
+      AND NOT EXISTS(SELECT 1 FROM supplier_credit_reversals v WHERE v.credit_id=a.credit_id)),0) AS credit_minor,
+    COALESCE((SELECT a.due_date FROM supplier_due_amendments a
       WHERE a.invoice_id=i.id ORDER BY a.invoice_revision DESC LIMIT 1),i.due_date) AS effective_due
     FROM supplier_invoices i''';
   static Future<SupplierInvoice> invoiceOn(

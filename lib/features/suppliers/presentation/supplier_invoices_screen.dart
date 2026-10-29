@@ -7,12 +7,14 @@ import '../../../core/money/money_field.dart';
 import '../../../l10n/localization.dart';
 import '../../management/domain/management_role.dart';
 import '../../management/presentation/management_gate.dart';
+import '../../management/presentation/management_session_provider.dart';
 import '../../settings/presentation/language_button.dart';
 import '../application/supplier_service.dart';
 import '../domain/supplier_invoice.dart';
 import 'supplier_billing_screen.dart';
 import 'supplier_invoice_screen.dart';
 import 'supplier_returns_screen.dart';
+import 'supplier_credits_screen.dart';
 
 /// A warehouse route is always scoped to one supplier. Each page replaces the
 /// previous one, so browsing long histories does not retain an unbounded list.
@@ -122,6 +124,19 @@ class _SupplierInvoicesScreenState extends State<SupplierInvoicesScreen> {
           padding: const EdgeInsets.all(16),
           children: [
             Text(name),
+            if (context.watch<ManagementSessionProvider>().service.role ==
+                ManagementRole.owner)
+              TextButton(
+                onPressed: busy
+                    ? null
+                    : () => Navigator.of(context).push<void>(
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              SupplierCreditsScreen(supplier: widget.id),
+                        ),
+                      ),
+                child: Text(tr(context, 'm53SupplierCredits')),
+              ),
             TextButton(
               key: const ValueKey('supplier-returns-open'),
               onPressed: busy

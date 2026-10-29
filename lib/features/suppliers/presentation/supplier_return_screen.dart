@@ -9,11 +9,14 @@ import '../../../l10n/localization.dart';
 import '../../inventory/application/inventory_service.dart';
 import '../../management/domain/management_role.dart';
 import '../../management/presentation/management_gate.dart';
+import '../../management/presentation/management_session_provider.dart';
 import '../../management/presentation/managed_text_field.dart';
 import '../../management/presentation/protected_dialog.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/supplier_return.dart';
 import 'supplier_finance_forms.dart';
+import 'supplier_credit_approval_screen.dart';
+import 'supplier_credits_screen.dart';
 
 /// A saved draft changes no stock. Each quantity edit is durable, while an
 /// unsaved reason remains owned by this route across lock/unlock and dirty Back.
@@ -265,6 +268,9 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
   @override
   Widget build(BuildContext context) {
     final d = draft, posted = document;
+    final owner =
+        context.watch<ManagementSessionProvider>().service.role ==
+        ManagementRole.owner;
     return ManagementGate(
       capability: ManagementCapability.inventory,
       child: ListenableBuilder(
@@ -514,6 +520,8 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
                                 context,
                                 posted.reversed
                                     ? 'm53ReturnReversed'
+                                    : posted.row['active_credit_id'] != null
+                                    ? 'm53CreditApprovedStatus'
                                     : 'm53ReturnPendingCredit',
                               ),
                             ),
@@ -532,6 +540,50 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
                                 key: const ValueKey('supplier-return-undo'),
                                 onPressed: busy ? null : undo,
                                 child: Text(tr(context, 'm53ReturnUndo')),
+                              ),
+                            if (!posted.reversed && owner)
+                              TextButton(
+                                key: const ValueKey('supplier-return-credit'),
+                                onPressed: busy
+                                    ? null
+                                    : () async {
+                                        final existing =
+                                            posted.row['active_credit_id'];
+                                        if (existing == null) {
+                                          await Navigator.of(
+                                            context,
+                                          ).push<EntityId>(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  SupplierCreditApprovalScreen(
+                                                    returnId: posted.id,
+                                                  ),
+                                            ),
+                                          );
+                                        } else {
+                                          await Navigator.of(
+                                            context,
+                                          ).push<void>(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  SupplierCreditScreen(
+                                                    id: EntityId(
+                                                      existing as String,
+                                                    ),
+                                                  ),
+                                            ),
+                                          );
+                                        }
+                                        if (mounted) await run(refresh);
+                                      },
+                                child: Text(
+                                  tr(
+                                    context,
+                                    posted.row['active_credit_id'] == null
+                                        ? 'm53CreditApprove'
+                                        : 'm53SupplierCredits',
+                                  ),
+                                ),
                               ),
                           ],
                         ],

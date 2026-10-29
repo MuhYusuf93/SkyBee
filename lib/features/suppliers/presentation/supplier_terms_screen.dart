@@ -12,6 +12,7 @@ import '../../settings/presentation/language_button.dart';
 import '../domain/supplier_terms.dart';
 import 'supplier_invoices_screen.dart';
 import 'supplier_returns_screen.dart';
+import 'supplier_credits_screen.dart';
 
 /// Warehouse can read the supplier's agreement, but every mutation is owner
 /// authorized again by the service. No old receipt becomes paid or indebted.
@@ -130,6 +131,18 @@ class _SupplierTermsScreenState extends State<SupplierTermsScreen> {
                     key: const ValueKey('supplier-terms-error'),
                   ),
                 Text(tr(context, 'm53SupplierTermsHelp')),
+                if (owner)
+                  TextButton(
+                    onPressed: busy
+                        ? null
+                        : () => Navigator.of(context).push<void>(
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  SupplierCreditsScreen(supplier: widget.id),
+                            ),
+                          ),
+                    child: Text(tr(context, 'm53SupplierCredits')),
+                  ),
                 TextButton(
                   onPressed: busy
                       ? null

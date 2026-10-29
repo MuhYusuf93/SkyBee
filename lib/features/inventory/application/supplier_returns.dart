@@ -179,12 +179,13 @@ extension SupplierReturns on InventoryService {
     String? reason,
     String? status,
     EntityId? posted,
+    int? recordedAt,
   }) async {
     if (await db.update(
           'supplier_return_drafts',
           {
             'revision': doc.revision + 1,
-            'updated_at': access.clock.milliseconds,
+            'updated_at': recordedAt ?? access.clock.milliseconds,
             'reason': ?reason,
             'status': ?status,
             if (posted != null) 'return_id': posted.value,
@@ -393,8 +394,13 @@ extension SupplierReturns on InventoryService {
     DatabaseExecutor db,
     EntityId id,
   ) async {
+    final activeCredit = database.schemaVersion < 33
+        ? 'NULL'
+        : '''(SELECT c.id FROM supplier_credits c WHERE c.return_id=r.id
+      AND NOT EXISTS(SELECT 1 FROM supplier_credit_reversals x WHERE x.credit_id=c.id) LIMIT 1)''';
     final headers = await db.rawQuery(
-      '''SELECT r.*,CASE WHEN v.id IS NULL THEN 0 ELSE 1 END AS reversed,v.reason AS reversal_reason,v.created_at AS reversed_at
+      '''SELECT r.*,CASE WHEN v.id IS NULL THEN 0 ELSE 1 END AS reversed,v.reason AS reversal_reason,v.created_at AS reversed_at,
+      $activeCredit AS active_credit_id
       FROM supplier_returns r LEFT JOIN supplier_return_reversals v ON v.return_id=r.id WHERE r.id=?''',
       [id.value],
     );

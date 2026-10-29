@@ -79,7 +79,7 @@ final supplierFinanceSchema = <String>[
     payment_json TEXT CHECK(payment_json IS NULL OR length(payment_json)<=4000))''',
   '''CREATE TRIGGER supplier_invoice_update BEFORE UPDATE ON supplier_invoices WHEN
     OLD.status<>'posted' OR NEW.revision<>OLD.revision+1 OR
-    ${_invoiceImmutableColumns.map((c) => 'NEW.$c IS NOT OLD.$c').join(' OR ')} OR
+    ${supplierInvoiceImmutableColumns.map((c) => 'NEW.$c IS NOT OLD.$c').join(' OR ')} OR
     (SELECT COUNT(*) FROM (
       SELECT 1 FROM supplier_payments p WHERE p.invoice_id=OLD.id AND p.invoice_revision=NEW.revision
       UNION ALL SELECT 1 FROM supplier_payment_reversals r WHERE r.invoice_id=OLD.id AND r.invoice_revision=NEW.revision
@@ -100,7 +100,7 @@ final supplierFinanceSchema = <String>[
       '''CREATE TRIGGER ${table}_${action.toLowerCase()} BEFORE $action ON $table
         BEGIN SELECT RAISE(ABORT,'immutable_supplier_fact'); END''',
 ];
-const _invoiceImmutableColumns = [
+const supplierInvoiceImmutableColumns = [
   'id',
   'receipt_id',
   'supplier_id',

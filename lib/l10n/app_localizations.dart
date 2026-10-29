@@ -7123,6 +7123,342 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create a draft from this receipt'**
   String get m53ReturnChooseReceipt;
+
+  /// Supplier credit: Supplier credit not found.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier credit not found.'**
+  String get m53CreditMissing;
+
+  /// Supplier credit: The credit balance or history changed. Reload and review before continuing.
+  ///
+  /// In en, this message translates to:
+  /// **'The credit balance or history changed. Reload and review before continuing.'**
+  String get m53CreditChanged;
+
+  /// Supplier credit: The physical return is unavailable or reversed. New credit cannot be approved.
+  ///
+  /// In en, this message translates to:
+  /// **'The physical return is unavailable or reversed. New credit cannot be approved.'**
+  String get m53CreditReturnUnavailable;
+
+  /// Supplier credit: This return already has approved credit. Open that credit.
+  ///
+  /// In en, this message translates to:
+  /// **'This return already has approved credit. Open that credit.'**
+  String get m53CreditAlreadyApproved;
+
+  /// Supplier credit: Check the date. It cannot be in the future or before the approval or original reversed event.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the date. It cannot be in the future or before the approval or original reversed event.'**
+  String get m53CreditDateInvalid;
+
+  /// Supplier credit: Amount must be positive and within both available credit and the target invoice balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount must be positive and within both available credit and the target invoice balance.'**
+  String get m53CreditAmountInvalid;
+
+  /// Supplier credit: Choose an active invoice for the same supplier and currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an active invoice for the same supplier and currency.'**
+  String get m53CreditTargetInvalid;
+
+  /// Supplier credit: Credit allocation not found.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit allocation not found.'**
+  String get m53CreditAllocationMissing;
+
+  /// Supplier credit: Credit allocation reversed.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit allocation reversed.'**
+  String get m53CreditAllocationReversed;
+
+  /// Supplier credit: Reverse effective allocations and refunds before reversing credit approval.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse effective allocations and refunds before reversing credit approval.'**
+  String get m53CreditDependencies;
+
+  /// Supplier credit: Supplier refund not found.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier refund not found.'**
+  String get m53CreditRefundMissing;
+
+  /// Supplier credit: This refund has already been reversed.
+  ///
+  /// In en, this message translates to:
+  /// **'This refund has already been reversed.'**
+  String get m53CreditRefundReversed;
+
+  /// Supplier credit: Enter the cash pieces actually sent back to the supplier from an active drawer session.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the cash pieces actually sent back to the supplier from an active drawer session.'**
+  String get m53CreditCashOutRequired;
+
+  /// Supplier credit: The archive contains inconsistent supplier credit approvals, allocations, refunds or balances.
+  ///
+  /// In en, this message translates to:
+  /// **'The archive contains inconsistent supplier credit approvals, allocations, refunds or balances.'**
+  String get backupSupplierCreditInvalid;
+
+  /// Supplier credit: Approve supplier credit value
+  ///
+  /// In en, this message translates to:
+  /// **'Approve supplier credit value'**
+  String get m53CreditApprove;
+
+  /// Supplier credit: Confirm the value actually approved by the supplier? This is separate from inventory removed. Allocation to the original invoice is posted together, without automatically receiving money.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the value actually approved by the supplier? This is separate from inventory removed. Allocation to the original invoice is posted together, without automatically receiving money.'**
+  String get m53CreditApproveConfirm;
+
+  /// Supplier credit: Applied to original invoice now
+  ///
+  /// In en, this message translates to:
+  /// **'Applied to original invoice now'**
+  String get m53CreditAppliedNow;
+
+  /// Supplier credit: Unallocated credit
+  ///
+  /// In en, this message translates to:
+  /// **'Unallocated credit'**
+  String get m53CreditAvailable;
+
+  /// Supplier credit: Enter a value and reason based on supplier approval, not an estimated goods price. It may differ from inventory removed. Allocation is capped by the original invoice balance; excess stays unallocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a value and reason based on supplier approval, not an estimated goods price. It may differ from inventory removed. Allocation is capped by the original invoice balance; excess stays unallocated.'**
+  String get m53CreditApprovalHelp;
+
+  /// Supplier credit: No active original invoice exists. Approved credit is kept separately for later allocation or refund.
+  ///
+  /// In en, this message translates to:
+  /// **'No active original invoice exists. Approved credit is kept separately for later allocation or refund.'**
+  String get m53CreditNoInvoice;
+
+  /// Supplier credit: Approved credit value
+  ///
+  /// In en, this message translates to:
+  /// **'Approved credit value'**
+  String get m53CreditApprovedValue;
+
+  /// Supplier credit: Supplier approval date
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier approval date'**
+  String get m53CreditApprovalDate;
+
+  /// Supplier credit: Reason / supplier agreement evidence
+  ///
+  /// In en, this message translates to:
+  /// **'Reason / supplier agreement evidence'**
+  String get m53CreditAgreementReason;
+
+  /// Supplier credit: Supplier credits and refunds
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier credits and refunds'**
+  String get m53SupplierCredits;
+
+  /// Supplier credit: Record refund received
+  ///
+  /// In en, this message translates to:
+  /// **'Record refund received'**
+  String get m53CreditRefund;
+
+  /// Supplier credit: Apply to one invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to one invoice'**
+  String get m53CreditAllocate;
+
+  /// Supplier credit: Refund cash pieces received in drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Refund cash pieces received in drawer'**
+  String get m53CreditCashReceived;
+
+  /// Supplier credit: Record refund money already received from the supplier? This uses available credit, not a new supplier payment or an automatic transfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Record refund money already received from the supplier? This uses available credit, not a new supplier payment or an automatic transfer.'**
+  String get m53CreditRefundConfirm;
+
+  /// Supplier credit: Apply credit to the selected single invoice? No money or stock is moved.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply credit to the selected single invoice? No money or stock is moved.'**
+  String get m53CreditAllocateConfirm;
+
+  /// Supplier credit: Record only money actually received from the supplier. Refunded credit cannot also be allocated to invoices. Bank transfers do not change drawer balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Record only money actually received from the supplier. Refunded credit cannot also be allocated to invoices. Bank transfers do not change drawer balance.'**
+  String get m53CreditRefundHelp;
+
+  /// Supplier credit: One allocation targets one invoice for the same supplier. Both balances are rechecked at confirmation. This allocation does not pay drawer cash.
+  ///
+  /// In en, this message translates to:
+  /// **'One allocation targets one invoice for the same supplier. Both balances are rechecked at confirmation. This allocation does not pay drawer cash.'**
+  String get m53CreditAllocateHelp;
+
+  /// Supplier credit: Refund amount received
+  ///
+  /// In en, this message translates to:
+  /// **'Refund amount received'**
+  String get m53CreditRefundAmount;
+
+  /// Supplier credit: Credit amount applied
+  ///
+  /// In en, this message translates to:
+  /// **'Credit amount applied'**
+  String get m53CreditAllocationAmount;
+
+  /// Supplier credit: Fill available maximum
+  ///
+  /// In en, this message translates to:
+  /// **'Fill available maximum'**
+  String get m53CreditFillMaximum;
+
+  /// Supplier credit: Refund receipt date
+  ///
+  /// In en, this message translates to:
+  /// **'Refund receipt date'**
+  String get m53CreditRefundDate;
+
+  /// Supplier credit: Credit allocation date
+  ///
+  /// In en, this message translates to:
+  /// **'Credit allocation date'**
+  String get m53CreditAllocationDate;
+
+  /// Supplier credit: Destination of received money
+  ///
+  /// In en, this message translates to:
+  /// **'Destination of received money'**
+  String get m53CreditRefundDestination;
+
+  /// Supplier credit: Into cash drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Into cash drawer'**
+  String get m53CreditDestinationdrawer;
+
+  /// Supplier credit: Received through bank
+  ///
+  /// In en, this message translates to:
+  /// **'Received through bank'**
+  String get m53CreditDestinationbank;
+
+  /// Supplier credit: Received by owner outside drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Received by owner outside drawer'**
+  String get m53CreditDestinationownerFunds;
+
+  /// Supplier credit: Drawer tracking is off. The refund amount is recorded, but no drawer pieces or balance are created. Open cash settings to track pieces and a drawer session.
+  ///
+  /// In en, this message translates to:
+  /// **'Drawer tracking is off. The refund amount is recorded, but no drawer pieces or balance are created. Open cash settings to track pieces and a drawer session.'**
+  String get m53CreditDrawerOff;
+
+  /// Supplier credit: All effective credits for this supplier, current balance, separated by currency. Reversed approvals remain in the list history.
+  ///
+  /// In en, this message translates to:
+  /// **'All effective credits for this supplier, current balance, separated by currency. Reversed approvals remain in the list history.'**
+  String get m53CreditSummaryScope;
+
+  /// Supplier credit: Total effective approved credit
+  ///
+  /// In en, this message translates to:
+  /// **'Total effective approved credit'**
+  String get m53CreditSummaryapproved;
+
+  /// Supplier credit: Effective credit applied
+  ///
+  /// In en, this message translates to:
+  /// **'Effective credit applied'**
+  String get m53CreditSummaryallocated;
+
+  /// Supplier credit: Effective refunds received
+  ///
+  /// In en, this message translates to:
+  /// **'Effective refunds received'**
+  String get m53CreditSummaryrefunded;
+
+  /// Supplier credit: Unallocated credit
+  ///
+  /// In en, this message translates to:
+  /// **'Unallocated credit'**
+  String get m53CreditSummaryavailable;
+
+  /// Supplier credit: Credit approval reversed
+  ///
+  /// In en, this message translates to:
+  /// **'Credit approval reversed'**
+  String get m53CreditReversed;
+
+  /// Supplier credit: Choose one target invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Choose one target invoice'**
+  String get m53CreditChooseInvoice;
+
+  /// Supplier credit: Reverse credit allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse credit allocation'**
+  String get m53CreditReverseAllocation;
+
+  /// Supplier credit: Cash pieces sent back to supplier
+  ///
+  /// In en, this message translates to:
+  /// **'Cash pieces sent back to supplier'**
+  String get m53CreditCashSentBack;
+
+  /// Supplier credit: Reverse received refund
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse received refund'**
+  String get m53CreditReverseRefund;
+
+  /// Supplier credit: Reverse credit approval
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse credit approval'**
+  String get m53CreditReverse;
+
+  /// Supplier credit: Credit allocation history
+  ///
+  /// In en, this message translates to:
+  /// **'Credit allocation history'**
+  String get m53CreditAllocations;
+
+  /// Supplier credit: Supplier refund history
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier refund history'**
+  String get m53CreditRefunds;
+
+  /// Supplier credit: Refund reversed
+  ///
+  /// In en, this message translates to:
+  /// **'Refund reversed'**
+  String get m53CreditRefundReversedLabel;
+
+  /// Supplier credit: Credit value approved; review its allocations and balance
+  ///
+  /// In en, this message translates to:
+  /// **'Credit value approved; review its allocations and balance'**
+  String get m53CreditApprovedStatus;
 }
 
 class _AppLocalizationsDelegate

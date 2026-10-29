@@ -1,0 +1,204 @@
+{
+  "schema": 33,
+  "sourceFiles": 640,
+  "sourceManifestSha256": "6c4a0632609f6a08b7187a37c4764f07922119605810aa2616597ceb73ea427e",
+  "regression": {
+    "passed": 37,
+    "failed": 0,
+    "elapsed": "00:57",
+    "scope": [
+      "credits domain9 and UI2",
+      "finance domain11 and UI2",
+      "returns domain6 and UI2",
+      "receipt stock guard3",
+      "backup metadata2"
+    ]
+  },
+  "focusedUI": {
+    "passed": 2,
+    "failed": 0,
+    "elapsed": "00:21",
+    "syntheticInput": true
+  },
+  "localization": {
+    "keys": 1227,
+    "staticReferences": 833,
+    "originalRequirements": 245
+  },
+  "pinCrypto": {
+    "upstreamUnchanged": 106,
+    "licenseAndArchive": "match"
+  },
+  "analyzer": {
+    "issues": 0,
+    "output": "Analyzing codex-kasir-kit...                                    \nNo issues found! (ran in 105.5s)"
+  },
+  "format": {
+    "files": 544,
+    "changed": 3
+  },
+  "advancingClock": "Old schema32 producer reproduced failure in isolated host; shared timestamp producer lifecycle PASS",
+  "native": "PENDING combined E3 after schedules; cross-key restore G pending",
+  "ordinarySkybee": "No update/reset/reseed; final authorization only after all M5.3 and verified backup",
+  "logs": {
+    "supplier-credits-analyze10.txt": {
+      "sha256": "d9a903f7c7ab9b4de376e4b9511d11fc3ab242316336dfb4374ae18ad5748872"
+    },
+    "supplier-credits-analyze11.txt": {
+      "sha256": "f4d2269318766998dffb45e9f9a7e9cc16fc6fc5b5d2c421a9e10f1d437eb97c"
+    },
+    "supplier-credits-analyze2.txt": {
+      "sha256": "1bdf2c140886a9d6957b86d95e2c46e0a037e29a0e228f412454e35bd17d3aff"
+    },
+    "supplier-credits-analyze4.txt": {
+      "sha256": "5d8f7293757e38219ad058bc4b96f71510fb4108d0109b41ff7f0a77bc71da09"
+    },
+    "supplier-credits-analyze9.txt": {
+      "sha256": "e916dbada26b600dda2fbc02dcb3d907de7489b21abeb244fa2152440a7025aa"
+    },
+    "supplier-credits-base-host1.txt": {
+      "sha256": "ee169a6ef68f6865a7ab67e207133ab903864f15dd59b4c92f8c1371a486952b",
+      "passed": 17,
+      "failed": 0,
+      "elapsed": "00:38"
+    },
+    "supplier-credits-clock-format.txt": {
+      "sha256": "b08c187e8d464775e22c67908ab48203626b2c91b4b1db0db0c4510fb393201b"
+    },
+    "supplier-credits-fix11.txt": {
+      "sha256": "ff398329f858f74009ebd2c9ecfedc17d7df2311b31b0d359d5c9f98e657ec57"
+    },
+    "supplier-credits-format1.txt": {
+      "sha256": "d987ac89e5b99d9508f56becbdfc38cfc3667d9cb174bce960974fca0ee6353d"
+    },
+    "supplier-credits-format10.txt": {
+      "sha256": "c9c2de3930c3f391d9e0b17252345d4b33a1a00ff2afbd3256807be9f00499c4"
+    },
+    "supplier-credits-format11.txt": {
+      "sha256": "1baefd27609874f7e382a5643fe2f87e5a02c45e3f00bccb07207f3899c8d16f"
+    },
+    "supplier-credits-format2.txt": {
+      "sha256": "f25a3d9be94586e7aaa58e55d97d955eabab5322b3dba720fc89d60a97f591de"
+    },
+    "supplier-credits-format3.txt": {
+      "sha256": "0030333a956ad663d3928f90dec859849effd9bcf3f3288a5371f5e6414a41b8"
+    },
+    "supplier-credits-format4.txt": {
+      "sha256": "5b64fbd1d1a3d3c1fe2b7b91f5a16eafca686d9d3290f3377ab9f8ab354d8df2"
+    },
+    "supplier-credits-format5.txt": {
+      "sha256": "9c41caf9089c7a8c0bbc709e894cf8a08a9defab51c72c075ca498d08d097f4d"
+    },
+    "supplier-credits-format6.txt": {
+      "sha256": "d5a19e8fadd0ed47ccd3a4d428b3b3fc76c3a262fb2737a43f45992f2ac2d682"
+    },
+    "supplier-credits-format7.txt": {
+      "sha256": "47735aeeab53305f5be661ae3a6b65290eb740af3c1eae84cfd2245461d328ea"
+    },
+    "supplier-credits-format8.txt": {
+      "sha256": "2da40d80585cd2e6050fc6c530be1a35e6979b49ff6881c2c223efe39ae503b6"
+    },
+    "supplier-credits-gen10.txt": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "supplier-credits-host1.txt": {
+      "sha256": "ab43975ab9b4ee6ecc1222f67ec86d979225114cf6a6ba8deb149ff7ebb87d67",
+      "passed": 5,
+      "failed": 1,
+      "elapsed": "00:25"
+    },
+    "supplier-credits-host2.txt": {
+      "sha256": "05c92cb16e548fe250172f55ac365f5d64f049a0f66ee7dbb7a62ed5913c5da3",
+      "passed": 7,
+      "failed": 0,
+      "elapsed": "00:27"
+    },
+    "supplier-credits-host3.txt": {
+      "sha256": "182defa0bc121f4743482948245f45dd650c5289b49f4c0dfa952186ad0e7e24",
+      "passed": 7,
+      "failed": 0,
+      "elapsed": "00:27"
+    },
+    "supplier-credits-host4.txt": {
+      "sha256": "b438e92cafdc346342af09df3e877facb3659f173d16c26eac10d82cc6abdfc1",
+      "passed": 0,
+      "failed": 7,
+      "elapsed": "00:30"
+    },
+    "supplier-credits-host5.txt": {
+      "sha256": "05c92cb16e548fe250172f55ac365f5d64f049a0f66ee7dbb7a62ed5913c5da3",
+      "passed": 7,
+      "failed": 0,
+      "elapsed": "00:27"
+    },
+    "supplier-credits-host6.txt": {
+      "sha256": "09f03658051092f745bab9530e23157721f9c0ef4c4f9834c9112c956747504f",
+      "passed": 8,
+      "failed": 0,
+      "elapsed": "00:34"
+    },
+    "supplier-credits-host7.txt": {
+      "sha256": "d9f1bf3c371a6c9ae65c2f224922818569d630c9caeb2664d443c6055131d945",
+      "passed": 9,
+      "failed": 0,
+      "elapsed": "00:31"
+    },
+    "supplier-credits-l10n10.txt": {
+      "sha256": "36864d58459784fc6277ae2b6b3f20fba7d146e5fa41609ecd1f986b331d9535"
+    },
+    "supplier-credits-l10n11.txt": {
+      "sha256": "36864d58459784fc6277ae2b6b3f20fba7d146e5fa41609ecd1f986b331d9535"
+    },
+    "supplier-credits-pin11.txt": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+    },
+    "supplier-credits-regression11.txt": {
+      "sha256": "38736a231a8c95633afb5476d2bbeec92c61f6d1486c282bb2c434a636dabeb3",
+      "passed": 37,
+      "failed": 0,
+      "elapsed": "00:57"
+    },
+    "supplier-credits-test-format1.txt": {
+      "sha256": "3a6f4bbd38b33046ce0429608cfa09bd269d81b39f13036a8b18392e15fb4a32"
+    },
+    "supplier-credits-ui-format1.txt": {
+      "sha256": "7bd91164fd543268b9903464d984565436752708805ceea13ceebd09e1b1f24a"
+    },
+    "supplier-credits-ui-format2.txt": {
+      "sha256": "a9d3a89da7fef90d3070e573c0a3b576da03067396fc08af6dea588f22849a5b"
+    },
+    "supplier-credits-ui-host1.txt": {
+      "sha256": "448ffef2d29f0ce79a9763edf776489d5c0aae6b326479ece8f57d83d4cce222",
+      "passed": 0,
+      "failed": 2,
+      "elapsed": "01:17"
+    },
+    "supplier-credits-ui-host2.txt": {
+      "sha256": "05c598a18321e7028f171044a0c7fe97cb23b696cd1e19d3f927ad3659496307",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:09"
+    },
+    "supplier-credits-ui-host3.txt": {
+      "sha256": "549ce1a45761caf62439ad38ba02327007746905cda9d940fbf38cfbd5c1e4c9",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:40"
+    },
+    "supplier-credits-ui-host4.txt": {
+      "sha256": "01a078c2bc81c80ef4b44a8c8495c28edf0d201a8335cbdfceeb8010b9782156",
+      "passed": 2,
+      "failed": 0,
+      "elapsed": "00:21"
+    },
+    "supplier-credits-ui-test-format1.txt": {
+      "sha256": "c70d00ef188d621bf6f79ef81d8cfd842fc0d81bb6e5cb51db684c3568ea09c7"
+    },
+    "supplier-return-clock-baseline-repro.txt": {
+      "sha256": "6010dd5117bf2d988d2e4fbce79cc4649f9afa6d4402cb9cc64dafa91cd72324",
+      "passed": 0,
+      "failed": 1,
+      "elapsed": "00:04"
+    }
+  }
+}

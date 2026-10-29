@@ -4778,5 +4778,229 @@
   "m53ReturnChooseReceipt": "Create a draft from this receipt",
   "@m53ReturnChooseReceipt": {
     "description": "Supplier return: Create a draft from this receipt"
+  },
+  "m53CreditMissing": "Supplier credit not found.",
+  "@m53CreditMissing": {
+    "description": "Supplier credit: Supplier credit not found."
+  },
+  "m53CreditChanged": "The credit balance or history changed. Reload and review before continuing.",
+  "@m53CreditChanged": {
+    "description": "Supplier credit: The credit balance or history changed. Reload and review before continuing."
+  },
+  "m53CreditReturnUnavailable": "The physical return is unavailable or reversed. New credit cannot be approved.",
+  "@m53CreditReturnUnavailable": {
+    "description": "Supplier credit: The physical return is unavailable or reversed. New credit cannot be approved."
+  },
+  "m53CreditAlreadyApproved": "This return already has approved credit. Open that credit.",
+  "@m53CreditAlreadyApproved": {
+    "description": "Supplier credit: This return already has approved credit. Open that credit."
+  },
+  "m53CreditDateInvalid": "Check the date. It cannot be in the future or before the approval or original reversed event.",
+  "@m53CreditDateInvalid": {
+    "description": "Supplier credit: Check the date. It cannot be in the future or before the approval or original reversed event."
+  },
+  "m53CreditAmountInvalid": "Amount must be positive and within both available credit and the target invoice balance.",
+  "@m53CreditAmountInvalid": {
+    "description": "Supplier credit: Amount must be positive and within both available credit and the target invoice balance."
+  },
+  "m53CreditTargetInvalid": "Choose an active invoice for the same supplier and currency.",
+  "@m53CreditTargetInvalid": {
+    "description": "Supplier credit: Choose an active invoice for the same supplier and currency."
+  },
+  "m53CreditAllocationMissing": "Credit allocation not found.",
+  "@m53CreditAllocationMissing": {
+    "description": "Supplier credit: Credit allocation not found."
+  },
+  "m53CreditAllocationReversed": "Credit allocation reversed.",
+  "@m53CreditAllocationReversed": {
+    "description": "Supplier credit: Credit allocation reversed."
+  },
+  "m53CreditDependencies": "Reverse effective allocations and refunds before reversing credit approval.",
+  "@m53CreditDependencies": {
+    "description": "Supplier credit: Reverse effective allocations and refunds before reversing credit approval."
+  },
+  "m53CreditRefundMissing": "Supplier refund not found.",
+  "@m53CreditRefundMissing": {
+    "description": "Supplier credit: Supplier refund not found."
+  },
+  "m53CreditRefundReversed": "This refund has already been reversed.",
+  "@m53CreditRefundReversed": {
+    "description": "Supplier credit: This refund has already been reversed."
+  },
+  "m53CreditCashOutRequired": "Enter the cash pieces actually sent back to the supplier from an active drawer session.",
+  "@m53CreditCashOutRequired": {
+    "description": "Supplier credit: Enter the cash pieces actually sent back to the supplier from an active drawer session."
+  },
+  "backupSupplierCreditInvalid": "The archive contains inconsistent supplier credit approvals, allocations, refunds or balances.",
+  "@backupSupplierCreditInvalid": {
+    "description": "Supplier credit: The archive contains inconsistent supplier credit approvals, allocations, refunds or balances."
+  },
+  "m53CreditApprove": "Approve supplier credit value",
+  "@m53CreditApprove": {
+    "description": "Supplier credit: Approve supplier credit value"
+  },
+  "m53CreditApproveConfirm": "Confirm the value actually approved by the supplier? This is separate from inventory removed. Allocation to the original invoice is posted together, without automatically receiving money.",
+  "@m53CreditApproveConfirm": {
+    "description": "Supplier credit: Confirm the value actually approved by the supplier? This is separate from inventory removed. Allocation to the original invoice is posted together, without automatically receiving money."
+  },
+  "m53CreditAppliedNow": "Applied to original invoice now",
+  "@m53CreditAppliedNow": {
+    "description": "Supplier credit: Applied to original invoice now"
+  },
+  "m53CreditAvailable": "Unallocated credit",
+  "@m53CreditAvailable": {
+    "description": "Supplier credit: Unallocated credit"
+  },
+  "m53CreditApprovalHelp": "Enter a value and reason based on supplier approval, not an estimated goods price. It may differ from inventory removed. Allocation is capped by the original invoice balance; excess stays unallocated.",
+  "@m53CreditApprovalHelp": {
+    "description": "Supplier credit: Enter a value and reason based on supplier approval, not an estimated goods price. It may differ from inventory removed. Allocation is capped by the original invoice balance; excess stays unallocated."
+  },
+  "m53CreditNoInvoice": "No active original invoice exists. Approved credit is kept separately for later allocation or refund.",
+  "@m53CreditNoInvoice": {
+    "description": "Supplier credit: No active original invoice exists. Approved credit is kept separately for later allocation or refund."
+  },
+  "m53CreditApprovedValue": "Approved credit value",
+  "@m53CreditApprovedValue": {
+    "description": "Supplier credit: Approved credit value"
+  },
+  "m53CreditApprovalDate": "Supplier approval date",
+  "@m53CreditApprovalDate": {
+    "description": "Supplier credit: Supplier approval date"
+  },
+  "m53CreditAgreementReason": "Reason / supplier agreement evidence",
+  "@m53CreditAgreementReason": {
+    "description": "Supplier credit: Reason / supplier agreement evidence"
+  },
+  "m53SupplierCredits": "Supplier credits and refunds",
+  "@m53SupplierCredits": {
+    "description": "Supplier credit: Supplier credits and refunds"
+  },
+  "m53CreditRefund": "Record refund received",
+  "@m53CreditRefund": {
+    "description": "Supplier credit: Record refund received"
+  },
+  "m53CreditAllocate": "Apply to one invoice",
+  "@m53CreditAllocate": {
+    "description": "Supplier credit: Apply to one invoice"
+  },
+  "m53CreditCashReceived": "Refund cash pieces received in drawer",
+  "@m53CreditCashReceived": {
+    "description": "Supplier credit: Refund cash pieces received in drawer"
+  },
+  "m53CreditRefundConfirm": "Record refund money already received from the supplier? This uses available credit, not a new supplier payment or an automatic transfer.",
+  "@m53CreditRefundConfirm": {
+    "description": "Supplier credit: Record refund money already received from the supplier? This uses available credit, not a new supplier payment or an automatic transfer."
+  },
+  "m53CreditAllocateConfirm": "Apply credit to the selected single invoice? No money or stock is moved.",
+  "@m53CreditAllocateConfirm": {
+    "description": "Supplier credit: Apply credit to the selected single invoice? No money or stock is moved."
+  },
+  "m53CreditRefundHelp": "Record only money actually received from the supplier. Refunded credit cannot also be allocated to invoices. Bank transfers do not change drawer balance.",
+  "@m53CreditRefundHelp": {
+    "description": "Supplier credit: Record only money actually received from the supplier. Refunded credit cannot also be allocated to invoices. Bank transfers do not change drawer balance."
+  },
+  "m53CreditAllocateHelp": "One allocation targets one invoice for the same supplier. Both balances are rechecked at confirmation. This allocation does not pay drawer cash.",
+  "@m53CreditAllocateHelp": {
+    "description": "Supplier credit: One allocation targets one invoice for the same supplier. Both balances are rechecked at confirmation. This allocation does not pay drawer cash."
+  },
+  "m53CreditRefundAmount": "Refund amount received",
+  "@m53CreditRefundAmount": {
+    "description": "Supplier credit: Refund amount received"
+  },
+  "m53CreditAllocationAmount": "Credit amount applied",
+  "@m53CreditAllocationAmount": {
+    "description": "Supplier credit: Credit amount applied"
+  },
+  "m53CreditFillMaximum": "Fill available maximum",
+  "@m53CreditFillMaximum": {
+    "description": "Supplier credit: Fill available maximum"
+  },
+  "m53CreditRefundDate": "Refund receipt date",
+  "@m53CreditRefundDate": {
+    "description": "Supplier credit: Refund receipt date"
+  },
+  "m53CreditAllocationDate": "Credit allocation date",
+  "@m53CreditAllocationDate": {
+    "description": "Supplier credit: Credit allocation date"
+  },
+  "m53CreditRefundDestination": "Destination of received money",
+  "@m53CreditRefundDestination": {
+    "description": "Supplier credit: Destination of received money"
+  },
+  "m53CreditDestinationdrawer": "Into cash drawer",
+  "@m53CreditDestinationdrawer": {
+    "description": "Supplier credit: Into cash drawer"
+  },
+  "m53CreditDestinationbank": "Received through bank",
+  "@m53CreditDestinationbank": {
+    "description": "Supplier credit: Received through bank"
+  },
+  "m53CreditDestinationownerFunds": "Received by owner outside drawer",
+  "@m53CreditDestinationownerFunds": {
+    "description": "Supplier credit: Received by owner outside drawer"
+  },
+  "m53CreditDrawerOff": "Drawer tracking is off. The refund amount is recorded, but no drawer pieces or balance are created. Open cash settings to track pieces and a drawer session.",
+  "@m53CreditDrawerOff": {
+    "description": "Supplier credit: Drawer tracking is off. The refund amount is recorded, but no drawer pieces or balance are created. Open cash settings to track pieces and a drawer session."
+  },
+  "m53CreditSummaryScope": "All effective credits for this supplier, current balance, separated by currency. Reversed approvals remain in the list history.",
+  "@m53CreditSummaryScope": {
+    "description": "Supplier credit: All effective credits for this supplier, current balance, separated by currency. Reversed approvals remain in the list history."
+  },
+  "m53CreditSummaryapproved": "Total effective approved credit",
+  "@m53CreditSummaryapproved": {
+    "description": "Supplier credit: Total effective approved credit"
+  },
+  "m53CreditSummaryallocated": "Effective credit applied",
+  "@m53CreditSummaryallocated": {
+    "description": "Supplier credit: Effective credit applied"
+  },
+  "m53CreditSummaryrefunded": "Effective refunds received",
+  "@m53CreditSummaryrefunded": {
+    "description": "Supplier credit: Effective refunds received"
+  },
+  "m53CreditSummaryavailable": "Unallocated credit",
+  "@m53CreditSummaryavailable": {
+    "description": "Supplier credit: Unallocated credit"
+  },
+  "m53CreditReversed": "Credit approval reversed",
+  "@m53CreditReversed": {
+    "description": "Supplier credit: Credit approval reversed"
+  },
+  "m53CreditChooseInvoice": "Choose one target invoice",
+  "@m53CreditChooseInvoice": {
+    "description": "Supplier credit: Choose one target invoice"
+  },
+  "m53CreditReverseAllocation": "Reverse credit allocation",
+  "@m53CreditReverseAllocation": {
+    "description": "Supplier credit: Reverse credit allocation"
+  },
+  "m53CreditCashSentBack": "Cash pieces sent back to supplier",
+  "@m53CreditCashSentBack": {
+    "description": "Supplier credit: Cash pieces sent back to supplier"
+  },
+  "m53CreditReverseRefund": "Reverse received refund",
+  "@m53CreditReverseRefund": {
+    "description": "Supplier credit: Reverse received refund"
+  },
+  "m53CreditReverse": "Reverse credit approval",
+  "@m53CreditReverse": {
+    "description": "Supplier credit: Reverse credit approval"
+  },
+  "m53CreditAllocations": "Credit allocation history",
+  "@m53CreditAllocations": {
+    "description": "Supplier credit: Credit allocation history"
+  },
+  "m53CreditRefunds": "Supplier refund history",
+  "@m53CreditRefunds": {
+    "description": "Supplier credit: Supplier refund history"
+  },
+  "m53CreditRefundReversedLabel": "Refund reversed",
+  "@m53CreditRefundReversedLabel": {
+    "description": "Supplier credit: Refund reversed"
+  },
+  "m53CreditApprovedStatus": "Credit value approved; review its allocations and balance",
+  "@m53CreditApprovedStatus": {
+    "description": "Supplier credit: Credit value approved; review its allocations and balance"
   }
 }

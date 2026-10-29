@@ -61,6 +61,14 @@ abstract final class SupplierFinanceValidation {
   }
 
   static Future<void> _validate(DatabaseExecutor db) async {
+    final hasCredits =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single
+            as int >=
+        33;
+    final creditRevisions = hasCredits
+        ? '''UNION ALL SELECT invoice_id,invoice_revision FROM supplier_credit_allocations
+      UNION ALL SELECT invoice_id,invoice_revision FROM supplier_credit_allocation_reversals'''
+        : '';
     if ((await db.rawQuery('PRAGMA foreign_key_check')).isNotEmpty) _bad();
     for (final sql in [
       '''SELECT 1 FROM supplier_invoices i LEFT JOIN suppliers s ON s.id=i.supplier_id LEFT JOIN stock_receipts r ON r.id=i.receipt_id WHERE
@@ -93,7 +101,8 @@ abstract final class SupplierFinanceValidation {
             e.${table == 'supplier_payments' ? 'cash_in_minor' : 'cash_out_minor'}<>0 OR e.${table == 'supplier_payments' ? 'out_counts_json' : 'in_counts_json'}<>p.${table == 'supplier_payments' ? 'out_counts_json' : 'in_counts_json'})) OR
           (p.tracked_cash=0 AND e.id IS NOT NULL) LIMIT 1''',
       '''WITH f AS(SELECT invoice_id,invoice_revision FROM supplier_payments UNION ALL SELECT invoice_id,invoice_revision FROM supplier_payment_reversals
-        UNION ALL SELECT invoice_id,invoice_revision FROM supplier_due_amendments UNION ALL SELECT invoice_id,invoice_revision FROM supplier_invoice_voids)
+        UNION ALL SELECT invoice_id,invoice_revision FROM supplier_due_amendments UNION ALL SELECT invoice_id,invoice_revision FROM supplier_invoice_voids
+        $creditRevisions)
         SELECT 1 FROM supplier_invoices i LEFT JOIN(SELECT invoice_id,COUNT(*) AS n,COUNT(DISTINCT invoice_revision) AS unique_n,
           MIN(invoice_revision) AS first,MAX(invoice_revision) AS last FROM f GROUP BY invoice_id) q ON q.invoice_id=i.id
         WHERE i.revision<>COALESCE(q.n,0) OR q.unique_n<>q.n OR q.last<>i.revision OR q.first<>1 LIMIT 1''',
@@ -209,7 +218,10 @@ abstract final class SupplierFinanceValidation {
     // so large histories use one indexed page rather than one SQL call per event.
     List<Object?>? cursor;
     String? current;
-    var paid = BigInt.zero, revision = 0, voided = false;
+    var paid = BigInt.zero,
+        credited = BigInt.zero,
+        revision = 0,
+        voided = false;
     Map<String, Object?>? last;
     void finish() {
       if (last != null &&
@@ -225,7 +237,8 @@ abstract final class SupplierFinanceValidation {
         SELECT invoice_id,invoice_revision,'pay' AS type,amount_minor FROM supplier_payments
         UNION ALL SELECT invoice_id,invoice_revision,'reverse',amount_minor FROM supplier_payment_reversals
         UNION ALL SELECT invoice_id,invoice_revision,'due',0 FROM supplier_due_amendments
-        UNION ALL SELECT invoice_id,invoice_revision,'void',0 FROM supplier_invoice_voids)
+        UNION ALL SELECT invoice_id,invoice_revision,'void',0 FROM supplier_invoice_voids
+        ${hasCredits ? "UNION ALL SELECT invoice_id,invoice_revision,'credit',amount_minor FROM supplier_credit_allocations UNION ALL SELECT invoice_id,invoice_revision,'uncredit',amount_minor FROM supplier_credit_allocation_reversals" : ''})
         SELECT f.*,i.total_minor,i.revision AS final_revision,i.status AS final_status FROM f JOIN supplier_invoices i ON i.id=f.invoice_id
         ${cursor == null ? '' : 'WHERE (f.invoice_id,f.invoice_revision)>(?,?)'} ORDER BY f.invoice_id COLLATE BINARY,f.invoice_revision LIMIT 100''',
         cursor,
@@ -235,6 +248,7 @@ abstract final class SupplierFinanceValidation {
           finish();
           current = row['invoice_id'] as String;
           paid = BigInt.zero;
+          credited = BigInt.zero;
           revision = 0;
           voided = false;
         }
@@ -244,11 +258,16 @@ abstract final class SupplierFinanceValidation {
         } else if (row['type'] == 'reverse') {
           paid -= BigInt.from(row['amount_minor'] as int);
         } else if (row['type'] == 'void') {
-          if (paid != BigInt.zero) _bad();
+          if (paid != BigInt.zero || credited != BigInt.zero) _bad();
           voided = true;
+        } else if (row['type'] == 'credit') {
+          credited += BigInt.from(row['amount_minor'] as int);
+        } else if (row['type'] == 'uncredit') {
+          credited -= BigInt.from(row['amount_minor'] as int);
         }
         if (paid < BigInt.zero ||
-            paid > BigInt.from(row['total_minor'] as int)) {
+            credited < BigInt.zero ||
+            paid + credited > BigInt.from(row['total_minor'] as int)) {
           _bad();
         }
         last = row;

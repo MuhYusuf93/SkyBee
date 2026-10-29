@@ -1167,6 +1167,7 @@ final class InventoryService {
     EntityId? receiptId,
     EntityId? reverses,
     EntityId? receiptItem,
+    int? recordedAt,
   }) async => db
       .insert('inventory_operations', {
         ...await _currency(db),
@@ -1186,7 +1187,7 @@ final class InventoryService {
         if (database.schemaVersion >= 17)
           'before_cost_complete': _complete(before) ? 1 : 0,
         'stock_revision_after': (before['stock_revision'] as int) + 1,
-        'created_at': access.clock.milliseconds,
+        'created_at': recordedAt ?? access.clock.milliseconds,
       })
       .then((_) {});
   Future<void> _stock(
@@ -1196,6 +1197,7 @@ final class InventoryService {
     int quantity,
     int value, {
     bool? complete,
+    int? recordedAt,
   }) async {
     final affected = await db.update(
       'products',
@@ -1208,7 +1210,7 @@ final class InventoryService {
               : 0,
         'stock_revision': (old['stock_revision'] as int) + 1,
         'revision': (old['revision'] as int) + 1,
-        'updated_at': access.clock.milliseconds,
+        'updated_at': recordedAt ?? access.clock.milliseconds,
       },
       where: 'id=? AND stock_revision=?',
       whereArgs: [id.value, old['stock_revision']],
@@ -1230,6 +1232,7 @@ final class InventoryService {
     EntityId? receipt,
     EntityId? reverses,
     bool complete = true,
+    int? recordedAt,
   }) async => db
       .insert('stock_history', {
         'reason_key': switch (kind) {
@@ -1249,7 +1252,7 @@ final class InventoryService {
         if (database.schemaVersion >= 17) 'cost_complete': complete ? 1 : 0,
         'kind': kind,
         'reason': reason,
-        'created_at': access.clock.milliseconds,
+        'created_at': recordedAt ?? access.clock.milliseconds,
       })
       .then((_) {});
 

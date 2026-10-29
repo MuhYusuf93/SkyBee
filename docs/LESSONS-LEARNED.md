@@ -540,3 +540,17 @@ Terms Poco awal5PASS1ENoverflow148px di akhir; registrasi input sintetis dan
 assertion perlayar kemudian UI2Poco/DV6PASS tanpa perubahan runtime aplikasi.
 Pisahkan bukti harness ini dari klaim keyboard OEM/touch fisik, dan pertahankan
 log/source awal serta hash preservation tiap interval, bukan menimpa kegagalan.
+
+134. Clock konstan menyembunyikan bug timestamp per dokumen. Producer retur32
+membaca waktu beberapa kali walau trigger mengharuskan draft/header/source sama.
+Reproduksi source32 dengan clock +7ms setiap read gagal invalid_supplier_return_draft;
+producer baru mengambil satu timestamp per posting/undo dan meneruskannya ke
+semua fakta terkait. Uji seluruh siklus dengan clock bergerak, bukan hanya now
+statis; jangan melemahkan trigger/validator agar lolos.
+
+135. Readiness widget dapat sudah berubah pada pump sesudah predicate pertama.
+Tunggu dan periksa ulang setelah pump stabil; fokuskan ulang input sintetis
+sesudah busy menonaktifkan field dan lazy scroll melepas klien teks. Kredit UI
+awal gagal isian alasan kosong atau Back tertahan, lalu ID/EN2PASS21s dengan
+assertion saldo dan reversal yang sama. Catat batas harness, jangan menyatakan
+bukti keyboard OEM/touch fisik. Domain/cash invariant tidak diubah untuk tes.
