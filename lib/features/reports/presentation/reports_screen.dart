@@ -12,6 +12,7 @@ import '../domain/report_models.dart';
 import 'financial_filters.dart';
 import 'reports_provider.dart';
 import 'report_export_screen.dart';
+import 'operational_reports_screen.dart';
 
 class ReportsScreen extends StatelessWidget {
   const ReportsScreen({super.key});
@@ -106,6 +107,15 @@ class _ReportsBodyState extends State<_ReportsBody> {
             builder: (context, layout) => ListView(
               padding: const EdgeInsets.all(16),
               children: [
+                OutlinedButton(
+                  key: const ValueKey('reports-open-operational'),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const OperationalReportsScreen(),
+                    ),
+                  ),
+                  child: Text(tr(context, 'm53OperationalReports')),
+                ),
                 if (state.loading || pager?.isLoading == true)
                   const LinearProgressIndicator(),
                 if (filter != null) ...[

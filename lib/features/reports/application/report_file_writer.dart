@@ -6,9 +6,11 @@ import 'package:path/path.dart' as p;
 /// Flat CSV and typed, inline-string SpreadsheetML. Money is exact text, never
 /// a floating point spreadsheet value. Rows flush every SQL page, not per book.
 final class ReportFileWriter {
-  ReportFileWriter(this.directory, this.xlsx);
+  ReportFileWriter(this.directory, this.xlsx, {List<String>? fieldKeys})
+    : fieldKeys = List.unmodifiable(fieldKeys ?? columns);
   final Directory directory;
   final bool xlsx;
+  final List<String> fieldKeys;
   final List<String> sheets = [];
   IOSink? _sink;
   int _row = 0;
@@ -69,7 +71,7 @@ final class ReportFileWriter {
   }
 
   static String xml(String value) => value
-      .replaceAll(RegExp(r'[\x00-\x08\x0b\x0c\x0e-\x1f]'), 'ï¿½')
+      .replaceAll(RegExp(r'[\x00-\x08\x0b\x0c\x0e-\x1f]'), '\uFFFD')
       .replaceAll('&', '&amp;')
       .replaceAll('<', '&lt;')
       .replaceAll('>', '&gt;')
@@ -86,16 +88,16 @@ final class ReportFileWriter {
       _sink!.write(
         '<?xml version="1.0" encoding="UTF-8"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>',
       );
-      _write(columns);
+      _write(fieldKeys);
     } else if (_sink == null) {
       _sink = File(p.join(directory.path, 'report.csv')).openWrite();
       _sink!.write('\uFEFF');
-      _write(columns);
+      _write(fieldKeys);
     }
   }
 
   void add(Map<String, Object?> row) =>
-      _write(columns.map((c) => row[c]).toList());
+      _write(fieldKeys.map((c) => row[c]).toList());
   void _write(List<Object?> values) {
     if (!xlsx) {
       _sink!.write('${values.map(csv).join(',')}\r\n');

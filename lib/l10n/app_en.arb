@@ -5363,5 +5363,669 @@
   "backupReceiptPolicyInvalid": "The backup contains invalid receipt policy, obligation or confirmation records.",
   "@backupReceiptPolicyInvalid": {
     "description": "M5.3 receipt policy. English meaning: The backup contains invalid receipt policy, obligation or confirmation records."
+  },
+  "m53OperationalReports": "Inventory and supplier reports",
+  "m53OperationalReportChanged": "Data, access or shop day changed. Reload the report.",
+  "m53OpInvoiceLevel": "Per invoice",
+  "m53OpSearch": "Search text containing",
+  "m53OpApply": "Apply / reload",
+  "m53OpAllDates": "All dates",
+  "m53OpCaptured": "Snapshot captured",
+  "m53OpWholeScope": "Summary of the entire filtered scope",
+  "m53OpNoComparison": "No comparison data yet",
+  "m53OpEmpty": "No matching data",
+  "m53OpUnassigned": "Unassigned category / supplier or whole store",
+  "m53OpNextPage": "Next page (20 rows)",
+  "m53OpFirstPage": "Return to first page",
+  "m53OpCashAudit": "Cash history and audit",
+  "m53OpCashPolicy": "Mandatory cash audit policy",
+  "m53OpAssumptions": "Basis, coverage and calculation limits",
+  "m53OpNoSupplier": "No supplier",
+  "m53OpNoCategory": "No category",
+  "m53OpAppliedSearch": "Applied search",
+  "@m53OperationalReports": {
+    "description": "Inventory and supplier reports"
+  },
+  "@m53OperationalReportChanged": {
+    "description": "Data, access or shop day changed. Reload the report."
+  },
+  "m53OpSectionPotential": "Potential stock retail value",
+  "@m53OpSectionPotential": {
+    "description": "Potential stock retail value"
+  },
+  "m53OpSectionVariance": "Stock variance / indication of shortage",
+  "@m53OpSectionVariance": {
+    "description": "Stock variance / indication of shortage"
+  },
+  "m53OpSectionSupplierInvoices": "Current supplier balances",
+  "@m53OpSectionSupplierInvoices": {
+    "description": "Current supplier balances"
+  },
+  "m53OpSectionSupplierPayments": "Supplier payments during period",
+  "@m53OpSectionSupplierPayments": {
+    "description": "Supplier payments during period"
+  },
+  "m53OpSectionSupplierCredits": "Current supplier credits",
+  "@m53OpSectionSupplierCredits": {
+    "description": "Current supplier credits"
+  },
+  "m53OpSectionSupplierRefunds": "Supplier refunds during period",
+  "@m53OpSectionSupplierRefunds": {
+    "description": "Supplier refunds during period"
+  },
+  "m53OpSectionUnreconciled": "Unreconciled receipts",
+  "@m53OpSectionUnreconciled": {
+    "description": "Unreconciled receipts"
+  },
+  "m53OpSectionPendingReturns": "Returns awaiting credit approval",
+  "@m53OpSectionPendingReturns": {
+    "description": "Returns awaiting credit approval"
+  },
+  "m53OpHelpPotential": "Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products.",
+  "@m53OpHelpPotential": {
+    "description": "Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products."
+  },
+  "m53OpHelpVariance": "Posted stocktake snapshots only, not current balances. Shortages may reflect counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft. Uncounted lines and untracked stock are not losses. Inventory adjustment values remain separate from sales and sale cost.",
+  "@m53OpHelpVariance": {
+    "description": "Posted stocktake snapshots only, not current balances. Shortages may reflect counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft. Uncounted lines and untracked stock are not losses. Inventory adjustment values remain separate from sales and sale cost."
+  },
+  "m53OpHelpSupplierInvoices": "CURRENT balances, not historical balances at a date. Purchases, effective payments and applied credits use active invoices. Overdue amounts are part of open balances, not an additional total; missing due dates are not overdue. Currencies stay separate. Unreconciled receipts and unapproved returns are separate, not inferred debt/credit. Search supplier names or invoice numbers.",
+  "@m53OpHelpSupplierInvoices": {
+    "description": "CURRENT balances, not historical balances at a date. Purchases, effective payments and applied credits use active invoices. Overdue amounts are part of open balances, not an additional total; missing due dates are not overdue. Currencies stay separate. Unreconciled receipts and unapproved returns are separate, not inferred debt/credit. Search supplier names or invoice numbers."
+  },
+  "m53OpHelpSupplierPayments": "Original payments use the operator-entered payment date. Reversals use their recorded time in the shop timezone. Old payments remain in their original period after a later reversal. Owner funds, bank and drawer are separate; these are not all store cash. This period does not alter current debt balances or sale cost.",
+  "@m53OpHelpSupplierPayments": {
+    "description": "Original payments use the operator-entered payment date. Reversals use their recorded time in the shop timezone. Old payments remain in their original period after a later reversal. Owner funds, bank and drawer are separate; these are not all store cash. This period does not alter current debt balances or sale cost."
+  },
+  "m53OpHelpSupplierCredits": "Active credit approvals: effective allocations and refunds reduce available credit. Available credit is not a payment or a debt deduction until allocated.",
+  "@m53OpHelpSupplierCredits": {
+    "description": "Active credit approvals: effective allocations and refunds reduce available credit. Available credit is not a payment or a debt deduction until allocated."
+  },
+  "m53OpHelpSupplierRefunds": "Actual refunds and reversals use operator-entered event dates. Bank, drawer and owner funds stay separate. These do not create sales or sale cost.",
+  "@m53OpHelpSupplierRefunds": {
+    "description": "Actual refunds and reversals use operator-entered event dates. Bank, drawer and owner funds stay separate. These do not create sales or sale cost."
+  },
+  "m53OpHelpUnreconciled": "Actual purchase receipts without an active invoice. Opening stock, tracking transitions and reversed receipts are excluded. Document counts are not estimated debt.",
+  "@m53OpHelpUnreconciled": {
+    "description": "Actual purchase receipts without an active invoice. Opening stock, tracking transitions and reversed receipts are excluded. Document counts are not estimated debt."
+  },
+  "m53OpHelpPendingReturns": "Active physical returns without active credit approval. Known carrying values are inventory adjustments only, not approved credit or debt reductions.",
+  "@m53OpHelpPendingReturns": {
+    "description": "Active physical returns without active credit approval. Known carrying values are inventory adjustments only, not approved credit or debt reductions."
+  },
+  "m53OpGroupProduct": "Per product",
+  "@m53OpGroupProduct": {
+    "description": "Per product"
+  },
+  "m53OpGroupCategory": "Per category",
+  "@m53OpGroupCategory": {
+    "description": "Per category"
+  },
+  "m53OpGroupSupplier": "Per supplier",
+  "@m53OpGroupSupplier": {
+    "description": "Per supplier"
+  },
+  "m53OpGroupStore": "Whole store",
+  "@m53OpGroupStore": {
+    "description": "Whole store"
+  },
+  "@m53OpInvoiceLevel": {
+    "description": "Per invoice"
+  },
+  "@m53OpSearch": {
+    "description": "Search text containing"
+  },
+  "@m53OpApply": {
+    "description": "Apply / reload"
+  },
+  "@m53OpAllDates": {
+    "description": "All dates"
+  },
+  "@m53OpCaptured": {
+    "description": "Snapshot captured"
+  },
+  "@m53OpWholeScope": {
+    "description": "Summary of the entire filtered scope"
+  },
+  "@m53OpNoComparison": {
+    "description": "No comparison data yet"
+  },
+  "@m53OpEmpty": {
+    "description": "No matching data"
+  },
+  "@m53OpUnassigned": {
+    "description": "Unassigned category / supplier or whole store"
+  },
+  "@m53OpNextPage": {
+    "description": "Next page (20 rows)"
+  },
+  "@m53OpFirstPage": {
+    "description": "Return to first page"
+  },
+  "@m53OpCashAudit": {
+    "description": "Cash history and audit"
+  },
+  "@m53OpCashPolicy": {
+    "description": "Mandatory cash audit policy"
+  },
+  "m53OpBalanceAll": "All invoices",
+  "@m53OpBalanceAll": {
+    "description": "All invoices"
+  },
+  "m53OpBalanceOpen": "Open balances",
+  "@m53OpBalanceOpen": {
+    "description": "Open balances"
+  },
+  "m53OpBalanceFuture": "Not yet due",
+  "@m53OpBalanceFuture": {
+    "description": "Not yet due"
+  },
+  "m53OpBalanceToday": "Due today",
+  "@m53OpBalanceToday": {
+    "description": "Due today"
+  },
+  "m53OpBalanceOverdue": "Overdue",
+  "@m53OpBalanceOverdue": {
+    "description": "Overdue"
+  },
+  "m53OpBalancePaid": "Paid",
+  "@m53OpBalancePaid": {
+    "description": "Paid"
+  },
+  "m53OpBalanceNoDue": "Open without due date",
+  "@m53OpBalanceNoDue": {
+    "description": "Open without due date"
+  },
+  "m53OpFieldProductCount": "Product count",
+  "@m53OpFieldProductCount": {
+    "description": "Product count"
+  },
+  "m53OpFieldTrackedProductCount": "Tracked products",
+  "@m53OpFieldTrackedProductCount": {
+    "description": "Tracked products"
+  },
+  "m53OpFieldUntrackedProductCount": "Cannot calculate: stock quantity is untracked",
+  "@m53OpFieldUntrackedProductCount": {
+    "description": "Cannot calculate: stock quantity is untracked"
+  },
+  "m53OpFieldSaleableQuantity": "Saleable quantity",
+  "@m53OpFieldSaleableQuantity": {
+    "description": "Saleable quantity"
+  },
+  "m53OpFieldExcludedQuantity": "Excluded quantity",
+  "@m53OpFieldExcludedQuantity": {
+    "description": "Excluded quantity"
+  },
+  "m53OpFieldExpiredQuantity": "Expired quantity",
+  "@m53OpFieldExpiredQuantity": {
+    "description": "Expired quantity"
+  },
+  "m53OpFieldArchivedProductCount": "Archived products",
+  "@m53OpFieldArchivedProductCount": {
+    "description": "Archived products"
+  },
+  "m53OpFieldPotentialMinor": "Potential stock retail value",
+  "@m53OpFieldPotentialMinor": {
+    "description": "Potential stock retail value"
+  },
+  "m53OpFieldKnownCostMicros": "Known related cost subtotal",
+  "@m53OpFieldKnownCostMicros": {
+    "description": "Known related cost subtotal"
+  },
+  "m53OpFieldKnownExcludedCostMicros": "Known excluded stock cost subtotal",
+  "@m53OpFieldKnownExcludedCostMicros": {
+    "description": "Known excluded stock cost subtotal"
+  },
+  "m53OpFieldKnownCostQuantity": "Saleable quantity with complete costs",
+  "@m53OpFieldKnownCostQuantity": {
+    "description": "Saleable quantity with complete costs"
+  },
+  "m53OpFieldKnownGrossMicros": "Estimated stock gross profit: known cost subtotal",
+  "@m53OpFieldKnownGrossMicros": {
+    "description": "Estimated stock gross profit: known cost subtotal"
+  },
+  "m53OpFieldUnknownCostProductCount": "Saleable products with incomplete costs",
+  "@m53OpFieldUnknownCostProductCount": {
+    "description": "Saleable products with incomplete costs"
+  },
+  "m53OpFieldUnknownCostQuantity": "Saleable quantity with incomplete costs",
+  "@m53OpFieldUnknownCostQuantity": {
+    "description": "Saleable quantity with incomplete costs"
+  },
+  "m53OpFieldUnknownExcludedQuantity": "Excluded quantity with incomplete costs",
+  "@m53OpFieldUnknownExcludedQuantity": {
+    "description": "Excluded quantity with incomplete costs"
+  },
+  "m53OpFieldUncountedLineCount": "Uncounted lines, not losses",
+  "@m53OpFieldUncountedLineCount": {
+    "description": "Uncounted lines, not losses"
+  },
+  "m53OpFieldComparisonLineCount": "Valid comparison lines",
+  "@m53OpFieldComparisonLineCount": {
+    "description": "Valid comparison lines"
+  },
+  "m53OpFieldBaselineQuantity": "System quantity at baseline",
+  "@m53OpFieldBaselineQuantity": {
+    "description": "System quantity at baseline"
+  },
+  "m53OpFieldPhysicalQuantity": "Final physical quantity",
+  "@m53OpFieldPhysicalQuantity": {
+    "description": "Final physical quantity"
+  },
+  "m53OpFieldDeltaQuantity": "Quantity variance (physical − system)",
+  "@m53OpFieldDeltaQuantity": {
+    "description": "Quantity variance (physical − system)"
+  },
+  "m53OpFieldShortageQuantity": "Shortage quantity",
+  "@m53OpFieldShortageQuantity": {
+    "description": "Shortage quantity"
+  },
+  "m53OpFieldSurplusQuantity": "Surplus quantity",
+  "@m53OpFieldSurplusQuantity": {
+    "description": "Surplus quantity"
+  },
+  "m53OpFieldKnownDeltaMicros": "Known value variance subtotal",
+  "@m53OpFieldKnownDeltaMicros": {
+    "description": "Known value variance subtotal"
+  },
+  "m53OpFieldKnownBaselineMicros": "Known baseline value subtotal",
+  "@m53OpFieldKnownBaselineMicros": {
+    "description": "Known baseline value subtotal"
+  },
+  "m53OpFieldKnownFinalMicros": "Known final value subtotal",
+  "@m53OpFieldKnownFinalMicros": {
+    "description": "Known final value subtotal"
+  },
+  "m53OpFieldUnknownValueLineCount": "Lines with incomplete values",
+  "@m53OpFieldUnknownValueLineCount": {
+    "description": "Lines with incomplete values"
+  },
+  "m53OpFieldInvoiceCount": "Invoice count",
+  "@m53OpFieldInvoiceCount": {
+    "description": "Invoice count"
+  },
+  "m53OpFieldPurchaseMinor": "Total invoiced purchases",
+  "@m53OpFieldPurchaseMinor": {
+    "description": "Total invoiced purchases"
+  },
+  "m53OpFieldEffectivePaymentMinor": "Total effective payments",
+  "@m53OpFieldEffectivePaymentMinor": {
+    "description": "Total effective payments"
+  },
+  "m53OpFieldAppliedCreditMinor": "Applied credits / returns",
+  "@m53OpFieldAppliedCreditMinor": {
+    "description": "Applied credits / returns"
+  },
+  "m53OpFieldRemainingMinor": "Total open debt",
+  "@m53OpFieldRemainingMinor": {
+    "description": "Total open debt"
+  },
+  "m53OpFieldOpenInvoiceCount": "Open invoices",
+  "@m53OpFieldOpenInvoiceCount": {
+    "description": "Open invoices"
+  },
+  "m53OpFieldNoDueMinor": "Balance without due date",
+  "@m53OpFieldNoDueMinor": {
+    "description": "Balance without due date"
+  },
+  "m53OpFieldDueTodayMinor": "Balance due today",
+  "@m53OpFieldDueTodayMinor": {
+    "description": "Balance due today"
+  },
+  "m53OpFieldFutureMinor": "Balance not yet due",
+  "@m53OpFieldFutureMinor": {
+    "description": "Balance not yet due"
+  },
+  "m53OpFieldOverdueMinor": "Overdue balance",
+  "@m53OpFieldOverdueMinor": {
+    "description": "Overdue balance"
+  },
+  "m53OpFieldOverdue17Minor": "Overdue 1–7 days",
+  "@m53OpFieldOverdue17Minor": {
+    "description": "Overdue 1–7 days"
+  },
+  "m53OpFieldOverdue830Minor": "Overdue 8–30 days",
+  "@m53OpFieldOverdue830Minor": {
+    "description": "Overdue 8–30 days"
+  },
+  "m53OpFieldOverdueOver30Minor": "Overdue >30 days",
+  "@m53OpFieldOverdueOver30Minor": {
+    "description": "Overdue >30 days"
+  },
+  "m53OpFieldPaidInvoiceCount": "Paid invoices",
+  "@m53OpFieldPaidInvoiceCount": {
+    "description": "Paid invoices"
+  },
+  "m53OpFieldPaymentMinor": "Original period payments",
+  "@m53OpFieldPaymentMinor": {
+    "description": "Original period payments"
+  },
+  "m53OpFieldPaymentReversalMinor": "Period payment reversals",
+  "@m53OpFieldPaymentReversalMinor": {
+    "description": "Period payment reversals"
+  },
+  "m53OpFieldNetPaymentMinor": "Net period payments",
+  "@m53OpFieldNetPaymentMinor": {
+    "description": "Net period payments"
+  },
+  "m53OpFieldEventCount": "Event count",
+  "@m53OpFieldEventCount": {
+    "description": "Event count"
+  },
+  "m53OpFieldRefundMinor": "Original period refunds",
+  "@m53OpFieldRefundMinor": {
+    "description": "Original period refunds"
+  },
+  "m53OpFieldRefundReversalMinor": "Period refund reversals",
+  "@m53OpFieldRefundReversalMinor": {
+    "description": "Period refund reversals"
+  },
+  "m53OpFieldNetRefundMinor": "Net period refunds",
+  "@m53OpFieldNetRefundMinor": {
+    "description": "Net period refunds"
+  },
+  "m53OpFieldCreditCount": "Active credit approvals",
+  "@m53OpFieldCreditCount": {
+    "description": "Active credit approvals"
+  },
+  "m53OpFieldApprovedCreditMinor": "Approved credit",
+  "@m53OpFieldApprovedCreditMinor": {
+    "description": "Approved credit"
+  },
+  "m53OpFieldAllocatedCreditMinor": "Allocated credit",
+  "@m53OpFieldAllocatedCreditMinor": {
+    "description": "Allocated credit"
+  },
+  "m53OpFieldRefundedCreditMinor": "Effective refunded credit",
+  "@m53OpFieldRefundedCreditMinor": {
+    "description": "Effective refunded credit"
+  },
+  "m53OpFieldAvailableCreditMinor": "Available credit",
+  "@m53OpFieldAvailableCreditMinor": {
+    "description": "Available credit"
+  },
+  "m53OpFieldUnreconciledReceiptCount": "Unreconciled receipts",
+  "@m53OpFieldUnreconciledReceiptCount": {
+    "description": "Unreconciled receipts"
+  },
+  "m53OpFieldPendingReturnLineCount": "Unapproved return lines",
+  "@m53OpFieldPendingReturnLineCount": {
+    "description": "Unapproved return lines"
+  },
+  "m53OpFieldPendingReturnQuantity": "Unapproved return quantity",
+  "@m53OpFieldPendingReturnQuantity": {
+    "description": "Unapproved return quantity"
+  },
+  "m53OpFieldKnownPendingCarryingMicros": "Known return carrying subtotal (not credit)",
+  "@m53OpFieldKnownPendingCarryingMicros": {
+    "description": "Known return carrying subtotal (not credit)"
+  },
+  "m53OpFieldUnknownPendingValueLineCount": "Return lines with incalculable value",
+  "@m53OpFieldUnknownPendingValueLineCount": {
+    "description": "Return lines with incalculable value"
+  },
+  "m53OpFieldPaymentDrawerMinor": "Net payments: drawer",
+  "@m53OpFieldPaymentDrawerMinor": {
+    "description": "Net payments: drawer"
+  },
+  "m53OpFieldPaymentBankMinor": "Net payments: bank",
+  "@m53OpFieldPaymentBankMinor": {
+    "description": "Net payments: bank"
+  },
+  "m53OpFieldPaymentOwnerFundsMinor": "Net payments: owner funds",
+  "@m53OpFieldPaymentOwnerFundsMinor": {
+    "description": "Net payments: owner funds"
+  },
+  "m53OpFieldRefundDrawerMinor": "Net refunds: drawer",
+  "@m53OpFieldRefundDrawerMinor": {
+    "description": "Net refunds: drawer"
+  },
+  "m53OpFieldRefundBankMinor": "Net refunds: bank",
+  "@m53OpFieldRefundBankMinor": {
+    "description": "Net refunds: bank"
+  },
+  "m53OpFieldRefundOwnerFundsMinor": "Net refunds: owner funds",
+  "@m53OpFieldRefundOwnerFundsMinor": {
+    "description": "Net refunds: owner funds"
+  },
+  "m53OpDetailProductId": "Product ID",
+  "@m53OpDetailProductId": {
+    "description": "Product ID"
+  },
+  "m53OpDetailSku": "SKU",
+  "@m53OpDetailSku": {
+    "description": "SKU"
+  },
+  "m53OpDetailBarcode": "Legacy code",
+  "@m53OpDetailBarcode": {
+    "description": "Legacy code"
+  },
+  "m53OpDetailCategory": "Product master category",
+  "@m53OpDetailCategory": {
+    "description": "Product master category"
+  },
+  "m53OpDetailSupplier": "Master / document supplier",
+  "@m53OpDetailSupplier": {
+    "description": "Master / document supplier"
+  },
+  "m53OpDetailSupplierId": "Supplier ID",
+  "@m53OpDetailSupplierId": {
+    "description": "Supplier ID"
+  },
+  "m53OpDetailBaseUnit": "Base unit",
+  "@m53OpDetailBaseUnit": {
+    "description": "Base unit"
+  },
+  "m53OpDetailRetailPriceMinor": "Retail price",
+  "@m53OpDetailRetailPriceMinor": {
+    "description": "Retail price"
+  },
+  "m53OpDetailStockTracking": "Stock tracking",
+  "@m53OpDetailStockTracking": {
+    "description": "Stock tracking"
+  },
+  "m53OpDetailArchived": "Archived (1=yes)",
+  "@m53OpDetailArchived": {
+    "description": "Archived (1=yes)"
+  },
+  "m53OpDetailStocktakeId": "Stocktake ID",
+  "@m53OpDetailStocktakeId": {
+    "description": "Stocktake ID"
+  },
+  "m53OpDetailOperationId": "Inventory operation",
+  "@m53OpDetailOperationId": {
+    "description": "Inventory operation"
+  },
+  "m53OpDetailPostedAt": "Posted time",
+  "@m53OpDetailPostedAt": {
+    "description": "Posted time"
+  },
+  "m53OpDetailReason": "Reason",
+  "@m53OpDetailReason": {
+    "description": "Reason"
+  },
+  "m53OpDetailActorRole": "Actor role",
+  "@m53OpDetailActorRole": {
+    "description": "Actor role"
+  },
+  "m53OpDetailBaselineAt": "Baseline time",
+  "@m53OpDetailBaselineAt": {
+    "description": "Baseline time"
+  },
+  "m53OpDetailBaselineEpoch": "Baseline epoch",
+  "@m53OpDetailBaselineEpoch": {
+    "description": "Baseline epoch"
+  },
+  "m53OpDetailBaselineQuantity": "Baseline quantity",
+  "@m53OpDetailBaselineQuantity": {
+    "description": "Baseline quantity"
+  },
+  "m53OpDetailFinalQuantity": "Final physical quantity",
+  "@m53OpDetailFinalQuantity": {
+    "description": "Final physical quantity"
+  },
+  "m53OpDetailSnapshotZone": "Snapshot timezone",
+  "@m53OpDetailSnapshotZone": {
+    "description": "Snapshot timezone"
+  },
+  "m53OpDetailInvoiceId": "Invoice ID",
+  "@m53OpDetailInvoiceId": {
+    "description": "Invoice ID"
+  },
+  "m53OpDetailInvoiceDate": "Invoice date",
+  "@m53OpDetailInvoiceDate": {
+    "description": "Invoice date"
+  },
+  "m53OpDetailDueDate": "Due date",
+  "@m53OpDetailDueDate": {
+    "description": "Due date"
+  },
+  "m53OpDetailDaysOverdue": "Days overdue",
+  "@m53OpDetailDaysOverdue": {
+    "description": "Days overdue"
+  },
+  "m53OpDetailStatus": "Status",
+  "@m53OpDetailStatus": {
+    "description": "Status"
+  },
+  "m53OpDetailCreditId": "Credit ID",
+  "@m53OpDetailCreditId": {
+    "description": "Credit ID"
+  },
+  "m53OpDetailSource": "Funds source / destination",
+  "@m53OpDetailSource": {
+    "description": "Funds source / destination"
+  },
+  "m53OpDetailKind": "Event kind",
+  "@m53OpDetailKind": {
+    "description": "Event kind"
+  },
+  "m53OpDetailEventDate": "Event date",
+  "@m53OpDetailEventDate": {
+    "description": "Event date"
+  },
+  "m53OpDetailRecordedAt": "Recorded time",
+  "@m53OpDetailRecordedAt": {
+    "description": "Recorded time"
+  },
+  "m53OpDetailDateBasis": "Date basis",
+  "@m53OpDetailDateBasis": {
+    "description": "Date basis"
+  },
+  "m53OpDetailReturnId": "Return ID",
+  "@m53OpDetailReturnId": {
+    "description": "Return ID"
+  },
+  "m53OpDetailApprovedDate": "Approval date",
+  "@m53OpDetailApprovedDate": {
+    "description": "Approval date"
+  },
+  "m53OpDetailReceiptId": "Receipt ID",
+  "@m53OpDetailReceiptId": {
+    "description": "Receipt ID"
+  },
+  "m53OpDetailGrouping": "Grouping level",
+  "@m53OpDetailGrouping": {
+    "description": "Grouping level"
+  },
+  "@m53OpAssumptions": {
+    "description": "Basis, coverage and calculation limits"
+  },
+  "@m53OpNoSupplier": {
+    "description": "No supplier"
+  },
+  "@m53OpNoCategory": {
+    "description": "No category"
+  },
+  "@m53OpAppliedSearch": {
+    "description": "Applied search"
+  },
+  "m53OpBasisPotential": "Current retail prices; average costs; tracked saleable stock only. Profit covers only complete costs.",
+  "@m53OpBasisPotential": {
+    "description": "Current retail prices; average costs; tracked saleable stock only. Profit covers only complete costs."
+  },
+  "m53OpBasisVariance": "Completed stocktake snapshots; not suspected theft or current stock balances.",
+  "@m53OpBasisVariance": {
+    "description": "Completed stocktake snapshots; not suspected theft or current stock balances."
+  },
+  "m53OpBasisSupplierInvoices": "Current balances. Overdue debt is part of open balances.",
+  "@m53OpBasisSupplierInvoices": {
+    "description": "Current balances. Overdue debt is part of open balances."
+  },
+  "m53OpBasisSupplierPayments": "Operator payment dates; reversals use the shop recording date.",
+  "@m53OpBasisSupplierPayments": {
+    "description": "Operator payment dates; reversals use the shop recording date."
+  },
+  "m53OpBasisSupplierCredits": "Active approvals, effective allocations and refunds.",
+  "@m53OpBasisSupplierCredits": {
+    "description": "Active approvals, effective allocations and refunds."
+  },
+  "m53OpBasisSupplierRefunds": "Actual refunds and reversals by operator-entered event dates.",
+  "@m53OpBasisSupplierRefunds": {
+    "description": "Actual refunds and reversals by operator-entered event dates."
+  },
+  "m53OpBasisUnreconciled": "Actual uninvoiced receipts; these counts are not debt values.",
+  "@m53OpBasisUnreconciled": {
+    "description": "Actual uninvoiced receipts; these counts are not debt values."
+  },
+  "m53OpBasisPendingReturns": "Unapproved physical returns do not reduce debt.",
+  "@m53OpBasisPendingReturns": {
+    "description": "Unapproved physical returns do not reduce debt."
+  },
+  "m53OpValueTracked": "Tracked",
+  "@m53OpValueTracked": {
+    "description": "Tracked"
+  },
+  "m53OpValueUntracked": "Untracked",
+  "@m53OpValueUntracked": {
+    "description": "Untracked"
+  },
+  "m53OpValuePaid": "Paid",
+  "@m53OpValuePaid": {
+    "description": "Paid"
+  },
+  "m53OpValueUnpaid": "Unpaid",
+  "@m53OpValueUnpaid": {
+    "description": "Unpaid"
+  },
+  "m53OpValuePartial": "Partial",
+  "@m53OpValuePartial": {
+    "description": "Partial"
+  },
+  "m53OpValueDrawer": "Drawer",
+  "@m53OpValueDrawer": {
+    "description": "Drawer"
+  },
+  "m53OpValueBank": "Bank",
+  "@m53OpValueBank": {
+    "description": "Bank"
+  },
+  "m53OpValueOwnerFunds": "Owner funds",
+  "@m53OpValueOwnerFunds": {
+    "description": "Owner funds"
+  },
+  "m53OpValueOriginal": "Original",
+  "@m53OpValueOriginal": {
+    "description": "Original"
+  },
+  "m53OpValueReversal": "Reversal",
+  "@m53OpValueReversal": {
+    "description": "Reversal"
+  },
+  "m53OpValueRecordedShopDate": "Recorded date in the shop timezone",
+  "@m53OpValueRecordedShopDate": {
+    "description": "Recorded date in the shop timezone"
+  },
+  "m53OpValueOperatorEventDate": "Operator-entered event date",
+  "@m53OpValueOperatorEventDate": {
+    "description": "Operator-entered event date"
+  },
+  "m53OpAllSuppliers": "All suppliers",
+  "@m53OpAllSuppliers": {
+    "description": "All suppliers"
+  },
+  "m53OpAllCategories": "All categories",
+  "@m53OpAllCategories": {
+    "description": "All categories"
   }
 }

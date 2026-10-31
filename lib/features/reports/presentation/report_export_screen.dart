@@ -5,13 +5,16 @@ import '../../../app/app_services.dart';
 import '../../../l10n/localization.dart';
 import '../../management/presentation/management_gate.dart';
 import '../domain/report_models.dart';
+import '../domain/operational_report.dart';
 import '../application/report_export_service.dart';
 import '../application/report_destination_service.dart';
 
 /// Only progress and bounded artifact handles live in the route, never SQL rows.
 class ReportExportScreen extends StatefulWidget {
-  const ReportExportScreen({super.key, required this.filter});
-  final ReportFilter filter;
+  const ReportExportScreen({super.key, this.filter, this.operational})
+    : assert((filter == null) != (operational == null));
+  final ReportFilter? filter;
+  final OperationalScope? operational;
   @override
   State<ReportExportScreen> createState() => _ReportExportState();
 }
@@ -38,14 +41,23 @@ class _ReportExportState extends State<ReportExportScreen> {
     final app = context.read<AppServices>();
     destination = ReportDestinationService(app.management);
     try {
-      final result = await app.reportExport.create(
-        widget.filter,
-        xlsx: xlsx,
-        control: control,
-        progress: (n) {
-          if (mounted) setState(() => rows = n);
-        },
-      );
+      void progress(int n) {
+        if (mounted) setState(() => rows = n);
+      }
+
+      final result = widget.operational != null
+          ? await app.operationalReports.export(
+              widget.operational!,
+              xlsx: xlsx,
+              control: control,
+              progress: progress,
+            )
+          : await app.reportExport.create(
+              widget.filter!,
+              xlsx: xlsx,
+              control: control,
+              progress: progress,
+            );
       if (!mounted) {
         await result.dispose();
         return;

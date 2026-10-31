@@ -4480,4 +4480,538 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get backupReceiptPolicyInvalid =>
       'Kebijakan, kewajiban atau konfirmasi struk dalam cadangan tidak valid.';
+
+  @override
+  String get m53OperationalReports => 'Laporan stok dan supplier';
+
+  @override
+  String get m53OperationalReportChanged =>
+      'Data, akses, atau hari toko berubah. Muat ulang laporan.';
+
+  @override
+  String get m53OpInvoiceLevel => 'Per tagihan';
+
+  @override
+  String get m53OpSearch => 'Cari teks yang mengandung';
+
+  @override
+  String get m53OpApply => 'Terapkan / muat ulang';
+
+  @override
+  String get m53OpAllDates => 'Semua tanggal';
+
+  @override
+  String get m53OpCaptured => 'Snapshot diambil';
+
+  @override
+  String get m53OpWholeScope => 'Ringkasan seluruh scope filter';
+
+  @override
+  String get m53OpNoComparison => 'Belum ada data pembanding';
+
+  @override
+  String get m53OpEmpty => 'Tidak ada data sesuai filter';
+
+  @override
+  String get m53OpUnassigned => 'Tanpa kategori / supplier atau seluruh toko';
+
+  @override
+  String get m53OpNextPage => 'Halaman berikutnya (20 baris)';
+
+  @override
+  String get m53OpFirstPage => 'Kembali ke halaman pertama';
+
+  @override
+  String get m53OpCashAudit => 'Histori dan audit kas';
+
+  @override
+  String get m53OpCashPolicy => 'Kebijakan audit kas wajib';
+
+  @override
+  String get m53OpAssumptions => 'Dasar, cakupan dan batas perhitungan';
+
+  @override
+  String get m53OpNoSupplier => 'Tanpa supplier';
+
+  @override
+  String get m53OpNoCategory => 'Tanpa kategori';
+
+  @override
+  String get m53OpAppliedSearch => 'Pencarian yang diterapkan';
+
+  @override
+  String get m53OpSectionPotential => 'Potensi nilai jual stok';
+
+  @override
+  String get m53OpSectionVariance =>
+      'Selisih stok / indikasi kekurangan barang';
+
+  @override
+  String get m53OpSectionSupplierInvoices => 'Utang supplier saat ini';
+
+  @override
+  String get m53OpSectionSupplierPayments => 'Pembayaran supplier periode';
+
+  @override
+  String get m53OpSectionSupplierCredits => 'Kredit supplier saat ini';
+
+  @override
+  String get m53OpSectionSupplierRefunds => 'Refund supplier periode';
+
+  @override
+  String get m53OpSectionUnreconciled => 'Penerimaan belum direkonsiliasi';
+
+  @override
+  String get m53OpSectionPendingReturns => 'Retur menunggu persetujuan kredit';
+
+  @override
+  String get m53OpHelpPotential =>
+      'Stok terlacak yang layak jual × harga eceran saat ini. Estimasi laba kotor stok adalah potensi nilai jual dikurangi alokasi biaya rata-rata. Subtotal biaya/laba diketahui mengecualikan biaya belum lengkap. Produk arsip, kedaluwarsa dan tidak terlacak dipisahkan. Ini bukan ramalan, laba bersih, atau penjualan terealisasi; belum memasukkan promo/grosir, ongkos, pajak dan biaya operasional. Pengelompokan supplier berdasarkan supplier pada data barang, bukan asal setiap batch. Kuantitas lintas satuan hanya jumlah unit dasar; bandingkan per produk.';
+
+  @override
+  String get m53OpHelpVariance =>
+      'Hanya snapshot opname yang sudah diposting, bukan saldo hari ini. Kekurangan dapat berasal dari salah hitung, transaksi belum dicatat, kerusakan atau sebab lain; bukan bukti pencurian. Baris belum dihitung dan stok tidak terlacak bukan kehilangan. Nilai penyesuaian terpisah dari omzet/HPP penjualan.';
+
+  @override
+  String get m53OpHelpSupplierInvoices =>
+      'Saldo SAAT INI, bukan saldo historis per tanggal. Pembelian, pembayaran efektif dan kredit terpakai berasal dari tagihan aktif. Tunggakan adalah bagian saldo belum lunas, bukan jumlah tambahan; tanpa due date bukan terlambat. Currency dipisahkan. Penerimaan belum direkonsiliasi dan retur belum disetujui tampil terpisah, bukan utang/kredit perkiraan. Cari nama supplier atau nomor tagihan.';
+
+  @override
+  String get m53OpHelpSupplierPayments =>
+      'Pembayaran asli memakai tanggal pembayaran yang dicatat operator. Reversal memakai tanggal waktu pencatatannya dalam timezone toko. Pembayaran lama tetap ada pada periode aslinya meski dibalik kemudian. Dana pemilik/bank/laci dipisahkan; bukan seluruhnya kas toko. Periode ini tidak mengubah saldo utang saat ini atau HPP.';
+
+  @override
+  String get m53OpHelpSupplierCredits =>
+      'Persetujuan kredit yang masih aktif: alokasi dan refund efektif mengurangi sisa kredit. Sisa kredit bukan pembayaran atau pengurangan utang sebelum dialokasikan.';
+
+  @override
+  String get m53OpHelpSupplierRefunds =>
+      'Uang refund aktual dan reversal memakai tanggal kejadian yang dicatat operator. Rekening, laci dan dana pemilik dipisahkan. Tidak membuat penjualan atau HPP baru.';
+
+  @override
+  String get m53OpHelpUnreconciled =>
+      'Penerimaan pembelian aktual yang belum mempunyai tagihan aktif. Stok awal, perubahan mode dan penerimaan dibalik dikecualikan. Jumlah dokumen bukan estimasi utang.';
+
+  @override
+  String get m53OpHelpPendingReturns =>
+      'Retur fisik aktif tanpa persetujuan kredit aktif. Nilai carrying yang diketahui hanya nilai penyesuaian stok, bukan kredit yang disetujui atau pengurang utang.';
+
+  @override
+  String get m53OpGroupProduct => 'Per produk';
+
+  @override
+  String get m53OpGroupCategory => 'Per kategori';
+
+  @override
+  String get m53OpGroupSupplier => 'Per supplier';
+
+  @override
+  String get m53OpGroupStore => 'Seluruh toko';
+
+  @override
+  String get m53OpBalanceAll => 'Semua tagihan';
+
+  @override
+  String get m53OpBalanceOpen => 'Belum lunas';
+
+  @override
+  String get m53OpBalanceFuture => 'Belum jatuh tempo';
+
+  @override
+  String get m53OpBalanceToday => 'Jatuh tempo hari ini';
+
+  @override
+  String get m53OpBalanceOverdue => 'Terlambat';
+
+  @override
+  String get m53OpBalancePaid => 'Lunas';
+
+  @override
+  String get m53OpBalanceNoDue => 'Belum lunas tanpa due date';
+
+  @override
+  String get m53OpFieldProductCount => 'Jumlah produk';
+
+  @override
+  String get m53OpFieldTrackedProductCount => 'Produk terlacak';
+
+  @override
+  String get m53OpFieldUntrackedProductCount =>
+      'Tidak dapat dihitung: jumlah stok tidak dilacak';
+
+  @override
+  String get m53OpFieldSaleableQuantity => 'Jumlah layak jual';
+
+  @override
+  String get m53OpFieldExcludedQuantity => 'Jumlah dikecualikan';
+
+  @override
+  String get m53OpFieldExpiredQuantity => 'Jumlah kedaluwarsa';
+
+  @override
+  String get m53OpFieldArchivedProductCount => 'Produk arsip';
+
+  @override
+  String get m53OpFieldPotentialMinor => 'Potensi nilai jual stok';
+
+  @override
+  String get m53OpFieldKnownCostMicros =>
+      'Subtotal biaya terkait yang diketahui';
+
+  @override
+  String get m53OpFieldKnownExcludedCostMicros =>
+      'Subtotal biaya stok dikecualikan yang diketahui';
+
+  @override
+  String get m53OpFieldKnownCostQuantity =>
+      'Jumlah layak jual dengan biaya lengkap';
+
+  @override
+  String get m53OpFieldKnownGrossMicros =>
+      'Estimasi laba kotor stok: subtotal biaya diketahui';
+
+  @override
+  String get m53OpFieldUnknownCostProductCount =>
+      'Produk layak jual dengan biaya belum lengkap';
+
+  @override
+  String get m53OpFieldUnknownCostQuantity =>
+      'Jumlah layak jual dengan biaya belum lengkap';
+
+  @override
+  String get m53OpFieldUnknownExcludedQuantity =>
+      'Jumlah dikecualikan dengan biaya belum lengkap';
+
+  @override
+  String get m53OpFieldUncountedLineCount =>
+      'Baris belum dihitung, bukan kehilangan';
+
+  @override
+  String get m53OpFieldComparisonLineCount => 'Baris pembanding sah';
+
+  @override
+  String get m53OpFieldBaselineQuantity => 'Jumlah sistem pada baseline';
+
+  @override
+  String get m53OpFieldPhysicalQuantity => 'Jumlah fisik final';
+
+  @override
+  String get m53OpFieldDeltaQuantity => 'Selisih jumlah (fisik − sistem)';
+
+  @override
+  String get m53OpFieldShortageQuantity => 'Jumlah kekurangan';
+
+  @override
+  String get m53OpFieldSurplusQuantity => 'Jumlah kelebihan';
+
+  @override
+  String get m53OpFieldKnownDeltaMicros =>
+      'Subtotal selisih nilai yang diketahui';
+
+  @override
+  String get m53OpFieldKnownBaselineMicros =>
+      'Subtotal nilai baseline diketahui';
+
+  @override
+  String get m53OpFieldKnownFinalMicros => 'Subtotal nilai final diketahui';
+
+  @override
+  String get m53OpFieldUnknownValueLineCount =>
+      'Baris dengan nilai belum lengkap';
+
+  @override
+  String get m53OpFieldInvoiceCount => 'Jumlah tagihan';
+
+  @override
+  String get m53OpFieldPurchaseMinor => 'Total pembelian tertagih';
+
+  @override
+  String get m53OpFieldEffectivePaymentMinor => 'Total pembayaran efektif';
+
+  @override
+  String get m53OpFieldAppliedCreditMinor => 'Kredit/retur diterapkan';
+
+  @override
+  String get m53OpFieldRemainingMinor => 'Total utang belum lunas';
+
+  @override
+  String get m53OpFieldOpenInvoiceCount => 'Tagihan belum lunas';
+
+  @override
+  String get m53OpFieldNoDueMinor => 'Saldo tanpa due date';
+
+  @override
+  String get m53OpFieldDueTodayMinor => 'Saldo jatuh tempo hari ini';
+
+  @override
+  String get m53OpFieldFutureMinor => 'Saldo belum jatuh tempo';
+
+  @override
+  String get m53OpFieldOverdueMinor => 'Tunggakan lewat jatuh tempo';
+
+  @override
+  String get m53OpFieldOverdue17Minor => 'Tunggakan 1–7 hari';
+
+  @override
+  String get m53OpFieldOverdue830Minor => 'Tunggakan 8–30 hari';
+
+  @override
+  String get m53OpFieldOverdueOver30Minor => 'Tunggakan >30 hari';
+
+  @override
+  String get m53OpFieldPaidInvoiceCount => 'Tagihan lunas';
+
+  @override
+  String get m53OpFieldPaymentMinor => 'Pembayaran asli periode';
+
+  @override
+  String get m53OpFieldPaymentReversalMinor => 'Reversal pembayaran periode';
+
+  @override
+  String get m53OpFieldNetPaymentMinor => 'Pembayaran neto periode';
+
+  @override
+  String get m53OpFieldEventCount => 'Jumlah kejadian';
+
+  @override
+  String get m53OpFieldRefundMinor => 'Refund asli periode';
+
+  @override
+  String get m53OpFieldRefundReversalMinor => 'Reversal refund periode';
+
+  @override
+  String get m53OpFieldNetRefundMinor => 'Refund neto periode';
+
+  @override
+  String get m53OpFieldCreditCount => 'Persetujuan kredit aktif';
+
+  @override
+  String get m53OpFieldApprovedCreditMinor => 'Kredit disetujui';
+
+  @override
+  String get m53OpFieldAllocatedCreditMinor => 'Kredit dialokasikan';
+
+  @override
+  String get m53OpFieldRefundedCreditMinor => 'Kredit direfund efektif';
+
+  @override
+  String get m53OpFieldAvailableCreditMinor => 'Kredit belum dialokasikan';
+
+  @override
+  String get m53OpFieldUnreconciledReceiptCount =>
+      'Penerimaan belum direkonsiliasi';
+
+  @override
+  String get m53OpFieldPendingReturnLineCount => 'Baris retur belum disetujui';
+
+  @override
+  String get m53OpFieldPendingReturnQuantity => 'Jumlah retur belum disetujui';
+
+  @override
+  String get m53OpFieldKnownPendingCarryingMicros =>
+      'Subtotal carrying retur diketahui (bukan kredit)';
+
+  @override
+  String get m53OpFieldUnknownPendingValueLineCount =>
+      'Baris retur dengan nilai tidak dapat dihitung';
+
+  @override
+  String get m53OpFieldPaymentDrawerMinor => 'Pembayaran neto: laci';
+
+  @override
+  String get m53OpFieldPaymentBankMinor => 'Pembayaran neto: bank';
+
+  @override
+  String get m53OpFieldPaymentOwnerFundsMinor =>
+      'Pembayaran neto: dana pemilik';
+
+  @override
+  String get m53OpFieldRefundDrawerMinor => 'Refund neto: laci';
+
+  @override
+  String get m53OpFieldRefundBankMinor => 'Refund neto: bank';
+
+  @override
+  String get m53OpFieldRefundOwnerFundsMinor => 'Refund neto: dana pemilik';
+
+  @override
+  String get m53OpDetailProductId => 'ID produk';
+
+  @override
+  String get m53OpDetailSku => 'SKU';
+
+  @override
+  String get m53OpDetailBarcode => 'Kode lama';
+
+  @override
+  String get m53OpDetailCategory => 'Kategori data barang';
+
+  @override
+  String get m53OpDetailSupplier => 'Supplier data/dokumen';
+
+  @override
+  String get m53OpDetailSupplierId => 'ID supplier';
+
+  @override
+  String get m53OpDetailBaseUnit => 'Satuan dasar';
+
+  @override
+  String get m53OpDetailRetailPriceMinor => 'Harga eceran';
+
+  @override
+  String get m53OpDetailStockTracking => 'Pelacakan stok';
+
+  @override
+  String get m53OpDetailArchived => 'Arsip (1=ya)';
+
+  @override
+  String get m53OpDetailStocktakeId => 'ID opname';
+
+  @override
+  String get m53OpDetailOperationId => 'Dokumen mutasi';
+
+  @override
+  String get m53OpDetailPostedAt => 'Waktu posting';
+
+  @override
+  String get m53OpDetailReason => 'Alasan';
+
+  @override
+  String get m53OpDetailActorRole => 'Peran pencatat';
+
+  @override
+  String get m53OpDetailBaselineAt => 'Waktu baseline';
+
+  @override
+  String get m53OpDetailBaselineEpoch => 'Versi baseline';
+
+  @override
+  String get m53OpDetailBaselineQuantity => 'Jumlah baseline';
+
+  @override
+  String get m53OpDetailFinalQuantity => 'Jumlah fisik final';
+
+  @override
+  String get m53OpDetailSnapshotZone => 'Timezone snapshot';
+
+  @override
+  String get m53OpDetailInvoiceId => 'ID tagihan';
+
+  @override
+  String get m53OpDetailInvoiceDate => 'Tanggal tagihan';
+
+  @override
+  String get m53OpDetailDueDate => 'Jatuh tempo';
+
+  @override
+  String get m53OpDetailDaysOverdue => 'Hari terlambat';
+
+  @override
+  String get m53OpDetailStatus => 'Status';
+
+  @override
+  String get m53OpDetailCreditId => 'ID kredit';
+
+  @override
+  String get m53OpDetailSource => 'Sumber / tujuan dana';
+
+  @override
+  String get m53OpDetailKind => 'Jenis kejadian';
+
+  @override
+  String get m53OpDetailEventDate => 'Tanggal kejadian';
+
+  @override
+  String get m53OpDetailRecordedAt => 'Waktu pencatatan';
+
+  @override
+  String get m53OpDetailDateBasis => 'Dasar tanggal';
+
+  @override
+  String get m53OpDetailReturnId => 'ID retur';
+
+  @override
+  String get m53OpDetailApprovedDate => 'Tanggal persetujuan';
+
+  @override
+  String get m53OpDetailReceiptId => 'ID penerimaan';
+
+  @override
+  String get m53OpDetailGrouping => 'Tingkat pengelompokan';
+
+  @override
+  String get m53OpBasisPotential =>
+      'Harga eceran saat ini; biaya rata-rata; hanya stok terlacak layak jual. Laba hanya subtotal dengan biaya lengkap.';
+
+  @override
+  String get m53OpBasisVariance =>
+      'Snapshot opname selesai; bukan dugaan pencurian atau saldo stok hari ini.';
+
+  @override
+  String get m53OpBasisSupplierInvoices =>
+      'Saldo saat ini. Tunggakan adalah bagian dari saldo belum lunas.';
+
+  @override
+  String get m53OpBasisSupplierPayments =>
+      'Tanggal pembayaran operator; reversal menurut tanggal pencatatan toko.';
+
+  @override
+  String get m53OpBasisSupplierCredits =>
+      'Persetujuan aktif, alokasi dan refund efektif.';
+
+  @override
+  String get m53OpBasisSupplierRefunds =>
+      'Refund aktual dan reversal menurut tanggal kejadian operator.';
+
+  @override
+  String get m53OpBasisUnreconciled =>
+      'Penerimaan aktual belum tertagih; jumlah ini bukan nilai utang.';
+
+  @override
+  String get m53OpBasisPendingReturns =>
+      'Retur fisik belum disetujui bukan pengurang utang.';
+
+  @override
+  String get m53OpValueTracked => 'Dilacak';
+
+  @override
+  String get m53OpValueUntracked => 'Tidak dilacak';
+
+  @override
+  String get m53OpValuePaid => 'Lunas';
+
+  @override
+  String get m53OpValueUnpaid => 'Belum dibayar';
+
+  @override
+  String get m53OpValuePartial => 'Sebagian';
+
+  @override
+  String get m53OpValueDrawer => 'Laci';
+
+  @override
+  String get m53OpValueBank => 'Bank';
+
+  @override
+  String get m53OpValueOwnerFunds => 'Dana pemilik';
+
+  @override
+  String get m53OpValueOriginal => 'Asli';
+
+  @override
+  String get m53OpValueReversal => 'Pembalikan';
+
+  @override
+  String get m53OpValueRecordedShopDate =>
+      'Tanggal pencatatan dalam timezone toko';
+
+  @override
+  String get m53OpValueOperatorEventDate =>
+      'Tanggal kejadian yang dicatat operator';
+
+  @override
+  String get m53OpAllSuppliers => 'Semua supplier';
+
+  @override
+  String get m53OpAllCategories => 'Semua kategori';
 }

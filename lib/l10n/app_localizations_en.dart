@@ -4470,4 +4470,528 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get backupReceiptPolicyInvalid =>
       'The backup contains invalid receipt policy, obligation or confirmation records.';
+
+  @override
+  String get m53OperationalReports => 'Inventory and supplier reports';
+
+  @override
+  String get m53OperationalReportChanged =>
+      'Data, access or shop day changed. Reload the report.';
+
+  @override
+  String get m53OpInvoiceLevel => 'Per invoice';
+
+  @override
+  String get m53OpSearch => 'Search text containing';
+
+  @override
+  String get m53OpApply => 'Apply / reload';
+
+  @override
+  String get m53OpAllDates => 'All dates';
+
+  @override
+  String get m53OpCaptured => 'Snapshot captured';
+
+  @override
+  String get m53OpWholeScope => 'Summary of the entire filtered scope';
+
+  @override
+  String get m53OpNoComparison => 'No comparison data yet';
+
+  @override
+  String get m53OpEmpty => 'No matching data';
+
+  @override
+  String get m53OpUnassigned => 'Unassigned category / supplier or whole store';
+
+  @override
+  String get m53OpNextPage => 'Next page (20 rows)';
+
+  @override
+  String get m53OpFirstPage => 'Return to first page';
+
+  @override
+  String get m53OpCashAudit => 'Cash history and audit';
+
+  @override
+  String get m53OpCashPolicy => 'Mandatory cash audit policy';
+
+  @override
+  String get m53OpAssumptions => 'Basis, coverage and calculation limits';
+
+  @override
+  String get m53OpNoSupplier => 'No supplier';
+
+  @override
+  String get m53OpNoCategory => 'No category';
+
+  @override
+  String get m53OpAppliedSearch => 'Applied search';
+
+  @override
+  String get m53OpSectionPotential => 'Potential stock retail value';
+
+  @override
+  String get m53OpSectionVariance => 'Stock variance / indication of shortage';
+
+  @override
+  String get m53OpSectionSupplierInvoices => 'Current supplier balances';
+
+  @override
+  String get m53OpSectionSupplierPayments => 'Supplier payments during period';
+
+  @override
+  String get m53OpSectionSupplierCredits => 'Current supplier credits';
+
+  @override
+  String get m53OpSectionSupplierRefunds => 'Supplier refunds during period';
+
+  @override
+  String get m53OpSectionUnreconciled => 'Unreconciled receipts';
+
+  @override
+  String get m53OpSectionPendingReturns => 'Returns awaiting credit approval';
+
+  @override
+  String get m53OpHelpPotential =>
+      'Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products.';
+
+  @override
+  String get m53OpHelpVariance =>
+      'Posted stocktake snapshots only, not current balances. Shortages may reflect counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft. Uncounted lines and untracked stock are not losses. Inventory adjustment values remain separate from sales and sale cost.';
+
+  @override
+  String get m53OpHelpSupplierInvoices =>
+      'CURRENT balances, not historical balances at a date. Purchases, effective payments and applied credits use active invoices. Overdue amounts are part of open balances, not an additional total; missing due dates are not overdue. Currencies stay separate. Unreconciled receipts and unapproved returns are separate, not inferred debt/credit. Search supplier names or invoice numbers.';
+
+  @override
+  String get m53OpHelpSupplierPayments =>
+      'Original payments use the operator-entered payment date. Reversals use their recorded time in the shop timezone. Old payments remain in their original period after a later reversal. Owner funds, bank and drawer are separate; these are not all store cash. This period does not alter current debt balances or sale cost.';
+
+  @override
+  String get m53OpHelpSupplierCredits =>
+      'Active credit approvals: effective allocations and refunds reduce available credit. Available credit is not a payment or a debt deduction until allocated.';
+
+  @override
+  String get m53OpHelpSupplierRefunds =>
+      'Actual refunds and reversals use operator-entered event dates. Bank, drawer and owner funds stay separate. These do not create sales or sale cost.';
+
+  @override
+  String get m53OpHelpUnreconciled =>
+      'Actual purchase receipts without an active invoice. Opening stock, tracking transitions and reversed receipts are excluded. Document counts are not estimated debt.';
+
+  @override
+  String get m53OpHelpPendingReturns =>
+      'Active physical returns without active credit approval. Known carrying values are inventory adjustments only, not approved credit or debt reductions.';
+
+  @override
+  String get m53OpGroupProduct => 'Per product';
+
+  @override
+  String get m53OpGroupCategory => 'Per category';
+
+  @override
+  String get m53OpGroupSupplier => 'Per supplier';
+
+  @override
+  String get m53OpGroupStore => 'Whole store';
+
+  @override
+  String get m53OpBalanceAll => 'All invoices';
+
+  @override
+  String get m53OpBalanceOpen => 'Open balances';
+
+  @override
+  String get m53OpBalanceFuture => 'Not yet due';
+
+  @override
+  String get m53OpBalanceToday => 'Due today';
+
+  @override
+  String get m53OpBalanceOverdue => 'Overdue';
+
+  @override
+  String get m53OpBalancePaid => 'Paid';
+
+  @override
+  String get m53OpBalanceNoDue => 'Open without due date';
+
+  @override
+  String get m53OpFieldProductCount => 'Product count';
+
+  @override
+  String get m53OpFieldTrackedProductCount => 'Tracked products';
+
+  @override
+  String get m53OpFieldUntrackedProductCount =>
+      'Cannot calculate: stock quantity is untracked';
+
+  @override
+  String get m53OpFieldSaleableQuantity => 'Saleable quantity';
+
+  @override
+  String get m53OpFieldExcludedQuantity => 'Excluded quantity';
+
+  @override
+  String get m53OpFieldExpiredQuantity => 'Expired quantity';
+
+  @override
+  String get m53OpFieldArchivedProductCount => 'Archived products';
+
+  @override
+  String get m53OpFieldPotentialMinor => 'Potential stock retail value';
+
+  @override
+  String get m53OpFieldKnownCostMicros => 'Known related cost subtotal';
+
+  @override
+  String get m53OpFieldKnownExcludedCostMicros =>
+      'Known excluded stock cost subtotal';
+
+  @override
+  String get m53OpFieldKnownCostQuantity =>
+      'Saleable quantity with complete costs';
+
+  @override
+  String get m53OpFieldKnownGrossMicros =>
+      'Estimated stock gross profit: known cost subtotal';
+
+  @override
+  String get m53OpFieldUnknownCostProductCount =>
+      'Saleable products with incomplete costs';
+
+  @override
+  String get m53OpFieldUnknownCostQuantity =>
+      'Saleable quantity with incomplete costs';
+
+  @override
+  String get m53OpFieldUnknownExcludedQuantity =>
+      'Excluded quantity with incomplete costs';
+
+  @override
+  String get m53OpFieldUncountedLineCount => 'Uncounted lines, not losses';
+
+  @override
+  String get m53OpFieldComparisonLineCount => 'Valid comparison lines';
+
+  @override
+  String get m53OpFieldBaselineQuantity => 'System quantity at baseline';
+
+  @override
+  String get m53OpFieldPhysicalQuantity => 'Final physical quantity';
+
+  @override
+  String get m53OpFieldDeltaQuantity => 'Quantity variance (physical − system)';
+
+  @override
+  String get m53OpFieldShortageQuantity => 'Shortage quantity';
+
+  @override
+  String get m53OpFieldSurplusQuantity => 'Surplus quantity';
+
+  @override
+  String get m53OpFieldKnownDeltaMicros => 'Known value variance subtotal';
+
+  @override
+  String get m53OpFieldKnownBaselineMicros => 'Known baseline value subtotal';
+
+  @override
+  String get m53OpFieldKnownFinalMicros => 'Known final value subtotal';
+
+  @override
+  String get m53OpFieldUnknownValueLineCount => 'Lines with incomplete values';
+
+  @override
+  String get m53OpFieldInvoiceCount => 'Invoice count';
+
+  @override
+  String get m53OpFieldPurchaseMinor => 'Total invoiced purchases';
+
+  @override
+  String get m53OpFieldEffectivePaymentMinor => 'Total effective payments';
+
+  @override
+  String get m53OpFieldAppliedCreditMinor => 'Applied credits / returns';
+
+  @override
+  String get m53OpFieldRemainingMinor => 'Total open debt';
+
+  @override
+  String get m53OpFieldOpenInvoiceCount => 'Open invoices';
+
+  @override
+  String get m53OpFieldNoDueMinor => 'Balance without due date';
+
+  @override
+  String get m53OpFieldDueTodayMinor => 'Balance due today';
+
+  @override
+  String get m53OpFieldFutureMinor => 'Balance not yet due';
+
+  @override
+  String get m53OpFieldOverdueMinor => 'Overdue balance';
+
+  @override
+  String get m53OpFieldOverdue17Minor => 'Overdue 1–7 days';
+
+  @override
+  String get m53OpFieldOverdue830Minor => 'Overdue 8–30 days';
+
+  @override
+  String get m53OpFieldOverdueOver30Minor => 'Overdue >30 days';
+
+  @override
+  String get m53OpFieldPaidInvoiceCount => 'Paid invoices';
+
+  @override
+  String get m53OpFieldPaymentMinor => 'Original period payments';
+
+  @override
+  String get m53OpFieldPaymentReversalMinor => 'Period payment reversals';
+
+  @override
+  String get m53OpFieldNetPaymentMinor => 'Net period payments';
+
+  @override
+  String get m53OpFieldEventCount => 'Event count';
+
+  @override
+  String get m53OpFieldRefundMinor => 'Original period refunds';
+
+  @override
+  String get m53OpFieldRefundReversalMinor => 'Period refund reversals';
+
+  @override
+  String get m53OpFieldNetRefundMinor => 'Net period refunds';
+
+  @override
+  String get m53OpFieldCreditCount => 'Active credit approvals';
+
+  @override
+  String get m53OpFieldApprovedCreditMinor => 'Approved credit';
+
+  @override
+  String get m53OpFieldAllocatedCreditMinor => 'Allocated credit';
+
+  @override
+  String get m53OpFieldRefundedCreditMinor => 'Effective refunded credit';
+
+  @override
+  String get m53OpFieldAvailableCreditMinor => 'Available credit';
+
+  @override
+  String get m53OpFieldUnreconciledReceiptCount => 'Unreconciled receipts';
+
+  @override
+  String get m53OpFieldPendingReturnLineCount => 'Unapproved return lines';
+
+  @override
+  String get m53OpFieldPendingReturnQuantity => 'Unapproved return quantity';
+
+  @override
+  String get m53OpFieldKnownPendingCarryingMicros =>
+      'Known return carrying subtotal (not credit)';
+
+  @override
+  String get m53OpFieldUnknownPendingValueLineCount =>
+      'Return lines with incalculable value';
+
+  @override
+  String get m53OpFieldPaymentDrawerMinor => 'Net payments: drawer';
+
+  @override
+  String get m53OpFieldPaymentBankMinor => 'Net payments: bank';
+
+  @override
+  String get m53OpFieldPaymentOwnerFundsMinor => 'Net payments: owner funds';
+
+  @override
+  String get m53OpFieldRefundDrawerMinor => 'Net refunds: drawer';
+
+  @override
+  String get m53OpFieldRefundBankMinor => 'Net refunds: bank';
+
+  @override
+  String get m53OpFieldRefundOwnerFundsMinor => 'Net refunds: owner funds';
+
+  @override
+  String get m53OpDetailProductId => 'Product ID';
+
+  @override
+  String get m53OpDetailSku => 'SKU';
+
+  @override
+  String get m53OpDetailBarcode => 'Legacy code';
+
+  @override
+  String get m53OpDetailCategory => 'Product master category';
+
+  @override
+  String get m53OpDetailSupplier => 'Master / document supplier';
+
+  @override
+  String get m53OpDetailSupplierId => 'Supplier ID';
+
+  @override
+  String get m53OpDetailBaseUnit => 'Base unit';
+
+  @override
+  String get m53OpDetailRetailPriceMinor => 'Retail price';
+
+  @override
+  String get m53OpDetailStockTracking => 'Stock tracking';
+
+  @override
+  String get m53OpDetailArchived => 'Archived (1=yes)';
+
+  @override
+  String get m53OpDetailStocktakeId => 'Stocktake ID';
+
+  @override
+  String get m53OpDetailOperationId => 'Inventory operation';
+
+  @override
+  String get m53OpDetailPostedAt => 'Posted time';
+
+  @override
+  String get m53OpDetailReason => 'Reason';
+
+  @override
+  String get m53OpDetailActorRole => 'Actor role';
+
+  @override
+  String get m53OpDetailBaselineAt => 'Baseline time';
+
+  @override
+  String get m53OpDetailBaselineEpoch => 'Baseline epoch';
+
+  @override
+  String get m53OpDetailBaselineQuantity => 'Baseline quantity';
+
+  @override
+  String get m53OpDetailFinalQuantity => 'Final physical quantity';
+
+  @override
+  String get m53OpDetailSnapshotZone => 'Snapshot timezone';
+
+  @override
+  String get m53OpDetailInvoiceId => 'Invoice ID';
+
+  @override
+  String get m53OpDetailInvoiceDate => 'Invoice date';
+
+  @override
+  String get m53OpDetailDueDate => 'Due date';
+
+  @override
+  String get m53OpDetailDaysOverdue => 'Days overdue';
+
+  @override
+  String get m53OpDetailStatus => 'Status';
+
+  @override
+  String get m53OpDetailCreditId => 'Credit ID';
+
+  @override
+  String get m53OpDetailSource => 'Funds source / destination';
+
+  @override
+  String get m53OpDetailKind => 'Event kind';
+
+  @override
+  String get m53OpDetailEventDate => 'Event date';
+
+  @override
+  String get m53OpDetailRecordedAt => 'Recorded time';
+
+  @override
+  String get m53OpDetailDateBasis => 'Date basis';
+
+  @override
+  String get m53OpDetailReturnId => 'Return ID';
+
+  @override
+  String get m53OpDetailApprovedDate => 'Approval date';
+
+  @override
+  String get m53OpDetailReceiptId => 'Receipt ID';
+
+  @override
+  String get m53OpDetailGrouping => 'Grouping level';
+
+  @override
+  String get m53OpBasisPotential =>
+      'Current retail prices; average costs; tracked saleable stock only. Profit covers only complete costs.';
+
+  @override
+  String get m53OpBasisVariance =>
+      'Completed stocktake snapshots; not suspected theft or current stock balances.';
+
+  @override
+  String get m53OpBasisSupplierInvoices =>
+      'Current balances. Overdue debt is part of open balances.';
+
+  @override
+  String get m53OpBasisSupplierPayments =>
+      'Operator payment dates; reversals use the shop recording date.';
+
+  @override
+  String get m53OpBasisSupplierCredits =>
+      'Active approvals, effective allocations and refunds.';
+
+  @override
+  String get m53OpBasisSupplierRefunds =>
+      'Actual refunds and reversals by operator-entered event dates.';
+
+  @override
+  String get m53OpBasisUnreconciled =>
+      'Actual uninvoiced receipts; these counts are not debt values.';
+
+  @override
+  String get m53OpBasisPendingReturns =>
+      'Unapproved physical returns do not reduce debt.';
+
+  @override
+  String get m53OpValueTracked => 'Tracked';
+
+  @override
+  String get m53OpValueUntracked => 'Untracked';
+
+  @override
+  String get m53OpValuePaid => 'Paid';
+
+  @override
+  String get m53OpValueUnpaid => 'Unpaid';
+
+  @override
+  String get m53OpValuePartial => 'Partial';
+
+  @override
+  String get m53OpValueDrawer => 'Drawer';
+
+  @override
+  String get m53OpValueBank => 'Bank';
+
+  @override
+  String get m53OpValueOwnerFunds => 'Owner funds';
+
+  @override
+  String get m53OpValueOriginal => 'Original';
+
+  @override
+  String get m53OpValueReversal => 'Reversal';
+
+  @override
+  String get m53OpValueRecordedShopDate => 'Recorded date in the shop timezone';
+
+  @override
+  String get m53OpValueOperatorEventDate => 'Operator-entered event date';
+
+  @override
+  String get m53OpAllSuppliers => 'All suppliers';
+
+  @override
+  String get m53OpAllCategories => 'All categories';
 }

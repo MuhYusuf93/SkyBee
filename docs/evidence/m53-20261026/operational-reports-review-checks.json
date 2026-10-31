@@ -1,0 +1,26 @@
+{
+  "schema": 37,
+  "sourceFiles": 695,
+  "sourceManifestSha256": "c6391af4934796bb57d205890461c56915b12a1ae7d58aed2479db0b5b68066e",
+  "deltaFromInitial": [
+    "test/support/m51_report_export_suite.dart"
+  ],
+  "productionSourcesUnchanged": true,
+  "change": "Destination fixture disables its synthetic channel mock while real native PIN unlock/crypto run, then reinstalls it only for destination rejection. Assertions unchanged.",
+  "host": {
+    "passed": 4,
+    "failed": 0,
+    "elapsed": "00:23",
+    "scope": "Complete existing export suite3 plus host-only XLSX precision1"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 155.2
+  },
+  "initialEvidence": "Initial source695 host18PASS1:35 and Pico15PASS1FAIL5:21 are separate immutable intervals. Original failure result has851 unchanged protected entries and controlOff.",
+  "nativeCaseCount": 16,
+  "nativeScope": "Operational domain11, IDEN UI2, shared legacy export3. Fourth legacy precision test lives outside shared suite and runs only in host entry.",
+  "native": "PENDING both full16 wrappers with fresh protected baselines",
+  "hostLogSha256": "02133103c4a89882aff18969eca6ac1914255dd2b3d6761f76dbbe2749303a85",
+  "analyzerLogSha256": "3bf490c42c03a0d950469a380646dda97682b76ef02ac32b84e5deb08b4f2ce4"
+}

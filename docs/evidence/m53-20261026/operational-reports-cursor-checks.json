@@ -1,0 +1,46 @@
+{
+  "schema": 37,
+  "sourceFiles": 696,
+  "sourceManifestSha256": "9a50cbebf17f03b1ddbefaaa1a812fbc5d118430db36f3f096c08ea4105431b2",
+  "deltaFromPriorFinalUiSource": [
+    "lib/features/reports/application/operational_report_queries.dart",
+    "lib/features/reports/application/operational_reports_service.dart",
+    "lib/features/reports/presentation/operational_reports_screen.dart",
+    "test/support/m53_operational_reports_suite.dart"
+  ],
+  "change": "Payment/refund UNION cursors use event kind plus table ID. Raw cursor grouping does not fold distinct event rows. Prevents losing valid cross-table UUID ties at source100/UI20 boundaries.",
+  "host": {
+    "passed": 19,
+    "failed": 0,
+    "elapsed": "01:38",
+    "scope": "Domain12 including accepted legacy103 event identity boundary; actual-menu IDEN320/text2 UI2; legacy export4; export cancellation UI1"
+  },
+  "reproduction": {
+    "passed": 0,
+    "failed": 1,
+    "elapsed": "00:05",
+    "expectedEvents": 103,
+    "actualEvents": 102,
+    "ledgerAccepted": true,
+    "fixture": "52 real bank payments,51 reversals, relabelled valid cross-table UUID reuse; exact production triggers restored; finance replay and FK checks passed before failing report count",
+    "fixedProof": "103 events, original52000/reversal51000/net1000,103 unique identities across UI20 pages and whole CSV, effective remaining9000"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 63.8
+  },
+  "format": {
+    "files": 300,
+    "changed": 0
+  },
+  "localization": {
+    "keys": 1482,
+    "staticReferences": 905,
+    "originalRequirementIds": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "native": "PENDING coherent17 both devices. Previous16+UI2 are historical intervals, not finalcore proof.",
+  "hostLogSha256": "6b2eea32f19dd18910004d3c012b9b410a3c8b37aa0b472192c71f0c8f87b2f2",
+  "analyzerLogSha256": "ed49882849cd3262492fbccec7eb8d38cbb584dedac1277a2a41fac9e40b3cf0",
+  "reproLogSha256": "5d5013925dde3b818f42e2926b70266df9688968176eab9b6deeb3a1150170c2"
+}

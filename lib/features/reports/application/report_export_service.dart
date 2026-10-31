@@ -22,9 +22,25 @@ final class ReportExportControl {
 }
 
 final class ReportArtifact {
-  const ReportArtifact(this.directory, this.file);
+  const ReportArtifact(
+    this.directory,
+    this.file, {
+    this.accessGeneration,
+    this.databaseGeneration,
+  });
   final Directory directory;
   final File file;
+  final int? accessGeneration, databaseGeneration;
+
+  /// A new unlock or replaced store cannot release an older protected export.
+  void requireCurrent(ManagementService access) {
+    if (accessGeneration != null && accessGeneration != access.generation ||
+        databaseGeneration != null &&
+            databaseGeneration != access.database.generation) {
+      throw StateError('reportSessionChanged');
+    }
+  }
+
   Future<void> dispose() async {
     if (await directory.exists()) await directory.delete(recursive: true);
   }
@@ -49,6 +65,7 @@ final class ReportExportService {
     Future<void> Function()? testPage,
   }) async {
     await access.authorizeCurrent();
+    final grant = access.generation, generation = database.generation;
     final directory = await Directory(
       p.join(
         p.dirname(database.databasePath),
@@ -323,9 +340,16 @@ final class ReportExportService {
       control.check();
       final file = await writer.finish();
       await access.authorizeCurrent();
+      final artifact = ReportArtifact(
+        directory,
+        file,
+        accessGeneration: grant,
+        databaseGeneration: generation,
+      );
+      artifact.requireCurrent(access);
       control.check();
       succeeded = true;
-      return ReportArtifact(directory, file);
+      return artifact;
     } finally {
       if (!succeeded) {
         await writer.endSheet();

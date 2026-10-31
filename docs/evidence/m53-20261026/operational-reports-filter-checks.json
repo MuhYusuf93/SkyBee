@@ -1,0 +1,44 @@
+{
+  "schema": 37,
+  "sourceFiles": 696,
+  "sourceManifestSha256": "b4fd56f2bd7090c5f166ba9d5dd784199663aa6e961d5a22cd981ded8956454f",
+  "deltaFromFull16Source": [
+    "lib/features/reports/presentation/operational_reports_screen.dart",
+    "lib/features/reports/presentation/report_master_picker.dart",
+    "lib/features/reports/presentation/reports_provider.dart",
+    "lib/features/reports/presentation/reports_screen.dart",
+    "lib/l10n/app_en.arb",
+    "lib/l10n/app_id.arb",
+    "lib/l10n/app_localizations.dart",
+    "lib/l10n/app_localizations_en.dart",
+    "lib/l10n/app_localizations_id.dart",
+    "lib/l10n/localization.dart",
+    "test/support/m53_operational_reports_widgets_suite.dart"
+  ],
+  "businessSqlDomainMathUnchanged": true,
+  "change": "Explicit All filters, report-owned readonly paged master picker with archived switch, clear actual ID and omit hidden category/supplier filters from exported scope. Actual navigation through parent ReportsScreen reproduces old parent refresh revoking PIN verification; parent provider skips refresh while locked/warehouse. Final UI2 tests actual menu route and re-unlock.",
+  "host": {
+    "passed": 2,
+    "failed": 0,
+    "elapsed": "00:22",
+    "scope": "Actual ReportsScreen entry → operational report, IDEN320/text2 all sections, real category choose/clear, hidden-category debt export scope, archived supplier with real unpaid2000/noDue balance choose/clear, owner lock/unlock and grouped export"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 10.3
+  },
+  "format": {
+    "files": 300,
+    "changed": 1
+  },
+  "localization": {
+    "keys": 1482,
+    "staticReferences": 905,
+    "originalRequirementIds": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "previousIntervals": "Initial host18 and full native16 on both devices are distinct historical source snapshots. Final UI2 supersedes only screen/picker/l10n/fixture, all financial and database sources identical.",
+  "native": "PENDING focusedUI2 on both through fresh protected wrapper",
+  "hostLogSha256": "c1f6f902de5f23cb8b7db3fe2003eb9639fadf44875590b40f9892bd38a35d15",
+  "analyzerLogSha256": "cbe7a18511fa51613335517bccb617397149114f1c3ab55e4db0256ce1c73801"
+}

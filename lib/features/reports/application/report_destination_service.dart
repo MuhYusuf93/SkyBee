@@ -28,6 +28,7 @@ final class ReportDestinationService {
   Future<void> write(String token, ReportArtifact artifact) async {
     try {
       await access.authorizeCurrent();
+      artifact.requireCurrent(access);
       final generation = access.generation;
       await platform
           .call<bool>('writeReportExport', {

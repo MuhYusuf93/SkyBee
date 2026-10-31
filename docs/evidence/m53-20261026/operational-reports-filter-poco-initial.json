@@ -1,0 +1,21 @@
+{
+  "schema": 37,
+  "sourceFiles": 696,
+  "sourceManifestSha256": "b4fd56f2bd7090c5f166ba9d5dd784199663aa6e961d5a22cd981ded8956454f",
+  "sourceMatchedAtCapture": true,
+  "run": "m53-operational-filter-poco-20261030-20261030-023430",
+  "device": "7f0edea0",
+  "passed": 0,
+  "failed": 2,
+  "skipped": 0,
+  "elapsed": "01:11",
+  "automaticDeviceControlActive": false,
+  "preExistingProtectedEntries": 887,
+  "everyPreExistingHashUnchanged": true,
+  "failure": "New real archived debt assertions used guarded expect inside async IO callback while widget pump was active. Native recommends expectSync for this callback. Assertions and production code remain unchanged; fixture-only correction next.",
+  "runnerLogSha256": "974e2a912203a7eb0bba05b48e613109fe255eb9799a7992d74859b85cc815f9",
+  "beforeManifestSha256": "47749bc4227a358710649fdabcf2f51b01efaef317d10d56785bf524ddb0ab54",
+  "afterManifestSha256": "fae6d075ea301f632c31889bf633cd6a850c8717c10914fddbc251b99cb7c058",
+  "reset": false,
+  "downgrade": false
+}

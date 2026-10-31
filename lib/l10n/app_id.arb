@@ -5363,5 +5363,669 @@
   "backupReceiptPolicyInvalid": "Kebijakan, kewajiban atau konfirmasi struk dalam cadangan tidak valid.",
   "@backupReceiptPolicyInvalid": {
     "description": "M5.3 receipt policy. English meaning: The backup contains invalid receipt policy, obligation or confirmation records."
+  },
+  "m53OperationalReports": "Laporan stok dan supplier",
+  "m53OperationalReportChanged": "Data, akses, atau hari toko berubah. Muat ulang laporan.",
+  "m53OpInvoiceLevel": "Per tagihan",
+  "m53OpSearch": "Cari teks yang mengandung",
+  "m53OpApply": "Terapkan / muat ulang",
+  "m53OpAllDates": "Semua tanggal",
+  "m53OpCaptured": "Snapshot diambil",
+  "m53OpWholeScope": "Ringkasan seluruh scope filter",
+  "m53OpNoComparison": "Belum ada data pembanding",
+  "m53OpEmpty": "Tidak ada data sesuai filter",
+  "m53OpUnassigned": "Tanpa kategori / supplier atau seluruh toko",
+  "m53OpNextPage": "Halaman berikutnya (20 baris)",
+  "m53OpFirstPage": "Kembali ke halaman pertama",
+  "m53OpCashAudit": "Histori dan audit kas",
+  "m53OpCashPolicy": "Kebijakan audit kas wajib",
+  "m53OpAssumptions": "Dasar, cakupan dan batas perhitungan",
+  "m53OpNoSupplier": "Tanpa supplier",
+  "m53OpNoCategory": "Tanpa kategori",
+  "m53OpAppliedSearch": "Pencarian yang diterapkan",
+  "@m53OperationalReports": {
+    "description": "Inventory and supplier reports"
+  },
+  "@m53OperationalReportChanged": {
+    "description": "Data, access or shop day changed. Reload the report."
+  },
+  "m53OpSectionPotential": "Potensi nilai jual stok",
+  "@m53OpSectionPotential": {
+    "description": "Potential stock retail value"
+  },
+  "m53OpSectionVariance": "Selisih stok / indikasi kekurangan barang",
+  "@m53OpSectionVariance": {
+    "description": "Stock variance / indication of shortage"
+  },
+  "m53OpSectionSupplierInvoices": "Utang supplier saat ini",
+  "@m53OpSectionSupplierInvoices": {
+    "description": "Current supplier balances"
+  },
+  "m53OpSectionSupplierPayments": "Pembayaran supplier periode",
+  "@m53OpSectionSupplierPayments": {
+    "description": "Supplier payments during period"
+  },
+  "m53OpSectionSupplierCredits": "Kredit supplier saat ini",
+  "@m53OpSectionSupplierCredits": {
+    "description": "Current supplier credits"
+  },
+  "m53OpSectionSupplierRefunds": "Refund supplier periode",
+  "@m53OpSectionSupplierRefunds": {
+    "description": "Supplier refunds during period"
+  },
+  "m53OpSectionUnreconciled": "Penerimaan belum direkonsiliasi",
+  "@m53OpSectionUnreconciled": {
+    "description": "Unreconciled receipts"
+  },
+  "m53OpSectionPendingReturns": "Retur menunggu persetujuan kredit",
+  "@m53OpSectionPendingReturns": {
+    "description": "Returns awaiting credit approval"
+  },
+  "m53OpHelpPotential": "Stok terlacak yang layak jual × harga eceran saat ini. Estimasi laba kotor stok adalah potensi nilai jual dikurangi alokasi biaya rata-rata. Subtotal biaya/laba diketahui mengecualikan biaya belum lengkap. Produk arsip, kedaluwarsa dan tidak terlacak dipisahkan. Ini bukan ramalan, laba bersih, atau penjualan terealisasi; belum memasukkan promo/grosir, ongkos, pajak dan biaya operasional. Pengelompokan supplier berdasarkan supplier pada data barang, bukan asal setiap batch. Kuantitas lintas satuan hanya jumlah unit dasar; bandingkan per produk.",
+  "@m53OpHelpPotential": {
+    "description": "Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products."
+  },
+  "m53OpHelpVariance": "Hanya snapshot opname yang sudah diposting, bukan saldo hari ini. Kekurangan dapat berasal dari salah hitung, transaksi belum dicatat, kerusakan atau sebab lain; bukan bukti pencurian. Baris belum dihitung dan stok tidak terlacak bukan kehilangan. Nilai penyesuaian terpisah dari omzet/HPP penjualan.",
+  "@m53OpHelpVariance": {
+    "description": "Posted stocktake snapshots only, not current balances. Shortages may reflect counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft. Uncounted lines and untracked stock are not losses. Inventory adjustment values remain separate from sales and sale cost."
+  },
+  "m53OpHelpSupplierInvoices": "Saldo SAAT INI, bukan saldo historis per tanggal. Pembelian, pembayaran efektif dan kredit terpakai berasal dari tagihan aktif. Tunggakan adalah bagian saldo belum lunas, bukan jumlah tambahan; tanpa due date bukan terlambat. Currency dipisahkan. Penerimaan belum direkonsiliasi dan retur belum disetujui tampil terpisah, bukan utang/kredit perkiraan. Cari nama supplier atau nomor tagihan.",
+  "@m53OpHelpSupplierInvoices": {
+    "description": "CURRENT balances, not historical balances at a date. Purchases, effective payments and applied credits use active invoices. Overdue amounts are part of open balances, not an additional total; missing due dates are not overdue. Currencies stay separate. Unreconciled receipts and unapproved returns are separate, not inferred debt/credit. Search supplier names or invoice numbers."
+  },
+  "m53OpHelpSupplierPayments": "Pembayaran asli memakai tanggal pembayaran yang dicatat operator. Reversal memakai tanggal waktu pencatatannya dalam timezone toko. Pembayaran lama tetap ada pada periode aslinya meski dibalik kemudian. Dana pemilik/bank/laci dipisahkan; bukan seluruhnya kas toko. Periode ini tidak mengubah saldo utang saat ini atau HPP.",
+  "@m53OpHelpSupplierPayments": {
+    "description": "Original payments use the operator-entered payment date. Reversals use their recorded time in the shop timezone. Old payments remain in their original period after a later reversal. Owner funds, bank and drawer are separate; these are not all store cash. This period does not alter current debt balances or sale cost."
+  },
+  "m53OpHelpSupplierCredits": "Persetujuan kredit yang masih aktif: alokasi dan refund efektif mengurangi sisa kredit. Sisa kredit bukan pembayaran atau pengurangan utang sebelum dialokasikan.",
+  "@m53OpHelpSupplierCredits": {
+    "description": "Active credit approvals: effective allocations and refunds reduce available credit. Available credit is not a payment or a debt deduction until allocated."
+  },
+  "m53OpHelpSupplierRefunds": "Uang refund aktual dan reversal memakai tanggal kejadian yang dicatat operator. Rekening, laci dan dana pemilik dipisahkan. Tidak membuat penjualan atau HPP baru.",
+  "@m53OpHelpSupplierRefunds": {
+    "description": "Actual refunds and reversals use operator-entered event dates. Bank, drawer and owner funds stay separate. These do not create sales or sale cost."
+  },
+  "m53OpHelpUnreconciled": "Penerimaan pembelian aktual yang belum mempunyai tagihan aktif. Stok awal, perubahan mode dan penerimaan dibalik dikecualikan. Jumlah dokumen bukan estimasi utang.",
+  "@m53OpHelpUnreconciled": {
+    "description": "Actual purchase receipts without an active invoice. Opening stock, tracking transitions and reversed receipts are excluded. Document counts are not estimated debt."
+  },
+  "m53OpHelpPendingReturns": "Retur fisik aktif tanpa persetujuan kredit aktif. Nilai carrying yang diketahui hanya nilai penyesuaian stok, bukan kredit yang disetujui atau pengurang utang.",
+  "@m53OpHelpPendingReturns": {
+    "description": "Active physical returns without active credit approval. Known carrying values are inventory adjustments only, not approved credit or debt reductions."
+  },
+  "m53OpGroupProduct": "Per produk",
+  "@m53OpGroupProduct": {
+    "description": "Per product"
+  },
+  "m53OpGroupCategory": "Per kategori",
+  "@m53OpGroupCategory": {
+    "description": "Per category"
+  },
+  "m53OpGroupSupplier": "Per supplier",
+  "@m53OpGroupSupplier": {
+    "description": "Per supplier"
+  },
+  "m53OpGroupStore": "Seluruh toko",
+  "@m53OpGroupStore": {
+    "description": "Whole store"
+  },
+  "@m53OpInvoiceLevel": {
+    "description": "Per invoice"
+  },
+  "@m53OpSearch": {
+    "description": "Search text containing"
+  },
+  "@m53OpApply": {
+    "description": "Apply / reload"
+  },
+  "@m53OpAllDates": {
+    "description": "All dates"
+  },
+  "@m53OpCaptured": {
+    "description": "Snapshot captured"
+  },
+  "@m53OpWholeScope": {
+    "description": "Summary of the entire filtered scope"
+  },
+  "@m53OpNoComparison": {
+    "description": "No comparison data yet"
+  },
+  "@m53OpEmpty": {
+    "description": "No matching data"
+  },
+  "@m53OpUnassigned": {
+    "description": "Unassigned category / supplier or whole store"
+  },
+  "@m53OpNextPage": {
+    "description": "Next page (20 rows)"
+  },
+  "@m53OpFirstPage": {
+    "description": "Return to first page"
+  },
+  "@m53OpCashAudit": {
+    "description": "Cash history and audit"
+  },
+  "@m53OpCashPolicy": {
+    "description": "Mandatory cash audit policy"
+  },
+  "m53OpBalanceAll": "Semua tagihan",
+  "@m53OpBalanceAll": {
+    "description": "All invoices"
+  },
+  "m53OpBalanceOpen": "Belum lunas",
+  "@m53OpBalanceOpen": {
+    "description": "Open balances"
+  },
+  "m53OpBalanceFuture": "Belum jatuh tempo",
+  "@m53OpBalanceFuture": {
+    "description": "Not yet due"
+  },
+  "m53OpBalanceToday": "Jatuh tempo hari ini",
+  "@m53OpBalanceToday": {
+    "description": "Due today"
+  },
+  "m53OpBalanceOverdue": "Terlambat",
+  "@m53OpBalanceOverdue": {
+    "description": "Overdue"
+  },
+  "m53OpBalancePaid": "Lunas",
+  "@m53OpBalancePaid": {
+    "description": "Paid"
+  },
+  "m53OpBalanceNoDue": "Belum lunas tanpa due date",
+  "@m53OpBalanceNoDue": {
+    "description": "Open without due date"
+  },
+  "m53OpFieldProductCount": "Jumlah produk",
+  "@m53OpFieldProductCount": {
+    "description": "Product count"
+  },
+  "m53OpFieldTrackedProductCount": "Produk terlacak",
+  "@m53OpFieldTrackedProductCount": {
+    "description": "Tracked products"
+  },
+  "m53OpFieldUntrackedProductCount": "Tidak dapat dihitung: jumlah stok tidak dilacak",
+  "@m53OpFieldUntrackedProductCount": {
+    "description": "Cannot calculate: stock quantity is untracked"
+  },
+  "m53OpFieldSaleableQuantity": "Jumlah layak jual",
+  "@m53OpFieldSaleableQuantity": {
+    "description": "Saleable quantity"
+  },
+  "m53OpFieldExcludedQuantity": "Jumlah dikecualikan",
+  "@m53OpFieldExcludedQuantity": {
+    "description": "Excluded quantity"
+  },
+  "m53OpFieldExpiredQuantity": "Jumlah kedaluwarsa",
+  "@m53OpFieldExpiredQuantity": {
+    "description": "Expired quantity"
+  },
+  "m53OpFieldArchivedProductCount": "Produk arsip",
+  "@m53OpFieldArchivedProductCount": {
+    "description": "Archived products"
+  },
+  "m53OpFieldPotentialMinor": "Potensi nilai jual stok",
+  "@m53OpFieldPotentialMinor": {
+    "description": "Potential stock retail value"
+  },
+  "m53OpFieldKnownCostMicros": "Subtotal biaya terkait yang diketahui",
+  "@m53OpFieldKnownCostMicros": {
+    "description": "Known related cost subtotal"
+  },
+  "m53OpFieldKnownExcludedCostMicros": "Subtotal biaya stok dikecualikan yang diketahui",
+  "@m53OpFieldKnownExcludedCostMicros": {
+    "description": "Known excluded stock cost subtotal"
+  },
+  "m53OpFieldKnownCostQuantity": "Jumlah layak jual dengan biaya lengkap",
+  "@m53OpFieldKnownCostQuantity": {
+    "description": "Saleable quantity with complete costs"
+  },
+  "m53OpFieldKnownGrossMicros": "Estimasi laba kotor stok: subtotal biaya diketahui",
+  "@m53OpFieldKnownGrossMicros": {
+    "description": "Estimated stock gross profit: known cost subtotal"
+  },
+  "m53OpFieldUnknownCostProductCount": "Produk layak jual dengan biaya belum lengkap",
+  "@m53OpFieldUnknownCostProductCount": {
+    "description": "Saleable products with incomplete costs"
+  },
+  "m53OpFieldUnknownCostQuantity": "Jumlah layak jual dengan biaya belum lengkap",
+  "@m53OpFieldUnknownCostQuantity": {
+    "description": "Saleable quantity with incomplete costs"
+  },
+  "m53OpFieldUnknownExcludedQuantity": "Jumlah dikecualikan dengan biaya belum lengkap",
+  "@m53OpFieldUnknownExcludedQuantity": {
+    "description": "Excluded quantity with incomplete costs"
+  },
+  "m53OpFieldUncountedLineCount": "Baris belum dihitung, bukan kehilangan",
+  "@m53OpFieldUncountedLineCount": {
+    "description": "Uncounted lines, not losses"
+  },
+  "m53OpFieldComparisonLineCount": "Baris pembanding sah",
+  "@m53OpFieldComparisonLineCount": {
+    "description": "Valid comparison lines"
+  },
+  "m53OpFieldBaselineQuantity": "Jumlah sistem pada baseline",
+  "@m53OpFieldBaselineQuantity": {
+    "description": "System quantity at baseline"
+  },
+  "m53OpFieldPhysicalQuantity": "Jumlah fisik final",
+  "@m53OpFieldPhysicalQuantity": {
+    "description": "Final physical quantity"
+  },
+  "m53OpFieldDeltaQuantity": "Selisih jumlah (fisik − sistem)",
+  "@m53OpFieldDeltaQuantity": {
+    "description": "Quantity variance (physical − system)"
+  },
+  "m53OpFieldShortageQuantity": "Jumlah kekurangan",
+  "@m53OpFieldShortageQuantity": {
+    "description": "Shortage quantity"
+  },
+  "m53OpFieldSurplusQuantity": "Jumlah kelebihan",
+  "@m53OpFieldSurplusQuantity": {
+    "description": "Surplus quantity"
+  },
+  "m53OpFieldKnownDeltaMicros": "Subtotal selisih nilai yang diketahui",
+  "@m53OpFieldKnownDeltaMicros": {
+    "description": "Known value variance subtotal"
+  },
+  "m53OpFieldKnownBaselineMicros": "Subtotal nilai baseline diketahui",
+  "@m53OpFieldKnownBaselineMicros": {
+    "description": "Known baseline value subtotal"
+  },
+  "m53OpFieldKnownFinalMicros": "Subtotal nilai final diketahui",
+  "@m53OpFieldKnownFinalMicros": {
+    "description": "Known final value subtotal"
+  },
+  "m53OpFieldUnknownValueLineCount": "Baris dengan nilai belum lengkap",
+  "@m53OpFieldUnknownValueLineCount": {
+    "description": "Lines with incomplete values"
+  },
+  "m53OpFieldInvoiceCount": "Jumlah tagihan",
+  "@m53OpFieldInvoiceCount": {
+    "description": "Invoice count"
+  },
+  "m53OpFieldPurchaseMinor": "Total pembelian tertagih",
+  "@m53OpFieldPurchaseMinor": {
+    "description": "Total invoiced purchases"
+  },
+  "m53OpFieldEffectivePaymentMinor": "Total pembayaran efektif",
+  "@m53OpFieldEffectivePaymentMinor": {
+    "description": "Total effective payments"
+  },
+  "m53OpFieldAppliedCreditMinor": "Kredit/retur diterapkan",
+  "@m53OpFieldAppliedCreditMinor": {
+    "description": "Applied credits / returns"
+  },
+  "m53OpFieldRemainingMinor": "Total utang belum lunas",
+  "@m53OpFieldRemainingMinor": {
+    "description": "Total open debt"
+  },
+  "m53OpFieldOpenInvoiceCount": "Tagihan belum lunas",
+  "@m53OpFieldOpenInvoiceCount": {
+    "description": "Open invoices"
+  },
+  "m53OpFieldNoDueMinor": "Saldo tanpa due date",
+  "@m53OpFieldNoDueMinor": {
+    "description": "Balance without due date"
+  },
+  "m53OpFieldDueTodayMinor": "Saldo jatuh tempo hari ini",
+  "@m53OpFieldDueTodayMinor": {
+    "description": "Balance due today"
+  },
+  "m53OpFieldFutureMinor": "Saldo belum jatuh tempo",
+  "@m53OpFieldFutureMinor": {
+    "description": "Balance not yet due"
+  },
+  "m53OpFieldOverdueMinor": "Tunggakan lewat jatuh tempo",
+  "@m53OpFieldOverdueMinor": {
+    "description": "Overdue balance"
+  },
+  "m53OpFieldOverdue17Minor": "Tunggakan 1–7 hari",
+  "@m53OpFieldOverdue17Minor": {
+    "description": "Overdue 1–7 days"
+  },
+  "m53OpFieldOverdue830Minor": "Tunggakan 8–30 hari",
+  "@m53OpFieldOverdue830Minor": {
+    "description": "Overdue 8–30 days"
+  },
+  "m53OpFieldOverdueOver30Minor": "Tunggakan >30 hari",
+  "@m53OpFieldOverdueOver30Minor": {
+    "description": "Overdue >30 days"
+  },
+  "m53OpFieldPaidInvoiceCount": "Tagihan lunas",
+  "@m53OpFieldPaidInvoiceCount": {
+    "description": "Paid invoices"
+  },
+  "m53OpFieldPaymentMinor": "Pembayaran asli periode",
+  "@m53OpFieldPaymentMinor": {
+    "description": "Original period payments"
+  },
+  "m53OpFieldPaymentReversalMinor": "Reversal pembayaran periode",
+  "@m53OpFieldPaymentReversalMinor": {
+    "description": "Period payment reversals"
+  },
+  "m53OpFieldNetPaymentMinor": "Pembayaran neto periode",
+  "@m53OpFieldNetPaymentMinor": {
+    "description": "Net period payments"
+  },
+  "m53OpFieldEventCount": "Jumlah kejadian",
+  "@m53OpFieldEventCount": {
+    "description": "Event count"
+  },
+  "m53OpFieldRefundMinor": "Refund asli periode",
+  "@m53OpFieldRefundMinor": {
+    "description": "Original period refunds"
+  },
+  "m53OpFieldRefundReversalMinor": "Reversal refund periode",
+  "@m53OpFieldRefundReversalMinor": {
+    "description": "Period refund reversals"
+  },
+  "m53OpFieldNetRefundMinor": "Refund neto periode",
+  "@m53OpFieldNetRefundMinor": {
+    "description": "Net period refunds"
+  },
+  "m53OpFieldCreditCount": "Persetujuan kredit aktif",
+  "@m53OpFieldCreditCount": {
+    "description": "Active credit approvals"
+  },
+  "m53OpFieldApprovedCreditMinor": "Kredit disetujui",
+  "@m53OpFieldApprovedCreditMinor": {
+    "description": "Approved credit"
+  },
+  "m53OpFieldAllocatedCreditMinor": "Kredit dialokasikan",
+  "@m53OpFieldAllocatedCreditMinor": {
+    "description": "Allocated credit"
+  },
+  "m53OpFieldRefundedCreditMinor": "Kredit direfund efektif",
+  "@m53OpFieldRefundedCreditMinor": {
+    "description": "Effective refunded credit"
+  },
+  "m53OpFieldAvailableCreditMinor": "Kredit belum dialokasikan",
+  "@m53OpFieldAvailableCreditMinor": {
+    "description": "Available credit"
+  },
+  "m53OpFieldUnreconciledReceiptCount": "Penerimaan belum direkonsiliasi",
+  "@m53OpFieldUnreconciledReceiptCount": {
+    "description": "Unreconciled receipts"
+  },
+  "m53OpFieldPendingReturnLineCount": "Baris retur belum disetujui",
+  "@m53OpFieldPendingReturnLineCount": {
+    "description": "Unapproved return lines"
+  },
+  "m53OpFieldPendingReturnQuantity": "Jumlah retur belum disetujui",
+  "@m53OpFieldPendingReturnQuantity": {
+    "description": "Unapproved return quantity"
+  },
+  "m53OpFieldKnownPendingCarryingMicros": "Subtotal carrying retur diketahui (bukan kredit)",
+  "@m53OpFieldKnownPendingCarryingMicros": {
+    "description": "Known return carrying subtotal (not credit)"
+  },
+  "m53OpFieldUnknownPendingValueLineCount": "Baris retur dengan nilai tidak dapat dihitung",
+  "@m53OpFieldUnknownPendingValueLineCount": {
+    "description": "Return lines with incalculable value"
+  },
+  "m53OpFieldPaymentDrawerMinor": "Pembayaran neto: laci",
+  "@m53OpFieldPaymentDrawerMinor": {
+    "description": "Net payments: drawer"
+  },
+  "m53OpFieldPaymentBankMinor": "Pembayaran neto: bank",
+  "@m53OpFieldPaymentBankMinor": {
+    "description": "Net payments: bank"
+  },
+  "m53OpFieldPaymentOwnerFundsMinor": "Pembayaran neto: dana pemilik",
+  "@m53OpFieldPaymentOwnerFundsMinor": {
+    "description": "Net payments: owner funds"
+  },
+  "m53OpFieldRefundDrawerMinor": "Refund neto: laci",
+  "@m53OpFieldRefundDrawerMinor": {
+    "description": "Net refunds: drawer"
+  },
+  "m53OpFieldRefundBankMinor": "Refund neto: bank",
+  "@m53OpFieldRefundBankMinor": {
+    "description": "Net refunds: bank"
+  },
+  "m53OpFieldRefundOwnerFundsMinor": "Refund neto: dana pemilik",
+  "@m53OpFieldRefundOwnerFundsMinor": {
+    "description": "Net refunds: owner funds"
+  },
+  "m53OpDetailProductId": "ID produk",
+  "@m53OpDetailProductId": {
+    "description": "Product ID"
+  },
+  "m53OpDetailSku": "SKU",
+  "@m53OpDetailSku": {
+    "description": "SKU"
+  },
+  "m53OpDetailBarcode": "Kode lama",
+  "@m53OpDetailBarcode": {
+    "description": "Legacy code"
+  },
+  "m53OpDetailCategory": "Kategori data barang",
+  "@m53OpDetailCategory": {
+    "description": "Product master category"
+  },
+  "m53OpDetailSupplier": "Supplier data/dokumen",
+  "@m53OpDetailSupplier": {
+    "description": "Master / document supplier"
+  },
+  "m53OpDetailSupplierId": "ID supplier",
+  "@m53OpDetailSupplierId": {
+    "description": "Supplier ID"
+  },
+  "m53OpDetailBaseUnit": "Satuan dasar",
+  "@m53OpDetailBaseUnit": {
+    "description": "Base unit"
+  },
+  "m53OpDetailRetailPriceMinor": "Harga eceran",
+  "@m53OpDetailRetailPriceMinor": {
+    "description": "Retail price"
+  },
+  "m53OpDetailStockTracking": "Pelacakan stok",
+  "@m53OpDetailStockTracking": {
+    "description": "Stock tracking"
+  },
+  "m53OpDetailArchived": "Arsip (1=ya)",
+  "@m53OpDetailArchived": {
+    "description": "Archived (1=yes)"
+  },
+  "m53OpDetailStocktakeId": "ID opname",
+  "@m53OpDetailStocktakeId": {
+    "description": "Stocktake ID"
+  },
+  "m53OpDetailOperationId": "Dokumen mutasi",
+  "@m53OpDetailOperationId": {
+    "description": "Inventory operation"
+  },
+  "m53OpDetailPostedAt": "Waktu posting",
+  "@m53OpDetailPostedAt": {
+    "description": "Posted time"
+  },
+  "m53OpDetailReason": "Alasan",
+  "@m53OpDetailReason": {
+    "description": "Reason"
+  },
+  "m53OpDetailActorRole": "Peran pencatat",
+  "@m53OpDetailActorRole": {
+    "description": "Actor role"
+  },
+  "m53OpDetailBaselineAt": "Waktu baseline",
+  "@m53OpDetailBaselineAt": {
+    "description": "Baseline time"
+  },
+  "m53OpDetailBaselineEpoch": "Versi baseline",
+  "@m53OpDetailBaselineEpoch": {
+    "description": "Baseline epoch"
+  },
+  "m53OpDetailBaselineQuantity": "Jumlah baseline",
+  "@m53OpDetailBaselineQuantity": {
+    "description": "Baseline quantity"
+  },
+  "m53OpDetailFinalQuantity": "Jumlah fisik final",
+  "@m53OpDetailFinalQuantity": {
+    "description": "Final physical quantity"
+  },
+  "m53OpDetailSnapshotZone": "Timezone snapshot",
+  "@m53OpDetailSnapshotZone": {
+    "description": "Snapshot timezone"
+  },
+  "m53OpDetailInvoiceId": "ID tagihan",
+  "@m53OpDetailInvoiceId": {
+    "description": "Invoice ID"
+  },
+  "m53OpDetailInvoiceDate": "Tanggal tagihan",
+  "@m53OpDetailInvoiceDate": {
+    "description": "Invoice date"
+  },
+  "m53OpDetailDueDate": "Jatuh tempo",
+  "@m53OpDetailDueDate": {
+    "description": "Due date"
+  },
+  "m53OpDetailDaysOverdue": "Hari terlambat",
+  "@m53OpDetailDaysOverdue": {
+    "description": "Days overdue"
+  },
+  "m53OpDetailStatus": "Status",
+  "@m53OpDetailStatus": {
+    "description": "Status"
+  },
+  "m53OpDetailCreditId": "ID kredit",
+  "@m53OpDetailCreditId": {
+    "description": "Credit ID"
+  },
+  "m53OpDetailSource": "Sumber / tujuan dana",
+  "@m53OpDetailSource": {
+    "description": "Funds source / destination"
+  },
+  "m53OpDetailKind": "Jenis kejadian",
+  "@m53OpDetailKind": {
+    "description": "Event kind"
+  },
+  "m53OpDetailEventDate": "Tanggal kejadian",
+  "@m53OpDetailEventDate": {
+    "description": "Event date"
+  },
+  "m53OpDetailRecordedAt": "Waktu pencatatan",
+  "@m53OpDetailRecordedAt": {
+    "description": "Recorded time"
+  },
+  "m53OpDetailDateBasis": "Dasar tanggal",
+  "@m53OpDetailDateBasis": {
+    "description": "Date basis"
+  },
+  "m53OpDetailReturnId": "ID retur",
+  "@m53OpDetailReturnId": {
+    "description": "Return ID"
+  },
+  "m53OpDetailApprovedDate": "Tanggal persetujuan",
+  "@m53OpDetailApprovedDate": {
+    "description": "Approval date"
+  },
+  "m53OpDetailReceiptId": "ID penerimaan",
+  "@m53OpDetailReceiptId": {
+    "description": "Receipt ID"
+  },
+  "m53OpDetailGrouping": "Tingkat pengelompokan",
+  "@m53OpDetailGrouping": {
+    "description": "Grouping level"
+  },
+  "@m53OpAssumptions": {
+    "description": "Basis, coverage and calculation limits"
+  },
+  "@m53OpNoSupplier": {
+    "description": "No supplier"
+  },
+  "@m53OpNoCategory": {
+    "description": "No category"
+  },
+  "@m53OpAppliedSearch": {
+    "description": "Applied search"
+  },
+  "m53OpBasisPotential": "Harga eceran saat ini; biaya rata-rata; hanya stok terlacak layak jual. Laba hanya subtotal dengan biaya lengkap.",
+  "@m53OpBasisPotential": {
+    "description": "Current retail prices; average costs; tracked saleable stock only. Profit covers only complete costs."
+  },
+  "m53OpBasisVariance": "Snapshot opname selesai; bukan dugaan pencurian atau saldo stok hari ini.",
+  "@m53OpBasisVariance": {
+    "description": "Completed stocktake snapshots; not suspected theft or current stock balances."
+  },
+  "m53OpBasisSupplierInvoices": "Saldo saat ini. Tunggakan adalah bagian dari saldo belum lunas.",
+  "@m53OpBasisSupplierInvoices": {
+    "description": "Current balances. Overdue debt is part of open balances."
+  },
+  "m53OpBasisSupplierPayments": "Tanggal pembayaran operator; reversal menurut tanggal pencatatan toko.",
+  "@m53OpBasisSupplierPayments": {
+    "description": "Operator payment dates; reversals use the shop recording date."
+  },
+  "m53OpBasisSupplierCredits": "Persetujuan aktif, alokasi dan refund efektif.",
+  "@m53OpBasisSupplierCredits": {
+    "description": "Active approvals, effective allocations and refunds."
+  },
+  "m53OpBasisSupplierRefunds": "Refund aktual dan reversal menurut tanggal kejadian operator.",
+  "@m53OpBasisSupplierRefunds": {
+    "description": "Actual refunds and reversals by operator-entered event dates."
+  },
+  "m53OpBasisUnreconciled": "Penerimaan aktual belum tertagih; jumlah ini bukan nilai utang.",
+  "@m53OpBasisUnreconciled": {
+    "description": "Actual uninvoiced receipts; these counts are not debt values."
+  },
+  "m53OpBasisPendingReturns": "Retur fisik belum disetujui bukan pengurang utang.",
+  "@m53OpBasisPendingReturns": {
+    "description": "Unapproved physical returns do not reduce debt."
+  },
+  "m53OpValueTracked": "Dilacak",
+  "@m53OpValueTracked": {
+    "description": "Tracked"
+  },
+  "m53OpValueUntracked": "Tidak dilacak",
+  "@m53OpValueUntracked": {
+    "description": "Untracked"
+  },
+  "m53OpValuePaid": "Lunas",
+  "@m53OpValuePaid": {
+    "description": "Paid"
+  },
+  "m53OpValueUnpaid": "Belum dibayar",
+  "@m53OpValueUnpaid": {
+    "description": "Unpaid"
+  },
+  "m53OpValuePartial": "Sebagian",
+  "@m53OpValuePartial": {
+    "description": "Partial"
+  },
+  "m53OpValueDrawer": "Laci",
+  "@m53OpValueDrawer": {
+    "description": "Drawer"
+  },
+  "m53OpValueBank": "Bank",
+  "@m53OpValueBank": {
+    "description": "Bank"
+  },
+  "m53OpValueOwnerFunds": "Dana pemilik",
+  "@m53OpValueOwnerFunds": {
+    "description": "Owner funds"
+  },
+  "m53OpValueOriginal": "Asli",
+  "@m53OpValueOriginal": {
+    "description": "Original"
+  },
+  "m53OpValueReversal": "Pembalikan",
+  "@m53OpValueReversal": {
+    "description": "Reversal"
+  },
+  "m53OpValueRecordedShopDate": "Tanggal pencatatan dalam timezone toko",
+  "@m53OpValueRecordedShopDate": {
+    "description": "Recorded date in the shop timezone"
+  },
+  "m53OpValueOperatorEventDate": "Tanggal kejadian yang dicatat operator",
+  "@m53OpValueOperatorEventDate": {
+    "description": "Operator-entered event date"
+  },
+  "m53OpAllSuppliers": "Semua supplier",
+  "@m53OpAllSuppliers": {
+    "description": "All suppliers"
+  },
+  "m53OpAllCategories": "Semua kategori",
+  "@m53OpAllCategories": {
+    "description": "All categories"
   }
 }

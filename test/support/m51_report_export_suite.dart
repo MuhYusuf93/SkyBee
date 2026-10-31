@@ -59,7 +59,10 @@ void m51ReportExportSuite(DatabaseFactory factory) {
         cash: true,
         tender: Money(10000, 'IDR', 0),
         tenderRaw: '10000',
-        customer: const CustomerChoice(name: 'PUBLIC customer'),
+        customer: const CustomerChoice(
+          name: 'PUBLIC customer',
+          phone: '08000000001',
+        ),
       ),
     );
     final customer = (await app.receivables.customers()).items.single;
@@ -183,19 +186,25 @@ void m51ReportExportSuite(DatabaseFactory factory) {
     'report destination selection is not a write; locked session cannot release report',
     () async {
       var writes = 0, cancels = 0;
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-          .setMockMethodCallHandler(KasirPlatform.channel, (call) async {
-            if (call.method == 'chooseReportExport') return 'PUBLIC-token';
-            if (call.method == 'writeReportExport') {
-              writes++;
-              return true;
-            }
-            if (call.method == 'cancelReportExport') {
-              cancels++;
-              return true;
-            }
-            throw PlatformException(code: 'unexpected-public-call');
-          });
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      Future<Object?> destinationOnly(MethodCall call) async {
+        if (call.method == 'chooseReportExport') return 'PUBLIC-token';
+        if (call.method == 'writeReportExport') {
+          writes++;
+          return true;
+        }
+        if (call.method == 'cancelReportExport') {
+          cancels++;
+          return true;
+        }
+        throw PlatformException(code: 'unexpected-public-call');
+      }
+
+      messenger.setMockMethodCallHandler(
+        KasirPlatform.channel,
+        destinationOnly,
+      );
       try {
         final destination = ReportDestinationService(app.management);
         final token = await destination.choose(xlsx: true);
@@ -210,6 +219,32 @@ void m51ReportExportSuite(DatabaseFactory factory) {
         );
         expect(writes, 0);
         expect(cancels, 1);
+        // Native PIN verification/snapshot crypto must use their real channel.
+        // Only the synthetic document destination is mocked by this fixture.
+        messenger.setMockMethodCallHandler(KasirPlatform.channel, null);
+        await app.management.unlock('0001');
+        final bound = await app.reportExport.create(
+          await app.reports.currentMonth(),
+          xlsx: true,
+          control: ReportExportControl(),
+        );
+        try {
+          app.management.lock();
+          await app.management.unlock('0001');
+          messenger.setMockMethodCallHandler(
+            KasirPlatform.channel,
+            destinationOnly,
+          );
+          await expectLater(
+            destination.write('PUBLIC-new-token', bound),
+            throwsA(anything),
+          );
+          expect(writes, 0);
+          expect(cancels, 2);
+        } finally {
+          messenger.setMockMethodCallHandler(KasirPlatform.channel, null);
+          await bound.dispose();
+        }
       } finally {
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(KasirPlatform.channel, null);

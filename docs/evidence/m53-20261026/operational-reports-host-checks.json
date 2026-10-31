@@ -1,0 +1,136 @@
+{
+  "schema": 37,
+  "sourceFiles": 695,
+  "sourceManifestSha256": "3a95fed1f33bf553e85bf653af973502ed52d96032e402ffdb89cb6abea21b79",
+  "finalHost": {
+    "passed": 18,
+    "failed": 0,
+    "elapsed": "01:35",
+    "scope": "Operational domain11, UI2 IDEN320/text2, legacy export4, export cancellation UI1"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 7.0
+  },
+  "format": {
+    "files": 299,
+    "changed": 0
+  },
+  "localization": {
+    "keys": 1480,
+    "staticReferences": 905,
+    "originalRequirementIds": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "indexEvidence": "Schema36 grouped sources use temporary sort. Schema37 exact-group/ID-range plus next-group seek use five additive indexes without temporary sort; tested on actual service query plans. All old table hashes unchanged on36→37.",
+  "failureHistory": "Old member fixture missing required phone corrected only fixture. Initial UI lazy-header witness failed, then stock help collapsed and readiness fixed. Refresh while locked could revoke PIN verification; guarded by owner/current route and checked unlock. Route-return pumpAndSettle replaced by bounded real-IO readiness. ARB snake_case/multiline stale switch branches corrected to audited camelCase with paired metadata. Final18 pass supersedes these failures; they are retained in log digests.",
+  "native": "PENDING17 coherent cases through protected wrapper on both devices, SQLCipher and background paused",
+  "ordinarySkybee": "No operational or .skybee update/reset/reseed; data protected until H verified backup/recovery",
+  "logs": {
+    "f3-analyze-final.log": {
+      "sha256": "fed6e581ee4e07ebd06f0f6cc6c3979aee84fca183bb2b9029d596da3a8e623b"
+    },
+    "f3-analyze-final2.log": {
+      "sha256": "60cb722e153cb93749e3e41fc0f3c93893ee1ce61938fe5297441a00a66505ae"
+    },
+    "f3-analyze-initial.log": {
+      "sha256": "dbb1d16f6a741c56c7d42144de152d0c8be1ab34c8d842dd35ac25724ab35fb7"
+    },
+    "f3-domain-expanded.log": {
+      "sha256": "23c795347a0010653390cb5ed087093676e8e899c9d65fba5177ad338c6f88d5",
+      "elapsed": "00:37",
+      "passed": 11,
+      "failed": 2
+    },
+    "f3-domain-final.log": {
+      "sha256": "a9d7d2e29b233bf680728b09a091e822df9f55dc747b56254150617bd4c34f5b",
+      "elapsed": "01:06",
+      "passed": 15,
+      "failed": 0
+    },
+    "f3-domain-first.log": {
+      "sha256": "b600e27f1ae7d3652d389c2db2c462c3231cc0b4db340c5da83447cf3845badf",
+      "elapsed": "00:26",
+      "passed": 6,
+      "failed": 0
+    },
+    "f3-format-final.log": {
+      "sha256": "967db56947dd492a94e17b2c34a17516039cdbdc8a7f8899459cff89fcaf3592"
+    },
+    "f3-host-final2.log": {
+      "sha256": "df4208dad57c743d2e852c59d7e832b9ec72a60d761e7cfaa4b5f43adb0d9e3e",
+      "elapsed": "01:31",
+      "passed": 16,
+      "failed": 2
+    },
+    "f3-host-final3.log": {
+      "sha256": "10f89a6a4c0fa62dc51cb2e9db1610e961a0f9716cf65c9f7de0df9e801dd45d",
+      "elapsed": "01:35",
+      "passed": 18,
+      "failed": 0
+    },
+    "f3-l10n.log": {
+      "sha256": "bfe2b9c171a0fbe7e8eb86d76cc040e71fda55c68d65b25c67d9794ad03013e4"
+    },
+    "f3-localization-audit.log": {
+      "sha256": "6ba3df8607c36f696b1ae6e64aefe35da8f1e785a3c51f78c22901b57df207f3"
+    },
+    "f3-pin-audit.log": {
+      "sha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+    },
+    "f3-plan-after.log": {
+      "sha256": "c758c547e9b461692bd8046a2ec5d9197ac09e6336595d3066260cccff16cf48",
+      "elapsed": "00:04",
+      "passed": 1,
+      "failed": 0
+    },
+    "f3-plan-before.log": {
+      "sha256": "4528d299593e083532d4660f2ff87f7fe5f18ff9aca73c065ebf58964baa211c",
+      "elapsed": "00:04",
+      "passed": 1,
+      "failed": 0
+    },
+    "f3-plan-seek.log": {
+      "sha256": "9ac37f3c6bbf3f8080a58940d676b1cd34a314ecc40c50952cd92bc27d0d1abc",
+      "elapsed": "00:04",
+      "passed": 1,
+      "failed": 0
+    },
+    "f3-ui-camel-review.log": {
+      "sha256": "d142c0781bdf8bdb4c6af93e54c4208adedd751809f317153495df3fc249fed1",
+      "elapsed": "00:00",
+      "passed": 0,
+      "failed": 1
+    },
+    "f3-ui-camel2.log": {
+      "sha256": "e5c44427e7f2e6fc3b34d531217e595623d6ac4a4847573b78e3a6850abf9bba",
+      "elapsed": "00:18",
+      "passed": 2,
+      "failed": 0
+    },
+    "f3-ui-final.log": {
+      "sha256": "423c0116ad3a25407fa50621b880e7c3ab1fd32f9444634dc0c12d787c7445b6",
+      "elapsed": "00:17",
+      "passed": 0,
+      "failed": 2
+    },
+    "f3-ui-first.log": {
+      "sha256": "fa52d6aef4954f89682e007402e699e0b700e42b46208a35b7e6774b8bea499f",
+      "elapsed": "01:12",
+      "passed": 0,
+      "failed": 2
+    },
+    "f3-ui-grant-review.log": {
+      "sha256": "3831d9bc1e6df54b934b1d37101fde90f1f3d8589cdde139461fa4924e4791a3",
+      "elapsed": "00:17",
+      "passed": 2,
+      "failed": 0
+    },
+    "f3-ui-review.log": {
+      "sha256": "55d212b1ee986fe792fe0a0fd5ff9d3760d6246cb7f4f385db757d8735cdbdd0",
+      "elapsed": "01:12",
+      "passed": 0,
+      "failed": 2
+    }
+  }
+}

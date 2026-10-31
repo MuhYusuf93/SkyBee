@@ -1,5 +1,130 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+30 Oktober — F3 FINAL cursor source696 frozen. Poco FINAL17PASS7:10/891hashlama sama/controlOff/trueexit0 sudahdikurasi.
+Host19PASS1:38/analyze63,8s
+bersih/format300/0/l10n1482/905/245/PIN106match. Kasus ledger valid cross-table
+UUID reuse103 events lulus: original52000/reversal51000/net1000/sisa9000,
+seluruh UI20/source100/CSV. Repro lama103→102 disimpan (0PASS1FAIL5s).
+FULL17 DV aktif di `build/m53-operational-cursor-dv-20261030-20261030-032503` (session30419),
+BackgroundPaused=true. Tunggu trueexit/finally/hash/controlOff sebelum source
+edit; FULL17 perangkat lain berikutnya (DVawake exact wajib). Native17 baru
+mencakup domain12/actual-menu IDEN UI2/sharedexport3. Native16 lama dan finalUI2
+Poco1:29/889hashsama adalah interval historis, bukan proof reader cursor baru.
+Manifest/checks cursor696 sudah disimpan. Setelah kedua17 ditutup, commit/push
+F3 lalu G/H; jangan stop pada checkpoint. .skybee/ordinary belum update/reset/
+reseed;100/50 hanya H setelah backup dan recovery lama verified. Tidak ada
+pertanyaan tertunda. G audit privat m53-g-concrete-audit-20261030.md,
+g-retention-contract-candidate.md dan g-reset-key-recovery-details.md.
+
+30 Oktober — F3 FINAL cursor source696 frozen. Host19PASS1:38/analyze63,8s
+bersih/format300/0/l10n1482/905/245/PIN106match. Kasus ledger valid cross-table
+UUID reuse103 events lulus: original52000/reversal51000/net1000/sisa9000,
+seluruh UI20/source100/CSV. Repro lama103→102 disimpan (0PASS1FAIL5s).
+FULL17 Poco aktif di `build/m53-operational-cursor-poco-20261030-20261030-031348` (session68388),
+BackgroundPaused=true. Tunggu trueexit/finally/hash/controlOff sebelum source
+edit; FULL17 perangkat lain berikutnya (DVawake exact wajib). Native17 baru
+mencakup domain12/actual-menu IDEN UI2/sharedexport3. Native16 lama dan finalUI2
+Poco1:29/889hashsama adalah interval historis, bukan proof reader cursor baru.
+Manifest/checks cursor696 sudah disimpan. Setelah kedua17 ditutup, commit/push
+F3 lalu G/H; jangan stop pada checkpoint. .skybee/ordinary belum update/reset/
+reseed;100/50 hanya H setelah backup dan recovery lama verified. Tidak ada
+pertanyaan tertunda. G audit privat m53-g-concrete-audit-20261030.md,
+g-retention-contract-candidate.md dan g-reset-key-recovery-details.md.
+
+30 Oktober — F3 cursor review WIP, belum handoff. Final UI2 Poco retry
+PASS1:29/889 hash lama sama/controlOff/trueexit0 (expectSync fixtureonly;
+failure awal0PASS2FAIL1:11/887hashsama tetap tersimpan). Full16 historis Poco
+5:25/869hashsama dan DV7:09/927hashsama/awakeexact tetap sah untuk source lama.
+Review menemukan bug uang: UUID boleh sama di tabel pembayaran/reversal,
+kursor lama kehilangan1 kejadian di batas source100. Repro ledger valid/FKcheck
+lulus tetapi count103→102 (host0PASS1FAIL5s). Cursor kini(kind,id), pisahkan raw
+group-seek dari aggregate; refund memakai pola sama. Fixedcase1PASS5s membuktikan
+103 events/pembayaran52000/reversal51000/net1000/sisa9000, semua UI20 dan CSV.
+Full host19 sedang berjalan (session77117, build/m53/f3-cursor-host-final.log);
+formatter300/0. Belum ada native aktif/source belum frozen. Setelah host/analyze/
+audit tutup, capture manifest cursor696, jalankan FULL17 Poco+DV; ini mencakup
+finalUI2 sehingga focusedDV2 lama tidak perlu. Jangan klaim full16 lama menguji
+cursor baru. Setelah17 kedua perangkat trueexit/hash/controlOff/DVawakeexact,
+tutup F3 commit/push lalu G/H. .skybee/ordinary belum update/reset/reseed;
+100/50 hanya H setelah backup+recovery lama verified. Tidak ada pertanyaan
+tertunda. G desain privat g-retention-contract-candidate.md dan
+g-reset-key-recovery-details.md; baca juga m53-g-concrete-audit-20261030.md.
+
+30 Oktober — F3 final UI source696 frozen (11 file delta presentation/l10n/
+fixture; SQL/domain/math identik full16). Actual ReportsScreen entry, filter
+Semua/choose/clear, utang supplier arsip2000/noDue dan kunci/unlock IDEN320/text2
+host2PASS22s; analyze10,3s bersih/format300/1/l10n1482/905/245/PIN106match.
+Full16 sebelumnya PocoPASS5:25/869hashsama dan DVPASS7:09/927hashsama/awakeexact,
+semua controlOff/trueexit0; interval awal15PASS1mockFAIL tetap tersimpan.
+Focused nativeUI2 Poco aktif di `build/m53-operational-filter-poco-20261030-20261030-023430`
+(session43863), BackgroundPaused=true. Tunggu trueexit/hash/finally sebelum
+source edit; UI2 DV berikutnya dengan baseline baru/awakeexact. Host repro
+parentPIN0PASS1FAIL11s diperbaiki dengan skip parentrefresh locked/Gudang;
+test kini lewatmenu sebenarnya, tidak bypass ReportsScreen. Manifest/checks
+filter696 sudah disimpan. Sesudah UI2 keduanya, tutup F3 commit/push lalu G/H.
+[Laporan F3](M53_OPERATIONAL_REPORTS_REPORT.md). Data ordinary/.skybee belum
+update/reset/reseed;100/50 hanya H sesudah backup+recovery lama verified.
+Audit G privat m53-g-concrete-audit-20261030.md, g-retention-contract-candidate.md
+dan g-reset-key-recovery-details.md. Tidak ada pertanyaan tertunda.
+
+30 Oktober — F3 full16 review selesai: Poco PASS5:25/869hashsama dan
+DV PASS7:09/927hashsama/awakeexact, semua controlOff/trueexit0, source695review.
+Review UI terakhir WIP: filter kosong eksplisit Semua, picker readonly20/40
+termasuk arsip, filter tersembunyi tidak masuk scope ekspor. Uji lewat menu
+ReportsScreen nyata mereproduksi parent refresh menggagalkan PIN unlock
+(host0PASS1FAIL11s); provider induk kini skip refresh locked/Gudang. Host UI
+setelah perbaikan2PASS22s; fixture diperluas dengan utang riil supplier arsip2000
+tanpa due date, final berjalan di build/m53/f3-filter-ui-archived-final.log
+(session8086). Analyzer final session baru akan dicatat setelah trueexit. Belum
+ada native aktif/source belum dibekukan lagi; selesaikan host/analyze/format/
+audit, capture manifest filter696/delta, focused UI2 Poco+DV melalui wrapper,
+tutup F3 commit/push lalu G/H. Source SQL/domain/math tetap identik denganfull16.
+[Laporan F3](M53_OPERATIONAL_REPORTS_REPORT.md). .skybee/ordinary belum update/
+reset/reseed;100/50 hanya H setelah backup+recovery lama verified. Audit G privat
+m53-g-concrete-audit-20261030.md, g-retention-contract-candidate.md dan
+g-reset-key-recovery-details.md sudah tersimpan. Tidak ada pertanyaan tertunda.
+
+30 Oktober02:05 — F3 full16 Poco review PASS5:25/869 hash lama sama/
+controlOff/trueexit0, sudah dikurasi. Review source695 (hanya1 fixture ekspor
+berubah dari host18PASS1:35); host review4PASS23s/analyze155,2s bersih. Native
+awal15PASS1mockFAIL5:21/851hashsama tersimpan, bukan dihapus. Full16 DV aktif
+di `build/m53-operational-reports-dv-20261030-20261030-020504` (session31855),
+BackgroundPaused=true. Source tetap frozen sampai trueexit/hash/finally/awake
+exact; jangan edit lib/test/native selama run. Sesudah DV, review UI filter
+kosong=SEMUA dan scope ekspor mengabaikan filter yang tersembunyi (catatan privat
+build/m53/f3-filter-scope-review-after-native.md), lalu host/focused UI2 kedua
+perangkat dengan manifest delta, tutup F3 commit/push, lanjut G/H.
+[Laporan F3](M53_OPERATIONAL_REPORTS_REPORT.md). .skybee/ordinary belum update/
+reset/reseed;100/50 hanya H sesudah backup+recovery lama verified. G audit sudah
+tersimpan di build/m53/m53-g-concrete-audit-20261030.md, g-retention-contract-
+candidate.md dan g-reset-key-recovery-details.md. Tidak ada pertanyaan tertunda.
+
+30 Oktober01:56 — F3 review source695 frozen. Host final18PASS1:35/analyze7s
+bersih/format299/0/l10n1480/905/245/PIN106match. Native Poco pertama15PASS1FAIL
+5:21: hanya fixture mock tujuan ekspor menolak panggilan native saat unlock;
+851 hash lama sama/controlOff/trueexit1. Perbaikan hanya1 file fixture, tidak ada
+perubahan produksi. Host review ekspor4PASS23s; analyzer review bersih155,2s/trueexit0. Manifest dan checks review695
+sudah dikurasi; hanya1 fixture berubah.
+Full16 Poco review aktif melalui wrapper di
+`build/m53-operational-reports-poco-review-20261030-20261030-015602`
+(session15359), BackgroundPaused=true. Native total16 (domain11/UI2/ekspor3),
+bukan17: uji presisi XLSX keempat ada di entry host saja. Tunggu trueexit/finally/
+hash/controlOff sebelum source edit; DV full16 berikutnya dengan baseline baru.
+[Laporan F3](M53_OPERATIONAL_REPORTS_REPORT.md). Setelah F3 tutup commit/push,
+lanjut G/H. .skybee/ordinary belum update/reset/reseed;100/50 hanya H sesudah
+backup dan recovery lama verified. Audit G privat m53-g-concrete-audit-20261030.md.
+
+30 Oktober — checkpoint F2 `b0cfc60` sudah dipush. F3 laporan/ekspor WIP,
+schema37 menambah lima indeks saja setelah planner36 menunjukkan sort ulang;
+query seek37 tanpa temp sort dan migrasi seluruh hash tabel lama tetap sama.
+Host domain11 + regresi ekspor4 lulus15/15 dalam1:06; UI ID/EN320/text2 sempat
+lulus2/2 sebelum penambahan route lifecycle/camelCase ARB, final sedang diperiksa.
+Kasus harness lazy header/pumpAndSettle dicatat, bug refresh saat PIN verification
+sudah diperbaiki (jangan refresh route terkunci/tersembunyi). Native F3 belum
+dijalankan. [Keputusan F3](decisions/M53_OPERATIONAL_REPORTS.md). Lanjut F3 lalu
+G/H; checkpoint bukan stop. Data ordinary/.skybee belum update/reset/reseed;
+100 produk/50 transaksi hanya H sesudah backup/recovery lama terverifikasi.
+
 30 Oktober — F2 schema36 ditutup: host43PASS77s/final16PASS26s,
 analyze42s bersih/l10n1316/892/245/PIN106match. NativePoco41PASS7:54/817hashsama,
 DV41PASS11:27/893hashsama/awakeexact; source683 sama, semua kontrolOff/trueexit0.

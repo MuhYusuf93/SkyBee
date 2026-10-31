@@ -1,0 +1,24 @@
+{
+  "schema": 37,
+  "sourceFiles": 696,
+  "sourceManifestSha256": "fcc5a5784e85ba9291f223eef0ba8eb8f06cb699f4a0e53e764d70d4c8446a24",
+  "deltaFromFilterSource": [
+    "test/support/m53_operational_reports_widgets_suite.dart"
+  ],
+  "allProductionSourcesUnchanged": true,
+  "change": "Two unchanged real archived-debt assertions inside IO callback use expectSync, as Flutter guarded-function-conflict diagnostic requires. No weakened assertions or runtime changes.",
+  "host": {
+    "passed": 2,
+    "failed": 0,
+    "elapsed": "00:22",
+    "scope": "Actual ReportsScreen menu, IDEN320/text2, category choose/clear/hidden scope, archived unpaid2000/noDue supplier, grouped export and owner re-unlock"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 106.5
+  },
+  "initialNativeFailure": "Source696 initial focused Poco0PASS2FAIL1:11 due guarded expect inside callback during pump;887 hashes unchanged/controlOff/trueexit1, retained separately.",
+  "native": "PENDING focused2 both wrappers with fresh baselines",
+  "hostLogSha256": "45d8c35da05f0328a884dcc8c71229be8a9cfbf858f4b38c6892b4dc824189e2",
+  "analyzerLogSha256": "797e822e6ac3c7e82d63a8fbd2b8aa7413dd2e418a820b9b1cade32017d65459"
+}

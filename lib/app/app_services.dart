@@ -7,6 +7,7 @@ import '../features/onboarding/application/onboarding_service.dart';
 import '../features/cashier/application/quick_cash_service.dart';
 import '../features/cashier/application/quantity_promotion_service.dart';
 import '../features/reports/application/report_export_service.dart';
+import '../features/reports/application/operational_reports_service.dart';
 import '../core/time/store_clock.dart';
 import '../data/database/database_coordinator.dart';
 import '../features/inventory/application/inventory_service.dart';
@@ -116,6 +117,10 @@ final class AppServices {
   );
   late final promotions = QuantityPromotionService(database, management);
   late final reportExport = ReportExportService(database, management);
+  late final operationalReports = OperationalReportsService(
+    database,
+    management,
+  );
   late final printers = PrinterSettingsService(
     database,
     management,

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../core/pagination/paged_controller.dart';
+import '../../management/domain/management_role.dart';
 import '../application/reports_service.dart';
 import '../domain/report_models.dart';
 
@@ -11,7 +12,13 @@ import '../domain/report_models.dart';
 final class ReportsProvider extends ChangeNotifier {
   ReportsProvider(this.service) {
     _commits = service.database.commits.listen((_) {
-      if (filter != null) unawaited(refresh());
+      // PIN verification commits before granting access. Refreshing a locked
+      // parent report can otherwise revoke the very unlock being verified.
+      if (filter != null &&
+          service.access.isUnlocked &&
+          service.access.role == ManagementRole.owner) {
+        unawaited(refresh());
+      }
     });
   }
   final ReportsService service;

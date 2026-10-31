@@ -605,3 +605,24 @@ Itu bukan bukti autentikasi atau persetujuan sudah selesai. Tunggu layar PIN
 dan route pengecualian benar-benar tutup serta receipt kembali, lalu periksa
 resolution SQL. F2 ID/EN membuktikan owner grant kembali terkunci dan hanya satu
 exception tercatat; laporan fisik tetap berdasarkan batas bukti yang nyata.
+
+144. Expression index bisa menghilangkan temp sort tetapi row-value cursor
+masih SCAN seluruh prefix lama. F3 membandingkan EXPLAIN actual service query:
+equality group + ID range, lalu range group berikutnya, menghasilkan SEARCH
+tanpa temp sort. Isi maksimal100 source rows; dua query hanya pada batas group.
+Uji group besar lintas100 dan24 kategori lintas UI20 untuk menangkap duplikasi/
+kehilangan akibat cursor. Jangan mengklaim ini benchmark ARM32/CCTV terisolasi.
+
+145. PIN verification menulis DB saat akses masih terkunci. Listener semua commit
+yang memanggil requireAccess saat itu dapat lock lagi dan menggagalkan unlock
+yang benar. Report route hanya refresh ketika Pemilik unlocked dan route aktif,
+serta refresh kembali sesudah child route. Batalkan pembacaan usang pada batas
+halaman; jangan membuat cart/child route terus memicu scan summary tersembunyi.
+Test kunci/unlock route nyata diperlukan selain service-role denial.
+
+146. ARB dinamis tetap mengikuti kontrak camelCase + description berpasangan.
+Field ekspor snake_case dipetakan lewat helper semantic key, bukan mengubah
+auditor. Rename switch yang sudah diformat perlu menangani branch multiline.
+Readiness UI harus mengungkap child lazy dan memberi IO nyata; pumpAndSettle
+dengan indikator DB yang berputar bisa timeout tanpa menyelesaikan IO. F3 final
+host18 lulus termasuk ID/EN320/text2 dan regresi ekspor.

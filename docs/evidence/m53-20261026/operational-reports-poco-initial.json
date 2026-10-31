@@ -1,0 +1,22 @@
+{
+  "schema": 37,
+  "sourceFiles": 695,
+  "sourceManifestSha256": "3a95fed1f33bf553e85bf653af973502ed52d96032e402ffdb89cb6abea21b79",
+  "sourceMatchedAtCapture": true,
+  "run": "m53-operational-reports-poco-20261030-20261030-014304",
+  "device": "7f0edea0",
+  "passed": 15,
+  "failed": 1,
+  "skipped": 0,
+  "elapsed": "05:21",
+  "automaticDeviceControlActive": false,
+  "preExistingProtectedEntries": 851,
+  "everyPreExistingHashUnchanged": true,
+  "failure": "Legacy destination fixture mock intercepted an unsupported native platform call after adding real owner unlock and bound-artifact creation; fixture isolation under review. No production change yet.",
+  "runnerLogSha256": "8528f697f4f4da29e4b7d0561771901334abeb4833289a07b0ca6825535ddfc8",
+  "beforeManifestSha256": "6cda70e1456df61334b2c7d0a84e87adcb178ee25a0e1435101db6c24d5a6732",
+  "afterManifestSha256": "f0ff17476bd506ebcd137aa54808a85ab2c6f3e3db2051e2866b2be47c9b3bda",
+  "reset": false,
+  "downgrade": false,
+  "scopeNote": "Native entry imports the shared legacy export suite3, not the host-only4th XLSX precision test. Coherent native total is16, not initially planned17."
+}

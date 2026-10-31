@@ -7993,6 +7993,1002 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The backup contains invalid receipt policy, obligation or confirmation records.'**
   String get backupReceiptPolicyInvalid;
+
+  /// Inventory and supplier reports
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory and supplier reports'**
+  String get m53OperationalReports;
+
+  /// Data, access or shop day changed. Reload the report.
+  ///
+  /// In en, this message translates to:
+  /// **'Data, access or shop day changed. Reload the report.'**
+  String get m53OperationalReportChanged;
+
+  /// Per invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Per invoice'**
+  String get m53OpInvoiceLevel;
+
+  /// Search text containing
+  ///
+  /// In en, this message translates to:
+  /// **'Search text containing'**
+  String get m53OpSearch;
+
+  /// Apply / reload
+  ///
+  /// In en, this message translates to:
+  /// **'Apply / reload'**
+  String get m53OpApply;
+
+  /// All dates
+  ///
+  /// In en, this message translates to:
+  /// **'All dates'**
+  String get m53OpAllDates;
+
+  /// Snapshot captured
+  ///
+  /// In en, this message translates to:
+  /// **'Snapshot captured'**
+  String get m53OpCaptured;
+
+  /// Summary of the entire filtered scope
+  ///
+  /// In en, this message translates to:
+  /// **'Summary of the entire filtered scope'**
+  String get m53OpWholeScope;
+
+  /// No comparison data yet
+  ///
+  /// In en, this message translates to:
+  /// **'No comparison data yet'**
+  String get m53OpNoComparison;
+
+  /// No matching data
+  ///
+  /// In en, this message translates to:
+  /// **'No matching data'**
+  String get m53OpEmpty;
+
+  /// Unassigned category / supplier or whole store
+  ///
+  /// In en, this message translates to:
+  /// **'Unassigned category / supplier or whole store'**
+  String get m53OpUnassigned;
+
+  /// Next page (20 rows)
+  ///
+  /// In en, this message translates to:
+  /// **'Next page (20 rows)'**
+  String get m53OpNextPage;
+
+  /// Return to first page
+  ///
+  /// In en, this message translates to:
+  /// **'Return to first page'**
+  String get m53OpFirstPage;
+
+  /// Cash history and audit
+  ///
+  /// In en, this message translates to:
+  /// **'Cash history and audit'**
+  String get m53OpCashAudit;
+
+  /// Mandatory cash audit policy
+  ///
+  /// In en, this message translates to:
+  /// **'Mandatory cash audit policy'**
+  String get m53OpCashPolicy;
+
+  /// Basis, coverage and calculation limits
+  ///
+  /// In en, this message translates to:
+  /// **'Basis, coverage and calculation limits'**
+  String get m53OpAssumptions;
+
+  /// No supplier
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier'**
+  String get m53OpNoSupplier;
+
+  /// No category
+  ///
+  /// In en, this message translates to:
+  /// **'No category'**
+  String get m53OpNoCategory;
+
+  /// Applied search
+  ///
+  /// In en, this message translates to:
+  /// **'Applied search'**
+  String get m53OpAppliedSearch;
+
+  /// Potential stock retail value
+  ///
+  /// In en, this message translates to:
+  /// **'Potential stock retail value'**
+  String get m53OpSectionPotential;
+
+  /// Stock variance / indication of shortage
+  ///
+  /// In en, this message translates to:
+  /// **'Stock variance / indication of shortage'**
+  String get m53OpSectionVariance;
+
+  /// Current supplier balances
+  ///
+  /// In en, this message translates to:
+  /// **'Current supplier balances'**
+  String get m53OpSectionSupplierInvoices;
+
+  /// Supplier payments during period
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier payments during period'**
+  String get m53OpSectionSupplierPayments;
+
+  /// Current supplier credits
+  ///
+  /// In en, this message translates to:
+  /// **'Current supplier credits'**
+  String get m53OpSectionSupplierCredits;
+
+  /// Supplier refunds during period
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier refunds during period'**
+  String get m53OpSectionSupplierRefunds;
+
+  /// Unreconciled receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Unreconciled receipts'**
+  String get m53OpSectionUnreconciled;
+
+  /// Returns awaiting credit approval
+  ///
+  /// In en, this message translates to:
+  /// **'Returns awaiting credit approval'**
+  String get m53OpSectionPendingReturns;
+
+  /// Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products.'**
+  String get m53OpHelpPotential;
+
+  /// Posted stocktake snapshots only, not current balances. Shortages may reflect counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft. Uncounted lines and untracked stock are not losses. Inventory adjustment values remain separate from sales and sale cost.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted stocktake snapshots only, not current balances. Shortages may reflect counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft. Uncounted lines and untracked stock are not losses. Inventory adjustment values remain separate from sales and sale cost.'**
+  String get m53OpHelpVariance;
+
+  /// CURRENT balances, not historical balances at a date. Purchases, effective payments and applied credits use active invoices. Overdue amounts are part of open balances, not an additional total; missing due dates are not overdue. Currencies stay separate. Unreconciled receipts and unapproved returns are separate, not inferred debt/credit. Search supplier names or invoice numbers.
+  ///
+  /// In en, this message translates to:
+  /// **'CURRENT balances, not historical balances at a date. Purchases, effective payments and applied credits use active invoices. Overdue amounts are part of open balances, not an additional total; missing due dates are not overdue. Currencies stay separate. Unreconciled receipts and unapproved returns are separate, not inferred debt/credit. Search supplier names or invoice numbers.'**
+  String get m53OpHelpSupplierInvoices;
+
+  /// Original payments use the operator-entered payment date. Reversals use their recorded time in the shop timezone. Old payments remain in their original period after a later reversal. Owner funds, bank and drawer are separate; these are not all store cash. This period does not alter current debt balances or sale cost.
+  ///
+  /// In en, this message translates to:
+  /// **'Original payments use the operator-entered payment date. Reversals use their recorded time in the shop timezone. Old payments remain in their original period after a later reversal. Owner funds, bank and drawer are separate; these are not all store cash. This period does not alter current debt balances or sale cost.'**
+  String get m53OpHelpSupplierPayments;
+
+  /// Active credit approvals: effective allocations and refunds reduce available credit. Available credit is not a payment or a debt deduction until allocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Active credit approvals: effective allocations and refunds reduce available credit. Available credit is not a payment or a debt deduction until allocated.'**
+  String get m53OpHelpSupplierCredits;
+
+  /// Actual refunds and reversals use operator-entered event dates. Bank, drawer and owner funds stay separate. These do not create sales or sale cost.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual refunds and reversals use operator-entered event dates. Bank, drawer and owner funds stay separate. These do not create sales or sale cost.'**
+  String get m53OpHelpSupplierRefunds;
+
+  /// Actual purchase receipts without an active invoice. Opening stock, tracking transitions and reversed receipts are excluded. Document counts are not estimated debt.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual purchase receipts without an active invoice. Opening stock, tracking transitions and reversed receipts are excluded. Document counts are not estimated debt.'**
+  String get m53OpHelpUnreconciled;
+
+  /// Active physical returns without active credit approval. Known carrying values are inventory adjustments only, not approved credit or debt reductions.
+  ///
+  /// In en, this message translates to:
+  /// **'Active physical returns without active credit approval. Known carrying values are inventory adjustments only, not approved credit or debt reductions.'**
+  String get m53OpHelpPendingReturns;
+
+  /// Per product
+  ///
+  /// In en, this message translates to:
+  /// **'Per product'**
+  String get m53OpGroupProduct;
+
+  /// Per category
+  ///
+  /// In en, this message translates to:
+  /// **'Per category'**
+  String get m53OpGroupCategory;
+
+  /// Per supplier
+  ///
+  /// In en, this message translates to:
+  /// **'Per supplier'**
+  String get m53OpGroupSupplier;
+
+  /// Whole store
+  ///
+  /// In en, this message translates to:
+  /// **'Whole store'**
+  String get m53OpGroupStore;
+
+  /// All invoices
+  ///
+  /// In en, this message translates to:
+  /// **'All invoices'**
+  String get m53OpBalanceAll;
+
+  /// Open balances
+  ///
+  /// In en, this message translates to:
+  /// **'Open balances'**
+  String get m53OpBalanceOpen;
+
+  /// Not yet due
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet due'**
+  String get m53OpBalanceFuture;
+
+  /// Due today
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get m53OpBalanceToday;
+
+  /// Overdue
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get m53OpBalanceOverdue;
+
+  /// Paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get m53OpBalancePaid;
+
+  /// Open without due date
+  ///
+  /// In en, this message translates to:
+  /// **'Open without due date'**
+  String get m53OpBalanceNoDue;
+
+  /// Product count
+  ///
+  /// In en, this message translates to:
+  /// **'Product count'**
+  String get m53OpFieldProductCount;
+
+  /// Tracked products
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked products'**
+  String get m53OpFieldTrackedProductCount;
+
+  /// Cannot calculate: stock quantity is untracked
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot calculate: stock quantity is untracked'**
+  String get m53OpFieldUntrackedProductCount;
+
+  /// Saleable quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Saleable quantity'**
+  String get m53OpFieldSaleableQuantity;
+
+  /// Excluded quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Excluded quantity'**
+  String get m53OpFieldExcludedQuantity;
+
+  /// Expired quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Expired quantity'**
+  String get m53OpFieldExpiredQuantity;
+
+  /// Archived products
+  ///
+  /// In en, this message translates to:
+  /// **'Archived products'**
+  String get m53OpFieldArchivedProductCount;
+
+  /// Potential stock retail value
+  ///
+  /// In en, this message translates to:
+  /// **'Potential stock retail value'**
+  String get m53OpFieldPotentialMinor;
+
+  /// Known related cost subtotal
+  ///
+  /// In en, this message translates to:
+  /// **'Known related cost subtotal'**
+  String get m53OpFieldKnownCostMicros;
+
+  /// Known excluded stock cost subtotal
+  ///
+  /// In en, this message translates to:
+  /// **'Known excluded stock cost subtotal'**
+  String get m53OpFieldKnownExcludedCostMicros;
+
+  /// Saleable quantity with complete costs
+  ///
+  /// In en, this message translates to:
+  /// **'Saleable quantity with complete costs'**
+  String get m53OpFieldKnownCostQuantity;
+
+  /// Estimated stock gross profit: known cost subtotal
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated stock gross profit: known cost subtotal'**
+  String get m53OpFieldKnownGrossMicros;
+
+  /// Saleable products with incomplete costs
+  ///
+  /// In en, this message translates to:
+  /// **'Saleable products with incomplete costs'**
+  String get m53OpFieldUnknownCostProductCount;
+
+  /// Saleable quantity with incomplete costs
+  ///
+  /// In en, this message translates to:
+  /// **'Saleable quantity with incomplete costs'**
+  String get m53OpFieldUnknownCostQuantity;
+
+  /// Excluded quantity with incomplete costs
+  ///
+  /// In en, this message translates to:
+  /// **'Excluded quantity with incomplete costs'**
+  String get m53OpFieldUnknownExcludedQuantity;
+
+  /// Uncounted lines, not losses
+  ///
+  /// In en, this message translates to:
+  /// **'Uncounted lines, not losses'**
+  String get m53OpFieldUncountedLineCount;
+
+  /// Valid comparison lines
+  ///
+  /// In en, this message translates to:
+  /// **'Valid comparison lines'**
+  String get m53OpFieldComparisonLineCount;
+
+  /// System quantity at baseline
+  ///
+  /// In en, this message translates to:
+  /// **'System quantity at baseline'**
+  String get m53OpFieldBaselineQuantity;
+
+  /// Final physical quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Final physical quantity'**
+  String get m53OpFieldPhysicalQuantity;
+
+  /// Quantity variance (physical − system)
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity variance (physical − system)'**
+  String get m53OpFieldDeltaQuantity;
+
+  /// Shortage quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Shortage quantity'**
+  String get m53OpFieldShortageQuantity;
+
+  /// Surplus quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Surplus quantity'**
+  String get m53OpFieldSurplusQuantity;
+
+  /// Known value variance subtotal
+  ///
+  /// In en, this message translates to:
+  /// **'Known value variance subtotal'**
+  String get m53OpFieldKnownDeltaMicros;
+
+  /// Known baseline value subtotal
+  ///
+  /// In en, this message translates to:
+  /// **'Known baseline value subtotal'**
+  String get m53OpFieldKnownBaselineMicros;
+
+  /// Known final value subtotal
+  ///
+  /// In en, this message translates to:
+  /// **'Known final value subtotal'**
+  String get m53OpFieldKnownFinalMicros;
+
+  /// Lines with incomplete values
+  ///
+  /// In en, this message translates to:
+  /// **'Lines with incomplete values'**
+  String get m53OpFieldUnknownValueLineCount;
+
+  /// Invoice count
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice count'**
+  String get m53OpFieldInvoiceCount;
+
+  /// Total invoiced purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Total invoiced purchases'**
+  String get m53OpFieldPurchaseMinor;
+
+  /// Total effective payments
+  ///
+  /// In en, this message translates to:
+  /// **'Total effective payments'**
+  String get m53OpFieldEffectivePaymentMinor;
+
+  /// Applied credits / returns
+  ///
+  /// In en, this message translates to:
+  /// **'Applied credits / returns'**
+  String get m53OpFieldAppliedCreditMinor;
+
+  /// Total open debt
+  ///
+  /// In en, this message translates to:
+  /// **'Total open debt'**
+  String get m53OpFieldRemainingMinor;
+
+  /// Open invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Open invoices'**
+  String get m53OpFieldOpenInvoiceCount;
+
+  /// Balance without due date
+  ///
+  /// In en, this message translates to:
+  /// **'Balance without due date'**
+  String get m53OpFieldNoDueMinor;
+
+  /// Balance due today
+  ///
+  /// In en, this message translates to:
+  /// **'Balance due today'**
+  String get m53OpFieldDueTodayMinor;
+
+  /// Balance not yet due
+  ///
+  /// In en, this message translates to:
+  /// **'Balance not yet due'**
+  String get m53OpFieldFutureMinor;
+
+  /// Overdue balance
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue balance'**
+  String get m53OpFieldOverdueMinor;
+
+  /// Overdue 1–7 days
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue 1–7 days'**
+  String get m53OpFieldOverdue17Minor;
+
+  /// Overdue 8–30 days
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue 8–30 days'**
+  String get m53OpFieldOverdue830Minor;
+
+  /// Overdue >30 days
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue >30 days'**
+  String get m53OpFieldOverdueOver30Minor;
+
+  /// Paid invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Paid invoices'**
+  String get m53OpFieldPaidInvoiceCount;
+
+  /// Original period payments
+  ///
+  /// In en, this message translates to:
+  /// **'Original period payments'**
+  String get m53OpFieldPaymentMinor;
+
+  /// Period payment reversals
+  ///
+  /// In en, this message translates to:
+  /// **'Period payment reversals'**
+  String get m53OpFieldPaymentReversalMinor;
+
+  /// Net period payments
+  ///
+  /// In en, this message translates to:
+  /// **'Net period payments'**
+  String get m53OpFieldNetPaymentMinor;
+
+  /// Event count
+  ///
+  /// In en, this message translates to:
+  /// **'Event count'**
+  String get m53OpFieldEventCount;
+
+  /// Original period refunds
+  ///
+  /// In en, this message translates to:
+  /// **'Original period refunds'**
+  String get m53OpFieldRefundMinor;
+
+  /// Period refund reversals
+  ///
+  /// In en, this message translates to:
+  /// **'Period refund reversals'**
+  String get m53OpFieldRefundReversalMinor;
+
+  /// Net period refunds
+  ///
+  /// In en, this message translates to:
+  /// **'Net period refunds'**
+  String get m53OpFieldNetRefundMinor;
+
+  /// Active credit approvals
+  ///
+  /// In en, this message translates to:
+  /// **'Active credit approvals'**
+  String get m53OpFieldCreditCount;
+
+  /// Approved credit
+  ///
+  /// In en, this message translates to:
+  /// **'Approved credit'**
+  String get m53OpFieldApprovedCreditMinor;
+
+  /// Allocated credit
+  ///
+  /// In en, this message translates to:
+  /// **'Allocated credit'**
+  String get m53OpFieldAllocatedCreditMinor;
+
+  /// Effective refunded credit
+  ///
+  /// In en, this message translates to:
+  /// **'Effective refunded credit'**
+  String get m53OpFieldRefundedCreditMinor;
+
+  /// Available credit
+  ///
+  /// In en, this message translates to:
+  /// **'Available credit'**
+  String get m53OpFieldAvailableCreditMinor;
+
+  /// Unreconciled receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Unreconciled receipts'**
+  String get m53OpFieldUnreconciledReceiptCount;
+
+  /// Unapproved return lines
+  ///
+  /// In en, this message translates to:
+  /// **'Unapproved return lines'**
+  String get m53OpFieldPendingReturnLineCount;
+
+  /// Unapproved return quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Unapproved return quantity'**
+  String get m53OpFieldPendingReturnQuantity;
+
+  /// Known return carrying subtotal (not credit)
+  ///
+  /// In en, this message translates to:
+  /// **'Known return carrying subtotal (not credit)'**
+  String get m53OpFieldKnownPendingCarryingMicros;
+
+  /// Return lines with incalculable value
+  ///
+  /// In en, this message translates to:
+  /// **'Return lines with incalculable value'**
+  String get m53OpFieldUnknownPendingValueLineCount;
+
+  /// Net payments: drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Net payments: drawer'**
+  String get m53OpFieldPaymentDrawerMinor;
+
+  /// Net payments: bank
+  ///
+  /// In en, this message translates to:
+  /// **'Net payments: bank'**
+  String get m53OpFieldPaymentBankMinor;
+
+  /// Net payments: owner funds
+  ///
+  /// In en, this message translates to:
+  /// **'Net payments: owner funds'**
+  String get m53OpFieldPaymentOwnerFundsMinor;
+
+  /// Net refunds: drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Net refunds: drawer'**
+  String get m53OpFieldRefundDrawerMinor;
+
+  /// Net refunds: bank
+  ///
+  /// In en, this message translates to:
+  /// **'Net refunds: bank'**
+  String get m53OpFieldRefundBankMinor;
+
+  /// Net refunds: owner funds
+  ///
+  /// In en, this message translates to:
+  /// **'Net refunds: owner funds'**
+  String get m53OpFieldRefundOwnerFundsMinor;
+
+  /// Product ID
+  ///
+  /// In en, this message translates to:
+  /// **'Product ID'**
+  String get m53OpDetailProductId;
+
+  /// SKU
+  ///
+  /// In en, this message translates to:
+  /// **'SKU'**
+  String get m53OpDetailSku;
+
+  /// Legacy code
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy code'**
+  String get m53OpDetailBarcode;
+
+  /// Product master category
+  ///
+  /// In en, this message translates to:
+  /// **'Product master category'**
+  String get m53OpDetailCategory;
+
+  /// Master / document supplier
+  ///
+  /// In en, this message translates to:
+  /// **'Master / document supplier'**
+  String get m53OpDetailSupplier;
+
+  /// Supplier ID
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier ID'**
+  String get m53OpDetailSupplierId;
+
+  /// Base unit
+  ///
+  /// In en, this message translates to:
+  /// **'Base unit'**
+  String get m53OpDetailBaseUnit;
+
+  /// Retail price
+  ///
+  /// In en, this message translates to:
+  /// **'Retail price'**
+  String get m53OpDetailRetailPriceMinor;
+
+  /// Stock tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Stock tracking'**
+  String get m53OpDetailStockTracking;
+
+  /// Archived (1=yes)
+  ///
+  /// In en, this message translates to:
+  /// **'Archived (1=yes)'**
+  String get m53OpDetailArchived;
+
+  /// Stocktake ID
+  ///
+  /// In en, this message translates to:
+  /// **'Stocktake ID'**
+  String get m53OpDetailStocktakeId;
+
+  /// Inventory operation
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory operation'**
+  String get m53OpDetailOperationId;
+
+  /// Posted time
+  ///
+  /// In en, this message translates to:
+  /// **'Posted time'**
+  String get m53OpDetailPostedAt;
+
+  /// Reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get m53OpDetailReason;
+
+  /// Actor role
+  ///
+  /// In en, this message translates to:
+  /// **'Actor role'**
+  String get m53OpDetailActorRole;
+
+  /// Baseline time
+  ///
+  /// In en, this message translates to:
+  /// **'Baseline time'**
+  String get m53OpDetailBaselineAt;
+
+  /// Baseline epoch
+  ///
+  /// In en, this message translates to:
+  /// **'Baseline epoch'**
+  String get m53OpDetailBaselineEpoch;
+
+  /// Baseline quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Baseline quantity'**
+  String get m53OpDetailBaselineQuantity;
+
+  /// Final physical quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Final physical quantity'**
+  String get m53OpDetailFinalQuantity;
+
+  /// Snapshot timezone
+  ///
+  /// In en, this message translates to:
+  /// **'Snapshot timezone'**
+  String get m53OpDetailSnapshotZone;
+
+  /// Invoice ID
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice ID'**
+  String get m53OpDetailInvoiceId;
+
+  /// Invoice date
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice date'**
+  String get m53OpDetailInvoiceDate;
+
+  /// Due date
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get m53OpDetailDueDate;
+
+  /// Days overdue
+  ///
+  /// In en, this message translates to:
+  /// **'Days overdue'**
+  String get m53OpDetailDaysOverdue;
+
+  /// Status
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get m53OpDetailStatus;
+
+  /// Credit ID
+  ///
+  /// In en, this message translates to:
+  /// **'Credit ID'**
+  String get m53OpDetailCreditId;
+
+  /// Funds source / destination
+  ///
+  /// In en, this message translates to:
+  /// **'Funds source / destination'**
+  String get m53OpDetailSource;
+
+  /// Event kind
+  ///
+  /// In en, this message translates to:
+  /// **'Event kind'**
+  String get m53OpDetailKind;
+
+  /// Event date
+  ///
+  /// In en, this message translates to:
+  /// **'Event date'**
+  String get m53OpDetailEventDate;
+
+  /// Recorded time
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded time'**
+  String get m53OpDetailRecordedAt;
+
+  /// Date basis
+  ///
+  /// In en, this message translates to:
+  /// **'Date basis'**
+  String get m53OpDetailDateBasis;
+
+  /// Return ID
+  ///
+  /// In en, this message translates to:
+  /// **'Return ID'**
+  String get m53OpDetailReturnId;
+
+  /// Approval date
+  ///
+  /// In en, this message translates to:
+  /// **'Approval date'**
+  String get m53OpDetailApprovedDate;
+
+  /// Receipt ID
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt ID'**
+  String get m53OpDetailReceiptId;
+
+  /// Grouping level
+  ///
+  /// In en, this message translates to:
+  /// **'Grouping level'**
+  String get m53OpDetailGrouping;
+
+  /// Current retail prices; average costs; tracked saleable stock only. Profit covers only complete costs.
+  ///
+  /// In en, this message translates to:
+  /// **'Current retail prices; average costs; tracked saleable stock only. Profit covers only complete costs.'**
+  String get m53OpBasisPotential;
+
+  /// Completed stocktake snapshots; not suspected theft or current stock balances.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed stocktake snapshots; not suspected theft or current stock balances.'**
+  String get m53OpBasisVariance;
+
+  /// Current balances. Overdue debt is part of open balances.
+  ///
+  /// In en, this message translates to:
+  /// **'Current balances. Overdue debt is part of open balances.'**
+  String get m53OpBasisSupplierInvoices;
+
+  /// Operator payment dates; reversals use the shop recording date.
+  ///
+  /// In en, this message translates to:
+  /// **'Operator payment dates; reversals use the shop recording date.'**
+  String get m53OpBasisSupplierPayments;
+
+  /// Active approvals, effective allocations and refunds.
+  ///
+  /// In en, this message translates to:
+  /// **'Active approvals, effective allocations and refunds.'**
+  String get m53OpBasisSupplierCredits;
+
+  /// Actual refunds and reversals by operator-entered event dates.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual refunds and reversals by operator-entered event dates.'**
+  String get m53OpBasisSupplierRefunds;
+
+  /// Actual uninvoiced receipts; these counts are not debt values.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual uninvoiced receipts; these counts are not debt values.'**
+  String get m53OpBasisUnreconciled;
+
+  /// Unapproved physical returns do not reduce debt.
+  ///
+  /// In en, this message translates to:
+  /// **'Unapproved physical returns do not reduce debt.'**
+  String get m53OpBasisPendingReturns;
+
+  /// Tracked
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked'**
+  String get m53OpValueTracked;
+
+  /// Untracked
+  ///
+  /// In en, this message translates to:
+  /// **'Untracked'**
+  String get m53OpValueUntracked;
+
+  /// Paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get m53OpValuePaid;
+
+  /// Unpaid
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get m53OpValueUnpaid;
+
+  /// Partial
+  ///
+  /// In en, this message translates to:
+  /// **'Partial'**
+  String get m53OpValuePartial;
+
+  /// Drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Drawer'**
+  String get m53OpValueDrawer;
+
+  /// Bank
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get m53OpValueBank;
+
+  /// Owner funds
+  ///
+  /// In en, this message translates to:
+  /// **'Owner funds'**
+  String get m53OpValueOwnerFunds;
+
+  /// Original
+  ///
+  /// In en, this message translates to:
+  /// **'Original'**
+  String get m53OpValueOriginal;
+
+  /// Reversal
+  ///
+  /// In en, this message translates to:
+  /// **'Reversal'**
+  String get m53OpValueReversal;
+
+  /// Recorded date in the shop timezone
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded date in the shop timezone'**
+  String get m53OpValueRecordedShopDate;
+
+  /// Operator-entered event date
+  ///
+  /// In en, this message translates to:
+  /// **'Operator-entered event date'**
+  String get m53OpValueOperatorEventDate;
+
+  /// All suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'All suppliers'**
+  String get m53OpAllSuppliers;
+
+  /// All categories
+  ///
+  /// In en, this message translates to:
+  /// **'All categories'**
+  String get m53OpAllCategories;
 }
 
 class _AppLocalizationsDelegate

@@ -90,6 +90,10 @@ final class SupplierService {
   /// Shared read-only projection keeps reminders and supplier screens on the
   /// same effective payment/credit/due-date authority.
   static String get invoiceProjectionSql => _invoiceSelect;
+
+  /// Shared credit projection for protected consolidated reports. It preserves
+  /// the same allocation/refund reversal rules as the operational ledger.
+  static String get creditProjectionSql => SupplierCreditPosting._creditSelect;
   static const _invoiceSelect = '''SELECT i.*,
     COALESCE((SELECT SUM(p.amount_minor) FROM supplier_payments p WHERE p.invoice_id=i.id
       AND NOT EXISTS(SELECT 1 FROM supplier_payment_reversals r WHERE r.payment_id=p.id)),0) AS paid_minor,

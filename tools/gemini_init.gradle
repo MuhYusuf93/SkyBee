@@ -1,0 +1,12 @@
+allprojects {
+    afterEvaluate { project ->
+        if (project.plugins.hasPlugin("com.android.application")) {
+            def android = project.extensions.findByName("android")
+            if (project.hasProperty("geminiApp")) {
+                android.defaultConfig.applicationId = "com.example.kasir_app.gemini"
+                android.defaultConfig.manifestPlaceholders["appLabel"] = "Kasir Gemini"
+                println("GEMINI INIT: Applied applicationId = " + android.defaultConfig.applicationId)
+            }
+        }
+    }
+}
