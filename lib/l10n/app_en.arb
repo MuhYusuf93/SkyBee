@@ -6027,5 +6027,125 @@
   "m53OpAllCategories": "All categories",
   "@m53OpAllCategories": {
     "description": "All categories"
+  },
+  "m53RetentionTitle": "Clean up old backups",
+  "@m53RetentionTitle": {
+    "description": "Clean up old backups"
+  },
+  "m53RetentionHelp": "Only backup archives belonging to this store and installation origin are cleaned up. The active database and historical transactions are retained.",
+  "@m53RetentionHelp": {
+    "description": "Only backup archives belonging to this store and installation origin are cleaned up. The active database and historical transactions are retained."
+  },
+  "m53RetentionOff": "Off",
+  "@m53RetentionOff": {
+    "description": "Off"
+  },
+  "m53RetentionSeven": "Keep at least 7 versions",
+  "@m53RetentionSeven": {
+    "description": "Keep at least 7 versions"
+  },
+  "m53RetentionAge90": "Older than 90 days",
+  "@m53RetentionAge90": {
+    "description": "Older than 90 days"
+  },
+  "m53RetentionCurrent": "Saved policy",
+  "@m53RetentionCurrent": {
+    "description": "Saved policy"
+  },
+  "m53RetentionLocalFloor": "Keep at least the 3 newest valid backups.",
+  "@m53RetentionLocalFloor": {
+    "description": "Keep at least the 3 newest valid backups."
+  },
+  "m53RetentionDriveFloor": "Keep at least the 7 newest valid backups.",
+  "@m53RetentionDriveFloor": {
+    "description": "Keep at least the 7 newest valid backups."
+  },
+  "m53RetentionConnectDrive": "Connect a Drive account on the backup page to configure Drive retention.",
+  "@m53RetentionConnectDrive": {
+    "description": "Connect a Drive account on the backup page to configure Drive retention."
+  },
+  "m53RetentionPreview": "Preview policy and counts",
+  "@m53RetentionPreview": {
+    "description": "Preview policy and counts"
+  },
+  "m53RetentionReviewTitle": "Review before activation",
+  "@m53RetentionReviewTitle": {
+    "description": "Review before activation"
+  },
+  "m53RetentionTotal": "Archives checked",
+  "@m53RetentionTotal": {
+    "description": "Archives checked"
+  },
+  "m53RetentionEligible": "Eligible for cleanup",
+  "@m53RetentionEligible": {
+    "description": "Eligible for cleanup"
+  },
+  "m53RetentionProtected": "Retained or protected",
+  "@m53RetentionProtected": {
+    "description": "Retained or protected"
+  },
+  "m53RetentionFloor": "Minimum newest valid backups",
+  "@m53RetentionFloor": {
+    "description": "Minimum newest valid backups"
+  },
+  "m53RetentionStore": "Store ID",
+  "@m53RetentionStore": {
+    "description": "Store ID"
+  },
+  "m53RetentionOrigin": "Installation origin",
+  "@m53RetentionOrigin": {
+    "description": "Installation origin"
+  },
+  "m53RetentionAccount": "Drive account identity",
+  "@m53RetentionAccount": {
+    "description": "Drive account identity"
+  },
+  "m53RetentionNextBackup": "Confirmation only saves the policy. Cleanup follows the next successful, validated backup, up to 30 archives per cycle. Counts may change.",
+  "@m53RetentionNextBackup": {
+    "description": "Confirmation only saves the policy. Cleanup follows the next successful, validated backup, up to 30 archives per cycle. Counts may change."
+  },
+  "m53RetentionConfirm": "Save this policy",
+  "@m53RetentionConfirm": {
+    "description": "Save this policy"
+  },
+  "m53RetentionSaved": "Policy saved. This action has not deleted any archives.",
+  "@m53RetentionSaved": {
+    "description": "Policy saved. This action has not deleted any archives."
+  },
+  "m53RetentionNeedsBackup": "Create the first local backup first. If backups already exist, check Owner access and reload.",
+  "@m53RetentionNeedsBackup": {
+    "description": "Create the first local backup first. If backups already exist, check Owner access and reload."
+  },
+  "m53RetentionReviewFailed": "The preview could not be verified. Check access, recovery key, and the Drive connection if used.",
+  "@m53RetentionReviewFailed": {
+    "description": "The preview could not be verified. Check access, recovery key, and the Drive connection if used."
+  },
+  "m53RetentionPreviewExpired": "The preview changed or access expired. Review again before saving.",
+  "@m53RetentionPreviewExpired": {
+    "description": "The preview changed or access expired. Review again before saving."
+  },
+  "m53RetentionProtectionHelp": "Safety archives, pinned backups and archives still used for upload or restore remain protected. Legacy archives with unverified proof, age or recovery keys are also retained. Local and Drive status are separate.",
+  "@m53RetentionProtectionHelp": {
+    "description": "Safety archives, pinned backups and archives still used for upload or restore remain protected. Legacy archives with unverified proof, age or recovery keys are also retained. Local and Drive status are separate."
+  },
+  "m53RetentionDeferred": "Local backup succeeded; cleanup was deferred because it could not be verified.",
+  "@m53RetentionDeferred": {
+    "description": "Local backup succeeded; cleanup was deferred because it could not be verified."
+  },
+  "m53RetentionLastDeleted": "Local archives cleaned in the last cycle",
+  "@m53RetentionLastDeleted": {
+    "description": "Local archives cleaned in the last cycle"
+  },
+  "m53RetentionPin": "Protect archive from cleanup",
+  "@m53RetentionPin": {
+    "description": "Protect archive from cleanup"
+  },
+  "m53RetentionAutoProtected": "Automatically protected: safety, archive still in use, or unverified proof/key.",
+  "@m53RetentionAutoProtected": {
+    "description": "Automatically protected: safety, archive still in use, or unverified proof/key."
+  },
+  "m53RetentionReload": "Reload",
+  "@m53RetentionReload": {
+    "description": "Reload"
   }
 }

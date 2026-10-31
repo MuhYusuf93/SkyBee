@@ -1,0 +1,18 @@
+{
+  "schema": 37,
+  "sourceFiles": 709,
+  "sourceManifestSha256": "a42b47c31185561d77e2c88d8e1682a6b8170583c7aa2e0e17cf8bb8effe92b8",
+  "deltaFromInitial": [
+    "integration_test/m5_backup_test.dart"
+  ],
+  "productionUnchanged": true,
+  "change": "Only the legacy native portable fixture now supplies required public synthetic debtor phone08000000001. No member/security rule weakened.",
+  "analyzer": {
+    "issues": 0,
+    "seconds": 85.7
+  },
+  "analyzerLogSha256": "f01bd955e6a8aa82df6890233c5ee7ff686d82ca5a9d72b5f08464fce7fa197d",
+  "host": "Final42PASS56s remains evidence for identical production/host-test code. Only native fixture changed; native22 reruns required.",
+  "initialNative": "Poco21PASS1legacyFixtureFAIL2:36/910preExistingHashesSame/controlOff/trueexit1 preserved separately",
+  "native": "PENDING coherent review22 Poco and DV; no user-data reset/update/reseed"
+}

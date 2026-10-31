@@ -1,5 +1,22 @@
 # Status proyek
 
+<!-- M53_ACTIVE_G1_START -->
+1 November 2026 — G1 retensi DITUTUP, schema37/source709 REVIEW. Host42PASS56s,
+analyzer13,8s + review85,7s bersih, formatter613/0/l10n1512/926/245/PIN106match.
+Native review22 pada source sama: PocoPASS03:52/946hashlama sama,
+DVPASS06:07/980hashlama sama/awake exact; controlOff/trueexit0.
+AwalPoco21PASS1legacyPhoneFixtureFAIL2:36/910hashsama tetap disimpan. Hanya satu
+fixture native phone berubah; produksi/host identik. [Laporan G1](M53_BACKUP_RETENTION_REPORT.md).
+Checkpoint commit/push G1 lalu aktif G2A keyjournal/native secrets, G2B ResetToko/UI,
+G3 portable seluruh fakta, H handoff. Jangan berhenti di checkpoint.
+G2 draft build/m53/g2-draft (23purehostPASS/fakecipher) belum produksi; baca NEXT.md
+termasuk wrapped immutable witness, fsync parent secret dan fresh-onboarding worker
+guard. Native G1 tidak aktif lagi; source boleh diedit untuk tahap G2 setelah commit.
+Tidak ada update/reset/reseed `.skybee`/ordinary;100/50 hanya H setelah backup/
+recovery lama verified. Prefix gemini_/gemini2_ diabaikan, tidak diubah/dihapus.
+F3 sudah dipush03eb331. Tidak ada pertanyaan tertunda. M5.4/M5.5/M6 di luar scope.
+<!-- M53_ACTIVE_G1_END -->
+
 1 November — F3 schema37 DITUTUP: coherent host19PASS01:38/
 analyze63.8s bersih/format300/0/l10n1482/905/245/PIN106match.
 Final native17 source696 sama: PocoPASS07:10/891hashlama sama,

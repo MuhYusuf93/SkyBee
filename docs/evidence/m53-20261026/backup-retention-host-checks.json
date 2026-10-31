@@ -1,0 +1,82 @@
+{
+  "schema": 37,
+  "sourceFiles": 709,
+  "sourceManifestSha256": "87f801043cbcadbd5ceb041f5e4bb88f9167bf5ab0736c833d95b5a3fd32b9c3",
+  "sourceMatchedAtCapture": true,
+  "sourceManifestIsHistorical": true,
+  "newFiles": [
+    "integration_test/m53_backup_retention_test.dart",
+    "lib/features/backup/application/backup_retention_service.dart",
+    "lib/features/backup/application/drive_retention.dart",
+    "lib/features/backup/application/retention_metadata_store.dart",
+    "lib/features/backup/domain/backup_retention.dart",
+    "lib/features/backup/presentation/backup_retention_screen.dart",
+    "test/m53_backup_retention_drive_test.dart",
+    "test/m53_backup_retention_local_test.dart",
+    "test/m53_backup_retention_pipeline_test.dart",
+    "test/m53_backup_retention_test.dart",
+    "test/m53_backup_retention_widgets_test.dart",
+    "test/support/m53_backup_retention_widgets_suite.dart",
+    "test/support/m53_retention_host_fixture.dart"
+  ],
+  "changedFromF3": [
+    "lib/app/app_services.dart",
+    "lib/features/backup/application/backup_service.dart",
+    "lib/features/backup/application/drive_backup_service.dart",
+    "lib/features/backup/application/drive_rest.dart",
+    "lib/features/backup/presentation/backup_settings_provider.dart",
+    "lib/features/backup/presentation/backup_settings_screen.dart",
+    "lib/l10n/app_en.arb",
+    "lib/l10n/app_id.arb",
+    "lib/l10n/app_localizations.dart",
+    "lib/l10n/app_localizations_en.dart",
+    "lib/l10n/app_localizations_id.dart",
+    "lib/l10n/localization.dart",
+    "test/m5_drive_transport_test.dart"
+  ],
+  "host": {
+    "passed": 42,
+    "failed": 0,
+    "elapsed": "00:56",
+    "scope": "planner/metadata12; HTTP6; local filesystem/owner7; pipeline fault2; actual backup-menu IDEN320/text2 UI2; legacy transport11; portable metadata2"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 13.8
+  },
+  "formatter": {
+    "files": 613,
+    "changed": 0,
+    "ignoredPrefixes": [
+      "gemini_",
+      "gemini2_"
+    ]
+  },
+  "localization": {
+    "pairedKeys": 1512,
+    "staticReferences": 926,
+    "originalRequirementIds": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "hostLogSha256": "809cd3a837e5bb88630bf8abefb24c4203cd9a6381f7e0367389c7b82e4d912f",
+  "analyzerLogSha256": "0c7d93e4fdb92d7964795eb3eddc8ee8c75bdb30c7aed605ef8000f52c46c39d",
+  "formatLogSha256": "5ae63938c112542c9668f844ca060bb9e1942cd0bae0bbaadbbff21014e3ee3a",
+  "failureLogDigests": {
+    "g1-ui-host-initial.log": "7ec569fcafeedc6dc4fd3f95fda98fae75d83a9001f5e4df702683eb83bc8b5c",
+    "g1-ui-host-reveal.log": "540414d936601b0bfffed2e9de7f2776e6236e4fc7fd150031aacc36217afbc5",
+    "g1-ui-host-gate.log": "8c5471068099f89e1d8b07e052a5b97302204a553e0ed8e3b3ddfac80acff275",
+    "g1-ui-host-debug.log": "6928c9334bf7a2ac1ffb27d6448e4dd038de080bec5a3be0286e20c425a8ca61",
+    "g1-ui-host-zone.log": "07ac7c879ab81c68f563148728b94bc7cfab2aa46e0328e21ec683cd34be3cf8",
+    "g1-ui-host-io-trigger.log": "80949281557c58090470554ca2481ac0a1732e49648d2498e6dc197acd728b52",
+    "g1-ui-host-dropdown-close.log": "153629698d53ef47022db22360c68b9165f0034632d457e166ba94a50168c5e5",
+    "g1-ui-host-dirty-registry.log": "cbd499b36ecf0ddc78c90ec4a25333b802ffc23348c33deff762d6b208033a0f",
+    "g1-ui-host-hit-target.log": "ac45165dafe1abce9d9cb57d01afd778dcb4db80cc909c3e15ad22f3e030ae88",
+    "g1-ui-host-reveal-final.log": "8376683b3986b46a1ce5c5b8a1ffb0b781c946d5d9334138425a726dc0a4a220",
+    "g1-review-repro.log": "1694d522e19e2272743562d02789ad41e0fb19af45ac33f5937e6f6ede7dac53",
+    "g1-review-fixed.log": "8d948a0dc69738d5c1eddb9cf4b5535a1b4436c11c009000be04db517eddf613"
+  },
+  "review": "Reproduced pending-upload-source deletion eligibility and cleanup-status-write turning a verified upload into failure (1PASS2FAIL9s). Fixed both; corrected a fixture expecting two aged deletions when only one archive was older than90days (2PASS1FAIL10s). Final42 includes both fixes.",
+  "uiHistory": "Lazy dropdown reveal, shared host work gate, real IO dispatch, correct menu target/value assertion and dialog-close wait repaired. savePolicy avoids State.activate lifecycle collision. No production guard weakened.",
+  "native": "PENDING22 each device via isolated wrapper; HTTP mock is not real Drive; synthetic age clock is not a natural90day wait.",
+  "userData": "No operational or .skybee update/reset/reseed. Only owned host fixtures cleaned."
+}

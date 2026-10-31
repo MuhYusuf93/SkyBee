@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import '../../../data/database/durable_promotion.dart';
 import 'backup_service.dart';
 import 'drive_authorization.dart';
+import '../domain/backup_retention.dart';
+part 'drive_retention.dart';
 
 final class DriveFailure implements Exception {
   const DriveFailure(this.code, {this.retryable = false});
@@ -518,43 +520,31 @@ final class DriveRest {
     String origin, {
     required String newId,
     bool automatic = false,
+    RetentionPolicy? cleanupPolicy,
+    Future<RetentionArchive> Function(Map<String, dynamic>)? describe,
+    Future<void> Function()? checkPolicy,
+    int? capturedAt,
   }) async {
-    final newest = await metadata(policy, newId, automatic: automatic);
-    if (!_belongs(newest, store, origin) ||
-        (newest['appProperties'] as Map)['complete'] != '1') {
-      throw const DriveFailure('driveRetentionScopeInvalid');
+    // Legacy/foreign files without authenticated local proof remain protected.
+    // The production pipeline supplies proof only after a verified upload.
+    if (describe == null || cleanupPolicy == null || checkPolicy == null) {
+      return;
     }
-    while (true) {
-      final page = await list(
-        policy,
-        storeId: store,
-        originId: origin,
-        automatic: automatic,
-      );
-      if (page.files.length <= 7) return;
-      final keep = page.files.take(7).map((e) => e['id']).toSet();
-      if (!keep.contains(newId)) {
-        keep.remove(page.files[6]['id']);
-        keep.add(newId);
-      }
-      final obsolete = page.files
-          .where((e) => !keep.contains(e['id']))
-          .toList();
-      if (obsolete.isEmpty) return;
-      for (final item in obsolete) {
-        if (!_belongs(item, store, origin)) {
-          throw const DriveFailure('driveRetentionScopeInvalid');
-        }
-        await _small(
-          await _send(
-            'DELETE',
-            uri('/drive/v3/files/${fileId(item['id'] as String)}'),
-            policy,
-            automatic: automatic,
-          ),
-        );
-      }
-    }
+    await cleanRetention(
+      policy,
+      RetentionScope(
+        RetentionDestination.drive,
+        store,
+        origin,
+        account: policy.permissionId,
+      ),
+      cleanupPolicy,
+      describe,
+      checkPolicy,
+      newId: newId,
+      automatic: automatic,
+      capturedAt: capturedAt,
+    );
   }
 
   Future<File> download(

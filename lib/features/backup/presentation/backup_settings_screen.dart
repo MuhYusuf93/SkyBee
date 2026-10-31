@@ -10,6 +10,8 @@ import '../../management/presentation/managed_text_field.dart';
 import '../../management/presentation/fresh_authentication.dart';
 import 'backup_settings_provider.dart';
 import 'backup_export_name_dialog.dart';
+import 'backup_retention_screen.dart';
+import '../domain/backup_retention.dart';
 
 class BackupSettingsScreen extends StatefulWidget {
   const BackupSettingsScreen({super.key});
@@ -18,6 +20,25 @@ class BackupSettingsScreen extends StatefulWidget {
 }
 
 class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
+  Widget protection(BackupSettingsProvider s, String id, {bool drive = false}) {
+    final value =
+        (drive ? s.remoteProtection : s.localProtection)[id] ??
+        const RetentionProtection();
+    return CheckboxListTile(
+      dense: true,
+      contentPadding: EdgeInsets.zero,
+      value: value.pinned || !value.canChange,
+      title: Text(tr(context, 'm53RetentionPin')),
+      subtitle: value.canChange
+          ? null
+          : Text(tr(context, 'm53RetentionAutoProtected')),
+      onChanged: s.busy || !value.canChange
+          ? null
+          : (checked) =>
+                drive ? s.pinRemote(id, checked!) : s.pinLocal(id, checked!),
+    );
+  }
+
   // Explicit user request for the isolated acceptance build only. This flag is
   // also guarded by APK identity checks before installation; ordinary stays
   // masked. ManagementGate still hides both inputs whenever the session locks.
@@ -185,6 +206,20 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                           padding: const EdgeInsets.all(16),
                           children: [
                             Text(tr(context, 'm5BackupHelp')),
+                            OutlinedButton.icon(
+                              key: const ValueKey('backup-retention-open'),
+                              onPressed: s.busy
+                                  ? null
+                                  : () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute<void>(
+                                        builder: (_) =>
+                                            const BackupRetentionScreen(),
+                                      ),
+                                    ),
+                              icon: const Icon(Icons.inventory_2_outlined),
+                              label: Text(tr(context, 'm53RetentionTitle')),
+                            ),
                             Text(tr(context, 'm52BatteryHelp')),
                             OutlinedButton.icon(
                               onPressed: s.busy
@@ -430,6 +465,7 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                           Text(
                                             '${shopTime(s, row['created_at'] as int)} · schema ${manifest['schema']} · ${manifest['currency']}',
                                           ),
+                                          protection(s, row['id'] as String),
                                           Wrap(
                                             spacing: 8,
                                             children: [
@@ -662,17 +698,30 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                   key: const ValueKey('drive-archive-empty'),
                                 ),
                               for (final row in s.remote)
-                                ListTile(
-                                  title: Text(row['name'] as String? ?? ''),
-                                  subtitle: Text(
-                                    '${row['createdTime']} · ${row['size']} bytes',
-                                  ),
-                                  trailing: TextButton(
-                                    onPressed: s.busy
-                                        ? null
-                                        : () => s.download(row['id'] as String),
-                                    child: Text(tr(context, 'm5SelectRestore')),
-                                  ),
+                                Column(
+                                  children: [
+                                    ListTile(
+                                      title: Text(row['name'] as String? ?? ''),
+                                      subtitle: Text(
+                                        '${row['createdTime']} · ${row['size']} bytes',
+                                      ),
+                                      trailing: TextButton(
+                                        onPressed: s.busy
+                                            ? null
+                                            : () => s.download(
+                                                row['id'] as String,
+                                              ),
+                                        child: Text(
+                                          tr(context, 'm5SelectRestore'),
+                                        ),
+                                      ),
+                                    ),
+                                    protection(
+                                      s,
+                                      row['id'] as String,
+                                      drive: true,
+                                    ),
+                                  ],
                                 ),
                               if (s.nextRemote != null)
                                 TextButton(

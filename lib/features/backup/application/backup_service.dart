@@ -23,11 +23,21 @@ import '../domain/backup_manifest.dart';
 import 'drive_authorization.dart';
 import 'backup_validation.dart';
 import 'space_maintenance_service.dart';
+import 'backup_retention_service.dart';
+import 'retention_metadata_store.dart';
 
 final class PortableBackup {
   const PortableBackup(this.file, this.manifest);
   final File file;
   final BackupManifest manifest;
+}
+
+/// A selected restore source stays protected independently of the UI's SQL or
+/// work leases. Dispose on cancellation as well as after successful restore.
+final class BackupSelection {
+  const BackupSelection(this.file, this.candidate);
+  final File file;
+  final RetentionCandidate candidate;
 }
 
 /// Coordinates only consistent, closed encrypted snapshots. Network and SAF I/O
@@ -41,6 +51,7 @@ final class BackupService {
     this.testStage,
     this.pausePeripherals,
     this.resumePeripherals,
+    this.retentionNow,
     DatabaseGate? workGate,
   }) : workGate =
            workGate ??
@@ -57,6 +68,17 @@ final class BackupService {
   final Future<void> Function(String stage)? testStage;
   final Future<void> Function()? pausePeripherals;
   final FutureOr<void> Function()? resumePeripherals;
+
+  /// Synthetic age clock for retention fixtures; archive creation remains
+  /// authenticated by the normal pipeline. Never changes management expiry.
+  final int Function()? retentionNow;
+  late final retention = BackupRetentionService(
+    database,
+    access,
+    platform,
+    workGate,
+    now: retentionNow,
+  );
   Future<int> _free(String directory) =>
       (availableBytes ?? platform.freeBytes)(directory);
   static const ids = Uuid();
@@ -69,18 +91,19 @@ final class BackupService {
 
   /// Generated at the backup screen, saved only after the user confirms an exact
   /// saved copy. The backup code is independent of both PIN and PIN recovery.
-  Future<void> confirmRecovery(String shown, String confirmation) async {
-    await access.authorizeCurrent();
-    access.requireFresh('recovery');
-    final code = normalizeCode(shown);
-    if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code) ||
-        normalizeCode(confirmation) != code) {
-      throw const FormatException('backupCodeMismatch');
-    }
-    await platform.saveSecret('backup-master-v1', code);
-    await access.authorizeCurrent();
-    access.requireFresh('recovery');
-  }
+  Future<void> confirmRecovery(String shown, String confirmation) =>
+      workGate.run(() async {
+        await access.authorizeCurrent();
+        access.requireFresh('recovery');
+        final code = normalizeCode(shown);
+        if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code) ||
+            normalizeCode(confirmation) != code) {
+          throw const FormatException('backupCodeMismatch');
+        }
+        await platform.saveSecret('backup-master-v1', code);
+        await access.authorizeCurrent();
+        access.requireFresh('recovery');
+      });
 
   /// Status only, never an implicit reveal on route loading.
   Future<bool> hasRecoveryCode() async {
@@ -328,6 +351,34 @@ final class BackupService {
           index['sha256'] as String,
         );
       }
+      try {
+        await retention.recordLocal(
+          complete,
+          manifest,
+          recovery,
+          safety: frozen != null,
+          headless: headless,
+          checkAuthorization: checkAuthorization,
+        );
+        if (frozen == null) {
+          final deleted = await retention.afterLocalBackup(
+            manifest,
+            headless: headless,
+            checkAuthorization: checkAuthorization,
+          );
+          await retention.noteLocal(manifest, deleted: deleted);
+        }
+      } catch (_) {
+        // Completed authenticated output remains a successful backup. Unknown
+        // proof/key/policy protects old archives; cleanup can be reviewed later.
+        if (frozen == null) {
+          try {
+            await retention.noteLocal(manifest, deferred: true);
+          } catch (_) {
+            /* Preserve successful artifact. */
+          }
+        }
+      }
       // The artifact is authenticated and indexed. Optional maintenance metadata
       // or scheduler failure must not cause an upload retry of this valid backup.
       try {
@@ -382,7 +433,12 @@ final class BackupService {
   /// Repair only this application's completed-artifact index after interruption
   /// or restore. Stream directory entries; never delete unrecognized files or
   /// treat an unvalidated .partial file as a successful backup.
-  Future<void> recoverLocalCatalog() async {
+  Future<void> recoverLocalCatalog({bool workLeaseHeld = false}) =>
+      workLeaseHeld
+      ? _recoverLocalCatalog()
+      : workGate.run(_recoverLocalCatalog);
+
+  Future<void> _recoverLocalCatalog() async {
     final root = Directory(
       p.join(p.dirname(database.databasePath), 'm5_backups'),
     );
@@ -468,6 +524,12 @@ final class BackupService {
     });
   }
 
+  Future<BackupSelection> selectLocal(String id) => workGate.run(() async {
+    final file = await localFile(id);
+    final candidate = await retention.protectLocal(file, workLeaseHeld: true);
+    return BackupSelection(file, candidate);
+  });
+
   Future<File> localFile(String id) async {
     access.requireAccess();
     final row = await database.read((db) async {
@@ -527,7 +589,9 @@ final class BackupService {
     final directory = Directory(
       p.join(p.dirname(database.databasePath), 'm5_restore_${ids.v4()}'),
     );
+    final candidate = await retention.protectLocal(archive);
     try {
+      final originalSha = await DurablePromotion.digest(archive);
       final free = await _free(p.dirname(database.databasePath));
       await platform.call<bool>('unpackArchive', {
         'input': archive.path,
@@ -582,6 +646,9 @@ final class BackupService {
         await validated.close();
       }
       await access.authorizeCurrent();
+      if (await DurablePromotion.digest(archive) != originalSha) {
+        throw StateError('backupSourceChanged');
+      }
       return BackupInspection(
         directory,
         manifest,
@@ -590,8 +657,10 @@ final class BackupService {
           File(p.join(directory.path, 'database.db')),
         ),
         summary,
+        candidate: candidate,
       );
     } catch (_) {
+      await candidate.release();
       if (await directory.exists()) await directory.delete(recursive: true);
       rethrow;
     }
@@ -790,7 +859,7 @@ final class BackupService {
         }
       });
       access.lock();
-      await recoverLocalCatalog();
+      await recoverLocalCatalog(workLeaseHeld: true);
       return safety;
     } finally {
       await resumePeripherals?.call();
@@ -806,13 +875,15 @@ final class BackupInspection {
     this.manifest,
     this.code,
     this.databaseSha256,
-    this.summary,
-  );
+    this.summary, {
+    this.candidate,
+  });
   final Directory directory;
   final BackupManifest manifest;
   final String code;
   final String databaseSha256;
   final Map<String, Object?> summary;
+  final RetentionCandidate? candidate;
   Future<void> verify() async {
     if (await DurablePromotion.digest(
           File(p.join(directory.path, 'database.db')),
@@ -832,5 +903,6 @@ final class BackupInspection {
 
   Future<void> dispose() async {
     if (await directory.exists()) await directory.delete(recursive: true);
+    await candidate?.release();
   }
 }

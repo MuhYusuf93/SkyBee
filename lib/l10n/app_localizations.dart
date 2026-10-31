@@ -8989,6 +8989,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All categories'**
   String get m53OpAllCategories;
+
+  /// Clean up old backups
+  ///
+  /// In en, this message translates to:
+  /// **'Clean up old backups'**
+  String get m53RetentionTitle;
+
+  /// Only backup archives belonging to this store and installation origin are cleaned up. The active database and historical transactions are retained.
+  ///
+  /// In en, this message translates to:
+  /// **'Only backup archives belonging to this store and installation origin are cleaned up. The active database and historical transactions are retained.'**
+  String get m53RetentionHelp;
+
+  /// Off
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get m53RetentionOff;
+
+  /// Keep at least 7 versions
+  ///
+  /// In en, this message translates to:
+  /// **'Keep at least 7 versions'**
+  String get m53RetentionSeven;
+
+  /// Older than 90 days
+  ///
+  /// In en, this message translates to:
+  /// **'Older than 90 days'**
+  String get m53RetentionAge90;
+
+  /// Saved policy
+  ///
+  /// In en, this message translates to:
+  /// **'Saved policy'**
+  String get m53RetentionCurrent;
+
+  /// Keep at least the 3 newest valid backups.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep at least the 3 newest valid backups.'**
+  String get m53RetentionLocalFloor;
+
+  /// Keep at least the 7 newest valid backups.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep at least the 7 newest valid backups.'**
+  String get m53RetentionDriveFloor;
+
+  /// Connect a Drive account on the backup page to configure Drive retention.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a Drive account on the backup page to configure Drive retention.'**
+  String get m53RetentionConnectDrive;
+
+  /// Preview policy and counts
+  ///
+  /// In en, this message translates to:
+  /// **'Preview policy and counts'**
+  String get m53RetentionPreview;
+
+  /// Review before activation
+  ///
+  /// In en, this message translates to:
+  /// **'Review before activation'**
+  String get m53RetentionReviewTitle;
+
+  /// Archives checked
+  ///
+  /// In en, this message translates to:
+  /// **'Archives checked'**
+  String get m53RetentionTotal;
+
+  /// Eligible for cleanup
+  ///
+  /// In en, this message translates to:
+  /// **'Eligible for cleanup'**
+  String get m53RetentionEligible;
+
+  /// Retained or protected
+  ///
+  /// In en, this message translates to:
+  /// **'Retained or protected'**
+  String get m53RetentionProtected;
+
+  /// Minimum newest valid backups
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum newest valid backups'**
+  String get m53RetentionFloor;
+
+  /// Store ID
+  ///
+  /// In en, this message translates to:
+  /// **'Store ID'**
+  String get m53RetentionStore;
+
+  /// Installation origin
+  ///
+  /// In en, this message translates to:
+  /// **'Installation origin'**
+  String get m53RetentionOrigin;
+
+  /// Drive account identity
+  ///
+  /// In en, this message translates to:
+  /// **'Drive account identity'**
+  String get m53RetentionAccount;
+
+  /// Confirmation only saves the policy. Cleanup follows the next successful, validated backup, up to 30 archives per cycle. Counts may change.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation only saves the policy. Cleanup follows the next successful, validated backup, up to 30 archives per cycle. Counts may change.'**
+  String get m53RetentionNextBackup;
+
+  /// Save this policy
+  ///
+  /// In en, this message translates to:
+  /// **'Save this policy'**
+  String get m53RetentionConfirm;
+
+  /// Policy saved. This action has not deleted any archives.
+  ///
+  /// In en, this message translates to:
+  /// **'Policy saved. This action has not deleted any archives.'**
+  String get m53RetentionSaved;
+
+  /// Create the first local backup first. If backups already exist, check Owner access and reload.
+  ///
+  /// In en, this message translates to:
+  /// **'Create the first local backup first. If backups already exist, check Owner access and reload.'**
+  String get m53RetentionNeedsBackup;
+
+  /// The preview could not be verified. Check access, recovery key, and the Drive connection if used.
+  ///
+  /// In en, this message translates to:
+  /// **'The preview could not be verified. Check access, recovery key, and the Drive connection if used.'**
+  String get m53RetentionReviewFailed;
+
+  /// The preview changed or access expired. Review again before saving.
+  ///
+  /// In en, this message translates to:
+  /// **'The preview changed or access expired. Review again before saving.'**
+  String get m53RetentionPreviewExpired;
+
+  /// Safety archives, pinned backups and archives still used for upload or restore remain protected. Legacy archives with unverified proof, age or recovery keys are also retained. Local and Drive status are separate.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety archives, pinned backups and archives still used for upload or restore remain protected. Legacy archives with unverified proof, age or recovery keys are also retained. Local and Drive status are separate.'**
+  String get m53RetentionProtectionHelp;
+
+  /// Local backup succeeded; cleanup was deferred because it could not be verified.
+  ///
+  /// In en, this message translates to:
+  /// **'Local backup succeeded; cleanup was deferred because it could not be verified.'**
+  String get m53RetentionDeferred;
+
+  /// Local archives cleaned in the last cycle
+  ///
+  /// In en, this message translates to:
+  /// **'Local archives cleaned in the last cycle'**
+  String get m53RetentionLastDeleted;
+
+  /// Protect archive from cleanup
+  ///
+  /// In en, this message translates to:
+  /// **'Protect archive from cleanup'**
+  String get m53RetentionPin;
+
+  /// Automatically protected: safety, archive still in use, or unverified proof/key.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically protected: safety, archive still in use, or unverified proof/key.'**
+  String get m53RetentionAutoProtected;
+
+  /// Reload
+  ///
+  /// In en, this message translates to:
+  /// **'Reload'**
+  String get m53RetentionReload;
 }
 
 class _AppLocalizationsDelegate

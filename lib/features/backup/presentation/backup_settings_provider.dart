@@ -12,6 +12,8 @@ import '../application/drive_authorization.dart';
 import '../application/drive_rest.dart';
 import '../domain/backup_export_name.dart';
 import '../../printer/application/recovery_print_service.dart';
+import '../application/retention_metadata_store.dart';
+import '../domain/backup_retention.dart';
 import '../../../core/domain/app_error.dart';
 
 /// Only route state and pending external selections live here. Account consent,
@@ -33,8 +35,10 @@ final class BackupSettingsProvider extends ChangeNotifier {
   File? selected;
   bool selectedTemporary = false;
   BackupInspection? inspection;
+  RetentionCandidate? selectedCandidate;
   List<Map<String, Object?>> local = [], runs = [];
   Map<String, Object?> overview = {};
+  Map<String, RetentionProtection> localProtection = {}, remoteProtection = {};
 
   /// Scheduler failures may precede creation of a backup_runs row. Keep this
   /// persisted device history visible across routes without attributing it to
@@ -84,6 +88,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
     recoveryConfigured = await app.backups.hasRecoveryCode();
     await app.backups.recoverLocalCatalog();
     local = await app.backups.localHistory();
+    await _localProtection();
     runs = await app.drive.history();
     overview = await app.backups.overview();
     loaded = true;
@@ -162,6 +167,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
   Future<void> createLocal() => task(() async {
     await app.backups.create();
     local = await app.backups.localHistory();
+    await _localProtection();
     message = 'm5LocalBackupReady';
     overview = await app.backups.overview();
   });
@@ -169,14 +175,18 @@ final class BackupSettingsProvider extends ChangeNotifier {
     final name = displayName == null
         ? null
         : BackupExportName.normalize(displayName);
-    final file = await app.backups.localFile(id);
-    final result = await app.management.systemInteraction(
-      () => app.backups.platform.callNullable<bool>('pickExport', {
-        'path': file.path,
-        'displayName': ?name,
-      }),
-    );
-    message = result == true ? 'm5ExportVerified' : 'm5Cancelled';
+    final selection = await app.backups.selectLocal(id);
+    try {
+      final result = await app.management.systemInteraction(
+        () => app.backups.platform.callNullable<bool>('pickExport', {
+          'path': selection.file.path,
+          'displayName': ?name,
+        }),
+      );
+      message = result == true ? 'm5ExportVerified' : 'm5Cancelled';
+    } finally {
+      await selection.candidate.release();
+    }
   });
   Future<void> chooseFile() => task(() async {
     app.management.requireAccess();
@@ -208,9 +218,14 @@ final class BackupSettingsProvider extends ChangeNotifier {
     message = 'm5ArchiveSelected';
   });
   Future<void> selectLocal(String id) => task(() async {
-    final file = await app.backups.localFile(id);
+    final selection = await app.backups.selectLocal(id);
+    if (_disposed) {
+      await selection.candidate.release();
+      return;
+    }
     await _clearSelection();
-    selected = file;
+    selected = selection.file;
+    selectedCandidate = selection.candidate;
     selectedTemporary = false;
     message = 'm5ArchiveSelected';
   });
@@ -310,17 +325,23 @@ final class BackupSettingsProvider extends ChangeNotifier {
   Future<void> versions({bool next = false}) => task(() async {
     final page = await app.drive.versions(pageToken: next ? nextRemote : null);
     remote = page.files;
+    remoteProtection = await app.drive.retentionProtections(
+      remote.map((e) => e['id'] as String),
+    );
     nextRemote = page.next;
     remoteLoaded = true;
   });
   Future<void> download(String id) => task(() async {
-    final file = await app.drive.download(id);
+    final selection = await app.drive.download(id);
+    final file = selection.file;
     if (_disposed) {
+      await selection.candidate.release();
       await file.delete();
       return;
     }
     await _clearSelection();
     selected = file;
+    selectedCandidate = selection.candidate;
     selectedTemporary = true;
     message = 'm5ArchiveSelected';
   });
@@ -330,6 +351,25 @@ final class BackupSettingsProvider extends ChangeNotifier {
       before: last?['created_at'] as int?,
       beforeId: last?['id'] as String?,
     );
+    await _localProtection();
+  });
+  Future<void> _localProtection() async {
+    localProtection = await app.backups.retention.protectionLocal(
+      local.map((e) => e['id'] as String),
+    );
+  }
+
+  Future<void> pinLocal(String id, bool value) => task(() async {
+    await app.backups.retention.pinLocal(id, value);
+    await _localProtection();
+    message = 'm5SettingsSaved';
+  });
+  Future<void> pinRemote(String id, bool value) => task(() async {
+    await app.drive.pinRetention(id, value);
+    remoteProtection = await app.drive.retentionProtections(
+      remote.map((e) => e['id'] as String),
+    );
+    message = 'm5SettingsSaved';
   });
   Future<void> runPage({bool next = false}) => task(() async {
     final last = next && runs.isNotEmpty ? runs.last : null;
@@ -341,6 +381,8 @@ final class BackupSettingsProvider extends ChangeNotifier {
   Future<void> _clearSelection() async {
     await inspection?.dispose();
     inspection = null;
+    await selectedCandidate?.release();
+    selectedCandidate = null;
     if (selectedTemporary && selected != null && await selected!.exists()) {
       await selected!.delete();
     }

@@ -5014,4 +5014,107 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53OpAllCategories => 'Semua kategori';
+
+  @override
+  String get m53RetentionTitle => 'Bersihkan cadangan lama';
+
+  @override
+  String get m53RetentionHelp =>
+      'Hanya arsip cadangan milik toko dan asal instalasi ini yang dibersihkan. Database aktif dan transaksi lama tetap disimpan.';
+
+  @override
+  String get m53RetentionOff => 'Nonaktif';
+
+  @override
+  String get m53RetentionSeven => 'Simpan minimum 7 versi';
+
+  @override
+  String get m53RetentionAge90 => 'Umur lebih dari 90 hari';
+
+  @override
+  String get m53RetentionCurrent => 'Kebijakan tersimpan';
+
+  @override
+  String get m53RetentionLocalFloor =>
+      'Tetap simpan sedikitnya 3 cadangan valid terbaru.';
+
+  @override
+  String get m53RetentionDriveFloor =>
+      'Tetap simpan sedikitnya 7 cadangan valid terbaru.';
+
+  @override
+  String get m53RetentionConnectDrive =>
+      'Hubungkan akun Drive di halaman cadangan untuk mengatur retensi Drive.';
+
+  @override
+  String get m53RetentionPreview => 'Tinjau kebijakan dan jumlah';
+
+  @override
+  String get m53RetentionReviewTitle => 'Tinjau sebelum mengaktifkan';
+
+  @override
+  String get m53RetentionTotal => 'Arsip diperiksa';
+
+  @override
+  String get m53RetentionEligible => 'Memenuhi syarat pembersihan';
+
+  @override
+  String get m53RetentionProtected => 'Tetap disimpan atau dilindungi';
+
+  @override
+  String get m53RetentionFloor => 'Minimum cadangan valid terbaru';
+
+  @override
+  String get m53RetentionStore => 'ID toko';
+
+  @override
+  String get m53RetentionOrigin => 'Asal instalasi';
+
+  @override
+  String get m53RetentionAccount => 'Identitas akun Drive';
+
+  @override
+  String get m53RetentionNextBackup =>
+      'Konfirmasi ini hanya menyimpan kebijakan. Pembersihan berlangsung sesudah cadangan baru berikutnya berhasil dan tervalidasi, maksimal 30 arsip per siklus. Jumlah dapat berubah.';
+
+  @override
+  String get m53RetentionConfirm => 'Simpan kebijakan ini';
+
+  @override
+  String get m53RetentionSaved =>
+      'Kebijakan tersimpan. Belum ada arsip yang dihapus oleh tindakan ini.';
+
+  @override
+  String get m53RetentionNeedsBackup =>
+      'Buat cadangan lokal pertama terlebih dahulu. Jika cadangan sudah ada, periksa akses Pemilik dan coba muat ulang.';
+
+  @override
+  String get m53RetentionReviewFailed =>
+      'Pratinjau belum dapat diverifikasi. Periksa akses, kunci pemulihan, dan koneksi Drive bila digunakan.';
+
+  @override
+  String get m53RetentionPreviewExpired =>
+      'Pratinjau berubah atau akses berakhir. Tinjau kembali sebelum menyimpan.';
+
+  @override
+  String get m53RetentionProtectionHelp =>
+      'Arsip safety, yang ditandai simpan, serta cadangan yang masih dipakai untuk upload atau restore tetap dilindungi. Arsip lama dengan bukti, umur atau kunci yang belum dapat diverifikasi juga tidak dihapus. Status lokal dan Drive terpisah.';
+
+  @override
+  String get m53RetentionDeferred =>
+      'Cadangan lokal berhasil; pembersihan ditunda karena belum dapat diverifikasi.';
+
+  @override
+  String get m53RetentionLastDeleted =>
+      'Arsip lokal dibersihkan pada siklus terakhir';
+
+  @override
+  String get m53RetentionPin => 'Lindungi arsip dari pembersihan';
+
+  @override
+  String get m53RetentionAutoProtected =>
+      'Dilindungi otomatis: safety, cadangan masih dipakai, atau bukti/kunci belum terverifikasi.';
+
+  @override
+  String get m53RetentionReload => 'Muat ulang';
 }

@@ -365,7 +365,7 @@ void main() {
     }
   });
   test(
-    'retention deletes only successful files in exact store origin namespace scope',
+    'legacy complete flags alone cannot authorize retention without authenticated recovery proof',
     () async {
       final owned = List.generate(
         9,
@@ -414,8 +414,8 @@ void main() {
           archive.manifest.originId,
           newId: 'owned-0',
         );
-        expect(owned.length, 7);
-        expect(deleted, ['owned-7', 'owned-8']);
+        expect(owned.length, 9);
+        expect(deleted, isEmpty);
         expect(deleted, isNot(contains(outside['id'])));
       } finally {
         rest.close();

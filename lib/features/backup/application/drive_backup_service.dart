@@ -11,6 +11,15 @@ import '../domain/backup_manifest.dart';
 import 'backup_service.dart';
 import 'drive_authorization.dart';
 import 'drive_rest.dart';
+import '../domain/backup_retention.dart';
+import 'backup_retention_service.dart';
+import 'retention_metadata_store.dart';
+
+final class DriveRetentionPreview {
+  const DriveRetentionPreview(this.review, this.account);
+  final RetentionPreview review;
+  final DrivePolicy account;
+}
 
 /// Background scheduling needs consent and one idempotent backup operation;
 /// foreground account selection/UI remains on the concrete service.
@@ -35,13 +44,16 @@ final class DriveBackupService implements ScheduledDriveBackup {
     GoogleDriveAuthorization? authorization,
     DriveRest Function()? transport,
     DatabaseGate? workGate,
-  }) : policies = policies ?? const KeystoreDrivePolicy(),
+  }) : policies = policies ?? KeystoreDrivePolicy(backups.platform),
        authorization = authorization ?? GoogleDriveAuthorization(),
-       workGate =
-           workGate ??
-           const AndroidDatabaseGate(KasirPlatform(), 'backup-work') {
+       workGate = workGate ?? backups.workGate {
     _transport =
-        transport ?? () => DriveRest(this.policies, this.authorization);
+        transport ??
+        () => DriveRest(
+          this.policies,
+          this.authorization,
+          sessions: KeystoreUploadSessions(backups.platform),
+        );
   }
   final DatabaseCoordinator database;
   final ManagementService access;
@@ -51,6 +63,162 @@ final class DriveBackupService implements ScheduledDriveBackup {
   final GoogleDriveAuthorization authorization;
   final DatabaseGate workGate;
   late final DriveRest Function() _transport;
+  Future<Map<String, RetentionProtection>> retentionProtections(
+    Iterable<String> ids,
+  ) {
+    final grant = access.generation, generation = database.generation;
+    return workGate.run(() async {
+      await _retentionAccess(grant, generation);
+      if (ids.isEmpty) return {};
+      final account = await policies.read();
+      final scope = backups.retention.remoteScope(
+        await backups.retention.localScope(),
+        account,
+      );
+      final result = await backups.retention.protections(scope, ids);
+      if ((await policies.read()).generation != account.generation) {
+        throw const DriveFailure('driveConsentChanged');
+      }
+      await _retentionAccess(grant, generation);
+      return result;
+    });
+  }
+
+  Future<RetentionPolicy?> retentionSettings() {
+    final grant = access.generation, generation = database.generation;
+    return workGate.run(() async {
+      await _retentionAccess(grant, generation);
+      final account = await policies.read();
+      if (!account.connected) return null;
+      final scope = backups.retention.remoteScope(
+        await backups.retention.localScope(),
+        account,
+      );
+      final result = await backups.retention.metadata.policy(scope);
+      if ((await policies.read()).generation != account.generation) {
+        throw const DriveFailure('driveConsentChanged');
+      }
+      await _retentionAccess(grant, generation);
+      return result;
+    });
+  }
+
+  Future<void> _retentionAccess(int grant, int generation) async {
+    if (!access.isUnlocked ||
+        access.generation != grant ||
+        database.generation != generation) {
+      throw const AppError('sessionLockedEnterPinAgain');
+    }
+    await access.authorizeCurrent();
+    if (access.generation != grant || database.generation != generation) {
+      throw const AppError('sessionLockedEnterPinAgain');
+    }
+  }
+
+  Future<DriveRetentionPreview> previewRetention(RetentionMode mode) {
+    final grant = access.generation, generation = database.generation;
+    return workGate.run(() async {
+      await _retentionAccess(grant, generation);
+      final account = await policies.read(), transport = _transport();
+      try {
+        await transport.identify(account);
+        final scope = backups.retention.remoteScope(
+          await backups.retention.localScope(),
+          account,
+        );
+        final current = await backups.retention.metadata.policy(scope);
+        final plan = await transport.planRetention(
+          account,
+          scope,
+          RetentionPolicy(mode, current.revision),
+          (item) => backups.retention.describeRemote(scope, item),
+        );
+        await transport.guard(account);
+        await _retentionAccess(grant, generation);
+        return DriveRetentionPreview(
+          RetentionPreview(plan, grant, generation),
+          account,
+        );
+      } finally {
+        transport.close();
+      }
+    });
+  }
+
+  Future<void> activateRetention(DriveRetentionPreview preview) =>
+      workGate.run(() async {
+        final review = preview.review;
+        await _retentionAccess(
+          review.accessGeneration,
+          review.databaseGeneration,
+        );
+        final transport = _transport();
+        try {
+          await transport.guard(preview.account);
+          await transport.identify(preview.account);
+          final scope = backups.retention.remoteScope(
+            await backups.retention.localScope(),
+            preview.account,
+          );
+          final current = await backups.retention.metadata.policy(scope);
+          if (scope.identity != review.plan.scope.identity ||
+              current.revision != review.plan.policy.revision) {
+            throw StateError('retentionPreviewChanged');
+          }
+          final actual = await transport.planRetention(
+            preview.account,
+            scope,
+            review.plan.policy,
+            (item) => backups.retention.describeRemote(scope, item),
+          );
+          if (actual.digest != review.plan.digest) {
+            throw StateError('retentionPreviewChanged');
+          }
+          await transport.guard(preview.account);
+          await _retentionAccess(
+            review.accessGeneration,
+            review.databaseGeneration,
+          );
+          await backups.retention.metadata.setPolicy(
+            scope,
+            review.plan.policy.mode,
+            expectedRevision: current.revision,
+          );
+        } finally {
+          transport.close();
+        }
+      });
+  Future<void> pinRetention(String id, bool value) {
+    final grant = access.generation, generation = database.generation;
+    return workGate.run(() async {
+      await _retentionAccess(grant, generation);
+      final account = await policies.read(), transport = _transport();
+      try {
+        await transport.identify(account);
+        final scope = backups.retention.remoteScope(
+          await backups.retention.localScope(),
+          account,
+        );
+        final item = await backups.retention.describeRemote(
+          scope,
+          await transport.metadata(account, id),
+        );
+        if (item.invalidReason(
+              scope,
+              DateTime.now().toUtc().millisecondsSinceEpoch,
+            ) !=
+            null) {
+          throw StateError('retentionArchiveProtected');
+        }
+        await transport.guard(account);
+        await _retentionAccess(grant, generation);
+        await backups.retention.metadata.pin(scope, id, value);
+      } finally {
+        transport.close();
+      }
+    });
+  }
+
   Future<DrivePolicy> settings() async {
     await access.authorizeCurrent();
     final result = await policies.read();
@@ -275,22 +443,53 @@ final class DriveBackupService implements ScheduledDriveBackup {
         // Retention failure cannot change a verified upload into "never backed
         // up"; record the distinct cleanup error and keep the local archive.
         try {
+          final scope = backups.retention.remoteScope(
+            RetentionScope(
+              RetentionDestination.local,
+              archive.manifest.storeId,
+              archive.manifest.originId,
+            ),
+            policy,
+          );
+          await backups.retention.recordRemote(
+            scope,
+            archive.manifest.id,
+            uploaded,
+            headless: headless,
+            checkAuthorization: () =>
+                transport.guard(policy, automatic: headless),
+          );
+          final cleanup = await backups.retention.metadata.policy(scope);
           await transport.retainSeven(
             policy,
             archive.manifest.storeId,
             archive.manifest.originId,
             newId: uploaded['id'] as String,
             automatic: headless,
+            cleanupPolicy: cleanup,
+            describe: (item) => backups.retention.describeRemote(scope, item),
+            checkPolicy: () async {
+              await transport.guard(policy, automatic: headless);
+              if ((await backups.retention.metadata.policy(scope)).revision !=
+                  cleanup.revision) {
+                throw StateError('retentionPolicyChanged');
+              }
+            },
           );
         } catch (_) {
-          await database.exclusive(
-            (db) => db.update(
-              'backup_runs',
-              {'error_code': 'driveRetentionDeferred'},
-              where: 'id=?',
-              whereArgs: [runId],
-            ),
-          );
+          try {
+            await database.exclusive(
+              (db) => db.update(
+                'backup_runs',
+                {'error_code': 'driveRetentionDeferred'},
+                where: 'id=?',
+                whereArgs: [runId],
+              ),
+            );
+          } catch (_) {
+            // Success was committed before cleanup. Failure to record optional
+            // maintenance status must not mark a verified upload failed/retry it.
+          }
         }
         return runId;
       } catch (error) {
@@ -316,7 +515,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
     });
   }
 
-  Future<File> download(String id) async {
+  Future<BackupSelection> download(String id) => workGate.run(() async {
     await access.authorizeCurrent();
     final policy = await policies.read(), transport = _transport();
     final destination = File(
@@ -325,7 +524,25 @@ final class DriveBackupService implements ScheduledDriveBackup {
         'drive_${const Uuid().v4()}.kasirbackup',
       ),
     );
+    RetentionCandidate? candidate;
     try {
+      await transport.identify(policy);
+      final item = await transport.metadata(policy, id),
+          properties = item['appProperties'];
+      if (properties is! Map ||
+          properties['namespace'] != DriveRest.namespace ||
+          properties['storeId'] is! String ||
+          properties['originId'] is! String ||
+          properties['complete'] != '1') {
+        throw const DriveFailure('driveBackupUnverified');
+      }
+      final scope = RetentionScope(
+        RetentionDestination.drive,
+        properties['storeId'] as String,
+        properties['originId'] as String,
+        account: policy.permissionId,
+      );
+      candidate = await backups.retention.metadata.candidate(scope, id);
       final budget =
           await const KasirPlatform().freeBytes(
             p.dirname(database.databasePath),
@@ -338,14 +555,19 @@ final class DriveBackupService implements ScheduledDriveBackup {
         byteBudget: budget,
       );
       await access.authorizeCurrent();
-      return result;
+      final held = candidate;
+      return BackupSelection(
+        result,
+        RetentionCandidate(() => workGate.run(held.release)),
+      );
     } catch (_) {
+      await candidate?.release();
       if (await destination.exists()) await destination.delete();
       rethrow;
     } finally {
       transport.close();
     }
-  }
+  });
 
   Future<List<Map<String, Object?>>> history({
     int? before,

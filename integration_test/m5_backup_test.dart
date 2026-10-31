@@ -192,7 +192,10 @@ void main() {
             tender: Money(0, 'IDR', 0),
             tenderRaw: '0',
             mode: PaymentMode.debt,
-            customer: const CustomerChoice(name: 'Synthetic portable debtor'),
+            customer: const CustomerChoice(
+              name: 'Synthetic portable debtor',
+              phone: '08000000001',
+            ),
           ),
         );
         final customer = (await app.receivables.customers()).items.single;

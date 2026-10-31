@@ -626,3 +626,11 @@ auditor. Rename switch yang sudah diformat perlu menangani branch multiline.
 Readiness UI harus mengungkap child lazy dan memberi IO nyata; pumpAndSettle
 dengan indikator DB yang berputar bisa timeout tanpa menyelesaikan IO. F3 final
 host18 lulus termasuk ID/EN320/text2 dan regresi ekspor.
+
+147. Pending upload snapshot tertinggal setelah crash harus diproteksi retensi
+sampai operasi selesai. Baca path set sekali per pass, bukan SQL per arsip.
+148. Gagal mencatat status maintenance tidak boleh membalikkan verified upload
+sukses atau memicu upload ulang; uji HTTP503 dan trigger fixture status-write.
+149. Callback tombol activate bertabrakan dengan State.activate; rename operasi,
+bukan menambah override/super. UI lazy perlu reveal/hit-test, IO nyata, pemeriksaan
+nilai draft/dirty dan menunggu dialog tutup. Satu pump atau teks .last bukan bukti.

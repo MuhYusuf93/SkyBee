@@ -1,5 +1,22 @@
 # Matriks persyaratan
 
+<!-- M53_ACTIVE_G1_START -->
+1 November 2026 — G1 retensi DITUTUP, schema37/source709 REVIEW. Host42PASS56s,
+analyzer13,8s + review85,7s bersih, formatter613/0/l10n1512/926/245/PIN106match.
+Native review22 pada source sama: PocoPASS03:52/946hashlama sama,
+DVPASS06:07/980hashlama sama/awake exact; controlOff/trueexit0.
+AwalPoco21PASS1legacyPhoneFixtureFAIL2:36/910hashsama tetap disimpan. Hanya satu
+fixture native phone berubah; produksi/host identik. [Laporan G1](M53_BACKUP_RETENTION_REPORT.md).
+Checkpoint commit/push G1 lalu aktif G2A keyjournal/native secrets, G2B ResetToko/UI,
+G3 portable seluruh fakta, H handoff. Jangan berhenti di checkpoint.
+G2 draft build/m53/g2-draft (23purehostPASS/fakecipher) belum produksi; baca NEXT.md
+termasuk wrapped immutable witness, fsync parent secret dan fresh-onboarding worker
+guard. Native G1 tidak aktif lagi; source boleh diedit untuk tahap G2 setelah commit.
+Tidak ada update/reset/reseed `.skybee`/ordinary;100/50 hanya H setelah backup/
+recovery lama verified. Prefix gemini_/gemini2_ diabaikan, tidak diubah/dihapus.
+F3 sudah dipush03eb331. Tidak ada pertanyaan tertunda. M5.4/M5.5/M6 di luar scope.
+<!-- M53_ACTIVE_G1_END -->
+
 1 November — F3 schema37 DITUTUP: coherent host19PASS01:38/
 analyze63.8s bersih/format300/0/l10n1482/905/245/PIN106match.
 Final native17 source696 sama: PocoPASS07:10/891hashlama sama,
@@ -356,7 +373,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
 | M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Schema31–34 E3 core: host51PASS/final15PASS(overlap), Poco44PASS1permissionSKIP/726hashsama, DV45PASS/802hashsama/awakeexact/controlOff; source652-platform historis. Post-review scoped reminder event/next visit date host20 + analyze bersih/source652-post-review, delta jadwal11/UI2 nativePoco/DV lulus padaF1; runtime5 tetapbukti host. Bukti supplier-e3-{poco-initial,dv}.json dan supplier-schedules-post-review-checks.json. F/G/H tetap aktif. |
 | M53-F | Label/struk wajib dan laporan/ekspor baru | F1 QR35 selesai software perinterval (laporan M53_QR_LABELS_REPORT.md), tanpa klaim scanner/kertas fisik. F2 schema36 selesai host43/final16/native41 tiap perangkat, datahashsama/controlOff (M53_RECEIPT_POLICY_REPORT.md). F3 schema37 selesai FINAL coherent host19PASS01:38/analyze63.8s bersih/l10n1482, native17PocoPASS07:10/891hashsama dan17DVPASS09:42/961hashsama/awakeexact, source696sama/controlOff. Cursor103events/UI20/source100/CSV, archived debt2000/noDue, actual-menu lock/unlock valid. Semua bukti/failure historis pada M53_OPERATIONAL_REPORTS_REPORT.md. G/H tetap wajib. |
-| M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |
+| M53-G | Retensi/reset fixture/backup portable semua penambahan | G1 selesai source709: host42PASS56s/analyzer13,8s+review85,7s bersih; native22PocoPASS03:52/946hashsama dan22DVPASS06:07/980hashsama/awake exact/controlOff. Riwayat kegagalan+retest pada M53_BACKUP_RETENTION_REPORT.md. G2 reset/keyjournal dan G3 portable masih TODO; H tetap wajib. Tidak ada reset pengguna. |
 | M53-H | Build/push/handoff baru terinstal .skybee dengan backup lama dan seed100/50 | TODO setelah E/F/G lengkap. Ralat langsung pengguna mengotorisasi reset .skybee pada akhir saja: backup lama verified dahulu, onboarding pending, 100produk beragam/beberapa supplier/pelanggan/50transaksi. Belum ada update/reset/reseed. Build ordinary/release/handoff M5.3 dan dua startup belum dilakukan; artefak lama bukan bukti source31 |
 
 Koreksi P25-01 tanggal25Oktober: default6 profil tanpa marker versi harus efektif3 setelah buka ulang. Nilai lama lainnya serta semua pilihan manual tersimpan versi baru tetap; job historis tidak diubah. Kebijakan ini menggantikan frasa bottom lama tetap di histori berikut. Pemeriksaan/handoff+12 selesai; host44/native1 dan profil aktual cold restart PASS.

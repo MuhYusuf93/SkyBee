@@ -4994,4 +4994,107 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53OpAllCategories => 'All categories';
+
+  @override
+  String get m53RetentionTitle => 'Clean up old backups';
+
+  @override
+  String get m53RetentionHelp =>
+      'Only backup archives belonging to this store and installation origin are cleaned up. The active database and historical transactions are retained.';
+
+  @override
+  String get m53RetentionOff => 'Off';
+
+  @override
+  String get m53RetentionSeven => 'Keep at least 7 versions';
+
+  @override
+  String get m53RetentionAge90 => 'Older than 90 days';
+
+  @override
+  String get m53RetentionCurrent => 'Saved policy';
+
+  @override
+  String get m53RetentionLocalFloor =>
+      'Keep at least the 3 newest valid backups.';
+
+  @override
+  String get m53RetentionDriveFloor =>
+      'Keep at least the 7 newest valid backups.';
+
+  @override
+  String get m53RetentionConnectDrive =>
+      'Connect a Drive account on the backup page to configure Drive retention.';
+
+  @override
+  String get m53RetentionPreview => 'Preview policy and counts';
+
+  @override
+  String get m53RetentionReviewTitle => 'Review before activation';
+
+  @override
+  String get m53RetentionTotal => 'Archives checked';
+
+  @override
+  String get m53RetentionEligible => 'Eligible for cleanup';
+
+  @override
+  String get m53RetentionProtected => 'Retained or protected';
+
+  @override
+  String get m53RetentionFloor => 'Minimum newest valid backups';
+
+  @override
+  String get m53RetentionStore => 'Store ID';
+
+  @override
+  String get m53RetentionOrigin => 'Installation origin';
+
+  @override
+  String get m53RetentionAccount => 'Drive account identity';
+
+  @override
+  String get m53RetentionNextBackup =>
+      'Confirmation only saves the policy. Cleanup follows the next successful, validated backup, up to 30 archives per cycle. Counts may change.';
+
+  @override
+  String get m53RetentionConfirm => 'Save this policy';
+
+  @override
+  String get m53RetentionSaved =>
+      'Policy saved. This action has not deleted any archives.';
+
+  @override
+  String get m53RetentionNeedsBackup =>
+      'Create the first local backup first. If backups already exist, check Owner access and reload.';
+
+  @override
+  String get m53RetentionReviewFailed =>
+      'The preview could not be verified. Check access, recovery key, and the Drive connection if used.';
+
+  @override
+  String get m53RetentionPreviewExpired =>
+      'The preview changed or access expired. Review again before saving.';
+
+  @override
+  String get m53RetentionProtectionHelp =>
+      'Safety archives, pinned backups and archives still used for upload or restore remain protected. Legacy archives with unverified proof, age or recovery keys are also retained. Local and Drive status are separate.';
+
+  @override
+  String get m53RetentionDeferred =>
+      'Local backup succeeded; cleanup was deferred because it could not be verified.';
+
+  @override
+  String get m53RetentionLastDeleted =>
+      'Local archives cleaned in the last cycle';
+
+  @override
+  String get m53RetentionPin => 'Protect archive from cleanup';
+
+  @override
+  String get m53RetentionAutoProtected =>
+      'Automatically protected: safety, archive still in use, or unverified proof/key.';
+
+  @override
+  String get m53RetentionReload => 'Reload';
 }

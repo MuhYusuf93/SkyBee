@@ -38,6 +38,7 @@ import '../features/suppliers/application/supplier_service.dart';
 import '../features/suppliers/application/supplier_reminder_service.dart';
 import '../features/suppliers/application/android_supplier_reminders.dart';
 import '../features/labels/application/product_label_service.dart';
+import 'package:kasir_platform/kasir_platform.dart';
 
 /// Dependency composition only, no shared cart/catalog/report state.
 final class AppServices {
@@ -48,6 +49,7 @@ final class AppServices {
     PrinterOutputGate? printerGate,
     BarcodeCamera Function()? barcodeCameraFactory,
     this.supplierReminderSink,
+    this.backupPlatform = const KasirPlatform(),
   }) : printerGate = printerGate ?? defaultPrinterOutputGate(),
        barcodeCameraFactory = barcodeCameraFactory ?? NativeBarcodeCamera.new {
     management = ManagementService(
@@ -76,6 +78,10 @@ final class AppServices {
   final PrinterOutputGate printerGate;
   final BarcodeCamera Function() barcodeCameraFactory;
   final SupplierReminderSink? supplierReminderSink;
+
+  /// Fixtures can namespace recovery/consent records without touching retained
+  /// manual-test credentials. Production uses the installation's native store.
+  final KasirPlatform backupPlatform;
   late final ManagementService management;
   late final suppliers = SupplierService(database, management);
   late final receiptPolicy = ReceiptPolicyService(
@@ -135,6 +141,7 @@ final class AppServices {
   late final backups = BackupService(
     database,
     management,
+    platform: backupPlatform,
     pausePeripherals: printing.pauseForRestore,
     resumePeripherals: printing.resumeAfterRestore,
   );
