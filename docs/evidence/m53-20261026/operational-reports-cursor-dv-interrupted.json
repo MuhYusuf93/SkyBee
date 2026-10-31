@@ -1,0 +1,33 @@
+{
+  "run": "m53-operational-cursor-dv-20261030-20261030-032503",
+  "device": "192.168.0.101:5555",
+  "status": "INTERRUPTED_UNVERIFIED",
+  "automaticDeviceControlActive": false,
+  "originalResultPreserved": true,
+  "originalTrueExitUnavailable": true,
+  "lastRecordedCase": "UI en started at +13; no final summary or finally artifacts",
+  "recovery": "No former native runner process remained. Restored saved DV awake settings and read back exactly before a new wrapper baseline.",
+  "awakeRecoveryLogSha256": "c20f69a1862a3f65f8af152107ad501e17f12a11488feaf7a182957fd269078c",
+  "runnerLogSha256": "9766bcc1d30ed4ba1d939a483095fde14ce06adaafcdd9a1f1b5fe5373ae5b86",
+  "beforeManifestSha256": "0f228a92f647716a1644147c7655909792549fac8219035036353286bc1aef11",
+  "resumptionManifestSha256": "01e34eeba28260deb548a4600658691d7d4c5604677049f89689546cebbec210",
+  "resumptionComparison": {
+    "com.example.kasir_app": {
+      "preExistingEntries": 1,
+      "unchangedAtResumption": 1,
+      "changedOrMissingAtResumption": 0
+    },
+    "com.example.kasir_app.integration": {
+      "preExistingEntries": 943,
+      "unchangedAtResumption": 943,
+      "changedOrMissingAtResumption": 0
+    },
+    "com.example.kasir_app.skybee": {
+      "preExistingEntries": 1,
+      "unchangedAtResumption": 1,
+      "changedOrMissingAtResumption": 0
+    }
+  },
+  "limitation": "A later resumption observation does not prove uninterrupted preservation or a passing original run. Fresh wrapper is a separate interval; no failure or missing finally evidence overwritten.",
+  "replacementRun": "m53-operational-cursor-dv-paused-20261101-20261101-043454"
+}

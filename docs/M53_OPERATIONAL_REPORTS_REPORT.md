@@ -1,167 +1,106 @@
 # F3 — laporan stok, supplier, dan ekspor
 
-30 Oktober — F3 FINAL cursor source696 frozen. Poco FINAL17PASS7:10/891hashlama sama/controlOff/trueexit0 sudahdikurasi.
-Host19PASS1:38/analyze63,8s
-bersih/format300/0/l10n1482/905/245/PIN106match. Kasus ledger valid cross-table
-UUID reuse103 events lulus: original52000/reversal51000/net1000/sisa9000,
-seluruh UI20/source100/CSV. Repro lama103→102 disimpan (0PASS1FAIL5s).
-FULL17 DV aktif di `build/m53-operational-cursor-dv-20261030-20261030-032503` (session30419),
-BackgroundPaused=true. Tunggu trueexit/finally/hash/controlOff sebelum source
-edit; FULL17 perangkat lain berikutnya (DVawake exact wajib). Native17 baru
-mencakup domain12/actual-menu IDEN UI2/sharedexport3. Native16 lama dan finalUI2
-Poco1:29/889hashsama adalah interval historis, bukan proof reader cursor baru.
-Manifest/checks cursor696 sudah disimpan. Setelah kedua17 ditutup, commit/push
-F3 lalu G/H; jangan stop pada checkpoint. .skybee/ordinary belum update/reset/
-reseed;100/50 hanya H setelah backup dan recovery lama verified. Tidak ada
-pertanyaan tertunda. G audit privat m53-g-concrete-audit-20261030.md,
-g-retention-contract-candidate.md dan g-reset-key-recovery-details.md.
-
-30 Oktober — F3 FINAL cursor source696 frozen. Host19PASS1:38/analyze63,8s
-bersih/format300/0/l10n1482/905/245/PIN106match. Kasus ledger valid cross-table
-UUID reuse103 events lulus: original52000/reversal51000/net1000/sisa9000,
-seluruh UI20/source100/CSV. Repro lama103→102 disimpan (0PASS1FAIL5s).
-FULL17 Poco aktif di `build/m53-operational-cursor-poco-20261030-20261030-031348` (session68388),
-BackgroundPaused=true. Tunggu trueexit/finally/hash/controlOff sebelum source
-edit; FULL17 perangkat lain berikutnya (DVawake exact wajib). Native17 baru
-mencakup domain12/actual-menu IDEN UI2/sharedexport3. Native16 lama dan finalUI2
-Poco1:29/889hashsama adalah interval historis, bukan proof reader cursor baru.
-Manifest/checks cursor696 sudah disimpan. Setelah kedua17 ditutup, commit/push
-F3 lalu G/H; jangan stop pada checkpoint. .skybee/ordinary belum update/reset/
-reseed;100/50 hanya H setelah backup dan recovery lama verified. Tidak ada
-pertanyaan tertunda. G audit privat m53-g-concrete-audit-20261030.md,
-g-retention-contract-candidate.md dan g-reset-key-recovery-details.md.
-
-30 Oktober 2026. F2 `b0cfc60` sudah dipush. F3 schema37 source695 dibekukan
-untuk native; **belum ditutup**. G/H tetap wajib. Data ordinary/.skybee belum
-diupdate/reset/reseed. [Keputusan](decisions/M53_OPERATIONAL_REPORTS.md),
+1 November 2026. **Software F3 selesai**, schema37/source696. Final coherent
+host19 dan native17 di kedua perangkat memakai source yang sama. G/H masih
+wajib; `.skybee`/ordinary belum diupdate/reset/reseed. [Keputusan](decisions/M53_OPERATIONAL_REPORTS.md),
 [panduan ID/EN](M53_OPERATIONAL_REPORTS_GUIDE.md).
 
-## Perubahan
+## Perubahan dan batas perhitungan
 
-Service laporan khusus Pemilik membaca satu snapshot, maksimal100 source rows
-per panggilan, lalu menjumlahkan BigInt. UI hanya satu halaman20 baris, dengan
-filter/search, metadata capture dan seluruh-scope summary. Route tersembunyi/
-terkunci tidak memicu refresh; request usang dibatalkan di batas halaman. Ekspor
-CSV/XLSX memakai writer/tujuan yang sama dengan M5.1; uang/ID sebagai teks eksak,
-snapshot scope/waktu/timezone/unit ikut diekspor. Artifact terikat generation
-akses/database sehingga kunci/unlock/restore membatalkan pelepasan file lama.
+Pemilik mendapatkan potensi nilai jual stok dan estimasi laba kotor (produk,
+kategori, supplier master, toko), selisih opname posted, utang supplier saat ini,
+pembayaran/refund periode, kredit tersedia, penerimaan belum direkonsiliasi dan
+retur menunggu persetujuan. Histori dan kebijakan audit kas D ditautkan tanpa
+ledger duplikat. Picker readonly mencakup arsip, label kosong berarti Semua,
+filter tersembunyi tidak masuk scope ekspor. Route terkunci/tersembunyi tidak
+menjalankan refresh baru; parent laporan tidak merevoke verifikasi PIN.
 
-Potensi stok menggunakan jumlah tracked layak × harga eceran dan bagian carrying
-cost moving average terkait. Unknown tidak0, untracked999 tidak aset, tracked999
-sah; expired/arsip/nonjual dipisahkan. Group kategori/supplier/toko deterministik
-tanpa join riwayat penerimaan. Supplier berdasarkan master barang, bukan asal
-batch. Selisih opname menggunakan snapshot posted yang tidak dihitung ulang
-dengan stok hari ini. Tidak menciptakan omzet/HPP penjualan atau tuduhan pencurian.
+Potensi memakai tracked saleable × harga eceran, dikurangi bagian moving-average
+carrying cost terkait; biaya unknown bukan0. Untracked999 bukan aset, tracked999
+sah. Arsip/expired/nonjual dan cakupan biaya belum lengkap terpisah. Group supplier
+berdasarkan data barang, bukan provenance batch. Ini bukan prediksi atau laba
+bersih. Selisih opname hanya snapshot immutable, bukan saldo hari ini atau bukti
+pencurian. Pembayaran dan kredit tidak menghitung ulang omzet/HPP historis.
 
-Utang menggunakan proyeksi tagihan/kredit operasional yang sama. Saldo saat ini
-dipisahkan dari pembayaran/refund periode, overdue bagian saldo terbuka, bucket
-tanggal kalender toko1–7/8–30/>30, tanpa due date terpisah. Kredit tersedia, retur
-fisik belum disetujui dan penerimaan belum direkonsiliasi tidak disamarkan sebagai
-pengurang utang. Currency dipisahkan. Audit kas menautkan ledger/histori D.
+Utang berlabel **saat ini**, tanpa picker saldo historis. Overdue bagian saldo
+terbuka, bucket kalender toko1–7/8–30/>30, tanpa due date terpisah. Pembayaran asli
+memakai paid_date operator, reversal memakai tanggal pencatatan dalam timezone
+toko. Refund memakai event_date operator. Currency, bank/laci/dana pemilik dan
+retur fisik belum disetujui dipisahkan.
 
-## Pemeriksaan host
+UI menyimpan satu halaman20, service membaca source100 dan menjumlahkan BigInt
+seluruh scope dalam satu snapshot. Ekspor CSV/XLSX memakai engine/tujuan lama,
+uang/ID sebagai teks eksak, formula dinetralkan, metadata scope/capture/unit ikut.
+Artifact terikat grant/database generation. Cursor UNION memakai jenis kejadian
+dan ID tabel, sehingga UUID yang sama lintas tabel tidak menggandakan/menghilangkan
+fakta. Group mentah kursor tidak mengagregasikan kejadian keuangan.
 
-| Pemeriksaan | Bukti |
+Schema37 hanya menambah lima indeks; hash setiap tabel lama sama pada migrasi
+36→37. Planner actual query membuktikan seek tanpa temp sort pada group/keyset
+persediaan/tagihan/retur yang diuji; equality-group/ID-range dan next-group-range
+mengisi maksimal100 baris, bukan satu panggilan per barang. Tidak ada klaim
+benchmark ARM32 terisolasi atau penetapan CCTV sebagai penyebab perlambatan.
+
+## Bukti final pada satu source
+
+| Pemeriksaan | Hasil |
 | --- | --- |
-| Final gabungan |18 PASS,1:35; domain11, UI ID/EN2, ekspor lama4, pembatalan UI ekspor1 |
-| Analyzer | Tidak ada issue,7,0s |
-| Formatter |299 file,0 berubah pada pemeriksaan final |
-| Lokalisasi |1480 key berpasangan/metadata sama,905 referensi statis,245 ID kebutuhan asli |
-| PIN/KDF |106 upstream file dan lisensi APK tetap sama |
-| Migrasi36→37 | Semua hash tabel lama sama; hanya lima indeks ditambahkan |
-| Planner | Actual service queries memakai seek, tanpa temp sort pada group/keyset yang diuji |
+| Host |19PASS01:38: domain12/UI2/ekspor lama4/pembatalan ekspor UI1 |
+| Analyzer | No issues, 63.8s |
+| Formatter / l10n / PIN |300/0;1482 key,905 referensi,245 ID kebutuhan asli;106 upstream+lisensi sama |
+| Poco F6 |17PASS07:10;891 hash lama sama;controlOff/trueexit0 |
+| DV8910 |17PASS09:42;961 hash lama sama;awake exact/controlOff/trueexit0 |
 
-[Manifest source](evidence/m53-20261026/operational-reports-source-sha256.json)
-dan [pemeriksaan host](evidence/m53-20261026/operational-reports-host-checks.json)
-menyimpan digest source/log, termasuk kegagalan terdahulu. Tidak menyimpan DB,
-PIN, recovery key, APK atau isi data pribadi.
+Native17 = domain12, actual-menu ID/EN320px/text2 UI2, shared legacy export3.
+Uji presisi XLSX tambahan dan UI pembatalan tujuan berada di host entry, tidak
+dihitung sebagai kasus native. Semua native melalui wrapper terisolasi,
+SQLCipher/background paused/verified `.integration` APK/`--no-uninstall`;
+tidak ada reset/downgrade package lain.
 
-Kasus mencakup expiry campuran/alokasi biaya, unknown vs gratis, untracked999 vs
-tracked999, USD2 dengan skala satu juta per minor, jumlah >15digit, leading0/
-formula CSV/XLSX, ekspor melebihi UI20/source100, pembatalan/kunci/pembersihan
-artifact, group129 produk/24 kategori dengan pagination, immutable opname sesudah
-checkout, pembayaran sebagian/reversal/bucket due, retur pending/approval/
-allocation/refund/reversal tanpa perubahan sale/HPP, role Pemilik/Gudang/terkunci,
-dan ID/EN320px/text2 termasuk kunci/unlock serta ekspor scope.
+[Manifest final](evidence/m53-20261026/operational-reports-cursor-source-sha256.json),
+[host final](evidence/m53-20261026/operational-reports-cursor-checks.json),
+[Poco final](evidence/m53-20261026/operational-reports-cursor-poco.json),
+[DV final](evidence/m53-20261026/operational-reports-cursor-dv.json).
 
-## Native terisolasi — sedang berjalan
+Kasus mencakup expiry campuran, alokasi carrying pool, unknown/gratis,
+untracked999/tracked999, USD2 (1e6 per MINOR), nilai >15digit, leading0/formula,
+scope melebihi UI20/source100, pembatalan/kunci/partial cleanup,129 produk/24group,
+opname setelah checkout nyata, payment/reversal/due buckets, kredit/retur/refund
+tanpa perubahan sale/HPP, role denial, archived debt2000/noDue, actual navigation
+dan owner re-unlock. Ledger valid52 pembayaran/51 reversal dengan UUID sama
+lintas tabel menghasilkan103 kejadian,52000 original/51000 reversal/net1000/
+sisa9000,103 identitas unik di seluruh halaman dan CSV.
 
-Target `integration_test/m53_operational_reports_test.dart`:16 kasus koheren
-(domain11/UI2/ekspor lama3), SQLCipher, background paused, wrapper
-`tools/test_m51_android.ps1` → `tools/test_android.ps1`. Tidak ada bare integration
-atau uninstall/downgrade/reset package operasional.
+## Interval historis dan kegagalan yang diselesaikan
 
-| Perangkat | Status |
-| --- | --- |
-| Poco F6 `7f0edea0` awal |15PASS/1FAIL5:21,851 hash lama sama/controlOff/trueexit1; mock fixture menghalangi native unlock |
-| Poco F6 review |16PASS5:25/869 hash lama sama/controlOff/trueexit0, review source695 |
-| DV8910 `.101:5555` |16PASS7:09/927 hash lama sama/awake exact/controlOff/trueexit0, review source695 |
+Source awal695 host18PASS1:35, nativePoco15PASS1mockFAIL5:21/851hashsama. Fixture
+mock dinonaktifkan ketika PIN/crypto native nyata berjalan; host review4PASS23s
+dan full16 Poco5:25/869hashsama +DV7:09/927hashsama/awakeexact. UI final696 awal
+nativePoco0PASS2FAIL1:11/887hashsama karena guarded expect di callback pump;
+expectSync mempertahankan asersi, host2PASS22s/analyze106,5s dan PocoUI2PASS1:29/
+889hashsama. Semua interval controlOff dan trueexit sudah ditutup.
 
-Tunggu trueexit/finally/hash data lama/controlOff dan DV awake exact; passing case
-sebelum finally bukan preservation proof. Source tidak boleh berubah selama run.
-Input UI dan tujuan ekspor sintetis; tidak mengklaim keyboard OEM, touch fisik,
-kertas/scanner atau penulisan dokumen SAF sungguhan. Waktu native bukan benchmark
-ARM32 terisolasi dan tidak menetapkan CCTV sebagai penyebab perlambatan.
+UI juga menemukan parent laporan merevoke PIN verification lewat refresh commit
+locked; actual-menu repro0PASS1FAIL11s, diperbaiki dan dicakup final17. Kasus uang
+valid cross-table UUID mereproduksi103→102 (host0PASS1FAIL5s); fixedcase1PASS5s,
+kemudian coherent final19/17 di atas. Fixture telepon pelanggan lama mengikuti
+aturan wajib baru. ARB mengikuti camelCase/metadata berpasangan; helper reveal/
+real-IO readiness menghindari lazy header/pumpAndSettle false failures.
 
-## Kegagalan yang diperbaiki
+Metadata lama/source/log digest tetap tersimpan di prefix operational-reports-*;
+tidak ditimpa atau dijumlahkan sebagai kasus unik final. Final17 supersedes
+interval16/UI2 untuk semua source terbaru. Tidak ada DB/key/PIN/APK/log mentah
+atau data pribadi di evidence Git.
 
-Fixture ekspor M5.1 lama belum memasukkan telepon pelanggan yang kini wajib;
-hanya fixture diperbaiki. UI awal memakai header lazy di luar cache sebagai
-saksi readiness; helper reveal diperbaiki. Test menemukan refresh commit ketika
-route terkunci dapat membatalkan autentikasi PIN yang sedang commit; runtime
-sekarang memeriksa Pemilik/route aktif, lalu refresh saat kembali. Route-return
-`pumpAndSettle` tidak memberi IO nyata pada DB/indikator; diganti bounded readiness.
-ARB baru sempat memakai snake_case dan switch multiline lama tertinggal sesudah
-rename; kini camelCase + metadata berpasangan lulus audit. Final18 lulus.
+Input UI dan tujuan ekspor sintetis; tidak mengklaim keyboard OEM/touch fisik,
+kertas/scanner atau penulisan dokumen SAF sungguhan. Setelah commit/push F3,
+lanjut G retensi/reset/portable restore dan H handoff.100/50 serta first-run
+`.skybee` hanya H setelah backup/recovery data lama terverifikasi.
 
-Index saja menghilangkan temp sort, tetapi row-value expression keyset masih
-SCAN. Equality-group+ID-range dan next-group-range membuktikan SEARCH pada query
-yang benar-benar dipakai service. Pada batas group maksimal dua source read
-mengisi100 baris, bukan banyak panggilan kecil per barang.
-
-## Berikutnya
-
-Selesaikan dua interval native dan kurasi, tutup F3/commit/push, kemudian G
-retensi/reset/portable restore serta H handoff. Pengosongan `.skybee` dan contoh
-100 produk/50 transaksi hanya H sesudah backup terenkripsi dan material
-pemulihan data lama terverifikasi; bukan bagian pengujian F3 ini.
-
-Review native pertama mengubah hanya test/support/m51_report_export_suite.dart:
-mock dinonaktifkan saat PIN/snapshot native nyata, lalu dipasang lagi untuk
-penolakan tujuan ekspor. Assertions sama; host review4PASS23s. Produksi dan
-seluruh fixture F3 lain identik. Manifest review terpisah dari manifest awal;
-jumlah native16 karena uji presisi XLSX tambahan hanya di entry host.
-
-Review fixture host4PASS23s/analyzer155,2s bersih;
-[evidence review](evidence/m53-20261026/operational-reports-review-checks.json),
-[native Poco review](evidence/m53-20261026/operational-reports-poco.json), dan
-[interval awal gagal](evidence/m53-20261026/operational-reports-poco-initial.json)
-berdiri sendiri. Review UI filter setelah DV tetap harus selesai sebelum F3
-ditutup: label kosong harus Semua, dan filter tersembunyi tidak masuk scope
-ekspor sebagai filter yang diterapkan. Tidak ada perubahan SQL/domain direncanakan.
-
-Full16 kedua perangkat sudah selesai, DV awake pulih persis;
-[evidence DV](evidence/m53-20261026/operational-reports-dv.json). Review UI final
-masih berjalan: Semua vs pilihan tertentu, arsip supplier dan scope filter aktif.
-Navigasi melalui ReportsScreen asli menemukan refresh parent saat PIN commit
-yang merevoke unlock; host mereproduksi0PASS1FAIL11s, sesudah guard2PASS22s.
-Fixture final memakai utang riil supplier arsip2000/no due. SQL/domain/math tidak
-berubah. Host/analyze/focused UI2 native final harus ditutup sebelum F3 commit.
-
-Final UI host2PASS22s/analyze10,3s bersih/format300/1/l10n1482/905/245/PIN106.
-[Manifest final filter696](evidence/m53-20261026/operational-reports-filter-source-sha256.json)
-dan [checks final filter](evidence/m53-20261026/operational-reports-filter-checks.json)
-memuat11 file delta, tanpa perubahan SQL/domain/math. Final UI menguji menu asli
-ReportsScreen serta utang riil supplier arsip2000/no due. Focused UI2 Poco RUNNING
-di build/m53-operational-filter-poco-20261030-20261030-023430 (session43863); DV2 berikutnya. Full16 snapshot sebelumnya
-dan finalUI2 adalah interval berbeda, bukan klaim satu fullrun source696.
-
-**Review cursor setelah interval di atas:** finalUI2 Poco retry PASS1:29/889
-hashsama/controlOff/trueexit0. Konflik expect di callback pump diperbaiki menjadi
-expectSync tanpa perubahan produksi/asersi; initial0PASS2FAIL1:11/887hashsama
-tersimpan. Kemudian kasus ledger legacy valid menemukan cursor UNION kehilangan
-satu dari103 kejadian ketika ID sama lintas tabel dan memotong batas100. Repro
-0PASS1FAIL5s; sesudah (kind,id) fixedcase1PASS5s:103 events,52000 original/51000
-reversal/net1000/sisa9000, seluruh UI20 dan CSV. Reader berubah sesudah full16
-lama, sehingga FULL17 source cursor baru wajib kedua perangkat sebelum F3 tutup;
-focusedDVUI2 saja tidak cukup dan digantikan full17. Host final19 sedang berjalan.
+Run DV 30 Oktober terputus setelah +13 tanpa hasil akhir/finally. Pada resume,
+943 hash fixture lama masih sama; pengaturan awake dipulihkan persis. Status
+run asli tetap INTERRUPTED_UNVERIFIED, bukan PASS. Percobaan resume pertama
+ditolak guard sebelum build/install karena flag background-paused belum diberikan;
+isolasi hash sama dan awake dipulihkan. Run terpisah dengan flag yang benar pada
+1 November menghasilkan final17PASS9:42/961hashsama/controlOff/trueexit0 di atas.
+[Bukti run terputus](evidence/m53-20261026/operational-reports-cursor-dv-interrupted.json).

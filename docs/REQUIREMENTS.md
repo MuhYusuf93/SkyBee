@@ -1,5 +1,19 @@
 # Matriks persyaratan
 
+1 November — F3 schema37 DITUTUP: coherent host19PASS01:38/
+analyze63.8s bersih/format300/0/l10n1482/905/245/PIN106match.
+Final native17 source696 sama: PocoPASS07:10/891hashlama sama,
+DV PASS09:42/961hashlama sama/awakeexact, semua controlOff/trueexit0.
+Source terakhir mencakup cursor(kind,id)103event/tie source100/UI20/CSV, picker
+Semua/arsip/hidden scope dan parent PIN refresh guard lewatmenu nyata. Tidak
+mengandalkan full16/UI2 historis untukklaim final. [Laporan F3](M53_OPERATIONAL_REPORTS_REPORT.md).
+Normalcommit/push checkpoint F3 lalu G1retensi, G2reset/keyjournal, G3portable
+restore, Hhandoff. Checkpoint bukan stop. .skybee/ordinary belum update/reset/
+reseed;100/50 hanya H setelah backup dan recovery lama verified. G audit privat
+m53-g-concrete-audit-20261030.md, g-retention-contract-candidate.md,
+g-reset-key-recovery-details.md dan g-addendum-exact-leases-and-inspection.md.
+Tidak ada pertanyaan tertunda. M5.4/M5.5/M6 tetap di luar tahap aktif.
+
 30 Oktober — F3 FINAL cursor source696 frozen. Poco FINAL17PASS7:10/891hashlama sama/controlOff/trueexit0 sudahdikurasi.
 Host19PASS1:38/analyze63,8s
 bersih/format300/0/l10n1482/905/245/PIN106match. Kasus ledger valid cross-table
@@ -341,7 +355,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-C | Pencarian/popularitas, uang cepat, member/piutang | Tender21 host/native17 per perangkat PASS. Member22 host20/regresi79/native20 per perangkat PASS. Search23 host51 (17search)/M52focus1/native13 per DV/Poco PASS;680/611hash lama cocok. Lihat M53_TENDER_REPORT, M53_MEMBER_REPORT, M53_SEARCH_REPORT |
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
 | M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Schema31–34 E3 core: host51PASS/final15PASS(overlap), Poco44PASS1permissionSKIP/726hashsama, DV45PASS/802hashsama/awakeexact/controlOff; source652-platform historis. Post-review scoped reminder event/next visit date host20 + analyze bersih/source652-post-review, delta jadwal11/UI2 nativePoco/DV lulus padaF1; runtime5 tetapbukti host. Bukti supplier-e3-{poco-initial,dv}.json dan supplier-schedules-post-review-checks.json. F/G/H tetap aktif. |
-| M53-F | Label/struk wajib dan laporan/ekspor baru | F1 QR35 selesai software perinterval: host46/printer33, nativeawal Poco42/DV41+1helperFAIL, UIreview2 masing-masing PASS/815&891hashsama; offset9 masing-masing PASS/817&893hashsama, semua controlOff/DVawakeexact. Laporan M53_QR_LABELS_REPORT.md menjelaskan manifest awal/review/offset dan failure teratasi; tidak klaim satufullrun atau fisik. F2 schema36 selesai: host43/final16/analyze lulus, native41PocoPASS7:54/817hashsama, DV41PASS11:27/893hashsama/awakeexact, semua controlOff/source683; F3 WIP schema37, lima indeks aditif/planner seek dan hash tabel lama sama; hostdomain11 + ekspor4 lulus, UI/l10n final dan native dua perangkat masih diperiksa. Lihat keputusan M53_OPERATIONAL_REPORTS.md; G/H tetap wajib. |
+| M53-F | Label/struk wajib dan laporan/ekspor baru | F1 QR35 selesai software perinterval (laporan M53_QR_LABELS_REPORT.md), tanpa klaim scanner/kertas fisik. F2 schema36 selesai host43/final16/native41 tiap perangkat, datahashsama/controlOff (M53_RECEIPT_POLICY_REPORT.md). F3 schema37 selesai FINAL coherent host19PASS01:38/analyze63.8s bersih/l10n1482, native17PocoPASS07:10/891hashsama dan17DVPASS09:42/961hashsama/awakeexact, source696sama/controlOff. Cursor103events/UI20/source100/CSV, archived debt2000/noDue, actual-menu lock/unlock valid. Semua bukti/failure historis pada M53_OPERATIONAL_REPORTS_REPORT.md. G/H tetap wajib. |
 | M53-G | Retensi/reset fixture/backup portable semua penambahan | TODO |
 | M53-H | Build/push/handoff baru terinstal .skybee dengan backup lama dan seed100/50 | TODO setelah E/F/G lengkap. Ralat langsung pengguna mengotorisasi reset .skybee pada akhir saja: backup lama verified dahulu, onboarding pending, 100produk beragam/beberapa supplier/pelanggan/50transaksi. Belum ada update/reset/reseed. Build ordinary/release/handoff M5.3 dan dua startup belum dilakukan; artefak lama bukan bukti source31 |
 

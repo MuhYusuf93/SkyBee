@@ -1,7 +1,7 @@
 # F3 — laporan stok, supplier, dan ekspor
 
 30 Oktober 2026. Acuan permintaan §9; melanjutkan F2 `b0cfc60` yang sudah
-dipush. Implementasi masih diperiksa; belum handoff dan belum native F3.
+dipush. Software F3 selesai dengan coherent host19 dan native17 kedua perangkat, source696 sama. G/H masih aktif; belum handoff akhir.
 
 Pemilik saja membuka laporan konsolidasi maupun ekspor. Service membaca satu
 snapshot SQL, memeriksa grant/epoch dan generation, mengambil paling banyak100

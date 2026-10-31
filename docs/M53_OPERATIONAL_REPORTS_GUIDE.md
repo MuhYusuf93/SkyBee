@@ -62,3 +62,12 @@ Import CSV identifier/money columns as text to preserve zeros. Formula-like
 prefixes are neutralized with an apostrophe. No PIN/key is exported. Cancellation
 removes the owned staging artifact; an already written destination remains the
 user's document.
+
+Filter kosong berlabel Semua supplier/kategori. Picker readonly menampilkan
+ID untuk membedakan nama sama dan menyediakan pilihan arsip. Identitas kejadian
+ekspor adalah pasangan group_id (jenis kejadian) +row_id; ID yang sama pada
+tabel original dan reversal tetap dua kejadian berbeda.
+
+Empty filters mean All suppliers/categories. The read-only picker shows IDs and
+an archived toggle. Export event identity is the pair group_id (event kind) +
+row_id; a shared ID in original/reversal tables still represents two events.
