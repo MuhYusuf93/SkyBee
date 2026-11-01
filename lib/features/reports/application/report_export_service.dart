@@ -1,4 +1,6 @@
 import 'dart:io';
+import '../../../data/database/database_gate.dart';
+import 'report_work_gate.dart';
 import 'package:path/path.dart' as p;
 import 'package:uuid/uuid.dart';
 import '../../../core/domain/value_types.dart';
@@ -49,7 +51,8 @@ final class ReportArtifact {
 /// One protected read transaction freezes all sections. SQL pages and file I/O
 /// remain service-owned. No network or SAF is performed while the DB is leased.
 final class ReportExportService {
-  const ReportExportService(this.database, this.access);
+  const ReportExportService(this.database, this.access, {this.workGate});
+  final DatabaseGate? workGate;
   final DatabaseCoordinator database;
   final ManagementService access;
   static String decimal(int minor, int scale) {
@@ -58,6 +61,29 @@ final class ReportExportService {
   }
 
   Future<ReportArtifact> create(
+    ReportFilter filter, {
+    required bool xlsx,
+    required ReportExportControl control,
+    void Function(int rows)? progress,
+    Future<void> Function()? testPage,
+  }) {
+    final grant = access.generation, generation = database.generation;
+    return (workGate ?? defaultReportWorkGate()).run(() async {
+      await access.authorizeCurrent();
+      if (grant != access.generation || generation != database.generation) {
+        throw StateError('reportSessionChanged');
+      }
+      return _create(
+        filter,
+        xlsx: xlsx,
+        control: control,
+        progress: progress,
+        testPage: testPage,
+      );
+    });
+  }
+
+  Future<ReportArtifact> _create(
     ReportFilter filter, {
     required bool xlsx,
     required ReportExportControl control,

@@ -1,5 +1,26 @@
 # Matriks persyaratan
 
+<!-- M53_ACTIVE_G2B_START -->
+1 November2026 â€” G2B runtime ResetToko DITUTUP, schema37/review source725.
+Historical host127PASS01:56 + delta3files focused5PASS/analyze82,9s bersih/format3/0,
+l10n1531/939/245/PIN106match, JavaJUnit4PASS43ms unchanged.
+Review native36 PocoPASS07:49/1199hash lama sama, DV PASS10:27/
+1100hash lama sama/awakeexact; controlOff/trueexit0 keduanya, source sama.
+AwalPoco29PASS7FAIL09:30/1066hashsama/controlOff/trueexit1 disimpan: Android public
+alias ditolak dibandingcanonicalroot. Fix native private preflight sebelumcleanup
++resolveddirectory konsisten, nofollow/allowlist tetap; review36 kedua perangkat
+lulus termasuk actualUIIDEN finalcancel/locked dirtyBack/freshPIN/genuinewizard.
+[Laporan G2B](M53_STORE_RESET_REPORT.md). G2A sudahpush50b0b3d. Commit/pushG2B,
+kemudian G3 full portable Aâ€“F/Drive resumed snapshot validation +localcache sanitize,
+lalu H handoff100/50. Checkpoint bukanstop. Native sudahtidakaktif;sourcebolehdiedit.
+Private auditG3: g3-resume-validation-audit.md, g3-restore-local-cache-audit.md.
+H: h-shadow-before-finish-addendum.md +h-launcher-audit-20261101.md, belumimplementasi.
+Tidakada ordinary/.skybee update/reset/reseed. Hbaru sesudahseluruhM5.3 +backup/
+externalrecovery verified. Currency/tracking/PIN pilihanuser dipertahankan dan
+wizardguard tetap. Gemini_/gemini2_ diabaikan. Tidakada pertanyaan tertunda.
+<!-- M53_ACTIVE_G2B_END -->
+
+
 <!-- M53_ACTIVE_G2_START -->
 1 November 2026 — G2A fondasi rotasi kunci DITUTUP, schema37/source715.
 Host76PASS01:16/analyze108,5s bersih/format620/0/l10n1512/926/245/PIN106match.
@@ -392,7 +413,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-D | Sesi dan pecahan kas, audit, jurnal laci | Source24 host20/native20 per DV/Poco PASS;693/624 hash lama cocok, source516 sama/controlOff. Notes/audit, owner freshPIN/history, atomic payment/refund, unknown opening/closure, backup replay. Lihat M53_CASH_DRAWER_REPORT; supplier E/ekspor F/portable G berikutnya |
 | M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Schema31–34 E3 core: host51PASS/final15PASS(overlap), Poco44PASS1permissionSKIP/726hashsama, DV45PASS/802hashsama/awakeexact/controlOff; source652-platform historis. Post-review scoped reminder event/next visit date host20 + analyze bersih/source652-post-review, delta jadwal11/UI2 nativePoco/DV lulus padaF1; runtime5 tetapbukti host. Bukti supplier-e3-{poco-initial,dv}.json dan supplier-schedules-post-review-checks.json. F/G/H tetap aktif. |
 | M53-F | Label/struk wajib dan laporan/ekspor baru | F1 QR35 selesai software perinterval (laporan M53_QR_LABELS_REPORT.md), tanpa klaim scanner/kertas fisik. F2 schema36 selesai host43/final16/native41 tiap perangkat, datahashsama/controlOff (M53_RECEIPT_POLICY_REPORT.md). F3 schema37 selesai FINAL coherent host19PASS01:38/analyze63.8s bersih/l10n1482, native17PocoPASS07:10/891hashsama dan17DVPASS09:42/961hashsama/awakeexact, source696sama/controlOff. Cursor103events/UI20/source100/CSV, archived debt2000/noDue, actual-menu lock/unlock valid. Semua bukti/failure historis pada M53_OPERATIONAL_REPORTS_REPORT.md. G/H tetap wajib. |
-| M53-G | Retensi/reset fixture/backup portable semua penambahan | G1 selesai edf315e; G2A source715 selesai host76/analyze bersih/native67 Poco 08:56, DV 12:03, seluruh hash lama sama/controlOff/awake exact. Laporan M53_KEY_ROTATION_REPORT.md. G2B runtime reset dan G3 portable masih wajib, H belum dilakukan. |
+| M53-G | Retensi/reset fixture/backup portable semua penambahan | G1, G2A dan G2B selesai; G2B review725 host127historis+5review/analyze82,9clean/native36 Poco07:49, DV10:27, semua hash lama sama/controlOff/awakeexact. M53_STORE_RESET_REPORT.md memuat failure/rootfix/retest. G3 full portable masih wajib, H belum dilakukan; data pengguna belum direset. |
 | M53-H | Build/push/handoff baru terinstal .skybee dengan backup lama dan seed100/50 | TODO setelah E/F/G lengkap. Ralat langsung pengguna mengotorisasi reset .skybee pada akhir saja: backup lama verified dahulu, onboarding pending, 100produk beragam/beberapa supplier/pelanggan/50transaksi. Belum ada update/reset/reseed. Build ordinary/release/handoff M5.3 dan dua startup belum dilakukan; artefak lama bukan bukti source31 |
 
 Koreksi P25-01 tanggal25Oktober: default6 profil tanpa marker versi harus efektif3 setelah buka ulang. Nilai lama lainnya serta semua pilihan manual tersimpan versi baru tetap; job historis tidak diubah. Kebijakan ini menggantikan frasa bottom lama tetap di histori berikut. Pemeriksaan/handoff+12 selesai; host44/native1 dan profil aktual cold restart PASS.

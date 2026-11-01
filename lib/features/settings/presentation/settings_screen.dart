@@ -1,5 +1,6 @@
 import '../../../core/presentation/form_exit_guard.dart';
 import 'low_price_settings_screen.dart';
+import '../../store_reset/presentation/store_reset_screen.dart';
 import 'feature_settings_screen.dart';
 import '../../../app/app_version.dart';
 import 'package:kasir_app/l10n/localized_notice.dart';
@@ -126,8 +127,10 @@ class _SettingsFormState extends State<_SettingsForm> {
                     (const ReceiptPolicyScreen(), 'm53ReceiptPolicy'),
                     (const AlertsScreen(), 'm5Alerts'),
                     (const BackupSettingsScreen(), 'm5Backup'),
+                    (const StoreResetScreen(), 'm53ResetTitle'),
                   ])
                     ListTile(
+                      key: ValueKey('settings-${destination.$2}'),
                       title: Text(tr(context, destination.$2)),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => Navigator.push(

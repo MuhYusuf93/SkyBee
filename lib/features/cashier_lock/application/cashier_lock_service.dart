@@ -34,7 +34,8 @@ final class CashierLockService {
     this.database,
     this.management, {
     this._hasher = const PinHasher(),
-  });
+  }) : _storeGeneration = database.generation;
+  final int _storeGeneration;
   final DatabaseCoordinator database;
   final ManagementService management;
   final PinHasher _hasher;
@@ -149,6 +150,9 @@ final class CashierLockService {
   }
 
   Future<CashierOperationProof> _begin(DatabaseExecutor db) async {
+    if (_storeGeneration != database.generation) {
+      throw const AppError('m53CashierLocked');
+    }
     final value = await policyOn(db);
     _adopt(value);
     if (!value.enabled) {

@@ -580,7 +580,23 @@ final class BackupService {
 
   /// Decryption is a separate inspect step. Callers must show this metadata and
   /// obtain explicit replacement/draft confirmation before invoking restore.
-  Future<BackupInspection> inspect(File archive, String enteredCode) async {
+  Future<BackupInspection> inspect(File archive, String enteredCode) {
+    final grant = access.generation, generation = database.generation;
+    return workGate.run(() async {
+      await access.authorizeCurrent();
+      if (grant != access.generation || generation != database.generation) {
+        throw StateError('backupSessionChanged');
+      }
+      return _inspect(archive, enteredCode, grant, generation);
+    });
+  }
+
+  Future<BackupInspection> _inspect(
+    File archive,
+    String enteredCode,
+    int grant,
+    int generation,
+  ) async {
     await access.authorizeCurrent();
     final code = normalizeCode(enteredCode);
     if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
@@ -589,7 +605,10 @@ final class BackupService {
     final directory = Directory(
       p.join(p.dirname(database.databasePath), 'm5_restore_${ids.v4()}'),
     );
-    final candidate = await retention.protectLocal(archive);
+    final candidate = await retention.protectLocal(
+      archive,
+      workLeaseHeld: true,
+    );
     try {
       final originalSha = await DurablePromotion.digest(archive);
       final free = await _free(p.dirname(database.databasePath));
@@ -646,6 +665,9 @@ final class BackupService {
         await validated.close();
       }
       await access.authorizeCurrent();
+      if (grant != access.generation || generation != database.generation) {
+        throw StateError('backupSessionChanged');
+      }
       if (await DurablePromotion.digest(archive) != originalSha) {
         throw StateError('backupSourceChanged');
       }
@@ -658,9 +680,13 @@ final class BackupService {
         ),
         summary,
         candidate: candidate,
+        disposeResources: () => workGate.run(() async {
+          if (await directory.exists()) await directory.delete(recursive: true);
+          await candidate.release(workLeaseHeld: true);
+        }),
       );
     } catch (_) {
-      await candidate.release();
+      await candidate.release(workLeaseHeld: true);
       if (await directory.exists()) await directory.delete(recursive: true);
       rethrow;
     }
@@ -877,6 +903,7 @@ final class BackupInspection {
     this.databaseSha256,
     this.summary, {
     this.candidate,
+    this.disposeResources,
   });
   final Directory directory;
   final BackupManifest manifest;
@@ -884,6 +911,7 @@ final class BackupInspection {
   final String databaseSha256;
   final Map<String, Object?> summary;
   final RetentionCandidate? candidate;
+  final Future<void> Function()? disposeResources;
   Future<void> verify() async {
     if (await DurablePromotion.digest(
           File(p.join(directory.path, 'database.db')),
@@ -902,6 +930,7 @@ final class BackupInspection {
   }
 
   Future<void> dispose() async {
+    if (disposeResources != null) return disposeResources!();
     if (await directory.exists()) await directory.delete(recursive: true);
     await candidate?.release();
   }

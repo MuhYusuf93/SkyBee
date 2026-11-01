@@ -5097,4 +5097,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53RetentionReload => 'Reload';
+
+  @override
+  String get m53ResetTitle => 'Delete all store data on this device';
+
+  @override
+  String get m53ResetWarning =>
+      'All store data on this device will be deleted, including products, transactions, customers, and settings. This cannot be undone. Create and check a backup first if you still need this data.';
+
+  @override
+  String get m53ResetArchivesKept =>
+      'Local and Drive backup archives are kept. Google accounts, device biometric enrollment, and other apps are unchanged. The store returns to initial setup with a new identity and key.';
+
+  @override
+  String get m53ResetRecoveryReminder =>
+      'Save the portable backup recovery code outside the app and check your copy before deleting the store. Your PIN is not the backup recovery code. Restoring a backup requires its matching code.';
+
+  @override
+  String get m53ResetMakeBackup => 'Create and check a backup';
+
+  @override
+  String get m53ResetSafetyBackup =>
+      'Create a final local backup before deletion';
+
+  @override
+  String get m53ResetRecoveryRequired =>
+      'Set up a recovery code in the backup menu to create a local backup. Google Drive is also optional in that menu.';
+
+  @override
+  String get m53ResetRecoveryAcknowledged =>
+      'I have saved and checked a copy of the recovery code outside the app.';
+
+  @override
+  String get m53ResetNoRecoveryAcknowledged =>
+      'I understand that no backup recovery code is currently configured. Older backups still need their own code.';
+
+  @override
+  String get m53ResetNoBackupAcknowledged =>
+      'I choose to continue without a final local backup and understand that data not backed up will be lost.';
+
+  @override
+  String get m53ResetAction => 'Delete store data';
+
+  @override
+  String get m53ResetFinalTitle => 'Delete all store data now?';
+
+  @override
+  String get m53ResetChanged =>
+      'The store has changed. Go back and review it again before deletion.';
+
+  @override
+  String get m53ResetConfirmationRequired =>
+      'Review the backup, recovery code, and deletion confirmations first.';
+
+  @override
+  String get m53ResetComplete =>
+      'Store data has been deleted. Start setting up a new store.';
+
+  @override
+  String get m53ResetOutcomeCheck =>
+      'Check the deletion outcome before continuing. If it failed before commit, the old store data is retained.';
+
+  @override
+  String get m53ResetBack => 'Back';
+
+  @override
+  String get m53ResetRetry => 'Reload';
+
+  @override
+  String get m53SetupRequired => 'Finish setting up the store first.';
 }

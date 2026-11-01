@@ -9169,6 +9169,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reload'**
   String get m53RetentionReload;
+
+  /// Store reset: m53ResetTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all store data on this device'**
+  String get m53ResetTitle;
+
+  /// Store reset: m53ResetWarning
+  ///
+  /// In en, this message translates to:
+  /// **'All store data on this device will be deleted, including products, transactions, customers, and settings. This cannot be undone. Create and check a backup first if you still need this data.'**
+  String get m53ResetWarning;
+
+  /// Store reset: m53ResetArchivesKept
+  ///
+  /// In en, this message translates to:
+  /// **'Local and Drive backup archives are kept. Google accounts, device biometric enrollment, and other apps are unchanged. The store returns to initial setup with a new identity and key.'**
+  String get m53ResetArchivesKept;
+
+  /// Store reset: m53ResetRecoveryReminder
+  ///
+  /// In en, this message translates to:
+  /// **'Save the portable backup recovery code outside the app and check your copy before deleting the store. Your PIN is not the backup recovery code. Restoring a backup requires its matching code.'**
+  String get m53ResetRecoveryReminder;
+
+  /// Store reset: m53ResetMakeBackup
+  ///
+  /// In en, this message translates to:
+  /// **'Create and check a backup'**
+  String get m53ResetMakeBackup;
+
+  /// Store reset: m53ResetSafetyBackup
+  ///
+  /// In en, this message translates to:
+  /// **'Create a final local backup before deletion'**
+  String get m53ResetSafetyBackup;
+
+  /// Store reset: m53ResetRecoveryRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Set up a recovery code in the backup menu to create a local backup. Google Drive is also optional in that menu.'**
+  String get m53ResetRecoveryRequired;
+
+  /// Store reset: m53ResetRecoveryAcknowledged
+  ///
+  /// In en, this message translates to:
+  /// **'I have saved and checked a copy of the recovery code outside the app.'**
+  String get m53ResetRecoveryAcknowledged;
+
+  /// Store reset: m53ResetNoRecoveryAcknowledged
+  ///
+  /// In en, this message translates to:
+  /// **'I understand that no backup recovery code is currently configured. Older backups still need their own code.'**
+  String get m53ResetNoRecoveryAcknowledged;
+
+  /// Store reset: m53ResetNoBackupAcknowledged
+  ///
+  /// In en, this message translates to:
+  /// **'I choose to continue without a final local backup and understand that data not backed up will be lost.'**
+  String get m53ResetNoBackupAcknowledged;
+
+  /// Store reset: m53ResetAction
+  ///
+  /// In en, this message translates to:
+  /// **'Delete store data'**
+  String get m53ResetAction;
+
+  /// Store reset: m53ResetFinalTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all store data now?'**
+  String get m53ResetFinalTitle;
+
+  /// Store reset: m53ResetChanged
+  ///
+  /// In en, this message translates to:
+  /// **'The store has changed. Go back and review it again before deletion.'**
+  String get m53ResetChanged;
+
+  /// Store reset: m53ResetConfirmationRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Review the backup, recovery code, and deletion confirmations first.'**
+  String get m53ResetConfirmationRequired;
+
+  /// Store reset: m53ResetComplete
+  ///
+  /// In en, this message translates to:
+  /// **'Store data has been deleted. Start setting up a new store.'**
+  String get m53ResetComplete;
+
+  /// Store reset: m53ResetOutcomeCheck
+  ///
+  /// In en, this message translates to:
+  /// **'Check the deletion outcome before continuing. If it failed before commit, the old store data is retained.'**
+  String get m53ResetOutcomeCheck;
+
+  /// Store reset: m53ResetBack
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get m53ResetBack;
+
+  /// Store reset: m53ResetRetry
+  ///
+  /// In en, this message translates to:
+  /// **'Reload'**
+  String get m53ResetRetry;
+
+  /// Store reset: m53SetupRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Finish setting up the store first.'**
+  String get m53SetupRequired;
 }
 
 class _AppLocalizationsDelegate

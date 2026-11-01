@@ -35,6 +35,12 @@ final class KasirPlatform {
   /// The same fixture namespace and native name validation apply as to reads.
   Future<void> removeSecret(String name) =>
       channel.invokeMethod('removeSecret', {'name': _secretName(name)});
+
+  /// Reset clears only namespaced resumable-upload aliases, never archives.
+  Future<void> clearResetUploadSessions() => channel.invokeMethod(
+    'clearResetUploadSessions',
+    {'prefix': _secretName('drive-session-')},
+  );
   Future<String> acquire() => call('acquire');
   Future<void> release(String token) =>
       channel.invokeMethod('release', {'token': token});

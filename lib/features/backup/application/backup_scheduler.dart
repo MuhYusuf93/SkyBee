@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart' show getDatabasesPath;
 import '../../../data/database/schema.dart';
+import '../../onboarding/data/onboarding_store.dart';
 import '../../../demo/skybee_background_guard.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -260,6 +261,9 @@ void m5BackgroundDispatcher() {
     }
     final database = await DatabaseCoordinator.android(headless: true);
     try {
+      // A pre-reset callback must not initialize jobs/consent/business in a
+      // fresh store. Old already-open engines retain an invalid old SQL key.
+      if (await database.read(OnboardingStore.needsSetup)) return true;
       final app = AppServices(database),
           notification = AndroidStockNotifications(
             FlutterLocalNotificationsPlugin(),

@@ -642,3 +642,10 @@ hanya untuk fingerprint/cipher/store yang cocok setelah cleanup shadow terputus.
 151. Reset file baru tanpa cleanup consent/recovery/worker tidak boleh bootstrap.
 Fail closed sampai handler idempotent terpasang; same-store replace bukan reset.
 Jangan memperlakukan pengujian fondasi key journal sebagai bukti runtime wipe.
+152. Android public app-data path dapat berbeda ejaan dengan hasil canonical
+(/data/user/0 versus /data/data). Equality spelling bukan bukti ownership. G2B
+source725 mereproduksi resetRootInvalid5cases dan UIwizardwait2; startup failclosed
+benar, tetapi valid storage ditolak. Lakukan native canonical private preflight
+sebelum cleanup, iterate resolved root konsisten, tetap no-follow/allowlist child.
+Modeled alias host adalah unit proof; native Android tetap diperlukan untuk
+membuktikan actual storage alias. Simpan run gagal sebelum review source berubah.

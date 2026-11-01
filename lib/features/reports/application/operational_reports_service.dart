@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import '../../../data/database/database_gate.dart';
+import 'report_work_gate.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
@@ -22,7 +24,8 @@ part 'operational_report_values.dart';
 /// Owner-only read models. Bounded keyset reads share one snapshot, calendar
 /// cutoff and ledger projections; no current price ever rewrites sale history.
 final class OperationalReportsService {
-  const OperationalReportsService(this.database, this.access);
+  const OperationalReportsService(this.database, this.access, {this.workGate});
+  final DatabaseGate? workGate;
   final DatabaseCoordinator database;
   final ManagementService access;
 
@@ -276,6 +279,29 @@ final class OperationalReportsService {
   /// One protected snapshot includes whole-scope totals, every matching row,
   /// exact integer units, filter definition and capture/timezone metadata.
   Future<ReportArtifact> export(
+    OperationalScope scope, {
+    required bool xlsx,
+    required ReportExportControl control,
+    void Function(int)? progress,
+    Future<void> Function()? testPage,
+  }) {
+    final grant = access.generation, generation = database.generation;
+    return (workGate ?? defaultReportWorkGate()).run(() async {
+      await access.authorizeCurrent();
+      if (grant != access.generation || generation != database.generation) {
+        throw StateError('reportSessionChanged');
+      }
+      return _export(
+        scope,
+        xlsx: xlsx,
+        control: control,
+        progress: progress,
+        testPage: testPage,
+      );
+    });
+  }
+
+  Future<ReportArtifact> _export(
     OperationalScope scope, {
     required bool xlsx,
     required ReportExportControl control,

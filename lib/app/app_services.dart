@@ -10,6 +10,9 @@ import '../features/reports/application/report_export_service.dart';
 import '../features/reports/application/operational_reports_service.dart';
 import '../core/time/store_clock.dart';
 import '../data/database/database_coordinator.dart';
+import '../data/database/database_gate.dart';
+import '../features/reports/application/report_work_gate.dart';
+import '../features/store_reset/application/store_reset_service.dart';
 import '../features/inventory/application/inventory_service.dart';
 import '../features/management/application/management_service.dart';
 import '../features/management/application/strong_biometrics.dart';
@@ -47,10 +50,12 @@ final class AppServices {
     StoreClock? clock,
     StrongBiometrics? biometrics,
     PrinterOutputGate? printerGate,
+    DatabaseGate? reportGate,
     BarcodeCamera Function()? barcodeCameraFactory,
     this.supplierReminderSink,
     this.backupPlatform = const KasirPlatform(),
-  }) : printerGate = printerGate ?? defaultPrinterOutputGate(),
+  }) : reportGate = reportGate ?? defaultReportWorkGate(backupPlatform),
+       printerGate = printerGate ?? defaultPrinterOutputGate(),
        barcodeCameraFactory = barcodeCameraFactory ?? NativeBarcodeCamera.new {
     management = ManagementService(
       database,
@@ -76,6 +81,7 @@ final class AppServices {
   }
   final DatabaseCoordinator database;
   final PrinterOutputGate printerGate;
+  final DatabaseGate reportGate;
   final BarcodeCamera Function() barcodeCameraFactory;
   final SupplierReminderSink? supplierReminderSink;
 
@@ -122,10 +128,15 @@ final class AppServices {
     cashierAccess: cashierLock,
   );
   late final promotions = QuantityPromotionService(database, management);
-  late final reportExport = ReportExportService(database, management);
+  late final reportExport = ReportExportService(
+    database,
+    management,
+    workGate: reportGate,
+  );
   late final operationalReports = OperationalReportsService(
     database,
     management,
+    workGate: reportGate,
   );
   late final printers = PrinterSettingsService(
     database,
@@ -146,6 +157,14 @@ final class AppServices {
     resumePeripherals: printing.resumeAfterRestore,
   );
   late final drive = DriveBackupService(database, management, backups);
+  late final storeReset = StoreResetService(
+    database,
+    management,
+    backups,
+    pausePrinting: printing.pauseForRestore,
+    resumePrinting: printing.resumeAfterRestore,
+    reportGate: reportGate,
+  );
   late final recoveryPrinting = RecoveryPrintService(
     database,
     management,

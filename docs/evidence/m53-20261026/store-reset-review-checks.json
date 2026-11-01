@@ -1,0 +1,46 @@
+{
+  "schema": 37,
+  "sourceFiles": 725,
+  "sourceManifestSha256": "c0ebeeeec3185e25581d68678c2a9bd51553a52c4d3bf040ba8bbb5df39b671c",
+  "sourceMatchedAtCapture": true,
+  "sourceManifestIsHistorical": true,
+  "changedFromInitial725": [
+    "integration_test/m53_store_reset_test.dart",
+    "lib/features/store_reset/application/store_reset_recovery.dart",
+    "test/m53_store_reset_recovery_test.dart"
+  ],
+  "fix": "Resolve canonical root consistently instead of comparing Android public alias spelling; native private-storage preflight precedes cleanup mutations. Strict child no-follow/allowlists and retained archives unchanged. Explicit fresh owned native fixture-root check.",
+  "hostFocused": {
+    "passed": 5,
+    "failed": 0,
+    "elapsed": "00:00",
+    "modeledAliasRegression": true,
+    "notRealWindowsSymlinkClaim": true,
+    "logSha256": "b3f80569afd610aac2fc3d6d20b9173962e144c87472798f5299893ecb53dd8a"
+  },
+  "historicalHost": {
+    "passed": 127,
+    "failed": 0,
+    "elapsed": "01:56",
+    "sourceManifest": "store-reset-source-sha256.json",
+    "full127NotRepeatedForThreeFileReview": true
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 82.9,
+    "logSha256": "a8cdde915ac32056f96f3a48c71c2140e5847f7bd484b6178455a212dbfc39c7"
+  },
+  "formatter": {
+    "focusedFiles": 3,
+    "changed": 0,
+    "logSha256": "e287e944aafa53fc284aeaf29867f88da09161ad1cd7b77b41ce789dfdb80aa1"
+  },
+  "localization": {
+    "pairedKeys": 1531,
+    "staticReferences": 939,
+    "originalRequirementIds": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "javaUnchangedFromInitialJunit4": true,
+  "native": "PENDING full36 Poco then DV on review source. Initial29PASS7FAIL retained with1066 hashes unchanged/controlOff/trueexit1. No .skybee/ordinary update/reset/reseed."
+}

@@ -68,7 +68,7 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
     }
     @Override public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         channel.setMethodCallHandler(null);
-        bluetooth.dispose();picker.detach();reportPicker.detach();
+        bluetooth.dispose();picker.detach();reportPicker.dispose();
         usb.dispose();
         biometrics.dispose();
         // The engine owner drains DB work before detaching. Process death is
@@ -149,6 +149,11 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
             try{Number max=call.argument("maxBytes");picker.pick(result,call.method.equals("pickExport"),privateFile(call.argument("path")),call.argument("mime"),max==null?null:max.longValue(),call.argument("displayName"));}
             catch(Exception error){result.error("document_path_invalid","Invalid private staging path.",null);}return;
         }
+        if(call.method.equals("pauseReportExports")){reportPicker.pause(result);return;}
+        if(call.method.equals("resumeReportExports")){
+            try{reportPicker.resume(call.argument("token"));result.success(true);}
+            catch(Exception error){result.error("report_reset_lease_invalid","Invalid report reset lease.",null);}return;
+        }
         if(call.method.equals("chooseReportExport")){reportPicker.choose(result,call.argument("displayName"),call.argument("mime"));return;}
         if(call.method.equals("cancelReportExport")){reportPicker.cancel(call.argument("token"));result.success(true);return;}
         if(call.method.equals("writeReportExport")){
@@ -166,6 +171,7 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
                     case "key" -> { synchronized (SECRETS) { yield readKey(call.argument("name"), Boolean.TRUE.equals(call.argument("create"))); } }
                     case "saveSecret" -> { synchronized (SECRETS) { writeSecret(call.argument("name"), call.argument("secret")); } yield true; }
                     case "removeSecret" -> { synchronized (SECRETS) { removeSecret(call.argument("name")); } yield true; }
+                    case "clearResetUploadSessions" -> { synchronized (SECRETS) { clearResetUploadSessions(call.argument("prefix")); } yield true; }
                     case "securityInfo" -> { synchronized (SECRETS) { yield securityInfo(); } }
                     case "acquire" -> acquire(call.argument("name"));
                     case "tryAcquire" -> tryAcquire(call.argument("name"));
@@ -323,6 +329,15 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
             throw new IOException("Wrapped secret removal incomplete");
         }
         syncPrivateDirectory(context.getNoBackupFilesDir());
+    }
+    private void clearResetUploadSessions(String prefix) throws Exception {
+        boolean fixture=context.getPackageName().endsWith(".integration");
+        if(prefix==null||!(prefix.equals("drive-session-")||fixture&&prefix.matches("test-m51-[0-9]{10,20}-drive-session-")))throw new IOException("Invalid reset scope");
+        String pattern="secret-"+java.util.regex.Pattern.quote(prefix)+"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(?:[.]bak|[.]new)?";
+        File[] files=context.getNoBackupFilesDir().listFiles();if(files==null)throw new IOException("Reset storage unavailable");
+        Set<String> aliases=new HashSet<>();
+        for(File file:files){if(file.getName().matches(pattern))aliases.add(file.getName().substring(7).replaceFirst("[.](bak|new)$",""));}
+        for(String alias:aliases)removeSecret(alias);
     }
     private synchronized void writeSecret(String name, String value) throws Exception {
         AtomicFile file = secretFile(name);

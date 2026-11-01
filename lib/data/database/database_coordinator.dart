@@ -5,9 +5,18 @@ import 'package:sqflite/sqflite.dart';
 import 'schema.dart';
 import 'database_gate.dart';
 import 'encrypted_database.dart';
+import '../../features/store_reset/application/store_reset_recovery.dart';
+import 'package:kasir_platform/kasir_platform.dart';
+
+enum DatabaseReplacementReason { restore, reset, replace }
 
 final class DatabaseReplacement {
-  const DatabaseReplacement(this.generation, this.succeeded);
+  const DatabaseReplacement(
+    this.generation,
+    this.succeeded, {
+    this.reason = DatabaseReplacementReason.restore,
+  });
+  final DatabaseReplacementReason reason;
   final int generation;
   final bool succeeded;
 }
@@ -94,6 +103,10 @@ final class DatabaseCoordinator {
       gate: const AndroidDatabaseGate(),
       encryption: EncryptedDatabase(
         location,
+        afterKeySelection: StoreResetRecovery(
+          location,
+          const KasirPlatform(),
+        ).complete,
         keyName: databaseName == 'kasir_app.db'
             ? 'database-v1'
             : 'fixture-${databaseName.replaceAll('.', '-')}',
@@ -231,22 +244,26 @@ final class DatabaseCoordinator {
 
   /// Maintenance owns the gate after closing the live connection. The callback
   /// must use private staging connections and must not re-enter this coordinator.
-  Future<T> maintenance<T>(Future<T> Function(String path) operation) =>
-      _serialize(() async {
-        await _database?.close();
-        _database = null;
-        var success = false;
-        try {
-          final result = await operation(_path);
-          success = true;
-          return result;
-        } finally {
-          _bootstrapped = false;
-          _generation++;
-          _commits.add(++_revision);
-          _replacements.add(DatabaseReplacement(_generation, success));
-        }
-      });
+  Future<T> maintenance<T>(
+    Future<T> Function(String path) operation, {
+    DatabaseReplacementReason reason = DatabaseReplacementReason.restore,
+  }) => _serialize(() async {
+    await _database?.close();
+    _database = null;
+    var success = false;
+    try {
+      final result = await operation(_path);
+      success = true;
+      return result;
+    } finally {
+      _bootstrapped = false;
+      _generation++;
+      _commits.add(++_revision);
+      _replacements.add(
+        DatabaseReplacement(_generation, success, reason: reason),
+      );
+    }
+  });
 
   /// Drain in-flight work then close. Subsequent operations are rejected.
   Future<void> close() => _serialize(() async {

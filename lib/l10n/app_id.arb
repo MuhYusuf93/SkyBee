@@ -6147,5 +6147,81 @@
   "m53RetentionReload": "Muat ulang",
   "@m53RetentionReload": {
     "description": "Reload"
+  },
+  "m53ResetTitle": "Hapus seluruh data toko di perangkat ini",
+  "@m53ResetTitle": {
+    "description": "Store reset: m53ResetTitle"
+  },
+  "m53ResetWarning": "Seluruh data toko di perangkat ini akan dihapus, termasuk barang, transaksi, pelanggan, dan pengaturan. Tindakan ini tidak dapat dibatalkan. Buat dan periksa cadangan terlebih dahulu jika data masih diperlukan.",
+  "@m53ResetWarning": {
+    "description": "Store reset: m53ResetWarning"
+  },
+  "m53ResetArchivesKept": "Arsip cadangan lokal dan Drive tetap disimpan. Akun Google, biometrik perangkat, dan aplikasi lain tidak dihapus. Toko akan kembali ke penyiapan awal dengan identitas dan kunci baru.",
+  "@m53ResetArchivesKept": {
+    "description": "Store reset: m53ResetArchivesKept"
+  },
+  "m53ResetRecoveryReminder": "Simpan kode pemulihan cadangan portabel di luar aplikasi dan periksa salinannya sebelum menghapus toko. PIN bukan kode pemulihan cadangan. Cadangan tidak dapat dipulihkan tanpa kode yang sesuai.",
+  "@m53ResetRecoveryReminder": {
+    "description": "Store reset: m53ResetRecoveryReminder"
+  },
+  "m53ResetMakeBackup": "Buat dan periksa cadangan",
+  "@m53ResetMakeBackup": {
+    "description": "Store reset: m53ResetMakeBackup"
+  },
+  "m53ResetSafetyBackup": "Buat cadangan lokal terakhir sebelum menghapus",
+  "@m53ResetSafetyBackup": {
+    "description": "Store reset: m53ResetSafetyBackup"
+  },
+  "m53ResetRecoveryRequired": "Siapkan kode pemulihan melalui menu cadangan untuk membuat cadangan lokal. Google Drive tersedia sebagai pilihan di menu tersebut.",
+  "@m53ResetRecoveryRequired": {
+    "description": "Store reset: m53ResetRecoveryRequired"
+  },
+  "m53ResetRecoveryAcknowledged": "Saya telah menyimpan dan memeriksa salinan kode pemulihan di luar aplikasi.",
+  "@m53ResetRecoveryAcknowledged": {
+    "description": "Store reset: m53ResetRecoveryAcknowledged"
+  },
+  "m53ResetNoRecoveryAcknowledged": "Saya memahami belum ada kode pemulihan cadangan aktif. Cadangan lama tetap memerlukan kodenya sendiri.",
+  "@m53ResetNoRecoveryAcknowledged": {
+    "description": "Store reset: m53ResetNoRecoveryAcknowledged"
+  },
+  "m53ResetNoBackupAcknowledged": "Saya memilih melanjutkan tanpa cadangan lokal terakhir dan memahami data yang belum dicadangkan akan hilang.",
+  "@m53ResetNoBackupAcknowledged": {
+    "description": "Store reset: m53ResetNoBackupAcknowledged"
+  },
+  "m53ResetAction": "Hapus data toko",
+  "@m53ResetAction": {
+    "description": "Store reset: m53ResetAction"
+  },
+  "m53ResetFinalTitle": "Hapus seluruh data toko sekarang?",
+  "@m53ResetFinalTitle": {
+    "description": "Store reset: m53ResetFinalTitle"
+  },
+  "m53ResetChanged": "Toko sudah berubah. Kembali dan tinjau ulang sebelum menghapus.",
+  "@m53ResetChanged": {
+    "description": "Store reset: m53ResetChanged"
+  },
+  "m53ResetConfirmationRequired": "Periksa cadangan, kode pemulihan, dan konfirmasi penghapusan terlebih dahulu.",
+  "@m53ResetConfirmationRequired": {
+    "description": "Store reset: m53ResetConfirmationRequired"
+  },
+  "m53ResetComplete": "Data toko telah dihapus. Mulai penyiapan toko baru.",
+  "@m53ResetComplete": {
+    "description": "Store reset: m53ResetComplete"
+  },
+  "m53ResetOutcomeCheck": "Periksa hasil penghapusan sebelum melanjutkan. Bila gagal sebelum commit, data toko lama tetap dipertahankan.",
+  "@m53ResetOutcomeCheck": {
+    "description": "Store reset: m53ResetOutcomeCheck"
+  },
+  "m53ResetBack": "Kembali",
+  "@m53ResetBack": {
+    "description": "Store reset: m53ResetBack"
+  },
+  "m53ResetRetry": "Muat ulang",
+  "@m53ResetRetry": {
+    "description": "Store reset: m53ResetRetry"
+  },
+  "m53SetupRequired": "Selesaikan penyiapan toko terlebih dahulu.",
+  "@m53SetupRequired": {
+    "description": "Store reset: m53SetupRequired"
   }
 }

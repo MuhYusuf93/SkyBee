@@ -1,0 +1,98 @@
+{
+  "schema": 37,
+  "sourceFiles": 725,
+  "sourceManifestSha256": "77629c95141b10e7e0255708acec4d0e2d9954b00e7486385a2b1a59fb56c4e4",
+  "sourceMatchedAtCapture": true,
+  "sourceManifestIsHistorical": true,
+  "host": {
+    "passed": 127,
+    "failed": 0,
+    "elapsed": "01:56",
+    "scope": "Reset recovery4; key journal24; archive keys5; inspection exclusion/stale grant2; full G1 host42; report export/operational reports, cashier lock domain/UI, onboarding domain/UI regressions. Total127; expanded log authoritative."
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 108.5
+  },
+  "formatter": {
+    "focusedFiles": 23,
+    "changed": 0
+  },
+  "localization": {
+    "pairedKeys": 1531,
+    "staticReferences": 939,
+    "originalRequirementIds": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "java": {
+    "javac": "ReportDocumentExport + ReportResetBarrier + JUnit source compiled against actual Android36/Flutter embedding",
+    "junitPassed": 4,
+    "elapsedSeconds": 0.043,
+    "junitLogSha256": "69778196065c0fdaf3c1c72de900ad29868948f5a164783df864895748672ebb"
+  },
+  "newFiles": [
+    "integration_test/m53_store_reset_test.dart",
+    "lib/features/reports/application/report_work_gate.dart",
+    "lib/features/store_reset/application/store_reset_recovery.dart",
+    "lib/features/store_reset/application/store_reset_service.dart",
+    "lib/features/store_reset/presentation/store_reset_screen.dart",
+    "packages/kasir_platform/android/src/main/java/com/example/kasir_platform/ReportResetBarrier.java",
+    "packages/kasir_platform/android/src/test/java/com/example/kasir_platform/ReportResetBarrierTest.java",
+    "test/m53_reset_inspection_gate_test.dart",
+    "test/m53_store_reset_recovery_test.dart",
+    "test/support/m53_reset_widgets_suite.dart"
+  ],
+  "changedFromG2A": [
+    "lib/app/app_services.dart",
+    "lib/app/kasir_app.dart",
+    "lib/data/database/database_coordinator.dart",
+    "lib/features/backup/application/backup_retention_service.dart",
+    "lib/features/backup/application/backup_scheduler.dart",
+    "lib/features/backup/application/backup_service.dart",
+    "lib/features/backup/application/retention_metadata_store.dart",
+    "lib/features/cashier/application/cart_service.dart",
+    "lib/features/cashier_lock/application/cashier_lock_service.dart",
+    "lib/features/management/application/management_service.dart",
+    "lib/features/printer/application/store_logo_service.dart",
+    "lib/features/reports/application/operational_reports_service.dart",
+    "lib/features/reports/application/report_export_service.dart",
+    "lib/features/settings/presentation/settings_screen.dart",
+    "lib/l10n/app_en.arb",
+    "lib/l10n/app_id.arb",
+    "lib/l10n/app_localizations.dart",
+    "lib/l10n/app_localizations_en.dart",
+    "lib/l10n/app_localizations_id.dart",
+    "lib/l10n/localization.dart",
+    "packages/kasir_platform/android/src/main/java/com/example/kasir_platform/KasirPlatformPlugin.java",
+    "packages/kasir_platform/android/src/main/java/com/example/kasir_platform/ReportDocumentExport.java",
+    "packages/kasir_platform/lib/kasir_platform.dart"
+  ],
+  "hostLogSha256": "c06f486e710785ad224bac5a737684114248a86372daeb996a195da72558bdcc",
+  "analyzerLogSha256": "7619321bddf21a995ab3feda81c02022c107162014e0a434a6610a0130c1a59e",
+  "formatLogSha256": "727f58404908d7a7c76f3c72dd882913694da88c0dbf0564af7bc19f5e84f36e",
+  "history": {
+    "initialPureHost": {
+      "passed": 33,
+      "failed": 0
+    },
+    "initialRegression": {
+      "passed": 93,
+      "failed": 1,
+      "elapsed": "01:56",
+      "logSha256": "5f7c7ffda8fa9b071949f5635d3cd42187b1caab7798a3e8ac7947abb98bcc11",
+      "failure": "Stale cashier grant correctly denied, but new message m53ResetChanged broke existing m53CashierLocked contract. Restored existing error; no security check weakened."
+    },
+    "focusedCashierRetest": {
+      "passed": 14,
+      "failed": 0,
+      "elapsed": "01:22",
+      "logSha256": "dd029500bbedae535a5bc12f85aeaccc10bd892c6fb0d595975ade1f9ab0170b"
+    },
+    "initialAnalyzer": {
+      "styleIssues": 15,
+      "elapsedSeconds": 222.1
+    }
+  },
+  "native": "PENDING36 per device: runtime service12 (5 coordinated faults), actual Settings UI IDEN2, full G1 native regression22. Unique owned fixtures and native wrapped secret namespaces; no package reset or actual cloud/OS account/enrollment mutation.",
+  "boundary": "Runtime G2B not closed until device verification. Fresh dispatcher predicate is source guard, not a real OS job cancellation probe. G3 portable full facts and H remain required. No .skybee/ordinary update/reset/reseed."
+}

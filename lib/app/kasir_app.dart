@@ -3,6 +3,7 @@ import '../features/onboarding/presentation/onboarding_screen.dart';
 import 'package:kasir_app/l10n/localization.dart';
 import '../features/settings/presentation/locale_provider.dart';
 import 'dart:async';
+import 'package:kasir_platform/kasir_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data/database/database_coordinator.dart';
@@ -98,9 +99,11 @@ class _ManagementAppState extends State<_ManagementApp> {
         _navigator = GlobalKey<NavigatorState>();
         _pendingAlert = false;
         _pendingSupplier = false;
-        _replacementNotice = event.succeeded
-            ? 'm5RestoreComplete'
-            : 'm5RestoreOutcomeCheck';
+        _replacementNotice = event.reason == DatabaseReplacementReason.reset
+            ? (event.succeeded ? 'm53ResetComplete' : 'm53ResetOutcomeCheck')
+            : event.reason == DatabaseReplacementReason.restore
+            ? (event.succeeded ? 'm5RestoreComplete' : 'm5RestoreOutcomeCheck')
+            : null;
         _future = _reload(services.database, native: native);
       });
     });
@@ -118,9 +121,19 @@ class _ManagementAppState extends State<_ManagementApp> {
     DatabaseCoordinator database, {
     required bool native,
   }) async {
+    final previous = _activeServices;
     await _runtime?.dispose();
     _runtime = null;
-    final services = AppServices(database);
+    final services = AppServices(
+      database,
+      clock: previous?.management.clock,
+      biometrics: previous?.management.biometrics,
+      printerGate: previous?.printerGate,
+      reportGate: previous?.reportGate,
+      barcodeCameraFactory: previous?.barcodeCameraFactory,
+      supplierReminderSink: previous?.supplierReminderSink,
+      backupPlatform: previous?.backupPlatform ?? const KasirPlatform(),
+    );
     _preferences = await services.settings.preferences();
     await services.cashierLock.load();
     _activeServices = services;

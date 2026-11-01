@@ -12,6 +12,25 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm53ResetTitle' => l.m53ResetTitle,
+    'm53ResetWarning' => l.m53ResetWarning,
+    'm53ResetArchivesKept' => l.m53ResetArchivesKept,
+    'm53ResetRecoveryReminder' => l.m53ResetRecoveryReminder,
+    'm53ResetMakeBackup' => l.m53ResetMakeBackup,
+    'm53ResetSafetyBackup' => l.m53ResetSafetyBackup,
+    'm53ResetRecoveryRequired' => l.m53ResetRecoveryRequired,
+    'm53ResetRecoveryAcknowledged' => l.m53ResetRecoveryAcknowledged,
+    'm53ResetNoRecoveryAcknowledged' => l.m53ResetNoRecoveryAcknowledged,
+    'm53ResetNoBackupAcknowledged' => l.m53ResetNoBackupAcknowledged,
+    'm53ResetAction' => l.m53ResetAction,
+    'm53ResetFinalTitle' => l.m53ResetFinalTitle,
+    'm53ResetChanged' => l.m53ResetChanged,
+    'm53ResetConfirmationRequired' => l.m53ResetConfirmationRequired,
+    'm53ResetComplete' => l.m53ResetComplete,
+    'm53ResetOutcomeCheck' => l.m53ResetOutcomeCheck,
+    'm53ResetBack' => l.m53ResetBack,
+    'm53ResetRetry' => l.m53ResetRetry,
+    'm53SetupRequired' => l.m53SetupRequired,
     'm53OpAllSuppliers' => l.m53OpAllSuppliers,
     'm53OpAllCategories' => l.m53OpAllCategories,
 

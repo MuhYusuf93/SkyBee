@@ -1,4 +1,6 @@
 import 'dart:io';
+import '../../../data/database/database_gate.dart';
+import '../../reports/application/report_work_gate.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:crypto/crypto.dart';
@@ -15,10 +17,12 @@ final class StoreLogoService {
     this.database,
     this.access, {
     this.platform = const KasirPlatform(),
+    this.workGate,
   });
   final DatabaseCoordinator database;
   final ManagementService access;
   final KasirPlatform platform;
+  final DatabaseGate? workGate;
   Future<File?> choose() async {
     await access.authorizeCurrent();
     final path = p.join(
@@ -74,7 +78,18 @@ final class StoreLogoService {
     }
   }
 
-  Future<void> apply(File selected) async {
+  Future<void> apply(File selected) {
+    final grant = access.generation, generation = database.generation;
+    return (workGate ?? defaultReportWorkGate(platform)).run(() async {
+      await access.authorizeCurrent();
+      if (grant != access.generation || generation != database.generation) {
+        throw StateError('reportSessionChanged');
+      }
+      await _apply(selected);
+    });
+  }
+
+  Future<void> _apply(File selected) async {
     await access.authorizeCurrent();
     if (await selected.length() > 4194304) {
       throw const FormatException('logoInvalid');

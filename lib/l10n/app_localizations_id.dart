@@ -5117,4 +5117,73 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53RetentionReload => 'Muat ulang';
+
+  @override
+  String get m53ResetTitle => 'Hapus seluruh data toko di perangkat ini';
+
+  @override
+  String get m53ResetWarning =>
+      'Seluruh data toko di perangkat ini akan dihapus, termasuk barang, transaksi, pelanggan, dan pengaturan. Tindakan ini tidak dapat dibatalkan. Buat dan periksa cadangan terlebih dahulu jika data masih diperlukan.';
+
+  @override
+  String get m53ResetArchivesKept =>
+      'Arsip cadangan lokal dan Drive tetap disimpan. Akun Google, biometrik perangkat, dan aplikasi lain tidak dihapus. Toko akan kembali ke penyiapan awal dengan identitas dan kunci baru.';
+
+  @override
+  String get m53ResetRecoveryReminder =>
+      'Simpan kode pemulihan cadangan portabel di luar aplikasi dan periksa salinannya sebelum menghapus toko. PIN bukan kode pemulihan cadangan. Cadangan tidak dapat dipulihkan tanpa kode yang sesuai.';
+
+  @override
+  String get m53ResetMakeBackup => 'Buat dan periksa cadangan';
+
+  @override
+  String get m53ResetSafetyBackup =>
+      'Buat cadangan lokal terakhir sebelum menghapus';
+
+  @override
+  String get m53ResetRecoveryRequired =>
+      'Siapkan kode pemulihan melalui menu cadangan untuk membuat cadangan lokal. Google Drive tersedia sebagai pilihan di menu tersebut.';
+
+  @override
+  String get m53ResetRecoveryAcknowledged =>
+      'Saya telah menyimpan dan memeriksa salinan kode pemulihan di luar aplikasi.';
+
+  @override
+  String get m53ResetNoRecoveryAcknowledged =>
+      'Saya memahami belum ada kode pemulihan cadangan aktif. Cadangan lama tetap memerlukan kodenya sendiri.';
+
+  @override
+  String get m53ResetNoBackupAcknowledged =>
+      'Saya memilih melanjutkan tanpa cadangan lokal terakhir dan memahami data yang belum dicadangkan akan hilang.';
+
+  @override
+  String get m53ResetAction => 'Hapus data toko';
+
+  @override
+  String get m53ResetFinalTitle => 'Hapus seluruh data toko sekarang?';
+
+  @override
+  String get m53ResetChanged =>
+      'Toko sudah berubah. Kembali dan tinjau ulang sebelum menghapus.';
+
+  @override
+  String get m53ResetConfirmationRequired =>
+      'Periksa cadangan, kode pemulihan, dan konfirmasi penghapusan terlebih dahulu.';
+
+  @override
+  String get m53ResetComplete =>
+      'Data toko telah dihapus. Mulai penyiapan toko baru.';
+
+  @override
+  String get m53ResetOutcomeCheck =>
+      'Periksa hasil penghapusan sebelum melanjutkan. Bila gagal sebelum commit, data toko lama tetap dipertahankan.';
+
+  @override
+  String get m53ResetBack => 'Kembali';
+
+  @override
+  String get m53ResetRetry => 'Muat ulang';
+
+  @override
+  String get m53SetupRequired => 'Selesaikan penyiapan toko terlebih dahulu.';
 }

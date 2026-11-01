@@ -9,7 +9,9 @@ import '../../printer/application/receipt_policy_service.dart';
 
 /// Durable cart mutations; no stock is reserved or removed by a draft.
 final class CartService {
-  CartService(this.database, this.store);
+  CartService(this.database, this.store)
+    : _storeGeneration = database.generation;
+  final int _storeGeneration;
   final DatabaseCoordinator database;
   final CashierStore store;
   Future<EntityId> _create(DatabaseExecutor db) async {
@@ -61,7 +63,7 @@ final class CartService {
       }, where: 'id=1');
     }
     return store.cart(dbTxn, id);
-  });
+  }, expectedGeneration: _storeGeneration);
   Future<CartSnapshot> read(EntityId id) =>
       database.read((db) => store.cart(db, id));
 

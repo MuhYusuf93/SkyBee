@@ -272,12 +272,16 @@ final class RetentionMetadataStore {
 }
 
 final class RetentionCandidate {
-  RetentionCandidate(this._release);
+  RetentionCandidate(this._release, {Future<void> Function()? releaseWhileHeld})
+    // Keep the optional named API public and its callback capability private.
+    // ignore: prefer_initializing_formals
+    : _releaseWhileHeld = releaseWhileHeld;
   final Future<void> Function() _release;
+  final Future<void> Function()? _releaseWhileHeld;
   bool _released = false;
-  Future<void> release() async {
+  Future<void> release({bool workLeaseHeld = false}) async {
     if (_released) return;
-    await _release();
+    await (workLeaseHeld ? (_releaseWhileHeld ?? _release) : _release)();
     _released = true;
   }
 }

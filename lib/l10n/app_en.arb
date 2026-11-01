@@ -6147,5 +6147,81 @@
   "m53RetentionReload": "Reload",
   "@m53RetentionReload": {
     "description": "Reload"
+  },
+  "m53ResetTitle": "Delete all store data on this device",
+  "@m53ResetTitle": {
+    "description": "Store reset: m53ResetTitle"
+  },
+  "m53ResetWarning": "All store data on this device will be deleted, including products, transactions, customers, and settings. This cannot be undone. Create and check a backup first if you still need this data.",
+  "@m53ResetWarning": {
+    "description": "Store reset: m53ResetWarning"
+  },
+  "m53ResetArchivesKept": "Local and Drive backup archives are kept. Google accounts, device biometric enrollment, and other apps are unchanged. The store returns to initial setup with a new identity and key.",
+  "@m53ResetArchivesKept": {
+    "description": "Store reset: m53ResetArchivesKept"
+  },
+  "m53ResetRecoveryReminder": "Save the portable backup recovery code outside the app and check your copy before deleting the store. Your PIN is not the backup recovery code. Restoring a backup requires its matching code.",
+  "@m53ResetRecoveryReminder": {
+    "description": "Store reset: m53ResetRecoveryReminder"
+  },
+  "m53ResetMakeBackup": "Create and check a backup",
+  "@m53ResetMakeBackup": {
+    "description": "Store reset: m53ResetMakeBackup"
+  },
+  "m53ResetSafetyBackup": "Create a final local backup before deletion",
+  "@m53ResetSafetyBackup": {
+    "description": "Store reset: m53ResetSafetyBackup"
+  },
+  "m53ResetRecoveryRequired": "Set up a recovery code in the backup menu to create a local backup. Google Drive is also optional in that menu.",
+  "@m53ResetRecoveryRequired": {
+    "description": "Store reset: m53ResetRecoveryRequired"
+  },
+  "m53ResetRecoveryAcknowledged": "I have saved and checked a copy of the recovery code outside the app.",
+  "@m53ResetRecoveryAcknowledged": {
+    "description": "Store reset: m53ResetRecoveryAcknowledged"
+  },
+  "m53ResetNoRecoveryAcknowledged": "I understand that no backup recovery code is currently configured. Older backups still need their own code.",
+  "@m53ResetNoRecoveryAcknowledged": {
+    "description": "Store reset: m53ResetNoRecoveryAcknowledged"
+  },
+  "m53ResetNoBackupAcknowledged": "I choose to continue without a final local backup and understand that data not backed up will be lost.",
+  "@m53ResetNoBackupAcknowledged": {
+    "description": "Store reset: m53ResetNoBackupAcknowledged"
+  },
+  "m53ResetAction": "Delete store data",
+  "@m53ResetAction": {
+    "description": "Store reset: m53ResetAction"
+  },
+  "m53ResetFinalTitle": "Delete all store data now?",
+  "@m53ResetFinalTitle": {
+    "description": "Store reset: m53ResetFinalTitle"
+  },
+  "m53ResetChanged": "The store has changed. Go back and review it again before deletion.",
+  "@m53ResetChanged": {
+    "description": "Store reset: m53ResetChanged"
+  },
+  "m53ResetConfirmationRequired": "Review the backup, recovery code, and deletion confirmations first.",
+  "@m53ResetConfirmationRequired": {
+    "description": "Store reset: m53ResetConfirmationRequired"
+  },
+  "m53ResetComplete": "Store data has been deleted. Start setting up a new store.",
+  "@m53ResetComplete": {
+    "description": "Store reset: m53ResetComplete"
+  },
+  "m53ResetOutcomeCheck": "Check the deletion outcome before continuing. If it failed before commit, the old store data is retained.",
+  "@m53ResetOutcomeCheck": {
+    "description": "Store reset: m53ResetOutcomeCheck"
+  },
+  "m53ResetBack": "Back",
+  "@m53ResetBack": {
+    "description": "Store reset: m53ResetBack"
+  },
+  "m53ResetRetry": "Reload",
+  "@m53ResetRetry": {
+    "description": "Store reset: m53ResetRetry"
+  },
+  "m53SetupRequired": "Finish setting up the store first.",
+  "@m53SetupRequired": {
+    "description": "Store reset: m53SetupRequired"
   }
 }

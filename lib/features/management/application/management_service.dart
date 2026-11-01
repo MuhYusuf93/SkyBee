@@ -193,6 +193,7 @@ final class ManagementService {
       'recovery',
       'security',
       'restore',
+      'storeReset',
       'recoveryPrint',
       'receiptException',
     ].contains(purpose)) {

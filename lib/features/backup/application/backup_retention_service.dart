@@ -549,7 +549,10 @@ final class BackupRetentionService {
         manifest.originId,
       );
       final lease = await metadata.candidate(scope, id);
-      return RetentionCandidate(() => workGate.run(lease.release));
+      return RetentionCandidate(
+        () => workGate.run(lease.release),
+        releaseWhileHeld: lease.release,
+      );
     }
 
     return workLeaseHeld ? action() : workGate.run(action);
