@@ -1,0 +1,67 @@
+{
+  "version": "0.5.3+13",
+  "schema": 37,
+  "nativeSourceFiles": 737,
+  "nativeSourceManifestSha256": "a77279c66ae5cf397bf9bdff81c202ce23ec59ae54701f5c522c8fa87c61d24a",
+  "postNativeDelta": {
+    "compiledApplicationCodeChanged": false,
+    "hostOnlyRetiredExpectation": "test/skybee_upgrade_recovery_test.dart",
+    "additionalFiles": [
+      "tools/handoff_skybee_m53.py",
+      "tools/test_handoff_skybee_m53.py",
+      ".run/SkyBee_Exploration.run.xml"
+    ],
+    "finalSourceManifestSha256": "783817d99c53466a4861cd1857d501abdf05f6d50d68146264c9e96819724d40"
+  },
+  "host": {
+    "passed": 54,
+    "failed": 0,
+    "elapsed": "01:33",
+    "timeout": "2m",
+    "logSha256": "8e0df0d83ff3aa184d82f21fdc4c4cbae25a0a72ed0626a860d9397529574db0",
+    "previous": {
+      "passed": 53,
+      "failed": 1,
+      "elapsed": "01:27",
+      "failure": "Legacy counter repair is intentionally retired when Schema.version !=14. Old positive expectation corrected; production guard unchanged.",
+      "logSha256": "9a4e83e314787401439647461aeffab0db37c1c302ddabb5f94b92b137ead991"
+    },
+    "earlierWrongPathInvocation": {
+      "passed": 41,
+      "loadErrors": 2,
+      "elapsed": "01:23",
+      "failure": "Two supplied test paths did not exist; original log retained.",
+      "logSha256": "9eb3b56d24d6c50db0fdc3a679cb1959725fe611d2f058ab774271abe5650a64"
+    }
+  },
+  "hostTool": {
+    "passed": 5,
+    "failed": 0,
+    "elapsedSeconds": 0.922,
+    "logSha256": "e8f1d6d6175af21357bfd78fb0b7e69c4e9d9353dbbf01f778ec2a1011e90900"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 119.5,
+    "logSha256": "0a9e83bc031c583a03a7576f59dc88a267659949dfb8c345c39997563323b51f"
+  },
+  "formatter": {
+    "files": 14,
+    "changed": 0,
+    "logSha256": "4d8e0a0110151f9daad5ca92e92d6f494cad2fc9d6f13c38f14d277229630d16"
+  },
+  "localization": {
+    "keys": 1532,
+    "staticReferences": 939,
+    "originalIds": 245,
+    "logSha256": "d889f6f8ee39b12ab51e3efd5d06d93e9557e5b042b10437a78934a3209d240c"
+  },
+  "pinUpstreamFilesUnchanged": 106,
+  "pinLogSha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137",
+  "native": [
+    "exploration-poco-initial.json",
+    "exploration-poco-review.json",
+    "exploration-dv-review.json"
+  ],
+  "actualUserHandoffPerformed": false
+}

@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SkyBee Exploration (M5.3)" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="filePath" value="$PROJECT_DIR$/lib/main_skybee_demo.dart" />
+    <option name="additionalArgs" value="--dart-define=KASIR_SKYBEE_DEMO=true" />
+    <method v="2" />
+  </configuration>
+</component>

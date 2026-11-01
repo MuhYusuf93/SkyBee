@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
+import 'package:kasir_app/data/database/schema.dart';
 import 'package:kasir_app/demo/skybee_background_guard.dart';
 import 'package:kasir_app/demo/skybee_upgrade_audit.dart';
 import 'package:kasir_app/demo/skybee_upgrade_proof.dart';
@@ -107,7 +108,9 @@ void main() {
             before,
           ),
         );
-        if (change == 'countersOnly') {
+        // The observed M5.2 race repair is deliberately retired after schema14.
+        // Later versions must fail closed, not broaden that old exception.
+        if (change == 'countersOnly' && Schema.version == 14) {
           final proof = await verify;
           expect(proof['allExistingFactsMatch'], false);
           expect(proof['allExistingBusinessFactsMatch'], true);

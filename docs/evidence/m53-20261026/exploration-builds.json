@@ -1,0 +1,68 @@
+{
+  "version": "0.5.3+13",
+  "schema": 37,
+  "artifacts": {
+    "ordinary-debug": {
+      "sha256": "5c8e06142d851ba1dbb3092047415ca391e52661e7e0f40ec4823d55a02178da",
+      "package": "com.example.kasir_app",
+      "version_code": 13,
+      "version_name": "0.5.3",
+      "launcher": "com.example.kasir_app.MainActivity",
+      "min_sdk": 24,
+      "notification_icon_present": true,
+      "signing_certificate_sha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "android_debug_certificate": true,
+      "zipalign_16k_pass": true,
+      "abis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "libraries": 13,
+      "artifactVerificationJsonSha256": "86eb5de9a4498f59e2de9670e5e8314ef4302e1722eefd84ca4e73f060a17e8f"
+    },
+    "ordinary-release": {
+      "sha256": "e4ff8613e271778b61e7aed5050b5055352a1c256a50fbee2fda9718d1534a88",
+      "package": "com.example.kasir_app",
+      "version_code": 13,
+      "version_name": "0.5.3",
+      "launcher": "com.example.kasir_app.MainActivity",
+      "min_sdk": 24,
+      "notification_icon_present": true,
+      "signing_certificate_sha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "android_debug_certificate": true,
+      "zipalign_16k_pass": true,
+      "abis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "libraries": 12,
+      "artifactVerificationJsonSha256": "3614a70a2e89c764ed3afc215b6bd7f8842e776f271f7c540e0a96a8c4467cda"
+    },
+    "skybee-debug": {
+      "sha256": "2025aa13491c30c75a01e9cb94e1a41cbc8c67dc227b035eb04fa402039e3a89",
+      "package": "com.example.kasir_app.skybee",
+      "version_code": 13,
+      "version_name": "0.5.3",
+      "launcher": "com.example.kasir_app.SkybeeDemoActivity",
+      "min_sdk": 24,
+      "notification_icon_present": true,
+      "signing_certificate_sha256": "002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c",
+      "android_debug_certificate": true,
+      "zipalign_16k_pass": true,
+      "abis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "libraries": 13,
+      "artifactVerificationJsonSha256": "17b06f54d8d963f46f3642e83e60a9016a05780b1b0d9562ae5c393236634e22"
+    }
+  },
+  "installedByBuild": false,
+  "signing": "Existing development certificate; M6 production signing not completed",
+  "source": "Compiled sources identical to native review737; one post-native host-only expectation fix plus host tooling/run config.",
+  "licenseChecks": "verify_m5_apk verifies pinned native and bundled Flutter-asset license bytes",
+  "actualSkybeePreflightCertificateMatches": true
+}

@@ -43,3 +43,11 @@ G3 portable/resume: [laporan](../../M53_PORTABLE_BACKUP_REPORT.md),
 [DV3PASS](portable-dv.json), [host61PASS dan riwayat timeout](portable-host-checks.json).
 Kedua perangkat source sama/hash lama sama/controlOff, DV awakeexact. Tidak ada
 claim handoff H atau reset toko eksplorasi.
+
+H software/native/build: [laporan](../../M53_EXPLORATION_HANDOFF_REPORT.md),
+[initialPoco2PASS3FAIL](exploration-poco-initial.json),
+[reviewPoco5PASS](exploration-poco-review.json), [DV5PASS](exploration-dv-review.json),
+[source737](exploration-review-source-sha256.json),
+[host54/tool5](exploration-host-checks.json), [3APK](exploration-builds.json),
+[post-native host-only/tooling delta](exploration-handoff-source-sha256.json).
+Actual update/reset user belum dilakukan pada checkpoint ini.

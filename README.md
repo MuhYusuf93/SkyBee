@@ -1,6 +1,15 @@
-# Kasir Flutter — M5
+# Kasir Flutter — M5.3
 
-Source aktif **0.5.0+7 / schema8**: database Android SQLCipher wajib dengan key instalasi Keystore; printer Bluetooth Classic SPP/ESC-POS, preview/raster/queue; peringatan stok/batch; backup portable terenkripsi, SAF, safety restore; Google Drive opsional appDataFolder dan WorkManager best effort. Kasir tetap offline tanpa akun Google. Tidak ada rename applicationId/signing produksi atau sinkronisasi multi-device. **M6 belum dimulai.**
+Source aktif **0.5.3+13 / schema37**. A–G selesai; H software/native/build telah
+diperiksa, handoff aktual masih mengikuti checkpoint. [Status](docs/STATUS.md),
+[laporan H](docs/M53_EXPLORATION_HANDOFF_REPORT.md),
+[panduan ID/EN dan Android Studio](docs/M53_HANDOFF_GUIDE.md).
+M6/publikasi belum dimulai.
+
+## Riwayat checkpoint M5
+
+
+Source checkpoint M5 historis **0.5.0+7 / schema8**: database Android SQLCipher wajib dengan key instalasi Keystore; printer Bluetooth Classic SPP/ESC-POS, preview/raster/queue; peringatan stok/batch; backup portable terenkripsi, SAF, safety restore; Google Drive opsional appDataFolder dan WorkManager best effort. Kasir tetap offline tanpa akun Google. Tidak ada rename applicationId/signing produksi atau sinkronisasi multi-device. **M6 belum dimulai.**
 
 Hasil dan batas bukti: [M5_TEST_REPORT](docs/M5_TEST_REPORT.md), [implementasi](docs/M5_IMPLEMENTATION_REPORT.md), [temuan/perbaikan](docs/M5_FIXES_AND_VALIDATION.md), [STATUS](docs/STATUS.md), [requirement matrix](docs/REQUIREMENTS.md). Native Realme88 PASS/Windows219 PASS+2 benchmark opt-in SKIP tidak membuktikan Iware paper/OAuth Drive/ARM64 Poco/lintas perangkat; status tersebut tetap terpisah.
 

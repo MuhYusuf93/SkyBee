@@ -24,14 +24,20 @@ import '../features/suppliers/presentation/supplier_schedules_screen.dart';
 /// state. Production owns the M3 cashier flow; injected readiness retains the
 /// M1 shell solely for compatibility/regression of startup boundaries.
 class KasirApp extends StatelessWidget {
-  const KasirApp({super.key, this.foundationService, this.services});
+  const KasirApp({
+    super.key,
+    this.foundationService,
+    this.services,
+    this.servicesFactory,
+  });
   final FoundationReadiness? foundationService;
   final AppServices? services;
+  final AppServices Function(DatabaseCoordinator database)? servicesFactory;
   @override
   Widget build(BuildContext context) {
     registerNativeLicenses();
     return foundationService == null
-        ? _ManagementApp(services: services)
+        ? _ManagementApp(services: services, servicesFactory: servicesFactory)
         : Provider<FoundationReadiness>(
             create: (_) =>
                 foundationService ??
@@ -60,8 +66,9 @@ class KasirApp extends StatelessWidget {
 
 /// Startup resolves one database dependency; feature state remains lazy/scoped.
 class _ManagementApp extends StatefulWidget {
-  const _ManagementApp({this.services});
+  const _ManagementApp({this.services, this.servicesFactory});
   final AppServices? services;
+  final AppServices Function(DatabaseCoordinator database)? servicesFactory;
   @override
   State<_ManagementApp> createState() => _ManagementAppState();
 }
@@ -124,16 +131,19 @@ class _ManagementAppState extends State<_ManagementApp> {
     final previous = _activeServices;
     await _runtime?.dispose();
     _runtime = null;
-    final services = AppServices(
-      database,
-      clock: previous?.management.clock,
-      biometrics: previous?.management.biometrics,
-      printerGate: previous?.printerGate,
-      reportGate: previous?.reportGate,
-      barcodeCameraFactory: previous?.barcodeCameraFactory,
-      supplierReminderSink: previous?.supplierReminderSink,
-      backupPlatform: previous?.backupPlatform ?? const KasirPlatform(),
-    );
+    final services =
+        widget.servicesFactory?.call(database) ??
+        AppServices(
+          database,
+          clock: previous?.management.clock,
+          biometrics: previous?.management.biometrics,
+          printerGate: previous?.printerGate,
+          reportGate: previous?.reportGate,
+          barcodeCameraFactory: previous?.barcodeCameraFactory,
+          supplierReminderSink: previous?.supplierReminderSink,
+          backupPlatform: previous?.backupPlatform ?? const KasirPlatform(),
+          onboardingCompletion: previous?.onboardingCompletion,
+        );
     _preferences = await services.settings.preferences();
     await services.cashierLock.load();
     _activeServices = services;
@@ -177,7 +187,8 @@ class _ManagementAppState extends State<_ManagementApp> {
         throw StateError('Startup disposed');
       }
       _owned = database;
-      final services = AppServices(database);
+      final services =
+          widget.servicesFactory?.call(database) ?? AppServices(database);
       _preferences = await services.settings.preferences();
       await services.cashierLock.load();
       _onboardingNeeded = await services.onboarding.needed;

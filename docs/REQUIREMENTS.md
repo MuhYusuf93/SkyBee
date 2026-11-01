@@ -1,5 +1,29 @@
 # Matriks persyaratan
 
+<!-- M53_ACTIVE_H_START -->
+1 November 2026 22:50 WIB — H software/regresi/build LULUS; handoff aktual berikutnya.
+Versi0.5.3+13/schema37. G3 push5166318. Native H review737 sama: Poco5PASS08:42/
+1338hashlama sama, DV5PASS10:32/1233hashlama sama; controlOff/exit0/DVawakeexact.
+InitialPoco2PASS3FAIL02:18 tetapdisimpan (PINdummy8→4 danfixture14reopen37),
+bukan ditalangi dengan downgrade/bypassguard. Host final54PASS01:33 +tool5PASS,
+analyzer119,5clean/format14/0/l10n1532/939/245/PIN106unchanged. Post-native hanya
+stale host expectation repair13→14 yangsudahretired, hosttool/runconfig; kodeAPK
+identikreview737. Ordinarydebug/release+skybeedebug3ABI/ELF+ZIP16KiB/licenses/
+package/signature lulus. Cert .skybee installed12 cocok candidate13.
+[Laporan H](M53_EXPLORATION_HANDOFF_REPORT.md), [panduan ID/EN](M53_HANDOFF_GUIDE.md).
+Source/bukti akancommit/push, kemudiantools/handoff_skybee_m53.py prepare→external→
+reset padaPoco7f0edea0 saja. BELUM ada .skybee/ordinary update/reset/reseed.
+Hosttool: scoped DBfamily/wrappedkey/seed/audit snapshot sebeluminstall (BUKAN
+whole sandbox), verifiedsame-signature install-r, portable frozen safety crypto/
+business preflight danexternal recovery readback, baru resetterotorisasi .skybee.
+Leavegenuinewizard step1/two startups+witness;100/50 aktifpadaFinish denganPIN/
+policy pengguna. SourceNativeH737 checkpoint,builts masihdibuild/m53-release-candidate.
+HactualUI/filearchive/otherpackageaudit masihwajib sebelummenutupmilestone.
+Gemini_/gemini2_ diabaikan. Tidakada native runneraktif. M6publikasi/signing di luar
+scope; physicalprinter/2Dscanner/Drive cloud/powercut/natural72h90d unverified.
+<!-- M53_ACTIVE_H_END -->
+
+
 <!-- M53_ACTIVE_G3_START -->
 1 November 2026 — G3 DITUTUP, schema37/source732. H berikutnya. G2B sudah push e0a5eb7.
 Host final61PASS00:56 dengan timeout2m; awal60PASS1timeout30s01:08 disimpan,
@@ -437,7 +461,7 @@ Matriks rinci kontrak pada [checkpoint](M53_CHECKPOINT.md); belum acceptance.
 | M53-E | Gudang/kamera/opname, retur/tagihan/pembayaran/jadwal supplier | Schema31–34 E3 core: host51PASS/final15PASS(overlap), Poco44PASS1permissionSKIP/726hashsama, DV45PASS/802hashsama/awakeexact/controlOff; source652-platform historis. Post-review scoped reminder event/next visit date host20 + analyze bersih/source652-post-review, delta jadwal11/UI2 nativePoco/DV lulus padaF1; runtime5 tetapbukti host. Bukti supplier-e3-{poco-initial,dv}.json dan supplier-schedules-post-review-checks.json. F/G/H tetap aktif. |
 | M53-F | Label/struk wajib dan laporan/ekspor baru | F1 QR35 selesai software perinterval (laporan M53_QR_LABELS_REPORT.md), tanpa klaim scanner/kertas fisik. F2 schema36 selesai host43/final16/native41 tiap perangkat, datahashsama/controlOff (M53_RECEIPT_POLICY_REPORT.md). F3 schema37 selesai FINAL coherent host19PASS01:38/analyze63.8s bersih/l10n1482, native17PocoPASS07:10/891hashsama dan17DVPASS09:42/961hashsama/awakeexact, source696sama/controlOff. Cursor103events/UI20/source100/CSV, archived debt2000/noDue, actual-menu lock/unlock valid. Semua bukti/failure historis pada M53_OPERATIONAL_REPORTS_REPORT.md. G/H tetap wajib. |
 | M53-G | Retensi/reset fixture/backup portable semua penambahan | G1/G2A/G2B ditutup; G2B push e0a5eb7. G3 source732 host61PASS00:56 (awal60PASS1timeout30s disimpan), analyzer113,9clean, Poco native3PASS06:01/1310hashlama sama/controlOff/exit0; DV3PASS08:08/1212hashlama sama/awakeexact/controlOff/exit0 source sama. M53_PORTABLE_BACKUP_REPORT.md: full A–F lintas key, schema14 staging migration, resume provenance/auth/grant, retur validator fix/orphan denial, local cache sanitize. H belum dilakukan; data pengguna belum direset. |
-| M53-H | Build/push/handoff baru terinstal .skybee dengan backup lama dan seed100/50 | TODO setelah E/F/G lengkap. Ralat langsung pengguna mengotorisasi reset .skybee pada akhir saja: backup lama verified dahulu, onboarding pending, 100produk beragam/beberapa supplier/pelanggan/50transaksi. Belum ada update/reset/reseed. Build ordinary/release/handoff M5.3 dan dua startup belum dilakukan; artefak lama bukan bukti source31 |
+| M53-H | Regresi/build/commit/push/update Paket Eksplorasi | Source0.5.3+13/schema37: Hnative5Poco08:42/5DV10:32 same737/hashlama sama/controlOff/awakeexact; host54+tool5/analyze119,5/format14/0/l10n/PIN dan3APK3ABI16KiB/signature/license PASS. M53_EXPLORATION_HANDOFF_REPORT.md menyimpaninitial2PASS3FAIL/fix/retest. Commit/push software laluactual .skybee protection/external recovery/reset/two-startupwizard; belum dilakukan. M6/physical limits tetap terpisah. |
 
 Koreksi P25-01 tanggal25Oktober: default6 profil tanpa marker versi harus efektif3 setelah buka ulang. Nilai lama lainnya serta semua pilihan manual tersimpan versi baru tetap; job historis tidak diubah. Kebijakan ini menggantikan frasa bottom lama tetap di histori berikut. Pemeriksaan/handoff+12 selesai; host44/native1 dan profil aktual cold restart PASS.
 

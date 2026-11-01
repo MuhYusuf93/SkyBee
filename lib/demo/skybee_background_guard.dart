@@ -14,6 +14,23 @@ final class SkybeeBackgroundGuard {
 
   static Future<bool> ready(String folder, int targetVersion) async {
     try {
+      final handoff = File('$folder/skybee-m53-handoff.json');
+      if (await handoff.exists()) {
+        if (!await File('$folder/kasir_app.db').exists()) {
+          return false;
+        }
+        if (await FileSystemEntity.type(handoff.path, followLinks: false) !=
+                FileSystemEntityType.file ||
+            await handoff.length() > 16384) {
+          return false;
+        }
+        final state = jsonDecode(await handoff.readAsString());
+        return state is Map &&
+            state['format'] == 1 &&
+            state['request'] == 'M53-FRESH-100-50' &&
+            state['package'] == 'com.example.kasir_app.skybee' &&
+            ['awaiting_setup', 'activated', 'spent'].contains(state['phase']);
+      }
       final seed = jsonDecode(
         await File('$folder/skybee-demo-seed-v1.json').readAsString(),
       );

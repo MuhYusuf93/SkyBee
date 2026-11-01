@@ -660,3 +660,13 @@ ulang source/grant/DB/account semula. File hilang/berubah tidak boleh otomatis
 menjadi snapshot baru dengan operation key lama. Catat uji HTTP terpisah dari
 native crypto dan Drive nyata. Timeout fixture KDF30s saat regresi gabungan harus
 disimpan; rerun timeout2m dengan assertion sama bukan bukti mempercepat perangkat.
+
+155. Debug shadow seed tetap mengikuti kontrak PIN nyata4digit; jangan mengira
+PIN8digit fixture valid. Reset ke schema baru memerlukan Coordinator current,
+bukan membuka file37 melalui opsi14. Guard downgrade harus tetap menolak.
+Seed hanya pada shadow genuine setup; restore prepared verifiers persis sebelum
+same-store key selection, dan permit tidak boleh mengikuti store hasilresetbaru.
+156. Retired13→14 counter repair sengaja failclosed ketika schema berubah. Perbaiki
+positive expectation historis, bukan memperluas recovery exception produksi.
+Handoff script wajib menolak -O, memakai external receipt sebelumreset, dan
+membedakan perubahan wrapped-key IV pada exact retained alias dari data hilang.

@@ -18,9 +18,17 @@ import 'completed_snapshot_source.dart';
 /// Caller owns backup-work through validation/upload; original archive is never
 /// upgraded or changed. Headless authority is the original local Drive consent.
 final class CompletedSnapshotAuthenticator {
-  const CompletedSnapshotAuthenticator(this.database, this.platform);
+  const CompletedSnapshotAuthenticator(
+    this.database,
+    this.platform, {
+    this.recoveryCode,
+  });
   final DatabaseCoordinator database;
   final KasirPlatform platform;
+
+  /// Explicit local protection can use a newly generated portable code without
+  /// replacing an existing automatic-backup credential. No code is logged.
+  final Future<String> Function()? recoveryCode;
   Future<void> authenticate(
     File source,
     BackupManifest expected, {
@@ -34,7 +42,9 @@ final class CompletedSnapshotAuthenticator {
     }
     try {
       await authorize();
-      final code = await platform.key('backup-master-v1', allowCreate: false);
+      final code =
+          await (recoveryCode?.call() ??
+              platform.key('backup-master-v1', allowCreate: false));
       if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
         throw const CompletedSnapshotInvalid();
       }

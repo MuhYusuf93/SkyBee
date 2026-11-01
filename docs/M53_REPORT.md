@@ -4,7 +4,9 @@ Status aktif 1 November2026: A–F, G1, G2A dan G2B sudah ditutup; G2B dipush
 `e0a5eb7`. G3 portable/resume selesai dengan Poco3PASS/DV3PASS,
 host61PASS, analyzer bersih dan semua hash interval lama sama/controlOff. [Laporan G3](M53_PORTABLE_BACKUP_REPORT.md) serta
 [checkpoint aktif](M53_CHECKPOINT.md) mengungguli rincian fondasi historis di bawah.
-H regresi/build/handoff/reset100/50 belum selesai. Data eksplorasi tetap dilindungi.
+H regresi/software/build0.5.3+13 lulus; [laporan H](M53_EXPLORATION_HANDOFF_REPORT.md)
+dan[panduan](M53_HANDOFF_GUIDE.md). Handoff/reset100/50 aktual masihberikutnya.
+Data eksplorasi tetap dilindungi.
 
 
 Laporan ini menyimpan fondasi schema16 historis. Progres aktif sudah source28;

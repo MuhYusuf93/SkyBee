@@ -54,6 +54,7 @@ final class AppServices {
     BarcodeCamera Function()? barcodeCameraFactory,
     this.supplierReminderSink,
     this.backupPlatform = const KasirPlatform(),
+    this.onboardingCompletion,
   }) : reportGate = reportGate ?? defaultReportWorkGate(backupPlatform),
        printerGate = printerGate ?? defaultPrinterOutputGate(),
        barcodeCameraFactory = barcodeCameraFactory ?? NativeBarcodeCamera.new {
@@ -88,6 +89,10 @@ final class AppServices {
   /// Fixtures can namespace recovery/consent records without touching retained
   /// manual-test credentials. Production uses the installation's native store.
   final KasirPlatform backupPlatform;
+
+  /// Package-specific completion dependency, never a global state provider.
+  final Future<bool> Function(AppServices app, int revision)?
+  onboardingCompletion;
   late final ManagementService management;
   late final suppliers = SupplierService(database, management);
   late final receiptPolicy = ReceiptPolicyService(
@@ -101,7 +106,13 @@ final class AppServices {
     management.clock,
     supplierReminderSink ?? AndroidSupplierReminders(notifications.plugin),
   );
-  late final onboarding = OnboardingService(database, management);
+  late final onboarding = OnboardingService(
+    database,
+    management,
+    completion: onboardingCompletion == null
+        ? null
+        : (revision) => onboardingCompletion!(this, revision),
+  );
   late final cashierLock = CashierLockService(database, management);
   late final InventoryService inventory;
   late final SettingsService settings;

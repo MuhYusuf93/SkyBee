@@ -220,12 +220,14 @@ final class BackupService {
     try {
       late Map<String, Object?> settings;
       late String storeId;
+      late int snapshotSchema;
       final files = <String, String>{'database.db': exported.path};
       Future<void> snapshot(Database db) async {
         await checkAuthorization?.call();
         if (!headless) await access.authorize(db);
         await EncryptedDatabase.requireCipher(db);
         await DatabaseValidation.integrity(db);
+        snapshotSchema = await db.getVersion();
         await db.rawInsert(
           'INSERT OR IGNORE INTO m5_store(id,store_id) VALUES(1,?)',
           [ids.v4()],
@@ -289,7 +291,7 @@ final class BackupService {
       }
       final manifest = BackupManifest({
         'format': 1,
-        'schema': Schema.version,
+        'schema': snapshotSchema,
         'appVersion': appVersion,
         'id': id,
         'storeId': storeId,

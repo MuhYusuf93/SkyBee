@@ -7,9 +7,13 @@ import '../domain/onboarding_draft.dart';
 /// Persists only whitelisted non-secret draft values. Completion is one SQL
 /// transaction so failure cannot leave a usable PIN with half-applied setup.
 final class OnboardingService {
-  const OnboardingService(this.database, this.access);
+  const OnboardingService(this.database, this.access, {this.completion});
   final DatabaseCoordinator database;
   final ManagementService access;
+
+  /// An explicitly composed exploration package may atomically complete a
+  /// genuine setup in an encrypted shadow. False uses the ordinary finish.
+  final Future<bool> Function(int revision)? completion;
   Future<bool> get needed => database.read(OnboardingStore.needsSetup);
   Future<OnboardingProgress> load() => database.transaction((dbTxn) async {
     await OnboardingStore.requireFresh(dbTxn);
@@ -55,7 +59,15 @@ final class OnboardingService {
     return OnboardingStore.progress(dbTxn);
   });
 
-  Future<void> finish(int revision) => database
+  Future<void> finish(int revision) async {
+    if (completion != null && await completion!(revision)) {
+      access.lock();
+      return;
+    }
+    await _finish(revision);
+  }
+
+  Future<void> _finish(int revision) => database
       .transaction((dbTxn) async {
         final current = await OnboardingStore.expect(dbTxn, revision);
         if (!current.pinsReady || current.step != 7) {
