@@ -6,6 +6,20 @@ final class ReceiptDraftValidation {
   static Future<void> validate(DatabaseExecutor db) async {
     final schema =
         (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
+    // Supplier returns retain the source item but deliberately are not a new
+    // receipt. Accept that shape only through its immutable return witness;
+    // the supplier validator checks quantities, snapshots and reversal chains.
+    final returnWitness = schema >= 32
+        ? '''OR (o.stock_receipt_id IS NULL AND (
+          EXISTS(SELECT 1 FROM supplier_return_items x JOIN supplier_returns r ON r.id=x.return_id
+            WHERE x.inventory_operation_id=o.id AND x.receipt_item_id=i.id AND
+              x.product_id=o.product_id AND r.receipt_id=i.stock_receipt_id) OR
+          EXISTS(SELECT 1 FROM supplier_return_reversal_items z
+            JOIN supplier_return_items x ON x.id=z.return_item_id
+            JOIN supplier_returns r ON r.id=x.return_id
+            WHERE z.inventory_operation_id=o.id AND x.receipt_item_id=i.id AND
+              x.product_id=o.product_id AND r.receipt_id=i.stock_receipt_id)))'''
+        : '';
     for (final sql in [
       '''SELECT 1 FROM receipt_drafts d JOIN store_settings s ON s.id=1 WHERE
         typeof(d.id)<>'text' OR length(d.id)<>36 OR typeof(d.status)<>'text' OR d.status NOT IN ('draft','posted','cancelled') OR
@@ -45,7 +59,7 @@ final class ReceiptDraftValidation {
       'SELECT 1 FROM receipt_draft_lines GROUP BY draft_id HAVING COUNT(*)>100 LIMIT 1',
       '''SELECT 1 FROM inventory_operations o WHERE o.stock_receipt_item_id IS NOT NULL AND
         NOT EXISTS(SELECT 1 FROM stock_receipt_items i WHERE i.id=o.stock_receipt_item_id AND
-          i.product_id=o.product_id AND i.stock_receipt_id=o.stock_receipt_id) LIMIT 1''',
+          i.product_id=o.product_id AND (i.stock_receipt_id=o.stock_receipt_id $returnWitness)) LIMIT 1''',
       '''SELECT 1 FROM reference_cost_history h WHERE h.stock_receipt_item_id IS NOT NULL AND
         NOT EXISTS(SELECT 1 FROM stock_receipt_items i WHERE i.id=h.stock_receipt_item_id AND i.product_id=h.product_id) LIMIT 1''',
     ]) {

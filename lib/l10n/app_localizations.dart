@@ -9283,6 +9283,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finish setting up the store first.'**
   String get m53SetupRequired;
+
+  /// A recorded upload snapshot cannot be validated; a new explicit backup is required.
+  ///
+  /// In en, this message translates to:
+  /// **'The saved backup snapshot is missing, changed, or cannot be verified. Start a new backup. The old file is kept.'**
+  String get m53BackupResumeInvalid;
 }
 
 class _AppLocalizationsDelegate

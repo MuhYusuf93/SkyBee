@@ -807,6 +807,17 @@ final class BackupService {
             await dbTxn.delete('print_jobs');
             await dbTxn.delete('printer_profiles');
             await dbTxn.delete('alert_state');
+            // Delivery tombstones survive restore to avoid duplicate alerts,
+            // while source-device scheduling/admission state never becomes live.
+            await dbTxn.update('supplier_reminder_jobs', {
+              'active': 0,
+              'seen_generation': 0,
+              'scheduled_fingerprint': null,
+              'error_code': null,
+            });
+            await dbTxn.update('supplier_reminder_runtime', {
+              'generation': 0,
+            }, where: 'id=1');
             await dbTxn.delete('backup_runs');
             await dbTxn.delete('local_backups');
             await dbTxn.update('space_maintenance', {

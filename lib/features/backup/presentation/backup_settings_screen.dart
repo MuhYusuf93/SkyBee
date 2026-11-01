@@ -766,7 +766,10 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                       tr(context, 'm5DriveFailed'),
                                   ].join('\n'),
                                 ),
-                                trailing: row['status'] == 'failed'
+                                trailing:
+                                    row['status'] == 'failed' &&
+                                        row['error_code'] !=
+                                            'driveSnapshotInvalid'
                                     ? TextButton(
                                         onPressed: s.busy
                                             ? null

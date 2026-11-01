@@ -9,6 +9,8 @@ import '../../../data/database/database_gate.dart';
 import '../../management/application/management_service.dart';
 import '../domain/backup_manifest.dart';
 import 'backup_service.dart';
+import 'completed_snapshot_source.dart';
+import 'completed_snapshot_auth.dart';
 import 'drive_authorization.dart';
 import 'drive_rest.dart';
 import '../domain/backup_retention.dart';
@@ -44,6 +46,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
     GoogleDriveAuthorization? authorization,
     DriveRest Function()? transport,
     DatabaseGate? workGate,
+    this.authenticateResumedSnapshot,
   }) : policies = policies ?? KeystoreDrivePolicy(backups.platform),
        authorization = authorization ?? GoogleDriveAuthorization(),
        workGate = workGate ?? backups.workGate {
@@ -62,6 +65,10 @@ final class DriveBackupService implements ScheduledDriveBackup {
   final DrivePolicyStore policies;
   final GoogleDriveAuthorization authorization;
   final DatabaseGate workGate;
+
+  /// Only opaque host HTTP fixtures replace native authentication. Creation
+  /// provenance/path/hash checks remain mandatory even with this dependency.
+  final Future<void> Function(PortableBackup)? authenticateResumedSnapshot;
   late final DriveRest Function() _transport;
   Future<Map<String, RetentionProtection>> retentionProtections(
     Iterable<String> ids,
@@ -323,9 +330,25 @@ final class DriveBackupService implements ScheduledDriveBackup {
     if (headless && access.lastRole == ManagementRole.warehouse) {
       throw const AppError('m53OwnerRequired');
     }
+    final requestedGrant = access.generation,
+        requestedGeneration = database.generation;
     if (!headless) await access.authorizeCurrent();
+    final requestedPolicy = await policies.read();
     return workGate.run(() async {
+      void requireOriginalStore() {
+        if (database.generation != requestedGeneration ||
+            (!headless && access.generation != requestedGrant)) {
+          throw const AppError('sessionLockedEnterPinAgain');
+        }
+      }
+
+      requireOriginalStore();
       final policy = await policies.read();
+      if (policy.generation != requestedPolicy.generation ||
+          policy.permissionId != requestedPolicy.permissionId ||
+          policy.accountId != requestedPolicy.accountId) {
+        throw const DriveFailure('driveConsentChanged');
+      }
       if (!policy.connected || (headless && !policy.enabled)) {
         throw const DriveFailure('driveNotEnabled');
       }
@@ -362,23 +385,61 @@ final class DriveBackupService implements ScheduledDriveBackup {
             throw const DriveFailure('driveAccountMismatch');
           }
           if (row['status'] == 'success') return runId;
-          if (row['manifest_json'] != null && row['snapshot_path'] != null) {
-            final path = row['snapshot_path'] as String;
-            final base = p.normalize(
-              p.join(p.dirname(database.databasePath), 'm5_backups'),
-            );
-            if (!p.isWithin(base, p.normalize(path))) {
-              throw const DriveFailure('driveSnapshotPathInvalid');
-            }
-            final file = File(path);
-            if (await file.exists()) {
+          final hasManifest = row['manifest_json'] != null,
+              hasPath = row['snapshot_path'] != null;
+          if (hasManifest != hasPath) {
+            throw const DriveFailure('driveSnapshotInvalid');
+          }
+          if (hasManifest) {
+            try {
               archive = PortableBackup(
-                file,
+                File(row['snapshot_path'] as String),
                 BackupManifest(
                   jsonDecode(row['manifest_json'] as String)
                       as Map<String, dynamic>,
                 ),
               );
+              final origin = await backups.platform.key(
+                'backup-origin-v1',
+                allowCreate: false,
+              );
+              if (row['origin_id'] != archive.manifest.originId ||
+                  origin != archive.manifest.originId) {
+                throw const CompletedSnapshotInvalid();
+              }
+              final verifier = CompletedSnapshotSource(database);
+              final proof = await verifier.verify(
+                archive.file,
+                archive.manifest,
+              );
+              Future<void> check() async {
+                requireOriginalStore();
+                await transport.guard(policy, automatic: headless);
+                if (!headless) await access.authorizeCurrent();
+                requireOriginalStore();
+              }
+
+              await check();
+              if (authenticateResumedSnapshot != null) {
+                await authenticateResumedSnapshot!(archive);
+              } else {
+                await CompletedSnapshotAuthenticator(
+                  database,
+                  backups.platform,
+                ).authenticate(
+                  archive.file,
+                  archive.manifest,
+                  authorize: check,
+                );
+              }
+              await verifier.recheck(archive.file, proof);
+              await check();
+            } on DriveFailure {
+              rethrow;
+            } on AppError {
+              rethrow;
+            } catch (_) {
+              throw const DriveFailure('driveSnapshotInvalid');
             }
           }
         }
@@ -406,8 +467,12 @@ final class DriveBackupService implements ScheduledDriveBackup {
         archive ??= await backups.create(
           workLeaseHeld: true,
           headless: headless,
-          checkAuthorization: () =>
-              transport.guard(policy, automatic: headless),
+          checkAuthorization: () async {
+            requireOriginalStore();
+            await transport.guard(policy, automatic: headless);
+            if (!headless) await access.authorizeCurrent();
+            requireOriginalStore();
+          },
         );
         await database.exclusive(
           (db) => db.update(
@@ -420,6 +485,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
             whereArgs: [runId],
           ),
         );
+        requireOriginalStore();
         await transport.guard(policy, automatic: headless);
         final uploaded = await transport.upload(
           policy,
@@ -427,6 +493,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
           automatic: headless,
         );
         await transport.guard(policy, automatic: headless);
+        requireOriginalStore();
         await database.exclusive(
           (db) => db.update(
             'backup_runs',
@@ -493,7 +560,9 @@ final class DriveBackupService implements ScheduledDriveBackup {
         }
         return runId;
       } catch (error) {
-        if (runId != null) {
+        // A late callback may report only into the database which issued it.
+        // In particular it must never touch an incoming restored/reset store.
+        if (runId != null && database.generation == requestedGeneration) {
           await database.exclusive(
             (db) => db.update(
               'backup_runs',

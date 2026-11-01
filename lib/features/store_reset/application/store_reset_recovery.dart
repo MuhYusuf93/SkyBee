@@ -77,7 +77,7 @@ final class StoreResetRecovery {
     const uuid =
         r'[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
     final report = RegExp('^m51_report_$uuid\$');
-    final restore = RegExp('^m5_restore_$uuid\$');
+    final restore = RegExp('^m5_(?:restore|check)_$uuid\$');
     final loose = RegExp(
       '^m5_(?:import_$uuid\\.kasirbackup|logo_$uuid\\.input)\$',
     );

@@ -6223,5 +6223,9 @@
   "m53SetupRequired": "Finish setting up the store first.",
   "@m53SetupRequired": {
     "description": "Store reset: m53SetupRequired"
+  },
+  "m53BackupResumeInvalid": "The saved backup snapshot is missing, changed, or cannot be verified. Start a new backup. The old file is kept.",
+  "@m53BackupResumeInvalid": {
+    "description": "A recorded upload snapshot cannot be validated; a new explicit backup is required."
   }
 }

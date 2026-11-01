@@ -6223,5 +6223,9 @@
   "m53SetupRequired": "Selesaikan penyiapan toko terlebih dahulu.",
   "@m53SetupRequired": {
     "description": "Store reset: m53SetupRequired"
+  },
+  "m53BackupResumeInvalid": "Snapshot cadangan tersimpan hilang, berubah, atau tidak dapat diverifikasi. Buat cadangan baru. Berkas lama tetap disimpan.",
+  "@m53BackupResumeInvalid": {
+    "description": "A recorded upload snapshot cannot be validated; a new explicit backup is required."
   }
 }

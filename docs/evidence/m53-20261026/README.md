@@ -37,3 +37,9 @@ Query plan/timings synthetic debug dan beban CCTV tidak diisolasi; lihat
 G2A key rotation: [laporan](../../M53_KEY_ROTATION_REPORT.md), [host](key-rotation-host-checks.json), [source715](key-rotation-source-sha256.json), [Poco67](key-rotation-poco.json), [DV67](key-rotation-dv.json), [guard rejection](key-rotation-dv-guard-rejection.json). G2B/G3/H belum selesai.
 
 G2B ResetToko: [laporan](../../M53_STORE_RESET_REPORT.md), [host awal127](store-reset-host-checks.json), [native gagal asli](store-reset-poco-initial.json), [review checks](store-reset-review-checks.json), [review725](store-reset-review-source-sha256.json), [Poco36](store-reset-poco-review.json), [DV36](store-reset-dv.json). G3/H masih wajib.
+
+G3 portable/resume: [laporan](../../M53_PORTABLE_BACKUP_REPORT.md),
+[source732](portable-initial-source-sha256.json), [Poco3PASS](portable-poco.json).
+[DV3PASS](portable-dv.json), [host61PASS dan riwayat timeout](portable-host-checks.json).
+Kedua perangkat source sama/hash lama sama/controlOff, DV awakeexact. Tidak ada
+claim handoff H atau reset toko eksplorasi.

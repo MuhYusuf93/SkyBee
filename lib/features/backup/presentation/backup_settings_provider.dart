@@ -56,6 +56,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
     'driveForbiddenOrNotConfigured' => 'm5DriveForbidden',
     'driveOffline' || 'driveNetworkTimeout' => 'm5DriveOffline',
     'backupRecoveryRequired' => 'm5RecoveryRequired',
+    'driveSnapshotInvalid' => 'm53BackupResumeInvalid',
     _ => 'm5DriveFailed',
   };
   List<Map<String, dynamic>> remote = [];
@@ -318,7 +319,14 @@ final class BackupSettingsProvider extends ChangeNotifier {
   Future<void> upload({String? retryKey}) => task(() async {
     final key = retryKey ?? 'manual:${const Uuid().v4()}';
     lastManualKey = key;
-    await app.drive.run(operationKey: key);
+    try {
+      await app.drive.run(operationKey: key);
+    } on DriveFailure catch (error) {
+      if (error.code == 'driveSnapshotInvalid') {
+        lastManualKey = null;
+      }
+      rethrow;
+    }
     runs = await app.drive.history();
     message = 'm5DriveBackupReady';
   });

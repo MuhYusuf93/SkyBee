@@ -5186,4 +5186,8 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53SetupRequired => 'Selesaikan penyiapan toko terlebih dahulu.';
+
+  @override
+  String get m53BackupResumeInvalid =>
+      'Snapshot cadangan tersimpan hilang, berubah, atau tidak dapat diverifikasi. Buat cadangan baru. Berkas lama tetap disimpan.';
 }

@@ -152,6 +152,7 @@ void main() {
       final restore = await put('m5_restore_$id/database.db');
       final logo = await put('logos/${'a' * 64}.png');
       final loose = await put('m5_import_$id.kasirbackup');
+      final check = await put('m5_check_$id/database.db');
       final backup = await put('m5_backups/$id/$id.kasirbackup');
       final userExport = await put('user-export.csv');
       final unknown = await put(
@@ -161,7 +162,7 @@ void main() {
         'm51_report_aaaaaaaa-1234-1234-1234-123456789012/report.csv',
       );
       await recovery.complete(outcome());
-      for (final f in [report, sheet, restore, logo, loose]) {
+      for (final f in [report, sheet, restore, check, logo, loose]) {
         expect(await f.exists(), false);
       }
       for (final f in [backup, userExport, unknown, matchingWithUnknown]) {

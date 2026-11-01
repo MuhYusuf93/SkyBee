@@ -649,3 +649,14 @@ benar, tetapi valid storage ditolak. Lakukan native canonical private preflight
 sebelum cleanup, iterate resolved root konsisten, tetap no-follow/allowlist child.
 Modeled alias host adalah unit proof; native Android tetap diperlukan untuk
 membuktikan actual storage alias. Simpan run gagal sebelum review source berubah.
+
+153. Validator antar modul harus diuji bersama melalui backup penuh. Pointer
+source-item pada retur sah tidak membawa receipt_id baru. Jangan melonggarkan
+semua null: require witness retur/reversal yang cocok, lalu jalankan validator
+supplier untuk replay lengkap. Fixture G3 A–F mereproduksi dan memperbaikinya.
+154. Resume upload bukan sekadar menghitung hash byte terkini. Bandingkan dengan
+creation receipt terenkripsi, autentikasi arsip/staging dan bisnis, lalu periksa
+ulang source/grant/DB/account semula. File hilang/berubah tidak boleh otomatis
+menjadi snapshot baru dengan operation key lama. Catat uji HTTP terpisah dari
+native crypto dan Drive nyata. Timeout fixture KDF30s saat regresi gabungan harus
+disimpan; rerun timeout2m dengan assertion sama bukan bukti mempercepat perangkat.

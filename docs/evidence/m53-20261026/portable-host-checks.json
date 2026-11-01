@@ -1,0 +1,43 @@
+{
+  "schema": 37,
+  "sourceFiles": 732,
+  "sourceManifestSha256": "c19e885a09b3456f487b75b31adc54770334f497bcafb3d2fa96bf7bebff0260",
+  "sourceMatchedAtCapture": true,
+  "sourceManifestIsHistorical": true,
+  "host": {
+    "passed": 61,
+    "failed": 0,
+    "elapsed": "00:56",
+    "timeout": "2m",
+    "files": 11,
+    "logSha256": "7438eb6f28748660885aab51a10fa4934f7e95a0f0bcbcc3be0ebc85146e000d",
+    "initial": {
+      "passed": 60,
+      "failed": 1,
+      "elapsed": "01:08",
+      "failure": "Default 30s timeout in separated portable real-writer fixture; no failed business assertion. Same source rerun with 2m timeout.",
+      "logSha256": "88e1e7056bef2b7ee3f88e3d31961c1e2fc8c633a017447f9eecae0064e94153"
+    }
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 113.9,
+    "logSha256": "14d050d1916ad5040d69e8f10d06261fd12ad2e824cb2b171148b853ba8ed3a4"
+  },
+  "localization": {
+    "pairedKeys": 1532,
+    "staticReferences": 939,
+    "originalRequirementIds": 245,
+    "logSha256": "d889f6f8ee39b12ab51e3efd5d06d93e9557e5b042b10437a78934a3209d240c"
+  },
+  "pinCrypto": {
+    "upstreamFilesUnchanged": 106,
+    "licenseMatches": true,
+    "logSha256": "a136cd6c1d63a0fff5c6ee1b14f741da14494bc16c11c954bfe4a6367b7ed137"
+  },
+  "native": [
+    "portable-poco.json",
+    "portable-dv.json"
+  ],
+  "limits": "Native crypto/SQLCipher/filesystem, synthetic IO/biometric dependencies. No real Drive, physical paper/scanner/OS biometric enrollment, natural 72h/90d, physical power loss or exploration reset/handoff."
+}

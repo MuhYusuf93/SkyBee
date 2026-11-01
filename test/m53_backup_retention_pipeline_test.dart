@@ -88,6 +88,9 @@ void main() {
             f.app.management,
             f.app.backups,
             policies: policy,
+            // This suite tests transport/retention with opaque synthetic bytes;
+            // real archive authentication has native cross-key coverage.
+            authenticateResumedSnapshot: (_) async {},
             transport: () => DriveRest(
               policy,
               Tokens(),

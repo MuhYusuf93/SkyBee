@@ -1,7 +1,30 @@
 # Spesifikasi pengembangan aplikasi kasir Flutter
 
+<!-- M53_ACTIVE_G3_START -->
+1 November 2026 — G3 DITUTUP, schema37/source732. H berikutnya. G2B sudah push e0a5eb7.
+Host final61PASS00:56 dengan timeout2m; awal60PASS1timeout30s01:08 disimpan,
+bukan assertion bisnis. Analyzer final113,9s bersih, l10n1532/939/245,
+PIN106 unchanged. Native Poco3PASS06:01/1310hash lama sama/controlOff/exit0;
+DV3PASS08:08/1212hash lama sama/awakeexact/controlOff/exit0 pada source sama.
+Kedua wrapper selesai; source boleh diedit untuk H.
+Snapshot retry Drive terikat creation receipt/path/SHA asli + native archive,
+SQLCipher/invariant validation dan grant/DB/account semula. Sumber invalid tidak
+diambil ulang diam-diam. Restore sanitize cache job, pertahankan delivery tombstone.
+Fixture A–F mereproduksi bug validator penerimaan menolak retur sah karena null
+receipt_id; fix hanya menerima relasi retur/reversal yang punya witness, orphan
+adjustment tetap ditolak. Full portable partial +warehouse/task3 dan native pack
+actual schema14→private migration melindungi fakta/credential legacy.
+[Laporan G3](M53_PORTABLE_BACKUP_REPORT.md). Commit/push G3 kemudian lanjut
+lalu H regresi/build/handoff. Draft H100/50 writer privat3PASS00:40 untuk off/
+partial/all; itu belum implementasi atomic wizard/backup/admin atau reset nyata.
+Tidak ada update/reset/reseed ordinary/.skybee. H hanya setelah backup terenkripsi
+serta recovery lama eksternal terverifikasi. Wizard guard/PIN/currency/tracking
+pilihan pengguna dipertahankan. Prefix gemini_/gemini2_ diabaikan. Checkpoint bukan stop.
+<!-- M53_ACTIVE_G3_END -->
+
+
 <!-- M53_ACTIVE_G2B_START -->
-1 November2026 â€” G2B runtime ResetToko DITUTUP, schema37/review source725.
+1 November2026 — G2B runtime ResetToko DITUTUP, schema37/review source725.
 Historical host127PASS01:56 + delta3files focused5PASS/analyze82,9s bersih/format3/0,
 l10n1531/939/245/PIN106match, JavaJUnit4PASS43ms unchanged.
 Review native36 PocoPASS07:49/1199hash lama sama, DV PASS10:27/
@@ -11,7 +34,7 @@ alias ditolak dibandingcanonicalroot. Fix native private preflight sebelumcleanu
 +resolveddirectory konsisten, nofollow/allowlist tetap; review36 kedua perangkat
 lulus termasuk actualUIIDEN finalcancel/locked dirtyBack/freshPIN/genuinewizard.
 [Laporan G2B](M53_STORE_RESET_REPORT.md). G2A sudahpush50b0b3d. Commit/pushG2B,
-kemudian G3 full portable Aâ€“F/Drive resumed snapshot validation +localcache sanitize,
+kemudian G3 full portable A–F/Drive resumed snapshot validation +localcache sanitize,
 lalu H handoff100/50. Checkpoint bukanstop. Native sudahtidakaktif;sourcebolehdiedit.
 Private auditG3: g3-resume-validation-audit.md, g3-restore-local-cache-audit.md.
 H: h-shadow-before-finish-addendum.md +h-launcher-audit-20261101.md, belumimplementasi.

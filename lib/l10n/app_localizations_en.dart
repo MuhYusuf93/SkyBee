@@ -5166,4 +5166,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53SetupRequired => 'Finish setting up the store first.';
+
+  @override
+  String get m53BackupResumeInvalid =>
+      'The saved backup snapshot is missing, changed, or cannot be verified. Start a new backup. The old file is kept.';
 }

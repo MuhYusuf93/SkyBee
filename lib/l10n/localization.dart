@@ -12,6 +12,7 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm53BackupResumeInvalid' => l.m53BackupResumeInvalid,
     'm53ResetTitle' => l.m53ResetTitle,
     'm53ResetWarning' => l.m53ResetWarning,
     'm53ResetArchivesKept' => l.m53ResetArchivesKept,
