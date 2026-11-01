@@ -1,8 +1,16 @@
 # H — Regresi dan Paket Eksplorasi Mandiri
 
-1 November 2026, pekerjaan aktif. Source calon0.5.3+13/schema37. G3 sudah push
-5166318. **H software/regresi/build lulus; handoff aktual masih berikutnya. .skybee pengguna
-belum diupdate/reset/reseed.**
+1 November 2026. **M5.3 A–H selesai; handoff aktual PASS.**
+Poco F6 `com.example.kasir_app.skybee` terpasang **0.5.3+13/schema37**, update
+in-place/cert sama tanpa uninstall/downgrade. Source APK sudah push **d06f7e1**.
+[Actual handoff](evidence/m53-20261026/exploration-actual-handoff.json).
+
+Paket ditinggalkan di wizard genuine langkah1/7, ID/EN, identitas kosong.
+Dua startup native witness + UI hierarchy dan screenshot akhir diperiksa.
+**Database bisnis aktif saat handoff adalah0/0**;100 produk/50 sale diaktifkan
+atomic pada Finish yang dilakukan pengguna dengan PIN/policy pilihannya.
+Flow Finish diuji pada native fixture kedua perangkat; wizard pengguna sengaja
+belum diselesaikan agar pengalaman setup pertamanya tetap milik pengguna.
 
 ## Perilaku yang diimplementasikan
 
@@ -87,20 +95,41 @@ reconcile; postSelection fault selesai satu kali; early shadow fault meninggalka
 fingerprint/wizard asli; permit toko berbeda menjalankan setup biasa tanpa seed.
 Receipt eksternal native adalah sintetis; belum merupakan salinan host data nyata.
 
-## Handoff yang masih harus dilakukan
+## Handoff aktual — selesai
 
-Seluruh cek software/native/build di atas selesai. Commit/push source yang
-lulus, lalu jalankan handoff aktual memakai tools/handoff_skybee_m53.py.
-[Panduan ID/EN dan runconfig](M53_HANDOFF_GUIDE.md) tersedia.
+Source software d06f7e1 dipush sebelum handoff. APK .skybee debug3ABI:
+`build/m53-release-candidate/skybee-kasir-0.5.3-debug.apk`, SHA256
+`2025aa13491c30c75a01e9cb94e1a41cbc8c67dc227b035eb04fa402039e3a89`.
+Ordinary debug/release juga dibangun/diverifikasi, tidak dipasang ke perangkat.
+Konfigurasi IDE ada pada `.run/SkyBee_Exploration.run.xml`; detail
+[panduan ID/EN](M53_HANDOFF_GUIDE.md). Development signing, bukan publikasi M6.
 
-Di Poco .skybee terdeteksi0.5.2+12/ARM64/debug. Simpan snapshot terpilih DB family,
-wrapped default/recovery dan marker/audit sebelum update (bukan kloning seluruh
-sandbox); verifikasi signing sama dan install-r version13 tanpa downgrade.
-Buat portable safety tervalidasi dan copy/recovery eksternal yang dibaca ulang,
-baru reset yang diotorisasi pengguna. Verifikasi dua startup dengan witness native
-serta UI langkah pertama sebenarnya, archive lama tetap sama, package lain hash
-sama dan semua runner/controlOff. Tinggalkan wizard agar pengguna memilih PIN
-sendiri;100/50 aktif pada Finish asli. Jangan klaim saat masih pending.
+Sebelum update, snapshot terpilih DB family/wrapped default/recovery serta
+seed/audit disimpan privat, bukan kloning sandbox. Tujuh hash lama .skybee
+sama sesudah install-r dan sebelum launch. Portable safety kemudian menjalani
+native archive/cipher/integrity/business preflight. Arsip1.541.594byte dan
+recovery eksternal dibaca ulang/hash cocok sebelum receipt reset diterbitkan.
+
+Lokasi pribadi:
+`C:/Users/ACER/Documents/SkyBee-Backups/M53-H-20261101-225304/` berisi arsip
+terenkripsi `.kasirbackup`, `RECOVERY.txt`, dan README. Recovery tidak masuk Git,
+chat atau evidence publik. Kode ini milik backup sebelum reset, bukan PIN baru.
+Tidak ada arsip lokal preexisting pada baseline; arsip safety baru tetap cocok
+hash sesudah reset. Dua marker historis seed/upgrade tetap byte-identik.
+
+Reset khusus .skybee terjadi sesudah perlindungan tersebut, dengan key/store/
+installation baru dan guard genuine setup. Lima file lama berubah/hilang sesuai
+reset: active DB/journal, wrapped DB key, active backup code dan app biometric
+binding. Tidak ada perubahan lain yang tidak dijelaskan. Ordinary **2** dan
+integration **1336** entry hash semuanya sama; tidak diupdate/reset oleh handoff.
+OS account/enrollment/cloud backups tidak dihapus. Semua controller/runner Off,
+DV awake restored/read-back exact pada suite native terakhir.
+
+Actual phase logs/private screenshots/DB-family protection tetap di
+`build/m53-skybee-handoff-20261101-225304/`; data/recovery tidak dipublikasikan.
+Invocation PowerShell awal salah membentuk argv dan ditolak parser sebelum
+operasi perangkat; invocation argv Python kemudian menyelesaikan ketiga fase.
+Tidak ada baseline diganti atau install-failure uninstall fallback.
 
 Bukti crypto/SQLCipher/filesystem nyata dipisahkan dari transport/printer/biometrik
 sintetis. Physical printer/2D scanner, OS biometric enrollment, Drive cloud baru,

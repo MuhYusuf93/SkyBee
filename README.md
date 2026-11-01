@@ -1,7 +1,7 @@
 # Kasir Flutter — M5.3
 
-Source aktif **0.5.3+13 / schema37**. A–G selesai; H software/native/build telah
-diperiksa, handoff aktual masih mengikuti checkpoint. [Status](docs/STATUS.md),
+Source aktif **0.5.3+13 / schema37**. A–H selesai; .skybee Poco diperbarui in-place dan
+siap pada wizard pertama. Data contoh100/50 aktif saat Finish pilihan pengguna. [Status](docs/STATUS.md),
 [laporan H](docs/M53_EXPLORATION_HANDOFF_REPORT.md),
 [panduan ID/EN dan Android Studio](docs/M53_HANDOFF_GUIDE.md).
 M6/publikasi belum dimulai.

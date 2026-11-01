@@ -1,0 +1,66 @@
+{
+  "version": "0.5.3+13",
+  "schema": 37,
+  "package": "com.example.kasir_app.skybee",
+  "device": "7f0edea0",
+  "apkSourceCommit": "d06f7e1518dfc3c9ad4779c5c9873bd3b4500a4c",
+  "apkSha256": "2025aa13491c30c75a01e9cb94e1a41cbc8c67dc227b035eb04fa402039e3a89",
+  "status": "PASS",
+  "installed": true,
+  "inPlaceUpdate": true,
+  "resetExplicitlyAuthorized": true,
+  "uninstall": false,
+  "downgrade": false,
+  "preinstallProtectionScope": "Named encrypted DB family + wrapped default key/recovery + seed/audit metadata only; same-installation protection, not portable recovery",
+  "allSevenPreexistingSkybeeHashesMatchedBeforeFirstLaunch": true,
+  "oldSkybeeProtectedEntries": 7,
+  "authorizedChangedEntries": 5,
+  "unexpectedChangedEntries": 0,
+  "historicalSeedAndUpgradeMarkersUnchanged": true,
+  "otherPackages": {
+    "com.example.kasir_app": {
+      "protectedEntries": 2,
+      "everyHashUnchanged": true,
+      "updatedByHandoff": false,
+      "reset": false
+    },
+    "com.example.kasir_app.integration": {
+      "protectedEntries": 1336,
+      "everyHashUnchanged": true,
+      "updatedByHandoff": false,
+      "reset": false
+    }
+  },
+  "oldPreexistingArchiveFiles": 0,
+  "newSafetyArchive": {
+    "encrypted": true,
+    "nativeAuthenticated": true,
+    "businessAndIntegrityValidated": true,
+    "sha256": "a03561efca8bc082cc4217690041e9f5f647e7652fa62d42f95ba9ad3d21ac37",
+    "bytes": 1541594,
+    "stillMatchesAfterReset": true,
+    "externalArchiveReadbackVerified": true,
+    "externalRecoveryReadbackVerified": true,
+    "recoveryMaterialPublished": false
+  },
+  "genuineFirstWizardTwoStartups": true,
+  "finalUiVisualReviewed": true,
+  "firstStep": "1/7 identity, empty fields, ID/EN",
+  "businessActiveAtHandoff": {
+    "products": 0,
+    "sale_transactions": 0
+  },
+  "activationOnUserFinish": {
+    "products": 100,
+    "sale_transactions": 50,
+    "registeredCustomers": 8,
+    "suppliers": 4
+  },
+  "defaultUserPinAssigned": false,
+  "automaticDeviceControlActive": false,
+  "privateResultSha256": "efa1edc77c32fe5e034a2d3683c79b2611806dc0f7a8df74cf2ab37b1c0d902c",
+  "privateStartup1HierarchySha256": "9ab3322c3f10dea3b36068acc6e8112ffbae7ad4652adbf51e1e221ea4167922",
+  "privateStartup2HierarchySha256": "9ab3322c3f10dea3b36068acc6e8112ffbae7ad4652adbf51e1e221ea4167922",
+  "privateLeftReadyScreenshotSha256": "3d68d09248d7f5dcc9488d4c3cc229a1e3c69bb59484135e361eb70a13d2b57a",
+  "limits": "Finish100/50 verified on isolated real native fixtures; user wizard intentionally left unfinished. No physical printer/scanner or OS biometric enrollment/new real Drive/powercut/natural72h90d verification claimed. M6 production signing/publishing not completed."
+}

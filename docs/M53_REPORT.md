@@ -1,13 +1,12 @@
 # Laporan M5.3 — checkpoint fondasi dan akses, belum handoff akhir
 
-Status aktif 1 November2026: A–F, G1, G2A dan G2B sudah ditutup; G2B dipush
-`e0a5eb7`. G3 portable/resume selesai dengan Poco3PASS/DV3PASS,
-host61PASS, analyzer bersih dan semua hash interval lama sama/controlOff. [Laporan G3](M53_PORTABLE_BACKUP_REPORT.md) serta
-[checkpoint aktif](M53_CHECKPOINT.md) mengungguli rincian fondasi historis di bawah.
-H regresi/software/build0.5.3+13 lulus; [laporan H](M53_EXPLORATION_HANDOFF_REPORT.md)
-dan[panduan](M53_HANDOFF_GUIDE.md). Handoff/reset100/50 aktual masihberikutnya.
-Data eksplorasi tetap dilindungi.
-
+Status akhir 1 November2026: **M5.3 A–H selesai**, .skybee Poco0.5.3+13/schema37
+terpasang in-place dan ditinggalkan pada genuinewizard1/7. Perlindungan portable
++recovery eksternal verified sebelum reset yang khusus diotorisasi pengguna;
+100/50 aktif pada Finish milik pengguna. [Laporan H](M53_EXPLORATION_HANDOFF_REPORT.md),
+[panduan](M53_HANDOFF_GUIDE.md), [bukti aktual](evidence/m53-20261026/exploration-actual-handoff.json)
+mengungguli rincian fondasi historis di bawah. Source/APK pushd06f7e1; hardware/
+Drive/biometric/power-cut/natural-clock limits dan M6 tetap dilaporkan terpisah.
 
 Laporan ini menyimpan fondasi schema16 historis. Progres aktif sudah source28;
 lihat [checkpoint terkini](M53_CHECKPOINT.md), [browse](M53_WAREHOUSE_REPORT.md)
