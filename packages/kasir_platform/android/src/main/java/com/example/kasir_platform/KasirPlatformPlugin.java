@@ -165,6 +165,7 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
                 Object answer = switch (call.method) {
                     case "key" -> { synchronized (SECRETS) { yield readKey(call.argument("name"), Boolean.TRUE.equals(call.argument("create"))); } }
                     case "saveSecret" -> { synchronized (SECRETS) { writeSecret(call.argument("name"), call.argument("secret")); } yield true; }
+                    case "removeSecret" -> { synchronized (SECRETS) { removeSecret(call.argument("name")); } yield true; }
                     case "securityInfo" -> { synchronized (SECRETS) { yield securityInfo(); } }
                     case "acquire" -> acquire(call.argument("name"));
                     case "tryAcquire" -> tryAcquire(call.argument("name"));
@@ -192,9 +193,7 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
                     case "syncDirectory" -> {
                         File directory=privateFile(call.argument("path"));
                         if(!directory.isDirectory())throw new IOException("Not a private directory");
-                        java.io.FileDescriptor fd=android.system.Os.open(directory.getPath(),
-                            android.system.OsConstants.O_RDONLY,0);
-                        try{android.system.Os.fsync(fd);}finally{android.system.Os.close(fd);}yield true;
+                        syncPrivateDirectory(directory);yield true;
                     }
                     case "btPaired" -> bluetooth.paired();
                     case "btStatus" -> bluetooth.status();
@@ -313,6 +312,18 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         if (name == null || !name.matches("[a-zA-Z0-9_.-]{1,96}")) throw new IOException("Invalid key name");
         return new AtomicFile(new File(context.getNoBackupFilesDir(), "secret-" + name));
     }
+    private static void syncPrivateDirectory(File directory) throws Exception {
+        java.io.FileDescriptor fd=android.system.Os.open(directory.getPath(),android.system.OsConstants.O_RDONLY,0);
+        try{android.system.Os.fsync(fd);}finally{android.system.Os.close(fd);}
+    }
+    private void removeSecret(String name) throws Exception {
+        AtomicFile file=secretFile(name);file.delete();
+        File base=file.getBaseFile();
+        if(base.exists()||new File(base+".bak").exists()||new File(base+".new").exists()){
+            throw new IOException("Wrapped secret removal incomplete");
+        }
+        syncPrivateDirectory(context.getNoBackupFilesDir());
+    }
     private synchronized void writeSecret(String name, String value) throws Exception {
         AtomicFile file = secretFile(name);
         Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
@@ -322,6 +333,9 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         FileOutputStream out = file.startWrite();
         try { out.write(0xA1);out.write(cipher.getIV().length); out.write(cipher.getIV()); out.write(encrypted); file.finishWrite(out); }
         catch (Exception error) { file.failWrite(out); throw error; }
+        // A rotation journal may refer to this alias immediately. Persist the
+        // directory rename as well as AtomicFile's flushed encrypted contents.
+        syncPrivateDirectory(context.getNoBackupFilesDir());
     }
     private synchronized String readKey(String name, boolean create) throws Exception {
         AtomicFile file = secretFile(name);

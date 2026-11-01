@@ -30,6 +30,11 @@ final class KasirPlatform {
     'saveSecret',
     {'name': _secretName(name), 'secret': secret},
   );
+
+  /// Delete one wrapped app alias, never the Keystore wrapping key/enrollment.
+  /// The same fixture namespace and native name validation apply as to reads.
+  Future<void> removeSecret(String name) =>
+      channel.invokeMethod('removeSecret', {'name': _secretName(name)});
   Future<String> acquire() => call('acquire');
   Future<void> release(String token) =>
       channel.invokeMethod('release', {'token': token});

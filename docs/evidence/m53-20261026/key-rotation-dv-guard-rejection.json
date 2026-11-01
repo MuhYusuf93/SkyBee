@@ -1,0 +1,15 @@
+{
+  "run": "m53-key-rotation-dv-20261101-20261101-133122",
+  "device": "192.168.0.101:5555",
+  "status": "REJECTED_BEFORE_BUILD_INSTALL",
+  "reason": "Incorrect BackgroundPaused define name; guard requires exact KASIR_FIXTURE_BACKGROUND_PAUSED=true. Corrected in separate run; no guard weakened.",
+  "trueExitCode": 1,
+  "automaticDeviceControlActive": false,
+  "preExistingProtectedEntries": 1023,
+  "everyPreExistingHashUnchanged": true,
+  "awake": "Original DV settings restored and read back exactly.",
+  "beforeManifestSha256": "c5d9c84ad8e5e029bfa745024d5c90c06cc29c9f096431a90a7cb3530437ab6e",
+  "afterManifestSha256": "c5d9c84ad8e5e029bfa745024d5c90c06cc29c9f096431a90a7cb3530437ab6e",
+  "resultSha256": "c16b64d0ebb473fa660f79fe5fb5948bf0a913a4c0d053a57d3ded90565ce681",
+  "buildInstallTestAttempted": false
+}

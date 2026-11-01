@@ -1,0 +1,45 @@
+{
+  "schema": 37,
+  "sourceFiles": 715,
+  "sourceManifestSha256": "7b73b1a677f861d7a2b3cc9302e11298b74ae6c71242fb98fea021837df15b3a",
+  "sourceMatchedAtCapture": true,
+  "sourceManifestIsHistorical": true,
+  "host": {
+    "passed": 76,
+    "failed": 0,
+    "elapsed": "01:16",
+    "scope": "key journal24; archive recovery keys5; original durable promotion5; full G1 host regression42"
+  },
+  "analyzer": {
+    "issues": 0,
+    "seconds": 108.5
+  },
+  "formatter": {
+    "files": 620,
+    "changed": 0
+  },
+  "localization": {
+    "pairedKeys": 1512,
+    "staticReferences": 926,
+    "originalRequirementIds": 245
+  },
+  "pinCryptoUnchangedFiles": 106,
+  "newFiles": [
+    "integration_test/m53_key_rotation_test.dart",
+    "lib/data/database/archive_recovery_keys.dart",
+    "lib/data/database/key_rotation_journal.dart",
+    "lib/data/database/platform_rotation_secrets.dart",
+    "test/m53_archive_recovery_keys_test.dart",
+    "test/m53_key_rotation_journal_test.dart"
+  ],
+  "changedFromG1": [
+    "lib/data/database/encrypted_database.dart",
+    "packages/kasir_platform/android/src/main/java/com/example/kasir_platform/KasirPlatformPlugin.java",
+    "packages/kasir_platform/lib/kasir_platform.dart"
+  ],
+  "hostLogSha256": "9a89261a3b2c4b6fe84171574e4fa96e0bd5286c53feec1fc083e477efc33946",
+  "analyzerLogSha256": "7619321bddf21a995ab3feda81c02022c107162014e0a434a6610a0130c1a59e",
+  "formatLogSha256": "02e333302ec3257c93ddb084d33c931be890acb12f21d8c76182e61b48563bae",
+  "native": "PENDING67 per device: pure journal24, real SQLCipher/key recovery21, full G1 native regression22. Only owned fixtures; background paused.",
+  "boundary": "G2A foundation only. Default bootstrap refuses a committed reset journal without an installed cleanup handler. Runtime ResetToko/fresh owner/red final confirmation/config-worker-export coordination (G2B), G3 and H remain required. No .skybee/ordinary update/reset/reseed."
+}

@@ -634,3 +634,11 @@ sukses atau memicu upload ulang; uji HTTP503 dan trigger fixture status-write.
 149. Callback tombol activate bertabrakan dengan State.activate; rename operasi,
 bukan menambah override/super. UI lazy perlu reveal/hit-test, IO nyata, pemeriksaan
 nilai draft/dirty dan menunggu dialog tutup. Satu pump atau teks .last bukan bukti.
+
+150. Public rotation JSON tidak cukup mengikat intent. Simpan wrapped immutable
+witness sebelum public prepared; autentikasi path/key/file/store/operation dan
+fsync parent AtomicFile. Prepared tidak boleh fallback default; selected boleh
+hanya untuk fingerprint/cipher/store yang cocok setelah cleanup shadow terputus.
+151. Reset file baru tanpa cleanup consent/recovery/worker tidak boleh bootstrap.
+Fail closed sampai handler idempotent terpasang; same-store replace bukan reset.
+Jangan memperlakukan pengujian fondasi key journal sebagai bukti runtime wipe.

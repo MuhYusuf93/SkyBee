@@ -33,3 +33,5 @@ Native13 per perangkat PASS, semua680/611hash lama cocok/controlOff/awakeDVexact
 [focused UI0P1F](search-focused-ui-failed-dv.json) tetap disimpan, bukan PASS.
 Query plan/timings synthetic debug dan beban CCTV tidak diisolasi; lihat
 [laporan/batas](../../M53_SEARCH_REPORT.md). D–H/handoff eksplorasi masih aktif.
+
+G2A key rotation: [laporan](../../M53_KEY_ROTATION_REPORT.md), [host](key-rotation-host-checks.json), [source715](key-rotation-source-sha256.json), [Poco67](key-rotation-poco.json), [DV67](key-rotation-dv.json), [guard rejection](key-rotation-dv-guard-rejection.json). G2B/G3/H belum selesai.

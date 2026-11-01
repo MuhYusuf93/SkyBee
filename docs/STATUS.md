@@ -1,5 +1,24 @@
 # Status proyek
 
+<!-- M53_ACTIVE_G2_START -->
+1 November 2026 — G2A fondasi rotasi kunci DITUTUP, schema37/source715.
+Host76PASS01:16/analyze108,5s bersih/format620/0/l10n1512/926/245/PIN106match.
+Native67 PocoPASS08:56/989hashlama sama dan DVPASS12:03/
+1023hashlama sama/awake exact; controlOff/trueexit0 keduanya. Semua pada source sama.
+Percobaan DV awal ditolak guard sebelum build/install (define salah), hash sama/
+awake exact; bukti asli disimpan. [Laporan G2A](M53_KEY_ROTATION_REPORT.md).
+G1 sudah dipush edf315e. Commit/push G2A lalu lanjut G2B ResetToko runtime/UI,
+G3 portable seluruh fakta dan H handoff. Source tidak frozen lagi setelah kedua
+wrapper selesai. Draft G2B terpisah build/m53/g2-draft; script apply_g2b.py sudah
+validasi27file tanpa mutasi. Draft barrier Java4PASS43ms, belum bukti SAF nyata.
+G2A menolak bootstrap reset committed tanpa cleanup handler; G2B wajib mengisi
+handler idempotent, owner fresh/final warning, backup/printer/report/SQL ordering,
+worker guard, config revoke dan inspeksi serialized. Belum ada ResetToko UI runtime.
+Tidak ada update/reset/reseed .skybee/ordinary;100/50 hanya H setelah backup dan
+recovery lama verified. Gemini_/gemini2_ diabaikan. Checkpoint bukan stop.
+<!-- M53_ACTIVE_G2_END -->
+
+
 <!-- M53_ACTIVE_G1_START -->
 1 November 2026 — G1 retensi DITUTUP, schema37/source709 REVIEW. Host42PASS56s,
 analyzer13,8s + review85,7s bersih, formatter613/0/l10n1512/926/245/PIN106match.

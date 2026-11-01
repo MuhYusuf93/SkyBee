@@ -9,6 +9,8 @@ import 'durable_promotion.dart';
 import 'schema.dart';
 import 'database_security_error.dart';
 import 'package:flutter/services.dart';
+import 'key_rotation_journal.dart';
+import 'platform_rotation_secrets.dart';
 
 /// Native SQLCipher bootstrap, called under the same process/file gate used for
 /// ordinary operations and workers. Plaintext is exported, never merely rekeyed.
@@ -19,6 +21,7 @@ final class EncryptedDatabase {
     this.keyName = 'database-v1',
     this.availableBytes,
     this.testPhase,
+    this.afterKeySelection,
   });
   final String path;
   final KasirPlatform platform;
@@ -28,6 +31,10 @@ final class EncryptedDatabase {
   /// and durable promotion without injected interruption.
   final Future<int> Function(String directory)? availableBytes;
   final Future<void> Function(String phase)? testPhase;
+
+  /// Reset cleanup must complete before a new store can bootstrap. The runtime
+  /// reset service supplies the idempotent installation-local effects.
+  final Future<void> Function(RotationOutcome outcome)? afterKeySelection;
   String? _key;
   String get key => _key ?? (throw StateError('databaseNotBootstrapped'));
 
@@ -94,6 +101,21 @@ final class EncryptedDatabase {
     );
     promotion.testPhase = testPhase;
     await promotion.recover();
+    try {
+      await KeyRotationJournal(
+        path,
+        keyName,
+        PlatformRotationSecrets(platform),
+        verifyRotationFile,
+        afterSelection: afterKeySelection,
+        syncDirectory: (directory) =>
+            platform.channelCall('syncDirectory', {'path': directory}),
+      ).recover();
+    } catch (_) {
+      // Existing ciphertext is never replaced by an empty DB or a generated key
+      // when file/key selection cannot be authenticated and completed.
+      throw const DatabaseSecurityError('m5DatabaseUnlockFailed');
+    }
     final exists = await File(path).exists();
     final plaintext = exists && await _plaintext();
     // Never generate a replacement key for an existing encrypted database.
@@ -163,6 +185,34 @@ final class EncryptedDatabase {
         await db.close();
       }
     });
+  }
+
+  /// A rotation verifier opens with the explicitly selected key, never the
+  /// default alias which may still belong to the previous closed file.
+  static Future<void> verifyRotationFile(
+    String file,
+    String selectedKey,
+    String store,
+  ) async {
+    final db = await openFile(file, selectedKey, readOnly: true);
+    try {
+      final version = await db.getVersion();
+      if (version < 1 || version > Schema.version) {
+        throw StateError('rotationSchemaInvalid');
+      }
+      await DatabaseValidation.integrity(db);
+      await envelopeIntegrity(db);
+      final rows = await db.query(
+        'm5_store',
+        columns: ['store_id'],
+        where: 'id=1',
+      );
+      if (rows.length != 1 || rows.single['store_id'] != store) {
+        throw StateError('rotationStoreMismatch');
+      }
+    } finally {
+      await db.close();
+    }
   }
 
   /// SQLCipher's supported export preserves table contents and DDL. Explicitly
