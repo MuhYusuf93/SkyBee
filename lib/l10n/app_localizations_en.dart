@@ -5497,4 +5497,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m54ReceiptQuantityChanged => 'Draft quantity reduced by one unit.';
+
+  @override
+  String get m54SupplierReceiptActual => 'Initial payment already handed over';
 }

@@ -3,4 +3,11 @@ enum ManagementRole { owner, warehouse }
 
 /// Services default to owner-only. Inventory must explicitly opt into the
 /// warehouse capability, so a new protected use case cannot inherit authority.
-enum ManagementCapability { owner, inventory }
+enum ManagementCapability {
+  owner,
+  inventory,
+  receiptSupplierPayment;
+
+  bool get permitsWarehouse =>
+      this == inventory || this == receiptSupplierPayment;
+}

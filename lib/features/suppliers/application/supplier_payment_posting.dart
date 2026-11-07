@@ -1,17 +1,42 @@
 part of 'supplier_service.dart';
 
 extension SupplierPaymentPosting on SupplierService {
-  /// Owner-only transaction primitive shared by receipt+invoice confirmation.
-  /// No stock/HPP writer is called; drawer movement is an explicit source fact.
+  /// Payments normally require owner access. The only warehouse entry is the
+  /// initial payment of the invoice created in the current receipt transaction.
   Future<EntityId> postPaymentOn(
     Transaction db,
     EntityId invoiceId,
     int revision,
     SupplierPaymentInput input, {
     required String operationKey,
+    EntityId? confirmingReceiptDraft,
   }) async {
     SupplierService.key(operationKey);
-    await access.authorize(db);
+    final scopedDraft = database.schemaVersion >= 45
+        ? confirmingReceiptDraft
+        : null;
+    final capability = scopedDraft != null
+        ? ManagementCapability.receiptSupplierPayment
+        : ManagementCapability.owner;
+    await access.authorize(db, capability: capability);
+    final actor = access.role!;
+    if (scopedDraft != null) {
+      final draftId = scopedDraft.value;
+      final scope = await db.rawQuery(
+        '''SELECT 1 FROM supplier_invoices i
+        JOIN stock_receipts r ON r.id=i.receipt_id
+        JOIN receipt_drafts d ON d.id=? AND r.operation_key='receipt-draft/'||d.id
+        WHERE i.id=? AND i.operation_key='receipt-invoice/'||d.id
+        AND i.revision=0 AND i.status='posted' AND i.source_mode='receipt_exact'
+        AND i.actor_role=? AND d.status='draft' LIMIT 1''',
+        [draftId, invoiceId.value, actor.name],
+      );
+      if (revision != 0 ||
+          operationKey != 'receipt-invoice-payment/$draftId' ||
+          scope.isEmpty) {
+        throw const AppError('m53SupplierInvoiceChanged');
+      }
+    }
     if (operationKey.trim().isEmpty || operationKey.length > 200) {
       throw const AppError('m53SupplierInputInvalid');
     }
@@ -55,10 +80,8 @@ extension SupplierPaymentPosting on SupplierService {
         0) {
       throw const AppError('m53SupplierPaymentDateInvalid');
     }
-    final policy = await CashDrawerLedger.operationalPolicyOn(
-      db,
-      CashierStore(access.clock),
-    );
+    final store = CashierStore(access.clock);
+    final policy = await CashDrawerLedger.operationalPolicyOn(db, store);
     final tracked =
         input.source == SupplierPaymentSource.drawer && policy.active;
     if (tracked) {
@@ -69,6 +92,13 @@ extension SupplierPaymentPosting on SupplierService {
       if (input.outgoing!.total.amountMinor != input.amount.amountMinor) {
         throw const AppError('m53SupplierPaymentInvalid');
       }
+      await CashDrawerLedger.requireOpenSessionOn(
+        db,
+        store,
+        policy,
+        input.drawerSession!,
+        invoice.currency,
+      );
     } else if (input.drawerSession != null || input.outgoing != null) {
       throw const AppError('m53CashSessionChanged');
     }
@@ -90,12 +120,13 @@ extension SupplierPaymentPosting on SupplierService {
       'reference': SupplierService.optional(input.reference, 80),
       'note': SupplierService.optional(input.note, 300),
       'actor_role': 'owner',
+      if (database.schemaVersion >= 45) 'recorded_actor_role': actor.name,
       'created_at': access.clock.milliseconds,
     });
     if (tracked) {
       await CashDrawerLedger.postOn(
         db,
-        CashierStore(access.clock),
+        store,
         sourceKind: 'supplier_payment',
         sourceId: id,
         currency: invoice.currency,
@@ -106,8 +137,13 @@ extension SupplierPaymentPosting on SupplierService {
       );
     }
     await _bumpInvoiceOn(db, invoice);
-    await access.audit(db, 'supplier_payment_posted', entityId: id.value);
-    await access.authorize(db);
+    await access.audit(
+      db,
+      'supplier_payment_posted',
+      entityId: id.value,
+      asRole: actor,
+    );
+    await access.authorize(db, capability: capability);
     return id;
   }
 

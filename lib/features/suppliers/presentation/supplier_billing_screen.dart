@@ -128,6 +128,12 @@ class _SupplierBillingScreenState extends State<SupplierBillingScreen> {
       quote != null &&
       (quote!.total == null || quote!.supplierId == null);
   Money? get total => historicalMode ? historical.canonicalMoney : quote?.total;
+  bool get receiptPaymentScope =>
+      widget.draft != null &&
+      context.read<AppServices>().database.schemaVersion >= 45;
+  String get paymentLabel => receiptPaymentScope
+      ? 'm54SupplierReceiptActual'
+      : 'm53SupplierInitialActual';
   Future<void> selectSupplier(MasterRecord? value) async {
     if (busy) return;
     setState(() {
@@ -162,6 +168,7 @@ class _SupplierBillingScreenState extends State<SupplierBillingScreen> {
           currency: quote!.currency,
           maximum: total!.amountMinor,
           today: quote!.today,
+          forReceiptConfirmation: receiptPaymentScope,
         ),
       ),
     );
@@ -231,10 +238,14 @@ class _SupplierBillingScreenState extends State<SupplierBillingScreen> {
       );
       if (!await confirmSupplierFact(
             context,
-            '${tr(context, "m53SupplierInvoiceConfirm")}\n${supplier!.name}\n${moneyLabel(context, totalValue.amountMinor, currency: quote!.currency)}\n${tr(context, "m53SupplierInitialActual")}: ${moneyLabel(context, payment?.amount.amountMinor ?? 0, currency: quote!.currency)}',
-            capability: payment != null || historicalValue != null
+            '${tr(context, "m53SupplierInvoiceConfirm")}\n${supplier!.name}\n${moneyLabel(context, totalValue.amountMinor, currency: quote!.currency)}\n${tr(context, paymentLabel)}: ${moneyLabel(context, payment?.amount.amountMinor ?? 0, currency: quote!.currency)}',
+            capability: historicalValue != null
                 ? ManagementCapability.owner
-                : ManagementCapability.inventory,
+                : payment == null
+                ? ManagementCapability.inventory
+                : receiptPaymentScope
+                ? ManagementCapability.receiptSupplierPayment
+                : ManagementCapability.owner,
           ) ||
           !mounted) {
         return;
@@ -495,7 +506,7 @@ class _SupplierBillingScreenState extends State<SupplierBillingScreen> {
                         ),
                       ),
                       Text(tr(context, 'm53SupplierReportedHelp')),
-                      if (owner) ...[
+                      if (owner || receiptPaymentScope) ...[
                         fields.anchor(
                           'payment',
                           TextButton(
@@ -503,9 +514,7 @@ class _SupplierBillingScreenState extends State<SupplierBillingScreen> {
                             onPressed: busy || total == null
                                 ? null
                                 : initialPayment,
-                            child: Text(
-                              tr(context, 'm53SupplierInitialActual'),
-                            ),
+                            child: Text(tr(context, paymentLabel)),
                           ),
                         ),
                         if (payment != null)

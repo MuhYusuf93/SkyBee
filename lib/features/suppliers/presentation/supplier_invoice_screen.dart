@@ -406,6 +406,14 @@ class _SupplierInvoiceScreenState extends State<SupplierInvoiceScreen> {
                                 'm53SupplierSource${p['source'] == "owner_funds" ? "ownerFunds" : p['source']}',
                               ),
                             ),
+                            Text(
+                              tr(
+                                context,
+                                p['actor_role'] == 'warehouse'
+                                    ? 'm53WarehouseRole'
+                                    : 'm53OwnerRole',
+                              ),
+                            ),
                             if (p['reference'] != null)
                               Text(p['reference'] as String),
                             if (p['note'] != null) Text(p['note'] as String),

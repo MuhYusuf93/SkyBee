@@ -30,7 +30,7 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 22 | Hard-delete arsip terproteksi | fresh owner/eligible preview/FK/race | Pending |
 | 23 | Drive error tahap spesifik | SDK/native picker/cloud terpisah | Pending; OAuth paket perlu diperiksa |
 | 24 | Arsip produk semua scope | commit/reopen/undo/stale checkout | Host commit/reopen, scope daftar, pencarian Kasir, Undo, pesan draft lama, histori utuh; Favorit dan native pending |
-| 25 | Penerimaan15/12/20 | scan/manual/new product/retry/cash capability | Host lulus untuk 27 scan beruntun, pencarian manual, batal/daftar Sunco, kurang/Undo, dan konfirmasi idempotent. Capability pembayaran gudang dan HID fisik terbuka. |
+| 25 | Penerimaan15/12/20 | scan/manual/new product/retry/cash capability | Host lulus untuk 27 scan, pencarian, batal/daftar Sunco, kurang/Undo, konfirmasi idempotent dan pembayaran awal gudang. ID/EN 320 px skala 2 lulus. HID fisik dan acceptance perangkat terbuka. |
 | 26 | Draft retur supplier reservasi | 3dari5→2/partial/unknown/untracked | Pending |
 | 27 | Produk–supplier many-to-many | migration/no duplicate value | Pending |
 | 28 | Tap rak/detail; Edit terpisah | filter/suggestion/draft | Host tap terfilter dan tombol Edit terpisah; suggestion/draft host; native navigasi pending |

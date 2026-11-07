@@ -173,7 +173,13 @@ extension SupplierFinanceQueries on SupplierService {
     );
     final page = rows.take(20).toList();
     return Page(
-      items: page,
+      items: [
+        for (final row in page)
+          {
+            ...row,
+            'actor_role': row['recorded_actor_role'] ?? row['actor_role'],
+          },
+      ],
       nextCursor: rows.length <= 20
           ? null
           : SupplierPaymentCursor(

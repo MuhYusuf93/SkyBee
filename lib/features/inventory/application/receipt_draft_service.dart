@@ -428,7 +428,6 @@ extension ReceiptDocuments on InventoryService {
           (database.schemaVersion < 31 || billing.historicalTotal != null)) {
         throw const AppError('m53SupplierInputInvalid');
       }
-      if (initialPayment != null) await access.authorize(db);
       final doc = await _editableReceiptOn(db, id, revision);
       if (doc.lines.isEmpty) throw const AppError('m53ReceiptDraftEmpty');
       final settings = (await db.query(
@@ -497,6 +496,7 @@ extension ReceiptDocuments on InventoryService {
               invoice.revision,
               initialPayment,
               operationKey: 'receipt-invoice-payment/${id.value}',
+              confirmingReceiptDraft: id,
             );
           }
         }
@@ -530,6 +530,8 @@ extension ReceiptDocuments on InventoryService {
     },
     capability: initialPayment == null
         ? ManagementCapability.inventory
+        : database.schemaVersion >= 45
+        ? ManagementCapability.receiptSupplierPayment
         : ManagementCapability.owner,
   );
 

@@ -370,6 +370,122 @@ void m53SupplierFinanceSuite(DatabaseFactory factory) {
     },
   );
   test(
+    'M54 warehouse payment is atomic and limited to the receiving draft invoice',
+    () async {
+      final cashProduct = await product('PUBLIC RECEIVING CASH');
+      final bankProduct = await product('PUBLIC RECEIVING BANK');
+      final cashDraft = await draft(cashProduct);
+      final bankDraft = await draft(bankProduct);
+      final currency = CurrencyPolicy.forCode('IDR');
+      final session = await app.cashDrawer.open(
+        operationKey: 'PUBLIC RECEIVING OPEN',
+        expected: await app.cashDrawer.context(),
+        opening: CashPieces(currency, {100000: 10}),
+        reason: 'PUBLIC RECEIVING OPEN',
+      );
+      final outgoing = CashPieces(currency, {100000: 2});
+      SupplierPaymentInput drawerInput(EntityId sessionId) =>
+          SupplierPaymentInput(
+            amount: money(200000),
+            date: day(),
+            source: SupplierPaymentSource.drawer,
+            drawerSession: sessionId,
+            outgoing: outgoing,
+          );
+      await app.management.reauthenticate('0001', 'security');
+      await app.management.setTaskPattern(
+        3,
+        warehousePin: '1234',
+        confirmation: '1234',
+      );
+      await app.management.unlock('1234', role: ManagementRole.warehouse);
+      expect(await app.cashDrawer.receiptPaymentContext(), (
+        active: true,
+        sessionId: session,
+      ));
+      await expectLater(
+        app.inventory.confirmReceiptDraft(
+          cashDraft.id,
+          cashDraft.revision,
+          billing: credit(),
+          initialPayment: drawerInput(const IdGenerator().next()),
+        ),
+        throwsA(isA<AppError>()),
+      );
+      expect((await app.inventory.detail(cashProduct)).quantity, 0);
+      expect((await app.inventory.receiptDraft(cashDraft.id)).status, 'draft');
+      expect(await db.read((sql) => sql.query('supplier_payments')), isEmpty);
+      expect(await db.read((sql) => sql.query('stock_receipts')), isEmpty);
+
+      final posted = await app.inventory.confirmReceiptDraft(
+        cashDraft.id,
+        cashDraft.revision,
+        billing: credit(),
+        initialPayment: drawerInput(session),
+      );
+      expect(
+        await app.inventory.confirmReceiptDraft(
+          cashDraft.id,
+          cashDraft.revision,
+          billing: credit(),
+          initialPayment: drawerInput(session),
+        ),
+        posted,
+      );
+      await app.inventory.confirmReceiptDraft(
+        bankDraft.id,
+        bankDraft.revision,
+        billing: credit(),
+        initialPayment: bank(100000),
+      );
+      final invoices = (await app.suppliers.invoices(supplier)).items;
+      final invoice = invoices.singleWhere((i) => i.receiptId == posted);
+      expect(invoice.paid, 200000);
+      expect(invoice.remaining, 800000);
+      final payment = (await app.suppliers.payments(invoice.id)).items.single;
+      expect(payment['actor_role'], 'warehouse');
+      expect((await app.inventory.detail(cashProduct)).quantity, 100);
+      expect((await app.inventory.detail(bankProduct)).quantity, 100);
+      final events = await db.read((sql) => sql.query('cash_drawer_events'));
+      expect(events.single['cash_out_minor'], 200000);
+      final audit = await db.read(
+        (sql) => sql.query(
+          'audit_log',
+          where: 'action=?',
+          whereArgs: ['supplier_payment_posted'],
+        ),
+      );
+      expect(audit.map((r) => r['actor_role']), ['warehouse', 'warehouse']);
+
+      await expectLater(
+        app.suppliers.payInvoice(
+          invoice.id,
+          invoice.revision,
+          bank(1),
+          operationKey: 'PUBLIC DENIED INSTALLMENT',
+        ),
+        throwsA(isA<AppError>()),
+      );
+      await expectLater(
+        db.transaction(
+          (sql) => app.suppliers.postPaymentOn(
+            sql,
+            invoice.id,
+            invoice.revision,
+            bank(1),
+            operationKey: 'receipt-invoice-payment/${bankDraft.id.value}',
+            confirmingReceiptDraft: bankDraft.id,
+          ),
+        ),
+        throwsA(isA<AppError>()),
+      );
+      expect(
+        await db.read((sql) => sql.query('supplier_payments')),
+        hasLength(2),
+      );
+    },
+  );
+  test(
     'M53 supplier finance warehouse records operational invoice but reported payment is not actual paid and owner functions are denied',
     () async {
       final (_, receipt) = await received();
@@ -860,14 +976,23 @@ void m53SupplierFinanceSuite(DatabaseFactory factory) {
       );
       try {
         await legacy.insert('suppliers', oldSupplier);
-        await legacy.insert('products', oldProduct);
+        final legacyProductColumns = await legacy.rawQuery(
+          'PRAGMA table_info(products)',
+        );
+        await legacy.insert('products', {
+          for (final column in legacyProductColumns)
+            column['name'] as String: oldProduct[column['name']],
+        });
         final tables = await legacy.rawQuery(
           "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name",
         );
         final before = <String, List<Map<String, Object?>>>{};
+        final columns = <String, List<String>>{};
         for (final row in tables) {
           final name = row['name'] as String;
-          before[name] = await legacy.query(name);
+          final info = await legacy.rawQuery('PRAGMA table_info($name)');
+          columns[name] = [for (final column in info) column['name'] as String];
+          before[name] = await legacy.query(name, columns: columns[name]);
         }
         await legacy.close();
         legacy = await factory.openDatabase(
@@ -879,7 +1004,7 @@ void m53SupplierFinanceSuite(DatabaseFactory factory) {
         );
         for (final entry in before.entries) {
           expect(
-            await legacy.query(entry.key),
+            await legacy.query(entry.key, columns: columns[entry.key]),
             entry.value,
             reason: 'preserve ${entry.key}',
           );

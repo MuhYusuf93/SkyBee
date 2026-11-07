@@ -73,7 +73,7 @@ class _FormExitGuardState extends State<FormExitGuard> {
         !widget.managementProtected ||
         (session == null ||
             (session.unlocked &&
-                (widget.capability == ManagementCapability.inventory ||
+                (widget.capability.permitsWarehouse ||
                     session.service.role == ManagementRole.owner)));
     return PopScope(
       canPop: !allowed || (!widget.busy && (_leaving || !_dirty)),

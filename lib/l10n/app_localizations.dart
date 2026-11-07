@@ -9871,6 +9871,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Draft quantity reduced by one unit.'**
   String get m54ReceiptQuantityChanged;
+
+  /// Initial payment actually delivered as part of a supplier receiving draft confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial payment already handed over'**
+  String get m54SupplierReceiptActual;
 }
 
 class _AppLocalizationsDelegate

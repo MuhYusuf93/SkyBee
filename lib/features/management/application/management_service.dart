@@ -119,8 +119,7 @@ final class ManagementService {
       lock();
       throw const AppError('managementSessionLockedEnterPinAgain');
     }
-    if (_role == ManagementRole.warehouse &&
-        capability != ManagementCapability.inventory) {
+    if (_role == ManagementRole.warehouse && !capability.permitsWarehouse) {
       throw const AppError('m53OwnerRequired');
     }
   }

@@ -8,6 +8,7 @@ import '../../../core/presentation/form_exit_guard.dart';
 import '../../../l10n/localization.dart';
 import '../../management/presentation/managed_text_field.dart';
 import '../../management/presentation/management_gate.dart';
+import '../../management/domain/management_role.dart';
 import '../domain/cash_pieces.dart';
 
 /// Editing pieces has no SQL or cash effect. The calling financial form applies
@@ -127,6 +128,7 @@ class CashPiecesScreen extends StatelessWidget {
     this.initial,
     this.expected,
     this.managementProtected = false,
+    this.managementCapability = ManagementCapability.owner,
     this.quickButtons = false,
   });
   final CurrencyPolicy currency;
@@ -134,15 +136,23 @@ class CashPiecesScreen extends StatelessWidget {
   final CashPieces? initial;
   final Money? expected;
   final bool managementProtected;
+  final ManagementCapability managementCapability;
   final bool quickButtons;
   @override
   Widget build(BuildContext context) {
     final body = ChangeNotifierProvider(
       create: (_) =>
           CashPieceForm(currency, initial: initial, expected: expected),
-      child: _CashPiecesBody(titleKey, managementProtected, quickButtons),
+      child: _CashPiecesBody(
+        titleKey,
+        managementProtected,
+        managementCapability,
+        quickButtons,
+      ),
     );
-    return managementProtected ? ManagementGate(child: body) : body;
+    return managementProtected
+        ? ManagementGate(capability: managementCapability, child: body)
+        : body;
   }
 }
 
@@ -150,10 +160,12 @@ class _CashPiecesBody extends StatelessWidget {
   const _CashPiecesBody(
     this.titleKey,
     this.managementProtected,
+    this.managementCapability,
     this.quickButtons,
   );
   final String titleKey;
   final bool managementProtected;
+  final ManagementCapability managementCapability;
   final bool quickButtons;
   @override
   Widget build(BuildContext context) {
@@ -163,6 +175,7 @@ class _CashPiecesBody extends StatelessWidget {
       dirty: form.dirty,
       dirtyCheck: () => form.dirty,
       managementProtected: managementProtected,
+      capability: managementCapability,
       child: Scaffold(
         appBar: AppBar(title: Text(tr(context, titleKey))),
         body: Column(

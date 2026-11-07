@@ -61,10 +61,9 @@ abstract final class SupplierFinanceValidation {
   }
 
   static Future<void> _validate(DatabaseExecutor db) async {
-    final hasCredits =
-        (await db.rawQuery('PRAGMA user_version')).single.values.single
-            as int >=
-        33;
+    final version =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
+    final hasCredits = version >= 33;
     final creditRevisions = hasCredits
         ? '''UNION ALL SELECT invoice_id,invoice_revision FROM supplier_credit_allocations
       UNION ALL SELECT invoice_id,invoice_revision FROM supplier_credit_allocation_reversals'''
@@ -94,6 +93,13 @@ abstract final class SupplierFinanceValidation {
         (r.tracked_cash=0 AND (r.drawer_session_id IS NOT NULL OR r.in_counts_json IS NOT NULL)) LIMIT 1''',
       'SELECT 1 FROM supplier_payment_reversals GROUP BY payment_id HAVING COUNT(*)>1 LIMIT 1',
       'SELECT 1 FROM supplier_invoice_voids GROUP BY invoice_id HAVING COUNT(*)>1 LIMIT 1',
+      if (version >= 45)
+        '''SELECT 1 FROM supplier_payments p WHERE p.recorded_actor_role='warehouse'
+        AND NOT EXISTS(SELECT 1 FROM receipt_invoice_confirmations c
+        JOIN supplier_invoices i ON i.id=c.invoice_id
+        WHERE c.payment_id=p.id AND i.id=p.invoice_id AND i.actor_role='warehouse'
+        AND p.invoice_revision=1 AND p.operation_key='receipt-invoice-payment/'||c.draft_id)
+        LIMIT 1''',
       '''SELECT 1 FROM supplier_due_amendments a LEFT JOIN supplier_invoices i ON i.id=a.invoice_id WHERE i.id IS NULL OR i.terms<>'credit' OR a.due_date<i.invoice_date LIMIT 1''',
       for (final table in ['supplier_payments', 'supplier_payment_reversals'])
         '''SELECT 1 FROM $table p LEFT JOIN cash_drawer_events e ON e.source_kind='supplier_payment' AND e.source_id=p.id WHERE

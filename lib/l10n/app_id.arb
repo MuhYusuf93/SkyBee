@@ -6571,5 +6571,9 @@
   "m54ReceiptQuantityChanged": "Jumlah pada draft dikurangi satu unit.",
   "@m54ReceiptQuantityChanged": {
     "description": "Feedback after decreasing a receiving draft line quantity by one."
+  },
+  "m54SupplierReceiptActual": "Pembayaran awal yang sudah diserahkan",
+  "@m54SupplierReceiptActual": {
+    "description": "Initial payment actually delivered as part of a supplier receiving draft confirmation."
   }
 }

@@ -5522,4 +5522,8 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m54ReceiptQuantityChanged =>
       'Jumlah pada draft dikurangi satu unit.';
+
+  @override
+  String get m54SupplierReceiptActual =>
+      'Pembayaran awal yang sudah diserahkan';
 }

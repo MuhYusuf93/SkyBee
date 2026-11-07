@@ -47,6 +47,37 @@ abstract final class CashDrawerLedger {
     );
   }
 
+  /// Validate the declared session before inserting any row with its FK.
+  static Future<void> requireOpenSessionOn(
+    DatabaseExecutor db,
+    CashierStore store,
+    CashDrawerPolicy policy,
+    EntityId session,
+    CurrencyPolicy currency,
+  ) async {
+    final settings = await store.settings(db);
+    final zone = settings['time_zone'] as String;
+    final rows = await db.rawQuery(
+      '''SELECT 1 FROM cash_drawer_sessions s WHERE s.id=?
+      AND s.store_day=? AND s.time_zone=? AND s.currency_code=? AND s.currency_scale=?
+      AND s.policy_mode=?
+      AND NOT EXISTS(SELECT 1 FROM cash_drawer_closures c WHERE c.session_id=s.id)''',
+      [
+        session.value,
+        store.clock.today(zone).iso,
+        zone,
+        currency.code,
+        currency.scale,
+        policy.mode.name,
+      ],
+    );
+    if (rows.length != 1 ||
+        settings['currency_code'] != currency.code ||
+        settings['currency_scale'] != currency.scale) {
+      throw const AppError('m53CashSessionChanged');
+    }
+  }
+
   static Future<void> clockOn(DatabaseExecutor sql, CashierStore store) async {
     final latest =
         (await sql.rawQuery(
@@ -198,24 +229,7 @@ abstract final class CashDrawerLedger {
     }
     await clockOn(dbTxn, store);
     if (sessionId == null) throw const AppError('m53CashSessionRequired');
-    final settings = await store.settings(dbTxn);
-    final zone = settings['time_zone'] as String,
-        today = store.clock.today(settings['time_zone'] as String).iso;
-    final rows = await dbTxn.rawQuery(
-      '''SELECT s.* FROM cash_drawer_sessions s WHERE s.id=?
-      AND NOT EXISTS(SELECT 1 FROM cash_drawer_closures c WHERE c.session_id=s.id)''',
-      [sessionId.value],
-    );
-    if (rows.length != 1 ||
-        rows.single['store_day'] != today ||
-        rows.single['time_zone'] != zone ||
-        rows.single['currency_code'] != currency.code ||
-        rows.single['currency_scale'] != currency.scale ||
-        rows.single['policy_mode'] != policy.mode.name ||
-        settings['currency_code'] != currency.code ||
-        settings['currency_scale'] != currency.scale) {
-      throw const AppError('m53CashSessionChanged');
-    }
+    await requireOpenSessionOn(dbTxn, store, policy, sessionId, currency);
     final before = await balanceOn(dbTxn, sessionId, currency);
     CashPieces next;
     try {

@@ -415,6 +415,74 @@ void m53SupplierFinanceWidgetsSuite(DatabaseFactory factory) {
             t,
             () => find.byType(SupplierInvoicesScreen).evaluate().isEmpty,
           );
+          late ReceiptDraft warehouseDraft;
+          await io(t, () async {
+            var receiving = await app.inventory.createReceiptDraft(
+              supplierId: supplier,
+            );
+            receiving = await app.inventory.addReceiptDraftProduct(
+              receiving.id,
+              receiving.revision,
+              product,
+            );
+            warehouseDraft = await app.inventory.updateReceiptDraftLine(
+              receiving.id,
+              receiving.revision,
+              receiving.lines.single.id,
+              input: StockInput(2),
+              cost: CostAmount.fromMoney(Money(100, 'IDR', 0)),
+            );
+          });
+          unawaited(
+            nav.push<EntityId>(
+              MaterialPageRoute(
+                builder: (_) => SupplierBillingScreen(draft: warehouseDraft),
+              ),
+            ),
+          );
+          final billingReady = find.byKey(
+            const ValueKey('supplier-billing-ready'),
+          );
+          await wait(t, () => billingReady.evaluate().isNotEmpty);
+          await tap(t, find.byKey(const ValueKey('supplier-billing-payment')));
+          await wait(
+            t,
+            () => find.byType(SupplierPaymentScreen).evaluate().isNotEmpty,
+          );
+          await reveal(t, amount);
+          await t.enterText(amount, '100');
+          await tap(t, find.byKey(const ValueKey('supplier-payment-confirm')));
+          await confirm(t);
+          await wait(
+            t,
+            () => find.byType(SupplierPaymentScreen).evaluate().isEmpty,
+          );
+          await tap(t, find.byKey(const ValueKey('supplier-billing-save')));
+          await confirm(t);
+          await wait(
+            t,
+            () => find.byType(SupplierBillingScreen).evaluate().isEmpty,
+          );
+          await io(t, () async {
+            final posted = await app.inventory.receiptDraft(warehouseDraft.id);
+            final invoice = (await app.suppliers.invoiceForReceipt(
+              posted.receiptId!,
+            ))!;
+            expectSync(invoice.paid, 100);
+            expectSync(invoice.remaining, 100);
+            expectSync(
+              (await app.suppliers.payments(
+                invoice.id,
+              )).items.single['actor_role'],
+              'warehouse',
+            );
+          });
+          expectSync(
+            t.takeException(),
+            isNull,
+            reason: 'warehouse receiving payment',
+          );
+
           late EntityId historicalReceipt;
           await io(t, () async {
             await app.management.unlock('0001');

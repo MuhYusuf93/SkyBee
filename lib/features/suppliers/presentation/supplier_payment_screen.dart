@@ -6,9 +6,9 @@ import '../../../core/domain/value_types.dart';
 import '../../../core/money/money_field.dart';
 import '../../../core/presentation/form_exit_guard.dart';
 import '../../../l10n/localization.dart';
-import '../../cash_drawer/domain/cash_drawer_models.dart';
 import '../../cash_drawer/domain/cash_pieces.dart';
 import '../../cash_drawer/presentation/cash_pieces_screen.dart';
+import '../../management/domain/management_role.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/managed_text_field.dart';
 import '../../settings/presentation/language_button.dart';
@@ -23,10 +23,12 @@ class SupplierPaymentScreen extends StatefulWidget {
     required this.currency,
     required this.maximum,
     required this.today,
+    this.forReceiptConfirmation = false,
   });
   final CurrencyPolicy currency;
   final int maximum;
   final CalendarDate today;
+  final bool forReceiptConfirmation;
   @override
   State<SupplierPaymentScreen> createState() => _SupplierPaymentScreenState();
 }
@@ -39,11 +41,14 @@ class _SupplierPaymentScreenState extends State<SupplierPaymentScreen> {
   late CalendarDate date = widget.today;
   SupplierPaymentSource source = SupplierPaymentSource.bank;
   CashPieces? pieces;
-  CashDrawerContext? drawer;
+  ({bool active, EntityId? sessionId})? drawer;
   String? error;
   String? invalidField;
   final fields = SupplierFormFocus();
   bool busy = false, completed = false;
+  ManagementCapability get capability => widget.forReceiptConfirmation
+      ? ManagementCapability.receiptSupplierPayment
+      : ManagementCapability.owner;
   bool get dirty =>
       !completed &&
       (amount.text.isNotEmpty ||
@@ -52,13 +57,20 @@ class _SupplierPaymentScreenState extends State<SupplierPaymentScreen> {
           pieces != null ||
           date != widget.today ||
           source != SupplierPaymentSource.bank);
+  Future<({bool active, EntityId? sessionId})> loadDrawer() async {
+    final service = context.read<AppServices>().cashDrawer;
+    if (widget.forReceiptConfirmation) return service.receiptPaymentContext();
+    final current = await service.context();
+    return (
+      active: current.policy.active,
+      sessionId: current.session?.closed == false ? current.session!.id : null,
+    );
+  }
+
   Future<void> editPieces() async {
     setState(() => busy = true);
     try {
-      final contextValue = await context
-          .read<AppServices>()
-          .cashDrawer
-          .context();
+      final contextValue = await loadDrawer();
       if (!mounted) return;
       final value = await Navigator.of(context).push<CashPieces>(
         MaterialPageRoute(
@@ -68,6 +80,7 @@ class _SupplierPaymentScreenState extends State<SupplierPaymentScreen> {
             initial: pieces,
             expected: amount.canonicalMoney,
             managementProtected: true,
+            managementCapability: capability,
           ),
         ),
       );
@@ -111,15 +124,15 @@ class _SupplierPaymentScreenState extends State<SupplierPaymentScreen> {
       }
       field = 'cash';
       if (source == SupplierPaymentSource.drawer) {
-        drawer = await context.read<AppServices>().cashDrawer.context();
-        if (drawer!.policy.active &&
-            (pieces == null ||
-                drawer!.session == null ||
-                drawer!.session!.closed)) {
+        final current = await loadDrawer();
+        if (pieces != null && current.sessionId != drawer?.sessionId) {
+          throw const AppError('m53CashSessionChanged');
+        }
+        drawer = current;
+        if (current.active && (pieces == null || current.sessionId == null)) {
           throw const AppError('m53CashSessionRequired');
         }
-        if (drawer!.policy.active &&
-            pieces!.total.amountMinor != value.amountMinor) {
+        if (current.active && pieces!.total.amountMinor != value.amountMinor) {
           throw const AppError('m53CashCompositionMismatch');
         }
       }
@@ -128,19 +141,19 @@ class _SupplierPaymentScreenState extends State<SupplierPaymentScreen> {
       if (!await confirmSupplierFact(
             context,
             '${tr(context, "m53SupplierPaymentConfirm")}\n${moneyLabel(context, value.amountMinor, currency: widget.currency)} · ${date.iso}\n${tr(context, "m53SupplierSource${source.name}")}',
+            capability: capability,
           ) ||
           !mounted) {
         return;
       }
-      final tracked =
-          source == SupplierPaymentSource.drawer && drawer!.policy.active;
+      final tracked = source == SupplierPaymentSource.drawer && drawer!.active;
       final result = SupplierPaymentInput(
         amount: value,
         date: date,
         source: source,
         reference: reference.text,
         note: note.text,
-        drawerSession: tracked ? drawer!.session!.id : null,
+        drawerSession: tracked ? drawer!.sessionId : null,
         outgoing: tracked ? pieces : null,
       );
       setState(() => completed = true);
@@ -177,12 +190,14 @@ class _SupplierPaymentScreenState extends State<SupplierPaymentScreen> {
 
   @override
   Widget build(BuildContext context) => ManagementGate(
+    capability: capability,
     child: ListenableBuilder(
       listenable: inputs,
       builder: (context, _) => FormExitGuard(
         dirty: dirty,
         dirtyCheck: () => dirty,
         busy: busy,
+        capability: capability,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr(context, 'm53SupplierPay')),

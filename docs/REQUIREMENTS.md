@@ -34,8 +34,10 @@ nominal manual, potongan tunai opsional, editor pecahan, dan lookup tanggal
 retur. Sebanyak 73 kasus host lulus melalui regresi dan tes ulang. APK debug
 biasa lulus verifikasi paket, tiga ABI, dan alignment 16 KiB tanpa instalasi.
 Penerimaan tahap 4 lulus 37 kasus host, termasuk scan beruntun 15/12,
-Sunco baru 20, koreksi dan retry. Pembayaran gudang, relasi supplier,
-karantina/reservasi, lampiran, tahap 5, acceptance dan handoff masih terbuka.
+Sunco baru 20, koreksi dan retry. Skema 45 menambah capability pembayaran awal
+gudang yang terikat pada konfirmasi penerimaan. Regresi dan tes ulang meliputi
+43 kasus host. Relasi supplier, karantina/reservasi, lampiran, tahap 5,
+acceptance dan handoff masih terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

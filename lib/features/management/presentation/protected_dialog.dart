@@ -36,7 +36,7 @@ class ProtectedDialog extends StatelessWidget {
       Selector<ManagementSessionProvider, bool>(
         selector: (_, state) =>
             state.unlocked &&
-            (capability == ManagementCapability.inventory ||
+            (capability.permitsWarehouse ||
                 state.service.role == ManagementRole.owner),
         builder: (context, unlocked, _) => unlocked
             ? child

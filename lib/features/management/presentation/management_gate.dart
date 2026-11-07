@@ -77,7 +77,7 @@ class _ManagementGateState extends State<ManagementGate> {
       Selector<ManagementSessionProvider, bool>(
         selector: (_, state) =>
             state.unlocked &&
-            (widget.capability == ManagementCapability.inventory ||
+            (widget.capability.permitsWarehouse ||
                 state.service.role == ManagementRole.owner),
         builder: (context, unlocked, _) {
           if (unlocked) _opened = true;
@@ -132,9 +132,7 @@ class _ManagementGateState extends State<ManagementGate> {
                           context,
                           MaterialPageRoute<bool>(
                             builder: (_) => PinScreen(
-                              role:
-                                  widget.capability ==
-                                      ManagementCapability.inventory
+                              role: widget.capability.permitsWarehouse
                                   ? context
                                         .read<ManagementSessionProvider>()
                                         .service

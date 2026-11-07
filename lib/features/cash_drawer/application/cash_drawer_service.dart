@@ -81,6 +81,37 @@ final class CashDrawerService {
     );
   });
 
+  /// A receiving clerk needs the current cash declaration target. The receipt
+  /// form has no access to the drawer balance, counted opening or its history.
+  Future<({bool active, EntityId? sessionId})> receiptPaymentContext() =>
+      database.read((sql) async {
+        const capability = ManagementCapability.receiptSupplierPayment;
+        final generation = management.generation;
+        await management.authorize(sql, capability: capability);
+        final settings = await store.settings(sql);
+        final policy = await CashDrawerLedger.operationalPolicyOn(sql, store);
+        final rows = await sql.rawQuery(
+          '''SELECT s.id FROM cash_drawer_sessions s
+          WHERE s.store_day=? AND s.currency_code=?
+          AND NOT EXISTS(SELECT 1 FROM cash_drawer_closures c WHERE c.session_id=s.id)
+          ORDER BY s.id COLLATE BINARY LIMIT 2''',
+          [
+            store.clock.today(settings['time_zone'] as String).iso,
+            settings['currency_code'],
+          ],
+        );
+        await management.authorize(sql, capability: capability);
+        if (generation != management.generation || rows.length > 1) {
+          throw const AppError('m53CashSessionChanged');
+        }
+        return (
+          active: policy.active,
+          sessionId: rows.isEmpty
+              ? null
+              : EntityId(rows.single['id'] as String),
+        );
+      });
+
   /// A policy change never rewrites an open session's immutable mode/counts.
   /// Explicit confirmation applies it to the next session. The shared revision
   /// also advances on open/close, rejecting a stale form after owner auth.

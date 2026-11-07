@@ -164,3 +164,20 @@ memakai harga beli setara harga jual. Koreksi fixture mempertahankan overflow
 yang diuji dan mengikuti aturan harga M5.4. Audit lokalisasi 1629/1013/245.
 Capability pembayaran pada konfirmasi penerimaan, relasi banyak supplier,
 reservasi, lampiran, dan acceptance perangkat tetap terbuka.
+
+## Tahap 4 · pembayaran awal gudang · skema 45
+
+Capability gudang hanya berlaku pada pembayaran awal tagihan yang dibuat
+dalam transaksi konfirmasi draft penerimaan. Uji membuktikan retry tidak
+menggandakan pembayaran, sesi laci yang salah membatalkan seluruh konfirmasi,
+dan pembayaran bank tidak menggerakkan laci. Pelunasan tagihan yang sudah
+terbit dan koreksi tetap memerlukan pemilik. Skema menambah peran pencatat
+aktual secara aditif dan pembaca pembayaran menampilkan peran tersebut.
+
+Sebanyak 43 kasus host unik lulus melalui regresi dan tes ulang. Run pertama
+mencatat 40 lulus, satu path suite portable keliru, dan satu fixture migrasi
+yang menyalin kolom garansi baru ke skema lama. Fixture diperbaiki untuk
+memeriksa seluruh kolom asli. Migrasi lulus dan dua kasus portable lulus.
+Analyzer bersih. Audit lokalisasi 1630/1012/245. APK debug biasa
+terverifikasi untuk tiga ABI dan alignment 16 KiB tanpa instalasi.
+Lanjut ke relasi produk dengan beberapa supplier.

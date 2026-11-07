@@ -532,6 +532,7 @@ String tr(BuildContext context, String key) {
     'm53SupplierPaymentReference' => l.m53SupplierPaymentReference,
     'm53SupplierPaymentNote' => l.m53SupplierPaymentNote,
     'm53SupplierInitialActual' => l.m53SupplierInitialActual,
+    'm54SupplierReceiptActual' => l.m54SupplierReceiptActual,
     'm53SupplierInvoiceConfirm' => l.m53SupplierInvoiceConfirm,
     'm53SupplierInvoiceNew' => l.m53SupplierInvoiceNew,
     'm53SupplierInvoiceHelp' => l.m53SupplierInvoiceHelp,
