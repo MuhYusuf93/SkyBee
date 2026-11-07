@@ -60,6 +60,16 @@ final class ReceiptSnapshots {
       'currency': receipt.total.currencyCode,
       'scale': receipt.total.scale,
       'total': receipt.total.amountMinor,
+      if (receipt.roundingMinor > 0) ...{
+        'subtotalBeforeRounding':
+            receipt.total.amountMinor + receipt.roundingMinor,
+        'roundingDiscount': receipt.roundingMinor,
+      },
+      if (receipt.nonCash case final external?) ...{
+        'manualPaymentMethod': external.method.name,
+        'manualPaymentMinor': external.amount.amountMinor,
+        'cashAppliedMinor': receipt.cashTender?.applied.amountMinor ?? 0,
+      },
       'paid': originalPaid,
       if (receipt.cashTender != null) ...{
         'tender': receipt.cashTender!.received.amountMinor,

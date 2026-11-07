@@ -11,6 +11,7 @@ import '../../../core/domain/value_types.dart';
 import '../../../core/time/store_clock.dart';
 import '../domain/cashier_models.dart';
 import '../domain/cash_tender.dart';
+import '../domain/checkout_settlement.dart';
 import '../domain/quantity_promotion.dart';
 import 'sale_receipt_codes.dart';
 
@@ -256,6 +257,16 @@ final class CashierStore {
           ? null
           : EntityId(row['completed_sale_transaction_id'] as String),
       input: CheckoutInput(
+        nonCash: row['noncash_method'] == null
+            ? null
+            : NonCashTender(
+                NonCashMethod.values.byName(row['noncash_method'] as String),
+                Money.fromStoredMinor(
+                  row['noncash_minor'] as int,
+                  currency.code,
+                  currency.scale,
+                ),
+              ),
         mode: PaymentMode.values.byName(row['payment_mode'] as String),
         paid: row['paid_minor'] == null
             ? null
@@ -401,6 +412,7 @@ final class CashierStore {
           'product_note_snapshot',
         ],
         if (schema >= 25) 'size_ons_milli_snapshot',
+        if (schema >= 44) 'rounding_minor',
         if (schema >= 39) ...[
           'warranty_months_snapshot',
           'warranty_started_on',
@@ -425,13 +437,41 @@ final class CashierStore {
             where: 'sale_transaction_id=?',
             whereArgs: [id.value],
           );
+    final manual = schema < 44
+        ? null
+        : (await db.query(
+            'checkout_manual_payments',
+            where: 'sale_transaction_id=?',
+            whereArgs: [id.value],
+          )).firstOrNull;
+    final rounding = schema < 44
+        ? null
+        : (await db.query(
+            'checkout_rounding',
+            columns: ['discount_minor'],
+            where: 'sale_transaction_id=?',
+            whereArgs: [id.value],
+          )).firstOrNull;
+    final totalMinor = row['total_rupiah'] as int;
+    final externalMinor = manual?['amount_minor'] as int? ?? 0;
     return SaleReceipt(
+      nonCash: manual == null
+          ? null
+          : NonCashTender(
+              NonCashMethod.values.byName(manual['method'] as String),
+              Money.fromStoredMinor(
+                externalMinor,
+                currency.code,
+                currency.scale,
+              ),
+            ),
+      roundingMinor: rounding?['discount_minor'] as int? ?? 0,
       debtReductionMinor: row['debt_reduction'] as int,
       code: schema >= 40 ? await SaleReceiptCodes.readOn(db, id) : null,
       cashTender: tenderRows.isEmpty
           ? null
           : CashTender(
-              Money(row['total_rupiah'] as int, currency.code, currency.scale),
+              Money(totalMinor - externalMinor, currency.code, currency.scale),
               Money(
                 tenderRows.single['received_minor'] as int,
                 currency.code,

@@ -503,7 +503,14 @@ void m53DrawerWidgetsSuite(DatabaseFactory factory) {
           tester,
           () => find.byType(CashPiecesScreen).evaluate().isNotEmpty,
         );
-        await count(tester, 2000, '1');
+        if (language == 'id') {
+          await tap(tester, find.byKey(const ValueKey('pieces-manual-toggle')));
+          await count(tester, 2000, '1');
+        } else {
+          await tap(tester, find.byKey(const ValueKey('pieces-plus-2000')));
+          await tap(tester, find.byKey(const ValueKey('pieces-minus-2000')));
+          await tap(tester, find.byKey(const ValueKey('pieces-undo')));
+        }
         await tap(tester, find.byKey(const ValueKey('pieces-save')));
         await drain(
           tester,
@@ -549,6 +556,64 @@ void m53DrawerWidgetsSuite(DatabaseFactory factory) {
       },
     );
   }
+  scenario(
+    'M54 checkout clears manual confirmation after amount edits and records transfer without drawer movement',
+    (tester) async {
+      await io(tester, activate);
+      final form = await checkout(tester);
+      narrow(tester);
+      await tester.pump(const Duration(milliseconds: 400));
+      await tap(tester, find.byKey(const ValueKey('checkout-method-null')));
+      await tester.pump(const Duration(milliseconds: 400));
+      final transfer = find
+          .byWidgetPredicate(
+            (widget) =>
+                widget is DropdownMenuItem<String> &&
+                widget.value == 'transfer',
+          )
+          .hitTestable()
+          .last;
+      await tester.tap(transfer);
+      await tester.pump(const Duration(milliseconds: 400));
+      final amount = find.descendant(
+        of: find.byKey(const ValueKey('checkout-manual-amount')),
+        matching: find.byType(TextField),
+      );
+      final confirm = find.byKey(
+        const ValueKey('checkout-manual-confirmation'),
+      );
+      await reveal(tester, amount);
+      await tester.enterText(amount, '93000');
+      await tester.pump();
+      await tap(tester, confirm);
+      expectSync(form.nonCashReady, isTrue);
+      await reveal(tester, amount);
+      await tester.enterText(amount, '92000');
+      await tester.pump();
+      expectSync(form.nonCashReady, isFalse);
+      await tester.enterText(amount, '93000');
+      await tester.pump();
+      expectSync(form.nonCashReady, isFalse);
+      await tap(tester, confirm);
+      final submit = find.byKey(const ValueKey('checkout-confirm'));
+      await tap(tester, submit);
+      await drain(tester, () => find.byType(CheckoutScreen).evaluate().isEmpty);
+      await io(tester, () async {
+        expectSync(
+          (await db.read(
+            (sql) => sql.query('checkout_manual_payments'),
+          )).single['amount_minor'],
+          93000,
+        );
+        expectSync(
+          await db.read((sql) => sql.query('cash_drawer_events')),
+          isEmpty,
+        );
+      });
+      expectSync(tester.takeException(), isNull);
+    },
+  );
+
   scenario(
     'M53 drawer editor dirty locked Back stays or discards without changing durable tender or stock',
     (tester) async {

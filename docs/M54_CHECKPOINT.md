@@ -126,3 +126,25 @@ driver awal dihentikan saat menunggu I/O. Run berikutnya memperbaiki
 navigasi field lazy dan status hasil yang sempat muncul ganda. Gambar
 sintetis diuji tanpa pembayaran nyata. Split checkout dan pembulatan
 masih dalam pengerjaan. Paket pengguna belum dipasang ulang.
+
+## Tahap 3 · skema 44 · 8 November 2026
+
+Checkout memvalidasi ulang revision draft, nominal, metode eksternal, dan
+revision kebijakan pembulatan dalam transaksi. Konfirmasi manual gugur ketika
+nominal atau metode berubah. Draft menyimpan nominal dan metode. Konfirmasi
+kasir harus diulang saat membuka draft. Pembulatan opsional berlaku pada
+checkout yang memakai tunai dan disimpan per baris untuk retur. Dalam kasus
+Rp86.750 menjadi Rp86.500, QRIS Rp50.000 tercatat sebagai pembayaran eksternal
+dan laci mencatat tunai bersih Rp36.500. Transfer murni tidak membuat event laci.
+Retur penjualan lama bisa dicari dengan tanggal toko dan hasil berpaginasi.
+
+Regresi awal mencatat 70 lulus dan dua kegagalan harness UI yang masih
+mengasumsikan mode hitung manual. Tes ulang UI lulus 9/9 dalam 53 detik,
+termasuk kedua kasus tersebut dan kasus baru invalidasi konfirmasi transfer.
+Totalnya 73 kasus host unik. Audit lokalisasi 1626/1011/245 dan audit PIN 106
+lulus. APK debug biasa 0.5.4+14 terkompilasi dan terverifikasi untuk
+`com.example.kasir_app`, tiga ABI, 13 pustaka native, dan alignment 16 KiB.
+APK tersebut disimpan sebagai bukti build tanpa instalasi. Pengujian native
+skema 44, alur karantina lanjutan dan cetak fisik tetap terbuka.
+
+Tahap 4 berikutnya dimulai dari reproduksi burst scan pada draft penerimaan.

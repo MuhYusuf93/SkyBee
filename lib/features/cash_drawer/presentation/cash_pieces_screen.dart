@@ -31,6 +31,9 @@ final class CashPieceForm extends ChangeNotifier {
   final Money? expected;
   final Map<int, TextEditingController> fields = {};
   late final String _baseline;
+  Map<int, String>? _before;
+  bool get canUndo => _before != null;
+  bool manualCounts = false;
   String? error;
   String get rawKey =>
       fields.entries.map((e) => '${e.key}:${e.value.text}').join('|');
@@ -60,14 +63,36 @@ final class CashPieceForm extends ChangeNotifier {
       notifyListeners();
       return;
     }
+    _remember();
     field.text = '${count + change}';
     field.selection = TextSelection.collapsed(offset: field.text.length);
   }
 
   void clear() {
+    if (fields.values.every((field) => field.text == '0')) return;
+    _remember();
     for (final field in fields.values) {
       field.text = '0';
     }
+  }
+
+  void _remember() => _before = {
+    for (final entry in fields.entries) entry.key: entry.value.text,
+  };
+
+  void undo() {
+    final previous = _before;
+    if (previous == null) return;
+    _before = null;
+    for (final entry in previous.entries) {
+      fields[entry.key]!.text = entry.value;
+    }
+    notifyListeners();
+  }
+
+  void toggleManual(bool value) {
+    manualCounts = value;
+    notifyListeners();
   }
 
   CashPieces? validate() {
@@ -102,27 +127,34 @@ class CashPiecesScreen extends StatelessWidget {
     this.initial,
     this.expected,
     this.managementProtected = false,
+    this.quickButtons = false,
   });
   final CurrencyPolicy currency;
   final String titleKey;
   final CashPieces? initial;
   final Money? expected;
   final bool managementProtected;
+  final bool quickButtons;
   @override
   Widget build(BuildContext context) {
     final body = ChangeNotifierProvider(
       create: (_) =>
           CashPieceForm(currency, initial: initial, expected: expected),
-      child: _CashPiecesBody(titleKey, managementProtected),
+      child: _CashPiecesBody(titleKey, managementProtected, quickButtons),
     );
     return managementProtected ? ManagementGate(child: body) : body;
   }
 }
 
 class _CashPiecesBody extends StatelessWidget {
-  const _CashPiecesBody(this.titleKey, this.managementProtected);
+  const _CashPiecesBody(
+    this.titleKey,
+    this.managementProtected,
+    this.quickButtons,
+  );
   final String titleKey;
   final bool managementProtected;
+  final bool quickButtons;
   @override
   Widget build(BuildContext context) {
     final form = context.watch<CashPieceForm>(),
@@ -153,74 +185,146 @@ class _CashPiecesBody extends StatelessWidget {
                             onPressed: form.clear,
                             child: Text(tr(context, 'm53CashClearCounts')),
                           ),
+                          if (quickButtons) ...[
+                            TextButton(
+                              key: const ValueKey('pieces-undo'),
+                              onPressed: form.canUndo ? form.undo : null,
+                              child: Text(tr(context, 'm54UndoPieces')),
+                            ),
+                            SwitchListTile(
+                              key: const ValueKey('pieces-manual-toggle'),
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(tr(context, 'm54ManualPieces')),
+                              value: form.manualCounts,
+                              onChanged: form.toggleManual,
+                            ),
+                            if (!form.manualCounts)
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: [
+                                  for (final denomination in denominations)
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          key: ValueKey(
+                                            'pieces-minus-$denomination',
+                                          ),
+                                          tooltip: tr(
+                                            context,
+                                            'm53RemoveDenomination',
+                                          ),
+                                          onPressed:
+                                              (int.tryParse(
+                                                        form
+                                                            .fields[denomination]!
+                                                            .text,
+                                                      ) ??
+                                                      0) >
+                                                  0
+                                              ? () =>
+                                                    form.step(denomination, -1)
+                                              : null,
+                                          icon: const Icon(
+                                            Icons.remove_circle_outline,
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: OutlinedButton(
+                                            key: ValueKey(
+                                              'pieces-plus-$denomination',
+                                            ),
+                                            onPressed: () =>
+                                                form.step(denomination, 1),
+                                            child: Text(
+                                              '${moneyLabel(context, denomination, currency: form.currency)} ×${form.fields[denomination]!.text}',
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
+                          ],
                         ],
                       ),
                     ),
                   ),
-                  SliverList.builder(
-                    itemCount: denominations.length,
-                    itemBuilder: (context, index) {
-                      final denomination = denominations[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              moneyLabel(
-                                context,
-                                denomination,
-                                currency: form.currency,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  key: ValueKey('pieces-minus-$denomination'),
-                                  tooltip: tr(context, 'm53RemoveDenomination'),
-                                  onPressed:
-                                      (int.tryParse(
-                                                form.fields[denomination]!.text,
-                                              ) ??
-                                              0) ==
-                                          0
-                                      ? null
-                                      : () => form.step(denomination, -1),
-                                  icon: const Icon(Icons.remove_circle_outline),
+                  if (!quickButtons || form.manualCounts)
+                    SliverList.builder(
+                      itemCount: denominations.length,
+                      itemBuilder: (context, index) {
+                        final denomination = denominations[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                moneyLabel(
+                                  context,
+                                  denomination,
+                                  currency: form.currency,
                                 ),
-                                Expanded(
-                                  child: ManagedTextField(
-                                    key: ValueKey('pieces-count-$denomination'),
-                                    controller: form.fields[denomination],
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      LengthLimitingTextInputFormatter(7),
-                                    ],
-                                    decoration: InputDecoration(
-                                      labelText: tr(
-                                        context,
-                                        'm53CashPieceCount',
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    key: ValueKey('pieces-minus-$denomination'),
+                                    tooltip: tr(
+                                      context,
+                                      'm53RemoveDenomination',
+                                    ),
+                                    onPressed:
+                                        (int.tryParse(
+                                                  form
+                                                      .fields[denomination]!
+                                                      .text,
+                                                ) ??
+                                                0) ==
+                                            0
+                                        ? null
+                                        : () => form.step(denomination, -1),
+                                    icon: const Icon(
+                                      Icons.remove_circle_outline,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: ManagedTextField(
+                                      key: ValueKey(
+                                        'pieces-count-$denomination',
+                                      ),
+                                      controller: form.fields[denomination],
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                        LengthLimitingTextInputFormatter(7),
+                                      ],
+                                      decoration: InputDecoration(
+                                        labelText: tr(
+                                          context,
+                                          'm53CashPieceCount',
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                IconButton(
-                                  key: ValueKey('pieces-plus-$denomination'),
-                                  tooltip: tr(context, 'm53CashAddPiece'),
-                                  onPressed: () => form.step(denomination, 1),
-                                  icon: const Icon(Icons.add_circle_outline),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                                  IconButton(
+                                    key: ValueKey('pieces-plus-$denomination'),
+                                    tooltip: tr(context, 'm53CashAddPiece'),
+                                    onPressed: () => form.step(denomination, 1),
+                                    icon: const Icon(Icons.add_circle_outline),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                 ],
               ),
             ),

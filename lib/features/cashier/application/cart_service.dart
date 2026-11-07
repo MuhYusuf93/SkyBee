@@ -284,6 +284,15 @@ final class CartService {
     if (draft['state'] == 'completed') return;
     if (draft['state'] != 'active') throw const AppError('m3DraftUnavailable');
     final policy = store.policy(draft);
+    final external = input.nonCash;
+    if (external != null &&
+        (!input.cash ||
+            database.schemaVersion < 44 ||
+            external.amount.currencyCode != policy.code ||
+            external.amount.scale != policy.scale ||
+            external.amount.amountMinor <= 0)) {
+      throw const AppError('m3InvalidPayment');
+    }
     if (database.schemaVersion >= 22 &&
         (input.customer.address.length > 4096 ||
             input.customer.phone.length > 128 ||
@@ -338,6 +347,10 @@ final class CartService {
     await dbTxn.update(
       'cart_drafts',
       {
+        if (database.schemaVersion >= 44) ...{
+          'noncash_method': external?.method.name,
+          'noncash_minor': external?.amount.amountMinor,
+        },
         if (database.schemaVersion >= 21)
           'tender_details_json': input.tenderDetails?.encode(),
         if (database.schemaVersion >= 24) ...{

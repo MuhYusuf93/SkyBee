@@ -22,6 +22,7 @@ import '../../backup/presentation/backup_settings_screen.dart';
 import '../../alerts/presentation/alerts_screen.dart';
 import '../../cash_drawer/presentation/cash_drawer_policy_screen.dart';
 import 'qris_settings_screen.dart';
+import '../../cashier/presentation/cash_rounding_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -121,6 +122,9 @@ class _SettingsFormState extends State<_SettingsForm> {
                   const CurrencySelector(),
                   for (final destination in [
                     (const CashDrawerPolicyScreen(), 'm53CashPolicy'),
+                    if (context.read<AppServices>().database.schemaVersion >=
+                        44)
+                      (const CashRoundingScreen(), 'm54CashRounding'),
                     if (context.read<AppServices>().database.schemaVersion >=
                         43)
                       (const QrisSettingsScreen(), 'm54QrisImageTitle'),

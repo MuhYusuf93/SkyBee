@@ -60,8 +60,18 @@ abstract final class CashPaymentPosting {
     required CashTender? tender,
     required Money paid,
     required CurrencyPolicy currency,
+    int nonCashMinor = 0,
   }) async {
     final policy = await CashDrawerLedger.operationalPolicyOn(db, store);
+    if (nonCashMinor > 0 && tender?.received.amountMinor == 0) {
+      if (payment == null ||
+          input.drawerSessionId != null ||
+          input.changePieces != null) {
+        throw const AppError('m3InvalidPayment');
+      }
+      await _sourceOn(db, payment, policy, 'external');
+      return;
+    }
     if (!policy.active && input.drawerSessionId != null) {
       throw const AppError('m53CashSessionChanged');
     }

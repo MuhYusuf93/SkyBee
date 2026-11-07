@@ -2,6 +2,20 @@ import '../../../core/domain/value_types.dart';
 
 enum SaleReturnCondition { good, quarantine }
 
+typedef SaleReturnDayCursor = ({
+  String day,
+  int createdAt,
+  EntityId sale,
+  int revision,
+});
+
+typedef SaleReturnReference = ({
+  String number,
+  int createdAt,
+  String timeZone,
+  Money total,
+});
+
 final class SaleReturnSelection {
   const SaleReturnSelection(this.saleItemId, this.quantity, this.condition);
   final EntityId saleItemId;

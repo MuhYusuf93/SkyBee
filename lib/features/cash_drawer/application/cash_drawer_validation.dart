@@ -394,7 +394,7 @@ abstract final class CashDrawerValidation {
       }
       cursor = sessions.last['id'] as String;
     }
-    await _paymentSources(db);
+    await _paymentSources(db, schema);
     await _drafts(db);
   }
 
@@ -559,7 +559,7 @@ abstract final class CashDrawerValidation {
     throw _invalid;
   }
 
-  static Future<void> _paymentSources(DatabaseExecutor db) async {
+  static Future<void> _paymentSources(DatabaseExecutor db, int schema) async {
     await _reject(
       db,
       '''SELECT 1 FROM payments p WHERE typeof(cash_provenance_version)<>'integer' OR cash_provenance_version NOT IN(0,1)
@@ -571,10 +571,16 @@ abstract final class CashDrawerValidation {
       WHERE p.id IS NULL OR p.cash_provenance_version<>1 LIMIT 1''',
     );
     String? cursor;
+    final externalAmount = schema < 44
+        ? '0'
+        : '''COALESCE((SELECT m.amount_minor
+      FROM checkout_payment_links l JOIN checkout_manual_payments m ON m.sale_transaction_id=l.sale_transaction_id
+      WHERE l.payment_id=p.id),0)''';
     while (true) {
       final rows = await db.rawQuery(
         '''SELECT c.payment_id,c.source,c.policy_mode,c.session_id,c.event_id,c.in_minor,c.out_minor,c.in_counts_json,c.out_counts_json,
-        p.kind,p.amount_rupiah,p.currency_code,p.currency_scale FROM payment_cash_sources c JOIN payments p ON p.id=c.payment_id
+        p.kind,p.amount_rupiah,p.currency_code,p.currency_scale,$externalAmount AS external_amount
+        FROM payment_cash_sources c JOIN payments p ON p.id=c.payment_id
         ${cursor == null ? '' : 'WHERE c.payment_id COLLATE BINARY>?'} ORDER BY c.payment_id COLLATE BINARY LIMIT 50''',
         [?cursor],
       );
@@ -610,7 +616,9 @@ abstract final class CashDrawerValidation {
           final net = row['kind'] == 'receipt'
               ? (inMinor as int) - (outMinor as int)
               : (outMinor as int) - (inMinor as int);
-          if (net != row['amount_rupiah']) throw _invalid;
+          if (net + (row['external_amount'] as int) != row['amount_rupiah']) {
+            throw _invalid;
+          }
         }
         for (final entry in [
           ('in_counts_json', inMinor),

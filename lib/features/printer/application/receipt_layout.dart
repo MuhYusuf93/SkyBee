@@ -218,7 +218,32 @@ final class ReceiptLayout implements PrinterRasterSource {
           ),
       ],
       const ReceiptLine('--------------------------------'),
+      if (receipt['roundingDiscount'] != null) ...[
+        ReceiptLine(
+          '${id ? 'Sebelum pembulatan' : 'Before rounding'} ${amount(receipt['subtotalBeforeRounding'])}',
+        ),
+        ReceiptLine(
+          '${id ? 'Potongan pembulatan tunai' : 'Cash rounding discount'} ${amount(receipt['roundingDiscount'])}',
+        ),
+      ],
       ReceiptLine('Total: ${amount(receipt['total'])}', bold: true),
+      if (receipt['manualPaymentMethod'] case final String method) ...[
+        ReceiptLine(
+          '${id ? 'Tunai bersih' : 'Net cash'} ${amount(receipt['cashAppliedMinor'])}',
+        ),
+        ReceiptLine(
+          '${method == 'qris'
+              ? 'QRIS'
+              : id
+              ? 'Transfer'
+              : 'Bank transfer'} ${amount(receipt['manualPaymentMinor'])}',
+        ),
+        ReceiptLine(
+          id
+              ? 'Dikonfirmasi manual oleh kasir'
+              : 'Manually confirmed by cashier',
+        ),
+      ],
       if (receipt['tender'] != null) ...[
         ReceiptLine(
           '${id ? 'Uang diterima' : 'Cash received'}: ${amount(receipt['tender'])}',

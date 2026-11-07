@@ -6426,6 +6426,84 @@
   "@m54QrisImageChanged": { "description": "The QR image settings changed while an edit was open" },
   "m54QrisImageInvalid": "Pilih gambar statis yang dapat dibuka, minimal 64 piksel per sisi dan maksimum 4 MiB.",
   "@m54QrisImageInvalid": { "description": "Static QR image validation error" },
+  "m54RoundingChanged": "Aturan atau potongan pembulatan berubah. Tinjau kembali total dan kembalian.",
+  "@m54RoundingChanged": {
+    "description": "M5.4 checkout: The rounding rule or discount changed. Review the total and change."
+  },
+  "m54RoundingInvalid": "Pilih kelipatan pembulatan yang tersedia untuk mata uang ini.",
+  "@m54RoundingInvalid": {
+    "description": "M5.4 checkout: Choose a rounding increment available for this currency."
+  },
+  "m54NonCashUnconfirmed": "Periksa dan konfirmasi kembali pembayaran nontunai.",
+  "@m54NonCashUnconfirmed": {
+    "description": "M5.4 checkout: Check and confirm the noncash payment again."
+  },
+  "m54NonCashTooLarge": "Pembayaran nontunai tidak boleh melebihi tagihan.",
+  "@m54NonCashTooLarge": {
+    "description": "M5.4 checkout: Noncash payment cannot exceed the bill."
+  },
+  "m54UseSaleReturn": "Gunakan Retur penjualan untuk transaksi dengan pembayaran nontunai.",
+  "@m54UseSaleReturn": {
+    "description": "M5.4 checkout: Use Sales returns for transactions with a noncash payment."
+  },
+  "m54CheckoutMethod": "Metode pembayaran",
+  "@m54CheckoutMethod": {
+    "description": "M5.4 checkout: Payment method"
+  },
+  "m54PayQris": "QRIS + tunai opsional",
+  "@m54PayQris": {
+    "description": "M5.4 checkout: QRIS + optional cash"
+  },
+  "m54PayTransfer": "Transfer + tunai opsional",
+  "@m54PayTransfer": {
+    "description": "M5.4 checkout: Bank transfer + optional cash"
+  },
+  "m54NonCashAmount": "Nominal nontunai",
+  "@m54NonCashAmount": {
+    "description": "M5.4 checkout: Noncash amount"
+  },
+  "m54ManualPaymentNotice": "Pembayaran diperiksa manual oleh kasir.",
+  "@m54ManualPaymentNotice": {
+    "description": "M5.4 checkout: Payment is checked manually by the cashier."
+  },
+  "m54ManualPaymentConfirm": "Pembayaran sudah saya periksa dan terima.",
+  "@m54ManualPaymentConfirm": {
+    "description": "M5.4 checkout: I have checked and received the payment."
+  },
+  "m54ManualPaymentRecorded": "Pembayaran nontunai dikonfirmasi manual oleh kasir.",
+  "@m54ManualPaymentRecorded": {
+    "description": "M5.4 checkout: The cashier manually confirmed the noncash payment."
+  },
+  "m54BeforeRounding": "Tagihan sebelum pembulatan",
+  "@m54BeforeRounding": {
+    "description": "M5.4 checkout: Total before rounding"
+  },
+  "m54CashRounding": "Potongan pembulatan tunai",
+  "@m54CashRounding": {
+    "description": "M5.4 checkout: Cash rounding discount"
+  },
+  "m54CashRoundingHelp": "Potongan membulatkan ke bawah bagian tunai yang dilunasi. Nominal nontunai dan piutang tetap utuh.",
+  "@m54CashRoundingHelp": {
+    "description": "M5.4 checkout: Round down the cash portion when paid in full. Noncash amounts and outstanding debt stay unchanged."
+  },
+  "m54RoundingStep": "Kelipatan pembulatan",
+  "@m54RoundingStep": {
+    "description": "M5.4 checkout: Rounding increment"
+  },
+  "m54RoundingOff": "Nonaktif",
+  "@m54RoundingOff": {
+    "description": "M5.4 checkout: Off"
+  },
+  "m54UndoPieces": "Urungkan perubahan pecahan",
+  "@m54UndoPieces": { "description": "Undo the last cash piece button action" },
+  "m54ManualPieces": "Ketik jumlah per pecahan",
+  "@m54ManualPieces": { "description": "Show manual denomination count inputs" },
+  "m54NetCash": "Tunai bersih",
+  "@m54NetCash": {
+    "description": "M5.4 checkout: Net cash"
+  },
+  "m54ReturnByDate": "Cari menurut tanggal penjualan",
+  "@m54ReturnByDate": { "description": "Browse committed sales for a shop calendar date" },
   "m54SaleReceiptOnly": "Gunakan kode struk ini di Retur penjualan.",
   "@m54SaleReceiptOnly": {
     "description": "A receipt QR was scanned in a product field"

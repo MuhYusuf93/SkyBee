@@ -6426,6 +6426,84 @@
   "@m54QrisImageChanged": { "description": "The QR image settings changed while an edit was open" },
   "m54QrisImageInvalid": "Choose a readable static image, at least 64 pixels per side and no larger than 4 MiB.",
   "@m54QrisImageInvalid": { "description": "Static QR image validation error" },
+  "m54RoundingChanged": "The rounding rule or discount changed. Review the total and change.",
+  "@m54RoundingChanged": {
+    "description": "M5.4 checkout: The rounding rule or discount changed. Review the total and change."
+  },
+  "m54RoundingInvalid": "Choose a rounding increment available for this currency.",
+  "@m54RoundingInvalid": {
+    "description": "M5.4 checkout: Choose a rounding increment available for this currency."
+  },
+  "m54NonCashUnconfirmed": "Check and confirm the noncash payment again.",
+  "@m54NonCashUnconfirmed": {
+    "description": "M5.4 checkout: Check and confirm the noncash payment again."
+  },
+  "m54NonCashTooLarge": "Noncash payment cannot exceed the bill.",
+  "@m54NonCashTooLarge": {
+    "description": "M5.4 checkout: Noncash payment cannot exceed the bill."
+  },
+  "m54UseSaleReturn": "Use Sales returns for transactions with a noncash payment.",
+  "@m54UseSaleReturn": {
+    "description": "M5.4 checkout: Use Sales returns for transactions with a noncash payment."
+  },
+  "m54CheckoutMethod": "Payment method",
+  "@m54CheckoutMethod": {
+    "description": "M5.4 checkout: Payment method"
+  },
+  "m54PayQris": "QRIS + optional cash",
+  "@m54PayQris": {
+    "description": "M5.4 checkout: QRIS + optional cash"
+  },
+  "m54PayTransfer": "Bank transfer + optional cash",
+  "@m54PayTransfer": {
+    "description": "M5.4 checkout: Bank transfer + optional cash"
+  },
+  "m54NonCashAmount": "Noncash amount",
+  "@m54NonCashAmount": {
+    "description": "M5.4 checkout: Noncash amount"
+  },
+  "m54ManualPaymentNotice": "Payment is checked manually by the cashier.",
+  "@m54ManualPaymentNotice": {
+    "description": "M5.4 checkout: Payment is checked manually by the cashier."
+  },
+  "m54ManualPaymentConfirm": "I have checked and received the payment.",
+  "@m54ManualPaymentConfirm": {
+    "description": "M5.4 checkout: I have checked and received the payment."
+  },
+  "m54ManualPaymentRecorded": "The cashier manually confirmed the noncash payment.",
+  "@m54ManualPaymentRecorded": {
+    "description": "M5.4 checkout: The cashier manually confirmed the noncash payment."
+  },
+  "m54BeforeRounding": "Total before rounding",
+  "@m54BeforeRounding": {
+    "description": "M5.4 checkout: Total before rounding"
+  },
+  "m54CashRounding": "Cash rounding discount",
+  "@m54CashRounding": {
+    "description": "M5.4 checkout: Cash rounding discount"
+  },
+  "m54CashRoundingHelp": "Round down the cash portion when paid in full. Noncash amounts and outstanding debt stay unchanged.",
+  "@m54CashRoundingHelp": {
+    "description": "M5.4 checkout: Round down the cash portion when paid in full. Noncash amounts and outstanding debt stay unchanged."
+  },
+  "m54RoundingStep": "Rounding increment",
+  "@m54RoundingStep": {
+    "description": "M5.4 checkout: Rounding increment"
+  },
+  "m54RoundingOff": "Off",
+  "@m54RoundingOff": {
+    "description": "M5.4 checkout: Off"
+  },
+  "m54UndoPieces": "Undo piece change",
+  "@m54UndoPieces": { "description": "Undo the last cash piece button action" },
+  "m54ManualPieces": "Enter counts manually",
+  "@m54ManualPieces": { "description": "Show manual denomination count inputs" },
+  "m54NetCash": "Net cash",
+  "@m54NetCash": {
+    "description": "M5.4 checkout: Net cash"
+  },
+  "m54ReturnByDate": "Find by sale date",
+  "@m54ReturnByDate": { "description": "Browse committed sales for a shop calendar date" },
   "m54SaleReceiptOnly": "Use this receipt code in Sales returns.",
   "@m54SaleReceiptOnly": {
     "description": "A receipt QR was scanned in a product field"

@@ -29,10 +29,11 @@ referensi lulus dalam regresi host 75/75. Analyzer bersih. Adapter fokus
 kamera belakang dan fallback telah dikompilasi untuk fixture. Arsip native,
 fokus optik, dan HID fisik dijadwalkan pada acceptance tahap 6.
 [Laporan operasional](M54_OPERATIONAL_REPORT.md).
-Checkpoint 0.5.4+14/skema 43 mencakup garansi snapshot, kode struk,
-retur parsial, pengurangan piutang, pencatatan refund, dan gambar QRIS
-privat. Regresi host lulus 64/64. Analyzer bersih. Split payment, pembulatan,
-karantina lanjutan, tahap 4–5, acceptance perangkat dan handoff masih terbuka.
+Checkpoint 0.5.4+14/skema 44 menambah checkout split dengan konfirmasi
+nominal manual, potongan tunai opsional, editor pecahan, dan lookup tanggal
+retur. Sebanyak 73 kasus host lulus melalui regresi dan tes ulang. APK debug
+biasa lulus verifikasi paket, tiga ABI, dan alignment 16 KiB tanpa instalasi.
+Karantina lanjutan, tahap 4–5, acceptance perangkat dan handoff masih terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

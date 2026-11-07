@@ -122,6 +122,15 @@ final class CorrectionService {
           )).isNotEmpty) {
         throw const AppError('m54ReturnDependent');
       }
+      if (database.schemaVersion >= 44 &&
+          (await dbTxn.rawQuery(
+            '''SELECT 1
+        FROM checkout_payment_links l JOIN checkout_manual_payments m ON m.sale_transaction_id=l.sale_transaction_id
+        WHERE l.payment_id=? LIMIT 1''',
+            [paymentId.value],
+          )).isNotEmpty) {
+        throw const AppError('m54UseSaleReturn');
+      }
       // An anonymous paid-in-full checkout has no customer to carry the reopened
       // debt. Its payment is reversed only as part of a full returned-goods sale.
       if (original['customer_id'] == null) {
@@ -277,6 +286,15 @@ final class CorrectionService {
       );
       if (sales.length != 1) throw const AppError('m3SaleUnavailable');
       final sale = sales.single;
+      if (database.schemaVersion >= 44 &&
+          (await dbTxn.query(
+            'checkout_manual_payments',
+            columns: ['sale_transaction_id'],
+            where: 'sale_transaction_id=?',
+            whereArgs: [saleId.value],
+          )).isNotEmpty) {
+        throw const AppError('m54UseSaleReturn');
+      }
       if (database.schemaVersion >= 41 &&
           (await dbTxn.query(
             'sale_returns',

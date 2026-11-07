@@ -265,6 +265,7 @@ class CashPad extends StatelessWidget {
                                   titleKey: 'm53CashChangeCounts',
                                   initial: form.changePieces,
                                   expected: settlement.change,
+                                  quickButtons: true,
                                 ),
                               ),
                             );

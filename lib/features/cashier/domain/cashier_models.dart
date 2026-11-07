@@ -2,6 +2,7 @@ import 'tender_draft.dart';
 import '../../cash_drawer/domain/cash_pieces.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../core/domain/sale_receipt_code.dart';
+import 'checkout_settlement.dart';
 import 'cash_tender.dart';
 import 'quantity_promotion.dart';
 import '../../../core/domain/pricing_mode.dart';
@@ -106,6 +107,9 @@ final class CheckoutInput {
     this.memberOptIn,
     this.drawerSessionId,
     this.changePieces,
+    this.nonCash,
+    this.roundingRevision,
+    this.roundingMinor,
     this.customer = const CustomerChoice(),
   });
   final PaymentMode mode;
@@ -117,6 +121,8 @@ final class CheckoutInput {
   final bool? memberOptIn;
   final EntityId? drawerSessionId;
   final CashPieces? changePieces;
+  final NonCashTender? nonCash;
+  final int? roundingRevision, roundingMinor;
   final Money? tender;
   final String tenderRaw;
   final TenderSnapshot? tenderDetails;
@@ -175,6 +181,8 @@ final class SaleReceipt {
     this.cashTender,
     this.code,
     this.debtReductionMinor = 0,
+    this.nonCash,
+    this.roundingMinor = 0,
   });
   final EntityId id;
   final int createdAt;
@@ -187,9 +195,12 @@ final class SaleReceipt {
   final CashTender? cashTender;
   final SaleReceiptCode? code;
   final int debtReductionMinor;
+  final NonCashTender? nonCash;
+  final int roundingMinor;
   int get outstanding =>
       reversed ? 0 : total.amountMinor - paid.amountMinor - debtReductionMinor;
-  String get number =>
+  String get number => numberFor(id, createdAt);
+  static String numberFor(EntityId id, int createdAt) =>
       '${createdAt.toRadixString(36).toUpperCase()}-${id.value.substring(0, 8).toUpperCase()}';
 }
 

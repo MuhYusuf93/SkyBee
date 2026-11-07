@@ -5,6 +5,8 @@ import '../../cash_drawer/application/cash_payment_posting.dart';
 import '../../members/application/member_rules.dart';
 import '../../members/domain/member_models.dart';
 import '../domain/cash_tender.dart';
+import '../domain/checkout_settlement.dart';
+import 'cash_rounding_service.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
@@ -46,6 +48,23 @@ final class CheckoutService {
 
   Future<String> _hash(EntityId draftId, int revision, CheckoutInput input) =>
       store.fingerprint([
+        if (input.nonCash case final external?) ...[
+          'manual-payment-v1',
+          external.method.name,
+          external.amount.amountMinor,
+          external.amount.currencyCode,
+          external.amount.scale,
+          external.reviewed?.draftId,
+          external.reviewed?.revision,
+          external.reviewed?.subtotal,
+          external.reviewed?.finalTotal,
+          external.reviewed?.roundingRevision,
+        ],
+        if (input.roundingRevision != null) ...[
+          'cash-rounding-v1',
+          input.roundingRevision,
+          input.roundingMinor,
+        ],
         if (input.drawerSessionId != null || input.changePieces != null) ...[
           'drawer-v1',
           input.drawerSessionId?.value,
@@ -198,9 +217,19 @@ final class CheckoutService {
         }
         if (cart.priceChanged) throw const AppError('m3PricesChanged');
         if (cart.unavailable) throw const AppError('insufficientSaleableStock');
-        final total = cart.total;
+        final subtotal = cart.total;
+        var total = subtotal;
         var paid = total;
         CashTender? cash;
+        CheckoutSettlement? settlement;
+        final external = input.nonCash;
+        if ((external != null ||
+                input.roundingRevision != null ||
+                input.roundingMinor != null) &&
+            (!input.cash || database.schemaVersion < 44)) {
+          throw const AppError('m3InvalidPayment');
+        }
+        var roundingStep = 0;
         if (input.cash) {
           if (database.schemaVersion < 12 || input.tender == null) {
             throw const AppError('m51TenderRequired');
@@ -209,12 +238,41 @@ final class CheckoutService {
               input.tender!.scale != currency.scale) {
             throw const AppError('currencyMismatch');
           }
-          cash = CashTender(total, input.tender!);
+          final rounding = database.schemaVersion >= 44
+              ? await CashRoundingService.policyOn(dbTxn, currency)
+              : CashRoundingPolicy(currency);
+          roundingStep = rounding.step;
+          if ((roundingStep > 0 || input.roundingRevision != null) &&
+              input.roundingRevision != rounding.revision) {
+            throw const AppError('m54RoundingChanged');
+          }
+          settlement = CheckoutSettlement.calculate(
+            subtotal,
+            input.tender!,
+            nonCash: external?.amount,
+            step: roundingStep,
+          );
+          if (external != null &&
+              (external.amount.amountMinor <= 0 ||
+                  !external.matches(
+                    draftId,
+                    revision,
+                    subtotal.amountMinor,
+                    settlement.total.amountMinor,
+                    rounding.revision,
+                  ))) {
+            throw const AppError('m54NonCashUnconfirmed');
+          }
+          if ((input.roundingMinor ?? 0) != settlement.rounding.amountMinor) {
+            throw const AppError('m54RoundingChanged');
+          }
+          cash = settlement.cash;
+          total = settlement.total;
           if (input.mode == PaymentMode.debt &&
-              input.tender!.amountMinor != 0) {
+              (input.tender!.amountMinor != 0 || external != null)) {
             throw const AppError('m3InvalidPayment');
           }
-          paid = cash.applied;
+          paid = settlement.paid;
         } else if (input.mode != PaymentMode.paid) {
           if (total.amountMinor == 0) throw const AppError('m3InvalidPayment');
           paid = input.mode == PaymentMode.debt
@@ -358,6 +416,23 @@ final class CheckoutService {
         if (database.schemaVersion >= 40) {
           await SaleReceiptCodes.issueOn(dbTxn, saleId);
         }
+        if (external != null) {
+          await dbTxn.insert('checkout_manual_payments', {
+            'sale_transaction_id': saleId.value,
+            'method': external.method.name,
+            'amount_minor': external.amount.amountMinor,
+            'confirmed_at': now,
+          });
+        }
+        final roundingMinor = settlement?.rounding.amountMinor ?? 0;
+        if (roundingMinor > 0) {
+          await dbTxn.insert('checkout_rounding', {
+            'sale_transaction_id': saleId.value,
+            'subtotal_minor': subtotal.amountMinor,
+            'discount_minor': roundingMinor,
+            'step_minor': roundingStep,
+          });
+        }
         if (cash != null) {
           await dbTxn.insert('checkout_tenders', {
             'sale_transaction_id': saleId.value,
@@ -365,6 +440,8 @@ final class CheckoutService {
             'applied_minor': cash.applied.amountMinor,
             'change_minor': cash.change.amountMinor,
             'debt_minor': cash.debt.amountMinor,
+            if (database.schemaVersion >= 44)
+              'noncash_minor': external?.amount.amountMinor ?? 0,
             if (database.schemaVersion >= 21)
               'details_json': input.tenderDetails?.encode(),
             if (database.schemaVersion >= 24)
@@ -372,8 +449,16 @@ final class CheckoutService {
           });
         }
         await _stage('sale');
+        var subtotalBeforeLine = 0;
         for (var index = 0; index < cart.lines.length; index++) {
           final line = cart.lines[index], product = products[index];
+          final lineRounding =
+              settlement?.lineDiscount(
+                subtotalBeforeLine,
+                line.total.amountMinor,
+              ) ??
+              0;
+          subtotalBeforeLine += line.total.amountMinor;
           if (product['stock_tracking_enabled'] != 0) {
             final quantity = product['stock_quantity'] as int;
             final value = product['inventory_value_micros'] as int;
@@ -419,7 +504,8 @@ final class CheckoutService {
             'quantity': line.quantity,
             'unit_price_rupiah': line.acceptedPrice.amountMinor,
             'pricing_mode': line.pricingMode.name,
-            'total_rupiah': line.total.amountMinor,
+            'total_rupiah': line.total.amountMinor - lineRounding,
+            if (database.schemaVersion >= 44) 'rounding_minor': lineRounding,
             'cost_micros': costs[index],
             if (warrantyMonths != null && warrantyStart != null) ...{
               'warranty_months_snapshot': warrantyMonths,
@@ -496,6 +582,7 @@ final class CheckoutService {
             input: input,
             tender: cash,
             paid: paid,
+            nonCashMinor: external?.amount.amountMinor ?? 0,
             currency: currency,
           );
           await _stage('drawer');
@@ -507,6 +594,10 @@ final class CheckoutService {
             'state': 'completed',
             'completed_sale_transaction_id': saleId.value,
             'updated_at': now,
+            if (database.schemaVersion >= 44) ...{
+              'noncash_method': external?.method.name,
+              'noncash_minor': external?.amount.amountMinor,
+            },
             if (database.schemaVersion >= 21)
               'tender_details_json': input.tenderDetails?.encode(),
             if (database.schemaVersion >= 24) ...{

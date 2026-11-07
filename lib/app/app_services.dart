@@ -21,6 +21,7 @@ import '../features/settings/application/qris_asset_service.dart';
 import '../features/cashier/application/cashier_store.dart';
 import '../features/cashier/application/cart_service.dart';
 import '../features/cashier/application/checkout_service.dart';
+import '../features/cashier/application/cash_rounding_service.dart';
 import '../features/cashier/application/sale_returns_service.dart';
 import '../features/cashier/application/sale_refund_service.dart';
 import '../features/cashier/application/product_search_service.dart';
@@ -76,6 +77,7 @@ final class AppServices {
     cashDrawer = CashDrawerService(database, management, cashierStore);
     cashDrawerHistory = CashDrawerHistoryService(cashDrawer);
     checkout = CheckoutService(database, cashierStore);
+    cashRounding = CashRoundingService(database, cashierStore, management);
     saleReturns = SaleReturnsService(database, cashierStore, management);
     saleRefunds = SaleRefundService(database, cashierStore);
     qrisAssets = QrisAssetService(
@@ -131,6 +133,7 @@ final class AppServices {
   late final CashDrawerService cashDrawer;
   late final CashDrawerHistoryService cashDrawerHistory;
   late final CheckoutService checkout;
+  late final CashRoundingService cashRounding;
   late final SaleReturnsService saleReturns;
   late final SaleRefundService saleRefunds;
   late final QrisAssetService qrisAssets;

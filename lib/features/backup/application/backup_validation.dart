@@ -30,6 +30,7 @@ import '../../cashier/application/sale_receipt_codes.dart';
 import '../../cashier/application/sale_return_validation.dart';
 import '../../cashier/application/sale_refund_service.dart';
 import '../../settings/application/qris_asset_service.dart';
+import '../../cashier/application/checkout_settlement_validation.dart';
 
 /// Archive authentication is necessary but not a substitute for supported
 /// business metadata. Scan bounded rows, preserving all accepted legacy values.
@@ -70,6 +71,7 @@ final class BackupValidation {
     if (schema >= 41) await SaleReturnValidation.validate(db);
     if (schema >= 42) await SaleRefundService.validate(db);
     if (schema >= 43) await QrisAssetService.validate(db);
+    if (schema >= 44) await CheckoutSettlementValidation.validate(db);
     if (schema >= 26 &&
         (await db.rawQuery('''SELECT 1 FROM products p
       LEFT JOIN suppliers s ON s.id=p.master_supplier_id
@@ -173,17 +175,18 @@ final class BackupValidation {
     }
     // Revalidate even authenticated archives: their SQLite CHECK/triggers may
     // have been removed. Tender is initial checkout only, never later revenue.
+    final nonCash = schema >= 44 ? 't.noncash_minor' : '0';
     if ((await db.rawQuery('''SELECT 1 FROM checkout_tenders t
       LEFT JOIN sale_transactions s ON s.id=t.sale_transaction_id WHERE s.id IS NULL
       OR typeof(t.received_minor)<>'integer' OR t.received_minor<0
       OR typeof(t.applied_minor)<>'integer' OR t.applied_minor<0
       OR typeof(t.change_minor)<>'integer' OR t.change_minor<0
       OR typeof(t.debt_minor)<>'integer' OR t.debt_minor<0
-      OR t.applied_minor<>MIN(t.received_minor,s.total_rupiah)
+      OR t.applied_minor<>MIN(t.received_minor,s.total_rupiah-$nonCash)
       OR t.change_minor<>t.received_minor-t.applied_minor
-      OR t.debt_minor<>s.total_rupiah-t.applied_minor
+      OR t.debt_minor<>s.total_rupiah-t.applied_minor-$nonCash
       OR (t.debt_minor>0 AND s.customer_id IS NULL)
-      OR t.applied_minor<>COALESCE((SELECT p.amount_rupiah FROM checkout_payment_links l
+      OR t.applied_minor+$nonCash<>COALESCE((SELECT p.amount_rupiah FROM checkout_payment_links l
         JOIN payments p ON p.id=l.payment_id WHERE l.sale_transaction_id=s.id),0)
       LIMIT 1''')).isNotEmpty) {
       throw const FormatException('backupTenderInvalid');
@@ -872,7 +875,8 @@ final class BackupValidation {
                             BigInt.from(quantity) !=
                         BigInt.from(gross) ||
                     discount != (promo?.discount(gross) ?? 0) ||
-                    gross - discount != row['total_rupiah']) {
+                    gross - discount - (row['rounding_minor'] as int? ?? 0) !=
+                        row['total_rupiah']) {
                   throw const FormatException('lineArithmetic');
                 }
               }

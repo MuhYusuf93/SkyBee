@@ -9644,6 +9644,132 @@ abstract class AppLocalizations {
   /// **'Choose a readable static image, at least 64 pixels per side and no larger than 4 MiB.'**
   String get m54QrisImageInvalid;
 
+  /// M5.4 checkout: The rounding rule or discount changed. Review the total and change.
+  ///
+  /// In en, this message translates to:
+  /// **'The rounding rule or discount changed. Review the total and change.'**
+  String get m54RoundingChanged;
+
+  /// M5.4 checkout: Choose a rounding increment available for this currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a rounding increment available for this currency.'**
+  String get m54RoundingInvalid;
+
+  /// M5.4 checkout: Check and confirm the noncash payment again.
+  ///
+  /// In en, this message translates to:
+  /// **'Check and confirm the noncash payment again.'**
+  String get m54NonCashUnconfirmed;
+
+  /// M5.4 checkout: Noncash payment cannot exceed the bill.
+  ///
+  /// In en, this message translates to:
+  /// **'Noncash payment cannot exceed the bill.'**
+  String get m54NonCashTooLarge;
+
+  /// M5.4 checkout: Use Sales returns for transactions with a noncash payment.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Sales returns for transactions with a noncash payment.'**
+  String get m54UseSaleReturn;
+
+  /// M5.4 checkout: Payment method
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get m54CheckoutMethod;
+
+  /// M5.4 checkout: QRIS + optional cash
+  ///
+  /// In en, this message translates to:
+  /// **'QRIS + optional cash'**
+  String get m54PayQris;
+
+  /// M5.4 checkout: Bank transfer + optional cash
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer + optional cash'**
+  String get m54PayTransfer;
+
+  /// M5.4 checkout: Noncash amount
+  ///
+  /// In en, this message translates to:
+  /// **'Noncash amount'**
+  String get m54NonCashAmount;
+
+  /// M5.4 checkout: Payment is checked manually by the cashier.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment is checked manually by the cashier.'**
+  String get m54ManualPaymentNotice;
+
+  /// M5.4 checkout: I have checked and received the payment.
+  ///
+  /// In en, this message translates to:
+  /// **'I have checked and received the payment.'**
+  String get m54ManualPaymentConfirm;
+
+  /// M5.4 checkout: The cashier manually confirmed the noncash payment.
+  ///
+  /// In en, this message translates to:
+  /// **'The cashier manually confirmed the noncash payment.'**
+  String get m54ManualPaymentRecorded;
+
+  /// M5.4 checkout: Total before rounding
+  ///
+  /// In en, this message translates to:
+  /// **'Total before rounding'**
+  String get m54BeforeRounding;
+
+  /// M5.4 checkout: Cash rounding discount
+  ///
+  /// In en, this message translates to:
+  /// **'Cash rounding discount'**
+  String get m54CashRounding;
+
+  /// M5.4 checkout: Round down the cash portion when paid in full. Noncash amounts and outstanding debt stay unchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Round down the cash portion when paid in full. Noncash amounts and outstanding debt stay unchanged.'**
+  String get m54CashRoundingHelp;
+
+  /// M5.4 checkout: Rounding increment
+  ///
+  /// In en, this message translates to:
+  /// **'Rounding increment'**
+  String get m54RoundingStep;
+
+  /// M5.4 checkout: Off
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get m54RoundingOff;
+
+  /// Undo the last cash piece button action
+  ///
+  /// In en, this message translates to:
+  /// **'Undo piece change'**
+  String get m54UndoPieces;
+
+  /// Show manual denomination count inputs
+  ///
+  /// In en, this message translates to:
+  /// **'Enter counts manually'**
+  String get m54ManualPieces;
+
+  /// M5.4 checkout: Net cash
+  ///
+  /// In en, this message translates to:
+  /// **'Net cash'**
+  String get m54NetCash;
+
+  /// Browse committed sales for a shop calendar date
+  ///
+  /// In en, this message translates to:
+  /// **'Find by sale date'**
+  String get m54ReturnByDate;
+
   /// A receipt QR was scanned in a product field
   ///
   /// In en, this message translates to:

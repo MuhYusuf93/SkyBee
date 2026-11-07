@@ -5368,6 +5368,77 @@ class AppLocalizationsEn extends AppLocalizations {
       'Choose a readable static image, at least 64 pixels per side and no larger than 4 MiB.';
 
   @override
+  String get m54RoundingChanged =>
+      'The rounding rule or discount changed. Review the total and change.';
+
+  @override
+  String get m54RoundingInvalid =>
+      'Choose a rounding increment available for this currency.';
+
+  @override
+  String get m54NonCashUnconfirmed =>
+      'Check and confirm the noncash payment again.';
+
+  @override
+  String get m54NonCashTooLarge => 'Noncash payment cannot exceed the bill.';
+
+  @override
+  String get m54UseSaleReturn =>
+      'Use Sales returns for transactions with a noncash payment.';
+
+  @override
+  String get m54CheckoutMethod => 'Payment method';
+
+  @override
+  String get m54PayQris => 'QRIS + optional cash';
+
+  @override
+  String get m54PayTransfer => 'Bank transfer + optional cash';
+
+  @override
+  String get m54NonCashAmount => 'Noncash amount';
+
+  @override
+  String get m54ManualPaymentNotice =>
+      'Payment is checked manually by the cashier.';
+
+  @override
+  String get m54ManualPaymentConfirm =>
+      'I have checked and received the payment.';
+
+  @override
+  String get m54ManualPaymentRecorded =>
+      'The cashier manually confirmed the noncash payment.';
+
+  @override
+  String get m54BeforeRounding => 'Total before rounding';
+
+  @override
+  String get m54CashRounding => 'Cash rounding discount';
+
+  @override
+  String get m54CashRoundingHelp =>
+      'Round down the cash portion when paid in full. Noncash amounts and outstanding debt stay unchanged.';
+
+  @override
+  String get m54RoundingStep => 'Rounding increment';
+
+  @override
+  String get m54RoundingOff => 'Off';
+
+  @override
+  String get m54UndoPieces => 'Undo piece change';
+
+  @override
+  String get m54ManualPieces => 'Enter counts manually';
+
+  @override
+  String get m54NetCash => 'Net cash';
+
+  @override
+  String get m54ReturnByDate => 'Find by sale date';
+
+  @override
   String get m54SaleReceiptOnly => 'Use this receipt code in Sales returns.';
 
   @override

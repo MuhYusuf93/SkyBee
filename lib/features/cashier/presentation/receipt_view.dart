@@ -89,7 +89,24 @@ class ReceiptView extends StatelessWidget {
               ],
             ),
           ),
+        if (receipt.roundingMinor > 0) ...[
+          Text(
+            '${tr(context, 'm54BeforeRounding')} ${amount(receipt.total.amountMinor + receipt.roundingMinor)}',
+          ),
+          Text(
+            '${tr(context, 'm54CashRounding')} ${amount(receipt.roundingMinor)}',
+          ),
+        ],
         Text('${tr(context, 'total')}: ${amount(receipt.total.amountMinor)}'),
+        if (receipt.nonCash case final external?) ...[
+          Text(
+            '${tr(context, 'm54NetCash')} ${amount(receipt.cashTender?.applied.amountMinor ?? 0)}',
+          ),
+          Text(
+            '${tr(context, external.method.name == 'qris' ? 'm54PayQris' : 'm54PayTransfer')} ${amount(external.amount.amountMinor)}',
+          ),
+          Text(tr(context, 'm54ManualPaymentRecorded')),
+        ],
         if (receipt.cashTender != null) ...[
           Text(
             '${tr(context, 'm51Tender')}: ${amount(receipt.cashTender!.received.amountMinor)}',

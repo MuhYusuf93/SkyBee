@@ -124,7 +124,9 @@ class _DetailBody extends StatelessWidget {
                         ),
                         child: Text(tr(context, 'm53CashSaleAudit')),
                       ),
-                      if (!receipt.reversed)
+                      if (!receipt.reversed && receipt.nonCash != null)
+                        Text(tr(context, 'm54UseSaleReturn'))
+                      else if (!receipt.reversed)
                         FilledButton(
                           onPressed: state.loading
                               ? null

@@ -2,7 +2,9 @@ import 'package:sqflite/sqflite.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../data/database/database_coordinator.dart';
+import '../../../core/pagination/page.dart';
 import '../../management/application/management_service.dart';
+import '../domain/cashier_models.dart';
 import '../domain/sale_return_models.dart';
 import 'cashier_store.dart';
 import 'sale_receipt_codes.dart';
@@ -46,6 +48,61 @@ final class SaleReturnsService {
 
   static const _returned = '''COALESCE((SELECT SUM(x.quantity)
     FROM sale_return_items x WHERE x.sale_transaction_item_id=i.id),0)''';
+
+  /// A date is resolved in the shop's calendar. This is a bounded lookup of
+  /// committed documents for old receipts whose printed reference is missing.
+  Future<Page<SaleReturnReference, SaleReturnDayCursor>> byDay(
+    CalendarDate day, {
+    SaleReturnDayCursor? after,
+  }) => store.read(database, (db) async {
+    if (after != null &&
+        (after.day != day.iso || after.revision != database.revision)) {
+      throw const AppError('m4DatasetChanged');
+    }
+    final zone = (await store.settings(db))['time_zone'] as String;
+    final start = store.clock.dayStart(day, zone).milliseconds;
+    final end = store.clock.dayStart(day, zone, nextDay: true).milliseconds;
+    final rows = await db.rawQuery(
+      '''SELECT s.id,s.created_at,s.total_rupiah,s.currency_code,s.currency_scale
+        FROM sale_transactions s JOIN cart_drafts d ON d.id=s.draft_id AND d.state='completed'
+        AND d.completed_sale_transaction_id=s.id
+        WHERE s.created_at>=? AND s.created_at<? AND NOT EXISTS
+          (SELECT 1 FROM sale_transaction_reversals r WHERE r.sale_transaction_id=s.id)
+        ${after == null ? '' : 'AND (s.created_at,s.id COLLATE BINARY)<(?,?)'}
+        ORDER BY s.created_at DESC,s.id COLLATE BINARY DESC LIMIT 26''',
+      [
+        start,
+        end,
+        if (after != null) ...[after.createdAt, after.sale.value],
+      ],
+    );
+    final page = rows.take(25);
+    final items = page
+        .map(
+          (row) => (
+            number: SaleReceipt.numberFor(
+              EntityId(row['id'] as String),
+              row['created_at'] as int,
+            ),
+            createdAt: row['created_at'] as int,
+            timeZone: zone,
+            total: _money(store.policy(row), row['total_rupiah'] as int),
+          ),
+        )
+        .toList();
+    final last = page.lastOrNull;
+    return Page(
+      items: items,
+      nextCursor: rows.length <= 25 || last == null
+          ? null
+          : (
+              day: day.iso,
+              createdAt: last['created_at'] as int,
+              sale: EntityId(last['id'] as String),
+              revision: database.revision,
+            ),
+    );
+  });
 
   Future<SaleReturnSource> lookup(String reference) =>
       store.read(database, (db) async {

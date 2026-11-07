@@ -5389,6 +5389,78 @@ class AppLocalizationsId extends AppLocalizations {
       'Pilih gambar statis yang dapat dibuka, minimal 64 piksel per sisi dan maksimum 4 MiB.';
 
   @override
+  String get m54RoundingChanged =>
+      'Aturan atau potongan pembulatan berubah. Tinjau kembali total dan kembalian.';
+
+  @override
+  String get m54RoundingInvalid =>
+      'Pilih kelipatan pembulatan yang tersedia untuk mata uang ini.';
+
+  @override
+  String get m54NonCashUnconfirmed =>
+      'Periksa dan konfirmasi kembali pembayaran nontunai.';
+
+  @override
+  String get m54NonCashTooLarge =>
+      'Pembayaran nontunai tidak boleh melebihi tagihan.';
+
+  @override
+  String get m54UseSaleReturn =>
+      'Gunakan Retur penjualan untuk transaksi dengan pembayaran nontunai.';
+
+  @override
+  String get m54CheckoutMethod => 'Metode pembayaran';
+
+  @override
+  String get m54PayQris => 'QRIS + tunai opsional';
+
+  @override
+  String get m54PayTransfer => 'Transfer + tunai opsional';
+
+  @override
+  String get m54NonCashAmount => 'Nominal nontunai';
+
+  @override
+  String get m54ManualPaymentNotice =>
+      'Pembayaran diperiksa manual oleh kasir.';
+
+  @override
+  String get m54ManualPaymentConfirm =>
+      'Pembayaran sudah saya periksa dan terima.';
+
+  @override
+  String get m54ManualPaymentRecorded =>
+      'Pembayaran nontunai dikonfirmasi manual oleh kasir.';
+
+  @override
+  String get m54BeforeRounding => 'Tagihan sebelum pembulatan';
+
+  @override
+  String get m54CashRounding => 'Potongan pembulatan tunai';
+
+  @override
+  String get m54CashRoundingHelp =>
+      'Potongan membulatkan ke bawah bagian tunai yang dilunasi. Nominal nontunai dan piutang tetap utuh.';
+
+  @override
+  String get m54RoundingStep => 'Kelipatan pembulatan';
+
+  @override
+  String get m54RoundingOff => 'Nonaktif';
+
+  @override
+  String get m54UndoPieces => 'Urungkan perubahan pecahan';
+
+  @override
+  String get m54ManualPieces => 'Ketik jumlah per pecahan';
+
+  @override
+  String get m54NetCash => 'Tunai bersih';
+
+  @override
+  String get m54ReturnByDate => 'Cari menurut tanggal penjualan';
+
+  @override
   String get m54SaleReceiptOnly => 'Gunakan kode struk ini di Retur penjualan.';
 
   @override

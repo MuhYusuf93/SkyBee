@@ -8,9 +8,9 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | --- | --- | --- | --- |
 | 1 | Adapter kamera tap-focus/crop/orientasi | supported/fixed-focus, Poco fisik | Area fokus kamera belakang dan fallback terkompilasi pada APK fixture; optik fisik belum diuji |
 | 2 | Counter target persisten3/5/8, owner unlock | paralel/restart/rotasi/restore/clock | Implemented, host4+ownerUI PASS; native4+ownerUI Poco/DV PASS; reboot/rotasi lengkap pending |
-| 3 | Retur sale/garansi/karantina/refund | 5→1→4, debt-first, race/reversal | Host lulus untuk retur parsial, refund tunai/eksternal dan garansi. Alur karantina lanjutan, lookup tanggal, cetak fisik dan native terbuka. |
+| 3 | Retur sale/garansi/karantina/refund | 5→1→4, debt-first, race/reversal | Host lulus untuk retur parsial, refund tunai/eksternal dan garansi. Lookup tanggal penjualan lama lulus host. Alur karantina lanjutan, cetak fisik dan native terbuka. |
 | 4 | Grafik+tabel laba kotor | bucket/timezone/unknown/export | Pending |
-| 5 | QRIS statis konfirmasi manual/split | amount invalidation/cash-only drawer | Penyimpanan gambar, otorisasi dan validasi host lulus. Bayar split dan konfirmasi nominal masih terbuka. |
+| 5 | QRIS statis konfirmasi manual/split | amount invalidation/cash-only drawer | Host lulus untuk penyimpanan gambar, split, invalidasi nominal, dan laci khusus tunai. Uji perangkat terbuka. |
 | 6 | Foto nota terenkripsi | EXIF/AEAD/orphan/portable restore | Pending |
 | 7 | Recovery24kata/PDF1halaman/QR | vektor BIP39/legacy/render/decode | Codec/UI/copy dan HKDF host PASS; PDF/share/scan khusus belum |
 | 8 | Field invalid pertama | form nyata ID/EN320px/text2 | Host UI2 dan native Poco/DV PASS |
@@ -20,8 +20,8 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 12 | Member nama+HP | normalized phone/nama sama | Pending |
 | 13 | Pilihan Code128/QR label | dots/quiet zone/58/80/profil | Pending |
 | 14 | Opname manual+scan | replacement/add/NULL0/conflict/batch | Pending |
-| 15 | Tombol pecahan kembalian | plus/minus/undo/currency/commit | Pending |
-| 16 | Potongan pembulatan tunai | 86750→86500/split/debt/return | Pending |
+| 15 | Tombol pecahan kembalian | plus/minus/undo/currency/commit | Host lulus pada editor pecahan ID/EN dan pecahan EUR. Native terbuka. |
+| 16 | Potongan pembulatan tunai | 86750→86500/split/debt/return | Host lulus untuk alokasi potongan, QRIS Rp50.000, kas bersih Rp36.500, piutang dan retur. Native terbuka. |
 | 17 | Riwayat member | sale/return/payment/date/seek | Pending |
 | 18 | Prioritas gate sesuai route | management-only resume/cashier Back | Implemented, host gate/dirty/back PASS; native7 Poco/DV PASS; OEM lengkap pending |
 | 19 | Satu tombol bahasa promo | ID/EN/draft | Host tab/form satu kontrol terlihat dan draft bertahan setelah perubahan bahasa |

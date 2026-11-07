@@ -9,6 +9,8 @@ import '../../../core/domain/app_error.dart';
 import '../../../core/domain/contact_validation.dart';
 import '../../../core/domain/value_types.dart';
 import '../domain/cash_tender.dart';
+import '../domain/checkout_settlement.dart';
+import '../application/cash_rounding_service.dart';
 import '../application/quick_cash_service.dart';
 import '../application/cart_service.dart';
 import '../application/checkout_service.dart';
@@ -24,6 +26,7 @@ final class CheckoutProvider extends ChangeNotifier {
     this.quickCash,
     this.phoneRegion,
     this.drawer,
+    this.roundingService,
   }) {
     final input = cart.snapshot!.input;
     digits = input.tenderDetails == null
@@ -42,6 +45,8 @@ final class CheckoutProvider extends ChangeNotifier {
     useMember = input.memberOptIn ?? input.memberIntent;
     drawerSessionId = input.drawerSessionId;
     changePieces = input.changePieces;
+    nonCash = input.nonCash;
+    nonCashMethod = nonCash?.method;
     drawerReady = drawer == null || service.database.schemaVersion < 24;
     _updateMode();
     _savedInputKey = _inputKey(this.input);
@@ -55,6 +60,23 @@ final class CheckoutProvider extends ChangeNotifier {
   final QuickCashService? quickCash;
   final Future<String> Function()? phoneRegion;
   final CashDrawerService? drawer;
+  final CashRoundingService? roundingService;
+  CashRoundingPolicy? rounding;
+  NonCashTender? nonCash;
+  NonCashMethod? nonCashMethod;
+  bool get roundingReady => roundingService == null || rounding != null;
+  bool get externalOnly => nonCash != null && tender?.amountMinor == 0;
+  bool get nonCashReady =>
+      nonCashMethod == null ||
+      (nonCash?.matches(
+                cart.snapshot!.id,
+                cart.snapshot!.revision,
+                cart.snapshot!.total.amountMinor,
+                calculation?.total.amountMinor ?? -1,
+                rounding?.revision ?? 0,
+              ) ??
+              false) &&
+          calculation != null;
   CashDrawerContext? drawerContext;
   bool drawerReady = true;
   EntityId? drawerSessionId;
@@ -92,6 +114,7 @@ final class CheckoutProvider extends ChangeNotifier {
 
   bool get needsSessionReview =>
       cashRecordingActive &&
+      !externalOnly &&
       (drawerContext?.session == null ||
           drawerContext!.session!.closed ||
           drawerSessionId != drawerContext!.session!.id ||
@@ -118,8 +141,22 @@ final class CheckoutProvider extends ChangeNotifier {
   List<int> amounts = [];
   Future<void> _saveTail = Future.value();
   Money? get tender => digits.money;
-  CashTender? get settlement =>
-      tender == null ? null : CashTender(cart.snapshot!.total, tender!);
+  CheckoutSettlement? get calculation {
+    final received = tender;
+    if (received == null) return null;
+    try {
+      return CheckoutSettlement.calculate(
+        cart.snapshot!.total,
+        received,
+        nonCash: nonCash?.amount,
+        step: rounding?.step ?? 0,
+      );
+    } on AppError {
+      return null;
+    }
+  }
+
+  CashTender? get settlement => calculation?.cash;
   bool get needsCustomer =>
       settlement != null && settlement!.debt.amountMinor > 0;
   bool useMember = false, selectedNeedsReview = false;
@@ -139,6 +176,8 @@ final class CheckoutProvider extends ChangeNotifier {
     value.memberOptIn,
     value.drawerSessionId?.value,
     value.changePieces?.encode(),
+    value.nonCash?.method.name,
+    value.nonCash?.amount.amountMinor,
     value.customer.id?.value,
     value.customer.name.trim(),
     value.customer.phone.trim(),
@@ -156,8 +195,13 @@ final class CheckoutProvider extends ChangeNotifier {
     quickMode: quickMode,
     memberIntent: service.database.schemaVersion >= 22 && needsMember,
     memberOptIn: useMember,
-    drawerSessionId: drawerSessionId,
-    changePieces: changePieces,
+    drawerSessionId: externalOnly ? null : drawerSessionId,
+    changePieces: externalOnly ? null : changePieces,
+    nonCash: nonCash,
+    roundingRevision: (rounding?.step ?? 0) > 0 ? rounding!.revision : null,
+    roundingMinor: (rounding?.step ?? 0) > 0
+        ? calculation?.rounding.amountMinor
+        : null,
     customer: CustomerChoice(
       id: selected,
       name: name.text,
@@ -176,8 +220,58 @@ final class CheckoutProvider extends ChangeNotifier {
       error = 'm3OperationFailed';
     }
     await loadDrawerContext();
+    await loadRounding();
     amounts = next;
     if (!_disposed) notifyListeners();
+  }
+
+  Future<void> loadRounding() async {
+    if (roundingService == null || _disposed) return;
+    try {
+      final next = await roundingService!.forCashier();
+      if (_disposed) return;
+      rounding = next;
+      if (error == 'm54RoundingChanged') error = null;
+      _updateMode();
+    } catch (e) {
+      if (_disposed) return;
+      rounding = null;
+      error = safeError(e);
+    }
+    if (!_disposed) notifyListeners();
+  }
+
+  void editNonCash(NonCashMethod? method, Money? amount) {
+    if (submitting) return;
+    nonCashMethod = method;
+    nonCash = method == null || amount == null || amount.amountMinor == 0
+        ? null
+        : NonCashTender(method, amount);
+    if (nonCash != null && tender == null) {
+      final currency = cart.snapshot!.currency;
+      digits.amount(Money(0, currency.code, currency.scale));
+    }
+    _updateMode();
+    error = null;
+    persist();
+  }
+
+  void confirmNonCash(bool confirmed) {
+    final value = nonCash;
+    if (submitting || value == null || calculation == null || !roundingReady) {
+      return;
+    }
+    final snapshot = cart.snapshot!;
+    nonCash = confirmed
+        ? value.confirm(
+            snapshot.id,
+            snapshot.revision,
+            snapshot.total.amountMinor,
+            calculation!.total.amountMinor,
+            rounding?.revision ?? 0,
+          )
+        : NonCashTender(value.method, value.amount);
+    notifyListeners();
   }
 
   Future<void> loadDrawerContext() async {
@@ -284,6 +378,10 @@ final class CheckoutProvider extends ChangeNotifier {
     }
     try {
       digits.key(value);
+      if (value == 'clear' && nonCash != null) {
+        final currency = cart.snapshot!.currency;
+        digits.amount(Money(0, currency.code, currency.scale));
+      }
       error = null;
       _updateMode();
       await persist();
@@ -294,9 +392,13 @@ final class CheckoutProvider extends ChangeNotifier {
   }
 
   void _updateMode() {
+    final external = nonCash;
+    if (roundingReady && external?.reviewed != null && !nonCashReady) {
+      nonCash = NonCashTender(external!.method, external.amount);
+    }
     mode = tender == null || !needsCustomer
         ? PaymentMode.paid
-        : tender!.amountMinor == 0
+        : calculation!.paid.amountMinor == 0
         ? PaymentMode.debt
         : PaymentMode.partial;
   }
@@ -322,7 +424,19 @@ final class CheckoutProvider extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    digits.exact(cart.snapshot!.total);
+    if ((nonCash?.amount.amountMinor ?? 0) > cart.snapshot!.total.amountMinor) {
+      error = 'm54NonCashTooLarge';
+      notifyListeners();
+      return;
+    }
+    final subtotal = cart.snapshot!.total;
+    final target = CheckoutSettlement.calculate(
+      subtotal,
+      subtotal,
+      nonCash: nonCash?.amount,
+      step: rounding?.step ?? 0,
+    ).cash.applied;
+    digits.exact(target);
     _updateMode();
     error = null;
     await persist();
@@ -377,8 +491,11 @@ final class CheckoutProvider extends ChangeNotifier {
   bool _settingCustomer = false;
   String? error;
   void selectMode(PaymentMode value) {
+    if (submitting) return;
     mode = value;
     if (value == PaymentMode.debt) {
+      nonCashMethod = null;
+      nonCash = null;
       receive(
         Money(0, cart.snapshot!.currency.code, cart.snapshot!.currency.scale),
       );
@@ -429,6 +546,8 @@ final class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
     try {
       if (!drawerReady) throw const AppError('m3OperationFailed');
+      if (!roundingReady) throw const AppError('m54RoundingChanged');
+      if (!nonCashReady) throw const AppError('m54NonCashUnconfirmed');
       await cart.beginCheckout();
       if (generation != service.database.generation) {
         throw const AppError('m3OperationFailed');

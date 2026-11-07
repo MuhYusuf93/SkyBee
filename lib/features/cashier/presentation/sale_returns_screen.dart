@@ -35,6 +35,9 @@ class _SaleReturnsScreenState extends State<SaleReturnsScreen> {
   SaleReturnQuote? quote;
   SaleReturnReceipt? receipt;
   SaleRefundCursor? cursor;
+  SaleReturnDayCursor? dayCursor;
+  CalendarDate? day;
+  final dayResults = <SaleReturnReference>[];
   String? error;
   String operation = const IdGenerator().next().value;
   int draft = 0;
@@ -75,17 +78,53 @@ class _SaleReturnsScreenState extends State<SaleReturnsScreen> {
     draft++;
   }
 
-  Future<void> lookup() async {
-    final code = reference.text.trim();
+  Future<void> lookup([String? selected]) async {
+    final code = selected ?? reference.text.trim();
     if (busy || code.isEmpty) return;
     FocusManager.instance.primaryFocus?.unfocus();
     final app = context.read<AppServices>();
     await _run(() async {
       final result = await app.saleReturns.lookup(code);
       if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
-        setState(() => source = result);
+        setState(() {
+          source = result;
+          reference.text = result.number;
+          dayResults.clear();
+          dayCursor = null;
+          day = null;
+        });
         await _loadPending(app, result.id);
       }
+    });
+  }
+
+  Future<void> findDay() async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: day == null ? now : DateTime.parse(day!.iso),
+      firstDate: DateTime(1970),
+      lastDate: DateTime(9999),
+    );
+    if (picked == null || !mounted) return;
+    final date = CalendarDate(picked.toIso8601String().split('T').first);
+    await _dayPage(date);
+  }
+
+  Future<void> _dayPage(CalendarDate date, {bool append = false}) async {
+    final app = context.read<AppServices>();
+    await _run(() async {
+      final page = await app.saleReturns.byDay(
+        date,
+        after: append ? dayCursor : null,
+      );
+      if (!mounted) return;
+      setState(() {
+        day = date;
+        if (!append) dayResults.clear();
+        dayResults.addAll(page.items);
+        dayCursor = page.nextCursor;
+      });
     });
   }
 
@@ -353,6 +392,26 @@ class _SaleReturnsScreenState extends State<SaleReturnsScreen> {
                   icon: const Icon(Icons.qr_code_scanner),
                   label: Text(tr(context, 'm53CameraScan')),
                 ),
+                TextButton(
+                  onPressed: busy ? null : findDay,
+                  child: Text(tr(context, 'm54ReturnByDate')),
+                ),
+                if (day != null) Text(day!.iso),
+                if (day != null && dayResults.isEmpty)
+                  Text(tr(context, 'noHistoryYet')),
+                for (final result in dayResults)
+                  ListTile(
+                    title: Text(result.number),
+                    subtitle: Text(
+                      '${clock.displayTime(result.createdAt, result.timeZone)} · ${money(result.total)}',
+                    ),
+                    onTap: busy ? null : () => lookup(result.number),
+                  ),
+                if (dayCursor != null)
+                  TextButton(
+                    onPressed: busy ? null : () => _dayPage(day!, append: true),
+                    child: Text(tr(context, 'm3LoadMore')),
+                  ),
               ] else ...[
                 Text(
                   '${sale.number} · ${clock.displayTime(sale.createdAt, sale.timeZone)}',
