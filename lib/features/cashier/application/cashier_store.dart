@@ -12,12 +12,24 @@ import '../../../core/time/store_clock.dart';
 import '../domain/cashier_models.dart';
 import '../domain/cash_tender.dart';
 import '../domain/quantity_promotion.dart';
+import 'sale_receipt_codes.dart';
 
 /// Shared SQL primitives, not screen state. All callers use their own dbTxn.
 final class CashierStore {
   CashierStore(this.clock, {this.cashierAccess});
   final CashierLockService? cashierAccess;
   final StoreClock clock;
+
+  /// Read protected sale facts with the same before/after lock proof as writes.
+  Future<T> read<T>(
+    DatabaseCoordinator database,
+    Future<T> Function(DatabaseExecutor db) operation,
+  ) => database.read((db) async {
+    final proof = await CashierLockService.beginOn(db, cashierAccess);
+    final result = await operation(db);
+    await CashierLockService.endOn(db, proof);
+    return result;
+  });
 
   /// Validate one cashier operation before and after all awaited SQL/stages.
   /// Lock/reconfigure while a draft is committing causes a full rollback.
@@ -338,20 +350,31 @@ final class CashierStore {
     });
   }
 
-  /// Reversals are anticipated by this derived balance; no balance is editable.
-  static const debtSql = '''SELECT s.*,
-    COALESCE((SELECT SUM(CASE WHEN p.kind='receipt' THEN a.amount_rupiah ELSE -a.amount_rupiah END)
-      FROM payment_allocations a JOIN payments p ON p.id=a.payment_id WHERE a.sale_transaction_id=s.id),0) AS paid,
-    s.total_rupiah-COALESCE((SELECT SUM(CASE WHEN p.kind='receipt' THEN a.amount_rupiah ELSE -a.amount_rupiah END)
-      FROM payment_allocations a JOIN payments p ON p.id=a.payment_id WHERE a.sale_transaction_id=s.id),0) AS outstanding
-    FROM sale_transactions s WHERE NOT EXISTS(SELECT 1 FROM sale_transaction_reversals r WHERE r.sale_transaction_id=s.id)''';
+  static const _paid = '''COALESCE((SELECT SUM(CASE WHEN p.kind='receipt' THEN
+    a.amount_rupiah ELSE -a.amount_rupiah END) FROM payment_allocations a
+    JOIN payments p ON p.id=a.payment_id WHERE a.sale_transaction_id=s.id),0)''';
+
+  /// Debt reduction is a separate fact. It changes the balance without
+  /// rewriting how much the customer actually paid on the original sale.
+  static String _balancesSql(int schema) {
+    final adjustment = schema < 41
+        ? '0'
+        : '''COALESCE((SELECT SUM(r.debt_reduction_minor)
+      FROM sale_returns r WHERE r.sale_transaction_id=s.id),0)''';
+    return '''SELECT s.*, $_paid AS paid, $adjustment AS debt_reduction,
+      s.total_rupiah-$_paid-$adjustment AS outstanding FROM sale_transactions s''';
+  }
+
+  static String debtSqlFor(int schema) =>
+      '''${_balancesSql(schema)} WHERE NOT EXISTS(
+    SELECT 1 FROM sale_transaction_reversals r WHERE r.sale_transaction_id=s.id)''';
 
   Future<SaleReceipt> receipt(DatabaseExecutor db, EntityId id) async {
     final schema =
         (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
     // Recovered checkout retries and protected history must still read a
     // cancelled original. It never becomes a new sale or an active debt.
-    final base = debtSql.substring(0, debtSql.indexOf(' WHERE NOT EXISTS'));
+    final base = _balancesSql(schema);
     final rows = await db.rawQuery('$base WHERE s.id=?', [id.value]);
     if (rows.isEmpty) throw const AppError('m3SaleUnavailable');
     final row = rows.single;
@@ -378,6 +401,12 @@ final class CashierStore {
           'product_note_snapshot',
         ],
         if (schema >= 25) 'size_ons_milli_snapshot',
+        if (schema >= 39) ...[
+          'warranty_months_snapshot',
+          'warranty_started_on',
+          'warranty_until',
+          'warranty_time_zone',
+        ],
         if (schema >= 14) ...[
           'promo_snapshot_json',
           'gross_minor',
@@ -397,6 +426,8 @@ final class CashierStore {
             whereArgs: [id.value],
           );
     return SaleReceipt(
+      debtReductionMinor: row['debt_reduction'] as int,
+      code: schema >= 40 ? await SaleReceiptCodes.readOn(db, id) : null,
       cashTender: tenderRows.isEmpty
           ? null
           : CashTender(

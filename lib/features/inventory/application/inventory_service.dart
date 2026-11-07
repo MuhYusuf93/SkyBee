@@ -1,6 +1,7 @@
 import 'dart:convert';
 import '../../../data/repositories/product_code_resolver.dart';
 import '../../../core/security/recovery_mnemonic.dart';
+import '../../../core/domain/sale_receipt_code.dart';
 import '../../suppliers/application/supplier_service.dart';
 import '../../suppliers/domain/supplier_invoice.dart';
 import '../../../core/domain/contact_validation.dart';
@@ -23,6 +24,7 @@ import '../domain/purchase_cost_hint.dart';
 import '../domain/warehouse_filter.dart';
 import '../domain/stock_input.dart';
 import '../domain/product_entry_rules.dart';
+import '../../../core/domain/warranty_term.dart';
 import '../domain/change_record.dart';
 import '../../settings/application/settings_service.dart';
 import '../../settings/domain/store_feature_policy.dart';
@@ -239,6 +241,10 @@ final class InventoryService {
         RecoveryMnemonic.isRecoveryQr(barcode ?? '')) {
       throw const AppError('m54RecoveryOnly');
     }
+    if (SaleReceiptCode.isSaleQr(sku) ||
+        SaleReceiptCode.isSaleQr(barcode ?? '')) {
+      throw const AppError('m54SaleReceiptOnly');
+    }
     final conflicts = await db.query(
       'products',
       columns: ['id', 'is_deleted'],
@@ -289,6 +295,13 @@ final class InventoryService {
     };
   }
 
+  Future<void> _requireWarrantyOn(DatabaseExecutor db, int? months) async {
+    WarrantyTerm.validate(months);
+    if (!(await SettingsService.policyOn(db)).warranty) {
+      throw const AppError('m54WarrantyDisabled');
+    }
+  }
+
   Future<void> _aliases(
     DatabaseExecutor db,
     EntityId id,
@@ -329,6 +342,9 @@ final class InventoryService {
             initialPurchase != null ||
             unitCost != null)) {
       throw const AppError('m31ConflictingInput');
+    }
+    if (input.warrantyMonths != null) {
+      await _requireWarrantyOn(dbTxn, input.warrantyMonths);
     }
     var startingQuantity = initialInput?.quantityBase ?? initialQuantity ?? 0;
     final policy = await SettingsService.policyOn(dbTxn);
@@ -388,6 +404,7 @@ final class InventoryService {
     await dbTxn.insert('products', {
       'id': id.value,
       ...await _input(dbTxn, input),
+      if (input.warrantyMonths != null) 'warranty_months': input.warrantyMonths,
       if (database.schemaVersion >= 14) ...{
         'stock_tracking_enabled': stockTracking ? 1 : 0,
         'stock_quantity': stockTracking ? 0 : 999,
@@ -452,6 +469,7 @@ final class InventoryService {
     bool suppressLowPriceWarning = false,
     CalendarDate? referenceExpiry,
     bool updateReferenceExpiry = false,
+    bool clearWarranty = false,
   }) => _write((dbTxn) async {
     final old = await _product(dbTxn, id);
     if (old['expiry_enabled'] == 1 &&
@@ -470,6 +488,13 @@ final class InventoryService {
       throw const AppError('productChangedReloadBeforeSaving');
     }
     final values = await _input(dbTxn, input, exclude: id);
+    if (input.warrantyMonths != null || clearWarranty) {
+      if (input.warrantyMonths != null && clearWarranty) {
+        throw const AppError('m31ConflictingInput');
+      }
+      await _requireWarrantyOn(dbTxn, input.warrantyMonths);
+      values['warranty_months'] = input.warrantyMonths;
+    }
     if (old['stock_tracking_enabled'] != 0 &&
         (old['stock_quantity'] as int) > 0) {
       final errors = masterPriceErrors(

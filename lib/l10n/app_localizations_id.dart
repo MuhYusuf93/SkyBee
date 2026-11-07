@@ -5225,6 +5225,177 @@ class AppLocalizationsId extends AppLocalizations {
   String get m54FieldInvalid => 'Periksa nilai pada kolom ini.';
 
   @override
+  String get m54WarrantyFeature => 'Garansi produk';
+
+  @override
+  String get m54WarrantyHelp =>
+      'Catat masa garansi produk dalam bulan dan cetak batasnya pada struk penjualan baru.';
+
+  @override
+  String get m54WarrantyMonths => 'Masa garansi (bulan, opsional)';
+
+  @override
+  String get m54WarrantyMonthsInvalid =>
+      'Masukkan 1–1200 bulan atau kosongkan.';
+
+  @override
+  String get m54ReceiptCodeFormat => 'Format kode struk';
+
+  @override
+  String get m54ReceiptBarcode => 'Barcode 1D (Code 128)';
+
+  @override
+  String get m54ReceiptQr => 'Kode QR 2D';
+
+  @override
+  String get m54ReceiptCodeHelp =>
+      'Code 128 perlu minimal 352 dot cetak. Profil yang lebih sempit mencetak kode QR. Referensi struk selalu bisa diketik manual.';
+
+  @override
+  String get m54ReturnQuantity =>
+      'Pilih jumlah dalam batas unit yang masih dapat diretur.';
+
+  @override
+  String get m54ReturnReason => 'Masukkan alasan retur (1–500 karakter).';
+
+  @override
+  String get m54ReturnChanged =>
+      'Saldo penjualan atau sisa unit berubah. Tinjau ulang retur.';
+
+  @override
+  String get m54ReturnQuarantineRequired =>
+      'Barang ini tidak dapat kembali ke stok layak jual. Pilih karantina.';
+
+  @override
+  String get m54ReturnDependent =>
+      'Retur sudah tercatat. Penjualan asal dan pembayarannya tidak dapat dibatalkan di sini.';
+
+  @override
+  String get m54SaleReturnStock => 'Retur penjualan';
+
+  @override
+  String get m54RefundUnavailable =>
+      'Retur ini tidak memiliki pengembalian dana tertunda.';
+
+  @override
+  String get m54RefundSettled => 'Refund dibayarkan';
+
+  @override
+  String get m54ReturnConditionRequired => 'Pilih kondisi barang yang diretur.';
+
+  @override
+  String get m54ReturnCondition => 'Kondisi barang';
+
+  @override
+  String get m54ReturnGood => 'Layak jual';
+
+  @override
+  String get m54ReturnQuarantine => 'Rusak / Karantina';
+
+  @override
+  String get m54ReturnSold => 'Terjual';
+
+  @override
+  String get m54ReturnRemaining => 'Bisa diretur';
+
+  @override
+  String get m54WarrantyUntil => 'Garansi s/d';
+
+  @override
+  String get m54ReturnQuantityLabel => 'Jumlah diretur';
+
+  @override
+  String get m54ReturnLookup => 'Kode atau referensi struk';
+
+  @override
+  String get m54ReturnFind => 'Cari penjualan';
+
+  @override
+  String get m54ReturnSourceFound => 'Penjualan asal ditemukan.';
+
+  @override
+  String get m54ReturnSaved => 'Dokumen retur tersimpan';
+
+  @override
+  String get m54ReturnDebtReduction => 'Pengurangan piutang';
+
+  @override
+  String get m54ReturnReasonLabel => 'Alasan retur';
+
+  @override
+  String get m54ReturnReview => 'Tinjau retur';
+
+  @override
+  String get m54ReturnAmount => 'Nilai retur';
+
+  @override
+  String get m54ReturnOwnerRequired =>
+      'Garansi sudah berakhir. Pemilik perlu menyetujui retur ini.';
+
+  @override
+  String get m54ReturnSave => 'Simpan retur';
+
+  @override
+  String get m54ReturnAnother => 'Cari struk lain';
+
+  @override
+  String get m54RefundPending => 'Menunggu pengembalian dana';
+
+  @override
+  String get m54RefundRecord => 'Catat pengembalian dana';
+
+  @override
+  String get m54RefundHelp =>
+      'Selesaikan pengembalian dana kepada pelanggan, lalu catat metode yang benar-benar dipakai.';
+
+  @override
+  String get m54RefundMethod => 'Metode pengembalian dana';
+
+  @override
+  String get m54RefundCash => 'Tunai';
+
+  @override
+  String get m54RefundQris => 'QRIS di luar aplikasi';
+
+  @override
+  String get m54RefundTransfer => 'Transfer di luar aplikasi';
+
+  @override
+  String get m54RefundConfirmed =>
+      'Saya sudah memberikan pengembalian dana ini kepada pelanggan.';
+
+  @override
+  String get m54QrisImageTitle => 'Gambar QRIS toko';
+
+  @override
+  String get m54QrisImageHelp =>
+      'Pilih gambar QRIS toko yang sudah Anda miliki. Seluruh gambar disimpan secara privat di database toko. Kasir tetap memeriksa pembayaran secara manual.';
+
+  @override
+  String get m54QrisImageMissing => 'Gambar QRIS belum diatur.';
+
+  @override
+  String get m54QrisImageChoose => 'Pilih gambar QRIS';
+
+  @override
+  String get m54QrisImageRemove => 'Hapus gambar QRIS';
+
+  @override
+  String get m54QrisImageChanged =>
+      'Gambar aktif sudah berubah. Muat ulang pengaturan sebelum menyimpan.';
+
+  @override
+  String get m54QrisImageInvalid =>
+      'Pilih gambar statis yang dapat dibuka, minimal 64 piksel per sisi dan maksimum 4 MiB.';
+
+  @override
+  String get m54SaleReceiptOnly => 'Gunakan kode struk ini di Retur penjualan.';
+
+  @override
+  String get m54WarrantyDisabled =>
+      'Fitur garansi sedang nonaktif. Muat ulang formulir.';
+
+  @override
   String get m54RecoveryOnly =>
       'Gunakan QR rahasia ini hanya pada alur pemulihan toko.';
 

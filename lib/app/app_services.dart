@@ -17,9 +17,12 @@ import '../features/inventory/application/inventory_service.dart';
 import '../features/management/application/management_service.dart';
 import '../features/management/application/strong_biometrics.dart';
 import '../features/settings/application/settings_service.dart';
+import '../features/settings/application/qris_asset_service.dart';
 import '../features/cashier/application/cashier_store.dart';
 import '../features/cashier/application/cart_service.dart';
 import '../features/cashier/application/checkout_service.dart';
+import '../features/cashier/application/sale_returns_service.dart';
+import '../features/cashier/application/sale_refund_service.dart';
 import '../features/cashier/application/product_search_service.dart';
 import '../features/receivables/application/receivables_service.dart';
 import '../features/sale_history/application/sale_history_service.dart';
@@ -73,6 +76,14 @@ final class AppServices {
     cashDrawer = CashDrawerService(database, management, cashierStore);
     cashDrawerHistory = CashDrawerHistoryService(cashDrawer);
     checkout = CheckoutService(database, cashierStore);
+    saleReturns = SaleReturnsService(database, cashierStore, management);
+    saleRefunds = SaleRefundService(database, cashierStore);
+    qrisAssets = QrisAssetService(
+      database,
+      management,
+      cashierStore,
+      backupPlatform,
+    );
     search = ProductSearchService(database, cashierStore);
     receivables = ReceivablesService(database, cashierStore);
     members = MemberService(database, management, cashierStore);
@@ -120,6 +131,9 @@ final class AppServices {
   late final CashDrawerService cashDrawer;
   late final CashDrawerHistoryService cashDrawerHistory;
   late final CheckoutService checkout;
+  late final SaleReturnsService saleReturns;
+  late final SaleRefundService saleRefunds;
+  late final QrisAssetService qrisAssets;
   late final ProductSearchService search;
   late final ReceivablesService receivables;
   late final MemberService members;

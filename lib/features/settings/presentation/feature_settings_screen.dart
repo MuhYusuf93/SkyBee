@@ -24,7 +24,8 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
       packaging = true,
       cost = true,
       barcode = true,
-      expiry = true;
+      expiry = true,
+      warranty = false;
   bool busy = false;
   String? error;
   StoreFeaturePolicy get value => StoreFeaturePolicy(
@@ -35,6 +36,7 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
     packaging: packaging,
     barcode: barcode,
     expiry: expiry,
+    warranty: warranty,
     cost: cost,
     revision: baseline!.revision,
   );
@@ -45,6 +47,7 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
           packaging != baseline!.packaging ||
           barcode != baseline!.barcode ||
           expiry != baseline!.expiry ||
+          warranty != baseline!.warranty ||
           cost != baseline!.cost);
 
   @override
@@ -71,6 +74,7 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
         packaging = policy.packaging;
         barcode = policy.barcode;
         expiry = policy.expiry;
+        warranty = policy.warranty;
         cost = policy.cost;
       });
     } catch (e) {
@@ -132,6 +136,7 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
             cost: pending.cost,
             barcode: pending.barcode,
             expiry: pending.expiry,
+            warranty: pending.warranty,
             revision: pending.revision,
           ),
         );
@@ -236,6 +241,13 @@ class _FeatureSettingsScreenState extends State<FeatureSettingsScreen> {
                   expiry,
                   (v) => expiry = v,
                 ),
+                if (context.read<AppServices>().database.schemaVersion >= 39)
+                  _feature(
+                    'm54WarrantyFeature',
+                    'm54WarrantyHelp',
+                    warranty,
+                    (v) => warranty = v,
+                  ),
                 Text(tr(context, 'm53PreserveFeatures')),
                 const SizedBox(height: 16),
                 FilledButton(

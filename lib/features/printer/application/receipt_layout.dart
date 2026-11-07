@@ -8,6 +8,7 @@ import '../../../core/money/money_codec.dart';
 import '../../../core/money/money.dart';
 import '../domain/printer_profile.dart';
 import 'printer_raster_source.dart';
+import 'receipt_code_layout.dart';
 
 final class ReceiptLine {
   const ReceiptLine(
@@ -28,10 +29,11 @@ final class ReceiptLayout implements PrinterRasterSource {
   /// At 640 dots a complete command stays below 2 KiB. Small raster strips
   /// bound receiver pressure independently of its brand and the paper width.
   static const rasterRows = 24;
-  ReceiptLayout(this.profile, this.lines);
+  ReceiptLayout(this.profile, this.lines, {this.receiptCode});
   @override
   final PrinterProfile profile;
   final List<ReceiptLine> lines;
+  final ReceiptCodeLayout? receiptCode;
   double logoX(int width) =>
       profile.x +
       switch (profile.headerAlign) {
@@ -105,6 +107,42 @@ final class ReceiptLayout implements PrinterRasterSource {
       ),
     ]);
   }
+  static String _warrantyDate(String iso, bool indonesian) {
+    const monthsId = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'Mei',
+      'Jun',
+      'Jul',
+      'Agu',
+      'Sep',
+      'Okt',
+      'Nov',
+      'Des',
+    ];
+    const monthsEn = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    final date = DateTime.parse(iso);
+    final month = (indonesian ? monthsId : monthsEn)[date.month - 1];
+    return indonesian
+        ? '${date.day}-$month-${date.year}'
+        : '$month ${date.day}, ${date.year}';
+  }
+
   factory ReceiptLayout.sale(
     Map<String, dynamic> receipt,
     PrinterProfile profile, {
@@ -131,6 +169,14 @@ final class ReceiptLayout implements PrinterRasterSource {
       zone,
       receipt['createdAt'] as int,
     );
+    final token = receipt['receiptCode'] as String?;
+    final symbol = token == null
+        ? null
+        : ReceiptCodeLayout.forReceipt(
+            token: token,
+            qrText: receipt['receiptCodeQr'] as String,
+            profile: profile,
+          );
     final lines = <ReceiptLine>[
       if (copy)
         const ReceiptLine('SALINAN', bold: true, align: TextAlign.center),
@@ -164,6 +210,12 @@ final class ReceiptLayout implements PrinterRasterSource {
         if (raw['wholesale'] == true) ReceiptLine(id ? 'Grosir' : 'Wholesale'),
         ReceiptLine('${raw['quantity']} × ${amount(raw['price'])}'),
         ReceiptLine(amount(raw['total']), align: TextAlign.right),
+        if (raw['warrantyUntil'] case final String until)
+          ReceiptLine(
+            id
+                ? 'Garansi s/d ${_warrantyDate(until, id)}. Simpan struk untuk pengajuan garansi.'
+                : 'Warranty through ${_warrantyDate(until, id)}. Keep the receipt for warranty claims.',
+          ),
       ],
       const ReceiptLine('--------------------------------'),
       ReceiptLine('Total: ${amount(receipt['total'])}', bold: true),
@@ -188,8 +240,9 @@ final class ReceiptLayout implements PrinterRasterSource {
           receipt['footer'] as String,
           align: alignment(profile.footerAlign),
         ),
+      if (token != null) ReceiptLine(token, align: TextAlign.center),
     ];
-    return ReceiptLayout(profile, lines);
+    return ReceiptLayout(profile, lines, receiptCode: symbol);
   }
   factory ReceiptLayout.calibration(PrinterProfile profile) =>
       ReceiptLayout(profile, [
@@ -353,6 +406,8 @@ final class ReceiptLayout implements PrinterRasterSource {
         text.dispose();
       }
     }
+    final code = receiptCode;
+    if (code != null) yield* code.tiles(profile, rasterRows);
   }
 
   /// GS v 0 raster strips are supported by the declared ESC/POS profile only.

@@ -1,6 +1,8 @@
 import 'printer_protocol.dart';
 export 'printer_protocol.dart';
 
+enum ReceiptCodeFormat { code128, qr }
+
 /// Physical paper width and effective printable dots are distinct. Defaults are
 /// conservative ESC/POS profiles, not proof of a particular printer capability.
 final class PrinterProfile {
@@ -22,6 +24,7 @@ final class PrinterProfile {
     this.logo = true,
     this.logoPercent = 100,
     this.lineGap = 6,
+    this.receiptCode = ReceiptCodeFormat.code128,
   });
   final int paperMm,
       dots,
@@ -37,6 +40,7 @@ final class PrinterProfile {
       lineGap;
   final bool bold, logo;
   final PrinterProtocol protocol;
+  final ReceiptCodeFormat receiptCode;
   final String headerAlign, footerAlign;
   int get x => left + shift;
   int get effectiveDots => dots - left - right - shift.abs();
@@ -86,6 +90,8 @@ final class PrinterProfile {
     'logo': logo,
     'logoPercent': logoPercent,
     'lineGap': lineGap,
+    if (receiptCode != ReceiptCodeFormat.code128)
+      'receiptCode': receiptCode.name,
   };
   factory PrinterProfile.fromJson(Map<String, dynamic> json) => PrinterProfile(
     paperMm: json['paperMm'] as int,
@@ -110,6 +116,11 @@ final class PrinterProfile {
     logo: json['logo'] as bool,
     logoPercent: json['logoPercent'] as int? ?? 100,
     lineGap: json['lineGap'] as int? ?? 6,
+    receiptCode: switch (json['receiptCode']) {
+      null || 'code128' => ReceiptCodeFormat.code128,
+      'qr' => ReceiptCodeFormat.qr,
+      _ => throw const FormatException('printerProfileInvalid'),
+    },
   )..validate();
 
   /// Jobs already prepared before leading feed existed keep their original

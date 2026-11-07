@@ -25,6 +25,11 @@ import '../../suppliers/application/supplier_service.dart';
 import '../../labels/application/product_label_validation.dart';
 import '../../printer/application/receipt_policy_validation.dart';
 import '../../management/application/employee_access_attempts.dart';
+import '../../cashier/application/warranty_validation.dart';
+import '../../cashier/application/sale_receipt_codes.dart';
+import '../../cashier/application/sale_return_validation.dart';
+import '../../cashier/application/sale_refund_service.dart';
+import '../../settings/application/qris_asset_service.dart';
 
 /// Archive authentication is necessary but not a substitute for supported
 /// business metadata. Scan bounded rows, preserving all accepted legacy values.
@@ -60,6 +65,11 @@ final class BackupValidation {
     if (schema >= 35) await ProductLabelValidation.validate(db);
     if (schema >= 36) await ReceiptPolicyValidation.validate(db);
     if (schema >= 38) await EmployeeAccessAttempts.validate(db);
+    if (schema >= 39) await WarrantyValidation.validate(db);
+    if (schema >= 40) await SaleReceiptCodes.validate(db);
+    if (schema >= 41) await SaleReturnValidation.validate(db);
+    if (schema >= 42) await SaleRefundService.validate(db);
+    if (schema >= 43) await QrisAssetService.validate(db);
     if (schema >= 26 &&
         (await db.rawQuery('''SELECT 1 FROM products p
       LEFT JOIN suppliers s ON s.id=p.master_supplier_id

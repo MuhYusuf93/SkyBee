@@ -5205,6 +5205,175 @@ class AppLocalizationsEn extends AppLocalizations {
   String get m54FieldInvalid => 'Check the value in this field.';
 
   @override
+  String get m54WarrantyFeature => 'Product warranty';
+
+  @override
+  String get m54WarrantyHelp =>
+      'Record product warranty terms in months and print the end date on new receipts.';
+
+  @override
+  String get m54WarrantyMonths => 'Warranty term (months, optional)';
+
+  @override
+  String get m54WarrantyMonthsInvalid => 'Enter 1–1200 months or leave blank.';
+
+  @override
+  String get m54ReceiptCodeFormat => 'Receipt code format';
+
+  @override
+  String get m54ReceiptBarcode => '1D barcode (Code 128)';
+
+  @override
+  String get m54ReceiptQr => '2D QR code';
+
+  @override
+  String get m54ReceiptCodeHelp =>
+      'Code 128 uses at least 352 printable dots. Narrower profiles print a QR code instead. You can always enter the receipt reference manually.';
+
+  @override
+  String get m54ReturnQuantity =>
+      'Select a quantity within the remaining returnable units.';
+
+  @override
+  String get m54ReturnReason =>
+      'Enter a reason for the return (1–500 characters).';
+
+  @override
+  String get m54ReturnChanged =>
+      'The sale balance or remaining units have changed. Review the return again.';
+
+  @override
+  String get m54ReturnQuarantineRequired =>
+      'This item cannot go back into saleable stock. Choose quarantine.';
+
+  @override
+  String get m54ReturnDependent =>
+      'This sale has a recorded return. Its original sale and payments cannot be reversed here.';
+
+  @override
+  String get m54SaleReturnStock => 'Sales return';
+
+  @override
+  String get m54RefundUnavailable => 'This return has no pending refund.';
+
+  @override
+  String get m54RefundSettled => 'Refund paid';
+
+  @override
+  String get m54ReturnConditionRequired =>
+      'Choose the condition of each item being returned.';
+
+  @override
+  String get m54ReturnCondition => 'Item condition';
+
+  @override
+  String get m54ReturnGood => 'Saleable';
+
+  @override
+  String get m54ReturnQuarantine => 'Damaged / Quarantine';
+
+  @override
+  String get m54ReturnSold => 'Sold';
+
+  @override
+  String get m54ReturnRemaining => 'Returnable';
+
+  @override
+  String get m54WarrantyUntil => 'Warranty through';
+
+  @override
+  String get m54ReturnQuantityLabel => 'Return quantity';
+
+  @override
+  String get m54ReturnLookup => 'Receipt code or reference';
+
+  @override
+  String get m54ReturnFind => 'Find sale';
+
+  @override
+  String get m54ReturnSourceFound => 'Original sale found.';
+
+  @override
+  String get m54ReturnSaved => 'Return document saved';
+
+  @override
+  String get m54ReturnDebtReduction => 'Debt reduction';
+
+  @override
+  String get m54ReturnReasonLabel => 'Return reason';
+
+  @override
+  String get m54ReturnReview => 'Review return';
+
+  @override
+  String get m54ReturnAmount => 'Return amount';
+
+  @override
+  String get m54ReturnOwnerRequired =>
+      'The warranty has ended. The owner needs to approve this return.';
+
+  @override
+  String get m54ReturnSave => 'Save return';
+
+  @override
+  String get m54ReturnAnother => 'Find another receipt';
+
+  @override
+  String get m54RefundPending => 'Refund pending';
+
+  @override
+  String get m54RefundRecord => 'Record refund';
+
+  @override
+  String get m54RefundHelp =>
+      'Complete the refund with the customer, then record the method actually used.';
+
+  @override
+  String get m54RefundMethod => 'Refund method';
+
+  @override
+  String get m54RefundCash => 'Cash';
+
+  @override
+  String get m54RefundQris => 'QRIS outside the app';
+
+  @override
+  String get m54RefundTransfer => 'Transfer outside the app';
+
+  @override
+  String get m54RefundConfirmed => 'I have given this refund to the customer.';
+
+  @override
+  String get m54QrisImageTitle => 'Store QRIS image';
+
+  @override
+  String get m54QrisImageHelp =>
+      'Choose your existing store QRIS image. The full image is stored privately in the store database. The cashier still checks payment manually.';
+
+  @override
+  String get m54QrisImageMissing => 'No QRIS image has been configured.';
+
+  @override
+  String get m54QrisImageChoose => 'Choose QRIS image';
+
+  @override
+  String get m54QrisImageRemove => 'Remove QRIS image';
+
+  @override
+  String get m54QrisImageChanged =>
+      'The active image changed. Reload the settings before saving.';
+
+  @override
+  String get m54QrisImageInvalid =>
+      'Choose a readable static image, at least 64 pixels per side and no larger than 4 MiB.';
+
+  @override
+  String get m54SaleReceiptOnly => 'Use this receipt code in Sales returns.';
+
+  @override
+  String get m54WarrantyDisabled => 'Warranty is off. Reload the form.';
+
+  @override
   String get m54RecoveryOnly => 'Use this secret QR only in store recovery.';
 
   @override

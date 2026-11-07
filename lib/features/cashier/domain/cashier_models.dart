@@ -1,6 +1,7 @@
 import 'tender_draft.dart';
 import '../../cash_drawer/domain/cash_pieces.dart';
 import '../../../core/domain/value_types.dart';
+import '../../../core/domain/sale_receipt_code.dart';
 import 'cash_tender.dart';
 import 'quantity_promotion.dart';
 import '../../../core/domain/pricing_mode.dart';
@@ -172,6 +173,8 @@ final class SaleReceipt {
     this.customerPhone,
     this.reversed = false,
     this.cashTender,
+    this.code,
+    this.debtReductionMinor = 0,
   });
   final EntityId id;
   final int createdAt;
@@ -182,7 +185,10 @@ final class SaleReceipt {
   final String? customerPhone;
   final bool reversed;
   final CashTender? cashTender;
-  int get outstanding => reversed ? 0 : total.amountMinor - paid.amountMinor;
+  final SaleReceiptCode? code;
+  final int debtReductionMinor;
+  int get outstanding =>
+      reversed ? 0 : total.amountMinor - paid.amountMinor - debtReductionMinor;
   String get number =>
       '${createdAt.toRadixString(36).toUpperCase()}-${id.value.substring(0, 8).toUpperCase()}';
 }

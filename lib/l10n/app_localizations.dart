@@ -9344,6 +9344,318 @@ abstract class AppLocalizations {
   /// **'Check the value in this field.'**
   String get m54FieldInvalid;
 
+  /// Store feature switch for warranty months on products
+  ///
+  /// In en, this message translates to:
+  /// **'Product warranty'**
+  String get m54WarrantyFeature;
+
+  /// Explains product warranty feature behavior
+  ///
+  /// In en, this message translates to:
+  /// **'Record product warranty terms in months and print the end date on new receipts.'**
+  String get m54WarrantyHelp;
+
+  /// Optional whole month warranty input label
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty term (months, optional)'**
+  String get m54WarrantyMonths;
+
+  /// Invalid optional warranty term
+  ///
+  /// In en, this message translates to:
+  /// **'Enter 1–1200 months or leave blank.'**
+  String get m54WarrantyMonthsInvalid;
+
+  /// Printer setting for the sale lookup code format
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt code format'**
+  String get m54ReceiptCodeFormat;
+
+  /// Code 128 format option
+  ///
+  /// In en, this message translates to:
+  /// **'1D barcode (Code 128)'**
+  String get m54ReceiptBarcode;
+
+  /// QR format option
+  ///
+  /// In en, this message translates to:
+  /// **'2D QR code'**
+  String get m54ReceiptQr;
+
+  /// Receipt format fallback help
+  ///
+  /// In en, this message translates to:
+  /// **'Code 128 uses at least 352 printable dots. Narrower profiles print a QR code instead. You can always enter the receipt reference manually.'**
+  String get m54ReceiptCodeHelp;
+
+  /// Return quantity is missing or exceeds the remaining sale quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Select a quantity within the remaining returnable units.'**
+  String get m54ReturnQuantity;
+
+  /// Sales return reason validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a reason for the return (1–500 characters).'**
+  String get m54ReturnReason;
+
+  /// A return preview became stale
+  ///
+  /// In en, this message translates to:
+  /// **'The sale balance or remaining units have changed. Review the return again.'**
+  String get m54ReturnChanged;
+
+  /// A return cannot restore saleable stock
+  ///
+  /// In en, this message translates to:
+  /// **'This item cannot go back into saleable stock. Choose quarantine.'**
+  String get m54ReturnQuarantineRequired;
+
+  /// Legacy reversal prevented by a dependent sales return
+  ///
+  /// In en, this message translates to:
+  /// **'This sale has a recorded return. Its original sale and payments cannot be reversed here.'**
+  String get m54ReturnDependent;
+
+  /// Sales return event label
+  ///
+  /// In en, this message translates to:
+  /// **'Sales return'**
+  String get m54SaleReturnStock;
+
+  /// Missing, settled or zero sale refund
+  ///
+  /// In en, this message translates to:
+  /// **'This return has no pending refund.'**
+  String get m54RefundUnavailable;
+
+  /// An actual sale refund outflow
+  ///
+  /// In en, this message translates to:
+  /// **'Refund paid'**
+  String get m54RefundSettled;
+
+  /// M5.4 sales return UI: Choose the condition of each item being returned.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the condition of each item being returned.'**
+  String get m54ReturnConditionRequired;
+
+  /// M5.4 sales return UI: Item condition
+  ///
+  /// In en, this message translates to:
+  /// **'Item condition'**
+  String get m54ReturnCondition;
+
+  /// M5.4 sales return UI: Saleable
+  ///
+  /// In en, this message translates to:
+  /// **'Saleable'**
+  String get m54ReturnGood;
+
+  /// M5.4 sales return UI: Damaged / Quarantine
+  ///
+  /// In en, this message translates to:
+  /// **'Damaged / Quarantine'**
+  String get m54ReturnQuarantine;
+
+  /// M5.4 sales return UI: Sold
+  ///
+  /// In en, this message translates to:
+  /// **'Sold'**
+  String get m54ReturnSold;
+
+  /// M5.4 sales return UI: Returnable
+  ///
+  /// In en, this message translates to:
+  /// **'Returnable'**
+  String get m54ReturnRemaining;
+
+  /// M5.4 sales return UI: Warranty through
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty through'**
+  String get m54WarrantyUntil;
+
+  /// M5.4 sales return UI: Return quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Return quantity'**
+  String get m54ReturnQuantityLabel;
+
+  /// M5.4 sales return UI: Receipt code or reference
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt code or reference'**
+  String get m54ReturnLookup;
+
+  /// M5.4 sales return UI: Find sale
+  ///
+  /// In en, this message translates to:
+  /// **'Find sale'**
+  String get m54ReturnFind;
+
+  /// M5.4 sales return UI: Original sale found.
+  ///
+  /// In en, this message translates to:
+  /// **'Original sale found.'**
+  String get m54ReturnSourceFound;
+
+  /// M5.4 sales return UI: Return document saved
+  ///
+  /// In en, this message translates to:
+  /// **'Return document saved'**
+  String get m54ReturnSaved;
+
+  /// M5.4 sales return UI: Debt reduction
+  ///
+  /// In en, this message translates to:
+  /// **'Debt reduction'**
+  String get m54ReturnDebtReduction;
+
+  /// M5.4 sales return UI: Return reason
+  ///
+  /// In en, this message translates to:
+  /// **'Return reason'**
+  String get m54ReturnReasonLabel;
+
+  /// M5.4 sales return UI: Review return
+  ///
+  /// In en, this message translates to:
+  /// **'Review return'**
+  String get m54ReturnReview;
+
+  /// M5.4 sales return UI: Return amount
+  ///
+  /// In en, this message translates to:
+  /// **'Return amount'**
+  String get m54ReturnAmount;
+
+  /// M5.4 sales return UI: The warranty has ended. The owner needs to approve this return.
+  ///
+  /// In en, this message translates to:
+  /// **'The warranty has ended. The owner needs to approve this return.'**
+  String get m54ReturnOwnerRequired;
+
+  /// M5.4 sales return UI: Save return
+  ///
+  /// In en, this message translates to:
+  /// **'Save return'**
+  String get m54ReturnSave;
+
+  /// M5.4 sales return UI: Find another receipt
+  ///
+  /// In en, this message translates to:
+  /// **'Find another receipt'**
+  String get m54ReturnAnother;
+
+  /// M5.4 sales return UI: Refund pending
+  ///
+  /// In en, this message translates to:
+  /// **'Refund pending'**
+  String get m54RefundPending;
+
+  /// M5.4 sales return UI: Record refund
+  ///
+  /// In en, this message translates to:
+  /// **'Record refund'**
+  String get m54RefundRecord;
+
+  /// M5.4 sales return UI: Complete the refund with the customer, then record the method actually used.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the refund with the customer, then record the method actually used.'**
+  String get m54RefundHelp;
+
+  /// M5.4 sales return UI: Refund method
+  ///
+  /// In en, this message translates to:
+  /// **'Refund method'**
+  String get m54RefundMethod;
+
+  /// M5.4 sales return UI: Cash
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get m54RefundCash;
+
+  /// M5.4 sales return UI: QRIS outside the app
+  ///
+  /// In en, this message translates to:
+  /// **'QRIS outside the app'**
+  String get m54RefundQris;
+
+  /// M5.4 sales return UI: Transfer outside the app
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer outside the app'**
+  String get m54RefundTransfer;
+
+  /// M5.4 sales return UI: I have given this refund to the customer.
+  ///
+  /// In en, this message translates to:
+  /// **'I have given this refund to the customer.'**
+  String get m54RefundConfirmed;
+
+  /// Local static merchant QR image settings
+  ///
+  /// In en, this message translates to:
+  /// **'Store QRIS image'**
+  String get m54QrisImageTitle;
+
+  /// Owner QR image settings help
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your existing store QRIS image. The full image is stored privately in the store database. The cashier still checks payment manually.'**
+  String get m54QrisImageHelp;
+
+  /// No QRIS image has been configured
+  ///
+  /// In en, this message translates to:
+  /// **'No QRIS image has been configured.'**
+  String get m54QrisImageMissing;
+
+  /// Choose a static QR image
+  ///
+  /// In en, this message translates to:
+  /// **'Choose QRIS image'**
+  String get m54QrisImageChoose;
+
+  /// Stage removal of the static QR image
+  ///
+  /// In en, this message translates to:
+  /// **'Remove QRIS image'**
+  String get m54QrisImageRemove;
+
+  /// The QR image settings changed while an edit was open
+  ///
+  /// In en, this message translates to:
+  /// **'The active image changed. Reload the settings before saving.'**
+  String get m54QrisImageChanged;
+
+  /// Static QR image validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a readable static image, at least 64 pixels per side and no larger than 4 MiB.'**
+  String get m54QrisImageInvalid;
+
+  /// A receipt QR was scanned in a product field
+  ///
+  /// In en, this message translates to:
+  /// **'Use this receipt code in Sales returns.'**
+  String get m54SaleReceiptOnly;
+
+  /// Warranty write refused because the store feature is off
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty is off. Reload the form.'**
+  String get m54WarrantyDisabled;
+
   /// Reject recovery secrets in all business barcode flows without echoing payload.
   ///
   /// In en, this message translates to:

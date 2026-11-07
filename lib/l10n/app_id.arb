@@ -6264,6 +6264,176 @@
   "@m54FieldInvalid": {
     "description": "M5.4 product form field validation."
   },
+  "m54WarrantyFeature": "Garansi produk",
+  "@m54WarrantyFeature": {
+    "description": "Store feature switch for warranty months on products"
+  },
+  "m54WarrantyHelp": "Catat masa garansi produk dalam bulan dan cetak batasnya pada struk penjualan baru.",
+  "@m54WarrantyHelp": {
+    "description": "Explains product warranty feature behavior"
+  },
+  "m54WarrantyMonths": "Masa garansi (bulan, opsional)",
+  "@m54WarrantyMonths": {
+    "description": "Optional whole month warranty input label"
+  },
+  "m54WarrantyMonthsInvalid": "Masukkan 1–1200 bulan atau kosongkan.",
+  "@m54WarrantyMonthsInvalid": {
+    "description": "Invalid optional warranty term"
+  },
+  "m54ReceiptCodeFormat": "Format kode struk",
+  "@m54ReceiptCodeFormat": { "description": "Printer setting for the sale lookup code format" },
+  "m54ReceiptBarcode": "Barcode 1D (Code 128)",
+  "@m54ReceiptBarcode": { "description": "Code 128 format option" },
+  "m54ReceiptQr": "Kode QR 2D",
+  "@m54ReceiptQr": { "description": "QR format option" },
+  "m54ReceiptCodeHelp": "Code 128 perlu minimal 352 dot cetak. Profil yang lebih sempit mencetak kode QR. Referensi struk selalu bisa diketik manual.",
+  "@m54ReceiptCodeHelp": { "description": "Receipt format fallback help" },
+  "m54ReturnQuantity": "Pilih jumlah dalam batas unit yang masih dapat diretur.",
+  "@m54ReturnQuantity": { "description": "Return quantity is missing or exceeds the remaining sale quantity" },
+  "m54ReturnReason": "Masukkan alasan retur (1–500 karakter).",
+  "@m54ReturnReason": { "description": "Sales return reason validation" },
+  "m54ReturnChanged": "Saldo penjualan atau sisa unit berubah. Tinjau ulang retur.",
+  "@m54ReturnChanged": { "description": "A return preview became stale" },
+  "m54ReturnQuarantineRequired": "Barang ini tidak dapat kembali ke stok layak jual. Pilih karantina.",
+  "@m54ReturnQuarantineRequired": { "description": "A return cannot restore saleable stock" },
+  "m54ReturnDependent": "Retur sudah tercatat. Penjualan asal dan pembayarannya tidak dapat dibatalkan di sini.",
+  "@m54ReturnDependent": { "description": "Legacy reversal prevented by a dependent sales return" },
+  "m54SaleReturnStock": "Retur penjualan",
+  "@m54SaleReturnStock": { "description": "Sales return event label" },
+  "m54RefundUnavailable": "Retur ini tidak memiliki pengembalian dana tertunda.",
+  "@m54RefundUnavailable": { "description": "Missing, settled or zero sale refund" },
+  "m54RefundSettled": "Refund dibayarkan",
+  "@m54RefundSettled": { "description": "An actual sale refund outflow" },
+  "m54ReturnConditionRequired": "Pilih kondisi barang yang diretur.",
+  "@m54ReturnConditionRequired": {
+    "description": "M5.4 sales return UI: Choose the condition of each item being returned."
+  },
+  "m54ReturnCondition": "Kondisi barang",
+  "@m54ReturnCondition": {
+    "description": "M5.4 sales return UI: Item condition"
+  },
+  "m54ReturnGood": "Layak jual",
+  "@m54ReturnGood": {
+    "description": "M5.4 sales return UI: Saleable"
+  },
+  "m54ReturnQuarantine": "Rusak / Karantina",
+  "@m54ReturnQuarantine": {
+    "description": "M5.4 sales return UI: Damaged / Quarantine"
+  },
+  "m54ReturnSold": "Terjual",
+  "@m54ReturnSold": {
+    "description": "M5.4 sales return UI: Sold"
+  },
+  "m54ReturnRemaining": "Bisa diretur",
+  "@m54ReturnRemaining": {
+    "description": "M5.4 sales return UI: Returnable"
+  },
+  "m54WarrantyUntil": "Garansi s/d",
+  "@m54WarrantyUntil": {
+    "description": "M5.4 sales return UI: Warranty through"
+  },
+  "m54ReturnQuantityLabel": "Jumlah diretur",
+  "@m54ReturnQuantityLabel": {
+    "description": "M5.4 sales return UI: Return quantity"
+  },
+  "m54ReturnLookup": "Kode atau referensi struk",
+  "@m54ReturnLookup": {
+    "description": "M5.4 sales return UI: Receipt code or reference"
+  },
+  "m54ReturnFind": "Cari penjualan",
+  "@m54ReturnFind": {
+    "description": "M5.4 sales return UI: Find sale"
+  },
+  "m54ReturnSourceFound": "Penjualan asal ditemukan.",
+  "@m54ReturnSourceFound": {
+    "description": "M5.4 sales return UI: Original sale found."
+  },
+  "m54ReturnSaved": "Dokumen retur tersimpan",
+  "@m54ReturnSaved": {
+    "description": "M5.4 sales return UI: Return document saved"
+  },
+  "m54ReturnDebtReduction": "Pengurangan piutang",
+  "@m54ReturnDebtReduction": {
+    "description": "M5.4 sales return UI: Debt reduction"
+  },
+  "m54ReturnReasonLabel": "Alasan retur",
+  "@m54ReturnReasonLabel": {
+    "description": "M5.4 sales return UI: Return reason"
+  },
+  "m54ReturnReview": "Tinjau retur",
+  "@m54ReturnReview": {
+    "description": "M5.4 sales return UI: Review return"
+  },
+  "m54ReturnAmount": "Nilai retur",
+  "@m54ReturnAmount": {
+    "description": "M5.4 sales return UI: Return amount"
+  },
+  "m54ReturnOwnerRequired": "Garansi sudah berakhir. Pemilik perlu menyetujui retur ini.",
+  "@m54ReturnOwnerRequired": {
+    "description": "M5.4 sales return UI: The warranty has ended. The owner needs to approve this return."
+  },
+  "m54ReturnSave": "Simpan retur",
+  "@m54ReturnSave": {
+    "description": "M5.4 sales return UI: Save return"
+  },
+  "m54ReturnAnother": "Cari struk lain",
+  "@m54ReturnAnother": {
+    "description": "M5.4 sales return UI: Find another receipt"
+  },
+  "m54RefundPending": "Menunggu pengembalian dana",
+  "@m54RefundPending": {
+    "description": "M5.4 sales return UI: Refund pending"
+  },
+  "m54RefundRecord": "Catat pengembalian dana",
+  "@m54RefundRecord": {
+    "description": "M5.4 sales return UI: Record refund"
+  },
+  "m54RefundHelp": "Selesaikan pengembalian dana kepada pelanggan, lalu catat metode yang benar-benar dipakai.",
+  "@m54RefundHelp": {
+    "description": "M5.4 sales return UI: Complete the refund with the customer, then record the method actually used."
+  },
+  "m54RefundMethod": "Metode pengembalian dana",
+  "@m54RefundMethod": {
+    "description": "M5.4 sales return UI: Refund method"
+  },
+  "m54RefundCash": "Tunai",
+  "@m54RefundCash": {
+    "description": "M5.4 sales return UI: Cash"
+  },
+  "m54RefundQris": "QRIS di luar aplikasi",
+  "@m54RefundQris": {
+    "description": "M5.4 sales return UI: QRIS outside the app"
+  },
+  "m54RefundTransfer": "Transfer di luar aplikasi",
+  "@m54RefundTransfer": {
+    "description": "M5.4 sales return UI: Transfer outside the app"
+  },
+  "m54RefundConfirmed": "Saya sudah memberikan pengembalian dana ini kepada pelanggan.",
+  "@m54RefundConfirmed": {
+    "description": "M5.4 sales return UI: I have given this refund to the customer."
+  },
+  "m54QrisImageTitle": "Gambar QRIS toko",
+  "@m54QrisImageTitle": { "description": "Local static merchant QR image settings" },
+  "m54QrisImageHelp": "Pilih gambar QRIS toko yang sudah Anda miliki. Seluruh gambar disimpan secara privat di database toko. Kasir tetap memeriksa pembayaran secara manual.",
+  "@m54QrisImageHelp": { "description": "Owner QR image settings help" },
+  "m54QrisImageMissing": "Gambar QRIS belum diatur.",
+  "@m54QrisImageMissing": { "description": "No QRIS image has been configured" },
+  "m54QrisImageChoose": "Pilih gambar QRIS",
+  "@m54QrisImageChoose": { "description": "Choose a static QR image" },
+  "m54QrisImageRemove": "Hapus gambar QRIS",
+  "@m54QrisImageRemove": { "description": "Stage removal of the static QR image" },
+  "m54QrisImageChanged": "Gambar aktif sudah berubah. Muat ulang pengaturan sebelum menyimpan.",
+  "@m54QrisImageChanged": { "description": "The QR image settings changed while an edit was open" },
+  "m54QrisImageInvalid": "Pilih gambar statis yang dapat dibuka, minimal 64 piksel per sisi dan maksimum 4 MiB.",
+  "@m54QrisImageInvalid": { "description": "Static QR image validation error" },
+  "m54SaleReceiptOnly": "Gunakan kode struk ini di Retur penjualan.",
+  "@m54SaleReceiptOnly": {
+    "description": "A receipt QR was scanned in a product field"
+  },
+  "m54WarrantyDisabled": "Fitur garansi sedang nonaktif. Muat ulang formulir.",
+  "@m54WarrantyDisabled": {
+    "description": "Warranty write refused because the store feature is off"
+  },
   "m54RecoveryOnly": "Gunakan QR rahasia ini hanya pada alur pemulihan toko.",
   "@m54RecoveryOnly": {
     "description": "Reject recovery secrets in all business barcode flows without echoing payload."

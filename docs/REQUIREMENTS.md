@@ -29,8 +29,11 @@ referensi lulus dalam regresi host 75/75. Analyzer bersih. Adapter fokus
 kamera belakang dan fallback telah dikompilasi untuk fixture. Arsip native,
 fokus optik, dan HID fisik dijadwalkan pada acceptance tahap 6.
 [Laporan operasional](M54_OPERATIONAL_REPORT.md).
-Implementasi berlanjut ke tahap 3. Tahap 3–5, acceptance, handoff .skybee/APK
-Uji Teman, dan Realme belum selesai. M5.5 khusus multi-device.
+Checkpoint 0.5.4+14/skema 43 mencakup garansi snapshot, kode struk,
+retur parsial, pengurangan piutang, pencatatan refund, dan gambar QRIS
+privat. Regresi host lulus 64/64. Analyzer bersih. Split payment, pembulatan,
+karantina lanjutan, tahap 4–5, acceptance perangkat dan handoff masih terbuka.
+M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->
 

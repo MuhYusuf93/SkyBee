@@ -160,6 +160,7 @@ final class ReportExportService {
               'minor',
             ),
             'repayments': (summary.repaymentsMinor.toString(), 'minor'),
+            'sale_refunds': (summary.refundsMinor.toString(), 'minor'),
             'unknown_payments': (
               summary.unknownPaymentsMinor.toString(),
               'minor',
@@ -203,6 +204,8 @@ final class ReportExportService {
                 cursor,
                 100,
                 costKnowledge: database.schemaVersion >= 17,
+                saleReturns: database.schemaVersion >= 41,
+                saleRefunds: database.schemaVersion >= 42,
               );
               final entries = (await sql.rawQuery(
                 query.sql,

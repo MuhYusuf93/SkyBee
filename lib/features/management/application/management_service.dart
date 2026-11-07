@@ -198,6 +198,7 @@ final class ManagementService {
       'storeReset',
       'recoveryPrint',
       'receiptException',
+      'saleReturnOverride',
     ].contains(purpose)) {
       throw ArgumentError('Unknown authentication purpose');
     }

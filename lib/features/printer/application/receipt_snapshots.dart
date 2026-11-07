@@ -52,6 +52,10 @@ final class ReceiptSnapshots {
       'format': 1,
       'saleId': receipt.id.value,
       'number': receipt.number,
+      if (receipt.code case final code?) ...{
+        'receiptCode': code.token,
+        'receiptCodeQr': code.qr,
+      },
       'createdAt': receipt.createdAt,
       'currency': receipt.total.currencyCode,
       'scale': receipt.total.scale,
@@ -85,6 +89,8 @@ final class ReceiptSnapshots {
               'promo': e['promo_snapshot_json'],
               'gross': e['gross_minor'],
               'discount': e['discount_minor'],
+              if (e['warranty_until'] != null)
+                'warrantyUntil': e['warranty_until'],
             },
           )
           .toList(),

@@ -69,6 +69,11 @@ class _ReportsBodyState extends State<_ReportsBody> {
           'm4Repayments',
           codec.formatSignedMinor(BigInt.from(summary.repaymentsMinor)),
         ),
+        if (summary.refundsMinor != 0)
+          (
+            'm54RefundSettled',
+            codec.formatSignedMinor(BigInt.from(summary.refundsMinor)),
+          ),
         if (summary.unknownPaymentsMinor != 0)
           (
             'm4UnknownPayments',
@@ -236,7 +241,11 @@ class _ReportsBodyState extends State<_ReportsBody> {
                       ).formatSignedMinor(BigInt.from(entry.amountMinor)),
                     ),
                     subtitle: Text(
-                      '${tr(context, entry.isReversal
+                      '${tr(context, entry.isSaleReturn
+                          ? 'm54SaleReturnStock'
+                          : entry.isSaleRefund
+                          ? 'm54RefundSettled'
+                          : entry.isReversal
                           ? 'm4Reversal'
                           : filter!.section == ReportSection.sales
                           ? 'm4SaleEvent'

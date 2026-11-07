@@ -6264,6 +6264,176 @@
   "@m54FieldInvalid": {
     "description": "M5.4 product form field validation."
   },
+  "m54WarrantyFeature": "Product warranty",
+  "@m54WarrantyFeature": {
+    "description": "Store feature switch for warranty months on products"
+  },
+  "m54WarrantyHelp": "Record product warranty terms in months and print the end date on new receipts.",
+  "@m54WarrantyHelp": {
+    "description": "Explains product warranty feature behavior"
+  },
+  "m54WarrantyMonths": "Warranty term (months, optional)",
+  "@m54WarrantyMonths": {
+    "description": "Optional whole month warranty input label"
+  },
+  "m54WarrantyMonthsInvalid": "Enter 1–1200 months or leave blank.",
+  "@m54WarrantyMonthsInvalid": {
+    "description": "Invalid optional warranty term"
+  },
+  "m54ReceiptCodeFormat": "Receipt code format",
+  "@m54ReceiptCodeFormat": { "description": "Printer setting for the sale lookup code format" },
+  "m54ReceiptBarcode": "1D barcode (Code 128)",
+  "@m54ReceiptBarcode": { "description": "Code 128 format option" },
+  "m54ReceiptQr": "2D QR code",
+  "@m54ReceiptQr": { "description": "QR format option" },
+  "m54ReceiptCodeHelp": "Code 128 uses at least 352 printable dots. Narrower profiles print a QR code instead. You can always enter the receipt reference manually.",
+  "@m54ReceiptCodeHelp": { "description": "Receipt format fallback help" },
+  "m54ReturnQuantity": "Select a quantity within the remaining returnable units.",
+  "@m54ReturnQuantity": { "description": "Return quantity is missing or exceeds the remaining sale quantity" },
+  "m54ReturnReason": "Enter a reason for the return (1–500 characters).",
+  "@m54ReturnReason": { "description": "Sales return reason validation" },
+  "m54ReturnChanged": "The sale balance or remaining units have changed. Review the return again.",
+  "@m54ReturnChanged": { "description": "A return preview became stale" },
+  "m54ReturnQuarantineRequired": "This item cannot go back into saleable stock. Choose quarantine.",
+  "@m54ReturnQuarantineRequired": { "description": "A return cannot restore saleable stock" },
+  "m54ReturnDependent": "This sale has a recorded return. Its original sale and payments cannot be reversed here.",
+  "@m54ReturnDependent": { "description": "Legacy reversal prevented by a dependent sales return" },
+  "m54SaleReturnStock": "Sales return",
+  "@m54SaleReturnStock": { "description": "Sales return event label" },
+  "m54RefundUnavailable": "This return has no pending refund.",
+  "@m54RefundUnavailable": { "description": "Missing, settled or zero sale refund" },
+  "m54RefundSettled": "Refund paid",
+  "@m54RefundSettled": { "description": "An actual sale refund outflow" },
+  "m54ReturnConditionRequired": "Choose the condition of each item being returned.",
+  "@m54ReturnConditionRequired": {
+    "description": "M5.4 sales return UI: Choose the condition of each item being returned."
+  },
+  "m54ReturnCondition": "Item condition",
+  "@m54ReturnCondition": {
+    "description": "M5.4 sales return UI: Item condition"
+  },
+  "m54ReturnGood": "Saleable",
+  "@m54ReturnGood": {
+    "description": "M5.4 sales return UI: Saleable"
+  },
+  "m54ReturnQuarantine": "Damaged / Quarantine",
+  "@m54ReturnQuarantine": {
+    "description": "M5.4 sales return UI: Damaged / Quarantine"
+  },
+  "m54ReturnSold": "Sold",
+  "@m54ReturnSold": {
+    "description": "M5.4 sales return UI: Sold"
+  },
+  "m54ReturnRemaining": "Returnable",
+  "@m54ReturnRemaining": {
+    "description": "M5.4 sales return UI: Returnable"
+  },
+  "m54WarrantyUntil": "Warranty through",
+  "@m54WarrantyUntil": {
+    "description": "M5.4 sales return UI: Warranty through"
+  },
+  "m54ReturnQuantityLabel": "Return quantity",
+  "@m54ReturnQuantityLabel": {
+    "description": "M5.4 sales return UI: Return quantity"
+  },
+  "m54ReturnLookup": "Receipt code or reference",
+  "@m54ReturnLookup": {
+    "description": "M5.4 sales return UI: Receipt code or reference"
+  },
+  "m54ReturnFind": "Find sale",
+  "@m54ReturnFind": {
+    "description": "M5.4 sales return UI: Find sale"
+  },
+  "m54ReturnSourceFound": "Original sale found.",
+  "@m54ReturnSourceFound": {
+    "description": "M5.4 sales return UI: Original sale found."
+  },
+  "m54ReturnSaved": "Return document saved",
+  "@m54ReturnSaved": {
+    "description": "M5.4 sales return UI: Return document saved"
+  },
+  "m54ReturnDebtReduction": "Debt reduction",
+  "@m54ReturnDebtReduction": {
+    "description": "M5.4 sales return UI: Debt reduction"
+  },
+  "m54ReturnReasonLabel": "Return reason",
+  "@m54ReturnReasonLabel": {
+    "description": "M5.4 sales return UI: Return reason"
+  },
+  "m54ReturnReview": "Review return",
+  "@m54ReturnReview": {
+    "description": "M5.4 sales return UI: Review return"
+  },
+  "m54ReturnAmount": "Return amount",
+  "@m54ReturnAmount": {
+    "description": "M5.4 sales return UI: Return amount"
+  },
+  "m54ReturnOwnerRequired": "The warranty has ended. The owner needs to approve this return.",
+  "@m54ReturnOwnerRequired": {
+    "description": "M5.4 sales return UI: The warranty has ended. The owner needs to approve this return."
+  },
+  "m54ReturnSave": "Save return",
+  "@m54ReturnSave": {
+    "description": "M5.4 sales return UI: Save return"
+  },
+  "m54ReturnAnother": "Find another receipt",
+  "@m54ReturnAnother": {
+    "description": "M5.4 sales return UI: Find another receipt"
+  },
+  "m54RefundPending": "Refund pending",
+  "@m54RefundPending": {
+    "description": "M5.4 sales return UI: Refund pending"
+  },
+  "m54RefundRecord": "Record refund",
+  "@m54RefundRecord": {
+    "description": "M5.4 sales return UI: Record refund"
+  },
+  "m54RefundHelp": "Complete the refund with the customer, then record the method actually used.",
+  "@m54RefundHelp": {
+    "description": "M5.4 sales return UI: Complete the refund with the customer, then record the method actually used."
+  },
+  "m54RefundMethod": "Refund method",
+  "@m54RefundMethod": {
+    "description": "M5.4 sales return UI: Refund method"
+  },
+  "m54RefundCash": "Cash",
+  "@m54RefundCash": {
+    "description": "M5.4 sales return UI: Cash"
+  },
+  "m54RefundQris": "QRIS outside the app",
+  "@m54RefundQris": {
+    "description": "M5.4 sales return UI: QRIS outside the app"
+  },
+  "m54RefundTransfer": "Transfer outside the app",
+  "@m54RefundTransfer": {
+    "description": "M5.4 sales return UI: Transfer outside the app"
+  },
+  "m54RefundConfirmed": "I have given this refund to the customer.",
+  "@m54RefundConfirmed": {
+    "description": "M5.4 sales return UI: I have given this refund to the customer."
+  },
+  "m54QrisImageTitle": "Store QRIS image",
+  "@m54QrisImageTitle": { "description": "Local static merchant QR image settings" },
+  "m54QrisImageHelp": "Choose your existing store QRIS image. The full image is stored privately in the store database. The cashier still checks payment manually.",
+  "@m54QrisImageHelp": { "description": "Owner QR image settings help" },
+  "m54QrisImageMissing": "No QRIS image has been configured.",
+  "@m54QrisImageMissing": { "description": "No QRIS image has been configured" },
+  "m54QrisImageChoose": "Choose QRIS image",
+  "@m54QrisImageChoose": { "description": "Choose a static QR image" },
+  "m54QrisImageRemove": "Remove QRIS image",
+  "@m54QrisImageRemove": { "description": "Stage removal of the static QR image" },
+  "m54QrisImageChanged": "The active image changed. Reload the settings before saving.",
+  "@m54QrisImageChanged": { "description": "The QR image settings changed while an edit was open" },
+  "m54QrisImageInvalid": "Choose a readable static image, at least 64 pixels per side and no larger than 4 MiB.",
+  "@m54QrisImageInvalid": { "description": "Static QR image validation error" },
+  "m54SaleReceiptOnly": "Use this receipt code in Sales returns.",
+  "@m54SaleReceiptOnly": {
+    "description": "A receipt QR was scanned in a product field"
+  },
+  "m54WarrantyDisabled": "Warranty is off. Reload the form.",
+  "@m54WarrantyDisabled": {
+    "description": "Warranty write refused because the store feature is off"
+  },
   "m54RecoveryOnly": "Use this secret QR only in store recovery.",
   "@m54RecoveryOnly": {
     "description": "Reject recovery secrets in all business barcode flows without echoing payload."

@@ -1,4 +1,6 @@
 import '../../../core/domain/contact_validation.dart';
+import '../../../core/domain/warranty_term.dart';
+import '../../settings/application/settings_service.dart';
 import '../../cash_drawer/application/cash_payment_posting.dart';
 import '../../members/application/member_rules.dart';
 import '../../members/domain/member_models.dart';
@@ -10,6 +12,7 @@ import '../../../data/database/database_coordinator.dart';
 import '../../inventory/domain/stock_rules.dart';
 import '../domain/cashier_models.dart';
 import 'cashier_store.dart';
+import 'sale_receipt_codes.dart';
 import '../../printer/application/receipt_snapshots.dart';
 import '../../printer/application/receipt_policy_service.dart';
 
@@ -28,6 +31,18 @@ final class CheckoutService {
 
   Future<SaleReceipt> receipt(EntityId id) =>
       database.read((db) => store.receipt(db, id));
+
+  /// Scanning resolves a committed local sale without producing an inventory
+  /// or financial mutation. A lock transition invalidates the pending read.
+  Future<SaleReceipt> receiptFromReference(String code) =>
+      store.read(database, (db) async {
+        final id = await SaleReceiptCodes.resolveOn(
+          db,
+          code,
+          codesEnabled: database.schemaVersion >= 40,
+        );
+        return store.receipt(db, id);
+      });
 
   Future<String> _hash(EntityId draftId, int revision, CheckoutInput input) =>
       store.fingerprint([
@@ -168,7 +183,8 @@ final class CheckoutService {
           throw const AppError('m3InvalidPayment');
         }
 
-        final current = store.policy(await store.settings(dbTxn));
+        final settings = await store.settings(dbTxn);
+        final current = store.policy(settings);
         if (current.code != currency.code || current.scale != currency.scale) {
           throw const AppError('currencyMismatch');
         }
@@ -314,6 +330,13 @@ final class CheckoutService {
         await _stage('customer');
         final saleId = CashierStore.ids.next();
         final now = store.clock.milliseconds;
+        final warrantyEnabled =
+            database.schemaVersion >= 39 &&
+            (await SettingsService.policyOn(dbTxn)).warranty;
+        final warrantyZone = settings['time_zone'] as String;
+        final warrantyStart = warrantyEnabled
+            ? store.clock.dateAt(now, warrantyZone)
+            : null;
         await dbTxn.insert('sale_transactions', {
           'id': saleId.value,
           'checkout_key': draftId.value,
@@ -332,6 +355,9 @@ final class CheckoutService {
           'payload_hash': hash,
           ...store.metadata(currency),
         });
+        if (database.schemaVersion >= 40) {
+          await SaleReceiptCodes.issueOn(dbTxn, saleId);
+        }
         if (cash != null) {
           await dbTxn.insert('checkout_tenders', {
             'sale_transaction_id': saleId.value,
@@ -375,6 +401,9 @@ final class CheckoutService {
           }
           await _stage('stock');
           final itemId = CashierStore.ids.next();
+          final warrantyMonths = warrantyEnabled
+              ? product['warranty_months'] as int?
+              : null;
           await dbTxn.insert('sale_transaction_items', {
             'id': itemId.value,
             'sale_transaction_id': saleId.value,
@@ -392,6 +421,15 @@ final class CheckoutService {
             'pricing_mode': line.pricingMode.name,
             'total_rupiah': line.total.amountMinor,
             'cost_micros': costs[index],
+            if (warrantyMonths != null && warrantyStart != null) ...{
+              'warranty_months_snapshot': warrantyMonths,
+              'warranty_started_on': warrantyStart.iso,
+              'warranty_until': WarrantyTerm.endsOn(
+                warrantyStart,
+                warrantyMonths,
+              ).iso,
+              'warranty_time_zone': warrantyZone,
+            },
             if (database.schemaVersion >= 17)
               'cost_complete': product['cost_complete'],
             if (database.schemaVersion >= 14) ...{

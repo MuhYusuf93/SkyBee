@@ -13,6 +13,7 @@ import '../../../core/domain/value_types.dart';
 import '../../management/presentation/management_gate.dart';
 import '../domain/inventory_models.dart';
 import '../domain/product_entry_rules.dart';
+import '../../../core/domain/warranty_term.dart';
 import '../domain/stock_input.dart';
 import 'stock_input_fields.dart';
 import 'confirm_free_cost.dart';
@@ -52,6 +53,7 @@ class _ProductFormState extends State<ProductForm> {
       size = TextEditingController(),
       shelf = TextEditingController(),
       note = TextEditingController(),
+      warranty = TextEditingController(),
       cost = MoneyEditingController(),
       expiry = TextEditingController();
   final stockInput = StockInputController(count: '');
@@ -118,6 +120,13 @@ class _ProductFormState extends State<ProductForm> {
       ProductAttributes(sizeMilli: null, unit: null, note: note.text);
     } catch (_) {
       return fail(note, 'm51AttributesInvalid');
+    }
+    if (_policy.warranty) {
+      try {
+        WarrantyTerm.parseOptional(warranty.text);
+      } on AppError catch (e) {
+        return fail(warranty, e.message);
+      }
     }
     try {
       price.parseMoney(finish: true);
@@ -305,6 +314,7 @@ class _ProductFormState extends State<ProductForm> {
         );
       }
       note.text = product.attributes.note ?? '';
+      warranty.text = product.warrantyMonths?.toString() ?? '';
       price.text = product.priceMinor.toString();
       sku.text = product.sku;
       barcode.text = product.barcode ?? '';
@@ -440,6 +450,7 @@ class _ProductFormState extends State<ProductForm> {
       selectedShelf?.id.value,
       shelf.text,
       note.text,
+      warranty.text,
       money(cost),
       expiry.text,
       stockInput.quantity.text,
@@ -521,6 +532,7 @@ class _ProductFormState extends State<ProductForm> {
       size,
       shelf,
       note,
+      warranty,
       cost,
       expiry,
     ]) {
@@ -634,6 +646,11 @@ class _ProductFormState extends State<ProductForm> {
         return;
       }
       if (initialError != null) throw AppError(initialError!);
+      final term = _policy.warranty
+          ? WarrantyTerm.parseOptional(warranty.text)
+          : null;
+      final warrantyChanged =
+          _policy.warranty && term != widget.product?.warrantyMonths;
       final input = ProductInput(
         name: name.text,
         sellingPrice: price.parseMoney(finish: true),
@@ -652,6 +669,7 @@ class _ProductFormState extends State<ProductForm> {
         minStock: parseWholeQuantity(minimum.text),
         lowStockEnabled: low,
         expiryEnabled: tracking,
+        warrantyMonths: warrantyChanged ? term : null,
         attributes: ProductAttributes(
           sizeMilli: ProductAttributes.parseSize(
             size.text,
@@ -805,6 +823,7 @@ class _ProductFormState extends State<ProductForm> {
           suppressLowPriceWarning: suppress,
           referenceExpiry: date,
           updateReferenceExpiry: untracked,
+          clearWarranty: warrantyChanged && term == null,
         );
         _baseline = snapshot();
         if (mounted) Navigator.pop(context, token ?? true);
@@ -840,6 +859,7 @@ class _ProductFormState extends State<ProductForm> {
         size,
         shelf,
         note,
+        warranty,
         cost,
         expiry,
         stockInput.quantity,
@@ -984,6 +1004,12 @@ class _ProductFormState extends State<ProductForm> {
                     Text(tr(context, 'm51AttributesHelp')),
                   ],
                 ),
+                if (_policy.warranty)
+                  field(
+                    warranty,
+                    tr(context, 'm54WarrantyMonths'),
+                    number: true,
+                  ),
                 Padding(
                   key: _anchor(price),
                   padding: const EdgeInsets.only(bottom: 16),

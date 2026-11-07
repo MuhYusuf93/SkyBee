@@ -114,3 +114,15 @@ terkompilasi dengan area fokus kamera belakang, dan diverifikasi package/ABI/
 terbuka. Runner kini menyimpan hasil terminal ketika pemulihan awake gagal.
 [Laporan](M54_OPERATIONAL_REPORT.md). Lanjut tahap 3 dari snapshot garansi,
 kode struk dan retur transaksi. Data perangkat belum diubah untuk handoff.
+
+
+## Tahap 3 · skema 43
+
+Garansi snapshot, kode struk Code 128/QR, retur parsial, pengurangan
+piutang, refund dengan sesi kas aktual, dan pengaturan gambar QRIS privat
+telah melalui regresi host 64/64 dalam 1:25. Analyzer bersih. Tes UI ID/EN
+320 px pada skala 2 mencatat refund eksternal tanpa mutasi laci. Dua run
+driver awal dihentikan saat menunggu I/O. Run berikutnya memperbaiki
+navigasi field lazy dan status hasil yang sempat muncul ganda. Gambar
+sintetis diuji tanpa pembayaran nyata. Split checkout dan pembulatan
+masih dalam pengerjaan. Paket pengguna belum dipasang ulang.

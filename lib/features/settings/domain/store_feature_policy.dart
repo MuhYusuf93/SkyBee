@@ -12,6 +12,7 @@ final class StoreFeaturePolicy {
     this.cost = true,
     this.barcode = true,
     this.expiry = true,
+    this.warranty = false,
     this.onboardingCompleted = true,
     this.revision = 1,
   });
@@ -25,11 +26,12 @@ final class StoreFeaturePolicy {
         cost: row['cost_visible'] == 1,
         barcode: row['barcode_visible'] == 1,
         expiry: row['expiry_visible'] == 1,
+        warranty: row['warranty_visible'] == 1,
         onboardingCompleted: row['onboarding_completed'] == 1,
         revision: row['revision'] as int,
       );
   final StockMode stockMode;
-  final bool enforced, wholesale, packaging, cost, barcode, expiry;
+  final bool enforced, wholesale, packaging, cost, barcode, expiry, warranty;
   final bool onboardingCompleted;
   final int taskPattern, revision;
 

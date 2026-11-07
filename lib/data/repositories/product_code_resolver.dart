@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import '../../core/domain/product_label_code.dart';
+import '../../core/domain/sale_receipt_code.dart';
 import 'keyset_queries.dart';
 import '../../core/security/recovery_mnemonic.dart';
 import '../../core/domain/app_error.dart';
@@ -10,10 +11,14 @@ import '../../core/domain/app_error.dart';
 /// old label cannot silently resolve to another product's coincident code.
 abstract final class ProductCodeResolver {
   static SqlQuery query(String input, {bool includeArchived = true}) {
-    if (RecoveryMnemonic.isRecoveryQr(input.trim())) {
+    final code = input.trim();
+    if (RecoveryMnemonic.isRecoveryQr(code)) {
       throw const AppError('m54RecoveryOnly');
     }
-    final code = input.trim(), id = ProductLabelCode.productId(code);
+    if (SaleReceiptCode.isSaleQr(code)) {
+      throw const AppError('m54SaleReceiptOnly');
+    }
+    final id = ProductLabelCode.productId(code);
     final filter = includeArchived || id != null ? '' : 'AND is_deleted=0';
     return SqlQuery(
       '''SELECT id FROM products WHERE (barcode=? OR sku=?) $filter

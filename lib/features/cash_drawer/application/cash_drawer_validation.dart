@@ -57,6 +57,8 @@ abstract final class CashDrawerValidation {
   }
 
   static Future<void> _validate(DatabaseExecutor db) async {
+    final schema =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
     // Constraints in an authenticated imported DB may have been removed. Bound
     // JSON in SQL before materializing any of these rows in Dart.
     final jsonColumns = {
@@ -293,7 +295,7 @@ abstract final class CashDrawerValidation {
                   (incoming.counts.isEmpty && outgoing.counts.isEmpty)) {
                 throw _invalid;
               }
-              await _reference(db, event, session, currency);
+              await _reference(db, event, session, currency, schema);
               try {
                 current = current.plus(incoming).minus(outgoing);
               } on Object {
@@ -401,6 +403,7 @@ abstract final class CashDrawerValidation {
     Map<String, Object?> event,
     Map<String, Object?> session,
     CurrencyPolicy currency,
+    int schema,
   ) async {
     final kind = event['source_kind'];
     if (kind == 'supplier_payment') {
@@ -482,6 +485,27 @@ abstract final class CashDrawerValidation {
       return;
     }
     if (kind == 'receivable' || kind == 'refund') {
+      if (kind == 'refund' && schema >= 42) {
+        final rows = await db.rawQuery(
+          '''SELECT f.id,f.method,f.amount_minor,f.drawer_mode,s.currency_code,s.currency_scale
+          FROM sale_return_refunds f JOIN sale_returns r ON r.id=f.sale_return_id
+          JOIN sale_transactions s ON s.id=r.sale_transaction_id WHERE f.event_id=?''',
+          [event['id']],
+        );
+        if (rows.isNotEmpty) {
+          final refund = rows.single;
+          if (refund['id'] != event['source_id'] ||
+              refund['method'] != 'cash' ||
+              refund['drawer_mode'] != session['policy_mode'] ||
+              event['cash_in_minor'] != 0 ||
+              refund['amount_minor'] != event['cash_out_minor'] ||
+              refund['currency_code'] != currency.code ||
+              refund['currency_scale'] != currency.scale) {
+            throw _invalid;
+          }
+          return;
+        }
+      }
       final rows = await db.query(
         'payments',
         columns: [

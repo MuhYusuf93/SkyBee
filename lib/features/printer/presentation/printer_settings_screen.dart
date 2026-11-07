@@ -37,6 +37,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
   String name = '';
   int paper = 58, font = 24, logoPercent = 100, lineGap = 6;
   PrinterProtocol protocol = PrinterProtocol.escPosRaster;
+  ReceiptCodeFormat receiptCode = ReceiptCodeFormat.code128;
   bool bold = false, logo = true;
   String header = 'center', footer = 'center';
   String? outcome;
@@ -59,6 +60,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
     feed.text,
     topFeed.text,
     protocol.name,
+    receiptCode.name,
     pageRows.text,
   ]);
   PrinterProfile profile() => PrinterProfile(
@@ -75,6 +77,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
     feed: int.parse(feed.text),
     topFeed: int.parse(topFeed.text),
     protocol: protocol,
+    receiptCode: receiptCode,
     pageRows: protocol.paged
         ? int.parse(pageRows.text)
         : (int.tryParse(pageRows.text) ?? 1024).clamp(128, 4096),
@@ -112,6 +115,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
     feed.text = '${value.feed}';
     topFeed.text = '${value.topFeed}';
     protocol = value.protocol;
+    receiptCode = value.receiptCode;
     pageRows.text = '${value.pageRows}';
   }
 
@@ -390,6 +394,32 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                             : (value) => setState(() => protocol = value!),
                       ),
                       Text(tr(context, 'm5ProtocolHelp')),
+                      DropdownButtonFormField<ReceiptCodeFormat>(
+                        key: ValueKey('receipt-code-${receiptCode.name}'),
+                        initialValue: receiptCode,
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          labelText: tr(context, 'm54ReceiptCodeFormat'),
+                        ),
+                        items: [
+                          for (final value in ReceiptCodeFormat.values)
+                            DropdownMenuItem(
+                              value: value,
+                              child: Text(
+                                tr(
+                                  context,
+                                  value == ReceiptCodeFormat.code128
+                                      ? 'm54ReceiptBarcode'
+                                      : 'm54ReceiptQr',
+                                ),
+                              ),
+                            ),
+                        ],
+                        onChanged: state.busy
+                            ? null
+                            : (value) => setState(() => receiptCode = value!),
+                      ),
+                      Text(tr(context, 'm54ReceiptCodeHelp')),
                       if (protocol.paged)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -415,6 +445,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                             ? null
                             : (value) => setState(() {
                                 final savedProtocol = protocol,
+                                    savedReceiptCode = receiptCode,
                                     savedPageRows = pageRows.text;
                                 apply(
                                   value.single == 80
@@ -422,6 +453,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                                       : const PrinterProfile(),
                                 );
                                 protocol = savedProtocol;
+                                receiptCode = savedReceiptCode;
                                 pageRows.text = savedPageRows;
                               }),
                       ),

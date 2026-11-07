@@ -12,6 +12,7 @@ SqlQuery reportSalesTotalsQuery(
   ReportFilter filter,
   CurrencyPolicy currency, {
   bool costKnowledge = false,
+  bool saleReturns = false,
 }) {
   final customer = filter.customerId == null ? '' : 'AND s.customer_id=?';
   final periodArgs = <Object?>[
@@ -25,12 +26,21 @@ SqlQuery reportSalesTotalsQuery(
         FROM sale_transactions s WHERE s.created_at>=? AND s.created_at<? $customer
       UNION ALL SELECT -s.total_rupiah,-s.cost_micros,1,${costKnowledge ? 's.cost_complete' : '1'},s.currency_code,s.currency_scale
         FROM sale_transaction_reversals r JOIN sale_transactions s ON s.id=r.sale_transaction_id
-        WHERE r.created_at>=? AND r.created_at<? $customer)
+        WHERE r.created_at>=? AND r.created_at<? $customer
+      ${saleReturns ? '''UNION ALL SELECT -r.net_minor,-r.cost_micros+r.write_down_micros,2,r.cost_complete,s.currency_code,s.currency_scale
+        FROM sale_returns r JOIN sale_transactions s ON s.id=r.sale_transaction_id
+        WHERE r.created_at>=? AND r.created_at<? $customer''' : ''})
       SELECT COALESCE(SUM(revenue),0) AS revenue,CASE WHEN SUM(cost_complete=0)>0 THEN NULL ELSE COALESCE(SUM(cost),0) END AS cost,
         COALESCE(SUM(cost_complete=0),0) AS incomplete,
-        COALESCE(SUM(kind=0),0) AS sales,COALESCE(SUM(kind=1),0) AS returns,
+        COALESCE(SUM(kind=0),0) AS sales,COALESCE(SUM(kind<>0),0) AS returns,
         COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch FROM events''',
-    [...periodArgs, ...periodArgs, currency.code, currency.scale],
+    [
+      ...periodArgs,
+      ...periodArgs,
+      if (saleReturns) ...periodArgs,
+      currency.code,
+      currency.scale,
+    ],
   );
 }
 
@@ -40,13 +50,15 @@ const _paymentOrigin = '''CASE
   ELSE 'unknown' END''';
 
 /// Each branch seeks its own indexed timestamp/id and returns at most 51 rows.
-/// UNION merges at most 102 candidates. Constants in the kind tie-breaker are
+/// UNION merges at most three bounded branches. Constants in the kind tie-breaker are
 /// translated into < / <= timestamp bounds, not an unindexed 3-column tuple.
 SqlQuery reportEventsQuery(
   ReportFilter filter,
   ReportCursor? after,
   int pageSize, {
   bool costKnowledge = false,
+  bool saleReturns = false,
+  bool saleRefunds = false,
 }) {
   validatePageSize(pageSize);
   if (filter.start.milliseconds >= filter.end.milliseconds) {
@@ -57,9 +69,15 @@ SqlQuery reportEventsQuery(
   }
   final args = <Object?>[];
   final branches = <String>[];
-  for (var kind = 0; kind < 2; kind++) {
-    final sales = filter.section == ReportSection.sales;
-    final alias = sales ? (kind == 0 ? 's' : 'r') : 'p';
+  final sales = filter.section == ReportSection.sales;
+  final branchCount = (sales ? saleReturns : saleRefunds) ? 3 : 2;
+  for (var kind = 0; kind < branchCount; kind++) {
+    final refund = !sales && kind == 2;
+    final alias = sales
+        ? (kind == 0 ? 's' : 'r')
+        : refund
+        ? 'f'
+        : 'p';
     final date = '$alias.created_at', id = '$alias.id';
     final conditions = <String>['$date>=?', '$date<?'];
     final cursorEnd = after == null
@@ -70,10 +88,10 @@ SqlQuery reportEventsQuery(
       cursorEnd < filter.end.milliseconds ? cursorEnd : filter.end.milliseconds,
     ]);
     if (filter.customerId != null) {
-      conditions.add('${sales ? 's' : 'p'}.customer_id=?');
+      conditions.add('${sales || refund ? 's' : 'p'}.customer_id=?');
       args.add(filter.customerId!.value);
     }
-    if (!sales) {
+    if (!sales && !refund) {
       conditions.add("p.kind='${kind == 0 ? 'receipt' : 'reversal'}'");
     }
     if (after != null) {
@@ -95,14 +113,35 @@ SqlQuery reportEventsQuery(
     final from = sales
         ? (kind == 0
               ? 'sale_transactions s'
-              : 'sale_transaction_reversals r JOIN sale_transactions s ON s.id=r.sale_transaction_id')
+              : '${kind == 1 ? 'sale_transaction_reversals' : 'sale_returns'} r JOIN sale_transactions s ON s.id=r.sale_transaction_id')
+        : refund
+        ? 'sale_return_refunds f JOIN sale_returns r ON r.id=f.sale_return_id JOIN sale_transactions s ON s.id=r.sale_transaction_id'
         : 'payments p LEFT JOIN customers c ON c.id=p.customer_id';
+    final saleAmount = switch (kind) {
+      0 => 's.total_rupiah',
+      1 => '-s.total_rupiah',
+      _ => '-r.net_minor',
+    };
+    final saleCost = switch (kind) {
+      0 => 's.cost_micros',
+      1 => '-s.cost_micros',
+      _ => '-r.cost_micros+r.write_down_micros',
+    };
+    final complete = kind == 2
+        ? 'r.cost_complete'
+        : costKnowledge
+        ? 's.cost_complete'
+        : '1';
     final columns = sales
         ? '''$id AS id,$date AS created_at,$kind AS kind,s.id AS sale_id,
-      ${kind == 0 ? '' : '-'}s.total_rupiah AS amount_minor,CASE WHEN ${costKnowledge ? 's.cost_complete' : '1'}=0 THEN NULL ELSE ${kind == 0 ? '' : '-'}s.cost_micros END AS cost_micros,
-      s.currency_code,s.currency_scale,s.customer_name_snapshot AS customer_name,'sale' AS origin,
+      $saleAmount AS amount_minor,CASE WHEN $complete=0 THEN NULL ELSE $saleCost END AS cost_micros,
+      s.currency_code,s.currency_scale,s.customer_name_snapshot AS customer_name,'${kind == 2 ? 'sale_return' : 'sale'}' AS origin,
       ${kind == 0 ? 'NULL' : 'r.reason'} AS reason,
       EXISTS(SELECT 1 FROM sale_transaction_reversals x WHERE x.sale_transaction_id=s.id) AS reversed'''
+        : refund
+        ? '''f.id,f.created_at,$kind AS kind,s.id AS sale_id,-f.amount_minor AS amount_minor,
+          0 AS cost_micros,s.currency_code,s.currency_scale,s.customer_name_snapshot AS customer_name,
+          'sale_refund' AS origin,r.reason,0 AS reversed'''
         : '''p.id,p.created_at,$kind AS kind,NULL AS sale_id,
       ${kind == 0 ? '' : '-'}p.amount_rupiah AS amount_minor,0 AS cost_micros,p.currency_code,p.currency_scale,
       c.name AS customer_name,$_paymentOrigin AS origin,p.reason,
@@ -139,6 +178,8 @@ final class SqliteReportsRepository {
       after,
       pageSize,
       costKnowledge: database.schemaVersion >= 17,
+      saleReturns: database.schemaVersion >= 41,
+      saleRefunds: database.schemaVersion >= 42,
     );
     final rows = await db.rawQuery(q.sql, q.arguments);
     await authorize?.call(db);
@@ -196,6 +237,7 @@ final class SqliteReportsRepository {
       filter,
       currency,
       costKnowledge: costKnowledge,
+      saleReturns: version >= 41,
     );
     final sales = (await db.rawQuery(
       salesQuery.sql,
@@ -204,20 +246,33 @@ final class SqliteReportsRepository {
     final paymentCustomer = filter.customerId == null
         ? ''
         : 'AND p.customer_id=?';
+    final refundCustomer = filter.customerId == null
+        ? ''
+        : 'AND s.customer_id=?';
     final payments = (await db.rawQuery(
       '''WITH events AS (
       SELECT CASE p.kind WHEN 'receipt' THEN p.amount_rupiah ELSE -p.amount_rupiah END AS amount,
         $_paymentOrigin AS origin,p.currency_code,p.currency_scale FROM payments p
-        WHERE p.kind IN ('receipt','reversal') AND p.created_at>=? AND p.created_at<? $paymentCustomer)
+        WHERE p.kind IN ('receipt','reversal') AND p.created_at>=? AND p.created_at<? $paymentCustomer
+      ${version >= 42 ? '''UNION ALL SELECT -f.amount_minor,'sale_refund',s.currency_code,s.currency_scale
+        FROM sale_return_refunds f JOIN sale_returns r ON r.id=f.sale_return_id
+        JOIN sale_transactions s ON s.id=r.sale_transaction_id
+        WHERE f.created_at>=? AND f.created_at<? $refundCustomer''' : ''})
       SELECT COALESCE(SUM(amount),0) AS amount,
         COALESCE(SUM(CASE WHEN origin='checkout' THEN amount ELSE 0 END),0) AS checkout,
         COALESCE(SUM(CASE WHEN origin='repayment' THEN amount ELSE 0 END),0) AS repayment,
         COALESCE(SUM(CASE WHEN origin='unknown' THEN amount ELSE 0 END),0) AS unknown,
+        COALESCE(SUM(CASE WHEN origin='sale_refund' THEN amount ELSE 0 END),0) AS refunds,
         COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch FROM events''',
-      [...periodArgs, currency.code, currency.scale],
+      [
+        ...periodArgs,
+        if (version >= 42) ...periodArgs,
+        currency.code,
+        currency.scale,
+      ],
     )).single;
     final debt = (await db.rawQuery(
-      '''WITH debts AS (${CashierStore.debtSql})
+      '''WITH debts AS (${CashierStore.debtSqlFor(version)})
       SELECT COALESCE(SUM(outstanding),0) AS balance,
       COALESCE(SUM(currency_code<>? OR currency_scale<>? OR outstanding<0),0) AS mismatch
       FROM debts ${filter.customerId == null ? '' : 'WHERE customer_id=?'}''',
@@ -258,6 +313,7 @@ final class SqliteReportsRepository {
       checkoutPaymentsMinor: payments['checkout'] as int,
       repaymentsMinor: payments['repayment'] as int,
       unknownPaymentsMinor: payments['unknown'] as int,
+      refundsMinor: payments['refunds'] as int,
       receivablesMinor: debt['balance'] as int,
       inventoryQuantity: inventory['quantity'] as int,
       inventoryMicros: inventory['value'] as int?,
@@ -310,7 +366,7 @@ final class SqliteReportsRepository {
           AND NOT EXISTS(SELECT 1 FROM payment_allocations o WHERE o.payment_id=p.reverses_payment_id
             AND o.sale_transaction_id=a.sale_transaction_id AND o.amount_rupiah=a.amount_rupiah)))''',
       'm4DebtCheck':
-          '''WITH debts AS (${CashierStore.debtSql}) SELECT COUNT(*) AS n FROM debts WHERE outstanding<0 OR outstanding>total_rupiah''',
+          '''WITH debts AS (${CashierStore.debtSqlFor(version)}) SELECT COUNT(*) AS n FROM debts WHERE outstanding<0 OR outstanding>total_rupiah''',
       'm4ReturnCheck':
           '''SELECT COUNT(*) AS n FROM sale_transaction_reversals r WHERE
         EXISTS(SELECT 1 FROM sale_transaction_items i WHERE i.sale_transaction_id=r.sale_transaction_id

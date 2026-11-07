@@ -67,6 +67,7 @@ final class ReportSummary {
     this.untrackedProductCount = 0,
     this.incompleteSaleEvents = 0,
     this.incompleteInventoryProducts = 0,
+    this.refundsMinor = 0,
   });
   final int untrackedProductCount,
       incompleteSaleEvents,
@@ -80,6 +81,7 @@ final class ReportSummary {
       checkoutPaymentsMinor,
       repaymentsMinor,
       unknownPaymentsMinor,
+      refundsMinor,
       receivablesMinor,
       inventoryQuantity,
       expiredQuantity,
@@ -114,6 +116,8 @@ final class ReportEntry {
   final String origin;
   final bool reversed;
   bool get isReversal => kind == 1;
+  bool get isSaleReturn => origin == 'sale_return';
+  bool get isSaleRefund => origin == 'sale_refund';
 }
 
 final class ReconciliationResult {

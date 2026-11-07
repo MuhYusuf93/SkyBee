@@ -17,7 +17,8 @@ final class ReceivablesService {
   final DatabaseCoordinator database;
   final CashierStore store;
   final Future<void> Function(String stage)? testStage;
-  static String get _debts => 'WITH debts AS (${CashierStore.debtSql})';
+  String get _debts =>
+      'WITH debts AS (${CashierStore.debtSqlFor(database.schemaVersion)})';
   Future<Page<SaleReceipt, DebtCursor>> transactions(
     EntityId customerId, {
     DebtCursor? after,

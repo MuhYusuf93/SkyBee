@@ -21,6 +21,7 @@ import '../../printer/presentation/receipt_policy_screen.dart';
 import '../../backup/presentation/backup_settings_screen.dart';
 import '../../alerts/presentation/alerts_screen.dart';
 import '../../cash_drawer/presentation/cash_drawer_policy_screen.dart';
+import 'qris_settings_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -120,6 +121,9 @@ class _SettingsFormState extends State<_SettingsForm> {
                   const CurrencySelector(),
                   for (final destination in [
                     (const CashDrawerPolicyScreen(), 'm53CashPolicy'),
+                    if (context.read<AppServices>().database.schemaVersion >=
+                        43)
+                      (const QrisSettingsScreen(), 'm54QrisImageTitle'),
                     (const TaskPatternScreen(), 'm53TaskPattern'),
                     (const FeatureSettingsScreen(), 'm53Features'),
                     (const LowPriceSettingsScreen(), 'm52LowPriceSettings'),

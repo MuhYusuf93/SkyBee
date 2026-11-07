@@ -69,6 +69,8 @@ final class SettingsService {
         }
         await dbTxn.update('store_feature_policy', {
           ...value.values,
+          if (database.schemaVersion >= 39)
+            'warranty_visible': value.warranty ? 1 : 0,
           'revision': current.revision + 1,
         }, where: 'id=1');
         await access.audit(dbTxn, 'store_feature_policy_changed');

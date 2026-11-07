@@ -26,6 +26,7 @@ import 'cart_provider.dart';
 import 'product_search_provider.dart';
 import 'checkout_screen.dart';
 import 'receipt_view.dart';
+import 'sale_returns_screen.dart';
 
 /// Cashier flow owns Cart and Search for its lifetime. Payment/history/debts
 /// create their own scoped state; public cashier never displays purchase cost.
@@ -186,6 +187,19 @@ class _CashierBodyState extends State<_CashierBody>
           ),
           child: Text(tr(context, 'debts')),
         ),
+        if (context.read<AppServices>().database.schemaVersion >= 42)
+          OutlinedButton.icon(
+            key: const ValueKey('cashier-sale-returns'),
+            onPressed: () async {
+              await Navigator.push<void>(
+                context,
+                MaterialPageRoute(builder: (_) => const SaleReturnsScreen()),
+              );
+              if (mounted) await context.read<CartProvider>().refresh();
+            },
+            icon: const Icon(Icons.assignment_return_outlined),
+            label: Text(tr(context, 'm54SaleReturnStock')),
+          ),
         OutlinedButton.icon(
           onPressed: _manage,
           icon: const Icon(Icons.lock_outline),

@@ -42,6 +42,7 @@ final class InventoryProduct {
   bool get stockTracked => row['stock_tracking_enabled'] != 0;
   int? get referenceCostMicros => row['reference_cost_micros'] as int?;
   ProductAttributes get attributes => ProductAttributes.fromRow(row);
+  int? get warrantyMonths => row['warranty_months'] as int?;
   bool get expiryEnabled => row['expiry_enabled'] == 1;
   bool get lowStock =>
       stockTracked &&
@@ -63,6 +64,7 @@ final class ProductInput {
     this.minStock = 5,
     this.lowStockEnabled = true,
     this.expiryEnabled = false,
+    this.warrantyMonths,
     this.attributes,
     this.shelfId,
     this.masterSupplierId,
@@ -79,6 +81,7 @@ final class ProductInput {
   final int minStock;
   final bool lowStockEnabled;
   final bool expiryEnabled;
+  final int? warrantyMonths;
   final ProductAttributes? attributes;
   final EntityId? shelfId;
   final EntityId? masterSupplierId;
