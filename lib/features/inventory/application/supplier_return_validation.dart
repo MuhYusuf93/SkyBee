@@ -62,7 +62,25 @@ abstract final class SupplierReturnValidation {
 
   static Future<void> _validate(DatabaseExecutor db) async {
     if ((await db.rawQuery('PRAGMA foreign_key_check')).isNotEmpty) _bad();
+    final version =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
     for (final sql in [
+      if (version >= 47) ...[
+        '''SELECT 1 FROM supplier_return_draft_lines l JOIN supplier_return_drafts d
+        ON d.id=l.draft_id WHERE typeof(l.reservation_active)<>'integer' OR
+        l.reservation_active NOT IN (0,1) OR (l.reservation_active=1 AND d.status='posted')
+        LIMIT 1''',
+        '''SELECT 1 FROM supplier_stock_reserved_batches r LEFT JOIN stock_batches b
+        ON b.id=r.batch_id WHERE b.id IS NULL OR r.quantity>b.remaining_quantity LIMIT 1''',
+        '''SELECT 1 FROM supplier_stock_reserved_batches r JOIN stock_batches b ON b.id=r.batch_id
+        JOIN products p ON p.id=b.product_id GROUP BY p.id HAVING
+        p.stock_tracking_enabled<>1 OR SUM(r.quantity)>p.stock_quantity LIMIT 1''',
+        '''SELECT 1 FROM supplier_return_reservations r JOIN stock_receipt_items i
+        ON i.id=r.receipt_item_id GROUP BY r.receipt_item_id HAVING SUM(r.quantity)>
+        i.quantity-COALESCE((SELECT e.returned_after FROM supplier_return_source_events e
+          WHERE e.receipt_item_id=r.receipt_item_id ORDER BY e.sequence DESC LIMIT 1),0)
+        LIMIT 1''',
+      ],
       '''SELECT 1 FROM supplier_return_drafts d JOIN stock_receipts r ON r.id=d.receipt_id
         LEFT JOIN supplier_invoices i ON i.id=d.source_invoice_id WHERE
         d.currency_code<>r.currency_code OR d.currency_scale<>r.currency_scale OR

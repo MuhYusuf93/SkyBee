@@ -113,23 +113,30 @@ final class InventoryService {
     void Function()? requireIntent,
   }) {
     final generation = access.generation;
-    return database.transaction((dbTxn) async {
-      await access.authorize(dbTxn, capability: capability);
-      if (access.generation != generation) {
-        throw const AppError('m53SupplierAccessChanged');
-      }
-      // Input cancellation supplements the persisted role proof; a stale route
-      // cannot publish or commit a draft merely because a lookup finished late.
-      requireIntent?.call();
-      final result = await operation(dbTxn);
-      await access.authorize(dbTxn, capability: capability);
-      if (access.generation != generation) {
-        throw const AppError('m53SupplierAccessChanged');
-      }
-      requireIntent?.call();
-      access.touch();
-      return result;
-    }, inventoryChanged: inventoryChanged);
+    return database
+        .transaction((dbTxn) async {
+          await access.authorize(dbTxn, capability: capability);
+          if (access.generation != generation) {
+            throw const AppError('m53SupplierAccessChanged');
+          }
+          // Input cancellation supplements the persisted role proof; a stale route
+          // cannot publish or commit a draft merely because a lookup finished late.
+          requireIntent?.call();
+          final result = await operation(dbTxn);
+          await access.authorize(dbTxn, capability: capability);
+          if (access.generation != generation) {
+            throw const AppError('m53SupplierAccessChanged');
+          }
+          requireIntent?.call();
+          access.touch();
+          return result;
+        }, inventoryChanged: inventoryChanged)
+        .onError<DatabaseException>((error, stack) {
+          if (error.toString().contains('m54StockReservedForSupplier')) {
+            throw const AppError('m54StockReservedForSupplier');
+          }
+          Error.throwWithStackTrace(error, stack);
+        });
   }
 
   /// Durable input does not invalidate underlying catalogue pages after every
@@ -1580,18 +1587,25 @@ final class InventoryService {
     } else {
       final removed = _removal(old, -delta);
       nextValue = value - removed;
-      final batches = await dbTxn.query(
-        'stock_batches',
-        where: 'product_id=? AND remaining_quantity>0',
-        whereArgs: [id.value],
-        orderBy:
-            'CASE WHEN expiry_date IS NULL THEN 1 ELSE 0 END, expiry_date, received_at, id',
+      final reserveStock = database.schemaVersion >= 47;
+      final batches = await dbTxn.rawQuery(
+        '''SELECT b.*, ${reserveStock ? 'COALESCE(r.quantity,0)' : '0'} AS reserved_quantity
+        FROM stock_batches b
+        ${reserveStock ? 'LEFT JOIN supplier_stock_reserved_batches r ON r.batch_id=b.id' : ''}
+        WHERE b.product_id=? AND b.remaining_quantity>0
+        ORDER BY CASE WHEN b.expiry_date IS NULL THEN 1 ELSE 0 END,
+          b.expiry_date,b.received_at,b.id''',
+        [id.value],
       );
       var remaining = -delta, valueLeft = removed;
+      var hasReservation = false;
       for (final row in batches) {
-        final take = (row['remaining_quantity'] as int) < remaining
-            ? row['remaining_quantity'] as int
-            : remaining;
+        final physical = row['remaining_quantity'] as int;
+        final reserved = row['reserved_quantity'] as int;
+        final available = physical - reserved;
+        hasReservation = hasReservation || reserved > 0;
+        if (available <= 0) continue;
+        final take = available < remaining ? available : remaining;
         final share = take == remaining
             ? valueLeft
             : removalCost(
@@ -1601,7 +1615,7 @@ final class InventoryService {
               );
         await dbTxn.update(
           'stock_batches',
-          {'remaining_quantity': (row['remaining_quantity'] as int) - take},
+          {'remaining_quantity': physical - take},
           where: 'id=?',
           whereArgs: [row['id']],
         );
@@ -1621,7 +1635,11 @@ final class InventoryService {
         if (remaining == 0) break;
       }
       if (remaining != 0) {
-        throw const AppError('batchReconciliationRequired');
+        throw AppError(
+          hasReservation
+              ? 'm54StockReservedForSupplier'
+              : 'batchReconciliationRequired',
+        );
       }
     }
     await _stock(
@@ -1806,9 +1824,12 @@ final class InventoryService {
                 columns: ['time_zone'],
               )).single['time_zone']
               as String;
-      final items = await warehouseProductsOn(dbTxn, [
-        for (final id in ids) byId[id]!,
-      ], access.clock.today(zone).iso);
+      final items = await warehouseProductsOn(
+        dbTxn,
+        [for (final id in ids) byId[id]!],
+        access.clock.today(zone).iso,
+        reserveStock: database.schemaVersion >= 47,
+      );
       return Page(
         items: items,
         nextCursor: rows.length > 50
@@ -1855,7 +1876,12 @@ final class InventoryService {
       );
       final rows = await dbTxn.rawQuery(query.sql, query.arguments);
       final selected = rows.take(pageSize).toList();
-      final items = await warehouseProductsOn(dbTxn, selected, day);
+      final items = await warehouseProductsOn(
+        dbTxn,
+        selected,
+        day,
+        reserveStock: database.schemaVersion >= 47,
+      );
       if (access.clock.today(zone).iso != day ||
           database.generation != generation) {
         throw const AppError('m53WarehouseChanged');
@@ -1962,7 +1988,12 @@ final class InventoryService {
         ),
       );
     }
-    return (await warehouseProductsOn(db, [details], today)).single;
+    return (await warehouseProductsOn(
+      db,
+      [details],
+      today,
+      reserveStock: database.schemaVersion >= 47,
+    )).single;
   }
 
   Future<Page<StockBatch, BatchCursor>> batches(

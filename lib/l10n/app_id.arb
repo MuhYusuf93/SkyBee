@@ -6583,5 +6583,17 @@
   "m54SupplierLinkArchived": "Diarsipkan",
   "@m54SupplierLinkArchived": {
     "description": "Product form master supplier selection and archive state."
+  },
+  "m54StockReservedForSupplier": "Sebagian stok sudah disiapkan untuk retur supplier. Kurangi jumlah atau lepaskan reservasi terlebih dahulu.",
+  "@m54StockReservedForSupplier": {
+    "description": "Supplier return stock reservation and physical quantity prompt."
+  },
+  "m54ReturnReviewReservation": "Tinjau draft lama untuk mereservasi jumlah sebelum konfirmasi.",
+  "@m54ReturnReviewReservation": {
+    "description": "Supplier return stock reservation and physical quantity prompt."
+  },
+  "m54ReturnCountPhysical": "Masukkan jumlah fisik yang disiapkan",
+  "@m54ReturnCountPhysical": {
+    "description": "Supplier return stock reservation and physical quantity prompt."
   }
 }

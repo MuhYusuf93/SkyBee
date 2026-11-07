@@ -102,8 +102,16 @@ extension SupplierReturnPosting on InventoryService {
     final sources = <String, Map<String, Object?>>{},
         products = <String, Map<String, Object?>>{};
     for (final line in doc.lines) {
+      if (database.schemaVersion >= 47 && !line.reserved) {
+        throw const AppError('m54ReturnReviewReservation');
+      }
       final source = await _returnSourceOn(db, doc.receipt, line.item);
-      _returnQuantity(source, line.quantity);
+      await _requireReturnAvailableOn(
+        db,
+        source,
+        line.quantity,
+        currentLine: line.id,
+      );
       if (source['product_revision'] != line.row['product_revision'] ||
           source['stock_revision'] != line.row['stock_revision'] ||
           (source['tracked'] == 1) != line.tracked ||
@@ -117,6 +125,16 @@ extension SupplierReturnPosting on InventoryService {
       }
       sources[line.id.value] = source;
       products.putIfAbsent(line.product.value, () => _returnProduct(source));
+    }
+    if (database.schemaVersion >= 47) {
+      // Release this draft's own hold before consuming its batch. A later
+      // failure rolls back the release together with the stock and return.
+      await db.update(
+        'supplier_return_draft_lines',
+        {'reservation_active': 0},
+        where: 'draft_id=?',
+        whereArgs: [id.value],
+      );
     }
     final recordedAt = access.clock.milliseconds;
     await db.insert('supplier_returns', {

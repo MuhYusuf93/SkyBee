@@ -78,8 +78,9 @@ SqlQuery warehouseQuery(
 Future<List<InventoryProduct>> warehouseProductsOn(
   DatabaseExecutor db,
   List<Map<String, Object?>> rows,
-  String today,
-) async {
+  String today, {
+  bool reserveStock = false,
+}) async {
   if (rows.isEmpty) return const [];
   if (rows.length > 200) throw RangeError.range(rows.length, 1, 200);
   final ids = rows.map((r) => r['id']).toList(),
@@ -87,13 +88,17 @@ Future<List<InventoryProduct>> warehouseProductsOn(
   final upcoming = DateTime.parse(
     today,
   ).add(const Duration(days: 5)).toIso8601String().substring(0, 10);
+  final reserved = reserveStock ? 'COALESCE(r.quantity,0)' : '0';
   final batches = await db.rawQuery(
-    '''SELECT product_id,
+    '''SELECT b.product_id,
     SUM(CASE WHEN expiry_date<=? THEN remaining_quantity ELSE 0 END) AS expired,
     SUM(CASE WHEN expiry_date IS NULL THEN remaining_quantity ELSE 0 END) AS undated,
-    SUM(CASE WHEN expiry_date IS NULL OR expiry_date>? THEN remaining_quantity ELSE 0 END) AS eligible,
-    SUM(CASE WHEN expiry_date>? AND expiry_date<=? THEN remaining_quantity ELSE 0 END) AS upcoming
-    FROM stock_batches WHERE product_id IN($marks) AND remaining_quantity>0 GROUP BY product_id''',
+    SUM(CASE WHEN expiry_date IS NULL OR expiry_date>? THEN remaining_quantity-$reserved ELSE 0 END) AS eligible,
+    SUM(CASE WHEN expiry_date>? AND expiry_date<=? THEN remaining_quantity ELSE 0 END) AS upcoming,
+    SUM($reserved) AS reserved
+    FROM stock_batches b
+    ${reserveStock ? 'LEFT JOIN supplier_stock_reserved_batches r ON r.batch_id=b.id' : ''}
+    WHERE b.product_id IN($marks) AND remaining_quantity>0 GROUP BY b.product_id''',
     [today, today, today, upcoming, ...ids],
   );
   final byId = {for (final b in batches) b['product_id']: b};
@@ -111,7 +116,8 @@ Future<List<InventoryProduct>> warehouseProductsOn(
           reference != null &&
           reference.compareTo(today) <= 0;
       row['reference_expired'] = referenceExpired ? 1 : 0;
-      var saleable = quantity;
+      final held = tracked ? (b?['reserved'] as int?) ?? 0 : 0;
+      var saleable = held <= quantity ? quantity - held : 0;
       if (tracked && expiry) {
         final eligible = (b?['eligible'] as int?) ?? 0;
         if (eligible < saleable) saleable = eligible;

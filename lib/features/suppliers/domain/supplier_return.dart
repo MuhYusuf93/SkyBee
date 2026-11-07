@@ -10,6 +10,7 @@ final class SupplierReturnLine {
       row['batch_id'] == null ? null : EntityId(row['batch_id'] as String);
   int get quantity => row['quantity'] as int;
   bool get tracked => row['tracked'] == 1;
+  bool get reserved => row['reservation_active'] == 1;
   String get name => row['product_name_snapshot'] as String;
 }
 

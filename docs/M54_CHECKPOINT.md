@@ -197,3 +197,20 @@ dan pelepasan supplier lewat chip. Perbaikan fixture mempertahankan harga
 beli di bawah eceran, versi uji 36→37, dan tombol Edit eksplisit. APK debug
 biasa lulus verifikasi tiga ABI dan alignment 16 KiB tanpa instalasi.
 Reservasi retur, karantina, lampiran, acceptance dan handoff masih terbuka.
+
+## Tahap 4 · reservasi batch dengan nota · skema 47
+
+Draft yang bersumber dari nota menahan kapasitas sumber dan batch, tanpa
+mengurangi stok fisik atau nilainya. Checkout dan pengeluaran umum memakai
+unit bebas. Migrasi menyimpan draft lama yang tumpang tindih dan meminta
+review untuk membuat reservasi. Batal melepaskan reservasi. Konfirmasi
+melepaskan reservasinya dan mengurangi stok dalam transaksi yang sama.
+Untuk barang untracked, UI meminta jumlah fisik yang disiapkan.
+
+Regresi 26 kasus host lulus sebelum satu tes fixture migrasi opname lama
+diulang dan lulus pada target yang dimaksud, skema 29. Dua kasus reservasi
+dan migrasi draft juga lulus dalam tes ulang terfokus. Analyzer bersih.
+Audit lokalisasi 1635/1016/245. Build debug biasa
+lulus verifikasi tiga ABI dan alignment 16 KiB tanpa instalasi. Draft
+karantina lintas supplier, asal belum diketahui, penyerahan parsial dan
+acceptance perangkat masih terbuka.

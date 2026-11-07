@@ -116,11 +116,16 @@ final class CheckoutService {
     final sort = expiry
         ? "COALESCE(expiry_date,'9999-99-99'),received_at,id"
         : 'received_at,id';
+    final reserved = database.schemaVersion >= 47
+        ? 'COALESCE(r.quantity,0)'
+        : '0';
     List<Object?>? cursor;
     var needed = quantity;
     while (needed > 0) {
       final rows = await dbTxn.rawQuery(
-        '''SELECT * FROM stock_batches WHERE product_id=? AND remaining_quantity>0
+        '''SELECT b.*,$reserved AS reserved_quantity FROM stock_batches b
+        ${database.schemaVersion >= 47 ? 'LEFT JOIN supplier_stock_reserved_batches r ON r.batch_id=b.id' : ''}
+        WHERE b.product_id=? AND b.remaining_quantity>$reserved
         ${expiry ? 'AND (expiry_date IS NULL OR expiry_date>?)' : ''}
         ${cursor == null ? '' : 'AND ($sort)>(${List.filled(cursor.length, '?').join(',')})'}
         ORDER BY $sort LIMIT 100''',
@@ -129,7 +134,8 @@ final class CheckoutService {
       if (rows.isEmpty) throw const AppError('insufficientSaleableStock');
       for (final batch in rows) {
         final remaining = batch['remaining_quantity'] as int;
-        final take = needed < remaining ? needed : remaining;
+        final available = remaining - (batch['reserved_quantity'] as int);
+        final take = needed < available ? needed : available;
         final changed = await dbTxn.update(
           'stock_batches',
           {'remaining_quantity': remaining - take},

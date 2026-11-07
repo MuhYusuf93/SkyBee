@@ -5507,4 +5507,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m54SupplierLinkArchived => 'Archived';
+
+  @override
+  String get m54StockReservedForSupplier =>
+      'Some stock is reserved for a supplier return. Reduce the quantity or release the reservation first.';
+
+  @override
+  String get m54ReturnReviewReservation =>
+      'Review this older draft to reserve the quantity before confirming.';
+
+  @override
+  String get m54ReturnCountPhysical => 'Enter the physical quantity set aside';
 }

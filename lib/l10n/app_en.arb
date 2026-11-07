@@ -6583,5 +6583,17 @@
   "m54SupplierLinkArchived": "Archived",
   "@m54SupplierLinkArchived": {
     "description": "Product form master supplier selection and archive state."
+  },
+  "m54StockReservedForSupplier": "Some stock is reserved for a supplier return. Reduce the quantity or release the reservation first.",
+  "@m54StockReservedForSupplier": {
+    "description": "Supplier return stock reservation and physical quantity prompt."
+  },
+  "m54ReturnReviewReservation": "Review this older draft to reserve the quantity before confirming.",
+  "@m54ReturnReviewReservation": {
+    "description": "Supplier return stock reservation and physical quantity prompt."
+  },
+  "m54ReturnCountPhysical": "Enter the physical quantity set aside",
+  "@m54ReturnCountPhysical": {
+    "description": "Supplier return stock reservation and physical quantity prompt."
   }
 }

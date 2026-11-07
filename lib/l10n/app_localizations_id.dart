@@ -5533,4 +5533,15 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m54SupplierLinkArchived => 'Diarsipkan';
+
+  @override
+  String get m54StockReservedForSupplier =>
+      'Sebagian stok sudah disiapkan untuk retur supplier. Kurangi jumlah atau lepaskan reservasi terlebih dahulu.';
+
+  @override
+  String get m54ReturnReviewReservation =>
+      'Tinjau draft lama untuk mereservasi jumlah sebelum konfirmasi.';
+
+  @override
+  String get m54ReturnCountPhysical => 'Masukkan jumlah fisik yang disiapkan';
 }

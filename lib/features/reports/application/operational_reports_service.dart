@@ -234,7 +234,12 @@ final class OperationalReportsService {
       }
       if (sources.isEmpty) break;
       final stock = scope.section == OperationalSection.potential
-          ? await warehouseProductsOn(sql, sources, c.day)
+          ? await warehouseProductsOn(
+              sql,
+              sources,
+              c.day,
+              reserveStock: database.schemaVersion >= 47,
+            )
           : const <InventoryProduct>[];
       for (var n = 0; n < sources.length; n++) {
         final row = _value(

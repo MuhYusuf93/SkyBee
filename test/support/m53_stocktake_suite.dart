@@ -251,7 +251,11 @@ void m53StocktakeSuite(DatabaseFactory factory) {
         }
       });
       await old.close();
-      old = DatabaseCoordinator(factory: factory, databasePath: oldPath);
+      old = DatabaseCoordinator(
+        factory: factory,
+        databasePath: oldPath,
+        schemaVersion: 29,
+      );
       try {
         await old.read((sql) async {
           for (final name in before.keys) {

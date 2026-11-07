@@ -9889,6 +9889,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Archived'**
   String get m54SupplierLinkArchived;
+
+  /// Supplier return stock reservation and physical quantity prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Some stock is reserved for a supplier return. Reduce the quantity or release the reservation first.'**
+  String get m54StockReservedForSupplier;
+
+  /// Supplier return stock reservation and physical quantity prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Review this older draft to reserve the quantity before confirming.'**
+  String get m54ReturnReviewReservation;
+
+  /// Supplier return stock reservation and physical quantity prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the physical quantity set aside'**
+  String get m54ReturnCountPhysical;
 }
 
 class _AppLocalizationsDelegate

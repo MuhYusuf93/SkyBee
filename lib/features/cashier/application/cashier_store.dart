@@ -132,26 +132,19 @@ final class CashierStore {
       for (final row in promotions)
         row['product_id'] as String: QuantityPromotion.fromRow(row).snapshot,
     };
-    final batches = await db.rawQuery(
-      '''SELECT product_id,SUM(remaining_quantity) AS eligible
-      FROM stock_batches WHERE product_id IN($marks) AND (expiry_date IS NULL OR expiry_date>?)
-      GROUP BY product_id''',
-      [...values, today],
-    );
-    final eligible = {
-      for (final row in batches)
-        row['product_id'] as String: row['eligible'] as int,
-    };
+    final availability = await _availabilityOn(db, values, today, schema);
     final byId = <String, CashierProduct>{};
     for (final source in rows) {
       final row = Map<String, Object?>.of(source), id = source['id'] as String;
       row['promotion_json'] = promoByProduct[id];
       final tracked = row['stock_tracking_enabled'] != 0,
           expiry = row['expiry_enabled'] == 1;
-      var saleable = row['stock_quantity'] as int;
-      if (tracked && expiry && (eligible[id] ?? 0) < saleable) {
-        saleable = eligible[id] ?? 0;
-      }
+      final saleable = _saleableQuantity(
+        row,
+        availability[id],
+        tracked,
+        expiry,
+      );
       final reference = row['reference_expiry_date'] as String?;
       final expired =
           !tracked &&
@@ -166,6 +159,47 @@ final class CashierStore {
         (id) => byId[id.value] ?? (throw const AppError('productNotFound')),
       ),
     );
+  }
+
+  Future<Map<String, ({int eligible, int reserved})>> _availabilityOn(
+    DatabaseExecutor db,
+    List<String> ids,
+    String today,
+    int schema,
+  ) async {
+    final marks = List.filled(ids.length, '?').join(',');
+    final reserved = schema >= 47 ? 'COALESCE(r.quantity,0)' : '0';
+    final rows = await db.rawQuery(
+      '''SELECT b.product_id,
+      SUM(CASE WHEN b.expiry_date IS NULL OR b.expiry_date>?
+        THEN b.remaining_quantity-$reserved ELSE 0 END) AS eligible,
+      SUM($reserved) AS reserved
+      FROM stock_batches b
+      ${schema >= 47 ? 'LEFT JOIN supplier_stock_reserved_batches r ON r.batch_id=b.id' : ''}
+      WHERE b.product_id IN($marks) GROUP BY b.product_id''',
+      [today, ...ids],
+    );
+    return {
+      for (final row in rows)
+        row['product_id'] as String: (
+          eligible: row['eligible'] as int,
+          reserved: row['reserved'] as int,
+        ),
+    };
+  }
+
+  int _saleableQuantity(
+    Map<String, Object?> product,
+    ({int eligible, int reserved})? batches,
+    bool tracked,
+    bool expiry,
+  ) {
+    final physical = product['stock_quantity'] as int;
+    if (!tracked) return physical;
+    final unreserved = physical - (batches?.reserved ?? 0);
+    if (unreserved <= 0) return 0;
+    final eligible = batches?.eligible ?? 0;
+    return expiry && eligible < unreserved ? eligible : unreserved;
   }
 
   Future<CashierProduct> product(DatabaseExecutor db, EntityId id) async {
@@ -190,20 +224,19 @@ final class CashierStore {
           ? null
           : QuantityPromotion.fromRow(promo.single).snapshot;
     }
-    var saleable = row['stock_quantity'] as int;
-    if (row['stock_tracking_enabled'] != 0 && row['expiry_enabled'] == 1) {
+    final tracked = row['stock_tracking_enabled'] != 0;
+    final expiry = row['expiry_enabled'] == 1;
+    ({int eligible, int reserved})? availability;
+    if (tracked && (expiry || schema >= 47)) {
       final today = clock
           .today((await settings(db))['time_zone'] as String)
           .iso;
-      final eligible =
-          (await db.rawQuery(
-                'SELECT COALESCE(SUM(remaining_quantity),0) AS quantity FROM stock_batches WHERE product_id=? AND (expiry_date IS NULL OR expiry_date>?)',
-                [id.value, today],
-              )).single['quantity']
-              as int;
-      // An unallocated legacy quantity is not evidence of an eligible batch.
-      // Checkout needs those batches too; fail closed without rewriting stock.
-      if (eligible < saleable) saleable = eligible;
+      availability = (await _availabilityOn(
+        db,
+        [id.value],
+        today,
+        schema,
+      ))[id.value];
     }
     // Expiry is eligibility, independent of whether quantity is tracked. The
     // sentinel must not bypass a retained reference date after mode changes.
@@ -217,8 +250,12 @@ final class CashierStore {
             ) <=
             0;
     row['reference_expired'] = referenceExpired ? 1 : 0;
-    if (referenceExpired) saleable = 0;
-    return CashierProduct(row, saleable);
+    return CashierProduct(
+      row,
+      referenceExpired
+          ? 0
+          : _saleableQuantity(row, availability, tracked, expiry),
+    );
   }
 
   Future<CartSnapshot> cart(DatabaseExecutor db, EntityId id) async {

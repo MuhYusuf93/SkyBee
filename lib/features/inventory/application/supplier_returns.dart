@@ -135,6 +135,42 @@ extension SupplierReturns on InventoryService {
     }
   }
 
+  /// Existing reservations consume both receipt eligibility and physical
+  /// availability. A quantity edit excludes only the line being replaced.
+  Future<void> _requireReturnAvailableOn(
+    DatabaseExecutor db,
+    Map<String, Object?> source,
+    int quantity, {
+    EntityId? currentLine,
+  }) async {
+    _returnQuantity(source, quantity);
+    if (database.schemaVersion < 47) return;
+    final held = (await db.rawQuery(
+      '''SELECT
+      COALESCE((SELECT SUM(quantity) FROM supplier_return_reservations
+        WHERE receipt_item_id=? AND id IS NOT ?),0) AS receipt_qty,
+      COALESCE((SELECT SUM(quantity) FROM supplier_stock_reserved_batches
+        WHERE batch_id=?),0) -
+      COALESCE((SELECT quantity FROM supplier_return_reservations
+        WHERE id=? AND batch_id IS NOT NULL),0) AS batch_qty''',
+      [
+        source['receipt_item_id'],
+        currentLine?.value,
+        source['source_batch_id'],
+        currentLine?.value,
+      ],
+    )).single;
+    if (quantity >
+            (source['eligible_quantity'] as int) -
+                (held['receipt_qty'] as int) ||
+        source['tracked'] == 1 &&
+            quantity >
+                (source['batch_remaining'] as int) -
+                    (held['batch_qty'] as int)) {
+      throw const AppError('m54StockReservedForSupplier');
+    }
+  }
+
   Future<SupplierReturnDraft> _returnDraftOn(
     DatabaseExecutor db,
     EntityId id,
@@ -237,9 +273,18 @@ extension SupplierReturns on InventoryService {
             after.revision != database.revision)) {
       throw const AppError('m53ReturnChanged');
     }
+    final sourceSql = '''$_returnSourceSql WHERE i.stock_receipt_id=?
+      ${after == null ? '' : 'AND i.id>?'} ORDER BY i.id COLLATE BINARY LIMIT 51''';
     final rows = await db.rawQuery(
-      '''$_returnSourceSql WHERE i.stock_receipt_id=? ${after == null ? '' : 'AND i.id>?'}
-      ORDER BY i.id COLLATE BINARY LIMIT 51''',
+      database.schemaVersion < 47
+          ? sourceSql
+          : '''
+      SELECT s.*, MAX(0,s.eligible_quantity-COALESCE((
+        SELECT SUM(r.quantity) FROM supplier_return_reservations r
+        WHERE r.receipt_item_id=s.receipt_item_id),0)) AS available_source_quantity,
+        MAX(0,s.batch_remaining-COALESCE((SELECT r.quantity FROM supplier_stock_reserved_batches r
+        WHERE r.batch_id=s.source_batch_id),0)) AS available_batch_quantity
+      FROM ($sourceSql) s ORDER BY s.receipt_item_id COLLATE BINARY''',
       [receipt.value, if (after != null) after.id.value],
     );
     final page = rows.take(50).toList();
@@ -268,7 +313,7 @@ extension SupplierReturns on InventoryService {
     if (doc.lines.length >= 100) throw const AppError('m53ReturnLimit');
     await _returnReceiptOn(db, doc.receipt);
     final source = await _returnSourceOn(db, doc.receipt, item);
-    _returnQuantity(source, quantity);
+    await _requireReturnAvailableOn(db, source, quantity);
     if (source['currency_code'] != doc.currency.code ||
         source['currency_scale'] != doc.currency.scale) {
       throw const AppError('currencyMismatch');
@@ -292,10 +337,11 @@ extension SupplierReturns on InventoryService {
       'stock_revision': source['stock_revision'],
       'tracked': source['tracked'],
       'position': next,
+      if (database.schemaVersion >= 47) 'reservation_active': 1,
     });
     await _bumpReturnOn(db, doc);
     return _returnDraftOn(db, id);
-  }, inventoryChanged: false);
+  }, inventoryChanged: database.schemaVersion >= 47);
 
   Future<SupplierReturnDraft> setSupplierReturnQuantity(
     EntityId id,
@@ -307,16 +353,24 @@ extension SupplierReturns on InventoryService {
     final current = doc.lines.where((value) => value.id == line);
     if (current.length != 1) throw const AppError('m53ReturnChanged');
     final source = await _returnSourceOn(db, doc.receipt, current.single.item);
-    _returnQuantity(source, quantity);
+    if ((source['tracked'] == 1) != current.single.tracked ||
+        (current.single.tracked &&
+            source['source_batch_id'] != current.single.batch?.value)) {
+      throw const AppError('m53ReturnSourceUnavailable');
+    }
+    await _requireReturnAvailableOn(db, source, quantity, currentLine: line);
     await db.update(
       'supplier_return_draft_lines',
-      {'quantity': quantity},
+      {
+        'quantity': quantity,
+        if (database.schemaVersion >= 47) 'reservation_active': 1,
+      },
       where: 'id=? AND draft_id=?',
       whereArgs: [line.value, id.value],
     );
     await _bumpReturnOn(db, doc);
     return _returnDraftOn(db, id);
-  }, inventoryChanged: false);
+  }, inventoryChanged: database.schemaVersion >= 47);
 
   Future<SupplierReturnDraft> removeSupplierReturnLine(
     EntityId id,
@@ -334,7 +388,7 @@ extension SupplierReturns on InventoryService {
     }
     await _bumpReturnOn(db, doc);
     return _returnDraftOn(db, id);
-  }, inventoryChanged: false);
+  }, inventoryChanged: database.schemaVersion >= 47);
 
   Future<SupplierReturnDraft> saveSupplierReturnReason(
     EntityId id,
@@ -357,7 +411,12 @@ extension SupplierReturns on InventoryService {
     await _returnReceiptOn(db, doc.receipt);
     for (final line in doc.lines) {
       final source = await _returnSourceOn(db, doc.receipt, line.item);
-      _returnQuantity(source, line.quantity);
+      await _requireReturnAvailableOn(
+        db,
+        source,
+        line.quantity,
+        currentLine: line.id,
+      );
       if ((source['tracked'] == 1) != line.tracked ||
           (line.tracked && source['source_batch_id'] != line.batch?.value)) {
         throw const AppError('m53ReturnSourceUnavailable');
@@ -367,6 +426,7 @@ extension SupplierReturns on InventoryService {
         {
           'product_revision': source['product_revision'],
           'stock_revision': source['stock_revision'],
+          if (database.schemaVersion >= 47) 'reservation_active': 1,
         },
         where: 'id=?',
         whereArgs: [line.id.value],
@@ -374,7 +434,7 @@ extension SupplierReturns on InventoryService {
     }
     await _bumpReturnOn(db, doc);
     return _returnDraftOn(db, id);
-  }, inventoryChanged: false);
+  }, inventoryChanged: database.schemaVersion >= 47);
 
   Future<SupplierReturnDraft> cancelSupplierReturnDraft(
     EntityId id,
@@ -388,7 +448,7 @@ extension SupplierReturns on InventoryService {
     }
     await _bumpReturnOn(db, doc, status: 'cancelled', reason: note);
     return _returnDraftOn(db, id);
-  }, inventoryChanged: false);
+  }, inventoryChanged: database.schemaVersion >= 47);
 
   Future<SupplierReturnDocument> _returnDocumentOn(
     DatabaseExecutor db,

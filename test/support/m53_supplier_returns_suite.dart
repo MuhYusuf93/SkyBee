@@ -77,6 +77,212 @@ void m53SupplierReturnsSuite(DatabaseFactory factory) {
         as String,
   );
   test(
+    'M54 supplier reservations survive reopen and checkout spends only unreserved pieces',
+    () async {
+      final id = await product('PUBLIC RESERVED PRODUCT');
+      final receipt = await app.inventory.receive(
+        id,
+        5,
+        cost(10000),
+        operationKey: 'PUBLIC RESERVED RECEIPT',
+        supplierId: supplier,
+      );
+      final source = await item(receipt);
+      var cart = await app.cart.open();
+      cart = await app.cart.add(cart.id, id);
+      cart = await app.cart.quantity(cart.id, id, 5);
+      var first = await app.inventory.createSupplierReturnDraft(receipt);
+      first = await app.inventory.addSupplierReturnLine(
+        first.id,
+        first.revision,
+        source,
+        quantity: 3,
+      );
+      var second = await app.inventory.createSupplierReturnDraft(receipt);
+      await expectLater(
+        app.inventory.addSupplierReturnLine(
+          second.id,
+          second.revision,
+          source,
+          quantity: 3,
+        ),
+        throwsA(
+          isA<AppError>().having(
+            (e) => e.message,
+            'message',
+            'm54StockReservedForSupplier',
+          ),
+        ),
+      );
+      second = await app.inventory.addSupplierReturnLine(
+        second.id,
+        second.revision,
+        source,
+        quantity: 2,
+      );
+      final location = db.databasePath;
+      await db.close();
+      db = DatabaseCoordinator(factory: factory, databasePath: location);
+      app = AppServices(db, clock: clock());
+      await app.management.unlock('0001');
+      expect(
+        (await app.inventory.supplierReturnDraft(
+          first.id,
+        )).lines.single.reserved,
+        isTrue,
+      );
+      final held = await app.inventory.detail(id);
+      expect(held.quantity, 5);
+      expect(held.saleable, 0);
+      expect(held.valueMicros, cost(50000).micros);
+      await expectLater(
+        app.checkout.submit(cart.id, cart.revision, const CheckoutInput()),
+        throwsA(isA<AppError>()),
+      );
+      expect(await db.read((sql) => sql.query('sale_transactions')), isEmpty);
+      await app.inventory.cancelSupplierReturnDraft(second.id, second.revision);
+      expect((await app.inventory.detail(id)).saleable, 2);
+      await expectLater(
+        db.transaction(
+          (sql) => sql.update(
+            'stock_batches',
+            {'remaining_quantity': 2},
+            where: 'id=?',
+            whereArgs: [first.lines.single.batch!.value],
+          ),
+        ),
+        throwsA(isA<DatabaseException>()),
+      );
+      cart = await app.cart.quantity(cart.id, id, 2);
+      await app.checkout.submit(cart.id, cart.revision, const CheckoutInput());
+      expect((await app.inventory.detail(id)).quantity, 3);
+      expect((await app.inventory.detail(id)).saleable, 0);
+      first = await app.inventory.reviewSupplierReturnDraft(
+        first.id,
+        first.revision,
+      );
+      final posted = await app.inventory.confirmSupplierReturn(
+        first.id,
+        first.revision,
+        reason: 'PUBLIC CONFIRMED',
+        operationKey: 'PUBLIC RESERVED SEND',
+      );
+      expect(posted.lines.single.quantity, 3);
+      expect((await app.inventory.detail(id)).quantity, 0);
+      expect(
+        await db.read((sql) => sql.query('supplier_return_reservations')),
+        isEmpty,
+      );
+      expect(
+        (await app.inventory.confirmSupplierReturn(
+          first.id,
+          first.revision,
+          reason: 'PUBLIC CONFIRMED',
+          operationKey: 'PUBLIC RESERVED SEND',
+        )).id,
+        posted.id,
+      );
+    },
+  );
+  test(
+    'M54 legacy overlapping drafts keep quantities and reserve on explicit review',
+    () async {
+      final location = path();
+      var opened = DatabaseCoordinator(
+        factory: factory,
+        databasePath: location,
+        schemaVersion: 46,
+      );
+      try {
+        await opened.transaction(
+          (sql) => sql.insert('management_credentials', credential),
+        );
+        var store = AppServices(opened, clock: clock());
+        await store.management.unlock('0001');
+        final vendor = await store.inventory.saveMaster(
+          MasterKind.supplier,
+          'PUBLIC LEGACY VENDOR',
+        );
+        final id = await store.inventory.create(
+          ProductInput(name: 'PUBLIC LEGACY HOLD', sellingPrice: money(30000)),
+        );
+        final receipt = await store.inventory.receive(
+          id,
+          5,
+          cost(10000),
+          operationKey: 'PUBLIC LEGACY RESERVE',
+          supplierId: vendor,
+        );
+        final source = EntityId(
+          (await store.inventory.supplierReturnSources(
+                receipt,
+              )).items.single['receipt_item_id']
+              as String,
+        );
+        var first = await store.inventory.createSupplierReturnDraft(receipt);
+        first = await store.inventory.addSupplierReturnLine(
+          first.id,
+          first.revision,
+          source,
+          quantity: 3,
+        );
+        var second = await store.inventory.createSupplierReturnDraft(receipt);
+        second = await store.inventory.addSupplierReturnLine(
+          second.id,
+          second.revision,
+          source,
+          quantity: 3,
+        );
+        await opened.close();
+        opened = DatabaseCoordinator(factory: factory, databasePath: location);
+        store = AppServices(opened, clock: clock());
+        await store.management.unlock('0001');
+        expect((await store.inventory.detail(id)).saleable, 5);
+        expect(
+          (await store.inventory.supplierReturnDraft(
+            second.id,
+          )).lines.single.quantity,
+          3,
+        );
+        await expectLater(
+          store.inventory.confirmSupplierReturn(
+            first.id,
+            first.revision,
+            reason: 'PUBLIC',
+            operationKey: 'PUBLIC LEGACY CONFIRM',
+          ),
+          throwsA(
+            isA<AppError>().having(
+              (e) => e.message,
+              'message',
+              'm54ReturnReviewReservation',
+            ),
+          ),
+        );
+        await store.inventory.reviewSupplierReturnDraft(
+          first.id,
+          first.revision,
+        );
+        await expectLater(
+          store.inventory.reviewSupplierReturnDraft(second.id, second.revision),
+          throwsA(
+            isA<AppError>().having(
+              (e) => e.message,
+              'message',
+              'm54StockReservedForSupplier',
+            ),
+          ),
+        );
+        expect((await store.inventory.detail(id)).saleable, 2);
+        expect((await store.inventory.detail(id)).quantity, 5);
+        await opened.read(SupplierReturnValidation.validate);
+      } finally {
+        await opened.close();
+        await factory.deleteDatabase(location);
+      }
+    },
+  );
+  test(
     'M53 returns use current moving average, source limits and pending credit never pay debt or alter historic sale HPP',
     () async {
       final id = await product('PUBLIC AVERAGE');

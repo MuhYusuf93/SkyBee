@@ -162,9 +162,45 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
     });
   }
 
-  Future<void> edit(SupplierReturnLine line) async {
-    final text = TextEditingController(text: '${line.quantity}'),
-        focus = FocusNode();
+  Future<void> edit(SupplierReturnLine line, int revision) => editQuantity(
+    line.name,
+    '${line.quantity}',
+    (quantity) => context
+        .read<AppServices>()
+        .inventory
+        .setSupplierReturnQuantity(widget.id, revision, line.id, quantity),
+  );
+
+  Future<void> addSource(Map<String, Object?> source, int revision) async {
+    Future<SupplierReturnDraft> add(int quantity) =>
+        context.read<AppServices>().inventory.addSupplierReturnLine(
+          widget.id,
+          revision,
+          EntityId(source['receipt_item_id'] as String),
+          quantity: quantity,
+        );
+    if (source['tracked'] == 0) {
+      await editQuantity(
+        source['product_name_snapshot'] as String,
+        '',
+        add,
+        title: 'm54ReturnCountPhysical',
+      );
+      return;
+    }
+    await run(() async {
+      await add(1);
+      await refresh();
+    });
+  }
+
+  Future<void> editQuantity(
+    String name,
+    String initial,
+    Future<SupplierReturnDraft> Function(int quantity) saveQuantity, {
+    String title = 'm53ReturnQuantity',
+  }) async {
+    final text = TextEditingController(text: initial), focus = FocusNode();
     var active = false, submitted = false;
     String? errorKey;
     try {
@@ -173,14 +209,14 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
         builder: (dialog) => StatefulBuilder(
           builder: (dialog, setDialog) => FormExitGuard(
             capability: ManagementCapability.inventory,
-            dirty: !submitted && text.text != '${line.quantity}',
-            dirtyCheck: () => !submitted && text.text != '${line.quantity}',
+            dirty: !submitted && text.text != initial,
+            dirtyCheck: () => !submitted && text.text != initial,
             busy: active,
             child: ProtectedDialog(
               capability: ManagementCapability.inventory,
               child: AlertDialog(
                 scrollable: true,
-                title: Text(tr(dialog, 'm53ReturnQuantity')),
+                title: Text(tr(dialog, title)),
                 content: ManagedTextField(
                   key: const ValueKey('supplier-return-quantity'),
                   controller: text,
@@ -189,7 +225,7 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
                   keyboardType: TextInputType.number,
                   onChanged: (_) => setDialog(() {}),
                   decoration: InputDecoration(
-                    labelText: line.name,
+                    labelText: name,
                     errorText: errorKey == null ? null : tr(dialog, errorKey!),
                   ),
                 ),
@@ -217,15 +253,7 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
                                 );
                               }
                               check();
-                              final value = await context
-                                  .read<AppServices>()
-                                  .inventory
-                                  .setSupplierReturnQuantity(
-                                    widget.id,
-                                    draft!.revision,
-                                    line.id,
-                                    quantity,
-                                  );
+                              final value = await saveQuantity(quantity);
                               if (dialog.mounted) {
                                 submitted = true;
                                 if (mounted) setState(() => draft = value);
@@ -365,7 +393,9 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
                                   subtitle: Text(
                                     '${line.quantity} · ${tr(context, line.tracked ? "m31BaseUnit" : "m53ReturnUntrackedHelp")}',
                                   ),
-                                  onTap: busy ? null : () => edit(line),
+                                  onTap: busy
+                                      ? null
+                                      : () => edit(line, d.revision),
                                   trailing: IconButton(
                                     tooltip: tr(context, 'delete'),
                                     icon: const Icon(Icons.delete_outline),
@@ -443,7 +473,7 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
                                     source['product_name_snapshot'] as String,
                                   ),
                                   subtitle: Text(
-                                    '${tr(context, "m53ReturnEligible")}: ${source['eligible_quantity']} · ${tr(context, "m53ReturnPhysicalAvailable")}: ${source['tracked'] == 1 ? source['batch_remaining'] ?? "—" : tr(context, "m53ReturnUntrackedHelp")}',
+                                    '${tr(context, "m53ReturnEligible")}: ${source['available_source_quantity'] ?? source['eligible_quantity']} · ${tr(context, "m53ReturnPhysicalAvailable")}: ${source['tracked'] == 1 ? source['available_batch_quantity'] ?? source['batch_remaining'] ?? "—" : tr(context, "m53ReturnUntrackedHelp")}',
                                   ),
                                   trailing: IconButton(
                                     tooltip: tr(context, 'add'),
@@ -453,7 +483,8 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
                                     ),
                                     onPressed:
                                         busy ||
-                                            (source['eligible_quantity']
+                                            ((source['available_source_quantity'] ??
+                                                        source['eligible_quantity'])
                                                     as int) <=
                                                 0 ||
                                             d.lines.any(
@@ -462,26 +493,13 @@ class _SupplierReturnScreenState extends State<SupplierReturnScreen> {
                                                   source['receipt_item_id'],
                                             ) ||
                                             source['tracked'] == 1 &&
-                                                (source['batch_remaining'] ==
-                                                        null ||
-                                                    (source['batch_remaining']
-                                                            as int) <=
-                                                        0)
+                                                ((source['available_batch_quantity'] ??
+                                                                source['batch_remaining'])
+                                                            as int? ??
+                                                        0) <=
+                                                    0
                                         ? null
-                                        : () => run(() async {
-                                            await context
-                                                .read<AppServices>()
-                                                .inventory
-                                                .addSupplierReturnLine(
-                                                  widget.id,
-                                                  d.revision,
-                                                  EntityId(
-                                                    source['receipt_item_id']
-                                                        as String,
-                                                  ),
-                                                );
-                                            await refresh();
-                                          }),
+                                        : () => addSource(source, d.revision),
                                   ),
                                 ),
                               ),
