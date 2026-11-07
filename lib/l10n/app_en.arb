@@ -5421,7 +5421,7 @@
   "@m53OpSectionPendingReturns": {
     "description": "Returns awaiting credit approval"
   },
-  "m53OpHelpPotential": "Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products.",
+  "m53OpHelpPotential": "Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses one optional primary supplier per product. Filtering includes all matching master associations. Results from different supplier filters may contain the same product. Receiving history records the actual supplier. Cross-unit quantities count base units; compare individual products.",
   "@m53OpHelpPotential": {
     "description": "Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products."
   },
@@ -6575,5 +6575,13 @@
   "m54SupplierReceiptActual": "Initial payment already handed over",
   "@m54SupplierReceiptActual": {
     "description": "Initial payment actually delivered as part of a supplier receiving draft confirmation."
+  },
+  "m54SupplierLinksHelp": "Choose suppliers from the suggestions. Tap a chip to mark an optional primary supplier. Receipts keep the supplier of each delivery.",
+  "@m54SupplierLinksHelp": {
+    "description": "Product form master supplier selection and archive state."
+  },
+  "m54SupplierLinkArchived": "Archived",
+  "@m54SupplierLinkArchived": {
+    "description": "Product form master supplier selection and archive state."
   }
 }

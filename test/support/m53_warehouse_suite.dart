@@ -13,6 +13,7 @@ import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/inventory/application/warehouse_query.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/inventory/domain/warehouse_filter.dart';
+import 'package:kasir_app/features/reports/domain/operational_report.dart';
 import 'database_contract_suite.dart' show fixtureId, productRow;
 
 void m53WarehouseSuite(DatabaseFactory factory) {
@@ -57,13 +58,163 @@ void m53WarehouseSuite(DatabaseFactory factory) {
   });
   tearDownAll(() async => root.delete());
   test(
+    'M54 supplier associations share one stock and retain receipt provenance',
+    () async {
+      Future<EntityId> supplier(String name) =>
+          app.inventory.saveMaster(MasterKind.supplier, name);
+      final alpha = await supplier('PUBLIC ALPHA');
+      final beta = await supplier('PUBLIC BETA');
+      final source = await supplier('PUBLIC RECEIPT SOURCE');
+      ProductInput input({
+        EntityId? primary,
+        List<EntityId>? links,
+        String? sku,
+      }) => ProductInput(
+        name: 'PUBLIC ONE STOCK',
+        sku: sku,
+        sellingPrice: Money(12000, 'IDR', 0),
+        masterSupplierId: primary,
+        supplierIds: links,
+      );
+      final id = await app.inventory.create(
+        input(primary: alpha, links: [alpha, beta, beta]),
+        initialQuantity: 0,
+      );
+      final receipt = await app.inventory.receive(
+        id,
+        7,
+        CostAmount.fromMoney(Money(3000, 'IDR', 0)),
+        supplierId: source,
+        operationKey: 'public-related-supplier-receipt',
+      );
+      for (final linked in [alpha, beta]) {
+        final page = await app.inventory.warehousePage(
+          WarehouseFilter(supplierId: linked),
+          null,
+          pageSize: 1,
+        );
+        expect(page.items.single.id, id);
+        expect(page.items.single.quantity, 7);
+        expect(page.hasMore, isFalse);
+      }
+      expect(
+        (await app.inventory.warehousePage(
+          WarehouseFilter(supplierId: source),
+          null,
+        )).items,
+        isEmpty,
+      );
+      for (final filter in [null, alpha, beta]) {
+        final report = await app.operationalReports.load(
+          OperationalScope(
+            supplierId: filter,
+            grouping: PotentialGrouping.supplier,
+          ),
+        );
+        expect(report.rows.single.amounts['product_count'], BigInt.one);
+        expect(
+          report.rows.single.amounts['potential_minor'],
+          BigInt.from(84000),
+        );
+      }
+      var product = await app.inventory.detail(id);
+      expect(product.supplierLinks.map((s) => s.id), [alpha, beta]);
+      await app.inventory.archiveMaster(MasterKind.supplier, beta);
+      await app.inventory.edit(
+        id,
+        input(primary: alpha, links: [alpha, beta], sku: product.sku),
+        product.revision,
+      );
+      product = await app.inventory.detail(id);
+      expect(
+        product.supplierLinks.singleWhere((s) => s.id == beta).isDeleted,
+        isTrue,
+      );
+      await app.inventory.edit(
+        id,
+        input(links: [alpha], sku: product.sku),
+        product.revision,
+      );
+      product = await app.inventory.detail(id);
+      expect(product.supplierLinks.single.id, alpha);
+      expect(product.valueMicros, 21000 * CostAmount.scale);
+      await expectLater(
+        app.inventory.edit(
+          id,
+          input(links: [alpha, beta], sku: product.sku),
+          product.revision,
+        ),
+        throwsA(isA<AppError>()),
+      );
+      expect((await app.inventory.detail(id)).revision, product.revision);
+      final savedReceipt = (await db.read(
+        (sql) => sql.query(
+          'stock_receipts',
+          where: 'id=?',
+          whereArgs: [receipt.value],
+        ),
+      )).single;
+      expect(savedReceipt['supplier_id'], source.value);
+    },
+  );
+
+  test(
+    'M54 v45 to v46 backfills primary association without changing legacy rows',
+    () async {
+      final location = nextPath();
+      final legacy = DatabaseCoordinator(
+        factory: factory,
+        databasePath: location,
+        schemaVersion: 45,
+      );
+      final migrated = DatabaseCoordinator(
+        factory: factory,
+        databasePath: location,
+      );
+      try {
+        await legacy.transaction(
+          (sql) => sql.insert('management_credentials', credential),
+        );
+        final oldApp = AppServices(legacy);
+        await oldApp.management.unlock('0001');
+        final supplier = await oldApp.inventory.saveMaster(
+          MasterKind.supplier,
+          'PUBLIC LEGACY PRIMARY',
+        );
+        final id = await oldApp.inventory.create(
+          ProductInput(
+            name: 'PUBLIC LEGACY PRODUCT',
+            sellingPrice: Money(12000, 'IDR', 0),
+            masterSupplierId: supplier,
+          ),
+        );
+        final before = await legacy.read((sql) => sql.query('products'));
+        await legacy.close();
+        expect(await migrated.read((sql) => sql.query('products')), before);
+        expect(await migrated.read((sql) => sql.query('product_suppliers')), [
+          {'product_id': id.value, 'supplier_id': supplier.value},
+        ]);
+        expect(
+          await migrated.read(
+            (sql) => sql.rawQuery('PRAGMA foreign_key_check'),
+          ),
+          isEmpty,
+        );
+      } finally {
+        await legacy.close();
+        await migrated.close();
+        await factory.deleteDatabase(location);
+      }
+    },
+  );
+  test(
     'M53 warehouse staged backup preserves archived master links and rejects forged dangling/oversized relations',
     () async {
       final supplier = await app.inventory.saveMaster(
         MasterKind.supplier,
         'PUBLIC BACKUP MASTER',
       );
-      await app.inventory.create(
+      final product = await app.inventory.create(
         ProductInput(
           name: 'PUBLIC BACKUP LINK',
           sellingPrice: Money(12000, 'IDR', 0),
@@ -90,6 +241,19 @@ void m53WarehouseSuite(DatabaseFactory factory) {
       });
       await db.read((sql) async {
         await BackupValidation.validate(sql, manifest);
+        await sql.delete(
+          'product_suppliers',
+          where: 'product_id=?',
+          whereArgs: [product.value],
+        );
+        await expectLater(
+          BackupValidation.validate(sql, manifest),
+          throwsA(isA<FormatException>()),
+        );
+        await sql.insert('product_suppliers', {
+          'product_id': product.value,
+          'supplier_id': supplier.value,
+        });
         // Disposable forged archive only: imported files cannot be trusted to
         // retain FK enforcement. No active application database uses this path.
         await sql.execute('PRAGMA foreign_keys=OFF');

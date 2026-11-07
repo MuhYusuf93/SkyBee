@@ -18,6 +18,7 @@ import 'sale_refund_schema.dart';
 import 'qris_asset_schema.dart';
 import 'checkout_settlement_schema.dart';
 import 'receipt_supplier_payment_schema.dart';
+import 'product_supplier_schema.dart';
 import '../../core/domain/value_types.dart';
 import '../../core/domain/app_error.dart';
 import '../../core/domain/contact_validation.dart';
@@ -25,7 +26,7 @@ import '../../core/domain/contact_validation.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 45;
+  static const version = 46;
 
   // A receipt's supplier is a transaction fact, not the master relationship.
   // Legacy products deliberately keep NULL rather than inferring a supplier.
@@ -108,6 +109,7 @@ final class Schema {
         43 => qrisAssetSchema,
         44 => checkoutSettlementSchema,
         45 => receiptSupplierPaymentSchema,
+        46 => productSupplierSchema,
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);

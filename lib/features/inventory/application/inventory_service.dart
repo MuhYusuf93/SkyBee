@@ -189,6 +189,55 @@ final class InventoryService {
     }
   }
 
+  /// Reconcile only changed master associations within the product CAS. An
+  /// existing archived link can remain, while newly chosen suppliers must be
+  /// active. Receipt headers keep their original supplier IDs.
+  Future<void> _syncProductSuppliers(
+    Transaction db,
+    EntityId product,
+    ProductInput input, {
+    String? previousPrimary,
+  }) async {
+    final links = input.supplierIds;
+    if (database.schemaVersion < 46) {
+      if (links != null) {
+        throw const AppError('categoryOrSupplierUnavailableSelectAgain');
+      }
+      return;
+    }
+    final primary = input.masterSupplierId?.value;
+    if (links == null && primary == previousPrimary) return;
+    final existing = {
+      for (final row in await db.query(
+        'product_suppliers',
+        columns: ['supplier_id'],
+        where: 'product_id=?',
+        whereArgs: [product.value],
+      ))
+        row['supplier_id'] as String,
+    };
+    final desired = links == null
+        ? {...existing.where((id) => id != previousPrimary), ?primary}
+        : links.map((id) => id.value).toSet();
+    if (primary != null && !desired.contains(primary)) {
+      throw const AppError('categoryOrSupplierUnavailableSelectAgain');
+    }
+    for (final added in desired.difference(existing)) {
+      await _relation(db, 'suppliers', EntityId(added));
+      await db.insert('product_suppliers', {
+        'product_id': product.value,
+        'supplier_id': added,
+      });
+    }
+    for (final removed in existing.difference(desired)) {
+      await db.delete(
+        'product_suppliers',
+        where: 'product_id=? AND supplier_id=?',
+        whereArgs: [product.value, removed],
+      );
+    }
+  }
+
   Future<Map<String, Object?>> _input(
     DatabaseExecutor db,
     ProductInput input, {
@@ -416,6 +465,7 @@ final class InventoryService {
       'created_at': now,
       'updated_at': now,
     });
+    await _syncProductSuppliers(dbTxn, id, input);
     await _aliases(dbTxn, id, input.aliases);
     if (!stockTracking) {
       await dbTxn.insert('reference_cost_history', {
@@ -550,6 +600,12 @@ final class InventoryService {
       {...values, 'revision': next, 'updated_at': now},
       where: 'id=? AND revision=?',
       whereArgs: [id.value, expectedRevision],
+    );
+    await _syncProductSuppliers(
+      dbTxn,
+      id,
+      input,
+      previousPrimary: old['master_supplier_id'] as String?,
     );
     await _aliases(dbTxn, id, input.aliases);
     UndoToken? undo;
@@ -1790,7 +1846,13 @@ final class InventoryService {
               after.generation != generation)) {
         throw const AppError('m53WarehouseChanged');
       }
-      final query = warehouseQuery(filter, after, day, pageSize);
+      final query = warehouseQuery(
+        filter,
+        after,
+        day,
+        pageSize,
+        useSupplierLinks: database.schemaVersion >= 46,
+      );
       final rows = await dbTxn.rawQuery(query.sql, query.arguments);
       final selected = rows.take(pageSize).toList();
       final items = await warehouseProductsOn(dbTxn, selected, day);
@@ -1882,6 +1944,23 @@ final class InventoryService {
         where: 'id=?',
         whereArgs: [row['master_supplier_id']],
       )).firstOrNull?['name'];
+    }
+    if (database.schemaVersion >= 46) {
+      final suppliers = await db.rawQuery(
+        '''SELECT s.id,s.name,s.is_deleted FROM product_suppliers ps
+        JOIN suppliers s ON s.id=ps.supplier_id WHERE ps.product_id=?
+        ORDER BY s.normalized_name COLLATE BINARY,s.id COLLATE BINARY''',
+        [id.value],
+      );
+      details['supplier_links'] = List<MasterRecord>.unmodifiable(
+        suppliers.map(
+          (s) => MasterRecord(
+            id: EntityId(s['id'] as String),
+            name: s['name'] as String,
+            isDeleted: s['is_deleted'] == 1,
+          ),
+        ),
+      );
     }
     return (await warehouseProductsOn(db, [details], today)).single;
   }

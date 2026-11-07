@@ -4566,7 +4566,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53OpHelpPotential =>
-      'Stok terlacak yang layak jual × harga eceran saat ini. Estimasi laba kotor stok adalah potensi nilai jual dikurangi alokasi biaya rata-rata. Subtotal biaya/laba diketahui mengecualikan biaya belum lengkap. Produk arsip, kedaluwarsa dan tidak terlacak dipisahkan. Ini bukan ramalan, laba bersih, atau penjualan terealisasi; belum memasukkan promo/grosir, ongkos, pajak dan biaya operasional. Pengelompokan supplier berdasarkan supplier pada data barang, bukan asal setiap batch. Kuantitas lintas satuan hanya jumlah unit dasar; bandingkan per produk.';
+      'Stok terlacak yang layak jual × harga eceran saat ini. Estimasi laba kotor stok adalah potensi nilai jual dikurangi alokasi biaya rata-rata. Subtotal biaya/laba diketahui mengecualikan biaya belum lengkap. Produk arsip, kedaluwarsa dan tidak terlacak dipisahkan. Ini bukan ramalan, laba bersih, atau penjualan terealisasi; belum memasukkan promo/grosir, ongkos, pajak dan biaya operasional. Kelompok supplier memakai satu supplier utama opsional per produk. Filter memilih semua relasi master yang cocok. Hasil dari filter supplier berbeda dapat mencakup produk yang sama. Histori penerimaan mencatat supplier aktual. Kuantitas lintas satuan hanya jumlah unit dasar; bandingkan per produk.';
 
   @override
   String get m53OpHelpVariance =>
@@ -5526,4 +5526,11 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m54SupplierReceiptActual =>
       'Pembayaran awal yang sudah diserahkan';
+
+  @override
+  String get m54SupplierLinksHelp =>
+      'Pilih supplier dari saran. Ketuk satu chip untuk menandai supplier utama opsional. Nota tetap mencatat supplier setiap penerimaan.';
+
+  @override
+  String get m54SupplierLinkArchived => 'Diarsipkan';
 }

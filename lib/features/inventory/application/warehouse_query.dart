@@ -11,20 +11,28 @@ SqlQuery warehouseQuery(
   WarehouseFilter filter,
   WarehouseCursor? after,
   String day,
-  int pageSize,
-) {
+  int pageSize, {
+  bool useSupplierLinks = false,
+}) {
   validatePageSize(pageSize);
   final conditions = <String>['p.is_deleted=?'];
   final values = <Object?>[day, day, filter.isDeleted ? 1 : 0];
   for (final relation in [
     ('category_id', filter.categoryId),
     ('shelf_id', filter.shelfId),
-    ('master_supplier_id', filter.supplierId),
   ]) {
     if (relation.$2 != null) {
       conditions.add('p.${relation.$1}=?');
       values.add(relation.$2!.value);
     }
+  }
+  if (filter.supplierId case final supplier?) {
+    conditions.add(
+      useSupplierLinks
+          ? 'EXISTS(SELECT 1 FROM product_suppliers ps WHERE ps.product_id=p.id AND ps.supplier_id=?)'
+          : 'p.master_supplier_id=?',
+    );
+    values.add(supplier.value);
   }
   if (filter.namePrefix.isNotEmpty) {
     final end = prefixEnd(filter.namePrefix);

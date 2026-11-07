@@ -1100,6 +1100,8 @@ String tr(BuildContext context, String key) {
     'm53WarehouseRelations' => l.m53WarehouseRelations,
     'm53WarehouseReferenceExpired' => l.m53WarehouseReferenceExpired,
     'm53MasterSupplierHelp' => l.m53MasterSupplierHelp,
+    'm54SupplierLinksHelp' => l.m54SupplierLinksHelp,
+    'm54SupplierLinkArchived' => l.m54SupplierLinkArchived,
     'm53CategoryLongPress' => l.m53CategoryLongPress,
     'm51Shelf' => l.m51Shelf,
     'm51Note' => l.m51Note,

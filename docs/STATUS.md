@@ -36,8 +36,9 @@ biasa lulus verifikasi paket, tiga ABI, dan alignment 16 KiB tanpa instalasi.
 Penerimaan tahap 4 lulus 37 kasus host, termasuk scan beruntun 15/12,
 Sunco baru 20, koreksi dan retry. Skema 45 menambah capability pembayaran awal
 gudang yang terikat pada konfirmasi penerimaan. Regresi dan tes ulang meliputi
-43 kasus host. Relasi supplier, karantina/reservasi, lampiran, tahap 5,
-acceptance dan handoff masih terbuka.
+43 kasus host. Skema 46 menambah relasi banyak supplier dengan migrasi aditif
+dan nilai stok tunggal, diuji dalam 23 kasus host. Karantina/reservasi,
+lampiran, tahap 5, acceptance dan handoff masih terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

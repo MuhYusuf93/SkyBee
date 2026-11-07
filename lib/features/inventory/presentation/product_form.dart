@@ -61,6 +61,10 @@ class _ProductFormState extends State<ProductForm> {
       wholesaleFocus = FocusNode(),
       retailFocus = FocusNode();
   MasterRecord? category, selectedShelf, masterSupplier;
+  final supplierLinks = <MasterRecord>[];
+  int supplierPickerRevision = 0;
+  bool get supportsSupplierLinks =>
+      context.read<AppServices>().database.schemaVersion >= 46;
   String? _baseline, _originalReferenceText;
   String? sizeUnit;
   bool tracking = false, low = true, busy = false;
@@ -325,6 +329,10 @@ class _ProductFormState extends State<ProductForm> {
           name: product.row['master_supplier_name'] as String? ?? '',
         );
       }
+      supplierLinks.addAll(product.supplierLinks);
+      if (supplierLinks.isEmpty && masterSupplier != null) {
+        supplierLinks.add(masterSupplier!);
+      }
       minimum.text = product.row['min_stock'].toString();
       tracking = product.expiryEnabled;
       low = product.row['low_stock_enabled'] == 1;
@@ -459,6 +467,7 @@ class _ProductFormState extends State<ProductForm> {
       stockInput.packLabel,
       category?.id.value,
       masterSupplier?.id.value,
+      supplierLinks.map((supplier) => supplier.id.value).toList(),
       tracking,
       low,
       _trackStock,
@@ -665,6 +674,9 @@ class _ProductFormState extends State<ProductForm> {
         barcode: barcode.text,
         categoryId: category?.id,
         masterSupplierId: masterSupplier?.id,
+        supplierIds: supportsSupplierLinks
+            ? supplierLinks.map((supplier) => supplier.id).toList()
+            : null,
         aliases: aliases.text.split(','),
         minStock: parseWholeQuantity(minimum.text),
         lowStockEnabled: low,
@@ -979,14 +991,71 @@ class _ProductFormState extends State<ProductForm> {
                         }),
                       ),
                     ),
-                    RelationField(
-                      kind: MasterKind.supplier,
-                      value: masterSupplier,
-                      enabled: !busy,
-                      onChanged: (value) =>
-                          setState(() => masterSupplier = value),
-                    ),
-                    Text(tr(context, 'm53MasterSupplierHelp')),
+                    if (supportsSupplierLinks) ...[
+                      Text(tr(context, 'm54SupplierLinksHelp')),
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 4,
+                        children: [
+                          for (final supplier in supplierLinks)
+                            InputChip(
+                              key: ValueKey(
+                                'product-supplier-${supplier.id.value}',
+                              ),
+                              label: Text(
+                                supplier.isDeleted
+                                    ? '${supplier.name} · ${tr(context, 'm54SupplierLinkArchived')}'
+                                    : supplier.name,
+                              ),
+                              selected: masterSupplier?.id == supplier.id,
+                              onSelected: busy || supplier.isDeleted
+                                  ? null
+                                  : (selected) => setState(() {
+                                      masterSupplier = selected
+                                          ? supplier
+                                          : null;
+                                    }),
+                              onDeleted: busy
+                                  ? null
+                                  : () => setState(() {
+                                      supplierLinks.remove(supplier);
+                                      if (masterSupplier?.id == supplier.id) {
+                                        masterSupplier = null;
+                                      }
+                                    }),
+                            ),
+                        ],
+                      ),
+                      RelationField(
+                        key: ValueKey(
+                          'product-supplier-add-$supplierPickerRevision',
+                        ),
+                        kind: MasterKind.supplier,
+                        labelKey: 'addSupplier',
+                        value: null,
+                        enabled: !busy,
+                        onChanged: (value) {
+                          if (value == null) return;
+                          setState(() {
+                            if (!supplierLinks.any(
+                              (supplier) => supplier.id == value.id,
+                            )) {
+                              supplierLinks.add(value);
+                            }
+                            supplierPickerRevision++;
+                          });
+                        },
+                      ),
+                    ] else ...[
+                      RelationField(
+                        kind: MasterKind.supplier,
+                        value: masterSupplier,
+                        enabled: !busy,
+                        onChanged: (value) =>
+                            setState(() => masterSupplier = value),
+                      ),
+                      Text(tr(context, 'm53MasterSupplierHelp')),
+                    ],
                     _tracked(
                       note,
                       ManagedTextField(

@@ -5421,7 +5421,7 @@
   "@m53OpSectionPendingReturns": {
     "description": "Returns awaiting credit approval"
   },
-  "m53OpHelpPotential": "Stok terlacak yang layak jual × harga eceran saat ini. Estimasi laba kotor stok adalah potensi nilai jual dikurangi alokasi biaya rata-rata. Subtotal biaya/laba diketahui mengecualikan biaya belum lengkap. Produk arsip, kedaluwarsa dan tidak terlacak dipisahkan. Ini bukan ramalan, laba bersih, atau penjualan terealisasi; belum memasukkan promo/grosir, ongkos, pajak dan biaya operasional. Pengelompokan supplier berdasarkan supplier pada data barang, bukan asal setiap batch. Kuantitas lintas satuan hanya jumlah unit dasar; bandingkan per produk.",
+  "m53OpHelpPotential": "Stok terlacak yang layak jual × harga eceran saat ini. Estimasi laba kotor stok adalah potensi nilai jual dikurangi alokasi biaya rata-rata. Subtotal biaya/laba diketahui mengecualikan biaya belum lengkap. Produk arsip, kedaluwarsa dan tidak terlacak dipisahkan. Ini bukan ramalan, laba bersih, atau penjualan terealisasi; belum memasukkan promo/grosir, ongkos, pajak dan biaya operasional. Kelompok supplier memakai satu supplier utama opsional per produk. Filter memilih semua relasi master yang cocok. Hasil dari filter supplier berbeda dapat mencakup produk yang sama. Histori penerimaan mencatat supplier aktual. Kuantitas lintas satuan hanya jumlah unit dasar; bandingkan per produk.",
   "@m53OpHelpPotential": {
     "description": "Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products."
   },
@@ -6575,5 +6575,13 @@
   "m54SupplierReceiptActual": "Pembayaran awal yang sudah diserahkan",
   "@m54SupplierReceiptActual": {
     "description": "Initial payment actually delivered as part of a supplier receiving draft confirmation."
+  },
+  "m54SupplierLinksHelp": "Pilih supplier dari saran. Ketuk satu chip untuk menandai supplier utama opsional. Nota tetap mencatat supplier setiap penerimaan.",
+  "@m54SupplierLinksHelp": {
+    "description": "Product form master supplier selection and archive state."
+  },
+  "m54SupplierLinkArchived": "Diarsipkan",
+  "@m54SupplierLinkArchived": {
+    "description": "Product form master supplier selection and archive state."
   }
 }

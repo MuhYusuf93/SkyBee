@@ -80,6 +80,20 @@ final class BackupValidation {
       LIMIT 1''')).isNotEmpty) {
       throw const FormatException('backupProductMetadataInvalid');
     }
+    if (schema >= 46 &&
+        (await db.rawQuery('''SELECT 1 FROM product_suppliers ps
+          LEFT JOIN products p ON p.id=ps.product_id
+          LEFT JOIN suppliers s ON s.id=ps.supplier_id
+          WHERE p.id IS NULL OR s.id IS NULL
+          UNION ALL
+          SELECT 1 FROM product_suppliers GROUP BY product_id,supplier_id HAVING COUNT(*)<>1
+          UNION ALL
+          SELECT 1 FROM products p WHERE p.master_supplier_id IS NOT NULL
+            AND NOT EXISTS(SELECT 1 FROM product_suppliers ps
+              WHERE ps.product_id=p.id AND ps.supplier_id=p.master_supplier_id)
+          LIMIT 1''')).isNotEmpty) {
+      throw const FormatException('backupProductMetadataInvalid');
+    }
     final settings = (await db.query('store_settings')).single;
     final currency = CurrencyPolicy.forCode(
       settings['currency_code'] as String,

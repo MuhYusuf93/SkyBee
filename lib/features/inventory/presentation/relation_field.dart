@@ -21,6 +21,7 @@ class RelationField extends StatefulWidget {
     this.errorText,
     this.focusNode,
     this.queryController,
+    this.labelKey,
   });
   final MasterKind kind;
   final MasterRecord? value;
@@ -30,6 +31,7 @@ class RelationField extends StatefulWidget {
   final String? errorText;
   final FocusNode? focusNode;
   final TextEditingController? queryController;
+  final String? labelKey;
   @override
   State<RelationField> createState() => _RelationFieldState();
 }
@@ -138,14 +140,18 @@ class _RelationFieldState extends State<RelationField> {
               focusNode: focus,
               enabled: widget.enabled,
               decoration: InputDecoration(
-                labelText: tr(context, switch (widget.kind) {
-                  MasterKind.category => 'categoryOptional',
-                  MasterKind.supplier => 'supplierOptional',
-                  MasterKind.shelf => 'm52Shelf',
-                }),
+                labelText: tr(
+                  context,
+                  widget.labelKey ??
+                      switch (widget.kind) {
+                        MasterKind.category => 'categoryOptional',
+                        MasterKind.supplier => 'supplierOptional',
+                        MasterKind.shelf => 'm52Shelf',
+                      },
+                ),
                 hintText: tr(context, 'typeANamePrefixThenSelect'),
                 errorText: widget.errorText,
-                helperText: widget.value == null
+                helperText: widget.value == null && widget.labelKey == null
                     ? (widget.kind == MasterKind.category
                           ? tr(context, 'uncategorized')
                           : widget.kind == MasterKind.supplier

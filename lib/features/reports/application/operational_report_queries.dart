@@ -38,7 +38,14 @@ extension _OperationalQueries on OperationalReportsService {
     String conditions() => where.isEmpty ? '' : 'WHERE ${where.join(' AND ')}';
     switch (s.section) {
       case OperationalSection.potential:
-        supplier('p.master_supplier_id');
+        if (database.schemaVersion >= 46 && s.supplierId != null) {
+          where.add(
+            'EXISTS(SELECT 1 FROM product_suppliers ps WHERE ps.product_id=p.id AND ps.supplier_id=?)',
+          );
+          args.add(s.supplierId!.value);
+        } else {
+          supplier('p.master_supplier_id');
+        }
         if (s.categoryId != null) {
           where.add('p.category_id=?');
           args.add(s.categoryId!.value);

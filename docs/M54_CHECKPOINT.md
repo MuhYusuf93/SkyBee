@@ -181,3 +181,19 @@ memeriksa seluruh kolom asli. Migrasi lulus dan dua kasus portable lulus.
 Analyzer bersih. Audit lokalisasi 1630/1012/245. APK debug biasa
 terverifikasi untuk tiga ABI dan alignment 16 KiB tanpa instalasi.
 Lanjut ke relasi produk dengan beberapa supplier.
+
+## Tahap 4 · relasi produk dan supplier · skema 46
+
+Migrasi 45→46 mengisi relasi utama lama dan mempertahankan baris produk.
+Satu produk dapat memiliki beberapa relasi master, termasuk tanpa supplier
+utama. Filter gudang dan potensi memeriksa semua relasi. Pengelompokan
+potensi memakai satu supplier utama opsional per produk, sehingga nilai
+total tetap unik. Supplier aktual penerimaan tetap pada nota.
+
+Regresi mencakup 23 kasus host unik melalui run dan tes ulang. Kasus SQL
+membuktikan nilai stok tunggal, migrasi, relasi arsip dan penolakan backup
+yang kehilangan relasi utama. Tes UI 320 px skala 2 memverifikasi pemilihan
+dan pelepasan supplier lewat chip. Perbaikan fixture mempertahankan harga
+beli di bawah eceran, versi uji 36→37, dan tombol Edit eksplisit. APK debug
+biasa lulus verifikasi tiga ABI dan alignment 16 KiB tanpa instalasi.
+Reservasi retur, karantina, lampiran, acceptance dan handoff masih terbuka.

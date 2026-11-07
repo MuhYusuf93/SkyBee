@@ -20,6 +20,8 @@ final class InventoryProduct {
   String get name => row['name'] as String;
   String get sku => row['sku'] as String;
   String? get barcode => row['barcode'] as String?;
+  List<MasterRecord> get supplierLinks =>
+      row['supplier_links'] as List<MasterRecord>? ?? const [];
   int get quantity => row['stock_quantity'] as int;
   bool get costComplete => row['cost_complete'] != 0;
   int? get valueMicros =>
@@ -68,6 +70,7 @@ final class ProductInput {
     this.attributes,
     this.shelfId,
     this.masterSupplierId,
+    this.supplierIds,
   });
   final String name;
   final Money sellingPrice;
@@ -85,6 +88,10 @@ final class ProductInput {
   final ProductAttributes? attributes;
   final EntityId? shelfId;
   final EntityId? masterSupplierId;
+
+  /// Null keeps the legacy single-primary edit contract. An explicit list
+  /// replaces master associations while leaving receipt suppliers untouched.
+  final List<EntityId>? supplierIds;
 }
 
 enum MasterKind { category, supplier, shelf }

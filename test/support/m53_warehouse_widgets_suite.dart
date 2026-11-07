@@ -264,19 +264,7 @@ void m53WarehouseWidgetsSuite(DatabaseFactory factory) {
           await tester.pumpAndSettle();
           if (entry.$1 == MasterKind.category) {
             await reveal(tester, find.text(masterName));
-            await tester.longPress(find.text(masterName).hitTestable());
-            await drain(
-              tester,
-              () => find.byType(AlertDialog).evaluate().isNotEmpty,
-            );
-            expectSync(
-              find.byWidgetPredicate(
-                (w) => w is TextField && w.controller?.text == masterName,
-              ),
-              findsOneWidget,
-            );
-            await tester.tap(find.text(cancel).last);
-            await tester.pumpAndSettle();
+            expectSync(tester.widget<ListTile>(row).onLongPress, isNull);
           }
           late InventoryProduct product;
           await io(tester, () async {
@@ -307,10 +295,10 @@ void m53WarehouseWidgetsSuite(DatabaseFactory factory) {
             (w) => w is RelationField && w.kind == MasterKind.supplier,
           );
           await reveal(tester, supplierField);
-          expectSync(
-            tester.widget<RelationField>(supplierField).value?.id.value,
-            fixtureId(201),
+          final primary = find.byKey(
+            ValueKey('product-supplier-${fixtureId(201)}'),
           );
+          expectSync(tester.widget<InputChip>(primary).selected, isTrue);
           final size = find.descendant(
             of: find.byKey(const ValueKey('product-size-input')),
             matching: find.byType(TextField),
@@ -321,6 +309,35 @@ void m53WarehouseWidgetsSuite(DatabaseFactory factory) {
             entry.$2 == 'id' ? '1,25' : '1.25',
           );
           expectSync(ProtectedFormExits.hasDirty(nav), isFalse);
+          if (entry.$1 == MasterKind.supplier) {
+            final query = find.descendant(
+              of: supplierField,
+              matching: find.byType(TextField),
+            );
+            await reveal(tester, query);
+            await tester.enterText(query, 'PUBLIC SUPPLIER 2');
+            final option = find
+                .widgetWithText(ListTile, 'PUBLIC SUPPLIER 2')
+                .hitTestable();
+            await drain(tester, () => option.evaluate().isNotEmpty);
+            await tester.tap(option);
+            await tester.pumpAndSettle();
+            final second = find.byKey(
+              ValueKey('product-supplier-${fixtureId(202)}'),
+            );
+            await reveal(tester, second);
+            expectSync(tester.widget<InputChip>(second).selected, isFalse);
+            expectSync(ProtectedFormExits.hasDirty(nav), isTrue);
+            final remove = find.descendant(
+              of: second,
+              matching: find.byIcon(Icons.clear),
+            );
+            expectSync(remove.hitTestable(), findsOneWidget);
+            await tester.tap(remove.hitTestable());
+            await tester.pumpAndSettle();
+            expectSync(second, findsNothing);
+            expectSync(ProtectedFormExits.hasDirty(nav), isFalse);
+          }
           final wholesaleTitle = find.text(
             tr(
               tester.element(find.byType(ProductForm)),

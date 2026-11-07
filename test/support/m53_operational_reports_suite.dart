@@ -112,7 +112,7 @@ void m53OperationalReportsSuite(DatabaseFactory factory) {
     String due = '2026-10-30',
     int n = 1000,
   }) async {
-    final pid = await product('PUBLIC BILL GOODS ${serial++}');
+    final pid = await product('PUBLIC BILL GOODS ${serial++}', price: n + 1);
     final receipt = await app.inventory.receive(
       pid,
       10,
@@ -916,7 +916,11 @@ void m53OperationalReportsSuite(DatabaseFactory factory) {
       await old.checkout.submit(cart.id, cart.revision, const CheckoutInput());
       final before = await legacy.read(DatabaseValidation.fingerprint);
       await legacy.close();
-      final current = DatabaseCoordinator(factory: factory, databasePath: file);
+      final current = DatabaseCoordinator(
+        factory: factory,
+        databasePath: file,
+        schemaVersion: 37,
+      );
       try {
         final after = await current.read(DatabaseValidation.fingerprint);
         expect(after['version'], 37);

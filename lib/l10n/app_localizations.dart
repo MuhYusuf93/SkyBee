@@ -8159,7 +8159,7 @@ abstract class AppLocalizations {
   /// Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products.
   ///
   /// In en, this message translates to:
-  /// **'Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses the product master supplier, not batch provenance. Cross-unit quantities count base units; compare individual products.'**
+  /// **'Tracked saleable stock × current retail price. Estimated stock gross profit deducts allocated average carrying cost. Known cost/profit subtotals exclude incomplete costs. Archived, expired and untracked products are separate. This is not a forecast, net profit or realized sales; cart promotions, wholesale, charges, tax and operating costs are excluded. Supplier grouping uses one optional primary supplier per product. Filtering includes all matching master associations. Results from different supplier filters may contain the same product. Receiving history records the actual supplier. Cross-unit quantities count base units; compare individual products.'**
   String get m53OpHelpPotential;
 
   /// Posted stocktake snapshots only, not current balances. Shortages may reflect counting errors, unrecorded transactions, damage or other causes; they are not evidence of theft. Uncounted lines and untracked stock are not losses. Inventory adjustment values remain separate from sales and sale cost.
@@ -9877,6 +9877,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Initial payment already handed over'**
   String get m54SupplierReceiptActual;
+
+  /// Product form master supplier selection and archive state.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose suppliers from the suggestions. Tap a chip to mark an optional primary supplier. Receipts keep the supplier of each delivery.'**
+  String get m54SupplierLinksHelp;
+
+  /// Product form master supplier selection and archive state.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get m54SupplierLinkArchived;
 }
 
 class _AppLocalizationsDelegate
