@@ -144,6 +144,7 @@ final class CartSnapshot {
   bool get priceChanged => lines.any((line) => line.priceChanged);
   bool get missingWholesale => lines.any((line) => line.missingWholesale);
   bool get unavailable => lines.any((line) => line.unavailable);
+  bool get hasArchivedProducts => lines.any((line) => line.product.archived);
 }
 
 final class CartUndo {

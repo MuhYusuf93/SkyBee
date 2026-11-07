@@ -1475,7 +1475,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m5RecoveryCodeHelp =>
-      'This code differs from your PIN and PIN recovery. Keep a private copy outside the device. Older backups still need the code used when created; a lost code cannot be derived from your PIN.';
+      'These 24 English words represent your 256-bit backup key. Keep their order and store them securely. Legacy hex codes remain accepted. The backup key differs from PIN recovery.';
 
   @override
   String get m5ConfirmRecoveryCode => 'Enter the code you saved';
@@ -2221,11 +2221,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m52PurchaseAboveRetail =>
-      'Purchase cost per unit must not exceed the retail selling price.';
+      'Purchase cost per unit must be lower than the retail selling price.';
 
   @override
   String get m52WholesaleAboveRetail =>
-      'Wholesale price must not exceed the retail selling price.';
+      'Wholesale price must be lower than the retail selling price.';
 
   @override
   String get m52ReferenceCostRequired =>
@@ -2969,7 +2969,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m53CashNotesHelp =>
-      'Enable this to help record daily cash. Records remain when the date changes or recording is disabled. Close open sessions before disabling recording.';
+      'Open a session to record physical cash voluntarily. Store policy is saved separately. Records remain after closing or a date change.';
 
   @override
   String get m53CashReasonRequired =>
@@ -5170,4 +5170,81 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m53BackupResumeInvalid =>
       'The saved backup snapshot is missing, changed, or cannot be verified. Start a new backup. The old file is kept.';
+
+  @override
+  String get m54EmployeeHardLocked =>
+      'Employee access is locked. Ask the owner to unlock it in Security.';
+
+  @override
+  String get m54UnlockCashier => 'Unblock Cashier PIN attempts';
+
+  @override
+  String get m54UnlockWarehouse => 'Unblock Warehouse PIN attempts';
+
+  @override
+  String get m54RecoveryWordCount =>
+      'Enter exactly 24 recovery words (or the legacy 64-character hex code).';
+
+  @override
+  String get m54RecoveryWordInvalid =>
+      'An unknown word was entered. Use the English words on the recovery sheet.';
+
+  @override
+  String get m54RecoveryChecksumInvalid =>
+      'Recovery checksum does not match. Check every word and its order.';
+
+  @override
+  String get m54RecoveryQrInvalid =>
+      'This is not a supported SkyBee recovery QR.';
+
+  @override
+  String get m54ShelfNotRegistered =>
+      'This shelf is not registered. Select an existing shelf or add a new one.';
+
+  @override
+  String get m54FieldInvalid => 'Check the value in this field.';
+
+  @override
+  String get m54RecoveryOnly => 'Use this secret QR only in store recovery.';
+
+  @override
+  String get m54EmployeeUnlocked =>
+      'Block cleared. Enter the Cashier PIN to continue.';
+
+  @override
+  String get m54UnblockOwnerHelp =>
+      'Enter the owner PIN to clear Cashier attempt blocking. The Cashier lock stays enabled; old sessions are revoked.';
+
+  @override
+  String get m54CashVoluntaryOpenFirst =>
+      'Start voluntary recording with Open cash session. Store policy does not change automatically.';
+
+  @override
+  String get m54CashNextSessionRequired =>
+      'Confirm that this change applies from the next session. Open sessions retain their original policy.';
+
+  @override
+  String get m54CashNextSession => 'Apply from the next session?';
+
+  @override
+  String get m54CashNextSessionHelp =>
+      'This change applies only to the next session. Open sessions keep their mode, opening counts and history. Close them with the actual physical count.';
+
+  @override
+  String get m54CashVoluntaryStoredOff =>
+      'Store policy remains Off. The open voluntary session records cash until it is closed.';
+
+  @override
+  String get m54CashStoredPolicy => 'Saved policy';
+
+  @override
+  String get m54CashAuthenticationCancelled =>
+      'Authentication cancelled. Policy was not saved; your selection is retained.';
+
+  @override
+  String get m54CashSessionOpen => 'Cash session open — closing required';
+
+  @override
+  String get m54ScanRouteChanged =>
+      'Scan cancelled because the screen changed. Scan again in the active field.';
 }

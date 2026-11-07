@@ -3,11 +3,17 @@ package com.example.kasir_app
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.Rect
+import android.graphics.drawable.GradientDrawable
 import android.hardware.Camera
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
+import android.widget.FrameLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.zxing.BarcodeFormat
@@ -29,6 +35,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import kotlin.math.roundToInt
 
 /** One foreground camera owner, no images/files/network. Lifecycle pause never
  * automatically resumes decoding: the Dart scope must explicitly re-authorize.
@@ -45,6 +52,30 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
         // result; Dart offers an explicit 12-digit alternative instead of
         // silently dropping a leading zero during lookup.
         val decoderFormats = formats.filter { it != BarcodeFormat.UPC_A }
+        private val focusModes = setOf(Camera.Parameters.FOCUS_MODE_AUTO,
+            Camera.Parameters.FOCUS_MODE_MACRO, Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE,
+            Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)
+
+        /** Preview pixels already include the decoder's scale and crop. Undo
+         * the display rotation before using Camera1 sensor coordinates. */
+        private fun focusArea(x: Float, y: Float, frame: Rect, crop: Rect,
+                              width: Int, height: Int, rotation: Int): Rect? {
+            if (frame.isEmpty || crop.isEmpty || width <= 0 || height <= 0) return null
+            val u = (crop.left + (x - frame.left) * crop.width() / frame.width()) / width
+            val v = (crop.top + (y - frame.top) * crop.height() / frame.height()) / height
+            if (u !in 0f..1f || v !in 0f..1f) return null
+            val (sensorX, sensorY) = when (rotation) {
+                0 -> u to v
+                90 -> v to (1 - u)
+                180 -> (1 - u) to (1 - v)
+                270 -> (1 - v) to u
+                else -> return null
+            }
+            val cx = (sensorX * 2000 - 1000).roundToInt()
+            val cy = (sensorY * 2000 - 1000).roundToInt()
+            return Rect((cx - 150).coerceAtLeast(-1000), (cy - 150).coerceAtLeast(-1000),
+                (cx + 150).coerceAtMost(1000), (cy + 150).coerceAtMost(1000))
+        }
     }
     private val messenger = engine.dartExecutor.binaryMessenger
     private val channel = MethodChannel(messenger, "kasir_app/barcode_camera")
@@ -57,6 +88,13 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
 
     private fun permitted() = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
     private fun cameras(): Int = try { Camera.getNumberOfCameras().coerceIn(0, 16) } catch (_: Exception) { 0 }
+    private fun hasRearCamera(): Boolean = try {
+        val info = Camera.CameraInfo()
+        (0 until cameras()).any {
+            Camera.getCameraInfo(it, info)
+            info.facing == Camera.CameraInfo.CAMERA_FACING_BACK
+        }
+    } catch (_: Exception) { false }
     private fun probe(): Map<String, Any> {
         val count = cameras()
         return mapOf("available" to (count > 0), "cameras" to count,
@@ -164,13 +202,27 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
 
     private inner class CameraView(context: Context, private val id: Int) : PlatformView {
         private val barcode = BarcodeView(context)
+        private val preview = FrameLayout(context)
+        private val ring = View(context)
+        private val ringSize = (40 * context.resources.displayMetrics.density).roundToInt()
+        private val hideRing = Runnable { ring.visibility = View.INVISIBLE }
         private val calls = MethodChannel(messenger, "kasir_app/barcode_camera/$id")
         private var closed = false
         private var armed = false
+        @Volatile
         private var generation = 0
 
         init {
             barcode.setUseTextureView(true)
+            preview.addView(barcode, FrameLayout.LayoutParams(-1, -1))
+            ring.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+            ring.background = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setStroke((ringSize / 20).coerceAtLeast(1), Color.WHITE)
+            }
+            ring.visibility = View.INVISIBLE
+            preview.addView(ring, FrameLayout.LayoutParams(ringSize, ringSize))
+            listenForFocus(context)
             barcode.decoderFactory = DefaultDecoderFactory(decoderFormats)
             barcode.addStateListener(object : CameraPreview.StateListener {
                 override fun previewSized() {}
@@ -217,13 +269,74 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
                 }
             }
         }
+
+        private fun listenForFocus(context: Context) {
+            val slop = ViewConfiguration.get(context).scaledTouchSlop
+            var downX = 0f
+            var downY = 0f
+            var tap = false
+            barcode.setOnTouchListener { _, event ->
+                when (event.actionMasked) {
+                    MotionEvent.ACTION_DOWN -> {
+                        downX = event.x
+                        downY = event.y
+                        tap = armed
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        if (kotlin.math.abs(event.x - downX) > slop ||
+                            kotlin.math.abs(event.y - downY) > slop) tap = false
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        if (tap) focusAt(event.x, event.y)
+                        tap = false
+                    }
+                    MotionEvent.ACTION_POINTER_DOWN, MotionEvent.ACTION_CANCEL -> tap = false
+                }
+                true
+            }
+        }
+
+        private fun focusAt(x: Float, y: Float) {
+            if (closed || !armed || !barcode.isPreviewActive) return
+            val camera = barcode.cameraInstance ?: return
+            val frame = barcode.framingRect ?: return
+            val crop = barcode.previewFramingRect ?: return
+            val size = barcode.previewSize ?: return
+            // ZXing chooses the first rear camera. Keep its normal autofocus on
+            // front-only devices, where the preview may also be mirrored.
+            if (!hasRearCamera()) return
+            val area = focusArea(x, y, frame, crop, size.width, size.height, camera.cameraRotation) ?: return
+            val epoch = generation
+            // This public ZXing callback runs on the existing camera thread.
+            // The normal autofocus cycle uses the requested area. The ring
+            // acknowledges the request, since the driver reports no lock here.
+            barcode.changeCameraParameters { parameters ->
+                if (generation == epoch && parameters.maxNumFocusAreas > 0 &&
+                    parameters.focusMode in focusModes) {
+                    parameters.focusAreas = listOf(Camera.Area(area, 1000))
+                    preview.post {
+                        if (!closed && armed && generation == epoch) {
+                            ring.translationX = x - ringSize / 2f
+                            ring.translationY = y - ringSize / 2f
+                            ring.visibility = View.VISIBLE
+                            ring.removeCallbacks(hideRing)
+                            ring.postDelayed(hideRing, 700)
+                        }
+                    }
+                }
+                parameters
+            }
+        }
+
         fun pause() {
             armed = false
             generation++
+            ring.removeCallbacks(hideRing)
+            hideRing.run()
             barcode.pause()
             if (active === this) active = null
         }
-        override fun getView(): View = barcode
+        override fun getView(): View = preview
         override fun dispose() {
             if (closed) return
             pause()

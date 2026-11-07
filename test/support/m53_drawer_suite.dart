@@ -82,11 +82,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
     );
   }
 
-  Future<void> notes() async {
-    final context = await service.context();
-    await service.setNotes(true, context.policy.revision);
-  }
-
   Future<EntityId> stock() async {
     await app.management.unlock('0001');
     final id = await app.inventory.create(
@@ -100,6 +95,220 @@ void m53DrawerSuite(DatabaseFactory factory) {
     app.management.lock();
     return id;
   }
+
+  test(
+    'M54 voluntary session records physical cash without changing Off; retries do not advance lifecycle twice',
+    () async {
+      final initial = await service.context();
+      final key = fixtureId(4100);
+      final id = await service.open(
+        operationKey: key,
+        expected: initial,
+        opening: pieces({1000: 3}),
+        reason: 'PUBLIC COUNT',
+      );
+      expect(
+        await service.open(
+          operationKey: key,
+          expected: initial,
+          opening: pieces({1000: 3}),
+          reason: 'PUBLIC COUNT',
+        ),
+        id,
+      );
+      var current = await service.context();
+      expect(current.storePolicy.mode, CashDrawerMode.off);
+      expect(current.policy.mode, CashDrawerMode.notes);
+      await db.read(CashDrawerValidation.validate);
+      expect(current.policy.revision, initial.policy.revision + 1);
+      final event = await service.journal(
+        session: id,
+        operationKey: fixtureId(4101),
+        pieces: pieces({1000: 1}),
+        incoming: false,
+        reason: 'PUBLIC ACTUAL CASH',
+      );
+      expect(
+        await service.journal(
+          session: id,
+          operationKey: fixtureId(4101),
+          pieces: pieces({1000: 1}),
+          incoming: false,
+          reason: 'PUBLIC ACTUAL CASH',
+        ),
+        event,
+      );
+      current = await service.context();
+      final rev = current.session!.balance.revision;
+      await service.close(
+        session: id,
+        revision: rev,
+        operationKey: fixtureId(4102),
+        observed: pieces({1000: 2}),
+        reason: 'PUBLIC COUNT',
+      );
+      await service.close(
+        session: id,
+        revision: rev,
+        operationKey: fixtureId(4102),
+        observed: pieces({1000: 2}),
+        reason: 'PUBLIC COUNT',
+      );
+      current = await service.context();
+      expect(current.storePolicy.mode, CashDrawerMode.off);
+      expect(current.policy.active, isFalse);
+      expect(current.policy.revision, initial.policy.revision + 2);
+      expect((await app.cashDrawerHistory.sessions()).items.single.id, id);
+      await expectLater(
+        service.journal(
+          session: id,
+          operationKey: fixtureId(4103),
+          pieces: pieces({1000: 1}),
+          incoming: true,
+          reason: 'PUBLIC STALE',
+        ),
+        throwsA(error('m53CashSessionChanged')),
+      );
+      await db.read(CashDrawerValidation.validate);
+    },
+  );
+
+  test(
+    'M54 confirmed audit applies next session without inventing opening counts or changing current notes',
+    () async {
+      final id = await open(null);
+      await app.management.reauthenticate('0001', 'security');
+      var state = await app.cashDrawerHistory.policyState();
+      expect(state.openCount, 1);
+      expect(state.policy.mode, CashDrawerMode.off);
+      await expectLater(
+        service.configure(CashDrawerMode.audit, state.policy.revision),
+        throwsA(error('m54CashNextSessionRequired')),
+      );
+      await app.management.reauthenticate('0001', 'security');
+      await service.configure(
+        CashDrawerMode.audit,
+        state.policy.revision,
+        applyFromNextSession: true,
+      );
+      var current = await service.context();
+      expect(current.storePolicy.mode, CashDrawerMode.audit);
+      expect(current.policy.mode, CashDrawerMode.notes);
+      expect(current.session!.openingKnown, isFalse);
+      expect(current.session!.mode, CashDrawerMode.notes);
+      await db.read(CashDrawerValidation.validate);
+      await app.management.reauthenticate('0001', 'security');
+      state = await app.cashDrawerHistory.policyState();
+      await expectLater(
+        service.configure(
+          CashDrawerMode.off,
+          state.policy.revision,
+          applyFromNextSession: true,
+        ),
+        throwsA(error('m53CashCloseSessionsFirst')),
+      );
+      await service.close(
+        session: id,
+        revision: current.session!.balance.revision,
+        operationKey: fixtureId(4110),
+        observed: pieces({}),
+        reason: 'PUBLIC UNKNOWN COUNT',
+      );
+      current = await service.context();
+      expect(current.policy.mandatory, isTrue);
+      await open(pieces({1000: 2}));
+      current = await service.context();
+      expect(current.session!.mode, CashDrawerMode.audit);
+      final rows = await db.read((sql) => sql.query('cash_drawer_closures'));
+      expect(rows.single['difference_minor'], isNull);
+      expect(rows.single['expected_known'], 0);
+      await db.read(CashDrawerValidation.validate);
+    },
+  );
+
+  test(
+    'M54 policy snapshot rejects both intervening open and close while preserving selected intent',
+    () async {
+      await app.management.reauthenticate('0001', 'security');
+      final before = await app.cashDrawerHistory.policyState();
+      final id = await open(pieces({}));
+      await expectLater(
+        service.configure(CashDrawerMode.audit, before.policy.revision),
+        throwsA(error('m53CashPolicyChanged')),
+      );
+      await app.management.reauthenticate('0001', 'security');
+      final opened = await app.cashDrawerHistory.policyState();
+      await service.close(
+        session: id,
+        revision: 1,
+        operationKey: fixtureId(4120),
+        observed: pieces({}),
+        reason: 'PUBLIC COUNT',
+      );
+      await expectLater(
+        service.configure(
+          CashDrawerMode.audit,
+          opened.policy.revision,
+          applyFromNextSession: true,
+        ),
+        throwsA(error('m53CashPolicyChanged')),
+      );
+      expect((await service.context()).storePolicy.mode, CashDrawerMode.off);
+      await app.management.reauthenticate('0001', 'security');
+      final closed = await app.cashDrawerHistory.policyState();
+      await expectLater(
+        service.configure(CashDrawerMode.notes, closed.policy.revision),
+        throwsA(error('m54CashVoluntaryOpenFirst')),
+      );
+    },
+  );
+
+  test(
+    'M54 failed open and close roll back lifecycle revision together with physical facts',
+    () async {
+      final failing = CashDrawerService(
+        db,
+        app.management,
+        service.store,
+        testStage: (stage) async {
+          if (stage == 'session-opened' || stage == 'closed') {
+            throw StateError('PUBLIC ROLLBACK');
+          }
+        },
+      );
+      final before = await service.context();
+      await expectLater(
+        failing.open(
+          operationKey: fixtureId(4130),
+          expected: before,
+          opening: pieces({}),
+          reason: 'PUBLIC COUNT',
+        ),
+        throwsStateError,
+      );
+      expect((await service.context()).policy.revision, before.policy.revision);
+      expect((await service.context()).session, isNull);
+      final id = await open(pieces({}));
+      final opened = await service.context();
+      await expectLater(
+        failing.close(
+          session: id,
+          revision: 1,
+          operationKey: fixtureId(4131),
+          observed: pieces({}),
+          reason: 'PUBLIC COUNT',
+        ),
+        throwsStateError,
+      );
+      final after = await service.context();
+      expect(after.policy.revision, opened.policy.revision);
+      expect(after.session!.closed, isFalse);
+      expect(
+        await db.read((sql) => sql.query('cash_drawer_closures')),
+        isEmpty,
+      );
+    },
+  );
 
   CheckoutInput input(
     EntityId session,
@@ -149,7 +358,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
         () => zero.plus(CashPieces(CurrencyPolicy.forCode('USD'), {1: 1})),
         throwsA(anything),
       );
-      await notes();
       final unknown = await open(null);
       final current = (await service.context()).session!;
       expect(current.id, unknown);
@@ -175,7 +383,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
   test(
     'M53 drawer journal retries and recount record actual composition without creating sales',
     () async {
-      await notes();
       final id = await open(pieces({1000: 2}));
       final event = await service.journal(
         session: id,
@@ -247,7 +454,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
   test(
     'M53 drawer midnight does not close old session or duplicate opening; rollback clock blocks new facts',
     () async {
-      await notes();
       final first = await open(pieces({1000: 2}));
       now = now.add(const Duration(days: 1));
       var context = await service.context();
@@ -284,7 +490,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
     'M53 drawer checkout atomically records 95000 tender minus 2000 change, retries once and refunds net with actual different pieces',
     () async {
       final product = await stock();
-      await notes();
       final session = await open(pieces({1000: 5, 2000: 2}));
       var cart = await app.cart.open();
       cart = await app.cart.add(cart.id, product);
@@ -370,7 +575,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
     'M53 drawer active mode refuses manual/exact or incomplete change without touching stock or financial facts',
     () async {
       final product = await stock();
-      await notes();
       final session = await open(pieces({2000: 2}));
       var cart = await app.cart.open();
       cart = await app.cart.add(cart.id, product);
@@ -423,7 +627,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
     'M53 drawer repayment records received and change once without a new sale HPP or visit; explicit external refund leaves drawer unchanged',
     () async {
       final product = await stock();
-      await notes();
       final session = await open(pieces({1000: 5, 2000: 2}));
       var cart = await app.cart.open();
       cart = await app.cart.add(cart.id, product);
@@ -498,7 +701,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
     'M53 drawer post failure rolls the sale ledger provenance balances and durable input back together',
     () async {
       final product = await stock();
-      await notes();
       final session = await open(pieces({2000: 2}));
       var cart = await app.cart.open();
       cart = await app.cart.add(cart.id, product);
@@ -562,7 +764,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
     'M53 drawer backup reconstructs pieces and rejects forged cache, missing payment provenance and inconsistent change',
     () async {
       final product = await stock();
-      await notes();
       final session = await open(pieces({1000: 5, 2000: 2}));
       var cart = await app.cart.open();
       cart = await app.cart.add(cart.id, product);
@@ -764,8 +965,8 @@ void m53DrawerSuite(DatabaseFactory factory) {
       );
       app.management.lock();
       await expectLater(
-        service.setNotes(false, 2),
-        throwsA(error('m53CashAuditRequired')),
+        service.configure(CashDrawerMode.off, 2),
+        throwsA(error('managementSessionLockedEnterPinAgain')),
       );
       await app.management.reauthenticate('0001', 'security');
       final before = await db.read(
@@ -783,7 +984,7 @@ void m53DrawerSuite(DatabaseFactory factory) {
         },
       );
       await expectLater(
-        late.configure(CashDrawerMode.notes, 2),
+        late.configure(CashDrawerMode.off, 2),
         throwsA(error('managementSessionLockedEnterPinAgain')),
       );
       expect(
@@ -814,7 +1015,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
     'M53 drawer late cashier lock rolls post and checkout back before result publication',
     () async {
       final product = await stock();
-      await notes();
       final session = await open(pieces({2000: 2}));
       var cart = await app.cart.open();
       cart = await app.cart.add(cart.id, product);
@@ -883,7 +1083,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
   test(
     'M53 drawer history keysets bound pages and scope; notes persist off and owner late revocation redacts audit',
     () async {
-      await notes();
       EntityId? latest;
       for (var n = 0; n < 27; n++) {
         latest = await open(pieces({}));
@@ -895,7 +1094,7 @@ void m53DrawerSuite(DatabaseFactory factory) {
           reason: 'PUBLIC CLOSE',
         );
       }
-      await service.setNotes(false, (await service.context()).policy.revision);
+      expect((await service.context()).policy.active, isFalse);
       final first = await app.cashDrawerHistory.sessions();
       final second = await app.cashDrawerHistory.sessions(after: first.next);
       expect(first.items.length, 25);
@@ -991,7 +1190,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
     'M53 drawer owner sale audit reads applied cash separately and refund preview never uses larger tender',
     () async {
       final product = await stock();
-      await notes();
       final session = await open(pieces({2000: 2}));
       var cart = await app.cart.open();
       cart = await app.cart.add(cart.id, product);
@@ -1043,7 +1241,6 @@ void m53DrawerSuite(DatabaseFactory factory) {
   test(
     'M53 drawer old-day closure requires explicit owner exception and never fabricates a historical physical count',
     () async {
-      await notes();
       final old = await open(pieces({2000: 2}));
       final oldState = (await service.context()).session!.balance;
       now = now.add(const Duration(days: 1));

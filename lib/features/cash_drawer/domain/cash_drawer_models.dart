@@ -49,17 +49,37 @@ final class CashDrawerSession {
 final class CashDrawerContext {
   const CashDrawerContext({
     required this.policy,
+    CashDrawerPolicy? storePolicy,
     required this.day,
     required this.timeZone,
     required this.currency,
     this.session,
     this.unclosedOlder = 0,
-  });
+  }) : storePolicy = storePolicy ?? policy;
   final CashDrawerPolicy policy;
+
+  /// The persisted owner preference is separate from the current physical
+  /// session. A voluntary session never silently changes that preference.
+  final CashDrawerPolicy storePolicy;
   final String day, timeZone;
   final CurrencyPolicy currency;
   final CashDrawerSession? session;
   final int unclosedOlder;
+}
+
+/// Owner settings read model. Only the current day's most recent session is
+/// loaded; aggregate counts include every open session, including older days.
+final class CashDrawerPolicyState {
+  const CashDrawerPolicyState({
+    required this.policy,
+    required this.openCount,
+    required this.olderOpenCount,
+    this.currentSession,
+  });
+  final CashDrawerPolicy policy;
+  final int openCount, olderOpenCount;
+  final CashDrawerSession? currentSession;
+  bool get hasOpenSessions => openCount > 0;
 }
 
 /// Optional new receipt provenance; null on old callers retains the historical

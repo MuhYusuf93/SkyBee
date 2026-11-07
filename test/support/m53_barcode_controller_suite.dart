@@ -49,6 +49,36 @@ final class SyntheticBarcodeCamera implements BarcodeCamera {
 
 void m53BarcodeControllerSuite() {
   test(
+    'M54 cancelled camera lookup cannot mutate after cover then resume',
+    () async {
+      final camera = SyntheticBarcodeCamera(), pending = Completer<void>();
+      var mutations = 0;
+      final controller = BarcodeScannerController(
+        camera: camera,
+        authorize: () async {},
+        permission: (a) => a(),
+        lookup: (code, requireIntent) async {
+          await pending.future;
+          requireIntent();
+          mutations++;
+          return const BarcodeFeedback('m53CameraAdded', success: true);
+        },
+      );
+      await controller.prepare();
+      camera.frame('0000123456789');
+      final accepting = controller.accept();
+      await Future<void>.delayed(Duration.zero);
+      controller.suspend(inactive: true);
+      controller.resume();
+      await controller.prepare();
+      pending.complete();
+      await accepting;
+      expect(mutations, 0);
+      expect(controller.feedback, isNull);
+      controller.dispose();
+    },
+  );
+  test(
     'M53 barcode EAN13 leading zero remains default; UPC equivalent requires explicit choice before one confirmation',
     () async {
       final camera = SyntheticBarcodeCamera(), codes = <String>[];
@@ -56,7 +86,7 @@ void m53BarcodeControllerSuite() {
         camera: camera,
         authorize: () async {},
         permission: (a) => a(),
-        lookup: (code) async {
+        lookup: (code, requireIntent) async {
           codes.add(code);
           return const BarcodeFeedback('m53CameraAdded', success: true);
         },
@@ -89,7 +119,7 @@ void m53BarcodeControllerSuite() {
         camera: camera,
         authorize: () async {},
         permission: (action) => action(),
-        lookup: (text) async {
+        lookup: (text, requireIntent) async {
           codes.add(text);
           return const BarcodeFeedback('m53CameraAdded', success: true);
         },
@@ -133,7 +163,7 @@ void m53BarcodeControllerSuite() {
         camera: camera,
         authorize: () async {},
         permission: (a) => a(),
-        lookup: (text) async {
+        lookup: (text, requireIntent) async {
           lookups++;
           return const BarcodeFeedback('productNotFound');
         },
@@ -170,7 +200,7 @@ void m53BarcodeControllerSuite() {
           if (!allowed) throw const AppError('m53CashierLocked');
         },
         permission: (action) => action(),
-        lookup: (text) async {
+        lookup: (text, requireIntent) async {
           lookups++;
           return const BarcodeFeedback('m53CameraAdded', success: true);
         },
@@ -202,7 +232,7 @@ void m53BarcodeControllerSuite() {
         camera: camera,
         authorize: () async {},
         permission: (a) => a(),
-        lookup: (_) => pending.future,
+        lookup: (_, requireIntent) => pending.future,
       );
       await controller.prepare();
       camera.frame('https://example.invalid/product');

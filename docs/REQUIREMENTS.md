@@ -1,5 +1,54 @@
 # Matriks persyaratan
 
+<!-- M54_FOUNDATION_START -->
+7 November 2026 WIB — M5.4 masih aktif, source0.5.4+14/schema38.
+Fondasi lockout/gate/PIN, recovery24kata kompatibel, form/rak/harga dan
+penolakan arsip tersedia. Host85kasusunik lulus melalui runs/retest, bukan satu
+run85PASS. Nativefondasi Poco20PASS3FAILharness lalu PIN4PASS; DV23/23PASS08:22.
+Semua wrapper selesai/controlOff/exit aktual tercatat; semua oldprotectedhash
+tetap sama, awakeDV exact restored. Revisi3 hanya mengubah harnessPIN; manifest
+888file05c3648f05069ee24eb91b4663a06ce2c47964b2429c39bf0ad59e11b3100634
+terverifikasi sebelum source dibuka kembali. Cleanup1jobfixtureDV PASS scoped
+APIWorkManager; bukan resetdata. Lihat [laporan](M54_FOUNDATION_REPORT.md).
+Kebijakan/sesi kas tahap2 diimplementasikan; regresi48/48PASS01:26,
+UIbaruID/EN2PASS00:31, analyzer104s bersih, l10n1552/947/245 dan PIN106match.
+NativekasPoco7/7PASS04:04, oldhashsama/controlOff/exit0. DV7/7PASS04:51,
+oldhashsama/awakeexact/controlOff/exit0 pada source889file manifest4
+2ae2e9e160de4083aec52bddca88737587160be85b78f33546b3605d24084ca0.
+Audit kas source4 ditutup. [Laporan kas](M54_CASH_POLICY_REPORT.md).
+Routing input memverifikasi field dan route aktif sebelum mutasi. Setup dan
+rotasi PIN mempertahankan input mentah. Sebanyak 81 kasus host lulus melalui
+run dan retest. Analyzer bersih, formatter 84 file tanpa perubahan, lokalisasi
+1553/948/245 dan hash PIN 106 cocok. Poco mencakup 21 kasus melalui 19 kasus
+awal dan dua retest. DV mengulang seluruh 21 kasus dan lulus dalam 2:48 pada
+manifest 6. Audit hash dan pemulihan awake ditutup pada kedua perangkat.
+Putus ADB pada run DV sebelumnya dicatat beserta audit pemulihan. Pengujian
+scanner fisik tetap terbuka. [Laporan input](M54_INPUT_ROUTING_REPORT.md).
+Arsip produk, navigasi master, kontrol bahasa promo dan validasi biaya
+referensi lulus dalam regresi host 75/75. Analyzer bersih. Adapter fokus
+kamera belakang dan fallback telah dikompilasi untuk fixture. Arsip native,
+fokus optik, dan HID fisik dijadwalkan pada acceptance tahap 6.
+[Laporan operasional](M54_OPERATIONAL_REPORT.md).
+Implementasi berlanjut ke tahap 3. Tahap 3–5, acceptance, handoff .skybee/APK
+Uji Teman, dan Realme belum selesai. M5.5 khusus multi-device.
+[Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
+<!-- M54_FOUNDATION_END -->
+
+
+## M5.4 aktif — 6 November 2026
+
+Instruksi terbaru pengguna mengaktifkan implementasi/pengujian/perbaikan/handoff
+M5.4 sesuai [kontrak lengkap](decisions/M54_REQUEST.md). Urutan dan temuan aktual:
+[M54_CHECKPOINT](M54_CHECKPOINT.md); matriks35catatan/bukti/batas:
+[M54_ACCEPTANCE](M54_ACCEPTANCE.md). Baseline0.5.3+13/schema37/c94a2a2.
+Jangan mengulang reset/seed M5.3: data/config/PIN `.skybee` saat ini dipertahankan.
+QRIS hanya gambar statis+konfirmasi manual kasir di luar aplikasi. M5.5 khusus
+multi-device dan belum dikerjakan; redesign menyeluruh ditunda ke arahan lain.
+Bagian historis yang menyebut M5.5 visual tidak berlaku sebagai roadmap aktif.
+Seluruh acceptance/handoff M5.4 belum selesai; jangan memakai bukti M5.3 sebagai
+hasil M5.4. Realme diuji sesudah handoff awal bila tersedia.
+
+
 <!-- M53_ACTIVE_H_START -->
 1 November 2026 23:06 WIB — M5.3 A–H SELESAI danhandoff aktual PASS.
 Source/APK0.5.3+13/schema37; softwarepushd06f7e1 (G3push5166318). Poco .skybee

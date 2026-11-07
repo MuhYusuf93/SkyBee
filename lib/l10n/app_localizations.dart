@@ -2741,7 +2741,7 @@ abstract class AppLocalizations {
   /// M5 printer, alerts or backup interface: m5RecoveryCodeHelp.
   ///
   /// In en, this message translates to:
-  /// **'This code differs from your PIN and PIN recovery. Keep a private copy outside the device. Older backups still need the code used when created; a lost code cannot be derived from your PIN.'**
+  /// **'These 24 English words represent your 256-bit backup key. Keep their order and store them securely. Legacy hex codes remain accepted. The backup key differs from PIN recovery.'**
   String get m5RecoveryCodeHelp;
 
   /// M5 printer, alerts or backup interface: m5ConfirmRecoveryCode.
@@ -4043,13 +4043,13 @@ abstract class AppLocalizations {
   /// M5.2 operational form or validation. English meaning: Purchase cost per unit must not exceed the retail selling price.
   ///
   /// In en, this message translates to:
-  /// **'Purchase cost per unit must not exceed the retail selling price.'**
+  /// **'Purchase cost per unit must be lower than the retail selling price.'**
   String get m52PurchaseAboveRetail;
 
   /// M5.2 operational form or validation. English meaning: Wholesale price must not exceed the retail selling price.
   ///
   /// In en, this message translates to:
-  /// **'Wholesale price must not exceed the retail selling price.'**
+  /// **'Wholesale price must be lower than the retail selling price.'**
   String get m52WholesaleAboveRetail;
 
   /// M5.2 operational form or validation. English meaning: Enter the reference purchase cost per unit, including an explicit zero if free.
@@ -5363,7 +5363,7 @@ abstract class AppLocalizations {
   /// M5.3 physical cash declarations and session accounting: m53CashNotesHelp
   ///
   /// In en, this message translates to:
-  /// **'Enable this to help record daily cash. Records remain when the date changes or recording is disabled. Close open sessions before disabling recording.'**
+  /// **'Open a session to record physical cash voluntarily. Store policy is saved separately. Records remain after closing or a date change.'**
   String get m53CashNotesHelp;
 
   /// M5.3 physical cash declarations and session accounting: m53CashReasonRequired
@@ -9289,6 +9289,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The saved backup snapshot is missing, changed, or cannot be verified. Start a new backup. The old file is kept.'**
   String get m53BackupResumeInvalid;
+
+  /// M5.4 employee access lockout and explicit fresh owner unlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Employee access is locked. Ask the owner to unlock it in Security.'**
+  String get m54EmployeeHardLocked;
+
+  /// M5.4 employee access lockout and explicit fresh owner unlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblock Cashier PIN attempts'**
+  String get m54UnlockCashier;
+
+  /// M5.4 employee access lockout and explicit fresh owner unlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblock Warehouse PIN attempts'**
+  String get m54UnlockWarehouse;
+
+  /// M5.4 recovery mnemonic validation, no secret in error.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter exactly 24 recovery words (or the legacy 64-character hex code).'**
+  String get m54RecoveryWordCount;
+
+  /// M5.4 recovery mnemonic validation, no secret in error.
+  ///
+  /// In en, this message translates to:
+  /// **'An unknown word was entered. Use the English words on the recovery sheet.'**
+  String get m54RecoveryWordInvalid;
+
+  /// M5.4 recovery mnemonic validation, no secret in error.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery checksum does not match. Check every word and its order.'**
+  String get m54RecoveryChecksumInvalid;
+
+  /// M5.4 recovery mnemonic validation, no secret in error.
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a supported SkyBee recovery QR.'**
+  String get m54RecoveryQrInvalid;
+
+  /// M5.4 product form field validation.
+  ///
+  /// In en, this message translates to:
+  /// **'This shelf is not registered. Select an existing shelf or add a new one.'**
+  String get m54ShelfNotRegistered;
+
+  /// M5.4 product form field validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the value in this field.'**
+  String get m54FieldInvalid;
+
+  /// Reject recovery secrets in all business barcode flows without echoing payload.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this secret QR only in store recovery.'**
+  String get m54RecoveryOnly;
+
+  /// M54 explicit owner action clears employee attempts without disabling cashier policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Block cleared. Enter the Cashier PIN to continue.'**
+  String get m54EmployeeUnlocked;
+
+  /// M54 explicit owner action clears employee attempts without disabling cashier policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the owner PIN to clear Cashier attempt blocking. The Cashier lock stays enabled; old sessions are revoked.'**
+  String get m54UnblockOwnerHelp;
+
+  /// M54 cash policy and physical session state: m54CashVoluntaryOpenFirst
+  ///
+  /// In en, this message translates to:
+  /// **'Start voluntary recording with Open cash session. Store policy does not change automatically.'**
+  String get m54CashVoluntaryOpenFirst;
+
+  /// M54 cash policy and physical session state: m54CashNextSessionRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm that this change applies from the next session. Open sessions retain their original policy.'**
+  String get m54CashNextSessionRequired;
+
+  /// M54 cash policy and physical session state: m54CashNextSession
+  ///
+  /// In en, this message translates to:
+  /// **'Apply from the next session?'**
+  String get m54CashNextSession;
+
+  /// M54 cash policy and physical session state: m54CashNextSessionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'This change applies only to the next session. Open sessions keep their mode, opening counts and history. Close them with the actual physical count.'**
+  String get m54CashNextSessionHelp;
+
+  /// M54 cash policy and physical session state: m54CashVoluntaryStoredOff
+  ///
+  /// In en, this message translates to:
+  /// **'Store policy remains Off. The open voluntary session records cash until it is closed.'**
+  String get m54CashVoluntaryStoredOff;
+
+  /// M54 cash policy and physical session state: m54CashStoredPolicy
+  ///
+  /// In en, this message translates to:
+  /// **'Saved policy'**
+  String get m54CashStoredPolicy;
+
+  /// M54 truthful policy form feedback after cancelled owner PIN.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication cancelled. Policy was not saved; your selection is retained.'**
+  String get m54CashAuthenticationCancelled;
+
+  /// M54 cash policy and physical session state: m54CashSessionOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Cash session open — closing required'**
+  String get m54CashSessionOpen;
+
+  /// Cancellation of an old input intent; never an authentication grant.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan cancelled because the screen changed. Scan again in the active field.'**
+  String get m54ScanRouteChanged;
 }
 
 class _AppLocalizationsDelegate

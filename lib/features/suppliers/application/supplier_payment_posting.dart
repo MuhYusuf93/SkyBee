@@ -55,7 +55,10 @@ extension SupplierPaymentPosting on SupplierService {
         0) {
       throw const AppError('m53SupplierPaymentDateInvalid');
     }
-    final policy = await CashDrawerLedger.policyOn(db);
+    final policy = await CashDrawerLedger.operationalPolicyOn(
+      db,
+      CashierStore(access.clock),
+    );
     final tracked =
         input.source == SupplierPaymentSource.drawer && policy.active;
     if (tracked) {
@@ -183,7 +186,10 @@ extension SupplierPaymentPosting on SupplierService {
     if (tracked) {
       if (original['source'] != 'drawer' ||
           drawerSession == null ||
-          !(await CashDrawerLedger.policyOn(db)).active) {
+          !(await CashDrawerLedger.operationalPolicyOn(
+            db,
+            CashierStore(access.clock),
+          )).active) {
         throw const AppError('m53SupplierCashReturnRequired');
       }
       if (returned.currency.code != invoice.currency.code ||

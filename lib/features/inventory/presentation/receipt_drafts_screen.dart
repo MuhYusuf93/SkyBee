@@ -5,6 +5,7 @@ import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../core/money/money_field.dart';
 import '../../../core/presentation/form_exit_guard.dart';
+import '../../../core/presentation/route_input_scope.dart';
 import '../../../l10n/localization.dart';
 import '../../barcode/domain/barcode_camera.dart';
 import '../../barcode/presentation/barcode_scanner_screen.dart';
@@ -200,6 +201,7 @@ class ReceiptDraftScreen extends StatefulWidget {
 
 class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
     with WidgetsBindingObserver {
+  final inputScope = RouteInputScope();
   final code = TextEditingController(), reason = TextEditingController();
   late final inputs = Listenable.merge([code, reason]);
   final reverseKey = const IdGenerator().next().value;
@@ -225,6 +227,10 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    inputScope.attach(
+      context.read<RouteObserver<ModalRoute<dynamic>>?>(),
+      ModalRoute.of(context),
+    );
     if (!started) {
       started = true;
       generation = context.read<AppServices>().database.generation;
@@ -304,30 +310,65 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
     }
   }
 
-  Future<void> scan(String text) async {
+  Future<void> scan(
+    String text, {
+    void Function()? requireIntent,
+    bool allowDialogs = true,
+  }) async {
     if (busy || doc == null || doc!.status != 'draft') return;
+    if (requireIntent == null && !inputScope.canReceive) return;
+    final guard = requireIntent ?? inputScope.capture();
+    try {
+      guard();
+    } on AppError {
+      return;
+    }
     final app = context.read<AppServices>();
     await run(
-      () => app.inventory.scanReceiptDraft(doc!.id, doc!.revision, text),
+      () => app.inventory.scanReceiptDraft(
+        doc!.id,
+        doc!.revision,
+        text,
+        requireIntent: guard,
+      ),
     );
     if (!mounted) return;
+    try {
+      guard();
+    } on AppError {
+      if (code.text == text) code.clear();
+      return;
+    }
+    if (!allowDialogs) {
+      if (error == null) code.clear();
+      return;
+    }
     if (error == 'productNotFound') {
       if (await ask('productNotFound', 'm53ReceiptRegisterUnknown') &&
-          mounted) {
+          mounted &&
+          inputScope.canReceive) {
         await register(text);
       }
     } else if (error == 'm53ReceiptChooseLine') {
       final product = await app.inventory.lookupCode(text);
+      try {
+        guard();
+      } on AppError {
+        return;
+      }
       if (product != null &&
           mounted &&
           await ask('m53ReceiptChooseLine', 'm53ReceiptSeparateLine') &&
-          mounted) {
+          mounted &&
+          inputScope.canReceive) {
+        final nextIntent = inputScope.capture();
         await run(
           () => app.inventory.addReceiptDraftProduct(
             doc!.id,
             doc!.revision,
             product.id,
             separateLine: true,
+            requireIntent: nextIntent,
           ),
         );
       }
@@ -341,13 +382,14 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
       MaterialPageRoute(
         builder: (_) => BarcodeScannerScreen(
           inventory: true,
-          lookup: (text) async {
+          lookup: (text, requireIntent) async {
             final app = context.read<AppServices>();
             final product = await app.inventory.lookupCode(text);
             if (product == null) {
               return const BarcodeFeedback('productNotFound', unknown: true);
             }
-            await scan(text);
+            requireIntent();
+            await scan(text, requireIntent: requireIntent, allowDialogs: false);
             return BarcodeFeedback(
               error ?? 'm53ReceiptDraftScanAdded',
               success: error == null,
@@ -476,6 +518,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
 
   @override
   void dispose() {
+    inputScope.dispose();
     WidgetsBinding.instance.removeObserver(this);
     code.dispose();
     reason.dispose();

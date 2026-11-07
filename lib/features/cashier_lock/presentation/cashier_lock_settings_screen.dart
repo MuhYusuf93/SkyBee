@@ -173,7 +173,8 @@ class _CashierLockSettingsScreenState extends State<CashierLockSettingsScreen> {
                   enabled: !busy,
                   visible: false,
                   onChanged: (_) => setState(() {}),
-                  onSubmitted: (_) => _save(),
+                  // Saving policy requires the explicit action, not a wedge's Enter.
+                  onSubmitted: (_) {},
                 ),
               ],
               if (error != null) Text(message(context, error!)),

@@ -172,6 +172,11 @@ final class CheckoutService {
         if (current.code != currency.code || current.scale != currency.scale) {
           throw const AppError('currencyMismatch');
         }
+        // An archived line must be restored or removed before reviewing its
+        // price or stock. Keep the draft intact so the cashier can correct it.
+        if (cart.hasArchivedProducts) {
+          throw const AppError('productIsArchivedRestoreItFirst');
+        }
         if (cart.missingWholesale) {
           throw const AppError('m31WholesaleUnavailable');
         }

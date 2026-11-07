@@ -9,6 +9,7 @@ import '../../../core/domain/value_types.dart';
 import '../../../core/time/store_clock.dart';
 import '../../../data/database/database_coordinator.dart';
 import 'pin_hasher.dart';
+import 'employee_access_attempts.dart';
 import '../../../data/database/installation_identity.dart';
 import '../domain/session_policy.dart';
 import 'strong_biometrics.dart';
@@ -65,6 +66,7 @@ final class ManagementService {
   final DatabaseCoordinator database;
   final StoreClock clock;
   final PinHasher _hasher;
+  late final employeeAttempts = EmployeeAccessAttempts(clock);
   final StrongBiometrics biometrics;
   SessionPolicy _policy = SessionPolicy.legacy;
   SessionPolicy get sessionPolicy => _policy;
@@ -336,6 +338,12 @@ final class ManagementService {
     ManagementRole role = ManagementRole.owner,
   }) async {
     if (role == ManagementRole.warehouse) {
+      if (database.schemaVersion >= 38) {
+        await employeeAttempts.requireNotHardLocked(
+          db,
+          EmployeeAccessTarget.warehouse,
+        );
+      }
       if (database.schemaVersion < 16 ||
           (await db.query('store_feature_policy')).single['task_pattern'] !=
               3) {
@@ -346,7 +354,8 @@ final class ManagementService {
     if (rows.isEmpty) throw const AppError('m53WarehouseNotConfigured');
     final row = rows.single;
     final now = max(clock.milliseconds, row['last_attempt_at'] as int);
-    if ((row['blocked_until'] as int) > now) {
+    if (!(role == ManagementRole.warehouse && database.schemaVersion >= 38) &&
+        (row['blocked_until'] as int) > now) {
       throw AppError(
         'retryAfterSeconds',
         arguments: {
@@ -740,9 +749,20 @@ final class ManagementService {
         return const AppError('createAManagementPinFirst');
       }
       final row = rows.single;
+      final employeeTarget = database.schemaVersion >= 38
+          ? cashierOnly
+                ? EmployeeAccessTarget.cashier
+                : role == ManagementRole.warehouse
+                ? EmployeeAccessTarget.warehouse
+                : null
+          : null;
+      if (employeeTarget != null) {
+        final denied = await employeeAttempts.before(dbTxn, employeeTarget);
+        if (denied != null) return denied;
+      }
       final now = max(clock.milliseconds, row['last_attempt_at'] as int);
       final blocked = row['blocked_until'] as int;
-      if (now < blocked) {
+      if (employeeTarget == null && now < blocked) {
         return AppError(
           'retryAfterSeconds',
           arguments: {'count': (blocked - now + 999) ~/ 1000},
@@ -768,25 +788,47 @@ final class ManagementService {
       final delaySeconds = attempts < 3
           ? 0
           : min(3600, 5 * (1 << min(10, attempts - 3)));
-      await dbTxn.update(_credentialsTable(role), {
-        'failed_attempts': attempts,
-        'blocked_until': valid ? 0 : now + delaySeconds * 1000,
-        'last_attempt_at': now,
-        if (database.schemaVersion >= 15 &&
-            valid &&
-            !recovery &&
-            !cashierOnly) ...{
-          // Lockout time remains monotonic above. A successful PIN establishes
-          // a new interval on the corrected wall clock, avoiding a PIN loop.
-          'last_pin_verified_at': clock.milliseconds,
-          'last_pin_clock_seen_at': clock.milliseconds,
-        },
-        if (database.schemaVersion >= 15 && valid && !recovery && cashierOnly)
+      if (!cashierOnly || database.schemaVersion < 38) {
+        await dbTxn.update(_credentialsTable(role), {
+          'failed_attempts': attempts,
+          'blocked_until': valid ? 0 : now + delaySeconds * 1000,
+          'last_attempt_at': now,
+          if (database.schemaVersion >= 15 &&
+              valid &&
+              !recovery &&
+              !cashierOnly) ...{
+            // Lockout time remains monotonic above. A successful PIN establishes
+            // a new interval on the corrected wall clock, avoiding a PIN loop.
+            'last_pin_verified_at': clock.milliseconds,
+            'last_pin_clock_seen_at': clock.milliseconds,
+          },
+          if (database.schemaVersion >= 15 && valid && !recovery && cashierOnly)
+            'last_pin_clock_seen_at': max(
+              clock.milliseconds,
+              row['last_pin_clock_seen_at'] as int? ?? 0,
+            ),
+        }, where: 'id=1');
+      } else if (valid && !recovery) {
+        // A cashier reference may advance the owner's clock-rollback witness,
+        // but must not change owner attempt limits or restart the 72h PIN age.
+        await dbTxn.update('management_credentials', {
           'last_pin_clock_seen_at': max(
             clock.milliseconds,
             row['last_pin_clock_seen_at'] as int? ?? 0,
           ),
-      }, where: 'id=1');
+        }, where: 'id=1');
+      }
+      if (employeeTarget != null) {
+        await employeeAttempts.record(
+          dbTxn,
+          employeeTarget,
+          valid: valid,
+          credentialVersion: sha256.convert([
+            ...row['salt'] as List<int>,
+            ...row['pin_verifier'] as List<int>,
+          ]).toString(),
+        );
+      }
       if (cashierOnly) {
         final installation = await InstallationIdentity.current(
           dbTxn,
@@ -814,6 +856,10 @@ final class ManagementService {
       if (valid) {
         verifiedAuthorization = await _authorizationEpochOn(dbTxn, role);
       }
+      if (!valid && employeeTarget != null) {
+        return await employeeAttempts.before(dbTxn, employeeTarget) ??
+            const AppError('pinOrRecoveryCodeDoesNotMatch');
+      }
       return valid ? null : const AppError('pinOrRecoveryCodeDoesNotMatch');
     });
     if (error != null) throw error;
@@ -840,11 +886,50 @@ final class ManagementService {
     DatabaseExecutor db,
     CashierReferenceProof proof,
   ) async {
+    if (database.schemaVersion >= 38) {
+      await employeeAttempts.requireNotHardLocked(
+        db,
+        EmployeeAccessTarget.cashier,
+      );
+    }
     if (!identical(proof.issuer, this) ||
         proof.databaseGeneration != database.generation ||
         proof.authorization !=
             await _authorizationEpochOn(db, ManagementRole.owner)) {
       throw const AppError('m53CashierLocked');
+    }
+  }
+
+  /// A purpose-bound fresh OWNER proof, checked again under SQL, is required.
+  /// Credential rotation alone deliberately cannot clear employee lockout.
+  /// Revoke both gate epochs after this explicit action, including other engines.
+  Future<void> unlockEmployeeAccess(EmployeeAccessTarget target) async {
+    final claim = claimFresh('security');
+    try {
+      await database.transaction((dbTxn) async {
+        await authorize(dbTxn);
+        requireClaim(claim, 'security');
+        if (database.schemaVersion < 38) {
+          throw StateError('employeeAccessSchemaRequired');
+        }
+        await dbTxn.rawUpdate(
+          '''UPDATE employee_access_attempts
+          SET failures=0,hard_locked=0,blocked_until=0,
+            last_wall_seen=?,revision=revision+1 WHERE target=?''',
+          [clock.milliseconds, target.name],
+        );
+        await dbTxn.rawUpdate(
+          'UPDATE management_access_epoch SET revision=revision+1 WHERE id=1',
+        );
+        await dbTxn.rawUpdate(
+          'UPDATE cashier_lock_policy SET gate_epoch=gate_epoch+1 WHERE id=1',
+        );
+        await audit(dbTxn, 'employee_${target.name}_unlocked_by_owner');
+        requireClaim(claim, 'security');
+      });
+    } finally {
+      releaseClaim(claim);
+      lock();
     }
   }
 

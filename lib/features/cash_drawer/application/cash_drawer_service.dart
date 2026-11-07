@@ -39,7 +39,8 @@ final class CashDrawerService {
   Future<CashDrawerContext> context() => database.read((sql) async {
     final proof = await CashierLockService.beginOn(sql, store.cashierAccess);
     final settings = await store.settings(sql),
-        policy = await CashDrawerLedger.policyOn(sql);
+        storePolicy = await CashDrawerLedger.policyOn(sql),
+        policy = await CashDrawerLedger.operationalPolicyOn(sql, store);
     final zone = settings['time_zone'] as String,
         day = store.clock.today(settings['time_zone'] as String).iso;
     final currency = store.policy(settings);
@@ -71,6 +72,7 @@ final class CashDrawerService {
     await CashierLockService.endOn(sql, proof);
     return CashDrawerContext(
       policy: policy,
+      storePolicy: storePolicy,
       day: day,
       timeZone: zone,
       currency: currency,
@@ -79,16 +81,14 @@ final class CashDrawerService {
     );
   });
 
-  static Future<void> _noOpenSessions(DatabaseExecutor sql) async {
-    if ((await sql.rawQuery(
-      '''SELECT 1 FROM cash_drawer_sessions s WHERE NOT EXISTS
-      (SELECT 1 FROM cash_drawer_closures c WHERE c.session_id=s.id) LIMIT 1''',
-    )).isNotEmpty) {
-      throw const AppError('m53CashCloseSessionsFirst');
-    }
-  }
-
-  Future<void> configure(CashDrawerMode mode, int revision) async {
+  /// A policy change never rewrites an open session's immutable mode/counts.
+  /// Explicit confirmation applies it to the next session. The shared revision
+  /// also advances on open/close, rejecting a stale form after owner auth.
+  Future<void> configure(
+    CashDrawerMode mode,
+    int revision, {
+    bool applyFromNextSession = false,
+  }) async {
     final claim = management.claimFresh('security');
     try {
       await database.transaction((sql) async {
@@ -98,7 +98,20 @@ final class CashDrawerService {
         if (old.revision != revision) {
           throw const AppError('m53CashPolicyChanged');
         }
-        if (old.mode != mode) await _noOpenSessions(sql);
+        final open = (await sql.rawQuery('''SELECT 1 FROM cash_drawer_sessions s
+          WHERE NOT EXISTS(SELECT 1 FROM cash_drawer_closures c WHERE c.session_id=s.id)
+          LIMIT 1''')).isNotEmpty;
+        if (old.mode != mode) {
+          if (mode == CashDrawerMode.off && open) {
+            throw const AppError('m53CashCloseSessionsFirst');
+          }
+          if (mode == CashDrawerMode.notes && !open) {
+            throw const AppError('m54CashVoluntaryOpenFirst');
+          }
+          if (open && !applyFromNextSession) {
+            throw const AppError('m54CashNextSessionRequired');
+          }
+        }
         final changed = await sql.update(
           'cash_drawer_policy',
           {'mode': mode.name, 'revision': revision + 1},
@@ -115,24 +128,6 @@ final class CashDrawerService {
       management.releaseClaim(claim);
     }
   }
-
-  Future<void> setNotes(bool enabled, int revision) => store.write(database, (
-    sql,
-  ) async {
-    final old = await CashDrawerLedger.policyOn(sql);
-    if (old.mandatory) throw const AppError('m53CashAuditRequired');
-    if (old.revision != revision) throw const AppError('m53CashPolicyChanged');
-    final mode = enabled ? CashDrawerMode.notes : CashDrawerMode.off;
-    if (old.mode != mode) await _noOpenSessions(sql);
-    await sql.update(
-      'cash_drawer_policy',
-      {'mode': mode.name, 'revision': revision + 1},
-      where: 'id=1 AND revision=?',
-      whereArgs: [revision],
-    );
-    await store.audit(sql, 'cash_drawer_notes_changed', 'cash_drawer_policy');
-    await testStage?.call('policy-written');
-  });
 
   /// A new session always records its own explicit physical opening. Opening
   /// another day/session never copies a prior closing or manufactures a count.
@@ -176,7 +171,6 @@ final class CashDrawerService {
       final currency = store.policy(settings),
           zone = settings['time_zone'] as String;
       final day = store.clock.today(zone).iso;
-      if (!policy.active) throw const AppError('m53CashRecordingOff');
       if (policy.revision != expected.policy.revision ||
           day != expected.day ||
           zone != expected.timeZone ||
@@ -221,7 +215,9 @@ final class CashDrawerService {
         'session_number': number,
         'currency_code': currency.code,
         'currency_scale': currency.scale,
-        'policy_mode': policy.mode.name,
+        'policy_mode': policy.mandatory
+            ? CashDrawerMode.audit.name
+            : CashDrawerMode.notes.name,
         'opening_counts_json': opening?.encode(),
         'reason': why,
         'created_at': store.clock.milliseconds,
@@ -242,6 +238,9 @@ final class CashDrawerService {
         }
         await batch.commit(noResult: true);
       }
+      await sql.rawUpdate(
+        'UPDATE cash_drawer_policy SET revision=revision+1 WHERE id=1',
+      );
       await store.audit(sql, 'cash_drawer_opened', id.value);
       await testStage?.call('session-opened');
       return id;
@@ -271,9 +270,6 @@ final class CashDrawerService {
       throw const AppError('m53CashSessionChanged');
     }
     if (!allowOld) {
-      if (!(await CashDrawerLedger.policyOn(sql)).active) {
-        throw const AppError('m53CashRecordingOff');
-      }
       final settings = await store.settings(sql);
       final zone = settings['time_zone'] as String;
       if (row['store_day'] != store.clock.today(zone).iso ||
@@ -469,6 +465,9 @@ final class CashDrawerService {
           'reason': why,
           'created_at': store.clock.milliseconds,
         });
+        await sql.rawUpdate(
+          'UPDATE cash_drawer_policy SET revision=revision+1 WHERE id=1',
+        );
         if (ownerException) {
           await management.audit(
             sql,

@@ -20,7 +20,11 @@ class BarcodeScannerScreen extends StatefulWidget {
     this.registerUnknown,
     this.camera,
   });
-  final Future<BarcodeFeedback> Function(String code) lookup;
+  final Future<BarcodeFeedback> Function(
+    String code,
+    void Function() requireIntent,
+  )
+  lookup;
   final Future<void> Function(String code)? registerUnknown;
   final bool inventory;
   final BarcodeCamera? camera;

@@ -5,6 +5,7 @@ import '../../../core/money/money_field.dart';
 import '../../../l10n/localization.dart';
 import '../../cashier_lock/presentation/cashier_lock_button.dart';
 import '../../settings/presentation/language_button.dart';
+import '../domain/cash_drawer_models.dart';
 import 'cash_drawer_form_screen.dart';
 import 'cash_drawer_provider.dart';
 import 'cash_drawer_history_screen.dart';
@@ -52,20 +53,30 @@ class _CashDrawerBody extends StatelessWidget {
               Text(tr(context, 'm53CashAudit')),
               Text(tr(context, 'm53CashAuditHelp')),
             ] else
-              SwitchListTile(
-                key: const ValueKey('drawer-notes-toggle'),
-                value: value.policy.active,
-                onChanged: state.busy ? null : state.notes,
-                title: Text(tr(context, 'm53CashNotes')),
+              Text(
+                tr(
+                  context,
+                  value.policy.active ? 'm53CashNotes' : 'm53CashOff',
+                ),
               ),
             if (!value.policy.mandatory) Text(tr(context, 'm53CashNotesHelp')),
+            if (value.policy.active &&
+                value.storePolicy.mode != value.policy.mode)
+              Text(
+                tr(
+                  context,
+                  value.storePolicy.mode == CashDrawerMode.off
+                      ? 'm54CashVoluntaryStoredOff'
+                      : 'm54CashNextSessionHelp',
+                ),
+              ),
             if (value.unclosedOlder > 0) ...[
               Text(
                 '${tr(context, 'm53CashPendingDays')}: ${value.unclosedOlder}',
               ),
               Text(tr(context, 'm53CashPendingHelp')),
             ],
-            if (value.policy.active) ...[
+            ...[
               if (value.session == null || value.session!.closed) ...[
                 Text(
                   tr(

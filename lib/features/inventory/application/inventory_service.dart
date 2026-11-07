@@ -1,5 +1,6 @@
 import 'dart:convert';
 import '../../../data/repositories/product_code_resolver.dart';
+import '../../../core/security/recovery_mnemonic.dart';
 import '../../suppliers/application/supplier_service.dart';
 import '../../suppliers/domain/supplier_invoice.dart';
 import '../../../core/domain/contact_validation.dart';
@@ -107,6 +108,7 @@ final class InventoryService {
     Future<T> Function(Transaction dbTxn) operation, {
     bool inventoryChanged = true,
     ManagementCapability capability = ManagementCapability.inventory,
+    void Function()? requireIntent,
   }) {
     final generation = access.generation;
     return database.transaction((dbTxn) async {
@@ -114,11 +116,15 @@ final class InventoryService {
       if (access.generation != generation) {
         throw const AppError('m53SupplierAccessChanged');
       }
+      // Input cancellation supplements the persisted role proof; a stale route
+      // cannot publish or commit a draft merely because a lookup finished late.
+      requireIntent?.call();
       final result = await operation(dbTxn);
       await access.authorize(dbTxn, capability: capability);
       if (access.generation != generation) {
         throw const AppError('m53SupplierAccessChanged');
       }
+      requireIntent?.call();
       access.touch();
       return result;
     }, inventoryChanged: inventoryChanged);
@@ -126,8 +132,11 @@ final class InventoryService {
 
   /// Durable input does not invalidate underlying catalogue pages after every
   /// scan. Actual finalization still emits the single inventory-change event.
-  Future<T> _draftWrite<T>(Future<T> Function(Transaction dbTxn) operation) =>
-      _write(operation, inventoryChanged: false);
+  Future<T> _draftWrite<T>(
+    Future<T> Function(Transaction dbTxn) operation, {
+    void Function()? requireIntent,
+  }) =>
+      _write(operation, inventoryChanged: false, requireIntent: requireIntent);
   String? _optional(String? value) =>
       value == null || value.trim().isEmpty ? null : value.trim();
 
@@ -189,7 +198,7 @@ final class InventoryService {
     Quantity(input.minStock);
     await _money(db, input.sellingPrice);
     if (input.wholesalePrice != null &&
-        input.wholesalePrice!.amountMinor > input.sellingPrice.amountMinor) {
+        input.wholesalePrice!.amountMinor >= input.sellingPrice.amountMinor) {
       throw const AppError('m52WholesaleAboveRetail');
     }
     if (input.wholesalePrice != null) {
@@ -205,6 +214,11 @@ final class InventoryService {
     if (input.packSize != null) Quantity.positive(input.packSize!);
     await _relation(db, 'categories', input.categoryId);
     if (database.schemaVersion >= 14) {
+      if (database.schemaVersion >= 38 &&
+          input.shelfId == null &&
+          input.attributes?.shelf?.trim().isNotEmpty == true) {
+        throw const AppError('m54ShelfNotRegistered');
+      }
       await _relation(db, 'shelves', input.shelfId);
     }
     if (database.schemaVersion >= 26) {
@@ -221,6 +235,10 @@ final class InventoryService {
     final sku =
         _optional(input.sku) ?? 'BRG-${_ids.next().value.toUpperCase()}';
     final barcode = _optional(input.barcode);
+    if (RecoveryMnemonic.isRecoveryQr(sku) ||
+        RecoveryMnemonic.isRecoveryQr(barcode ?? '')) {
+      throw const AppError('m54RecoveryOnly');
+    }
     final conflicts = await db.query(
       'products',
       columns: ['id', 'is_deleted'],
@@ -478,12 +496,11 @@ final class InventoryService {
       if (reference == null && database.schemaVersion < 17) {
         throw const AppError('m52ReferenceCostRequired');
       }
-      if (reference != null &&
-          BigInt.from(reference) >
-              BigInt.from(input.sellingPrice.amountMinor) *
-                  BigInt.from(1000000)) {
-        throw const AppError('m52PurchaseAboveRetail');
-      }
+      final errors = masterPriceErrors(
+        retail: input.sellingPrice,
+        costMicros: reference,
+      );
+      if (errors.isNotEmpty) throw AppError(errors.first);
       values['reference_cost_micros'] = reference;
       if (database.schemaVersion >= 17) {
         values['cost_complete'] = reference == null ? 0 : 1;
@@ -637,12 +654,15 @@ final class InventoryService {
     if (!tracked || initialQuantity > 0) {
       await _purchaseCost(dbTxn, cost, confirmedFree: confirmedFree);
     }
-    if (cost != null &&
-        BigInt.from(cost.micros) >
-            BigInt.from(old['selling_price_rupiah'] as int) *
-                BigInt.from(1000000)) {
-      throw const AppError('m52PurchaseAboveRetail');
-    }
+    final errors = masterPriceErrors(
+      retail: Money.fromStoredMinor(
+        old['selling_price_rupiah'] as int,
+        old['currency_code'] as String,
+        old['currency_scale'] as int,
+      ),
+      costMicros: cost?.micros,
+    );
+    if (errors.isNotEmpty) throw AppError(errors.first);
     final wasTracked = old['stock_tracking_enabled'] != 0;
     if (wasTracked == tracked) throw const AppError('m52StockTransition');
     if (!tracked &&

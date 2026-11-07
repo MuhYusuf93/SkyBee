@@ -26,6 +26,22 @@ final class CashierLockNavigator extends NavigatorObserver
   late final StreamSubscription<void> _subscription;
   final _routes = <Route<dynamic>>[];
   final _allowedDialogs = <Route<dynamic>>{};
+  final _managementRoutes = <Route<dynamic>, Set<Object>>{};
+
+  /// Presentation priority only; this does not grant either capability. The
+  /// protected route's own gate still redacts and authenticates management.
+  void registerManagementRoute(Route<dynamic> route, Object owner) {
+    (_managementRoutes[route] ??= {}).add(owner);
+    _schedule();
+  }
+
+  void unregisterManagementRoute(Route<dynamic> route, Object owner) {
+    final owners = _managementRoutes[route];
+    owners?.remove(owner);
+    if (owners?.isEmpty ?? false) _managementRoutes.remove(route);
+    _schedule();
+  }
+
   Route<void>? _lockRoute;
   bool _disposed = false, _scheduled = false, _asking = false;
   int? _screenGeneration;
@@ -59,7 +75,12 @@ final class CashierLockNavigator extends NavigatorObserver
   void _synchronize() {
     final nav = navigator;
     if (nav == null || !nav.mounted || !service.loaded) return;
-    if (!service.policy.enabled || !service.locked) {
+    final activePage = _routes
+        .whereType<PageRoute<dynamic>>()
+        .where((route) => route != _lockRoute)
+        .lastOrNull;
+    final managementActive = _managementRoutes.containsKey(activePage);
+    if (!service.policy.enabled || !service.locked || managementActive) {
       for (final dialog in _allowedDialogs.toList()) {
         if (_routes.contains(dialog)) nav.removeRoute(dialog);
       }
@@ -106,6 +127,7 @@ final class CashierLockNavigator extends NavigatorObserver
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     _routes.remove(route);
     _allowedDialogs.remove(route);
+    _managementRoutes.remove(route);
     _schedule();
   }
 

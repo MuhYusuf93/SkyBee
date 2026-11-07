@@ -12,6 +12,32 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm54ScanRouteChanged' => l.m54ScanRouteChanged,
+    'm54CashAuthenticationCancelled' => l.m54CashAuthenticationCancelled,
+    'm54CashVoluntaryOpenFirst' => l.m54CashVoluntaryOpenFirst,
+    'm54CashNextSessionRequired' => l.m54CashNextSessionRequired,
+    'm54CashNextSession' => l.m54CashNextSession,
+    'm54CashNextSessionHelp' => l.m54CashNextSessionHelp,
+    'm54CashVoluntaryStoredOff' => l.m54CashVoluntaryStoredOff,
+    'm54CashStoredPolicy' => l.m54CashStoredPolicy,
+    'm54CashSessionOpen' => l.m54CashSessionOpen,
+
+    'm54EmployeeUnlocked' => l.m54EmployeeUnlocked,
+    'm54UnblockOwnerHelp' => l.m54UnblockOwnerHelp,
+
+    'm54RecoveryOnly' => l.m54RecoveryOnly,
+    'm54ShelfNotRegistered' => l.m54ShelfNotRegistered,
+    'm54FieldInvalid' => l.m54FieldInvalid,
+
+    'm54RecoveryWordCount' => l.m54RecoveryWordCount,
+    'm54RecoveryWordInvalid' => l.m54RecoveryWordInvalid,
+    'm54RecoveryChecksumInvalid' => l.m54RecoveryChecksumInvalid,
+    'm54RecoveryQrInvalid' => l.m54RecoveryQrInvalid,
+
+    'm54EmployeeHardLocked' => l.m54EmployeeHardLocked,
+    'm54UnlockCashier' => l.m54UnlockCashier,
+    'm54UnlockWarehouse' => l.m54UnlockWarehouse,
+
     'm53BackupResumeInvalid' => l.m53BackupResumeInvalid,
     'm53ResetTitle' => l.m53ResetTitle,
     'm53ResetWarning' => l.m53ResetWarning,

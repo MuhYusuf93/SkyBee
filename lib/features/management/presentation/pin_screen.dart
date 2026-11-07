@@ -3,13 +3,13 @@ import 'package:kasir_app/features/settings/presentation/language_button.dart';
 import 'package:kasir_app/l10n/localization.dart';
 import 'managed_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
 import 'management_session_provider.dart';
 import 'management_navigation.dart';
 import '../domain/management_role.dart';
+import '../../cashier_lock/presentation/cashier_lock_navigator.dart';
 
 /// PIN setup/access/rotation form. No credentials or SQL in state/Provider.
 class PinScreen extends StatefulWidget {
@@ -35,11 +35,15 @@ class _PinScreenState extends State<PinScreen> {
       _old = TextEditingController(),
       _pin = TextEditingController(),
       _confirm = TextEditingController();
-  final _pinFocus = FocusNode();
+  final _pinFocus = FocusNode(),
+      _oldFocus = FocusNode(),
+      _confirmationFocus = FocusNode();
   bool _visible = false, _busy = false, _recovery = false;
   String? _error;
   bool _focusScheduled = false;
   String? _submittedPin;
+  CashierLockNavigator? _cashierNavigator;
+  ModalRoute<dynamic>? _route;
   bool get _useBiometrics =>
       widget.allowBiometrics && widget.role == ManagementRole.owner;
   bool get _ordinaryGate =>
@@ -56,6 +60,16 @@ class _PinScreenState extends State<PinScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    final controller = context.read<CashierLockNavigator?>();
+    if (route != _route || controller != _cashierNavigator) {
+      if (_route != null) {
+        _cashierNavigator?.unregisterManagementRoute(_route!, this);
+      }
+      _route = route;
+      _cashierNavigator = controller;
+      if (route != null) controller?.registerManagementRoute(route, this);
+    }
     if (!_focusScheduled) {
       _focusScheduled = true;
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -120,11 +134,16 @@ class _PinScreenState extends State<PinScreen> {
 
   @override
   void dispose() {
+    if (_route != null) {
+      _cashierNavigator?.unregisterManagementRoute(_route!, this);
+    }
     _name.dispose();
     _old.dispose();
     _pin.dispose();
     _confirm.dispose();
     _pinFocus.dispose();
+    _oldFocus.dispose();
+    _confirmationFocus.dispose();
     super.dispose();
   }
 
@@ -203,33 +222,51 @@ class _PinScreenState extends State<PinScreen> {
     TextEditingController controller,
     String label, {
     bool recovery = false,
-  }) => !widget.configure && !widget.rotate && identical(controller, _pin)
+  }) => !recovery
       ? PinBoxes(
           controller: controller,
-          focusNode: _pinFocus,
+          focusNode: identical(controller, _old)
+              ? _oldFocus
+              : identical(controller, _confirm)
+              ? _confirmationFocus
+              : _pinFocus,
           label: label,
           enabled: !_busy,
           visible: _visible,
+          autoSubmit:
+              !widget.configure &&
+              !widget.rotate &&
+              identical(controller, _pin),
           onChanged: (value) {
             context.read<ManagementSessionProvider>().activity();
             if (value.length < 4) _submittedPin = null;
-            if (value.length == 4 && !_busy && _submittedPin != value) {
+          },
+          onSubmitted: (value) {
+            // Setup/rotation never saves from Enter, including scanner suffixes.
+            if (widget.configure || widget.rotate) {
+              if (identical(controller, _old)) {
+                _pinFocus.requestFocus();
+              } else if (identical(controller, _pin)) {
+                _confirmationFocus.requestFocus();
+              } else {
+                FocusScope.of(context).unfocus();
+              }
+              return;
+            }
+            if (RegExp(r'^\d{4}$').hasMatch(value) &&
+                !_busy &&
+                _submittedPin != value) {
               _submittedPin = value;
               _submit();
             }
           },
-          onSubmitted: (_) => _submit(),
         )
       : ManagedTextField(
-          focusNode: identical(controller, _pin) ? _pinFocus : null,
+          focusNode: _oldFocus,
           controller: controller,
           enabled: !_busy,
           obscureText: !_visible,
-          keyboardType: recovery ? TextInputType.text : TextInputType.number,
-          maxLength: recovery ? 32 : 4,
-          inputFormatters: recovery
-              ? null
-              : [FilteringTextInputFormatter.digitsOnly],
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
             labelText: label,
             border: const OutlineInputBorder(),

@@ -21,16 +21,21 @@ final class CashierStore {
 
   /// Validate one cashier operation before and after all awaited SQL/stages.
   /// Lock/reconfigure while a draft is committing causes a full rollback.
+  /// requireIntent additionally cancels queued input whose receiving route
+  /// changed. It grants no authority and runs after the final access proof too.
   Future<T> write<T>(
     DatabaseCoordinator database,
     Future<T> Function(Transaction dbTxn) operation, {
     bool inventoryChanged = false,
     int? expectedGeneration,
+    void Function()? requireIntent,
   }) => database.transaction(
     (dbTxn) async {
       final proof = await CashierLockService.beginOn(dbTxn, cashierAccess);
+      requireIntent?.call();
       final result = await operation(dbTxn);
       await CashierLockService.endOn(dbTxn, proof);
+      requireIntent?.call();
       return result;
     },
     inventoryChanged: inventoryChanged,

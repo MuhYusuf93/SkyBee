@@ -9,6 +9,7 @@ import '../../settings/application/settings_service.dart';
 import '../../settings/domain/store_feature_policy.dart';
 import '../domain/stock_rules.dart';
 import '../domain/stock_valuation.dart';
+import '../domain/product_entry_rules.dart';
 
 typedef OpeningStockWriter =
     Future<EntityId> Function(
@@ -152,11 +153,15 @@ final class StockTrackingService {
         if (!useHistoricalAverage) {
           PurchaseCostInput.known(reference, confirmedFree: confirmedFree);
         }
-        if (BigInt.from(reference.micros) >
-            BigInt.from(old['selling_price_rupiah'] as int) *
-                BigInt.from(CostAmount.scale)) {
-          throw const AppError('m52PurchaseAboveRetail');
-        }
+        final errors = masterPriceErrors(
+          retail: Money.fromStoredMinor(
+            old['selling_price_rupiah'] as int,
+            reference.currencyCode,
+            reference.currencyScale,
+          ),
+          costMicros: reference.micros,
+        );
+        if (errors.isNotEmpty) throw AppError(errors.first);
       } else if (policy.cost && (!tracked || initialQuantity! > 0)) {
         throw const AppError('m52ReferenceCostRequired');
       }

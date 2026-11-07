@@ -68,7 +68,8 @@ final class CartProvider extends ChangeNotifier {
   Future<bool> open() => _run(service.open);
   Future<bool> refresh() =>
       _run(() => service.read(snapshot!.id), readOnly: true);
-  Future<bool> add(EntityId id) => _run(() => service.add(snapshot!.id, id));
+  Future<bool> add(EntityId id, {void Function()? requireIntent}) =>
+      _run(() => service.add(snapshot!.id, id, requireIntent: requireIntent));
   Future<bool> quantity(EntityId id, int quantity) =>
       _run(() => service.quantity(snapshot!.id, id, quantity));
   Future<bool> pricing(EntityId id, PricingMode mode) =>

@@ -213,7 +213,7 @@ void m52FormsSuite(DatabaseFactory factory) {
     );
     expect(
       masterPriceErrors(retail: retail, costMicros: 300000000, costQuantity: 3),
-      isEmpty,
+      ['m52PurchaseAboveRetail'],
     );
     expect(
       masterPriceErrors(retail: retail, costMicros: 300000001, costQuantity: 3),
@@ -387,20 +387,18 @@ void m52FormsSuite(DatabaseFactory factory) {
       await tester.tap(find.text('Save product'));
       await tester.pumpAndSettle();
       expect(
-        find
-            .text(
-              'Purchase cost per unit must not exceed the retail selling price.',
-            )
-            .hitTestable(),
-        findsOneWidget,
-      );
-      expect(
-        find.text('Wholesale price must not exceed the retail selling price.'),
+        find.text(
+          'Wholesale price must be lower than the retail selling price.',
+        ),
         findsNothing,
       );
       expect(find.text('Save anyway'), findsNothing);
-      await tester.tap(find.widgetWithText(TextButton, 'Review again'));
-      await tester.pumpAndSettle();
+      expect(
+        tester.widget<TextField>(purchase).decoration!.errorText,
+        'Purchase cost per unit must be lower than the retail selling price.',
+      );
+      expect(tester.widget<TextField>(purchase).focusNode!.hasFocus, isTrue);
+      expect(find.byType(AlertDialog), findsNothing);
       await tester.scrollUntilVisible(purchase, -200, scrollable: scroll);
       await tester.enterText(purchase, '0');
       await tester.scrollUntilVisible(
@@ -554,8 +552,8 @@ void m52FormsSuite(DatabaseFactory factory) {
       await tester.enterText(editor, '999');
       await tester.pump();
       expect(session.busy, false);
-      await tester.runAsync(() => tester.enterText(editor, '9999'));
-      await tester.pump();
+      await tester.enterText(editor, '9999');
+      await tester.pump(const Duration(milliseconds: 201));
       expect(session.busy, true);
       expect(
         tester.widget<FilledButton>(find.byType(FilledButton)).onPressed,

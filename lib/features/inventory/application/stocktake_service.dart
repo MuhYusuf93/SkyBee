@@ -276,13 +276,14 @@ extension StocktakeDraftOperations on InventoryService {
   Future<StocktakeDraft> includeStocktakeProduct(
     EntityId id,
     int revision,
-    EntityId product,
-  ) => _draftWrite((db) async {
+    EntityId product, {
+    void Function()? requireIntent,
+  }) => _draftWrite((db) async {
     final doc = await _editableStocktakeOn(db, id, revision);
     await _includeStocktakeProductOn(db, doc, product);
     await _bumpStocktakeOn(db, doc);
     return _stocktakeOn(db, id);
-  });
+  }, requireIntent: requireIntent);
 
   Future<Page<StocktakeObservation, StocktakeObservationCursor>>
   stocktakeObservations(EntityId lineId, {StocktakeObservationCursor? after}) =>
@@ -425,6 +426,7 @@ extension StocktakeDraftOperations on InventoryService {
     int revision,
     String input, {
     EntityId? observationId,
+    void Function()? requireIntent,
   }) => _draftWrite((db) async {
     final doc = await _editableStocktakeOn(db, id, revision),
         code = input.trim();
@@ -465,7 +467,7 @@ extension StocktakeDraftOperations on InventoryService {
       line,
       needsBatchChoice: choose,
     );
-  });
+  }, requireIntent: requireIntent);
 
   Future<StocktakeDraft> addStocktakeBatch(
     EntityId id,

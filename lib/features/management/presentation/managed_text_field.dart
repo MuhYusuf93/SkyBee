@@ -5,7 +5,7 @@ import 'management_session_provider.dart';
 
 /// Soft-keyboard edits don't bubble KeyEvents. Count actual onChanged edits as
 /// session activity; never record/log their text. Controllers remain caller-owned.
-class ManagedTextField extends StatelessWidget {
+class ManagedTextField extends StatefulWidget {
   const ManagedTextField({
     super.key,
     this.controller,
@@ -39,26 +39,53 @@ class ManagedTextField extends StatelessWidget {
   final bool autofocus;
   final bool autocorrect;
   final TextInputAction? textInputAction;
+
+  @override
+  State<ManagedTextField> createState() => _ManagedTextFieldState();
+}
+
+class _ManagedTextFieldState extends State<ManagedTextField> {
+  final _ownedFocus = FocusNode();
+  FocusNode get _focus => widget.focusNode ?? _ownedFocus;
+  @override
+  void dispose() {
+    _ownedFocus.dispose();
+    super.dispose();
+  }
+
+  // A covered route/field can retain an old IME callback until Android detaches
+  // it. Ownership is independent of timing, text content or device identity.
+  bool _canReceive(BuildContext context) =>
+      widget.enabled &&
+      mounted &&
+      _focus.hasFocus &&
+      (ModalRoute.of(context)?.isCurrent ?? true);
   @override
   Widget build(BuildContext context) => TextField(
-    controller: controller,
-    focusNode: focusNode,
-    decoration: decoration,
-    keyboardType: keyboardType,
-    inputFormatters: inputFormatters,
-    maxLength: maxLength,
-    maxLines: maxLines,
-    enabled: enabled,
-    obscureText: obscureText,
-    autofocus: autofocus,
-    autocorrect: autocorrect,
-    textInputAction: textInputAction,
+    controller: widget.controller,
+    focusNode: _focus,
+    decoration: widget.decoration,
+    keyboardType: widget.keyboardType,
+    inputFormatters: widget.inputFormatters,
+    maxLength: widget.maxLength,
+    maxLines: widget.maxLines,
+    enabled: widget.enabled,
+    obscureText: widget.obscureText,
+    autofocus: widget.autofocus,
+    autocorrect: widget.autocorrect,
+    textInputAction: widget.textInputAction,
     onTapOutside:
-        onTapOutside ?? (_) => FocusManager.instance.primaryFocus?.unfocus(),
-    onSubmitted: onSubmitted,
+        widget.onTapOutside ??
+        (_) => FocusManager.instance.primaryFocus?.unfocus(),
+    onSubmitted: widget.onSubmitted == null
+        ? null
+        : (text) {
+            if (_canReceive(context)) widget.onSubmitted!(text);
+          },
     onChanged: (text) {
+      if (!_canReceive(context)) return;
       context.read<ManagementSessionProvider?>()?.activity();
-      onChanged?.call(text);
+      widget.onChanged?.call(text);
     },
   );
 }

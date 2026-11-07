@@ -35,11 +35,12 @@ class _InventoryScreenState extends State<InventoryScreen> {
       MaterialPageRoute(
         builder: (_) => BarcodeScannerScreen(
           inventory: true,
-          lookup: (code) async {
+          lookup: (code, requireIntent) async {
             final product = await services.inventory.lookupCode(code);
             if (product == null) {
               return const BarcodeFeedback('productNotFound', unknown: true);
             }
+            requireIntent();
             if (!mounted) return const BarcodeFeedback('m3OperationFailed');
             await Navigator.of(context).push<void>(
               MaterialPageRoute(

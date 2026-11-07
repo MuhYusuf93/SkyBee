@@ -5,7 +5,8 @@ import 'package:kasir_app/app/app_services.dart';
 import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/cashier/application/checkout_service.dart';
-import 'package:kasir_app/features/cashier/domain/cashier_models.dart';
+import 'package:kasir_app/features/cashier/domain/cashier_models.dart'
+    show PaymentMode;
 import 'package:kasir_app/features/cashier/presentation/cart_provider.dart';
 import 'package:kasir_app/features/cashier/presentation/checkout_provider.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
@@ -41,13 +42,6 @@ void m5CheckoutSuite(
         await cart.open();
         await cart.add(product);
         final draft = cart.snapshot!;
-        final input = CheckoutInput(
-          cash: true,
-          tender: Money(0, 'IDR', 0),
-          tenderRaw: '0',
-          mode: PaymentMode.debt,
-          customer: CustomerChoice(name: 'Synthetic M5 debtor'),
-        );
         final service = CheckoutService(
           database,
           services.checkout.store,
@@ -60,9 +54,16 @@ void m5CheckoutSuite(
         );
         form = CheckoutProvider(cart, services.cart, service)
           ..selectMode(PaymentMode.debt);
-        form.name.text = input.customer.name;
+        form.name.text = 'Synthetic M5 debtor';
+        form.phone.text = '081230000001';
+        final input = form.input;
         final first = form.submit();
-        await entered.future.timeout(const Duration(seconds: 30));
+        await Future.any<void>([
+          entered.future,
+          first.then(
+            (_) => fail('Submit ended before the barrier: ${form?.error}'),
+          ),
+        ]).timeout(const Duration(seconds: 30));
         expect(form.submitting, true);
         expect(await form.submit(), isNull);
         release.complete();

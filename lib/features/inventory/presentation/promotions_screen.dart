@@ -60,10 +60,7 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
     child: ListenableBuilder(
       listenable: paging!,
       builder: (context, _) => Scaffold(
-        appBar: AppBar(
-          title: Text(tr(context, 'm52Promo')),
-          actions: const [LanguageButton()],
-        ),
+        appBar: AppBar(title: Text(tr(context, 'm52Promo'))),
         body: ListView(
           padding: const EdgeInsets.all(16),
           children: [

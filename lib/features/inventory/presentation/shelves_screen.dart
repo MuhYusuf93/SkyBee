@@ -11,6 +11,7 @@ import '../../management/presentation/managed_text_field.dart';
 import '../../management/presentation/protected_dialog.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/inventory_models.dart';
+import 'inventory_screen.dart';
 
 /// Inline repeated quick-add plus bounded stable-ID list. Returning to a product
 /// leaves that route's draft/controllers intact; selection is an explicit tap.
@@ -191,7 +192,11 @@ class _ShelvesScreenState extends State<ShelvesScreen> {
                         ? null
                         : widget.picker
                         ? () => Navigator.pop(context, row)
-                        : () => edit(row),
+                        : () => Navigator.of(context).push<void>(
+                            MaterialPageRoute(
+                              builder: (_) => InventoryBrowseScreen(shelf: row),
+                            ),
+                          ),
                     trailing: IconButton(
                       tooltip: tr(context, 'editRecord'),
                       icon: const Icon(Icons.edit),

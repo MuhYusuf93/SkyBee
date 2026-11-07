@@ -3,6 +3,7 @@ param(
  [Parameter(Mandatory=$true)][string]$TestFile,
  [string]$RunName='m51-native',
  [string]$NameFilter='',
+ [ValidatePattern('^[1-9][0-9]*[sm]$')][string]$TestTimeout='5m',
  [string[]]$AdditionalDartDefines=@()
 )
 # M5.1 never downgrades a retained fixture to v6. Existing business files and
@@ -55,7 +56,7 @@ try {
  if($LASTEXITCODE -ne 0){throw 'Isolated prepare failed'}
  & $taskAdb -s $DeviceId install -r "$taskRoot/build/app/outputs/flutter-apk/app-debug.apk" *> "$taskEvidence/install.log"
  if($LASTEXITCODE -ne 0){throw 'In-place fixture install failed; no uninstall/downgrade fallback'}
- & "$PSScriptRoot/test_android.ps1" -DeviceId $DeviceId -AndroidSdkRoot $taskSdk -TestFiles @($TestFile) -TestTimeout 5m -NameFilter $NameFilter -AdditionalDartDefines $AdditionalDartDefines *> "$taskEvidence/runner.log"
+ & "$PSScriptRoot/test_android.ps1" -DeviceId $DeviceId -AndroidSdkRoot $taskSdk -TestFiles @($TestFile) -TestTimeout $TestTimeout -NameFilter $NameFilter -AdditionalDartDefines $AdditionalDartDefines *> "$taskEvidence/runner.log"
  if($LASTEXITCODE -ne 0){throw 'Native suite failed'}
  $taskResult.tests=if((Get-Content "$taskEvidence/runner.log" -Raw) -match 'All tests skipped\.'){'SKIPPED'}else{'PASS'}
 } catch {
@@ -73,9 +74,21 @@ try {
   $taskResult.isolation='FAILED_OR_UNVERIFIED'
   throw
  } finally {
-  if(Test-Path -LiteralPath $taskAwake){& "$PSScriptRoot/dv8910_awake.ps1" -DeviceId $DeviceId -Action Restore -SnapshotPath $taskAwake *> "$taskEvidence/awake-restored.log"}
-  $taskResult.automaticDeviceControlActive=$false
-  $taskResult | ConvertTo-Json | Set-Content "$taskEvidence/result.json" -Encoding UTF8
-  Write-Output "M5.1 evidence: $taskEvidence"
+  try {
+   $taskResult.awakeRestoration='NOT_REQUIRED'
+   if(Test-Path -LiteralPath $taskAwake){
+    & "$PSScriptRoot/dv8910_awake.ps1" -DeviceId $DeviceId -Action Restore -SnapshotPath $taskAwake *> "$taskEvidence/awake-restored.log"
+    $taskResult.awakeRestoration='VERIFIED'
+   }
+  } catch {
+   $taskResult.tests='FAILED_OR_BLOCKED'
+   $taskResult.awakeRestoration='FAILED_OR_UNVERIFIED'
+   throw
+  } finally {
+   # An offline device can block cleanup, but the runner still exits.
+   $taskResult.automaticDeviceControlActive=$false
+   $taskResult | ConvertTo-Json | Set-Content "$taskEvidence/result.json" -Encoding UTF8
+   Write-Output "M5.1 evidence: $taskEvidence"
+  }
  }
 }

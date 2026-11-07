@@ -162,12 +162,9 @@ abstract final class CashDrawerValidation {
       throw _invalid;
     }
     _integer(policies.single['revision'], minimum: 1);
-    await _reject(
-      db,
-      '''SELECT 1 FROM cash_drawer_sessions s WHERE s.policy_mode<>?
-      AND NOT EXISTS(SELECT 1 FROM cash_drawer_closures c WHERE c.session_id=s.id) LIMIT 1''',
-      [policies.single['mode']],
-    );
+    // Store preference applies to future openings. A voluntary notes session
+    // may coexist with Off, or retain notes while next-session audit is saved.
+    // Each immutable session mode and its physical replay are validated below.
     await _reject(
       db,
       "SELECT 1 FROM sale_transactions WHERE typeof(drawer_version)<>'integer' OR drawer_version NOT IN(0,1) LIMIT 1",

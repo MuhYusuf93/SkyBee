@@ -499,16 +499,32 @@ class _DetailBody extends StatelessWidget {
                                     content: LocalizedNotice(
                                       messageKey: 'productStatusUpdated',
                                       onUndo: () async {
-                                        await state.run(
+                                        final undone = await state.run(
                                           () => state.service.undo(token!),
                                         );
-                                        await state.load();
+                                        if (undone) {
+                                          await state.load();
+                                        } else if (context.mounted) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                message(
+                                                  context,
+                                                  state.error ??
+                                                      'm3OperationFailed',
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
                                       },
                                     ),
                                   ),
                                 );
+                                await state.load();
                               }
-                              await state.load();
                             },
                       child: Text(
                         product.isDeleted

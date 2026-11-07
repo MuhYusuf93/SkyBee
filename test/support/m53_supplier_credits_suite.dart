@@ -395,8 +395,6 @@ void m53SupplierCreditsSuite(DatabaseFactory factory) {
         operationKey: 'PUBLIC PAID',
       );
       var credit = await approve(await physical(receipt), 100000);
-      final policy = await app.cashDrawer.context();
-      await app.cashDrawer.setNotes(true, policy.policy.revision);
       final currency = CurrencyPolicy.forCode('IDR'),
           session = await app.cashDrawer.open(
             operationKey: 'PUBLIC OPEN',

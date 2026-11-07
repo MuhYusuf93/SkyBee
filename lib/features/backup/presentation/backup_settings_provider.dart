@@ -76,7 +76,12 @@ final class BackupSettingsProvider extends ChangeNotifier {
       message = error is DriveFailure
           ? _driveFailureMessage(error.code)
           : error is FormatException
-          ? 'm5ArchiveRejected'
+          ? switch (error.message) {
+              'm54RecoveryWordCount' => 'm54RecoveryWordCount',
+              'm54RecoveryWordInvalid' => 'm54RecoveryWordInvalid',
+              'm54RecoveryChecksumInvalid' => 'm54RecoveryChecksumInvalid',
+              _ => 'm5ArchiveRejected',
+            }
           : 'm5OperationFailed';
     } finally {
       busy = false;

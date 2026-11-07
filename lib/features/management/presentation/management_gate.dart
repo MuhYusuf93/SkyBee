@@ -9,6 +9,7 @@ import 'pin_screen.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/management_role.dart';
 import 'management_navigation.dart';
+import '../../cashier_lock/presentation/cashier_lock_navigator.dart';
 
 /// Hides protected routes immediately on background/timeout. Service checks
 /// still enforce authorization for pending/queued actions independently.
@@ -26,6 +27,23 @@ class ManagementGate extends StatefulWidget {
 
 class _ManagementGateState extends State<ManagementGate> {
   bool _opened = false;
+  CashierLockNavigator? _cashierNavigator;
+  ModalRoute<dynamic>? _route;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    final controller = context.read<CashierLockNavigator?>();
+    if (_route == route && _cashierNavigator == controller) return;
+    if (_route != null) {
+      _cashierNavigator?.unregisterManagementRoute(_route!, this);
+    }
+    _route = route;
+    _cashierNavigator = controller;
+    if (route != null) controller?.registerManagementRoute(route, this);
+  }
+
   late final String _privacyId = identityHashCode(this).toString();
   Future<void> _privacy(bool active) async {
     if (!Platform.isAndroid) return;
@@ -47,6 +65,9 @@ class _ManagementGateState extends State<ManagementGate> {
 
   @override
   void dispose() {
+    if (_route != null) {
+      _cashierNavigator?.unregisterManagementRoute(_route!, this);
+    }
     unawaited(_privacy(false));
     super.dispose();
   }

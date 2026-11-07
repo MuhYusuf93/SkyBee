@@ -27,12 +27,12 @@ List<String> masterPriceErrors({
   return [
     if (costMicros != null &&
         costQuantity > 0 &&
-        BigInt.from(costMicros) >
+        BigInt.from(costMicros) >=
             BigInt.from(retail.amountMinor) *
                 BigInt.from(CostAmount.scale) *
                 BigInt.from(costQuantity))
       'm52PurchaseAboveRetail',
-    if (wholesale != null && wholesale.amountMinor > retail.amountMinor)
+    if (wholesale != null && wholesale.amountMinor >= retail.amountMinor)
       'm52WholesaleAboveRetail',
   ];
 }

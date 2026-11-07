@@ -324,16 +324,16 @@ void reportsCorrectionsSuite(
       await services.inventory.receive(
         productId,
         3,
-        CostAmount.fromMoney(Money(12000, 'IDR', 0)),
+        CostAmount.fromMoney(Money(11500, 'IDR', 0)),
         operationKey: 'new-stock',
       );
       final second = await sale(quantity: 1, paid: null);
       final secondCost = (await services.history.detail(second.id)).$2!.micros;
-      expect(secondCost, 9450 * CostAmount.scale);
+      expect(secondCost, 9375 * CostAmount.scale);
       await cancel(first);
       final product = await services.inventory.detail(productId);
       expect(product.quantity, 22);
-      expect(product.valueMicros, 206550 * CostAmount.scale);
+      expect(product.valueMicros, 205125 * CostAmount.scale);
       expect((await services.history.detail(second.id)).$2!.micros, secondCost);
       expect((await services.reports.reconcile()).consistent, true);
     },

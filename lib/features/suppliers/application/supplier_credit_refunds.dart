@@ -43,7 +43,10 @@ extension SupplierCreditRefunds on SupplierService {
       input.date,
       notBefore: CalendarDate(credit.row['approved_date'] as String),
     );
-    final policy = await CashDrawerLedger.policyOn(db),
+    final policy = await CashDrawerLedger.operationalPolicyOn(
+          db,
+          CashierStore(access.clock),
+        ),
         tracked =
             input.destination == SupplierPaymentSource.drawer && policy.active;
     if (tracked) {
@@ -167,7 +170,10 @@ extension SupplierCreditRefunds on SupplierService {
     if (tracked) {
       if (original['destination'] != 'drawer' ||
           drawerSession == null ||
-          !(await CashDrawerLedger.policyOn(db)).active) {
+          !(await CashDrawerLedger.operationalPolicyOn(
+            db,
+            CashierStore(access.clock),
+          )).active) {
         throw const AppError('m53CreditCashOutRequired');
       }
       if (outgoing.currency.code != credit.currency.code ||

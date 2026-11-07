@@ -5,6 +5,7 @@ import '../../../core/domain/app_error.dart';
 import '../../../core/domain/value_types.dart';
 import '../../../core/money/money_field.dart';
 import '../../../core/presentation/form_exit_guard.dart';
+import '../../../core/presentation/route_input_scope.dart';
 import '../../../l10n/localization.dart';
 import '../../barcode/domain/barcode_camera.dart';
 import '../../barcode/presentation/barcode_scanner_screen.dart';
@@ -203,6 +204,7 @@ class StocktakeScreen extends StatefulWidget {
 }
 
 class _StocktakeScreenState extends State<StocktakeScreen> {
+  final inputScope = RouteInputScope();
   StocktakeDraft? doc;
   final code = TextEditingController(),
       reason = TextEditingController(),
@@ -218,6 +220,10 @@ class _StocktakeScreenState extends State<StocktakeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    inputScope.attach(
+      context.read<RouteObserver<ModalRoute<dynamic>>?>(),
+      ModalRoute.of(context),
+    );
     if (!started) {
       started = true;
       generation = context.read<AppServices>().database.generation;
@@ -296,8 +302,20 @@ class _StocktakeScreenState extends State<StocktakeScreen> {
         ),
       ) ??
       false;
-  Future<void> scan({String? literal, bool includeOnly = false}) async {
+  Future<void> scan({
+    String? literal,
+    bool includeOnly = false,
+    bool allowDialogs = true,
+    void Function()? requireIntent,
+  }) async {
     if (busy || doc == null) return;
+    if (requireIntent == null && !inputScope.canReceive) return;
+    final guard = requireIntent ?? inputScope.capture();
+    try {
+      guard();
+    } on AppError {
+      return;
+    }
     final text = literal ?? code.text;
     final service = context.read<AppServices>().inventory;
     StocktakeScanResult? result;
@@ -305,21 +323,42 @@ class _StocktakeScreenState extends State<StocktakeScreen> {
       if (includeOnly) {
         final p = await service.lookupCode(text);
         if (p == null) throw const AppError('productNotFound');
-        return service.includeStocktakeProduct(doc!.id, doc!.revision, p.id);
+        guard();
+        return service.includeStocktakeProduct(
+          doc!.id,
+          doc!.revision,
+          p.id,
+          requireIntent: guard,
+        );
       }
-      result = await service.scanStocktake(doc!.id, doc!.revision, text);
+      result = await service.scanStocktake(
+        doc!.id,
+        doc!.revision,
+        text,
+        requireIntent: guard,
+      );
       return result!.draft;
     });
     if (!mounted) return;
+    try {
+      guard();
+    } on AppError {
+      if (code.text == text) code.clear();
+      return;
+    }
     if (ok) {
       code.clear();
       if (result?.needsBatchChoice == true) {
         setState(() => error = 'm53StocktakeBatchChoice');
-        await line(doc!.lines.singleWhere((l) => l.id == result!.lineId));
+        if (allowDialogs) {
+          await line(doc!.lines.singleWhere((l) => l.id == result!.lineId));
+        }
       }
-    } else if (error == 'productNotFound' &&
+    } else if (allowDialogs &&
+        error == 'productNotFound' &&
         await ask('productNotFound', 'm53StocktakeRegister') &&
-        mounted) {
+        mounted &&
+        inputScope.canReceive) {
       await register(text);
     }
   }
@@ -339,7 +378,7 @@ class _StocktakeScreenState extends State<StocktakeScreen> {
       MaterialPageRoute(
         builder: (_) => BarcodeScannerScreen(
           inventory: true,
-          lookup: (literal) async {
+          lookup: (literal, requireIntent) async {
             final product = await context
                 .read<AppServices>()
                 .inventory
@@ -347,7 +386,12 @@ class _StocktakeScreenState extends State<StocktakeScreen> {
             if (product == null) {
               return const BarcodeFeedback('productNotFound', unknown: true);
             }
-            await scan(literal: literal);
+            requireIntent();
+            await scan(
+              literal: literal,
+              requireIntent: requireIntent,
+              allowDialogs: false,
+            );
             return BarcodeFeedback(
               error ?? 'm53StocktakeScanAdded',
               success: error == null,
@@ -443,6 +487,7 @@ class _StocktakeScreenState extends State<StocktakeScreen> {
 
   @override
   void dispose() {
+    inputScope.dispose();
     scroll.dispose();
     code.dispose();
     reason.dispose();

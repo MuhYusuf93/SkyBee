@@ -1681,7 +1681,7 @@
   "@m5CodeCopyFailed": {
     "description": "Sanitized clipboard failure without upstream details."
   },
-  "m5RecoveryCodeHelp": "This code differs from your PIN and PIN recovery. Keep a private copy outside the device. Older backups still need the code used when created; a lost code cannot be derived from your PIN.",
+  "m5RecoveryCodeHelp": "These 24 English words represent your 256-bit backup key. Keep their order and store them securely. Legacy hex codes remain accepted. The backup key differs from PIN recovery.",
   "m5ConfirmRecoveryCode": "Enter the code you saved",
   "m5CodeStored": "I have saved a copy of this code where I can retrieve it.",
   "m5SaveRecoveryCode": "Confirm and save code",
@@ -2438,8 +2438,8 @@
   "m52EmailInvalid": "Invalid email format.",
   "m52WebsiteInvalid": "Enter a domain or http/https URL with a valid host.",
   "m52InitialQuantityLimit": "Initial quantity must be 0–999999 base units, at most six digits.",
-  "m52PurchaseAboveRetail": "Purchase cost per unit must not exceed the retail selling price.",
-  "m52WholesaleAboveRetail": "Wholesale price must not exceed the retail selling price.",
+  "m52PurchaseAboveRetail": "Purchase cost per unit must be lower than the retail selling price.",
+  "m52WholesaleAboveRetail": "Wholesale price must be lower than the retail selling price.",
   "m52ReferenceCostRequired": "Enter the reference purchase cost per unit, including an explicit zero if free.",
   "m52ShelfDuplicate": "This shelf name/code already exists.",
   "m52UnsavedTitle": "Unsaved changes",
@@ -3603,7 +3603,7 @@
   "@m53CashAuditHelp": {
     "description": "M5.3 physical cash declarations and session accounting: m53CashAuditHelp"
   },
-  "m53CashNotesHelp": "Enable this to help record daily cash. Records remain when the date changes or recording is disabled. Close open sessions before disabling recording.",
+  "m53CashNotesHelp": "Open a session to record physical cash voluntarily. Store policy is saved separately. Records remain after closing or a date change.",
   "@m53CashNotesHelp": {
     "description": "M5.3 physical cash declarations and session accounting: m53CashNotesHelp"
   },
@@ -6227,5 +6227,89 @@
   "m53BackupResumeInvalid": "The saved backup snapshot is missing, changed, or cannot be verified. Start a new backup. The old file is kept.",
   "@m53BackupResumeInvalid": {
     "description": "A recorded upload snapshot cannot be validated; a new explicit backup is required."
+  },
+  "m54EmployeeHardLocked": "Employee access is locked. Ask the owner to unlock it in Security.",
+  "@m54EmployeeHardLocked": {
+    "description": "M5.4 employee access lockout and explicit fresh owner unlock."
+  },
+  "m54UnlockCashier": "Unblock Cashier PIN attempts",
+  "@m54UnlockCashier": {
+    "description": "M5.4 employee access lockout and explicit fresh owner unlock."
+  },
+  "m54UnlockWarehouse": "Unblock Warehouse PIN attempts",
+  "@m54UnlockWarehouse": {
+    "description": "M5.4 employee access lockout and explicit fresh owner unlock."
+  },
+  "m54RecoveryWordCount": "Enter exactly 24 recovery words (or the legacy 64-character hex code).",
+  "@m54RecoveryWordCount": {
+    "description": "M5.4 recovery mnemonic validation, no secret in error."
+  },
+  "m54RecoveryWordInvalid": "An unknown word was entered. Use the English words on the recovery sheet.",
+  "@m54RecoveryWordInvalid": {
+    "description": "M5.4 recovery mnemonic validation, no secret in error."
+  },
+  "m54RecoveryChecksumInvalid": "Recovery checksum does not match. Check every word and its order.",
+  "@m54RecoveryChecksumInvalid": {
+    "description": "M5.4 recovery mnemonic validation, no secret in error."
+  },
+  "m54RecoveryQrInvalid": "This is not a supported SkyBee recovery QR.",
+  "@m54RecoveryQrInvalid": {
+    "description": "M5.4 recovery mnemonic validation, no secret in error."
+  },
+  "m54ShelfNotRegistered": "This shelf is not registered. Select an existing shelf or add a new one.",
+  "@m54ShelfNotRegistered": {
+    "description": "M5.4 product form field validation."
+  },
+  "m54FieldInvalid": "Check the value in this field.",
+  "@m54FieldInvalid": {
+    "description": "M5.4 product form field validation."
+  },
+  "m54RecoveryOnly": "Use this secret QR only in store recovery.",
+  "@m54RecoveryOnly": {
+    "description": "Reject recovery secrets in all business barcode flows without echoing payload."
+  },
+  "m54EmployeeUnlocked": "Block cleared. Enter the Cashier PIN to continue.",
+  "@m54EmployeeUnlocked": {
+    "description": "M54 explicit owner action clears employee attempts without disabling cashier policy."
+  },
+  "m54UnblockOwnerHelp": "Enter the owner PIN to clear Cashier attempt blocking. The Cashier lock stays enabled; old sessions are revoked.",
+  "@m54UnblockOwnerHelp": {
+    "description": "M54 explicit owner action clears employee attempts without disabling cashier policy."
+  },
+  "m54CashVoluntaryOpenFirst": "Start voluntary recording with Open cash session. Store policy does not change automatically.",
+  "@m54CashVoluntaryOpenFirst": {
+    "description": "M54 cash policy and physical session state: m54CashVoluntaryOpenFirst"
+  },
+  "m54CashNextSessionRequired": "Confirm that this change applies from the next session. Open sessions retain their original policy.",
+  "@m54CashNextSessionRequired": {
+    "description": "M54 cash policy and physical session state: m54CashNextSessionRequired"
+  },
+  "m54CashNextSession": "Apply from the next session?",
+  "@m54CashNextSession": {
+    "description": "M54 cash policy and physical session state: m54CashNextSession"
+  },
+  "m54CashNextSessionHelp": "This change applies only to the next session. Open sessions keep their mode, opening counts and history. Close them with the actual physical count.",
+  "@m54CashNextSessionHelp": {
+    "description": "M54 cash policy and physical session state: m54CashNextSessionHelp"
+  },
+  "m54CashVoluntaryStoredOff": "Store policy remains Off. The open voluntary session records cash until it is closed.",
+  "@m54CashVoluntaryStoredOff": {
+    "description": "M54 cash policy and physical session state: m54CashVoluntaryStoredOff"
+  },
+  "m54CashStoredPolicy": "Saved policy",
+  "@m54CashStoredPolicy": {
+    "description": "M54 cash policy and physical session state: m54CashStoredPolicy"
+  },
+  "m54CashAuthenticationCancelled": "Authentication cancelled. Policy was not saved; your selection is retained.",
+  "@m54CashAuthenticationCancelled": {
+    "description": "M54 truthful policy form feedback after cancelled owner PIN."
+  },
+  "m54CashSessionOpen": "Cash session open — closing required",
+  "@m54CashSessionOpen": {
+    "description": "M54 cash policy and physical session state: m54CashSessionOpen"
+  },
+  "m54ScanRouteChanged": "Scan cancelled because the screen changed. Scan again in the active field.",
+  "@m54ScanRouteChanged": {
+    "description": "Cancellation of an old input intent; never an authentication grant."
   }
 }

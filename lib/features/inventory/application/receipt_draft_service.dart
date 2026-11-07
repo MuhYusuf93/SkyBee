@@ -208,6 +208,7 @@ extension ReceiptDocuments on InventoryService {
     EntityId product, {
     bool separateLine = false,
     EntityId? targetLine,
+    void Function()? requireIntent,
   }) => _write(
     (db) async => _addReceiptProductOn(
       db,
@@ -216,6 +217,7 @@ extension ReceiptDocuments on InventoryService {
       separateLine: separateLine,
       targetLine: targetLine,
     ),
+    requireIntent: requireIntent,
   );
 
   /// Camera re-arm and external HID both call this literal lookup. Every accepted
@@ -225,6 +227,7 @@ extension ReceiptDocuments on InventoryService {
     int revision,
     String input, {
     EntityId? targetLine,
+    void Function()? requireIntent,
   }) => _write((db) async {
     final doc = await _editableReceiptOn(db, id, revision), code = input.trim();
     if (code.isEmpty || code.length > 256) {
@@ -239,7 +242,7 @@ extension ReceiptDocuments on InventoryService {
       EntityId(rows.single['id'] as String),
       targetLine: targetLine,
     );
-  });
+  }, requireIntent: requireIntent);
 
   Future<ReceiptDraft> updateReceiptDraftLine(
     EntityId id,

@@ -6,6 +6,7 @@ import 'package:kasir_app/app/app_services.dart';
 import 'package:kasir_app/app/theme.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/management/presentation/pin_screen.dart';
+import 'package:kasir_app/features/management/presentation/pin_boxes.dart';
 import 'package:kasir_app/features/management/presentation/management_session_provider.dart';
 
 void main() {
@@ -90,7 +91,18 @@ void main() {
               )
               .first,
         );
-        expect(tester.widget<TextField>(pin).obscureText, false);
+        // The accessible logical editor remains masked. Show PIN changes the
+        // four visual cells, without exposing each digit as a semantic editor.
+        expect(tester.widget<TextField>(pin).obscureText, true);
+        final boxes = find.ancestor(of: pin, matching: find.byType(PinBoxes));
+        expect(
+          find.descendant(of: boxes, matching: find.text('0')),
+          findsNWidgets(3),
+        );
+        expect(
+          find.descendant(of: boxes, matching: find.text('1')),
+          findsOneWidget,
+        );
         expect(tester.takeException(), isNull);
         await tester.pumpWidget(const SizedBox());
         await database.close();

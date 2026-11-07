@@ -16,7 +16,8 @@ class CashDrawerPolicyScreen extends StatefulWidget {
 }
 
 class _CashDrawerPolicyScreenState extends State<CashDrawerPolicyScreen> {
-  CashDrawerPolicy? baseline;
+  CashDrawerPolicyState? snapshot;
+  CashDrawerPolicy? get baseline => snapshot?.policy;
   CashDrawerMode? mode;
   bool busy = false;
   String? error;
@@ -27,7 +28,7 @@ class _CashDrawerPolicyScreenState extends State<CashDrawerPolicyScreen> {
     load();
   }
 
-  Future<void> load() async {
+  Future<void> load({bool keepDraft = false}) async {
     setState(() {
       busy = true;
       error = null;
@@ -36,11 +37,11 @@ class _CashDrawerPolicyScreenState extends State<CashDrawerPolicyScreen> {
       final policy = await context
           .read<AppServices>()
           .cashDrawerHistory
-          .policy();
+          .policyState();
       if (mounted) {
         setState(() {
-          baseline = policy;
-          mode = policy.mode;
+          snapshot = policy;
+          if (!keepDraft || mode == null) mode = policy.policy.mode;
         });
       }
     } catch (e) {
@@ -51,7 +52,7 @@ class _CashDrawerPolicyScreenState extends State<CashDrawerPolicyScreen> {
   }
 
   Future<void> save() async {
-    if (busy || baseline == null || mode == null) return;
+    if (busy || !dirty || baseline == null || mode == null) return;
     setState(() {
       busy = true;
       error = null;
@@ -60,14 +61,62 @@ class _CashDrawerPolicyScreenState extends State<CashDrawerPolicyScreen> {
       final services = context.read<AppServices>(),
           selected = mode!,
           revision = baseline!.revision;
-      if (!await freshAuthentication(context, 'security', pinOnly: true) ||
-          !mounted) {
+      final next = snapshot!.hasOpenSessions;
+      if (next) {
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (c) => AlertDialog(
+            scrollable: true,
+            title: Text(tr(c, 'm54CashNextSession')),
+            content: Text(tr(c, 'm54CashNextSessionHelp')),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(c, false),
+                child: Text(tr(c, 'cancel')),
+              ),
+              FilledButton(
+                key: const ValueKey('drawer-policy-next-confirm'),
+                onPressed: () => Navigator.pop(c, true),
+                child: Text(tr(c, 'continueAction')),
+              ),
+            ],
+          ),
+        );
+        if (confirmed != true || !mounted) return;
+      }
+      final authenticated = await freshAuthentication(
+        context,
+        'security',
+        pinOnly: true,
+      );
+      if (!mounted) return;
+      if (!authenticated) {
+        setState(() => error = 'm54CashAuthenticationCancelled');
         return;
       }
-      await services.cashDrawer.configure(selected, revision);
+      await services.cashDrawer.configure(
+        selected,
+        revision,
+        applyFromNextSession: next,
+      );
       if (mounted) await load();
     } catch (e) {
-      if (mounted) setState(() => error = safeError(e));
+      final message = safeError(e);
+      // A failed CAS may mean a session changed during PIN entry. Refresh the
+      // actual status without replacing the owner's unsaved selection. If the
+      // owner session was revoked, the management gate handles that failure.
+      if (mounted) {
+        try {
+          final actual = await context
+              .read<AppServices>()
+              .cashDrawerHistory
+              .policyState();
+          if (mounted) setState(() => snapshot = actual);
+        } catch (_) {
+          /* Preserve last verified snapshot under a locked gate. */
+        }
+        if (mounted) setState(() => error = message);
+      }
     } finally {
       if (mounted) setState(() => busy = false);
     }
@@ -86,6 +135,35 @@ class _CashDrawerPolicyScreenState extends State<CashDrawerPolicyScreen> {
           children: [
             if (busy) const LinearProgressIndicator(),
             Text(tr(context, 'm53CashAuditHelp')),
+            if (snapshot != null) ...[
+              Text(
+                tr(
+                  context,
+                  snapshot!.hasOpenSessions
+                      ? 'm54CashSessionOpen'
+                      : 'm53CashNoSession',
+                ),
+                key: const ValueKey('drawer-policy-session-status'),
+              ),
+              if (snapshot!.currentSession case final session?)
+                Text(
+                  '${session.day} · ${session.timeZone} · ${session.id.value} · ${tr(context, session.closed ? 'm53CashSessionClosed' : 'm54CashSessionOpen')}',
+                ),
+              if (snapshot!.olderOpenCount > 0)
+                Text(
+                  '${tr(context, 'm53CashPendingDays')}: ${snapshot!.olderOpenCount}',
+                ),
+              if (snapshot!.hasOpenSessions) ...[
+                Text(tr(context, 'm53CashCloseSessionsFirst')),
+                Text(tr(context, 'm54CashNextSessionHelp')),
+                if (baseline!.mode == CashDrawerMode.off)
+                  Text(tr(context, 'm54CashVoluntaryStoredOff')),
+              ] else
+                Text(tr(context, 'm54CashVoluntaryOpenFirst')),
+              Text(
+                '${tr(context, 'm54CashStoredPolicy')}: ${tr(context, _label(baseline!.mode))}',
+              ),
+            ],
             if (baseline != null)
               RadioGroup<CashDrawerMode>(
                 groupValue: mode,
@@ -93,29 +171,37 @@ class _CashDrawerPolicyScreenState extends State<CashDrawerPolicyScreen> {
                 child: Column(
                   children: [
                     for (final value in CashDrawerMode.values)
-                      RadioListTile<CashDrawerMode>(
-                        key: ValueKey('drawer-policy-${value.name}'),
-                        value: value,
-                        title: Text(
-                          tr(context, switch (value) {
-                            CashDrawerMode.off => 'm53CashOff',
-                            CashDrawerMode.notes => 'm53CashNotes',
-                            CashDrawerMode.audit => 'm53CashAudit',
-                          }),
+                      if (value != CashDrawerMode.notes ||
+                          snapshot!.hasOpenSessions ||
+                          baseline!.mode == CashDrawerMode.notes)
+                        RadioListTile<CashDrawerMode>(
+                          key: ValueKey('drawer-policy-${value.name}'),
+                          value: value,
+                          enabled:
+                              !busy &&
+                              (value == CashDrawerMode.off
+                                  ? !snapshot!.hasOpenSessions
+                                  : value != CashDrawerMode.notes ||
+                                        snapshot!.hasOpenSessions),
+                          title: Text(tr(context, _label(value))),
                         ),
-                      ),
                   ],
                 ),
               ),
             Text(tr(context, 'm53CashNotesHelp')),
-            if (error != null) Text(tr(context, error!)),
+            if (error != null)
+              Text(
+                tr(context, error!),
+                key: const ValueKey('drawer-policy-error'),
+              ),
             FilledButton(
               key: const ValueKey('drawer-policy-save'),
               onPressed: busy || !dirty ? null : save,
               child: Text(tr(context, 'save')),
             ),
             TextButton(
-              onPressed: busy ? null : load,
+              key: const ValueKey('drawer-policy-refresh'),
+              onPressed: busy ? null : () => load(keepDraft: true),
               child: Text(tr(context, 'tryAgain')),
             ),
             OutlinedButton(
@@ -131,4 +217,10 @@ class _CashDrawerPolicyScreenState extends State<CashDrawerPolicyScreen> {
       ),
     ),
   );
+
+  String _label(CashDrawerMode value) => switch (value) {
+    CashDrawerMode.off => 'm53CashOff',
+    CashDrawerMode.notes => 'm53CashNotes',
+    CashDrawerMode.audit => 'm53CashAudit',
+  };
 }

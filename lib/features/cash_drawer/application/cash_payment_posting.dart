@@ -61,7 +61,10 @@ abstract final class CashPaymentPosting {
     required Money paid,
     required CurrencyPolicy currency,
   }) async {
-    final policy = await CashDrawerLedger.policyOn(db);
+    final policy = await CashDrawerLedger.operationalPolicyOn(db, store);
+    if (!policy.active && input.drawerSessionId != null) {
+      throw const AppError('m53CashSessionChanged');
+    }
     if (tender == null) {
       if (input.changePieces != null || input.drawerSessionId != null) {
         throw const AppError('m3InvalidPayment');
@@ -151,8 +154,11 @@ abstract final class CashPaymentPosting {
     required Money amount,
     required CashPaymentIntent? intent,
   }) async {
-    final policy = await CashDrawerLedger.policyOn(db),
+    final policy = await CashDrawerLedger.operationalPolicyOn(db, store),
         currency = CurrencyPolicy.forCode(amount.currencyCode);
+    if (!policy.active && intent?.sessionId != null) {
+      throw const AppError('m53CashSessionChanged');
+    }
     if (intent == null) {
       if (policy.active) throw const AppError('m53CashCompositionRequired');
       await _sourceOn(db, payment, policy, 'unknown');
@@ -222,8 +228,11 @@ abstract final class CashPaymentPosting {
     required Money amount,
     required CashPaymentIntent? intent,
   }) async {
-    final policy = await CashDrawerLedger.policyOn(db),
+    final policy = await CashDrawerLedger.operationalPolicyOn(db, store),
         currency = CurrencyPolicy.forCode(amount.currencyCode);
+    if (!policy.active && intent?.sessionId != null) {
+      throw const AppError('m53CashSessionChanged');
+    }
     if (intent == null) {
       if (policy.active) throw const AppError('m53CashCompositionRequired');
       await _sourceOn(db, payment, policy, 'unknown');

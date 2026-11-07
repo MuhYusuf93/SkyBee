@@ -266,8 +266,6 @@ void m53SupplierFinanceSuite(DatabaseFactory factory) {
         credit(),
         operationKey: 'PUBLIC CASH BILL',
       );
-      final context = await app.cashDrawer.context();
-      await app.cashDrawer.setNotes(true, context.policy.revision);
       final current = await app.cashDrawer.context();
       final currency = CurrencyPolicy.forCode('IDR');
       final session = await app.cashDrawer.open(

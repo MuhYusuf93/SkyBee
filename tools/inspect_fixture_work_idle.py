@@ -14,6 +14,7 @@ import tempfile
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--device', required=True, choices=['7f0edea0', '192.168.0.101:5555', '192.168.0.102:5555'])
+parser.add_argument('--details', action='store_true', help='Show pending worker IDs/classes/states only; never inputs or business rows')
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
 adb = [r'C:\Users\ACER\AppData\Local\Android\sdk\platform-tools\adb.exe', '-s', args.device]
@@ -69,6 +70,14 @@ if bases:
         try:
             assert connection.execute('PRAGMA quick_check').fetchone()[0] == 'ok'
             states = dict(connection.execute('SELECT state, COUNT(*) FROM WorkSpec GROUP BY state'))
+            details = [dict(zip(('id','state','worker'),row)) for row in connection.execute(
+                'SELECT id,state,worker_class_name FROM WorkSpec WHERE state NOT IN (2,3,5) ORDER BY id LIMIT 20'
+            )] if args.details else None
+            if details is not None:
+                for detail in details:
+                    detail['names'] = [row[0] for row in connection.execute(
+                        'SELECT name FROM WorkName WHERE work_spec_id=? ORDER BY name', (detail['id'],)
+                    )]
         finally:
             connection.close()
         for suffix, digest in before.items():
@@ -76,5 +85,7 @@ if bases:
             assert (None if raw is None else hashlib.sha256(raw).hexdigest()) == digest
         assert not call('shell', 'pidof', package).stdout.strip()
         summary = {'device': args.device, 'pending': sum(n for state, n in states.items() if state not in (2, 3, 5)), 'source': 'CLOSED_CONSISTENT_WORK_DATABASE'}
+        if args.details:
+            summary['pendingWorkers'] = details
 print(json.dumps(summary))
 assert summary['pending'] == 0, 'Existing fixture work pending; do not install tests'

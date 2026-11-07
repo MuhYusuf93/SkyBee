@@ -14,6 +14,39 @@ abstract final class CashDrawerLedger {
         (await db.query('cash_drawer_policy', where: 'id=1')).single,
       );
 
+  /// Money movements follow the immutable mode of today's actual open session.
+  /// Owner policy changes can apply to the NEXT session; they never manufacture
+  /// opening counts or relabel old notes as mandatory audit. Legacy `notes`
+  /// preferences also need an explicit open session to record physical money.
+  static Future<CashDrawerPolicy> operationalPolicyOn(
+    DatabaseExecutor db,
+    CashierStore store,
+  ) async {
+    final policy = await policyOn(db), settings = await store.settings(db);
+    final zone = settings['time_zone'] as String;
+    final rows = await db.rawQuery(
+      '''SELECT s.policy_mode,s.time_zone,s.currency_scale
+      FROM cash_drawer_sessions s WHERE s.store_day=? AND s.currency_code=?
+      AND NOT EXISTS(SELECT 1 FROM cash_drawer_closures c WHERE c.session_id=s.id)
+      ORDER BY s.id COLLATE BINARY LIMIT 2''',
+      [store.clock.today(zone).iso, settings['currency_code']],
+    );
+    if (rows.length > 1 ||
+        (rows.isNotEmpty &&
+            (rows.single['time_zone'] != zone ||
+                rows.single['currency_scale'] != settings['currency_scale']))) {
+      throw const AppError('m53CashSessionChanged');
+    }
+    return CashDrawerPolicy(
+      mode: rows.isNotEmpty
+          ? CashDrawerMode.values.byName(rows.single['policy_mode'] as String)
+          : policy.mandatory
+          ? CashDrawerMode.audit
+          : CashDrawerMode.off,
+      revision: policy.revision,
+    );
+  }
+
   static Future<void> clockOn(DatabaseExecutor sql, CashierStore store) async {
     final latest =
         (await sql.rawQuery(
@@ -155,7 +188,10 @@ abstract final class CashDrawerLedger {
         outgoing: outgoing,
       );
     }
-    final policy = await policyOn(dbTxn);
+    final policy = await operationalPolicyOn(dbTxn, store);
+    if (!policy.active && sessionId != null) {
+      throw const AppError('m53CashSessionChanged');
+    }
     if (!policy.active ||
         (incoming.total.amountMinor == 0 && outgoing.total.amountMinor == 0)) {
       return null;

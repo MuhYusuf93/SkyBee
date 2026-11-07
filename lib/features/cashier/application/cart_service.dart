@@ -94,45 +94,48 @@ final class CartService {
     );
   }
 
-  Future<CartSnapshot> add(EntityId draftId, EntityId productId) =>
-      store.write(database, (dbTxn) async {
-        final draft = await store.draft(dbTxn, draftId);
-        final product = await store.product(dbTxn, productId);
-        if (product.archived) {
-          throw const AppError('productIsArchivedRestoreItFirst');
-        }
-        final rows = await dbTxn.query(
-          'cart_draft_items',
-          where: 'draft_id=? AND product_id=?',
-          whereArgs: [draftId.value, productId.value],
-        );
-        final quantity = (rows.firstOrNull?['quantity'] as int? ?? 0) + 1;
-        if (product.referenceExpired ||
-            (product.stockTracked && quantity > product.saleable)) {
-          throw const AppError('insufficientSaleableStock');
-        }
-        if (rows.isEmpty) {
-          await dbTxn.insert('cart_draft_items', {
-            'draft_id': draftId.value,
-            'product_id': productId.value,
-            'quantity': quantity,
-            'accepted_price_rupiah': product.price.amountMinor,
-            'product_revision': product.revision,
-          });
-        } else {
-          await dbTxn.update(
-            'cart_draft_items',
-            {'quantity': quantity},
-            where: 'draft_id=? AND product_id=?',
-            whereArgs: [draftId.value, productId.value],
-          );
-        }
-        await store.acceptLinePromo(dbTxn, draftId, productId);
-        await _changed(dbTxn, draftId, draft['revision'] as int);
-        final result = await store.cart(dbTxn, draftId);
-        result.total; // Validate cap/metadata before committing the mutation.
-        return result;
+  Future<CartSnapshot> add(
+    EntityId draftId,
+    EntityId productId, {
+    void Function()? requireIntent,
+  }) => store.write(database, (dbTxn) async {
+    final draft = await store.draft(dbTxn, draftId);
+    final product = await store.product(dbTxn, productId);
+    if (product.archived) {
+      throw const AppError('productIsArchivedRestoreItFirst');
+    }
+    final rows = await dbTxn.query(
+      'cart_draft_items',
+      where: 'draft_id=? AND product_id=?',
+      whereArgs: [draftId.value, productId.value],
+    );
+    final quantity = (rows.firstOrNull?['quantity'] as int? ?? 0) + 1;
+    if (product.referenceExpired ||
+        (product.stockTracked && quantity > product.saleable)) {
+      throw const AppError('insufficientSaleableStock');
+    }
+    if (rows.isEmpty) {
+      await dbTxn.insert('cart_draft_items', {
+        'draft_id': draftId.value,
+        'product_id': productId.value,
+        'quantity': quantity,
+        'accepted_price_rupiah': product.price.amountMinor,
+        'product_revision': product.revision,
       });
+    } else {
+      await dbTxn.update(
+        'cart_draft_items',
+        {'quantity': quantity},
+        where: 'draft_id=? AND product_id=?',
+        whereArgs: [draftId.value, productId.value],
+      );
+    }
+    await store.acceptLinePromo(dbTxn, draftId, productId);
+    await _changed(dbTxn, draftId, draft['revision'] as int);
+    final result = await store.cart(dbTxn, draftId);
+    result.total; // Validate cap/metadata before committing the mutation.
+    return result;
+  }, requireIntent: requireIntent);
   Future<CartSnapshot> quantity(
     EntityId draftId,
     EntityId productId,

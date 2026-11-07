@@ -31,24 +31,6 @@ final class CashDrawerProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> notes(bool enabled) async {
-    if (busy || value == null) return;
-    busy = true;
-    error = null;
-    notifyListeners();
-    try {
-      await service.setNotes(enabled, value!.policy.revision);
-    } catch (e) {
-      if (!_disposed) {
-        error = safeError(e);
-        busy = false;
-        notifyListeners();
-      }
-      return;
-    }
-    if (!_disposed) await load();
-  }
-
   @override
   void dispose() {
     _disposed = true;

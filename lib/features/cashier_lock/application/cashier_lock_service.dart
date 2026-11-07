@@ -9,6 +9,7 @@ import '../../../data/database/database_coordinator.dart';
 import '../../../data/database/installation_identity.dart';
 import '../../management/application/management_service.dart';
 import '../../management/application/pin_hasher.dart';
+import '../../management/application/employee_access_attempts.dart';
 import '../../management/application/strong_biometrics.dart';
 import '../domain/cashier_lock_policy.dart';
 
@@ -126,6 +127,12 @@ final class CashierLockService {
     CashierLockPolicy value, {
     CashierReferenceProof? reference,
   }) async {
+    if (database.schemaVersion >= 38) {
+      await management.employeeAttempts.requireNotHardLocked(
+        db,
+        EmployeeAccessTarget.cashier,
+      );
+    }
     final accessEpoch = (await db.query(
       'management_access_epoch',
       columns: ['revision'],
@@ -346,6 +353,13 @@ final class CashierLockService {
 
   Future<void> _verifyOwn(String pin) async {
     final error = await database.transaction((dbTxn) async {
+      if (database.schemaVersion >= 38) {
+        final denied = await management.employeeAttempts.before(
+          dbTxn,
+          EmployeeAccessTarget.cashier,
+        );
+        if (denied != null) return denied;
+      }
       final rows = await dbTxn.query('cashier_credentials');
       if (rows.isEmpty) throw const AppError('m53CashierPinRequired');
       final row = rows.single,
@@ -354,7 +368,7 @@ final class CashierLockService {
             rows.single['last_attempt_at'] as int,
           );
       final blocked = row['blocked_until'] as int;
-      if (now < blocked) {
+      if (database.schemaVersion < 38 && now < blocked) {
         return AppError(
           'retryAfterSeconds',
           arguments: {'count': (blocked - now + 999) ~/ 1000},
@@ -381,7 +395,25 @@ final class CashierLockService {
         'blocked_until': valid ? 0 : now + seconds * 1000,
         'last_attempt_at': now,
       }, where: 'id=1');
+      if (database.schemaVersion >= 38) {
+        await management.employeeAttempts.record(
+          dbTxn,
+          EmployeeAccessTarget.cashier,
+          valid: valid,
+          credentialVersion: sha256.convert([
+            ...row['salt'] as List<int>,
+            ...row['pin_verifier'] as List<int>,
+          ]).toString(),
+        );
+      }
       await _audit(dbTxn, valid ? 'cashier_verified' : 'cashier_denied');
+      if (!valid && database.schemaVersion >= 38) {
+        return await management.employeeAttempts.before(
+              dbTxn,
+              EmployeeAccessTarget.cashier,
+            ) ??
+            const AppError('pinOrRecoveryCodeDoesNotMatch');
+      }
       return valid ? null : const AppError('pinOrRecoveryCodeDoesNotMatch');
     });
     if (error != null) throw error;

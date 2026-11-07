@@ -5,6 +5,7 @@ import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../l10n/localization.dart';
 import '../application/management_service.dart';
+import '../application/employee_access_attempts.dart';
 import '../application/strong_biometrics.dart';
 import '../domain/session_policy.dart';
 import 'fresh_authentication.dart';
@@ -172,6 +173,33 @@ class _SecuritySettingsBody extends StatelessWidget {
                   child: Text(tr(context, 'save')),
                 ),
                 const Divider(),
+                for (final target in EmployeeAccessTarget.values)
+                  OutlinedButton(
+                    key: ValueKey('employee-unlock-${target.name}'),
+                    onPressed: state.busy
+                        ? null
+                        : () async {
+                            if (await freshAuthentication(
+                                  context,
+                                  'security',
+                                  pinOnly: true,
+                                ) &&
+                                context.mounted) {
+                              await state.run(
+                                () =>
+                                    state.service.unlockEmployeeAccess(target),
+                              );
+                            }
+                          },
+                    child: Text(
+                      tr(
+                        context,
+                        target == EmployeeAccessTarget.cashier
+                            ? 'm54UnlockCashier'
+                            : 'm54UnlockWarehouse',
+                      ),
+                    ),
+                  ),
                 Text(tr(context, 'm51BiometricHelp')),
                 if (state.biometric?.available == false)
                   Text(tr(context, 'm51BiometricUnavailable')),

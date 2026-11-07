@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../../core/security/recovery_mnemonic.dart';
 import 'package:kasir_platform/kasir_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,21 @@ class BackupSettingsScreen extends StatefulWidget {
 }
 
 class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
+  String _numberedRecovery(String value) {
+    try {
+      final words = RecoveryMnemonic.entropyToMnemonic(
+        RecoveryMnemonic.normalize(value),
+      ).split(' ');
+      return words
+          .asMap()
+          .entries
+          .map((entry) => '${entry.key + 1}. ${entry.value}')
+          .join('\n');
+    } on FormatException {
+      return tr(context, 'm54RecoveryWordInvalid');
+    }
+  }
+
   Widget protection(BackupSettingsProvider s, String id, {bool drive = false}) {
     final value =
         (drive ? s.remoteProtection : s.localProtection)[id] ??
@@ -360,6 +376,16 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                     onPressed: s.busy
                                         ? null
                                         : () async {
+                                            // A queued tap from the now-hidden
+                                            // protected page must not start a
+                                            // new auth route after it locks.
+                                            if (!s.app.management.isUnlocked ||
+                                                !(ModalRoute.of(
+                                                      context,
+                                                    )?.isCurrent ??
+                                                    false)) {
+                                              return;
+                                            }
                                             if (!s.app.management.hasFresh(
                                                   'recovery',
                                                 ) &&
@@ -387,7 +413,7 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                                 ],
                               ),
                               SelectableText(
-                                s.generatedCode!,
+                                _numberedRecovery(s.generatedCode!),
                                 key: const ValueKey('backup-recovery-code'),
                               ),
                               Text(tr(context, 'm5RecoveryCodeHelp')),

@@ -7,6 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:kasir_app/app/app_services.dart';
 import 'package:kasir_app/app/kasir_app.dart';
 import 'package:kasir_app/core/time/store_clock.dart';
+import 'package:kasir_app/core/presentation/form_exit_guard.dart';
 import 'package:kasir_app/core/money/money_field.dart';
 import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
@@ -92,7 +93,11 @@ void m53DrawerWidgetsSuite(DatabaseFactory factory) {
     final cart = await app.cart.open();
     await app.cart.add(cart.id, EntityId(fixtureId(1)));
   });
-  Future<void> drain(WidgetTester tester, bool Function() ready) async {
+  Future<void> drain(
+    WidgetTester tester,
+    bool Function() ready, [
+    String? phase,
+  ]) async {
     final watch = Stopwatch()..start();
     do {
       await tester.runAsync(
@@ -100,7 +105,7 @@ void m53DrawerWidgetsSuite(DatabaseFactory factory) {
       );
       await tester.pump(const Duration(milliseconds: 16));
     } while (!ready() && watch.elapsed < const Duration(seconds: 90));
-    expectSync(ready(), isTrue);
+    expectSync(ready(), isTrue, reason: phase);
     await tester.pump(const Duration(milliseconds: 400));
   }
 
@@ -250,6 +255,216 @@ void m53DrawerWidgetsSuite(DatabaseFactory factory) {
   }
 
   for (final language in ['id', 'en']) {
+    scenario(
+      'M54 drawer policy $language cancel PIN, clean save Back and concurrent close retain truthful draft 320px text2',
+      (tester) async {
+        await io(tester, () async {
+          await app.settings.setLanguage(language);
+          await app.management.unlock('0001');
+        });
+        await mount(tester);
+        narrow(tester);
+        await tester.pump(const Duration(milliseconds: 400));
+        final nav = Navigator.of(tester.element(find.byType(CashierScreen)));
+        final save = find.byKey(const ValueKey('drawer-policy-save'));
+        final audit = find.byKey(const ValueKey('drawer-policy-audit'));
+        final guard = find.descendant(
+          of: find.byType(CashDrawerPolicyScreen),
+          matching: find.byType(FormExitGuard),
+        );
+        Future<void> policy() async {
+          unawaited(
+            nav.push<void>(
+              MaterialPageRoute(builder: (_) => const CashDrawerPolicyScreen()),
+            ),
+          );
+          await tester.pump();
+          await drain(
+            tester,
+            () =>
+                find.byType(CashDrawerPolicyScreen).evaluate().isNotEmpty &&
+                guard.evaluate().isNotEmpty &&
+                !tester.widget<FormExitGuard>(guard).busy,
+            'Policy load finished before revealing lazy radios',
+          );
+          await reveal(tester, audit);
+          await drain(
+            tester,
+            () =>
+                audit.evaluate().isNotEmpty &&
+                tester.widget<RadioListTile<CashDrawerMode>>(audit).enabled ==
+                    true,
+          );
+        }
+
+        Future<void> pin() async {
+          await drain(
+            tester,
+            () =>
+                find.byType(PinScreen).evaluate().isNotEmpty &&
+                find.byType(TextField).evaluate().isNotEmpty &&
+                tester.widget<TextField>(find.byType(TextField)).enabled !=
+                    false,
+            'Fresh PIN route ready for a new input client',
+          );
+          tester.testTextInput.register();
+          await tester.tap(find.byType(TextField));
+          await tester.pump();
+          await tester.enterText(find.byType(TextField), '0001');
+          await tester.pump(const Duration(milliseconds: 250));
+          await drain(
+            tester,
+            () => find.byType(PinScreen).evaluate().isEmpty,
+            'PIN authentication returned to policy route',
+          );
+        }
+
+        Future<void> idle() async {
+          await drain(
+            tester,
+            () =>
+                find.byType(PinScreen).evaluate().isEmpty &&
+                guard.evaluate().isNotEmpty &&
+                !tester.widget<FormExitGuard>(guard).busy,
+          );
+          await reveal(tester, save);
+        }
+
+        Future<void> selection(CashDrawerMode selected) async {
+          await reveal(tester, audit);
+          expectSync(
+            tester
+                .widget<RadioGroup<CashDrawerMode>>(
+                  find.byType(RadioGroup<CashDrawerMode>),
+                )
+                .groupValue,
+            selected,
+          );
+        }
+
+        Future<void> actual(CashDrawerMode mode) => io(tester, () async {
+          expectSync((await app.cashDrawerHistory.policy()).mode, mode);
+        });
+        await policy();
+        expectSync(
+          find.byKey(const ValueKey('drawer-policy-notes')),
+          findsNothing,
+        );
+        await tap(tester, audit);
+        await tap(tester, save);
+        await drain(tester, () => find.byType(PinScreen).evaluate().isNotEmpty);
+        await tester.binding.handlePopRoute();
+        await tester.pump();
+        await idle();
+        await actual(CashDrawerMode.off);
+        final cancelled = find.byKey(const ValueKey('drawer-policy-error'));
+        await reveal(tester, cancelled);
+        expectSync(
+          tester.widget<Text>(cancelled).data,
+          tr(tester.element(cancelled), 'm54CashAuthenticationCancelled'),
+        );
+        await reveal(tester, save);
+        expectSync(tester.widget<FilledButton>(save).onPressed, isNotNull);
+        await selection(CashDrawerMode.audit);
+        await tap(tester, save);
+        await pin();
+        await idle();
+        await actual(CashDrawerMode.audit);
+        expectSync(tester.widget<FilledButton>(save).onPressed, isNull);
+        unawaited(nav.maybePop());
+        await tester.pump();
+        await drain(
+          tester,
+          () => find.byType(CashDrawerPolicyScreen).evaluate().isEmpty,
+        );
+        expectSync(find.byType(AlertDialog), findsNothing);
+
+        // A voluntary session remains notes/unknown when future policy changes.
+        await io(tester, () async {
+          await app.management.reauthenticate('0001', 'security');
+          await app.cashDrawer.configure(
+            CashDrawerMode.off,
+            (await app.cashDrawerHistory.policy()).revision,
+          );
+          await app.cashDrawer.open(
+            operationKey: fixtureId(4140),
+            expected: await app.cashDrawer.context(),
+            opening: null,
+            reason: 'PUBLIC UNKNOWN',
+          );
+        });
+        await policy();
+        expectSync(
+          tester
+              .widget<RadioListTile<CashDrawerMode>>(
+                find.byKey(const ValueKey('drawer-policy-off')),
+              )
+              .enabled,
+          isFalse,
+        );
+        expectSync(
+          find.byKey(const ValueKey('drawer-policy-notes')),
+          findsOneWidget,
+        );
+        await tap(tester, audit);
+        await tap(tester, save);
+        await drain(
+          tester,
+          () => find.byType(AlertDialog).evaluate().isNotEmpty,
+        );
+        final dialogContext = tester.element(find.byType(AlertDialog));
+        await tap(tester, find.text(tr(dialogContext, 'cancel')));
+        await idle();
+        await actual(CashDrawerMode.off);
+        expectSync(tester.widget<FilledButton>(save).onPressed, isNotNull);
+        await tap(tester, save);
+        await tap(
+          tester,
+          find.byKey(const ValueKey('drawer-policy-next-confirm')),
+        );
+        await drain(tester, () => find.byType(PinScreen).evaluate().isNotEmpty);
+        await io(tester, () async {
+          final current = await app.cashDrawer.context();
+          expectSync(current.session!.mode, CashDrawerMode.notes);
+          expectSync(current.session!.openingKnown, isFalse);
+          await app.cashDrawer.close(
+            session: current.session!.id,
+            revision: current.session!.balance.revision,
+            operationKey: fixtureId(4141),
+            observed: CashPieces(CurrencyPolicy.forCode('IDR'), {}),
+            reason: 'PUBLIC ACTUAL COUNT',
+          );
+        });
+        await pin();
+        await idle();
+        await actual(CashDrawerMode.off);
+        final message = find.byKey(const ValueKey('drawer-policy-error'));
+        await reveal(tester, message);
+        expectSync(
+          tester.widget<Text>(message).data,
+          tr(tester.element(message), 'm53CashPolicyChanged'),
+        );
+        await reveal(tester, save);
+        expectSync(tester.widget<FilledButton>(save).onPressed, isNotNull);
+        await selection(CashDrawerMode.audit);
+        await tap(tester, find.byKey(const ValueKey('drawer-policy-refresh')));
+        await idle();
+        await tap(tester, save);
+        await pin();
+        await idle();
+        await actual(CashDrawerMode.audit);
+        expectSync(tester.widget<FilledButton>(save).onPressed, isNull);
+        unawaited(nav.maybePop());
+        await tester.pump();
+        await drain(
+          tester,
+          () => find.byType(CashDrawerPolicyScreen).evaluate().isEmpty,
+        );
+        expectSync(find.byType(AlertDialog), findsNothing);
+        expectSync(tester.takeException(), isNull);
+      },
+    );
+
     scenario(
       'M53 drawer $language audit cash pad and actual piece editors fit 320px text2x and commit tender/change once',
       (tester) async {
@@ -693,7 +908,7 @@ void m53DrawerWidgetsSuite(DatabaseFactory factory) {
   );
 
   scenario(
-    'M53 drawer opening and closing zero require explicit observed count and disabling notes keeps history',
+    'M54 drawer voluntary opening and closing zero require observed count, preserve Off and keep history',
     (tester) async {
       await mount(tester);
       await tap(tester, find.byKey(const ValueKey('cashier-drawer')));
@@ -701,21 +916,18 @@ void m53DrawerWidgetsSuite(DatabaseFactory factory) {
         tester,
         () =>
             find.byType(CashDrawerScreen).evaluate().isNotEmpty &&
-            find
-                .byKey(const ValueKey('drawer-notes-toggle'))
-                .evaluate()
-                .isNotEmpty &&
+            find.byKey(const ValueKey('drawer-open')).evaluate().isNotEmpty &&
             tester
-                    .element(find.byKey(const ValueKey('drawer-notes-toggle')))
+                    .element(find.byKey(const ValueKey('drawer-open')))
                     .read<CashDrawerProvider>()
                     .value !=
                 null,
       );
       final state = tester
-          .element(find.byKey(const ValueKey('drawer-notes-toggle')))
+          .element(find.byKey(const ValueKey('drawer-open')))
           .read<CashDrawerProvider>();
-      await tap(tester, find.byKey(const ValueKey('drawer-notes-toggle')));
-      await drain(tester, () => !state.busy && state.value!.policy.active);
+      expectSync(state.value!.storePolicy.mode, CashDrawerMode.off);
+      expectSync(state.value!.policy.active, isFalse);
       await tap(tester, find.byKey(const ValueKey('drawer-open')));
       await drain(
         tester,
@@ -772,8 +984,8 @@ void m53DrawerWidgetsSuite(DatabaseFactory factory) {
             !state.busy &&
             state.value!.session!.closed,
       );
-      await tap(tester, find.byKey(const ValueKey('drawer-notes-toggle')));
-      await drain(tester, () => !state.busy && !state.value!.policy.active);
+      expectSync(state.value!.storePolicy.mode, CashDrawerMode.off);
+      expectSync(state.value!.policy.active, isFalse);
       await io(tester, () async {
         expectSync(
           (await db.read((sql) => sql.query('cash_drawer_sessions'))).length,

@@ -7,6 +7,7 @@ import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/barcode/application/barcode_access.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
+import 'package:kasir_app/features/cashier/presentation/cart_provider.dart';
 
 void m53BarcodeSqlSuite(DatabaseFactory factory) {
   late Directory directory;
@@ -61,6 +62,79 @@ void m53BarcodeSqlSuite(DatabaseFactory factory) {
     await factory.deleteDatabase(db.databasePath);
   });
   tearDownAll(() async => directory.delete());
+  test(
+    'M54 cancelled intent at final SQL boundary rolls back draft revision and line together',
+    () async {
+      final cart = await app.cart.open();
+      final before = await db.read(
+        (sql) async => [
+          await sql.query('cart_drafts'),
+          await sql.query('cart_draft_items'),
+          await sql.query('products'),
+          await sql.query('stock_history'),
+        ],
+      );
+      var checks = 0;
+      await expectLater(
+        app.cart.add(
+          cart.id,
+          product,
+          requireIntent: () {
+            if (++checks == 2) throw const AppError('m54ScanRouteChanged');
+          },
+        ),
+        throwsA(
+          isA<AppError>().having(
+            (e) => e.message,
+            'key',
+            'm54ScanRouteChanged',
+          ),
+        ),
+      );
+      expect(checks, 2);
+      expect(
+        await db.read(
+          (sql) async => [
+            await sql.query('cart_drafts'),
+            await sql.query('cart_draft_items'),
+            await sql.query('products'),
+            await sql.query('stock_history'),
+          ],
+        ),
+        before,
+      );
+    },
+  );
+  test(
+    'M54 fifteen repeated identical scan intents serialize without timing debounce or stock mutation',
+    () async {
+      await app.inventory.receive(
+        product,
+        20,
+        CostAmount.fromMoney(Money(1000, 'IDR', 0)),
+        operationKey: const IdGenerator().next().value,
+      );
+      final provider = CartProvider(app.cart);
+      try {
+        await provider.open();
+        final results = await Future.wait(
+          List.generate(15, (_) => provider.add(product, requireIntent: () {})),
+        );
+        expect(results.every((v) => v), isTrue);
+        expect(provider.snapshot!.lines.single.quantity, 15);
+        expect(
+          (await db.read(
+            (sql) => sql.query('products'),
+          )).single['stock_quantity'],
+          25,
+        );
+        expect(await db.read((sql) => sql.query('sale_transactions')), isEmpty);
+        expect(await db.read((sql) => sql.query('payments')), isEmpty);
+      } finally {
+        provider.dispose();
+      }
+    },
+  );
   test(
     'M53 barcode literal inventory lookup requires capability and never turns unknown or URL into a product',
     () async {

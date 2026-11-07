@@ -178,9 +178,11 @@ final class PortableFactsFixture {
     );
     member = profile.id;
     await app.quickCash.saveForCashier('IDR', [10000, 20000, 50000]);
-    await app.cashDrawer.setNotes(
-      true,
-      (await app.cashDrawer.context()).policy.revision,
+    // Historical persisted preference: compatibility fixture, not a public UI action.
+    await app.database.transaction(
+      (sql) => sql.rawUpdate(
+        "UPDATE cash_drawer_policy SET mode='notes',revision=revision+1 WHERE id=1",
+      ),
     );
     final currency = CurrencyPolicy.forCode('IDR');
     final drawer = await app.cashDrawer.open(
@@ -204,9 +206,11 @@ final class PortableFactsFixture {
       observed: CashPieces(currency, {10000: 11}),
       reason: 'PUBLIC CLOSE',
     );
-    await app.cashDrawer.setNotes(
-      false,
-      (await app.cashDrawer.context()).policy.revision,
+    // Historical persisted preference: compatibility fixture, not a public UI action.
+    await app.database.transaction(
+      (sql) => sql.rawUpdate(
+        "UPDATE cash_drawer_policy SET mode='off',revision=revision+1 WHERE id=1",
+      ),
     );
     final first = await sale([mainProduct, unknown, free]);
     await app.cart.next(drafts[first.id.value]!);
@@ -388,9 +392,11 @@ final class PortableFactsFixture {
       );
       await app.management.unlock('0001');
     }
-    await app.cashDrawer.setNotes(
-      true,
-      (await app.cashDrawer.context()).policy.revision,
+    // Historical persisted preference: compatibility fixture, not a public UI action.
+    await app.database.transaction(
+      (sql) => sql.rawUpdate(
+        "UPDATE cash_drawer_policy SET mode='notes',revision=revision+1 WHERE id=1",
+      ),
     );
     await app.cashierLock.load();
     await app.management.reauthenticate('0001', 'security');

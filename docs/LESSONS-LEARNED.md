@@ -670,3 +670,26 @@ same-store key selection, dan permit tidak boleh mengikuti store hasilresetbaru.
 positive expectation historis, bukan memperluas recovery exception produksi.
 Handoff script wajib menolak -O, memakai external receipt sebelumreset, dan
 membedakan perubahan wrapped-key IV pada exact retained alias dari data hilang.
+
+157. Integration binding tidak otomatis register TestTextInput seperti host
+widget binding. Sesudah Done, klien lama tertutup; review fondasi M54 mendaftar
+ulang dan refocus, lalu assert teks4digit diterima sebelum menguji timer200ms.
+Jangan memperpanjang timer/meringankan KDF untuk menutupi input yang tidak masuk.
+Poco3failharness disimpan, affected4PASS, DVfull23PASS; audit paket tetap wajib.
+
+158. Pada ListView lazy, tidak adanya progress indicator di finder bukan bukti
+IO selesai: indikator bisa berada di luar viewport. Tunggu busy flow yang nyata,
+lalu reveal kontrol sebelum membaca widget atau menekannya. Widget radio juga
+bisa terbuang ketika tes menggulir ke pesan error. Back harus dikirim ke route
+teratas, bukan tooltip Back yang ambigu selama animasi. Uji dialog konfirmasi
+dengan320px/text2+insetkeyboard; teks panjang membutuhkan scrollable agar aksi
+Batal/Lanjut tetap dapat dijangkau. Simpan hasil gagal sebelum perbaikan.
+
+### Putus ADB saat cleanup M5.4
+
+Run DV berhenti dengan kode 1 setelah 17 kasus lulus. Restore awake sempat
+gagal dan `result.json` lama tertinggal RUNNING. Sesudah koneksi kembali,
+readback awake dan 1.264 hash dibandingkan terhadap snapshot awal run yang
+sama. Run kedua menutup 21 kasus dan audit. Runner kini menulis status
+terminal dalam `finally` terdalam serta tetap mempropagasikan kegagalan
+restore. Simpan log awal dan bukti susulan secara terpisah.

@@ -9,6 +9,7 @@ import '../../../l10n/localization.dart';
 import '../../management/presentation/pin_boxes.dart';
 import '../../settings/presentation/locale_provider.dart';
 import 'cashier_lock_navigator.dart';
+import '../../management/application/employee_access_attempts.dart';
 
 /// The cashier gate has no path that upgrades a cashier PIN to management.
 /// Recovery is a separate explicit owner-only disable action, then owner
@@ -30,6 +31,7 @@ class _CashierLockScreenState extends State<CashierLockScreen>
   bool _busy = false,
       _visible = false,
       _ownerRecovery = false,
+      _ownerUnblock = false,
       _disableConfirmed = false,
       _active = true;
   String? _error;
@@ -98,18 +100,30 @@ class _CashierLockScreenState extends State<CashierLockScreen>
     final service = widget.controller.service;
     try {
       if (_ownerRecovery) {
-        if (!_disableConfirmed) {
+        if (!_ownerUnblock && !_disableConfirmed) {
           throw const AppError('m53CashierDisableConsent');
         }
         try {
           await service.management.reauthenticate(_pin.text, 'security');
-          await service.load();
-          await service.configure(
-            enabled: false,
-            screenLock: service.policy.screenLock,
-            source: service.policy.source,
-            revision: service.policy.revision,
-          );
+          if (_ownerUnblock) {
+            await service.management.unlockEmployeeAccess(
+              EmployeeAccessTarget.cashier,
+            );
+            await service.load();
+            if (mounted) {
+              _ownerRecovery = false;
+              _ownerUnblock = false;
+              _error = 'm54EmployeeUnlocked';
+            }
+          } else {
+            await service.load();
+            await service.configure(
+              enabled: false,
+              screenLock: service.policy.screenLock,
+              source: service.policy.source,
+              revision: service.policy.revision,
+            );
+          }
         } finally {
           service.management.lock();
         }
@@ -173,14 +187,16 @@ class _CashierLockScreenState extends State<CashierLockScreen>
                           tr(
                             context,
                             _ownerRecovery
-                                ? 'm53CashierOwnerDisableHelp'
+                                ? _ownerUnblock
+                                      ? 'm54UnblockOwnerHelp'
+                                      : 'm53CashierOwnerDisableHelp'
                                 : widget.controller.service.policy.source ==
                                       CashierPinSource.owner
                                 ? 'm53CashierOwnerReferenceHelp'
                                 : 'm53CashierUnlockHelp',
                           ),
                         ),
-                        if (_ownerRecovery)
+                        if (_ownerRecovery && !_ownerUnblock)
                           CheckboxListTile(
                             value: _disableConfirmed,
                             title: Text(
@@ -202,16 +218,23 @@ class _CashierLockScreenState extends State<CashierLockScreen>
                           ),
                           enabled: !_busy,
                           visible: _visible,
+                          autoSubmit:
+                              !_ownerRecovery ||
+                              _ownerUnblock ||
+                              _disableConfirmed,
                           onChanged: (v) {
                             _edit++;
-                            if (v.length == 4 &&
+                          },
+                          onSubmitted: (v) {
+                            if (RegExp(r'^\d{4}$').hasMatch(v) &&
                                 _submitted != _edit &&
-                                (!_ownerRecovery || _disableConfirmed)) {
+                                (!_ownerRecovery ||
+                                    _ownerUnblock ||
+                                    _disableConfirmed)) {
                               _submitted = _edit;
                               unawaited(_submit());
                             }
                           },
-                          onSubmitted: (_) => _submit(),
                         ),
                         SwitchListTile(
                           value: _visible,
@@ -241,7 +264,9 @@ class _CashierLockScreenState extends State<CashierLockScreen>
                             tr(
                               context,
                               _ownerRecovery
-                                  ? 'm53CashierDisable'
+                                  ? _ownerUnblock
+                                        ? 'm54UnlockCashier'
+                                        : 'm53CashierDisable'
                                   : 'm53CashierUnlock',
                             ),
                           ),
@@ -252,6 +277,7 @@ class _CashierLockScreenState extends State<CashierLockScreen>
                               ? null
                               : () => setState(() {
                                   _ownerRecovery = !_ownerRecovery;
+                                  _ownerUnblock = false;
                                   _pin.clear();
                                   _error = null;
                                   _visible = false;
@@ -265,6 +291,19 @@ class _CashierLockScreenState extends State<CashierLockScreen>
                                   : 'm53CashierForgotPin',
                             ),
                           ),
+                        ),
+                        TextButton(
+                          key: const ValueKey('cashier-owner-unblock'),
+                          onPressed: _busy
+                              ? null
+                              : () => setState(() {
+                                  _ownerRecovery = true;
+                                  _ownerUnblock = true;
+                                  _pin.clear();
+                                  _error = null;
+                                  _visible = false;
+                                }),
+                          child: Text(tr(context, 'm54UnlockCashier')),
                         ),
                       ],
                     ),

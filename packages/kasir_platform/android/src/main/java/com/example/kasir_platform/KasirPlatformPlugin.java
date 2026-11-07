@@ -122,8 +122,12 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
             try {
                 // A foreground user action only; no worker can copy a secret.
                 String text=call.argument("text");
+                String format=call.argument("format");
+                boolean supported=text!=null && (text.matches("[a-f0-9]{64}") ||
+                    ("bip39-en-256-v1".equals(format) && text.length()<=256 &&
+                     text.matches("[a-z]+(?: [a-z]+){23}")));
                 if(activity==null||!activity.getActivity().hasWindowFocus()
-                    ||text==null||!text.matches("[a-f0-9]{64}")) {
+                    ||!supported) {
                     throw new IllegalStateException("Clipboard request unavailable");
                 }
                 ClipData clip=ClipData.newPlainText("Backup recovery code",text);

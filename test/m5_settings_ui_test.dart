@@ -1,3 +1,4 @@
+import 'package:kasir_app/core/security/recovery_mnemonic.dart';
 import 'dart:io';
 import 'support/m51_security_suite.dart';
 import 'package:kasir_app/features/printer/application/printer_output_gate.dart';
@@ -1398,7 +1399,10 @@ void m5SettingsUiSuite(
         await drain(tester, () => !state.busy);
         final success = scenario == 'plain' || scenario == 'grouped';
         expect(copyCalls, scenario == 'invalid' ? 0 : 1);
-        expect(copied, success ? canonical : null);
+        expect(
+          copied,
+          success ? RecoveryMnemonic.entropyToMnemonic(canonical) : null,
+        );
         expect(state.generatedCode, shown);
         expect(state.recoveryConfigured, isTrue);
         expect(state.message, success ? 'm5CodeCopied' : 'm5CodeCopyFailed');

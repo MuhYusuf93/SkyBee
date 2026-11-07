@@ -17,39 +17,61 @@ class RelationField extends StatefulWidget {
     required this.value,
     required this.onChanged,
     this.enabled = true,
+    this.onQueryChanged,
+    this.errorText,
+    this.focusNode,
+    this.queryController,
   });
   final MasterKind kind;
   final MasterRecord? value;
   final ValueChanged<MasterRecord?> onChanged;
   final bool enabled;
+  final ValueChanged<String>? onQueryChanged;
+  final String? errorText;
+  final FocusNode? focusNode;
+  final TextEditingController? queryController;
   @override
   State<RelationField> createState() => _RelationFieldState();
 }
 
 class _RelationFieldState extends State<RelationField> {
   late final TextEditingController _controller;
-  final _focus = FocusNode();
+  final _ownedFocus = FocusNode();
+  FocusNode get _focus => widget.focusNode ?? _ownedFocus;
   int _generation = 0;
   String? _error;
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.value?.name);
+    _controller =
+        widget.queryController ??
+        TextEditingController(text: widget.value?.name);
   }
 
   @override
   void didUpdateWidget(RelationField old) {
     super.didUpdateWidget(old);
-    if (widget.value != null && widget.value?.id != old.value?.id) {
-      _controller.text = widget.value!.name;
+    if (widget.value != null &&
+        widget.value?.id != old.value?.id &&
+        _controller.text != widget.value!.name) {
+      final selected = widget.value!, text = _controller.text;
+      // An external controller can notify a dirty-form ancestor. Do not write
+      // it during didUpdateWidget/build, and never overwrite a later user edit.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted &&
+            widget.value?.id == selected.id &&
+            _controller.text == text) {
+          _controller.text = selected.name;
+        }
+      });
     }
   }
 
   @override
   void dispose() {
     _generation++;
-    _controller.dispose();
-    _focus.dispose();
+    if (widget.queryController == null) _controller.dispose();
+    _ownedFocus.dispose();
     super.dispose();
   }
 
@@ -81,7 +103,10 @@ class _RelationFieldState extends State<RelationField> {
             return <MasterRecord>[];
           }
         },
-        onSelected: (record) => widget.onChanged(record),
+        onSelected: (record) {
+          widget.onQueryChanged?.call(record.name);
+          widget.onChanged(record);
+        },
         optionsViewBuilder: (context, choose, options) => Align(
           alignment: Alignment.topLeft,
           child: Material(
@@ -119,6 +144,7 @@ class _RelationFieldState extends State<RelationField> {
                   MasterKind.shelf => 'm52Shelf',
                 }),
                 hintText: tr(context, 'typeANamePrefixThenSelect'),
+                errorText: widget.errorText,
                 helperText: widget.value == null
                     ? (widget.kind == MasterKind.category
                           ? tr(context, 'uncategorized')
@@ -132,6 +158,7 @@ class _RelationFieldState extends State<RelationField> {
                   onPressed: widget.enabled
                       ? () {
                           controller.clear();
+                          widget.onQueryChanged?.call('');
                           widget.onChanged(null);
                         }
                       : null,
@@ -139,6 +166,7 @@ class _RelationFieldState extends State<RelationField> {
                 ),
               ),
               onChanged: (text) {
+                widget.onQueryChanged?.call(text);
                 if (widget.value != null && text != widget.value!.name) {
                   widget.onChanged(null);
                 }

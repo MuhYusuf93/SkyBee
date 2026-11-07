@@ -246,7 +246,11 @@ void m53CashierLockSuite(DatabaseFactory factory) {
       for (var i = 0; i < 3; i++) {
         await expectLater(
           app.cashierLock.unlock('9999'),
-          throwsA(error('pinOrRecoveryCodeDoesNotMatch')),
+          throwsA(
+            error(
+              i == 2 ? 'retryAfterSeconds' : 'pinOrRecoveryCodeDoesNotMatch',
+            ),
+          ),
         );
       }
       final saved = (await db.read(
@@ -267,7 +271,8 @@ void m53CashierLockSuite(DatabaseFactory factory) {
         throwsA(error('retryAfterSeconds')),
       );
       expect(restarted.cashierLock.locked, isTrue);
-      now = DateTime.utc(2026, 10, 27).add(const Duration(seconds: 6));
+      now = DateTime.utc(2026, 10, 27).add(const Duration(seconds: 60));
+      ticks += 60000;
       await restarted.cashierLock.unlock('0003');
       expect(restarted.cashierLock.locked, isFalse);
     },

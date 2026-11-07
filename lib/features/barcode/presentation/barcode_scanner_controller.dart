@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../../../core/domain/app_error.dart';
 import '../domain/barcode_camera.dart';
+import '../../../core/security/recovery_mnemonic.dart';
 
 /// Exactly one accepted code per explicit arm. Repeated camera frames are
 /// ignored; an intentional Scan again can accept the identical text again.
@@ -20,7 +21,11 @@ final class BarcodeScannerController extends ChangeNotifier {
     Future<CameraAvailability> Function(),
   )
   permission;
-  final Future<BarcodeFeedback> Function(String) lookup;
+
+  /// Caller invokes requireIntent immediately before a mutation and passes it
+  /// into the transaction. Ignoring a late response cannot undo a committed add.
+  final Future<BarcodeFeedback> Function(String, void Function() requireIntent)
+  lookup;
   late final StreamSubscription<BarcodeCameraEvent> _events;
   bool busy = false,
       armed = false,
@@ -117,6 +122,14 @@ final class BarcodeScannerController extends ChangeNotifier {
     armed = false;
     unawaited(camera.pause());
     if (event is BarcodeDecoded) {
+      if (RecoveryMnemonic.isRecoveryQr(event.value.text)) {
+        value = null;
+        choices = const [];
+        feedback = null;
+        error = 'm54RecoveryOnly';
+        _emit();
+        return;
+      }
       value = event.value;
       choices = List.unmodifiable(event.value.choices);
       feedback = null;
@@ -130,6 +143,10 @@ final class BarcodeScannerController extends ChangeNotifier {
   Future<void> accept() async {
     if (_disposed || busy || value == null || consumed || !visible) return;
     final epoch = _generation, text = value!.text;
+    void requireIntent() {
+      if (!_current(epoch)) throw const AppError('m54ScanRouteChanged');
+    }
+
     consumed = true;
     busy = true;
     error = null;
@@ -137,7 +154,7 @@ final class BarcodeScannerController extends ChangeNotifier {
     try {
       await authorize();
       if (!_current(epoch)) return;
-      final result = await lookup(text);
+      final result = await lookup(text, requireIntent);
       await authorize();
       if (_current(epoch)) feedback = result;
     } catch (e) {

@@ -1,4 +1,5 @@
 import '../../../app/app_version.dart';
+import '../../../core/security/recovery_mnemonic.dart';
 import '../../../core/domain/app_error.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -19,6 +20,7 @@ import '../../../data/database/schema.dart';
 import '../../../data/database/installation_identity.dart';
 import '../../../data/repositories/sqlite_reports_repository.dart';
 import '../../management/application/management_service.dart';
+import '../../management/application/employee_access_attempts.dart';
 import '../domain/backup_manifest.dart';
 import 'drive_authorization.dart';
 import 'backup_validation.dart';
@@ -83,7 +85,7 @@ final class BackupService {
       (availableBytes ?? platform.freeBytes)(directory);
   static const ids = Uuid();
   static String normalizeCode(String value) =>
-      value.replaceAll(RegExp(r'[\s-]'), '').toLowerCase();
+      RecoveryMnemonic.normalize(value);
   static String newRecoveryCode() => List.generate(
     32,
     (_) => Random.secure().nextInt(256),
@@ -154,7 +156,10 @@ final class BackupService {
     if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
       throw const FormatException('backupCodeInvalid');
     }
-    if (await platform.callNullable<bool>('copyRecoveryCode', {'text': code}) !=
+    if (await platform.callNullable<bool>('copyRecoveryCode', {
+          'text': RecoveryMnemonic.entropyToMnemonic(code),
+          'format': RecoveryMnemonic.version,
+        }) !=
         true) {
       throw PlatformException(code: 'clipboard_unavailable');
     }
@@ -163,6 +168,7 @@ final class BackupService {
   Future<String> origin() =>
       platform.key('backup-origin-v1', allowCreate: true);
   static Future<String> portableDatabaseKey(String code, String id) async {
+    code = normalizeCode(code);
     final bytes = List.generate(
       32,
       (i) => int.parse(code.substring(i * 2, i * 2 + 2), radix: 16),
@@ -209,8 +215,9 @@ final class BackupService {
     Future<void> authorizeSource() =>
         frozen == null ? access.authorizeCurrent() : access.authorize(frozen);
     if (!headless) await authorizeSource();
-    final recovery =
-        code ?? await platform.key('backup-master-v1', allowCreate: false);
+    final recovery = normalizeCode(
+      code ?? await platform.key('backup-master-v1', allowCreate: false),
+    );
     final id = ids.v4(), originId = await origin();
     final directory = await Directory(
       p.join(p.dirname(database.databasePath), 'm5_backups', id),
@@ -756,9 +763,21 @@ final class BackupService {
           throw StateError('restoreInsufficientSpace');
         }
         final frozen = await EncryptedDatabase.openFile(path, liveKey);
+        var localAttempts = <Map<String, Object?>>[];
+        String? localStore;
         try {
           await frozen.execute('PRAGMA foreign_keys=ON');
           await EncryptedDatabase.quiesce(frozen);
+          if (await frozen.getVersion() >= 38) {
+            localAttempts = await frozen.query('employee_access_attempts');
+            final stores = await frozen.query(
+              'm5_store',
+              columns: ['store_id'],
+            );
+            localStore = stores.isEmpty
+                ? null
+                : stores.single['store_id'] as String;
+          }
           await testStage?.call('beforeSafetySnapshot');
           safety = await create(
             code: safetyCode,
@@ -802,6 +821,13 @@ final class BackupService {
           }
           await stage.execute('PRAGMA foreign_keys=ON');
           await stage.transaction((dbTxn) async {
+            final stores = await dbTxn.query('m5_store', columns: ['store_id']);
+            if (localStore != null && stores.single['store_id'] == localStore) {
+              await EmployeeAccessAttempts.mergeForRestore(
+                dbTxn,
+                localAttempts,
+              );
+            }
             await InstallationIdentity.restored(
               dbTxn,
               DateTime.now().millisecondsSinceEpoch,

@@ -41,6 +41,34 @@ final class CashDrawerHistoryService {
 
   Future<CashDrawerPolicy> policy() => _read(true, CashDrawerLedger.policyOn);
 
+  /// Owner-only bounded snapshot for the policy form. Counts include older open
+  /// sessions; changing today's view cannot hide an unresolved physical drawer.
+  Future<CashDrawerPolicyState> policyState() => _read(true, (sql) async {
+    final policy = await CashDrawerLedger.policyOn(sql),
+        settings = await service.store.settings(sql);
+    final day = service.store.clock.today(settings['time_zone'] as String).iso;
+    final counts = (await sql.rawQuery(
+      '''SELECT COUNT(*) AS total,
+      COALESCE(SUM(CASE WHEN s.store_day<>? THEN 1 ELSE 0 END),0) AS older
+      FROM cash_drawer_sessions s WHERE NOT EXISTS
+      (SELECT 1 FROM cash_drawer_closures c WHERE c.session_id=s.id)''',
+      [day],
+    )).single;
+    final rows = await sql.rawQuery(
+      '''SELECT $_sessionColumns
+      FROM cash_drawer_sessions s JOIN cash_drawer_state d ON d.session_id=s.id
+      WHERE s.store_day=? AND s.currency_code=?
+      ORDER BY s.session_number DESC LIMIT 1''',
+      [day, settings['currency_code']],
+    );
+    return CashDrawerPolicyState(
+      policy: policy,
+      openCount: counts['total'] as int,
+      olderOpenCount: counts['older'] as int,
+      currentSession: rows.isEmpty ? null : await _session(sql, rows.single),
+    );
+  });
+
   Future<CashDrawerSession> _session(
     DatabaseExecutor sql,
     Map<String, Object?> row,

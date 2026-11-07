@@ -204,7 +204,9 @@ class _CheckoutFormState extends State<_CheckoutForm>
                 ),
               ],
               if (cart.priceChanged) Text(tr(context, 'm3PricesChanged')),
-              if (cart.unavailable)
+              if (cart.hasArchivedProducts)
+                Text(tr(context, 'productIsArchivedRestoreItFirst'))
+              else if (cart.unavailable)
                 Text(tr(context, 'insufficientSaleableStock')),
               if (form.error != null)
                 Text(

@@ -1681,7 +1681,7 @@
   "@m5CodeCopyFailed": {
     "description": "Sanitized clipboard failure without upstream details."
   },
-  "m5RecoveryCodeHelp": "Kode ini berbeda dari PIN dan recovery PIN. Simpan salinan pribadi di luar perangkat. Backup lama tetap membutuhkan kode yang dipakai saat dibuat; kode hilang tidak dapat dihitung ulang dari PIN.",
+  "m5RecoveryCodeHelp": "24 kata English ini mewakili kunci cadangan 256-bit. Simpan urutannya di tempat aman. Kode hex lama tetap diterima. Kunci cadangan berbeda dari kode pemulihan PIN.",
   "m5ConfirmRecoveryCode": "Masukkan ulang kode yang disimpan",
   "m5CodeStored": "Saya telah menyimpan salinan kode di tempat yang dapat saya akses kembali.",
   "m5SaveRecoveryCode": "Konfirmasi dan simpan kode",
@@ -2438,8 +2438,8 @@
   "m52EmailInvalid": "Format email tidak valid.",
   "m52WebsiteInvalid": "Masukkan domain atau URL http/https dengan host yang valid.",
   "m52InitialQuantityLimit": "Jumlah awal maksimal 6 digit (0–999999 pcs).",
-  "m52PurchaseAboveRetail": "Harga beli per pcs tidak boleh melebihi harga jual eceran.",
-  "m52WholesaleAboveRetail": "Harga grosir tidak boleh melebihi harga jual eceran.",
+  "m52PurchaseAboveRetail": "Harga beli per pcs harus lebih rendah dari harga jual eceran.",
+  "m52WholesaleAboveRetail": "Harga grosir harus lebih rendah dari harga jual eceran.",
   "m52ReferenceCostRequired": "Isi harga beli acuan per pcs, termasuk 0 bila memang tanpa biaya.",
   "m52ShelfDuplicate": "Rak dengan nama/kode ini sudah ada.",
   "m52UnsavedTitle": "Perubahan belum disimpan",
@@ -3603,7 +3603,7 @@
   "@m53CashAuditHelp": {
     "description": "M5.3 physical cash declarations and session accounting: m53CashAuditHelp"
   },
-  "m53CashNotesHelp": "Aktifkan untuk membantu mencatat uang harian. Catatan tetap tersimpan saat tanggal berganti atau pencatatan dimatikan. Selesaikan sesi terbuka sebelum mematikan pencatatan.",
+  "m53CashNotesHelp": "Buka sesi untuk mencatat pecahan uang secara sukarela. Kebijakan toko tetap tersimpan terpisah. Catatan tetap ada setelah sesi ditutup atau tanggal berganti.",
   "@m53CashNotesHelp": {
     "description": "M5.3 physical cash declarations and session accounting: m53CashNotesHelp"
   },
@@ -6227,5 +6227,89 @@
   "m53BackupResumeInvalid": "Snapshot cadangan tersimpan hilang, berubah, atau tidak dapat diverifikasi. Buat cadangan baru. Berkas lama tetap disimpan.",
   "@m53BackupResumeInvalid": {
     "description": "A recorded upload snapshot cannot be validated; a new explicit backup is required."
+  },
+  "m54EmployeeHardLocked": "Akses karyawan terkunci. Hubungi pemilik untuk membuka kunci melalui Pengamanan.",
+  "@m54EmployeeHardLocked": {
+    "description": "M5.4 employee access lockout and explicit fresh owner unlock."
+  },
+  "m54UnlockCashier": "Buka blokir percobaan PIN Kasir",
+  "@m54UnlockCashier": {
+    "description": "M5.4 employee access lockout and explicit fresh owner unlock."
+  },
+  "m54UnlockWarehouse": "Buka blokir percobaan PIN Gudang",
+  "@m54UnlockWarehouse": {
+    "description": "M5.4 employee access lockout and explicit fresh owner unlock."
+  },
+  "m54RecoveryWordCount": "Sertakan tepat 24 kata pemulihan (atau kode lama 64 karakter hex).",
+  "@m54RecoveryWordCount": {
+    "description": "M5.4 recovery mnemonic validation, no secret in error."
+  },
+  "m54RecoveryWordInvalid": "Ada kata yang tidak terdaftar. Gunakan kata English pada lembar pemulihan.",
+  "@m54RecoveryWordInvalid": {
+    "description": "M5.4 recovery mnemonic validation, no secret in error."
+  },
+  "m54RecoveryChecksumInvalid": "Checksum kunci tidak cocok. Periksa urutan dan ejaan semua kata.",
+  "@m54RecoveryChecksumInvalid": {
+    "description": "M5.4 recovery mnemonic validation, no secret in error."
+  },
+  "m54RecoveryQrInvalid": "QR ini bukan QR pemulihan SkyBee yang didukung.",
+  "@m54RecoveryQrInvalid": {
+    "description": "M5.4 recovery mnemonic validation, no secret in error."
+  },
+  "m54ShelfNotRegistered": "Rak ini belum terdaftar. Pilih rak yang tersedia atau tambahkan rak baru.",
+  "@m54ShelfNotRegistered": {
+    "description": "M5.4 product form field validation."
+  },
+  "m54FieldInvalid": "Periksa nilai pada kolom ini.",
+  "@m54FieldInvalid": {
+    "description": "M5.4 product form field validation."
+  },
+  "m54RecoveryOnly": "Gunakan QR rahasia ini hanya pada alur pemulihan toko.",
+  "@m54RecoveryOnly": {
+    "description": "Reject recovery secrets in all business barcode flows without echoing payload."
+  },
+  "m54EmployeeUnlocked": "Blokir dicabut. Masukkan PIN Kasir untuk melanjutkan.",
+  "@m54EmployeeUnlocked": {
+    "description": "M54 explicit owner action clears employee attempts without disabling cashier policy."
+  },
+  "m54UnblockOwnerHelp": "Masukkan PIN pemilik untuk mencabut blokir percobaan Kasir. Kunci Kasir tetap aktif; sesi lama dicabut.",
+  "@m54UnblockOwnerHelp": {
+    "description": "M54 explicit owner action clears employee attempts without disabling cashier policy."
+  },
+  "m54CashVoluntaryOpenFirst": "Pencatatan sukarela dimulai lewat Buka sesi kas. Kebijakan toko tidak berubah otomatis.",
+  "@m54CashVoluntaryOpenFirst": {
+    "description": "M54 cash policy and physical session state: m54CashVoluntaryOpenFirst"
+  },
+  "m54CashNextSessionRequired": "Konfirmasikan bahwa perubahan berlaku mulai sesi berikutnya. Sesi terbuka tetap memakai kebijakan semula.",
+  "@m54CashNextSessionRequired": {
+    "description": "M54 cash policy and physical session state: m54CashNextSessionRequired"
+  },
+  "m54CashNextSession": "Berlaku mulai sesi berikutnya?",
+  "@m54CashNextSession": {
+    "description": "M54 cash policy and physical session state: m54CashNextSession"
+  },
+  "m54CashNextSessionHelp": "Perubahan hanya untuk sesi berikutnya. Mode, saldo awal dan histori sesi yang masih terbuka tidak diubah. Tutup sesi tersebut dengan hitungan fisik yang sebenarnya.",
+  "@m54CashNextSessionHelp": {
+    "description": "M54 cash policy and physical session state: m54CashNextSessionHelp"
+  },
+  "m54CashVoluntaryStoredOff": "Kebijakan toko tetap Nonaktif. Sesi sukarela yang terbuka tetap mencatat uang sampai ditutup.",
+  "@m54CashVoluntaryStoredOff": {
+    "description": "M54 cash policy and physical session state: m54CashVoluntaryStoredOff"
+  },
+  "m54CashStoredPolicy": "Kebijakan tersimpan",
+  "@m54CashStoredPolicy": {
+    "description": "M54 cash policy and physical session state: m54CashStoredPolicy"
+  },
+  "m54CashAuthenticationCancelled": "Autentikasi dibatalkan. Kebijakan belum disimpan; pilihan Anda tetap tersedia.",
+  "@m54CashAuthenticationCancelled": {
+    "description": "M54 truthful policy form feedback after cancelled owner PIN."
+  },
+  "m54CashSessionOpen": "Sesi kas terbuka — perlu ditutup",
+  "@m54CashSessionOpen": {
+    "description": "M54 cash policy and physical session state: m54CashSessionOpen"
+  },
+  "m54ScanRouteChanged": "Scan dibatalkan karena layar berubah. Pindai ulang pada kolom yang aktif.",
+  "@m54ScanRouteChanged": {
+    "description": "Cancellation of an old input intent; never an authentication grant."
   }
 }

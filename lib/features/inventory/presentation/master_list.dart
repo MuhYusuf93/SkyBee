@@ -264,8 +264,6 @@ class _MasterBody extends StatelessWidget {
                       archived: value,
                     )),
                   ),
-                if (!picker && kind == MasterKind.category)
-                  Text(tr(context, 'm53CategoryLongPress')),
                 FilledButton.icon(
                   onPressed: () => _edit(context),
                   icon: const Icon(Icons.add),
@@ -337,10 +335,6 @@ class _MasterBody extends StatelessWidget {
                         ),
                       ),
                     ),
-              onLongPress:
-                  !picker && !record.isDeleted && kind == MasterKind.category
-                  ? () => _edit(context, record: record)
-                  : null,
               trailing: picker
                   ? null
                   : Row(

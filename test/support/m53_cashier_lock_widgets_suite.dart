@@ -79,7 +79,12 @@ void m53CashierLockWidgetsSuite(DatabaseFactory factory) {
       );
       await tester.pump(const Duration(milliseconds: 16));
     } while (!ready() && watch.elapsed < const Duration(seconds: 45));
-    expectSync(ready(), isTrue);
+    expectSync(
+      ready(),
+      isTrue,
+      reason:
+          'Management grant=${app.management.isUnlocked}; cashierLocked=${app.cashierLock.locked}; PIN routes=${find.byType(PinScreen).evaluate().length}',
+    );
     await tester.pump(const Duration(milliseconds: 400));
   }
 
@@ -186,7 +191,7 @@ void m53CashierLockWidgetsSuite(DatabaseFactory factory) {
     },
   );
   testWidgets(
-    'M53 cashier locked dirty Back uses generic warning and discards the protected stack',
+    'M54 management gate has priority over cashier lock and preserves dirty Back',
     (tester) async {
       await mount(tester);
       await unlock(tester);
@@ -254,21 +259,22 @@ void m53CashierLockWidgetsSuite(DatabaseFactory factory) {
       expectSync(
         ProtectedFormExits.hasDirty(nav),
         isTrue,
-        reason: 'dirty state retained under opaque cashier lock route',
+        reason: 'dirty state retained beneath the management gate',
       );
       await drain(
         tester,
-        () => find.byType(CashierLockScreen).evaluate().isNotEmpty,
+        () => find
+            .byKey(const ValueKey('management-locked'))
+            .evaluate()
+            .isNotEmpty,
       );
-      final context = tester.element(find.byType(CashierLockScreen));
+      expectSync(find.byType(CashierLockScreen), findsNothing);
+      final context = tester.element(
+        find.byKey(const ValueKey('management-locked')),
+      );
       expectSync(ModalRoute.of(context)!.isCurrent, isTrue);
       expectSync(Navigator.of(context), same(nav));
-      await tester.tap(
-        find.descendant(
-          of: find.byType(CashierLockScreen),
-          matching: find.byIcon(Icons.arrow_back),
-        ),
-      );
+      await tester.binding.handlePopRoute();
       await tester.pump();
       await drain(
         tester,
@@ -323,7 +329,7 @@ void m53CashierLockWidgetsSuite(DatabaseFactory factory) {
     },
   );
   testWidgets(
-    'M53 cashier late protected route cannot cover the lock or borrow a cashier grant',
+    'M54 management PIN alone unlocks protected route; Back still needs cashier PIN',
     (tester) async {
       await mount(tester);
       final controller = guard(tester),
@@ -340,15 +346,100 @@ void m53CashierLockWidgetsSuite(DatabaseFactory factory) {
       await tester.pump();
       await drain(
         tester,
-        () => find.byType(CashierLockScreen).evaluate().isNotEmpty,
+        () => find
+            .byKey(const ValueKey('management-locked'))
+            .evaluate()
+            .isNotEmpty,
       );
+      expectSync(find.byType(CashierLockScreen), findsNothing);
       expectSync(find.text('PRIVATE LATE CALLBACK'), findsNothing);
       expectSync(app.cashierLock.locked, isTrue);
+      final lockedContext = tester.element(
+        find.byKey(const ValueKey('management-locked')),
+      );
+      await tester.tap(find.text(tr(lockedContext, 'enterPinAgain')));
+      await tester.pump(const Duration(milliseconds: 400));
+      final editor = find.byKey(const ValueKey('management-pin-editor'));
+      await drain(
+        tester,
+        () =>
+            editor.evaluate().isNotEmpty &&
+            tester.widget<TextField>(editor).enabled != false,
+      );
+      tester.testTextInput.register();
+      await tester.tap(editor);
+      await tester.pump();
+      await tester.enterText(editor, '0001');
+      expectSync(
+        tester.widget<TextField>(editor).controller!.text.length,
+        4,
+        reason: 'PIN text-client dispatch before authentication',
+      );
+      await tester.pump(const Duration(milliseconds: 201));
+      await drain(
+        tester,
+        () => find.text('PRIVATE LATE CALLBACK').evaluate().isNotEmpty,
+      );
+      expectSync(app.cashierLock.locked, isTrue);
+      expectSync(app.management.isUnlocked, isTrue);
+      nav.pop();
+      await tester.pump();
+      await drain(
+        tester,
+        () => find.byType(CashierLockScreen).evaluate().isNotEmpty,
+      );
       await unlock(tester);
-      expectSync(find.text('PRIVATE LATE CALLBACK'), findsNothing);
       expectSync(app.management.isUnlocked, isFalse);
       expectSync(controller.service.locked, isFalse);
       expectSync(tester.takeException(), isNull);
+      await cleanup(tester);
+    },
+  );
+  testWidgets(
+    'M54 hard locked cashier owner unblock preserves enabled policy and grants no cashier access',
+    (tester) async {
+      await io(tester, () async {
+        await db.transaction(
+          (sql) => sql.update('employee_access_attempts', {
+            'failures': 8,
+            'hard_locked': 1,
+          }, where: "target='cashier'"),
+        );
+      });
+      await mount(tester);
+      final owner = find.byKey(const ValueKey('cashier-owner-unblock'));
+      await tester.ensureVisible(owner);
+      await tester.tap(owner);
+      await tester.pump();
+      final editor = find.descendant(
+        of: find.byKey(const ValueKey('cashier-pin-boxes')),
+        matching: find.byType(TextField),
+      );
+      await tester.ensureVisible(editor);
+      tester.testTextInput.register();
+      await tester.enterText(editor, '0001');
+      await tester.pump(const Duration(milliseconds: 201));
+      final gateContext = tester.element(find.byType(CashierLockScreen));
+      await drain(
+        tester,
+        () => find
+            .text(tr(gateContext, 'm54EmployeeUnlocked'))
+            .evaluate()
+            .isNotEmpty,
+      );
+      expectSync(app.management.isUnlocked, isFalse);
+      expectSync(app.cashierLock.locked, isTrue);
+      expectSync(app.cashierLock.policy.enabled, isTrue);
+      await io(tester, () async {
+        final rows = await db.read(
+          (sql) =>
+              sql.query('employee_access_attempts', where: "target='cashier'"),
+        );
+        expectSync(rows.single['failures'], 0);
+        expectSync(rows.single['hard_locked'], 0);
+      });
+      await unlock(tester);
+      expectSync(app.management.isUnlocked, isFalse);
       await cleanup(tester);
     },
   );
@@ -453,7 +544,10 @@ void m53CashierLockWidgetsSuite(DatabaseFactory factory) {
       await tester.pump();
       await drain(
         tester,
-        () => find.byType(CashierLockScreen).evaluate().isNotEmpty,
+        () => find
+            .byKey(const ValueKey('management-locked'))
+            .evaluate()
+            .isNotEmpty,
       );
       expectSync(app.management.isUnlocked, isFalse);
       expectSync(app.cashierLock.locked, isTrue);

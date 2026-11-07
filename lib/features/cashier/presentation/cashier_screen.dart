@@ -9,6 +9,8 @@ import '../../inventory/presentation/product_attributes_view.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
+import '../../../core/domain/app_error.dart';
+import '../../../core/presentation/route_input_scope.dart';
 import '../../../core/money/money_field.dart';
 import '../../../core/money/money.dart';
 import '../../../l10n/localization.dart';
@@ -365,6 +367,21 @@ class _CashierBodyState extends State<_CashierBody>
                                 : () async {
                                     await cart.refresh();
                                     if (!context.mounted) return;
+                                    if (cart.snapshot!.hasArchivedProducts) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            tr(
+                                              context,
+                                              'productIsArchivedRestoreItFirst',
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                      return;
+                                    }
                                     if (cart.snapshot!.missingWholesale) {
                                       ScaffoldMessenger.of(
                                         context,
@@ -471,7 +488,26 @@ class _SearchPane extends StatefulWidget {
 }
 
 class _SearchPaneState extends State<_SearchPane> {
+  final inputScope = RouteInputScope();
   late final TextEditingController input;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    inputScope.attach(
+      context.read<RouteObserver<ModalRoute<dynamic>>?>(),
+      ModalRoute.of(context),
+    );
+  }
+
+  bool _current(void Function() guard) {
+    try {
+      guard();
+      return true;
+    } on AppError {
+      return false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -485,13 +521,14 @@ class _SearchPaneState extends State<_SearchPane> {
   FocusNode get focus => widget.focusNode;
   String? addError;
   Future<void> camera() async {
+    if (!inputScope.canReceive) return;
     focus.unfocus();
     final search = context.read<ProductSearchProvider>(),
         cart = context.read<CartProvider>();
     await Navigator.of(context).push<void>(
       MaterialPageRoute(
         builder: (_) => BarcodeScannerScreen(
-          lookup: (code) async {
+          lookup: (code, requireIntent) async {
             if (!mounted) return const BarcodeFeedback('m3OperationFailed');
             final product = await search.scan(code);
             if (product == null) {
@@ -500,9 +537,16 @@ class _SearchPaneState extends State<_SearchPane> {
                 unknown: search.error == 'productNotFound',
               );
             }
+            requireIntent();
             final version = search.inputVersion;
-            final changed = await cart.add(product.id);
-            if (changed && mounted && search.clearAfter(version)) {
+            final changed = await cart.add(
+              product.id,
+              requireIntent: requireIntent,
+            );
+            if (changed &&
+                mounted &&
+                _current(requireIntent) &&
+                search.clearAfter(version)) {
               input.clear();
               setState(() => addError = null);
             }
@@ -516,23 +560,33 @@ class _SearchPaneState extends State<_SearchPane> {
     );
   }
 
-  Future<void> add(CashierProduct product, {int? version}) async {
+  Future<void> add(
+    CashierProduct product, {
+    int? version,
+    void Function()? requireIntent,
+  }) async {
+    if (requireIntent == null && !inputScope.canReceive) return;
+    final guard = requireIntent ?? inputScope.capture();
+    if (!_current(guard)) return;
     final cart = context.read<CartProvider>();
     final search = context.read<ProductSearchProvider>();
     final acceptedVersion = version ?? search.inputVersion;
-    if (await cart.add(product.id)) {
-      if (!mounted) return;
+    if (await cart.add(product.id, requireIntent: guard)) {
+      if (!mounted || !_current(guard)) return;
       if (!search.clearAfter(acceptedVersion)) return;
       input.clear();
       setState(() => addError = null);
       focus.requestFocus();
-    } else if (mounted && search.inputVersion == acceptedVersion) {
+    } else if (mounted &&
+        _current(guard) &&
+        search.inputVersion == acceptedVersion) {
       setState(() => addError = cart.error);
     }
   }
 
   @override
   void dispose() {
+    inputScope.dispose();
     input.dispose();
     super.dispose();
   }
@@ -555,11 +609,13 @@ class _SearchPaneState extends State<_SearchPane> {
             search.change(value);
           },
           onSubmitted: (value) async {
+            if (!inputScope.canReceive) return;
+            final guard = inputScope.capture();
             final request = search.scan(value);
             final version = search.inputVersion;
             final product = await request;
-            if (product != null && mounted) {
-              await add(product, version: version);
+            if (product != null && mounted && _current(guard)) {
+              await add(product, version: version, requireIntent: guard);
             }
           },
           decoration: InputDecoration(
@@ -821,7 +877,9 @@ class _Basket extends StatelessWidget {
                         Text(
                           '${tr(context, 'm3PricesChanged')}: ${moneyLabel(context, line.currentPrice!.amountMinor)}',
                         ),
-                      if (line.unavailable)
+                      if (line.product.archived)
+                        Text(tr(context, 'productIsArchivedRestoreItFirst'))
+                      else if (line.unavailable)
                         Text(tr(context, 'insufficientSaleableStock')),
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,

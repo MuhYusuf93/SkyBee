@@ -1482,7 +1482,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m5RecoveryCodeHelp =>
-      'Kode ini berbeda dari PIN dan recovery PIN. Simpan salinan pribadi di luar perangkat. Backup lama tetap membutuhkan kode yang dipakai saat dibuat; kode hilang tidak dapat dihitung ulang dari PIN.';
+      '24 kata English ini mewakili kunci cadangan 256-bit. Simpan urutannya di tempat aman. Kode hex lama tetap diterima. Kunci cadangan berbeda dari kode pemulihan PIN.';
 
   @override
   String get m5ConfirmRecoveryCode => 'Masukkan ulang kode yang disimpan';
@@ -2234,11 +2234,11 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m52PurchaseAboveRetail =>
-      'Harga beli per pcs tidak boleh melebihi harga jual eceran.';
+      'Harga beli per pcs harus lebih rendah dari harga jual eceran.';
 
   @override
   String get m52WholesaleAboveRetail =>
-      'Harga grosir tidak boleh melebihi harga jual eceran.';
+      'Harga grosir harus lebih rendah dari harga jual eceran.';
 
   @override
   String get m52ReferenceCostRequired =>
@@ -2977,7 +2977,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m53CashNotesHelp =>
-      'Aktifkan untuk membantu mencatat uang harian. Catatan tetap tersimpan saat tanggal berganti atau pencatatan dimatikan. Selesaikan sesi terbuka sebelum mematikan pencatatan.';
+      'Buka sesi untuk mencatat pecahan uang secara sukarela. Kebijakan toko tetap tersimpan terpisah. Catatan tetap ada setelah sesi ditutup atau tanggal berganti.';
 
   @override
   String get m53CashReasonRequired => 'Isi alasan, maksimal 1.000 karakter.';
@@ -5190,4 +5190,82 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m53BackupResumeInvalid =>
       'Snapshot cadangan tersimpan hilang, berubah, atau tidak dapat diverifikasi. Buat cadangan baru. Berkas lama tetap disimpan.';
+
+  @override
+  String get m54EmployeeHardLocked =>
+      'Akses karyawan terkunci. Hubungi pemilik untuk membuka kunci melalui Pengamanan.';
+
+  @override
+  String get m54UnlockCashier => 'Buka blokir percobaan PIN Kasir';
+
+  @override
+  String get m54UnlockWarehouse => 'Buka blokir percobaan PIN Gudang';
+
+  @override
+  String get m54RecoveryWordCount =>
+      'Sertakan tepat 24 kata pemulihan (atau kode lama 64 karakter hex).';
+
+  @override
+  String get m54RecoveryWordInvalid =>
+      'Ada kata yang tidak terdaftar. Gunakan kata English pada lembar pemulihan.';
+
+  @override
+  String get m54RecoveryChecksumInvalid =>
+      'Checksum kunci tidak cocok. Periksa urutan dan ejaan semua kata.';
+
+  @override
+  String get m54RecoveryQrInvalid =>
+      'QR ini bukan QR pemulihan SkyBee yang didukung.';
+
+  @override
+  String get m54ShelfNotRegistered =>
+      'Rak ini belum terdaftar. Pilih rak yang tersedia atau tambahkan rak baru.';
+
+  @override
+  String get m54FieldInvalid => 'Periksa nilai pada kolom ini.';
+
+  @override
+  String get m54RecoveryOnly =>
+      'Gunakan QR rahasia ini hanya pada alur pemulihan toko.';
+
+  @override
+  String get m54EmployeeUnlocked =>
+      'Blokir dicabut. Masukkan PIN Kasir untuk melanjutkan.';
+
+  @override
+  String get m54UnblockOwnerHelp =>
+      'Masukkan PIN pemilik untuk mencabut blokir percobaan Kasir. Kunci Kasir tetap aktif; sesi lama dicabut.';
+
+  @override
+  String get m54CashVoluntaryOpenFirst =>
+      'Pencatatan sukarela dimulai lewat Buka sesi kas. Kebijakan toko tidak berubah otomatis.';
+
+  @override
+  String get m54CashNextSessionRequired =>
+      'Konfirmasikan bahwa perubahan berlaku mulai sesi berikutnya. Sesi terbuka tetap memakai kebijakan semula.';
+
+  @override
+  String get m54CashNextSession => 'Berlaku mulai sesi berikutnya?';
+
+  @override
+  String get m54CashNextSessionHelp =>
+      'Perubahan hanya untuk sesi berikutnya. Mode, saldo awal dan histori sesi yang masih terbuka tidak diubah. Tutup sesi tersebut dengan hitungan fisik yang sebenarnya.';
+
+  @override
+  String get m54CashVoluntaryStoredOff =>
+      'Kebijakan toko tetap Nonaktif. Sesi sukarela yang terbuka tetap mencatat uang sampai ditutup.';
+
+  @override
+  String get m54CashStoredPolicy => 'Kebijakan tersimpan';
+
+  @override
+  String get m54CashAuthenticationCancelled =>
+      'Autentikasi dibatalkan. Kebijakan belum disimpan; pilihan Anda tetap tersedia.';
+
+  @override
+  String get m54CashSessionOpen => 'Sesi kas terbuka — perlu ditutup';
+
+  @override
+  String get m54ScanRouteChanged =>
+      'Scan dibatalkan karena layar berubah. Pindai ulang pada kolom yang aktif.';
 }
