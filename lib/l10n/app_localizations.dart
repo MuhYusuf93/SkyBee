@@ -9853,6 +9853,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scan cancelled because the screen changed. Scan again in the active field.'**
   String get m54ScanRouteChanged;
+
+  /// Feedback when the receiving route cannot accept more pending scan suffixes.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan queue full. Wait for processing to finish, then scan the last code again.'**
+  String get m54ReceiptScanQueueFull;
+
+  /// Tooltip for subtracting one input unit from a receiving draft line.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease quantity by one unit'**
+  String get m54ReceiptDecrease;
+
+  /// Feedback after decreasing a receiving draft line quantity by one.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft quantity reduced by one unit.'**
+  String get m54ReceiptQuantityChanged;
 }
 
 class _AppLocalizationsDelegate

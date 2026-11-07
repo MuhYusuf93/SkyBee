@@ -6559,5 +6559,17 @@
   "m54ScanRouteChanged": "Scan dibatalkan karena layar berubah. Pindai ulang pada kolom yang aktif.",
   "@m54ScanRouteChanged": {
     "description": "Cancellation of an old input intent; never an authentication grant."
+  },
+  "m54ReceiptScanQueueFull": "Antrean scan penuh. Tunggu pemrosesan selesai, lalu pindai kembali kode terakhir.",
+  "@m54ReceiptScanQueueFull": {
+    "description": "Feedback when the receiving route cannot accept more pending scan suffixes."
+  },
+  "m54ReceiptDecrease": "Kurangi jumlah satu unit",
+  "@m54ReceiptDecrease": {
+    "description": "Tooltip for subtracting one input unit from a receiving draft line."
+  },
+  "m54ReceiptQuantityChanged": "Jumlah pada draft dikurangi satu unit.",
+  "@m54ReceiptQuantityChanged": {
+    "description": "Feedback after decreasing a receiving draft line quantity by one."
   }
 }

@@ -576,7 +576,7 @@ void m53ReceiptDocumentSuite(DatabaseFactory factory) {
         draft.revision,
         draft.lines.single.id,
         input: StockInput(1),
-        cost: cost(Money.maxAmountMinor),
+        cost: cost(Money.maxAmountMinor - 1),
       );
       await expectLater(
         app.inventory.scanReceiptDraft(draft.id, draft.revision, 'HIGH001'),
@@ -589,7 +589,7 @@ void m53ReceiptDocumentSuite(DatabaseFactory factory) {
       await app.inventory.confirmReceiptDraft(draft.id, draft.revision);
       expect(
         (await app.inventory.detail(id)).valueMicros,
-        Money.maxAmountMinor * CostAmount.scale,
+        (Money.maxAmountMinor - 1) * CostAmount.scale,
       );
       await db.read(ReceiptDraftValidation.validate);
     },

@@ -5511,4 +5511,15 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m54ScanRouteChanged =>
       'Scan dibatalkan karena layar berubah. Pindai ulang pada kolom yang aktif.';
+
+  @override
+  String get m54ReceiptScanQueueFull =>
+      'Antrean scan penuh. Tunggu pemrosesan selesai, lalu pindai kembali kode terakhir.';
+
+  @override
+  String get m54ReceiptDecrease => 'Kurangi jumlah satu unit';
+
+  @override
+  String get m54ReceiptQuantityChanged =>
+      'Jumlah pada draft dikurangi satu unit.';
 }

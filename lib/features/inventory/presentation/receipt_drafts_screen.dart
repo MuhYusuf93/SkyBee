@@ -19,6 +19,7 @@ import '../domain/inventory_models.dart';
 import '../domain/receipt_draft.dart';
 import 'product_form.dart';
 import 'receipt_line_editor.dart';
+import 'receipt_product_picker.dart';
 import 'relation_field.dart';
 import '../../suppliers/presentation/supplier_billing_screen.dart';
 import '../../suppliers/presentation/supplier_invoice_screen.dart';
@@ -201,6 +202,9 @@ class ReceiptDraftScreen extends StatefulWidget {
 
 class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
     with WidgetsBindingObserver {
+  Future<void> _scanTail = Future.value();
+  int pendingScans = 0;
+  bool get working => busy || pendingScans > 0;
   final inputScope = RouteInputScope();
   final code = TextEditingController(), reason = TextEditingController();
   late final inputs = Listenable.merge([code, reason]);
@@ -240,7 +244,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && !busy) load();
+    if (state == AppLifecycleState.resumed && !working) load();
   }
 
   Future<void> run(Future<ReceiptDraft> Function() work) async {
@@ -288,40 +292,93 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
         ),
       ) ??
       false;
-  Future<void> register(String text) async {
-    await Navigator.of(context).push<bool>(
-      MaterialPageRoute(
-        builder: (_) =>
-            ProductForm(initialBarcode: text, forReceiptDraft: true),
-      ),
-    );
-    if (!mounted) return;
-    final product = await context.read<AppServices>().inventory.lookupCode(
-      text,
-    );
-    if (product != null && doc != null) {
-      await run(
-        () => context.read<AppServices>().inventory.addReceiptDraftProduct(
-          doc!.id,
-          doc!.revision,
-          product.id,
+  Future<bool> register(String text) async =>
+      await Navigator.of(context).push<bool>(
+        MaterialPageRoute(
+          builder: (_) =>
+              ProductForm(initialBarcode: text, forReceiptDraft: true),
         ),
+      ) ??
+      false;
+
+  Future<void> addRegistered(String text) async {
+    if (!mounted || !inputScope.canReceive) return;
+    final guard = inputScope.capture();
+    try {
+      final product = await context.read<AppServices>().inventory.lookupCode(
+        text,
       );
+      guard();
+      if (product == null) throw const AppError('productNotFound');
+      setState(() => error = null);
+      await chooseProduct(product);
+    } catch (e) {
+      if (mounted && (e is! AppError || e.message != 'm54ScanRouteChanged')) {
+        setState(() => error = safeError(e));
+      }
     }
   }
 
-  Future<void> scan(
+  Future<void> chooseProduct([InventoryProduct? product]) async {
+    if (!inputScope.canReceive || doc?.status != 'draft') return;
+    final selection = await Navigator.of(context).push<ReceiptProductSelection>(
+      MaterialPageRoute(builder: (_) => ReceiptProductPicker(product: product)),
+    );
+    if (!mounted || selection == null || !inputScope.canReceive) return;
+    final guard = inputScope.capture();
+    await run(
+      () => context.read<AppServices>().inventory.addReceiptDraftProduct(
+        doc!.id,
+        doc!.revision,
+        selection.product,
+        quantity: selection.quantity,
+        requireIntent: guard,
+      ),
+    );
+  }
+
+  /// Capture each literal and route token at ingress. The next accepted input
+  /// uses the updated draft revision only after the previous write completes.
+  void queueScan(String text) {
+    if (text.trim().isEmpty ||
+        doc?.status != 'draft' ||
+        !inputScope.canReceive ||
+        (busy && pendingScans == 0)) {
+      return;
+    }
+    if (pendingScans >= 100) {
+      setState(() => error = 'm54ReceiptScanQueueFull');
+      return;
+    }
+    final guard = inputScope.capture();
+    if (code.text == text) code.clear();
+    setState(() => pendingScans++);
+    _scanTail = _scanTail.then((_) async {
+      if (!mounted) return;
+      try {
+        guard();
+        await scan(text, requireIntent: guard);
+      } catch (e) {
+        if (mounted && (e is! AppError || e.message != 'm54ScanRouteChanged')) {
+          setState(() => error = safeError(e));
+        }
+      } finally {
+        if (mounted) setState(() => pendingScans--);
+      }
+    });
+  }
+
+  Future<bool> scan(
     String text, {
-    void Function()? requireIntent,
+    required void Function() requireIntent,
     bool allowDialogs = true,
   }) async {
-    if (busy || doc == null || doc!.status != 'draft') return;
-    if (requireIntent == null && !inputScope.canReceive) return;
-    final guard = requireIntent ?? inputScope.capture();
+    if (busy || doc?.status != 'draft') return false;
+    final guard = requireIntent;
     try {
       guard();
     } on AppError {
-      return;
+      return false;
     }
     final app = context.read<AppServices>();
     await run(
@@ -332,29 +389,25 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
         requireIntent: guard,
       ),
     );
-    if (!mounted) return;
+    if (!mounted) return false;
     try {
       guard();
     } on AppError {
-      if (code.text == text) code.clear();
-      return;
+      return false;
     }
-    if (!allowDialogs) {
-      if (error == null) code.clear();
-      return;
-    }
+    if (!allowDialogs) return error == null;
     if (error == 'productNotFound') {
       if (await ask('productNotFound', 'm53ReceiptRegisterUnknown') &&
           mounted &&
           inputScope.canReceive) {
-        await register(text);
+        if (await register(text)) await addRegistered(text);
       }
     } else if (error == 'm53ReceiptChooseLine') {
       final product = await app.inventory.lookupCode(text);
       try {
         guard();
       } on AppError {
-        return;
+        return false;
       }
       if (product != null &&
           mounted &&
@@ -372,15 +425,14 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
           ),
         );
       }
-    } else if (error == null) {
-      code.clear();
     }
+    return error == null;
   }
 
   Future<void> camera() async {
-    await Navigator.of(context).push<void>(
+    final registeredCode = await Navigator.of(context).push<String>(
       MaterialPageRoute(
-        builder: (_) => BarcodeScannerScreen(
+        builder: (scannerContext) => BarcodeScannerScreen(
           inventory: true,
           lookup: (text, requireIntent) async {
             final app = context.read<AppServices>();
@@ -389,16 +441,28 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
               return const BarcodeFeedback('productNotFound', unknown: true);
             }
             requireIntent();
-            await scan(text, requireIntent: requireIntent, allowDialogs: false);
+            final added = await scan(
+              text,
+              requireIntent: requireIntent,
+              allowDialogs: false,
+            );
+            requireIntent();
             return BarcodeFeedback(
-              error ?? 'm53ReceiptDraftScanAdded',
-              success: error == null,
+              added
+                  ? 'm53ReceiptDraftScanAdded'
+                  : (error ?? 'm53ReceiptDraftChanged'),
+              success: added,
             );
           },
-          registerUnknown: register,
+          registerUnknown: (text) async {
+            if (await register(text) && scannerContext.mounted) {
+              Navigator.pop(scannerContext, text);
+            }
+          },
         ),
       ),
     );
+    if (registeredCode != null) await addRegistered(registeredCode);
   }
 
   Future<void> edit(ReceiptDraftLine line) async {
@@ -433,6 +497,45 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
     } catch (e) {
       if (mounted) setState(() => error = safeError(e));
     }
+  }
+
+  Future<void> decrease(ReceiptDraftLine line) async {
+    if (working || !inputScope.canReceive || doc?.status != 'draft') return;
+    final service = context.read<AppServices>().inventory;
+    final revision = doc!.revision;
+    final guard = inputScope.capture();
+    await run(
+      () => service.adjustReceiptDraftLineQuantity(
+        widget.id,
+        revision,
+        line.id,
+        undoDecrease: false,
+        requireIntent: guard,
+      ),
+    );
+    if (!mounted || error != null || !inputScope.canReceive) return;
+    final correctedRevision = revision + 1;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(tr(context, 'm54ReceiptQuantityChanged')),
+        action: SnackBarAction(
+          label: tr(context, 'undo'),
+          onPressed: () {
+            if (!mounted || working || !inputScope.canReceive) return;
+            final undoGuard = inputScope.capture();
+            run(
+              () => service.adjustReceiptDraftLineQuantity(
+                widget.id,
+                correctedRevision,
+                line.id,
+                undoDecrease: true,
+                requireIntent: undoGuard,
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   Future<void> confirm() async {
@@ -533,7 +636,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
       builder: (context, _) => FormExitGuard(
         dirty: code.text.isNotEmpty || reason.text.isNotEmpty,
         dirtyCheck: () => code.text.isNotEmpty || reason.text.isNotEmpty,
-        busy: busy,
+        busy: working,
         child: Scaffold(
           appBar: AppBar(
             title: Text(tr(context, 'm53ReceiptDraft')),
@@ -544,7 +647,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
               key: ValueKey('receipt-document-${doc?.status ?? 'loading'}'),
               padding: const EdgeInsets.all(16),
               children: [
-                if (busy) const LinearProgressIndicator(),
+                if (working) const LinearProgressIndicator(),
                 Text(
                   tr(
                     context,
@@ -577,7 +680,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                     key: ValueKey(doc!.supplierId),
                     kind: MasterKind.supplier,
                     value: supplier,
-                    enabled: !busy,
+                    enabled: !working,
                     onChanged: (s) => run(
                       () => context
                           .read<AppServices>()
@@ -592,8 +695,9 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                   ManagedTextField(
                     key: const ValueKey('receipt-draft-code'),
                     controller: code,
-                    enabled: !busy,
-                    onSubmitted: scan,
+                    enabled: !busy || pendingScans > 0,
+                    retainFocusOnSubmit: true,
+                    onSubmitted: queueScan,
                     decoration: InputDecoration(
                       labelText: tr(context, 'm53ReceiptDraftCode'),
                     ),
@@ -602,11 +706,16 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                     spacing: 12,
                     children: [
                       FilledButton(
-                        onPressed: busy ? null : () => scan(code.text),
+                        onPressed: working ? null : () => queueScan(code.text),
                         child: Text(tr(context, 'm53ReceiptDraftAddCode')),
                       ),
+                      OutlinedButton(
+                        key: const ValueKey('receipt-draft-search'),
+                        onPressed: working ? null : chooseProduct,
+                        child: Text(tr(context, 'searchProducts')),
+                      ),
                       IconButton(
-                        onPressed: busy ? null : camera,
+                        onPressed: working ? null : camera,
                         tooltip: tr(context, 'm53CameraScan'),
                         icon: const Icon(Icons.qr_code_scanner),
                       ),
@@ -615,30 +724,42 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                 ],
                 if (doc?.status == 'posted' && doc?.reversed != true) ...[
                   TextButton(
-                    onPressed: busy ? null : openInvoice,
+                    onPressed: working ? null : openInvoice,
                     child: Text(tr(context, 'm53SupplierInvoices')),
                   ),
                   ManagedTextField(
                     controller: reason,
-                    enabled: !busy,
+                    enabled: !working,
                     decoration: InputDecoration(
                       labelText: tr(context, 'correctionReason'),
                     ),
                   ),
                   TextButton(
-                    onPressed: busy ? null : reverse,
+                    onPressed: working ? null : reverse,
                     child: Text(tr(context, 'm53ReceiptDraftReverse')),
                   ),
                 ],
                 for (final line in doc?.lines ?? <ReceiptDraftLine>[])
                   Card(
                     child: ListTile(
+                      leading: doc?.status != 'draft'
+                          ? null
+                          : IconButton(
+                              key: ValueKey(
+                                'receipt-decrease-${line.id.value}',
+                              ),
+                              tooltip: tr(context, 'm54ReceiptDecrease'),
+                              icon: const Icon(Icons.remove),
+                              onPressed: working || line.input.count <= 1
+                                  ? null
+                                  : () => decrease(line),
+                            ),
                       title: Text(line.name),
                       subtitle: Text(
                         '${line.input.count} ${line.input.unit.name == "base" ? tr(context, "m31BaseUnit") : tr(context, "m31PackUnit")} → ${line.input.quantityBase}\n'
                         '${line.totalMicros == null ? tr(context, "m53CostIncomplete") : moneyCostLabel(context, line.totalMicros, currency: doc!.currency)}${line.expiry == null ? '' : ' · ${line.expiry!.iso}'}',
                       ),
-                      onTap: busy || doc?.status != 'draft'
+                      onTap: working || doc?.status != 'draft'
                           ? null
                           : () => edit(line),
                       trailing: doc?.status != 'draft'
@@ -646,7 +767,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                           : IconButton(
                               tooltip: tr(context, 'delete'),
                               icon: const Icon(Icons.delete_outline),
-                              onPressed: busy
+                              onPressed: working
                                   ? null
                                   : () => run(
                                       () => context
@@ -668,18 +789,18 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                 if (doc?.status == 'draft') ...[
                   OutlinedButton(
                     key: const ValueKey('receipt-draft-confirm-invoice'),
-                    onPressed: busy || doc!.lines.isEmpty
+                    onPressed: working || doc!.lines.isEmpty
                         ? null
                         : confirmWithInvoice,
                     child: Text(tr(context, 'm53SupplierReceiveInvoice')),
                   ),
                   FilledButton(
                     key: const ValueKey('receipt-draft-confirm'),
-                    onPressed: busy || doc!.lines.isEmpty ? null : confirm,
+                    onPressed: working || doc!.lines.isEmpty ? null : confirm,
                     child: Text(tr(context, 'm53ReceiptDraftConfirm')),
                   ),
                   TextButton(
-                    onPressed: busy
+                    onPressed: working
                         ? null
                         : () async {
                             if (await ask(
@@ -701,7 +822,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                     child: Text(tr(context, 'm53ReceiptDraftReview')),
                   ),
                   TextButton(
-                    onPressed: busy
+                    onPressed: working
                         ? null
                         : () async {
                             final service = context
@@ -725,7 +846,7 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                   ),
                 ],
                 TextButton(
-                  onPressed: busy ? null : load,
+                  onPressed: working ? null : load,
                   child: Text(tr(context, 'm5Refresh')),
                 ),
               ],

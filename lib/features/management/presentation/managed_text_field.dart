@@ -23,6 +23,7 @@ class ManagedTextField extends StatefulWidget {
     this.autofocus = false,
     this.autocorrect = true,
     this.textInputAction,
+    this.retainFocusOnSubmit = false,
   });
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -37,6 +38,7 @@ class ManagedTextField extends StatefulWidget {
   final bool obscureText;
   final TapRegionCallback? onTapOutside;
   final bool autofocus;
+  final bool retainFocusOnSubmit;
   final bool autocorrect;
   final TextInputAction? textInputAction;
 
@@ -77,6 +79,11 @@ class _ManagedTextFieldState extends State<ManagedTextField> {
     onTapOutside:
         widget.onTapOutside ??
         (_) => FocusManager.instance.primaryFocus?.unfocus(),
+    // A dedicated scanner field stays attached between consecutive suffixes.
+    // Other fields keep the platform's normal completion/focus behavior.
+    onEditingComplete: widget.retainFocusOnSubmit
+        ? () => widget.controller?.clearComposing()
+        : null,
     onSubmitted: widget.onSubmitted == null
         ? null
         : (text) {

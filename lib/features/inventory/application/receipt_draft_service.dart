@@ -147,9 +147,11 @@ extension ReceiptDocuments on InventoryService {
     Transaction db,
     ReceiptDraft doc,
     EntityId product, {
+    int quantity = 1,
     bool separateLine = false,
     EntityId? targetLine,
   }) async {
+    Quantity.positive(quantity);
     final master = await _product(db, product);
     final candidates = doc.lines
         .where(
@@ -166,7 +168,7 @@ extension ReceiptDocuments on InventoryService {
     if (!separateLine && candidates.isNotEmpty) {
       final line = candidates.single;
       final next = checkedNonNegative(
-        BigInt.from(line.input.count) + BigInt.one,
+        BigInt.from(line.input.count) + BigInt.from(quantity),
       );
       if (line.cost != null) {
         StockPurchase(StockInput(next), line.cost!).totalMicros;
@@ -195,7 +197,7 @@ extension ReceiptDocuments on InventoryService {
         'product_name': master['name'],
         'position': position,
         'input_unit': 'base',
-        'input_count': 1,
+        'input_count': quantity,
       });
     }
     await _bumpReceiptOn(db, doc);
@@ -206,14 +208,16 @@ extension ReceiptDocuments on InventoryService {
     EntityId id,
     int revision,
     EntityId product, {
+    int quantity = 1,
     bool separateLine = false,
     EntityId? targetLine,
     void Function()? requireIntent,
-  }) => _write(
+  }) => _draftWrite(
     (db) async => _addReceiptProductOn(
       db,
       await _editableReceiptOn(db, id, revision),
       product,
+      quantity: quantity,
       separateLine: separateLine,
       targetLine: targetLine,
     ),
@@ -228,7 +232,7 @@ extension ReceiptDocuments on InventoryService {
     String input, {
     EntityId? targetLine,
     void Function()? requireIntent,
-  }) => _write((db) async {
+  }) => _draftWrite((db) async {
     final doc = await _editableReceiptOn(db, id, revision), code = input.trim();
     if (code.isEmpty || code.length > 256) {
       throw const AppError('m53CameraInvalidCode');
@@ -288,6 +292,41 @@ extension ReceiptDocuments on InventoryService {
     await _bumpReceiptOn(db, doc);
     return _receiptDraftOn(db, id);
   });
+
+  /// A one-step correction keeps the saved unit, purchase basis and expiry.
+  /// Undo uses the same revision check and cannot overwrite another edit.
+  Future<ReceiptDraft> adjustReceiptDraftLineQuantity(
+    EntityId id,
+    int revision,
+    EntityId lineId, {
+    required bool undoDecrease,
+    required void Function() requireIntent,
+  }) => _draftWrite((db) async {
+    final doc = await _editableReceiptOn(db, id, revision);
+    final line = doc.lines.where((item) => item.id == lineId).firstOrNull;
+    if (line == null) throw const AppError('m53ReceiptDraftChanged');
+    final count = checkedNonNegative(
+      BigInt.from(line.input.count) + BigInt.from(undoDecrease ? 1 : -1),
+    );
+    Quantity.positive(count);
+    final updated = StockInput(
+      count,
+      unit: line.input.unit,
+      packSize: line.input.packSize,
+      packLabel: line.input.packLabel,
+    );
+    if (line.cost case final cost?) {
+      StockPurchase(updated, cost).totalMicros;
+    }
+    await db.update(
+      'receipt_draft_lines',
+      {'input_count': count},
+      where: 'id=?',
+      whereArgs: [lineId.value],
+    );
+    await _bumpReceiptOn(db, doc);
+    return _receiptDraftOn(db, id);
+  }, requireIntent: requireIntent);
 
   Future<ReceiptDraft> removeReceiptDraftLine(
     EntityId id,

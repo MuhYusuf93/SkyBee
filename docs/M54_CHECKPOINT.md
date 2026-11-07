@@ -148,3 +148,19 @@ APK tersebut disimpan sebagai bukti build tanpa instalasi. Pengujian native
 skema 44, alur karantina lanjutan dan cetak fisik tetap terbuka.
 
 Tahap 4 berikutnya dimulai dari reproduksi burst scan pada draft penerimaan.
+
+## Tahap 4 · input penerimaan · 8 November 2026
+
+Reproduksi pada layar penerimaan semula menyimpan satu dari 27 scan IME.
+Antrean terikat route menerima input beruntun dan menunggu revisi sebelumnya
+sebelum menulis berikutnya. Form menyisakan stok di saldo awal nol setelah
+registrasi Sunco, lalu meminta jumlah sebelum membuat baris penerimaan.
+Pencarian manual berpaginasi, tombol kurang dan Undo mempertahankan basis
+harga dan unit. Konfirmasi akhir menyimpan 15 Marie Roma, 12 Hit dan 20 Sunco
+sekali saat diulang. Semua scan uji berasal dari driver IME host.
+
+Regresi 37/37 lulus dalam 1:15. Pada run sebelumnya, fixture overflow lama
+memakai harga beli setara harga jual. Koreksi fixture mempertahankan overflow
+yang diuji dan mengikuti aturan harga M5.4. Audit lokalisasi 1629/1013/245.
+Capability pembayaran pada konfirmasi penerimaan, relasi banyak supplier,
+reservasi, lampiran, dan acceptance perangkat tetap terbuka.

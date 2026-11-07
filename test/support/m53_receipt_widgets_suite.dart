@@ -10,10 +10,14 @@ import 'package:kasir_app/core/money/money_field.dart';
 import 'package:kasir_app/core/time/store_clock.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/cashier/presentation/cashier_screen.dart';
+import 'package:kasir_app/features/inventory/application/inventory_service.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/inventory/domain/stock_input.dart';
+import 'package:kasir_app/features/inventory/presentation/product_form.dart';
 import 'package:kasir_app/features/inventory/presentation/product_detail_screen.dart';
 import 'package:kasir_app/features/inventory/presentation/receipt_line_editor.dart';
+import 'package:kasir_app/features/inventory/presentation/receipt_drafts_screen.dart';
+import 'package:kasir_app/features/inventory/presentation/receipt_product_picker.dart';
 import 'package:kasir_app/features/inventory/presentation/expiry_date_field.dart';
 import 'package:kasir_app/features/management/presentation/management_navigation.dart';
 import 'package:kasir_app/features/settings/domain/store_feature_policy.dart';
@@ -59,6 +63,281 @@ void m53ReceiptWidgetsSuite(DatabaseFactory factory) {
   Finder field(String label) => find.byWidgetPredicate(
     (w) => w is TextField && w.decoration?.labelText == label,
   );
+
+  testWidgets(
+    'M54 receiving accepts 27 scan suffixes and adds Sunco manually',
+    (tester) async {
+      late Directory root;
+      late DatabaseCoordinator db;
+      late AppServices app;
+      late EntityId receipt, marie, hit;
+      await io(tester, () async {
+        root = await Directory.systemTemp.createTemp(
+          'kasir_m54_receipt_burst_',
+        );
+        db = DatabaseCoordinator(
+          factory: factory,
+          databasePath: '${root.path}/m54_receipt_burst.db',
+        );
+        app = AppServices(db);
+        await app.management.configure('PUBLIC SCAN FIXTURE', '0001', '0001');
+        await app.management.unlock('0001');
+        await app.settings.setLanguage('en');
+        await app.settings.saveFeaturePolicy(
+          const StoreFeaturePolicy(
+            enforced: true,
+            stockMode: StockMode.partial,
+          ),
+        );
+        await db.transaction(
+          (sql) => sql.update('store_feature_policy', {
+            'onboarding_completed': 1,
+          }, where: 'id=1'),
+        );
+        Future<EntityId> create(String name, String code) =>
+            app.inventory.create(
+              ProductInput(
+                name: name,
+                barcode: code,
+                sellingPrice: Money(12000, 'IDR', 0),
+              ),
+              initialQuantity: 0,
+            );
+        marie = await create('Marie Roma', '899000001');
+        hit = await create('Hit', '899000002');
+        receipt = (await app.inventory.createReceiptDraft()).id;
+      });
+      try {
+        tester.testTextInput.register();
+        await tester.pumpWidget(KasirApp(services: app));
+        final home = find.byType(CashierScreen);
+        await drain(tester, () => home.evaluate().isNotEmpty);
+        unawaited(
+          Navigator.of(tester.element(home)).push<void>(
+            MaterialPageRoute(builder: (_) => ReceiptDraftScreen(id: receipt)),
+          ),
+        );
+        final code = find.byKey(const ValueKey('receipt-draft-code'));
+        await drain(tester, () => code.evaluate().isNotEmpty);
+        await tester.showKeyboard(code);
+        Future<void> submit(String barcode) async {
+          tester.testTextInput.updateEditingValue(
+            TextEditingValue(
+              text: barcode,
+              selection: TextSelection.collapsed(offset: barcode.length),
+            ),
+          );
+          await tester.testTextInput.receiveAction(TextInputAction.done);
+        }
+
+        for (final barcode in [
+          for (var i = 0; i < 12; i++) ...['899000001', '899000002'],
+          '899000001',
+          '899000001',
+          '899000001',
+        ]) {
+          await submit(barcode);
+        }
+        final progress = find.descendant(
+          of: find.byType(ReceiptDraftScreen),
+          matching: find.byType(LinearProgressIndicator),
+        );
+        await tester.pump();
+        await drain(tester, () => progress.evaluate().isEmpty);
+        await io(tester, () async {
+          final saved = await app.inventory.receiptDraft(receipt);
+          expectSync(
+            {for (final l in saved.lines) l.name: l.input.count},
+            {'Marie Roma': 15, 'Hit': 12},
+          );
+          expectSync((await app.inventory.detail(marie)).quantity, 0);
+          expectSync((await app.inventory.detail(hit)).quantity, 0);
+          expectSync(
+            await db.read((sql) => sql.query('stock_receipts')),
+            isEmpty,
+          );
+        });
+        final form = find.byType(ProductForm);
+        final picker = find.byType(ReceiptProductPicker);
+        await tap(tester, find.byKey(const ValueKey('receipt-draft-search')));
+        await drain(tester, () => picker.evaluate().isNotEmpty);
+        await tester.enterText(field('Search product name prefix'), 'Marie');
+        final result = find.descendant(
+          of: picker,
+          matching: find.text('Marie Roma'),
+        );
+        await drain(tester, () => result.evaluate().isNotEmpty);
+        await tap(tester, result);
+        expectSync(
+          find.byKey(const ValueKey('receipt-picker-quantity')),
+          findsOneWidget,
+        );
+        await tester.binding.handlePopRoute();
+        await drain(tester, () => picker.evaluate().isEmpty);
+        Future<void> openRegistration() async {
+          await tester.showKeyboard(code);
+          await submit('899000003');
+          final dialog = find.byType(AlertDialog);
+          await drain(tester, () => dialog.evaluate().isNotEmpty);
+          final confirm = tr(tester.element(dialog), 'm5Confirm');
+          await tap(
+            tester,
+            find.descendant(of: dialog, matching: find.text(confirm)),
+          );
+          await drain(
+            tester,
+            () =>
+                form.evaluate().isNotEmpty &&
+                find
+                    .byKey(const ValueKey('product-policy-loading'))
+                    .evaluate()
+                    .isEmpty,
+          );
+        }
+
+        await openRegistration();
+        await tester.binding.handlePopRoute();
+        await drain(
+          tester,
+          () => form.evaluate().isEmpty && progress.evaluate().isEmpty,
+        );
+        await io(tester, () async {
+          expectSync(await app.inventory.lookupCode('899000003'), isNull);
+          expectSync(
+            (await app.inventory.receiptDraft(receipt)).lines.length,
+            2,
+          );
+        });
+
+        await openRegistration();
+        await tester.enterText(field('Product name'), 'Sunco');
+        final formScroll = find
+            .descendant(
+              of: form,
+              matching: find.byWidgetPredicate(
+                (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+              ),
+            )
+            .first;
+        final selling = field('Selling price (IDR)');
+        await tester.scrollUntilVisible(selling, 160, scrollable: formScroll);
+        await tester.enterText(selling, '12000');
+        FocusManager.instance.primaryFocus?.unfocus();
+        await tester.pump();
+        final save = find.widgetWithText(FilledButton, 'Save product');
+        await tester.scrollUntilVisible(save, 160, scrollable: formScroll);
+        final position = tester.state<ScrollableState>(formScroll).position;
+        position.jumpTo(position.maxScrollExtent);
+        await tester.pump(const Duration(milliseconds: 400));
+        expectSync(save.hitTestable(), findsOneWidget);
+        await tester.tap(save.hitTestable());
+        await drain(tester, () => picker.evaluate().isNotEmpty);
+        await io(tester, () async {
+          final sunco = (await app.inventory.lookupCode('899000003'))!;
+          expectSync(sunco.quantity, 0);
+          expectSync(
+            (await app.inventory.receiptDraft(receipt)).lines.length,
+            2,
+          );
+          expectSync(
+            await db.read((sql) => sql.query('stock_receipts')),
+            isEmpty,
+          );
+        });
+        await tester.enterText(
+          find.byKey(const ValueKey('receipt-picker-quantity')),
+          '20',
+        );
+        await tap(tester, find.byKey(const ValueKey('receipt-picker-add')));
+        await drain(
+          tester,
+          () => picker.evaluate().isEmpty && progress.evaluate().isEmpty,
+        );
+        late EntityId suncoLine;
+        await io(tester, () async {
+          final saved = await app.inventory.receiptDraft(receipt);
+          suncoLine = saved.lines
+              .singleWhere((line) => line.name == 'Sunco')
+              .id;
+        });
+        final minus = find.byKey(
+          ValueKey('receipt-decrease-${suncoLine.value}'),
+        );
+        final receivingScroll = find
+            .descendant(
+              of: find.byType(ReceiptDraftScreen),
+              matching: find.byWidgetPredicate(
+                (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+              ),
+            )
+            .first;
+        await tester.scrollUntilVisible(
+          minus,
+          120,
+          scrollable: receivingScroll,
+        );
+        await tap(tester, minus);
+        final undo = find.widgetWithText(TextButton, 'Undo');
+        await drain(tester, () => undo.evaluate().isNotEmpty);
+        await io(tester, () async {
+          final saved = await app.inventory.receiptDraft(receipt);
+          expectSync(
+            saved.lines.singleWhere((l) => l.id == suncoLine).input.count,
+            19,
+          );
+        });
+        await tap(tester, undo);
+        await drain(tester, () => progress.evaluate().isEmpty);
+        await io(tester, () async {
+          var saved = await app.inventory.receiptDraft(receipt);
+          expectSync(
+            {for (final l in saved.lines) l.name: l.input.count},
+            {'Marie Roma': 15, 'Hit': 12, 'Sunco': 20},
+          );
+          expectSync(
+            await db.read((sql) => sql.query('stock_receipts')),
+            isEmpty,
+          );
+          for (final line in saved.lines) {
+            saved = await app.inventory.updateReceiptDraftLine(
+              saved.id,
+              saved.revision,
+              line.id,
+              input: line.input,
+              cost: CostAmount.fromMoney(Money(2000, 'IDR', 0)),
+            );
+          }
+          final receiptId = await app.inventory.confirmReceiptDraft(
+            saved.id,
+            saved.revision,
+          );
+          expectSync(
+            await app.inventory.confirmReceiptDraft(saved.id, saved.revision),
+            receiptId,
+          );
+          expectSync((await app.inventory.detail(marie)).quantity, 15);
+          expectSync((await app.inventory.detail(hit)).quantity, 12);
+          expectSync(
+            (await app.inventory.lookupCode('899000003'))!.quantity,
+            20,
+          );
+          expectSync(
+            (await db.read((sql) => sql.query('stock_receipts'))).length,
+            1,
+          );
+        });
+        expectSync(tester.takeException(), isNull);
+      } finally {
+        await tester.pumpWidget(const SizedBox());
+        await io(tester, () async {
+          await db.close();
+          await factory.deleteDatabase(db.databasePath);
+          await root.delete();
+        });
+      }
+    },
+  );
+
   for (final config in [('id', true), ('en', true), ('en', false)]) {
     testWidgets(
       'M53 receipt ${config.$1}/cost${config.$2} actual receiving route validates fields, preserves pricing basis and never commits before save',

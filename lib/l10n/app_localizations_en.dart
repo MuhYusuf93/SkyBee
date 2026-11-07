@@ -5487,4 +5487,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m54ScanRouteChanged =>
       'Scan cancelled because the screen changed. Scan again in the active field.';
+
+  @override
+  String get m54ReceiptScanQueueFull =>
+      'Scan queue full. Wait for processing to finish, then scan the last code again.';
+
+  @override
+  String get m54ReceiptDecrease => 'Decrease quantity by one unit';
+
+  @override
+  String get m54ReceiptQuantityChanged => 'Draft quantity reduced by one unit.';
 }
