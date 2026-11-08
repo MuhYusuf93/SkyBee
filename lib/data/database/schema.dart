@@ -32,7 +32,7 @@ import '../../core/domain/contact_validation.dart';
 /// Ordered, non-destructive migrations. V1 establishes relational storage;
 /// V2 adds query/FK indexes. Both fresh install and upgrade use this same path.
 final class Schema {
-  static const version = 52;
+  static const version = 53;
 
   // A receipt's supplier is a transaction fact, not the master relationship.
   // Legacy products deliberately keep NULL rather than inferring a supplier.
@@ -122,6 +122,9 @@ final class Schema {
         50 => purchaseHistorySchema,
         51 => warehouseSortSchema,
         52 => memberHistorySchema,
+        53 => const [
+          'CREATE INDEX audit_log_entity ON audit_log(entity_id,action)',
+        ],
         _ => throw StateError('Migration tidak tersedia.'),
       }) {
         await db.execute(statement);

@@ -5761,4 +5761,48 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m54MemberNameHelp =>
       'Choose a name you will recognize. Phone numbers distinguish customers with the same name.';
+
+  @override
+  String get m54ArchiveSelect => 'Select archived records';
+
+  @override
+  String get m54ArchiveSelectLoaded => 'Select all loaded records';
+
+  @override
+  String get m54ArchiveSelected => 'Selected';
+
+  @override
+  String get m54ArchiveReview => 'Review permanent deletion';
+
+  @override
+  String get m54ArchiveDeleteForever => 'Delete permanently';
+
+  @override
+  String get m54ArchiveIrreversible =>
+      'Deletion cannot be undone. A local backup is recommended before continuing. Only items in the Eligible list will be deleted.';
+
+  @override
+  String get m54ArchiveEligible => 'Eligible for deletion';
+
+  @override
+  String get m54ArchiveProtected => 'Protected';
+
+  @override
+  String get m54ArchiveStockOrValue =>
+      'Still has physical stock or inventory value.';
+
+  @override
+  String get m54ArchiveReference =>
+      'Protected because it is used by a transaction or has linked records.';
+
+  @override
+  String get m54ArchiveScopeChanged =>
+      'The archive or its linked records changed. Go back, reload the list, and review the selection again.';
+
+  @override
+  String get m54ArchiveNoEligible =>
+      'None of the selected records can be deleted.';
+
+  @override
+  String get m54ArchiveDeleted => 'Records deleted';
 }

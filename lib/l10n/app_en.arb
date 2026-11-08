@@ -6915,5 +6915,57 @@
   "m54MemberNameHelp": "Choose a name you will recognize. Phone numbers distinguish customers with the same name.",
   "@m54MemberNameHelp": {
     "description": "M54: Choose a name you will recognize. Phone numbers distinguish customers with the same name."
+  },
+  "m54ArchiveSelect": "Select archived records",
+  "@m54ArchiveSelect": {
+    "description": "M54: Select archived records"
+  },
+  "m54ArchiveSelectLoaded": "Select all loaded records",
+  "@m54ArchiveSelectLoaded": {
+    "description": "M54: Select all loaded records"
+  },
+  "m54ArchiveSelected": "Selected",
+  "@m54ArchiveSelected": {
+    "description": "M54: Selected"
+  },
+  "m54ArchiveReview": "Review permanent deletion",
+  "@m54ArchiveReview": {
+    "description": "M54: Review permanent deletion"
+  },
+  "m54ArchiveDeleteForever": "Delete permanently",
+  "@m54ArchiveDeleteForever": {
+    "description": "M54: Delete permanently"
+  },
+  "m54ArchiveIrreversible": "Deletion cannot be undone. A local backup is recommended before continuing. Only items in the Eligible list will be deleted.",
+  "@m54ArchiveIrreversible": {
+    "description": "M54: Deletion cannot be undone. A local backup is recommended before continuing. Only items in the Eligible list will be deleted."
+  },
+  "m54ArchiveEligible": "Eligible for deletion",
+  "@m54ArchiveEligible": {
+    "description": "M54: Eligible for deletion"
+  },
+  "m54ArchiveProtected": "Protected",
+  "@m54ArchiveProtected": {
+    "description": "M54: Protected"
+  },
+  "m54ArchiveStockOrValue": "Still has physical stock or inventory value.",
+  "@m54ArchiveStockOrValue": {
+    "description": "M54: Still has physical stock or inventory value."
+  },
+  "m54ArchiveReference": "Protected because it is used by a transaction or has linked records.",
+  "@m54ArchiveReference": {
+    "description": "M54: Protected because it is used by a transaction or has linked records."
+  },
+  "m54ArchiveScopeChanged": "The archive or its linked records changed. Go back, reload the list, and review the selection again.",
+  "@m54ArchiveScopeChanged": {
+    "description": "M54: The archive or its linked records changed. Go back, reload the list, and review the selection again."
+  },
+  "m54ArchiveNoEligible": "None of the selected records can be deleted.",
+  "@m54ArchiveNoEligible": {
+    "description": "M54: None of the selected records can be deleted."
+  },
+  "m54ArchiveDeleted": "Records deleted",
+  "@m54ArchiveDeleted": {
+    "description": "M54: Records deleted"
   }
 }

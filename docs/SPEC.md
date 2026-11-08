@@ -45,9 +45,10 @@ memvalidasi lampiran pada fixture backup host. Skema 50 menambah histori
 pembelian berindeks dan tren biaya per pcs. Regresi opname manual dan scan
 lulus di host. Skema 51 menambah sort Gudang dan Favorit Kasir dengan
 cache 30 hari yang memperhitungkan retur. Skema 52 menambah histori member
-dan filter/sort piutang efektif. Regresi host lulus. Uji kamera fisik dan
-restore native, persetujuan klaim tanpa nota, hapus arsip, tahap 5,
-acceptance dan handoff masih terbuka.
+dan filter/sort piutang efektif. Skema 53 menambah penghapusan arsip
+berbatas halaman dengan PIN pemilik, pratinjau, dan validasi ulang
+dependensi. Regresi host lulus. Uji kamera fisik dan restore native,
+persetujuan klaim tanpa nota, tahap 5, acceptance dan handoff masih terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->
@@ -64,7 +65,10 @@ QRIS hanya gambar statis+konfirmasi manual kasir di luar aplikasi. M5.5 khusus
 multi-device dan belum dikerjakan; redesign menyeluruh ditunda ke arahan lain.
 Bagian historis yang menyebut M5.5 visual tidak berlaku sebagai roadmap aktif.
 Seluruh acceptance/handoff M5.4 belum selesai; jangan memakai bukti M5.3 sebagai
-hasil M5.4. Realme diuji sesudah handoff awal bila tersedia.
+hasil M5.4. Arahan pengguna 8 November memindahkan pengujian M5.3 dan M5.4
+pada Realme C11 ke sebelum handoff. Beri kabar dan jeda sebelum memasang
+paket eksplorasi atau membuat APK eksternal. Gunakan fixture terisolasi
+dengan serial Realme yang dikonfirmasi untuk pengujian perangkat.
 
 
 <!-- M53_ACTIVE_H_START -->

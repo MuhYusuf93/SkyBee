@@ -27,7 +27,7 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 19 | Satu tombol bahasa promo | ID/EN/draft | Host tab/form satu kontrol terlihat dan draft bertahan setelah perubahan bahasa |
 | 20 | Tap kategori/detail; Edit terpisah | filter/semantics/no longpress | Host tap terfilter dan tombol Edit terpisah; native arsip/navigasi pending |
 | 21 | Sort gudang | name/modified/popularity/seek | Host lulus dua arah, tie, seek, filter gabungan, cursor stale, dan retur. Widget ID/EN 320 px teks 2× lulus. |
-| 22 | Hard-delete arsip terproteksi | fresh owner/eligible preview/FK/race | Pending |
+| 22 | Hard-delete arsip terproteksi | fresh owner/eligible preview/FK/race | Host lulus scope yang dimuat, batal, PIN pemilik, FK, rollback, perubahan referensi dan member lunas dengan histori. Native terbuka. |
 | 23 | Drive error tahap spesifik | SDK/native picker/cloud terpisah | Pending; OAuth paket perlu diperiksa |
 | 24 | Arsip produk semua scope | commit/reopen/undo/stale checkout | Host commit/reopen, scope daftar, pencarian Kasir, Undo, pesan draft lama, histori utuh; Favorit dan native pending |
 | 25 | Penerimaan15/12/20 | scan/manual/new product/retry/cash capability | Host lulus untuk 27 scan, pencarian, batal/daftar Sunco, kurang/Undo, konfirmasi idempotent dan pembayaran awal gudang. ID/EN 320 px skala 2 lulus. HID fisik dan acceptance perangkat terbuka. |

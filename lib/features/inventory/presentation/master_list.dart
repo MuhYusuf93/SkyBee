@@ -11,6 +11,8 @@ import '../../../core/domain/contact_validation.dart';
 import '../../../core/presentation/contact_output_link.dart';
 import '../../../core/pagination/paged_controller.dart';
 import '../domain/inventory_models.dart';
+import '../../archive/application/archive_purge_service.dart';
+import '../../archive/presentation/archive_selection_screen.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/protected_dialog.dart';
 import 'inventory_screen.dart';
@@ -232,6 +234,28 @@ class _MasterBody extends StatelessWidget {
     website.dispose();
   }
 
+  Widget _archiveSelection(
+    BuildContext context,
+    PagedController<MasterRecord, MasterCursor, MasterFilter> state,
+  ) {
+    final scope = state.filter;
+    final visible = [
+      for (final row in state.items) (id: row.id, name: row.name),
+    ];
+    return ArchiveSelectionButton(
+      service: context.read<AppServices>().archivePurge,
+      kind: kind == MasterKind.category
+          ? ArchivePurgeKind.category
+          : ArchivePurgeKind.supplier,
+      rows: visible,
+      scopeIsCurrent: () =>
+          context.mounted &&
+          state.filter == scope &&
+          archiveIdsMatch(visible, state.items.map((row) => row.id)),
+      reload: () => state.reset(state.filter),
+    );
+  }
+
   @override
   Widget build(
     BuildContext context,
@@ -264,6 +288,11 @@ class _MasterBody extends StatelessWidget {
                       archived: value,
                     )),
                   ),
+                if (!picker &&
+                    kind != MasterKind.shelf &&
+                    state.filter.archived &&
+                    !state.isLoading)
+                  _archiveSelection(context, state),
                 FilledButton.icon(
                   onPressed: () => _edit(context),
                   icon: const Icon(Icons.add),

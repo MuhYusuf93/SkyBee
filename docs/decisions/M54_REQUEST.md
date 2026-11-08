@@ -6,6 +6,8 @@ Disusun 6 November 2026, WIB, berdasarkan `milestone 5.4`, `STATUS(20261106-1515
 
 **Jalankan implementasi M5.4 dalam proyek SkyBee yang sedang terbuka, uji dan langsung perbaiki temuan pada DV8910 serta Poco F6. Sesudah itu perbarui Paket Eksplorasi Mandiri `.skybee`, buat APK terpisah berdata dummy untuk dicoba teman saya, lalu lakukan pengujian M5.3 dan M5.4 pada Realme C11 ketika perangkat tersedia.**
 
+**Arahan pengguna 8 November 2026.** Pindahkan pengujian M5.3 dan M5.4 di Realme C11 ke sebelum handoff. Beri kabar dan jeda pada batas sebelum memasang `.skybee` atau membuat APK eksternal untuk koordinasi pengujian Realme. Lanjutkan instalasi dan build eksternal setelah arahan pengguna.
+
 Ini instruksi kerja aktif, bukan permintaan menyusun rencana saja. Audit dahulu, pecah pekerjaan berdasarkan dependensi, implementasikan sampai konkret, uji, perbaiki, dan lakukan handoff. Jangan menjadikan setiap checkpoint sebagai alasan berhenti meminta persetujuan. Jika ada hambatan nyata, lanjutkan pekerjaan independen dan catat langkah yang perlu dilanjutkan.
 
 Saya mengutamakan kesederhanaan operasional toko kecil, akurasi uang/stok, dan kemudahan pengelolaan kode. Perbaiki copywriting, kesalahan asumsi dan rincian teknis tanpa meluaskan M5.4 menjadi ERP atau layanan keuangan online.
@@ -310,15 +312,15 @@ Reproduksi menggunakan konfigurasi/paket yang benar dan akun yang diizinkan, tan
 4. **Gudang/supplier**: penerimaan 15/12/20, many-to-many, reservasi draft retur, lampiran nota, lookup/member/favorit.
 5. **Recovery PDF/grafik/output/Drive**: integrasikan semua perubahan dan backup portable, perbaiki temuan.
 6. **Acceptance M5.4 pada DV8910 dan Poco F6**: uji domain/integrasi/native yang relevan; perbaiki langsung, retest kasus dan regresi terdampak. Checkpoint lulus/gagal serta batas.
-7. **Handoff awal**: update `.skybee` tanpa reset/reseed, buat APK Uji Teman berdata dummy dan panduan feedback; perangkat/fitur baru yang belum teruji ditandai. Jangan menunggu penilaian teman sebelum pekerjaan lain berlanjut.
-8. **Realme C11**: sesudah tahap 7, uji cakupan **M5.3 dan M5.4** pada fixture terisolasi ketika perangkat tersedia; langsung perbaiki. Jika tidak tersedia, simpan checkpoint perintah/kasus yang jelas dan status belum diuji, jangan klaim selesai atau menahan APK yang sudah siap.
+7. **Jeda sebelum handoff dan Realme C11.** Beri kabar kepada pengguna, lalu koordinasikan pengujian **M5.3 dan M5.4** pada fixture terisolasi di Realme C11. Perbaiki temuan dan jalankan regresi terdampak. Bila perangkat belum tersedia, simpan checkpoint dan lanjutkan pemeriksaan independen yang masih sah.
+8. **Handoff awal.** Setelah pengujian Realme dan arahan lanjut, update `.skybee` in-place dengan data sekarang, buat APK Uji Teman berdata dummy dan panduan feedback. Tandai fitur yang masih belum teruji.
 9. **Finalisasi**: jika temuan Realme mengubah source, jalankan regresi perubahan relevan pada DV/Poco, build ulang kedua APK terdampak, update `.skybee` lagi secara aman dan tandai APK terbaru. Commit/push/dokumentasi final tidak menyamakan bukti APK lama dengan kode baru.
 
 ### 12.2 Aturan perangkat dan isolasi
 
 - **DV8910**: nama firmware DV8947-KIX/AX810 boleh berbeda dari hardware, jangan dipermasalahkan. Endpoint LAN terakhir 192.168.0.102:5555 bersifat petunjuk; **verifikasi device authorized aktual**, karena alamat bisa berubah. Root: write hanya tujuan pengujian yang diizinkan; selain itu read-only. Tidak mengubah firmware/HDMI/CCTV/bootloader/akun/sistem permanen. State sementara yang sah wajib dipulihkan dan readback exact.
 - **Poco F6**: target UI/kamera/PIN biometrik/checkout/printer yang tersedia. Periksa serial/paket sebelum perintah. Iware MP-581RL 58 mm telah digunakan; printer 80 mm/protokol lain hanya diuji jika benar-benar tersedia. Tidak mengklaim kompatibilitas universal dari satu printer.
-- **Realme C11**: jalankan setelah handoff awal, bukan paralel memotong urutan saya. Gunakan suite M5.3+M5.4 yang mencakup operasi baru, bukan mengulang semua M1–M4 tanpa alasan. Jangan mengurangi fitur/parameter keamanan demi Realme. Crash/ANR investigasi lewat log dan repro; hanya tandai SKIP/ENV jika bukti menunjukkan masalah sistem/perangkat di luar app, bukan otomatis karena HP tua.
+- **Realme C11**: jalankan sebelum handoff sesuai arahan 8 November. Gunakan suite M5.3+M5.4 yang mencakup operasi baru, dengan parameter keamanan dan fitur yang sama. Untuk crash/ANR, investigasi lewat log dan repro. Tandai SKIP/ENV hanya jika bukti menunjukkan hambatan di luar aplikasi.
 - Host test dulu, lalu native suite relevan. DV tanpa kamera tidak wajib menjadi pengganti uji kamera Poco; ketiadaan hardware bukan bug app. Kamera/fingerprint/paper/cloud nyata yang tidak tersedia ditandai unverified dengan alasan.
 - Seluruh mutasi acceptance memakai package/DB sintetis terisolasi. Jangan menggunakan `.skybee` aktif, ordinary, atau data teman sebagai fixture destructive. Hindari runner default-uninstall terhadap package operasional. Jangan menyalin seluruh sandbox/data privat di luar scope sebagai jalan pintas.
 - Lindungi berkas/key/data lama dengan mekanisme proyek yang konsisten dengan WAL/background workers. Hash byte berbeda harus diinvestigasi; hash main DB sendiri tidak cukup membuktikan semua fakta. Jika isolasi gagal, simpan failure asli dan tandai FAILED ISOLATION, bukan baseline baru untuk menyembunyikannya.
@@ -372,9 +374,9 @@ Jika perangkat tersedia, lakukan pemasangan yang sudah diotorisasi ini; jangan b
 8. Buat `PANDUAN_UJI_TEMAN_M54.md` singkat: nama APK/versi/hash/paket/min Android, instalasi sebagai APK dari user, data demo, cara memilih PIN, skenario test 15–30 menit dan cara menyampaikan feedback dengan versi/perangkat/langkah/expected/actual. Tidak meminta mereka memberikan PIN/recovery/token/nomor rekening. Tidak mengirim APK/pesan kepada teman atas nama saya; saya yang mendistribusikannya.
 9. Sediakan APK dan manifest build/path/hash yang mudah ditemukan (`release-artifacts` lokal yang diabaikan Git sesuai aturan), serta catatan fitur cloud/hardware yang belum teruji. Hindari modul telemetry/analytics/expiry timebomb/require login tambahan hanya untuk mengumpulkan penilaian.
 
-## 14. Pengujian Realme setelah handoff dan konsistensi APK final
+## 14. Pengujian Realme sebelum handoff dan konsistensi APK final
 
-Setelah `.skybee` diperbarui dan APK Uji Teman tersedia, lanjut pengujian **M5.3+M5.4** di Realme C11 yang disediakan. Reuse paket fixture terisolasi, jangan mencopot app pribadi atau reset HP pinjaman. Periksa storage/memori/OS/API/ABI/koneksi dan izin sebelum menuduh hardware tua sebagai penyebab bug.
+Sesudah acceptance awal DV/Poco dan jeda untuk koordinasi, uji **M5.3+M5.4** di Realme C11 yang disediakan sebelum memasang `.skybee` atau membuat APK Uji Teman. Pakai paket fixture terisolasi pada serial yang telah dikonfirmasi. Verifikasi storage, memori, OS, API, ABI, koneksi, izin dan perlindungan paket sebelum pengujian.
 
 Cakupan M5.3 meliputi onboarding/roles/PIN/biometrik jika ada, mode stok/biaya/promo/grosir/kemasan, pembayaran/numpad/uang cepat/kas fisik, member/piutang, receipt/retur supplier, opname, scanner fallback, reports/export, backup portable/restore/retensi/reset **fixture**. Cakupan M5.4 mengikuti matriks §12.3 dengan prioritas ketepatan uang/stok/security dan pengalaman input pada layar kecil/perangkat lambat. Hardware yang tidak ada diberi status not applicable/unverified, bukan lulus dengan mock.
 

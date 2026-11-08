@@ -5784,4 +5784,48 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m54MemberNameHelp =>
       'Gunakan nama yang mudah Anda kenali. Pelanggan dengan nama sama dibedakan melalui nomor telepon.';
+
+  @override
+  String get m54ArchiveSelect => 'Pilih arsip';
+
+  @override
+  String get m54ArchiveSelectLoaded => 'Pilih semua item yang dimuat';
+
+  @override
+  String get m54ArchiveSelected => 'Dipilih';
+
+  @override
+  String get m54ArchiveReview => 'Tinjau penghapusan permanen';
+
+  @override
+  String get m54ArchiveDeleteForever => 'Hapus permanen';
+
+  @override
+  String get m54ArchiveIrreversible =>
+      'Penghapusan tidak dapat diurungkan. Sebaiknya buat cadangan lokal sebelum melanjutkan. Hanya item pada daftar Dapat dihapus yang akan dihapus.';
+
+  @override
+  String get m54ArchiveEligible => 'Dapat dihapus';
+
+  @override
+  String get m54ArchiveProtected => 'Dipertahankan';
+
+  @override
+  String get m54ArchiveStockOrValue =>
+      'Masih memiliki stok fisik atau nilai persediaan.';
+
+  @override
+  String get m54ArchiveReference =>
+      'Dipertahankan karena digunakan pada transaksi atau memiliki catatan terkait.';
+
+  @override
+  String get m54ArchiveScopeChanged =>
+      'Arsip atau catatan terkait sudah berubah. Kembali, muat ulang daftar, dan tinjau pilihan lagi.';
+
+  @override
+  String get m54ArchiveNoEligible =>
+      'Tidak ada arsip terpilih yang dapat dihapus.';
+
+  @override
+  String get m54ArchiveDeleted => 'Item dihapus';
 }

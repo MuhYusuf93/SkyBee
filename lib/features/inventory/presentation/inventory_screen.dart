@@ -15,6 +15,8 @@ import 'product_form.dart';
 import 'product_detail_screen.dart';
 import '../domain/inventory_models.dart';
 import '../domain/warehouse_filter.dart';
+import '../../archive/application/archive_purge_service.dart';
+import '../../archive/presentation/archive_selection_screen.dart';
 import 'relation_field.dart';
 import 'receipt_drafts_screen.dart';
 import 'stocktake_screen.dart';
@@ -211,6 +213,11 @@ class _ProductsState extends State<_Products> with WidgetsBindingObserver {
   Widget build(BuildContext context) => Consumer<InventoryProvider>(
     builder: (context, state, _) {
       final paging = state.paging;
+      final scope = paging.filter;
+      final visibleArchive = [
+        if (scope.isDeleted)
+          for (final item in paging.items) (id: item.id, name: item.name),
+      ];
       // The search/actions and empty state share the row viewport. A fixed
       // header plus Expanded would overflow when the keyboard reduces height.
       return CustomScrollView(
@@ -235,6 +242,20 @@ class _ProductsState extends State<_Products> with WidgetsBindingObserver {
                       state.filter(paging.filter.namePrefix, value);
                     },
                   ),
+                  if (scope.isDeleted && !paging.isLoading)
+                    ArchiveSelectionButton(
+                      service: context.read<AppServices>().archivePurge,
+                      kind: ArchivePurgeKind.product,
+                      rows: visibleArchive,
+                      scopeIsCurrent: () =>
+                          mounted &&
+                          paging.filter == scope &&
+                          archiveIdsMatch(
+                            visibleArchive,
+                            paging.items.map((item) => item.id),
+                          ),
+                      reload: state.refresh,
+                    ),
                   Wrap(
                     spacing: 12,
                     // Every filter remains part of the same SQL query.

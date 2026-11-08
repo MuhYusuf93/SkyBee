@@ -20,6 +20,7 @@ import 'package:kasir_app/features/cashier/presentation/checkout_provider.dart';
 import 'package:kasir_app/features/cashier_lock/domain/cashier_lock_policy.dart';
 import 'package:kasir_app/features/cashier_lock/presentation/cashier_lock_screen.dart';
 import 'package:kasir_app/features/management/presentation/management_navigation.dart';
+import 'package:kasir_app/features/management/presentation/pin_screen.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/l10n/localization.dart';
 import 'm53_cashier_lock_suite.dart' show CashierSyntheticScreens;
@@ -196,6 +197,108 @@ void m53MemberWidgetsSuite(DatabaseFactory factory) {
       () => find.byType(CashierLockScreen).evaluate().isEmpty,
     );
   }
+
+  scenario(
+    'M54 member archive selects the loaded page, reviews and requires a fresh PIN',
+    (tester) async {
+      await mount(tester);
+      late MemberProfile archived;
+      late MemberProfile active;
+      await io(tester, () async {
+        await app.management.unlock('0001');
+        final original = (await app.members.ownerList()).items.single;
+        archived = await app.members.archive(
+          original.id,
+          original.revision,
+          true,
+        );
+        active = await app.members.create(
+          const MemberInput(
+            name: 'PUBLIC ACTIVE MEMBER',
+            phone: '081234567893',
+          ),
+        );
+      });
+      final nav = Navigator.of(tester.element(find.byType(CashPad)));
+      unawaited(
+        nav.push<void>(
+          MaterialPageRoute(builder: (_) => const MembersScreen()),
+        ),
+      );
+      await drain(tester, () => find.text(active.name).evaluate().isNotEmpty);
+      final list = tester.element(find.byType(MembersScreen));
+      final archiveToggle = find.widgetWithText(
+        CheckboxListTile,
+        tr(list, 'm53ArchivedMembers'),
+      );
+      await tap(tester, archiveToggle);
+      final select = find.byKey(const ValueKey('archive-selection'));
+      await drain(tester, () => select.evaluate().isNotEmpty);
+      await tap(tester, select);
+      final all = find.byKey(const ValueKey('archive-select-loaded'));
+      await drain(tester, () => all.evaluate().isNotEmpty);
+      await tap(tester, all);
+      final checkbox = find.byKey(
+        ValueKey('archive-check-${archived.id.value}'),
+      );
+      expectSync(tester.widget<CheckboxListTile>(checkbox).value, isTrue);
+      expectSync(
+        find.byKey(ValueKey('archive-check-${active.id.value}')),
+        findsNothing,
+      );
+      final review = find.widgetWithText(
+        FilledButton,
+        tr(list, 'm54ArchiveReview'),
+      );
+      await tap(tester, review);
+      final dialog = find.byType(AlertDialog);
+      await drain(tester, () => dialog.evaluate().isNotEmpty);
+      await tap(tester, find.widgetWithText(TextButton, tr(list, 'cancel')));
+      await drain(
+        tester,
+        () =>
+            dialog.evaluate().isEmpty &&
+            tester.widget<FilledButton>(review).onPressed != null,
+      );
+      await io(tester, () async {
+        expectSync(
+          (await app.members.ownerDetail(archived.id)).archived,
+          isTrue,
+        );
+      });
+      await tap(tester, review);
+      await drain(tester, () => dialog.evaluate().isNotEmpty);
+      await tap(
+        tester,
+        find.widgetWithText(FilledButton, tr(list, 'm54ArchiveDeleteForever')),
+      );
+      final pin = find.descendant(
+        of: find.byType(PinScreen),
+        matching: find.byType(TextField),
+      );
+      await drain(tester, () => pin.evaluate().isNotEmpty);
+      await io(tester, () async {
+        expectSync(
+          (await app.members.ownerDetail(archived.id)).archived,
+          isTrue,
+        );
+      });
+      await tester.enterText(pin, '0001');
+      await drain(
+        tester,
+        () =>
+            find.byType(PinScreen).evaluate().isEmpty && all.evaluate().isEmpty,
+      );
+      await io(tester, () async {
+        expectSync(
+          (await app.members.ownerList(archived: true)).items,
+          isEmpty,
+        );
+        expectSync((await app.members.ownerList()).items.single.id, active.id);
+      });
+      expectSync(tester.takeException(), isNull);
+    },
+  );
 
   scenario(
     'M53 paid checkout opt-in creates member with required phone and optional address without owner access',

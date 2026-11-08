@@ -14,8 +14,9 @@ riwayat pengujian lama bukan perintah mengulang seluruh suite.
 4. Gudang/supplier/reservasi/lampiran/member/favorit.
 5. Recovery PDF/grafik/output/Drive/portable backup.
 6. Host lalu acceptance fixture DV/Poco, perbaikan dan regresi terdampak.
-7. Handoff `.skybee` in-place tanpa reset/seed; trial release terpisah.
-8. Realme M5.3+M5.4 sesudah handoff, jika tersedia.
+7. Beri kabar dan jeda sebelum handoff untuk koordinasi Realme C11. Uji
+   M5.3 dan M5.4 dengan fixture terisolasi, lalu perbaiki temuan.
+8. Sesudah arahan lanjut, handoff `.skybee` in-place dan APK Uji Teman.
 9. Finalisasi source/APK/manifest/dokumentasi/commit/push biasa.
 
 ## Temuan awal
@@ -320,3 +321,26 @@ menunggu I/O reload sesudah keluar dari form. Kedua kasus lulus tes ulang
 dalam 17 detik. Analyzer bersih, audit lokalisasi 1708/1055/245 dan APK
 biasa tiga ABI/alignment 16 KiB lulus tanpa instalasi. Acceptance native
 terbuka.
+
+## Tahap 4 · hapus permanen arsip terproteksi · skema 53
+
+Barang, kategori, supplier, dan member yang sudah dimuat memiliki mode
+pilih dengan cakupan eksplisit. Pemilik meninjau nama dan alasan per item
+sebelum konfirmasi dan PIN ulang. SQL memeriksa semua foreign key yang
+mengarah ke master serta audit terkait di dalam transaksi. Alias, relasi
+master milik produk, dan cache produk terpilih dapat dilepas saat produk
+eligible dihapus. Fakta dan audit historis dipertahankan. Rak dan promo
+memiliki layar aktif tersendiri tanpa daftar arsip pada UI saat ini.
+
+Regresi host 11/11 lulus. Tes fokus service dan widget 2/2 lulus, dengan satu
+kasus service merupakan pengulangan. Bukti mencakup batal sebelum PIN,
+cakupan halaman, saldo member nol dengan sejarah penjualan, perubahan
+dependensi, FK dan rollback. Audit lokalisasi 1721/1066/245 dan audit PIN 106
+cocok.
+
+Arahan 8 November 2026 memindahkan Realme C11 M5.3 dan M5.4 ke sebelum
+handoff. Beri kabar dan jeda pada batas sebelum memasang `.skybee` atau
+membuat APK eksternal. Gunakan paket fixture terisolasi di serial Realme
+yang telah dikonfirmasi.
+Analyzer akhir bersih. APK biasa 0.5.4+14 terverifikasi pada tiga ABI dan
+alignment 16 KiB. APK belum dipasang.

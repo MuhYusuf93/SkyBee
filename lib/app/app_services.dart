@@ -3,6 +3,7 @@ import '../features/barcode/application/native_barcode_camera.dart';
 import '../features/barcode/domain/barcode_camera.dart';
 import '../features/cash_drawer/application/cash_drawer_service.dart';
 import '../features/members/application/member_service.dart';
+import '../features/archive/application/archive_purge_service.dart';
 import '../features/onboarding/application/onboarding_service.dart';
 import '../features/cashier/application/quick_cash_service.dart';
 import '../features/cashier/application/quantity_promotion_service.dart';
@@ -102,6 +103,7 @@ final class AppServices {
   /// Fixtures can namespace recovery/consent records without touching retained
   /// manual-test credentials. Production uses the installation's native store.
   final KasirPlatform backupPlatform;
+  late final archivePurge = ArchivePurgeService(database, management);
 
   /// Package-specific completion dependency, never a global state provider.
   final Future<bool> Function(AppServices app, int revision)?

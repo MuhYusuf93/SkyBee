@@ -10345,6 +10345,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a name you will recognize. Phone numbers distinguish customers with the same name.'**
   String get m54MemberNameHelp;
+
+  /// M54: Select archived records
+  ///
+  /// In en, this message translates to:
+  /// **'Select archived records'**
+  String get m54ArchiveSelect;
+
+  /// M54: Select all loaded records
+  ///
+  /// In en, this message translates to:
+  /// **'Select all loaded records'**
+  String get m54ArchiveSelectLoaded;
+
+  /// M54: Selected
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get m54ArchiveSelected;
+
+  /// M54: Review permanent deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Review permanent deletion'**
+  String get m54ArchiveReview;
+
+  /// M54: Delete permanently
+  ///
+  /// In en, this message translates to:
+  /// **'Delete permanently'**
+  String get m54ArchiveDeleteForever;
+
+  /// M54: Deletion cannot be undone. A local backup is recommended before continuing. Only items in the Eligible list will be deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletion cannot be undone. A local backup is recommended before continuing. Only items in the Eligible list will be deleted.'**
+  String get m54ArchiveIrreversible;
+
+  /// M54: Eligible for deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Eligible for deletion'**
+  String get m54ArchiveEligible;
+
+  /// M54: Protected
+  ///
+  /// In en, this message translates to:
+  /// **'Protected'**
+  String get m54ArchiveProtected;
+
+  /// M54: Still has physical stock or inventory value.
+  ///
+  /// In en, this message translates to:
+  /// **'Still has physical stock or inventory value.'**
+  String get m54ArchiveStockOrValue;
+
+  /// M54: Protected because it is used by a transaction or has linked records.
+  ///
+  /// In en, this message translates to:
+  /// **'Protected because it is used by a transaction or has linked records.'**
+  String get m54ArchiveReference;
+
+  /// M54: The archive or its linked records changed. Go back, reload the list, and review the selection again.
+  ///
+  /// In en, this message translates to:
+  /// **'The archive or its linked records changed. Go back, reload the list, and review the selection again.'**
+  String get m54ArchiveScopeChanged;
+
+  /// M54: None of the selected records can be deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'None of the selected records can be deleted.'**
+  String get m54ArchiveNoEligible;
+
+  /// M54: Records deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Records deleted'**
+  String get m54ArchiveDeleted;
 }
 
 class _AppLocalizationsDelegate

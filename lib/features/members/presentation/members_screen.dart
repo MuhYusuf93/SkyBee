@@ -5,6 +5,8 @@ import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
 import '../../../core/money/money_field.dart';
 import '../../../l10n/localization.dart';
+import '../../archive/application/archive_purge_service.dart';
+import '../../archive/presentation/archive_selection_screen.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/managed_text_field.dart';
 import '../../settings/presentation/language_button.dart';
@@ -154,6 +156,22 @@ class _MembersListState extends State<_MembersList> {
     super.dispose();
   }
 
+  Widget _archiveSelection() {
+    final scope = (search.text, archived, sort, descending, onlyDebtors, after);
+    final visible = [for (final row in rows) (id: row.id, name: row.name)];
+    return ArchiveSelectionButton(
+      service: context.read<AppServices>().archivePurge,
+      kind: ArchivePurgeKind.member,
+      rows: visible,
+      scopeIsCurrent: () =>
+          mounted &&
+          scope ==
+              (search.text, archived, sort, descending, onlyDebtors, after) &&
+          archiveIdsMatch(visible, rows.map((row) => row.id)),
+      reload: () => load(reset: true),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
@@ -198,6 +216,7 @@ class _MembersListState extends State<_MembersList> {
                         },
                   title: Text(tr(context, 'm53ArchivedMembers')),
                 ),
+                if (archived && !busy) _archiveSelection(),
                 CheckboxListTile(
                   value: onlyDebtors,
                   onChanged: busy
