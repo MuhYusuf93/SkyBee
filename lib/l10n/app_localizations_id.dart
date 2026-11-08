@@ -5737,4 +5737,51 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get m54CashierFavoritesEmpty =>
       'Belum ada barang favorit yang dapat dijual. Barang akan muncul setelah ada penjualan.';
+
+  @override
+  String get m54MemberHistory => 'Histori transaksi member';
+
+  @override
+  String get m54MemberHistoryDateInvalid =>
+      'Tanggal akhir harus sama dengan atau sesudah tanggal mulai.';
+
+  @override
+  String get m54MemberNetPurchases => 'Pembelian bersih periode ini';
+
+  @override
+  String get m54MemberCurrentDebt => 'Piutang saat ini';
+
+  @override
+  String get m54MemberSale => 'Penjualan';
+
+  @override
+  String get m54MemberSaleReversal => 'Pembalikan penjualan';
+
+  @override
+  String get m54MemberSaleReturn => 'Retur penjualan';
+
+  @override
+  String get m54MemberRepayment => 'Pembayaran piutang';
+
+  @override
+  String get m54MemberRepaymentReversal => 'Pembalikan pembayaran piutang';
+
+  @override
+  String get m54MemberRefund => 'Pengembalian dana';
+
+  @override
+  String get m54MemberHasDebt => 'Punya utang';
+
+  @override
+  String get m54MemberLastAdded => 'Terakhir ditambahkan';
+
+  @override
+  String get m54MemberMostVisits => 'Kunjungan terbanyak';
+
+  @override
+  String get m54MemberHighestDebt => 'Utang terbanyak';
+
+  @override
+  String get m54MemberNameHelp =>
+      'Gunakan nama yang mudah Anda kenali. Pelanggan dengan nama sama dibedakan melalui nomor telepon.';
 }

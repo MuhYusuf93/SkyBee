@@ -12,6 +12,21 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm54MemberHistory' => l.m54MemberHistory,
+    'm54MemberHistoryDateInvalid' => l.m54MemberHistoryDateInvalid,
+    'm54MemberNetPurchases' => l.m54MemberNetPurchases,
+    'm54MemberCurrentDebt' => l.m54MemberCurrentDebt,
+    'm54MemberSale' => l.m54MemberSale,
+    'm54MemberSaleReversal' => l.m54MemberSaleReversal,
+    'm54MemberSaleReturn' => l.m54MemberSaleReturn,
+    'm54MemberRepayment' => l.m54MemberRepayment,
+    'm54MemberRepaymentReversal' => l.m54MemberRepaymentReversal,
+    'm54MemberRefund' => l.m54MemberRefund,
+    'm54MemberHasDebt' => l.m54MemberHasDebt,
+    'm54MemberLastAdded' => l.m54MemberLastAdded,
+    'm54MemberMostVisits' => l.m54MemberMostVisits,
+    'm54MemberHighestDebt' => l.m54MemberHighestDebt,
+    'm54MemberNameHelp' => l.m54MemberNameHelp,
     'm54CashierFavorites' => l.m54CashierFavorites,
     'm54CashierFavoritesEmpty' => l.m54CashierFavoritesEmpty,
     'm54WarehouseSort' => l.m54WarehouseSort,

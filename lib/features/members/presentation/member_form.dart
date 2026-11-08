@@ -121,6 +121,7 @@ class _MemberFormState extends State<MemberForm> {
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 labelText: tr(context, 'm53MemberName'),
+                helper: Text(tr(context, 'm54MemberNameHelp')),
               ),
             ),
             const SizedBox(height: 12),

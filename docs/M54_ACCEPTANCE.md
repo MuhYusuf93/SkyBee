@@ -17,12 +17,12 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 9 | Histori penerimaan tanggal+jam/biaya | unit/currency/pagination/unknown | Host lulus migrasi, snapshot dus ke pcs, pemasok, expiry, reversal, biaya kosong dan seek pada timestamp sama. UI dikompilasi. |
 | 10 | Rak sah atau error eksplisit | add/edit/draft/repository | Host UI/repository PASS; add/edit navigasi lengkap pending |
 | 11 | Biaya dan grosir < retail | equality/greater/unknown/pack precision | Host 4 currency dan repository, termasuk biaya referensi sama dengan harga jual; native fondasi Poco/DV; jalur edit referensi native pending |
-| 12 | Member nama+HP | normalized phone/nama sama | Pending |
+| 12 | Member nama+HP | normalized phone/nama sama | Host lulus nama, prefix nomor HP, normalisasi unik dan nama sama. Widget checkout memilih hasil nama/nomor. |
 | 13 | Pilihan Code128/QR label | dots/quiet zone/58/80/profil | Pending |
 | 14 | Opname manual+scan | replacement/add/NULL0/conflict/batch | Regresi service dan widget host lulus untuk manual, barcode simulasi, 0 eksplisit, Undo, konflik dan pemilihan batch. Scanner fisik terbuka. |
 | 15 | Tombol pecahan kembalian | plus/minus/undo/currency/commit | Host lulus pada editor pecahan ID/EN dan pecahan EUR. Native terbuka. |
 | 16 | Potongan pembulatan tunai | 86750→86500/split/debt/return | Host lulus untuk alokasi potongan, QRIS Rp50.000, kas bersih Rp36.500, piutang dan retur. Native terbuka. |
-| 17 | Riwayat member | sale/return/payment/date/seek | Pending |
+| 17 | Riwayat member | sale/return/payment/date/seek | Host lulus timeline sale/retur/refund/pelunasan dan reversal, tanggal, seek dan ringkasan. Nama membuka histori, Edit terpisah di ID/EN. |
 | 18 | Prioritas gate sesuai route | management-only resume/cashier Back | Implemented, host gate/dirty/back PASS; native7 Poco/DV PASS; OEM lengkap pending |
 | 19 | Satu tombol bahasa promo | ID/EN/draft | Host tab/form satu kontrol terlihat dan draft bertahan setelah perubahan bahasa |
 | 20 | Tap kategori/detail; Edit terpisah | filter/semantics/no longpress | Host tap terfilter dan tombol Edit terpisah; native arsip/navigasi pending |
@@ -34,9 +34,9 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 26 | Draft retur supplier reservasi | 3dari5→2/partial/unknown/untracked | Host lulus untuk 5→3+2 lintas supplier, parsial, reversal, asal belum diketahui, observasi untracked dan UI barcode 320 px skala 2. Klaim tanpa nota tersimpan tertunda. Persetujuan klaim ini dan perangkat terbuka. |
 | 27 | Produk–supplier many-to-many | migration/no duplicate value | Host lulus untuk migrasi data terisi, filter dua supplier, form chip, arsip, backup dan nilai stok tunggal. Native terbuka. |
 | 28 | Tap rak/detail; Edit terpisah | filter/suggestion/draft | Host tap terfilter dan tombol Edit terpisah; suggestion/draft host; native navigasi pending |
-| 29 | Pulihkan member | conflict/role/zero new debt | Pending |
-| 30 | Filter member punya utang | effective current balance | Pending |
-| 31 | Sort member | name/new/visits/debt/seek tie | Pending |
+| 29 | Pulihkan member | conflict/role/zero new debt | Regresi host memeriksa pemulihan, konflik nomor, akses dan utang lama. |
+| 30 | Filter member punya utang | effective current balance | Host lulus saldo efektif sesudah pelunasan dan pengurangan piutang oleh retur. |
+| 31 | Sort member | name/new/visits/debt/seek tie | Host lulus sort nama, waktu dibuat, kunjungan dan saldo, serta cursor terikat scope. |
 | 32 | Kamera pencarian gudang | permission/no camera/stale callback | Lookup dan callback lama diuji pada suite routing; izin/perangkat fisik belum dibuktikan |
 | 33 | Kebijakan kas persisted/clean form | session state/cancel/failure/race | Implemented; host48PASS termasukUI2 ID/EN320/text2; native7 Poco dan7 DV PASS; hash/awake/controlOff PASS |
 | 34 | Scanner routing/PIN/modal/Enter | HID+commitText/no truncated PIN | PIN raw/Enter/burst host4 dan native4 fondasi PASS; field/focus/setup/SQL guarded host81unik viaretest PASS; native 21 kasus unik Poco dan 21 DV lulus; HID fisik dan OEM belum teruji |

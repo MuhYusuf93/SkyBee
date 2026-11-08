@@ -1,5 +1,6 @@
 import 'package:kasir_app/features/members/domain/member_models.dart';
 import 'package:kasir_app/features/members/presentation/member_form.dart';
+import 'package:kasir_app/features/members/presentation/member_history_screen.dart';
 import 'package:kasir_app/features/members/presentation/members_screen.dart';
 import 'dart:async';
 import 'dart:io';
@@ -258,11 +259,16 @@ void m53MemberWidgetsSuite(DatabaseFactory factory) {
       expectSync(form.phoneError, 'm53MemberPhoneRequired');
       await visible(tester, field('checkout-member-name'));
       await tester.enterText(field('checkout-member-name'), 'PUBLIC');
+      await tester.pump(const Duration(milliseconds: 300));
+      await drain(
+        tester,
+        () => find.text('PUBLIC EXISTING').evaluate().isNotEmpty,
+      );
       await visible(tester, field('checkout-member-phone'));
       await tester.enterText(field('checkout-member-phone'), '123');
       await tester.pump();
       expectSync(form.phoneError, 'm52PhoneInvalid');
-      await tester.enterText(field('checkout-member-phone'), '081234567891');
+      await tester.enterText(field('checkout-member-phone'), '0812345');
       await tester.pump(const Duration(milliseconds: 300));
       await drain(
         tester,
@@ -466,6 +472,39 @@ void m53MemberWidgetsSuite(DatabaseFactory factory) {
         );
         await visible(tester, find.text('PUBLIC EXISTING'));
         expectSync(tester.takeException(), isNull);
+        await tap(tester, find.text('PUBLIC EXISTING'));
+        await drain(
+          tester,
+          () =>
+              find.byType(MemberHistoryScreen).evaluate().isNotEmpty &&
+              find.byType(LinearProgressIndicator).evaluate().isEmpty,
+        );
+        expectSync(find.byType(MemberForm), findsNothing);
+        await visible(
+          tester,
+          find.descendant(
+            of: find.byType(MemberHistoryScreen),
+            matching: find.text('PUBLIC EXISTING'),
+          ),
+        );
+        await tester.binding.handlePopRoute();
+        await tester.pumpAndSettle();
+        await tap(tester, find.byIcon(Icons.edit_outlined));
+        await drain(
+          tester,
+          () => field('member-owner-name').evaluate().isNotEmpty,
+        );
+        expectSync(
+          tester.widget<TextField>(field('member-owner-name')).controller!.text,
+          'PUBLIC EXISTING',
+        );
+        await tester.binding.handlePopRoute();
+        await drain(
+          tester,
+          () =>
+              find.byType(MemberForm).evaluate().isEmpty &&
+              find.byType(LinearProgressIndicator).evaluate().isEmpty,
+        );
         await tap(tester, find.byIcon(Icons.person_add));
         await drain(
           tester,

@@ -67,21 +67,29 @@ class _CheckoutFormState extends State<_CheckoutForm>
     }
   }
 
-  void search(String name) {
+  void clearMemberSuggestions() {
+    timer?.cancel();
+    generation++;
+    setState(() => suggestions = const []);
+  }
+
+  void search(String query) {
     final form = context.read<CheckoutProvider>();
     form.newCustomer();
-    timer?.cancel();
-    final version = ++generation;
-    setState(() => suggestions = const []);
-    if (name.trim().isEmpty) return;
+    clearMemberSuggestions();
+    final version = generation;
+    if (query.trim().isEmpty) return;
     timer = Timer(const Duration(milliseconds: 275), () async {
       try {
         final records = await context.read<AppServices>().members.forCheckout(
           form.cart.snapshot!.id,
-          query: name,
+          query: query,
           pageSize: 10,
         );
-        if (mounted && version == generation) {
+        if (mounted &&
+            version == generation &&
+            form.needsMember &&
+            (ModalRoute.of(context)?.isCurrent ?? false)) {
           setState(() => suggestions = records.items);
         }
       } on Object {
@@ -244,7 +252,10 @@ class _CheckoutFormState extends State<_CheckoutForm>
                 value: form.needsMember,
                 onChanged: form.submitting || form.needsCustomer
                     ? null
-                    : (value) => form.setUseMember(value!),
+                    : (value) {
+                        clearMemberSuggestions();
+                        form.setUseMember(value!);
+                      },
                 title: Text(tr(context, 'm53UseMember')),
                 subtitle: Text(tr(context, 'm53GuestHelp')),
               ),
@@ -257,6 +268,7 @@ class _CheckoutFormState extends State<_CheckoutForm>
                     onChanged: search,
                     decoration: InputDecoration(
                       labelText: tr(context, 'm53MemberName'),
+                      helper: Text(tr(context, 'm54MemberNameHelp')),
                       errorText: form.nameError == null
                           ? null
                           : tr(context, form.nameError!),
@@ -316,14 +328,17 @@ class _CheckoutFormState extends State<_CheckoutForm>
                           ? null
                           : () {
                               form.customer(person);
-                              setState(() => suggestions = const []);
+                              clearMemberSuggestions();
                             },
                     ),
                 ],
                 TextButton(
                   onPressed: form.submitting
                       ? null
-                      : () => form.newCustomer(clearFields: true),
+                      : () {
+                          clearMemberSuggestions();
+                          form.newCustomer(clearFields: true);
+                        },
                   child: Text(tr(context, 'm53ChangeMember')),
                 ),
               ],

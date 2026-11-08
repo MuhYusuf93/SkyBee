@@ -5714,4 +5714,51 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get m54CashierFavoritesEmpty =>
       'No sellable favorites yet. Products appear here after they sell.';
+
+  @override
+  String get m54MemberHistory => 'Member transaction history';
+
+  @override
+  String get m54MemberHistoryDateInvalid =>
+      'Choose an end date on or after the start date.';
+
+  @override
+  String get m54MemberNetPurchases => 'Net purchases in this period';
+
+  @override
+  String get m54MemberCurrentDebt => 'Current outstanding debt';
+
+  @override
+  String get m54MemberSale => 'Sale';
+
+  @override
+  String get m54MemberSaleReversal => 'Sale reversal';
+
+  @override
+  String get m54MemberSaleReturn => 'Sale return';
+
+  @override
+  String get m54MemberRepayment => 'Debt repayment';
+
+  @override
+  String get m54MemberRepaymentReversal => 'Debt repayment reversal';
+
+  @override
+  String get m54MemberRefund => 'Refund';
+
+  @override
+  String get m54MemberHasDebt => 'Has outstanding debt';
+
+  @override
+  String get m54MemberLastAdded => 'Last added';
+
+  @override
+  String get m54MemberMostVisits => 'Most visits';
+
+  @override
+  String get m54MemberHighestDebt => 'Highest debt';
+
+  @override
+  String get m54MemberNameHelp =>
+      'Choose a name you will recognize. Phone numbers distinguish customers with the same name.';
 }

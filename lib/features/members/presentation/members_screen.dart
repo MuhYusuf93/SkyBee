@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../app/app_services.dart';
 import '../../../core/domain/app_error.dart';
+import '../../../core/money/money_field.dart';
 import '../../../l10n/localization.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/managed_text_field.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/member_models.dart';
 import 'member_form.dart';
+import 'member_history_screen.dart';
 
 class MembersScreen extends StatelessWidget {
   const MembersScreen({super.key});
@@ -29,6 +31,8 @@ class _MembersListState extends State<_MembersList> {
   Timer? debounce;
   int request = 0;
   bool busy = true, archived = false;
+  bool descending = true, onlyDebtors = false;
+  MemberListSort sort = MemberListSort.visits;
   String? error;
   List<MemberProfile> rows = [];
   MemberCursor? after, next;
@@ -54,6 +58,9 @@ class _MembersListState extends State<_MembersList> {
         query: search.text,
         archived: archived,
         after: after,
+        sort: sort,
+        descending: descending,
+        onlyDebtors: onlyDebtors,
       );
       if (mounted && version == request) {
         setState(() {
@@ -82,6 +89,11 @@ class _MembersListState extends State<_MembersList> {
     );
     if (mounted) await load(reset: true);
   }
+
+  Future<void> openHistory(MemberProfile member) => Navigator.push<void>(
+    context,
+    MaterialPageRoute(builder: (_) => MemberHistoryScreen(memberId: member.id)),
+  );
 
   Future<void> archive(MemberProfile member) async {
     if (busy) return;
@@ -186,6 +198,77 @@ class _MembersListState extends State<_MembersList> {
                         },
                   title: Text(tr(context, 'm53ArchivedMembers')),
                 ),
+                CheckboxListTile(
+                  value: onlyDebtors,
+                  onChanged: busy
+                      ? null
+                      : (value) {
+                          onlyDebtors = value!;
+                          load(reset: true);
+                        },
+                  title: Text(tr(context, 'm54MemberHasDebt')),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonFormField<MemberListSort>(
+                          key: ValueKey(sort),
+                          initialValue: sort,
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            labelText: tr(context, 'm54WarehouseSort'),
+                          ),
+                          items: [
+                            for (final value in MemberListSort.values)
+                              DropdownMenuItem(
+                                value: value,
+                                child: Text(
+                                  tr(context, switch (value) {
+                                    MemberListSort.name => 'name',
+                                    MemberListSort.added =>
+                                      'm54MemberLastAdded',
+                                    MemberListSort.visits =>
+                                      'm54MemberMostVisits',
+                                    MemberListSort.debt =>
+                                      'm54MemberHighestDebt',
+                                  }),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                          ],
+                          onChanged: busy
+                              ? null
+                              : (value) {
+                                  if (value == null) return;
+                                  sort = value;
+                                  descending = value != MemberListSort.name;
+                                  load(reset: true);
+                                },
+                        ),
+                      ),
+                      IconButton(
+                        key: const ValueKey('member-sort-direction'),
+                        tooltip: tr(
+                          context,
+                          descending ? 'm54SortDescending' : 'm54SortAscending',
+                        ),
+                        onPressed: busy
+                            ? null
+                            : () {
+                                descending = !descending;
+                                load(reset: true);
+                              },
+                        icon: Icon(
+                          descending
+                              ? Icons.arrow_downward
+                              : Icons.arrow_upward,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(tr(context, 'm53MemberVisitHelp')),
@@ -212,20 +295,39 @@ class _MembersListState extends State<_MembersList> {
                   children: [
                     Text(member.phone ?? tr(context, 'm3NoPhone')),
                     Text('${tr(context, 'm53MemberVisits')}: ${member.visits}'),
+                    if (member.outstandingMinor case final amount?)
+                      Text(
+                        '${tr(context, 'm54MemberCurrentDebt')} ${moneyLabel(context, amount)}',
+                      ),
                     if (member.needsReview)
                       Text(tr(context, 'm53MemberRepairRequired')),
                   ],
                 ),
-                onTap: busy ? null : () => edit(member),
-                trailing: IconButton(
-                  tooltip: tr(
-                    context,
-                    member.archived ? 'm53RestoreMember' : 'm53ArchiveMember',
-                  ),
-                  onPressed: busy ? null : () => archive(member),
-                  icon: Icon(
-                    member.archived ? Icons.unarchive : Icons.archive_outlined,
-                  ),
+                onTap: busy ? null : () => openHistory(member),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      key: ValueKey('member-edit-${member.id.value}'),
+                      tooltip: tr(context, 'editRecord'),
+                      onPressed: busy ? null : () => edit(member),
+                      icon: const Icon(Icons.edit_outlined),
+                    ),
+                    IconButton(
+                      tooltip: tr(
+                        context,
+                        member.archived
+                            ? 'm53RestoreMember'
+                            : 'm53ArchiveMember',
+                      ),
+                      onPressed: busy ? null : () => archive(member),
+                      icon: Icon(
+                        member.archived
+                            ? Icons.unarchive
+                            : Icons.archive_outlined,
+                      ),
+                    ),
+                  ],
                 ),
               );
             },

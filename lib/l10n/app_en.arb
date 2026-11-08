@@ -6855,5 +6855,65 @@
   "m54CashierFavoritesEmpty": "No sellable favorites yet. Products appear here after they sell.",
   "@m54CashierFavoritesEmpty": {
     "description": "M54: No sellable favorites yet. Products appear here after they sell."
+  },
+  "m54MemberHistory": "Member transaction history",
+  "@m54MemberHistory": {
+    "description": "M54: Member transaction history"
+  },
+  "m54MemberHistoryDateInvalid": "Choose an end date on or after the start date.",
+  "@m54MemberHistoryDateInvalid": {
+    "description": "M54: Choose an end date on or after the start date."
+  },
+  "m54MemberNetPurchases": "Net purchases in this period",
+  "@m54MemberNetPurchases": {
+    "description": "M54: Net purchases in this period"
+  },
+  "m54MemberCurrentDebt": "Current outstanding debt",
+  "@m54MemberCurrentDebt": {
+    "description": "M54: Current outstanding debt"
+  },
+  "m54MemberSale": "Sale",
+  "@m54MemberSale": {
+    "description": "M54: Sale"
+  },
+  "m54MemberSaleReversal": "Sale reversal",
+  "@m54MemberSaleReversal": {
+    "description": "M54: Sale reversal"
+  },
+  "m54MemberSaleReturn": "Sale return",
+  "@m54MemberSaleReturn": {
+    "description": "M54: Sale return"
+  },
+  "m54MemberRepayment": "Debt repayment",
+  "@m54MemberRepayment": {
+    "description": "M54: Debt repayment"
+  },
+  "m54MemberRepaymentReversal": "Debt repayment reversal",
+  "@m54MemberRepaymentReversal": {
+    "description": "M54: Debt repayment reversal"
+  },
+  "m54MemberRefund": "Refund",
+  "@m54MemberRefund": {
+    "description": "M54: Refund"
+  },
+  "m54MemberHasDebt": "Has outstanding debt",
+  "@m54MemberHasDebt": {
+    "description": "M54: Has outstanding debt"
+  },
+  "m54MemberLastAdded": "Last added",
+  "@m54MemberLastAdded": {
+    "description": "M54: Last added"
+  },
+  "m54MemberMostVisits": "Most visits",
+  "@m54MemberMostVisits": {
+    "description": "M54: Most visits"
+  },
+  "m54MemberHighestDebt": "Highest debt",
+  "@m54MemberHighestDebt": {
+    "description": "M54: Highest debt"
+  },
+  "m54MemberNameHelp": "Choose a name you will recognize. Phone numbers distinguish customers with the same name.",
+  "@m54MemberNameHelp": {
+    "description": "M54: Choose a name you will recognize. Phone numbers distinguish customers with the same name."
   }
 }

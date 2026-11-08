@@ -12,11 +12,14 @@ import 'package:kasir_app/features/backup/application/backup_validation.dart';
 import 'package:kasir_app/features/backup/domain/backup_manifest.dart';
 import 'package:kasir_app/features/cashier/application/checkout_service.dart';
 import 'package:kasir_app/features/cashier/domain/cashier_models.dart';
+import 'package:kasir_app/features/cashier/domain/sale_refund_models.dart';
+import 'package:kasir_app/features/cashier/domain/sale_return_models.dart';
 import 'package:kasir_app/features/cashier/presentation/cart_provider.dart';
 import 'package:kasir_app/features/cashier/presentation/checkout_provider.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/members/application/member_service.dart';
 import 'package:kasir_app/features/members/domain/member_models.dart';
+import 'package:kasir_app/features/members/domain/member_history.dart';
 import 'package:kasir_app/features/management/domain/management_role.dart';
 
 void m53MemberSuite(DatabaseFactory factory) {
@@ -299,6 +302,167 @@ void m53MemberSuite(DatabaseFactory factory) {
       );
       expect((await app.members.ownerDetail(member.id)).visits, 1);
       expect((await app.receivables.balance(member.id)).amountMinor, 0);
+    },
+  );
+  test(
+    'M54 member history retains distinct sale, return, refund and repayment facts',
+    () async {
+      final alpha = await app.members.create(profile('PUBLIC ALPHA'));
+      final zulu = await app.members.create(
+        profile('PUBLIC ZULU', '081234567891'),
+      );
+      final paid = await app.members.create(
+        profile('PUBLIC BETA', '081234567892'),
+      );
+      final original = await sale(member: alpha.id, tender: 3000);
+      await sale(member: zulu.id, tender: 6000);
+      await sale(member: paid.id);
+      final cancel = await sale(member: alpha.id);
+      final plan = await app.receivables.preview(alpha.id, m(1000));
+      await app.receivables.record(plan);
+      final asc = await app.members.ownerList(
+        sort: MemberListSort.debt,
+        descending: false,
+        onlyDebtors: true,
+        pageSize: 1,
+      );
+      expect(
+        (asc.items.single.id, asc.items.single.outstandingMinor),
+        (zulu.id, 4000),
+      );
+      expect(
+        (await app.members.ownerList(
+          sort: MemberListSort.debt,
+          descending: false,
+          onlyDebtors: true,
+          pageSize: 1,
+          after: asc.nextCursor,
+        )).items.single.id,
+        alpha.id,
+      );
+      await expectLater(
+        app.members.ownerList(sort: MemberListSort.debt, after: asc.nextCursor),
+        throwsA(error('m3DraftChanged')),
+      );
+      final name = await app.members.ownerList(
+        sort: MemberListSort.name,
+        descending: false,
+      );
+      expect(name.items.map((member) => member.id), [
+        alpha.id,
+        paid.id,
+        zulu.id,
+      ]);
+      final added = await app.members.ownerList(
+        sort: MemberListSort.added,
+        pageSize: 1,
+      );
+      expect(added.nextCursor, isNotNull);
+      final visits = await app.members.ownerList(sort: MemberListSort.visits);
+      expect(visits.items.first.id, alpha.id);
+      expect(visits.items.first.visits, 2);
+      final full = await app.members.ownerHistory(alpha.id, pageSize: 1);
+      expect(
+        (full.purchases, full.purchaseCount, full.outstanding),
+        (20000, 2, 6000),
+      );
+      final outside = CalendarDate('2000-01-01');
+      final old = await app.members.ownerHistory(
+        alpha.id,
+        from: outside,
+        through: outside,
+      );
+      expect(old.events.items, isEmpty);
+      expect((old.purchases, old.purchaseCount, old.outstanding), (0, 0, 6000));
+      final source = await app.saleReturns.lookup(original.number);
+      final quote = await app.saleReturns.preview(original.id, [
+        SaleReturnSelection(
+          source.items.single.id,
+          1,
+          SaleReturnCondition.good,
+        ),
+      ]);
+      final returned = await app.saleReturns.post(
+        quote,
+        operationKey: 'public-member-timeline-return',
+        reason: 'PUBLIC RETURN',
+      );
+      await app.saleRefunds.settle(
+        returned.id,
+        const SaleRefundIntent(SaleRefundMethod.transfer),
+        operationKey: 'public-member-timeline-refund',
+      );
+      await app.corrections.cancelSale(
+        cancel.id,
+        operationKey: 'public-member-timeline-reversal',
+        reason: 'PUBLIC REVERSAL',
+        goodsReturned: true,
+        moneyHandled: true,
+      );
+      await expectLater(
+        app.members.ownerHistory(alpha.id, after: full.events.nextCursor),
+        throwsA(error('m3DraftChanged')),
+      );
+      MemberHistoryCursor? cursor;
+      final facts = <MemberHistoryEvent>[];
+      do {
+        final page = await app.members.ownerHistory(
+          alpha.id,
+          after: cursor,
+          pageSize: 2,
+        );
+        expect(
+          (page.purchases, page.purchaseCount, page.outstanding),
+          (0, 1, 0),
+        );
+        facts.addAll(page.events.items);
+        cursor = page.events.nextCursor;
+      } while (cursor != null && facts.length < 10);
+      expect(cursor, isNull);
+      expect(facts, hasLength(6));
+      expect(
+        facts.where((event) => event.kind == MemberHistoryKind.sale),
+        hasLength(2),
+      );
+      expect(
+        facts
+            .where(
+              (event) => event.kind == MemberHistoryKind.sale && event.reversed,
+            )
+            .single
+            .saleId,
+        cancel.id,
+      );
+      expect(
+        facts
+            .singleWhere((event) => event.kind == MemberHistoryKind.repayment)
+            .amountMinor,
+        1000,
+      );
+      expect(
+        facts
+            .singleWhere((event) => event.kind == MemberHistoryKind.saleReturn)
+            .amountMinor,
+        10000,
+      );
+      expect(
+        facts
+            .singleWhere((event) => event.kind == MemberHistoryKind.refund)
+            .amountMinor,
+        4000,
+      );
+      expect(
+        facts
+            .singleWhere(
+              (event) => event.kind == MemberHistoryKind.saleReversal,
+            )
+            .saleId,
+        cancel.id,
+      );
+      expect(
+        (await app.members.ownerList(onlyDebtors: true)).items.single.id,
+        zulu.id,
+      );
     },
   );
   test(

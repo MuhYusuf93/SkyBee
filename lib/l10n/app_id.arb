@@ -6855,5 +6855,65 @@
   "m54CashierFavoritesEmpty": "Belum ada barang favorit yang dapat dijual. Barang akan muncul setelah ada penjualan.",
   "@m54CashierFavoritesEmpty": {
     "description": "M54: No sellable favorites yet. Products appear here after they sell."
+  },
+  "m54MemberHistory": "Histori transaksi member",
+  "@m54MemberHistory": {
+    "description": "M54: Member transaction history"
+  },
+  "m54MemberHistoryDateInvalid": "Tanggal akhir harus sama dengan atau sesudah tanggal mulai.",
+  "@m54MemberHistoryDateInvalid": {
+    "description": "M54: Choose an end date on or after the start date."
+  },
+  "m54MemberNetPurchases": "Pembelian bersih periode ini",
+  "@m54MemberNetPurchases": {
+    "description": "M54: Net purchases in this period"
+  },
+  "m54MemberCurrentDebt": "Piutang saat ini",
+  "@m54MemberCurrentDebt": {
+    "description": "M54: Current outstanding debt"
+  },
+  "m54MemberSale": "Penjualan",
+  "@m54MemberSale": {
+    "description": "M54: Sale"
+  },
+  "m54MemberSaleReversal": "Pembalikan penjualan",
+  "@m54MemberSaleReversal": {
+    "description": "M54: Sale reversal"
+  },
+  "m54MemberSaleReturn": "Retur penjualan",
+  "@m54MemberSaleReturn": {
+    "description": "M54: Sale return"
+  },
+  "m54MemberRepayment": "Pembayaran piutang",
+  "@m54MemberRepayment": {
+    "description": "M54: Debt repayment"
+  },
+  "m54MemberRepaymentReversal": "Pembalikan pembayaran piutang",
+  "@m54MemberRepaymentReversal": {
+    "description": "M54: Debt repayment reversal"
+  },
+  "m54MemberRefund": "Pengembalian dana",
+  "@m54MemberRefund": {
+    "description": "M54: Refund"
+  },
+  "m54MemberHasDebt": "Punya utang",
+  "@m54MemberHasDebt": {
+    "description": "M54: Has outstanding debt"
+  },
+  "m54MemberLastAdded": "Terakhir ditambahkan",
+  "@m54MemberLastAdded": {
+    "description": "M54: Last added"
+  },
+  "m54MemberMostVisits": "Kunjungan terbanyak",
+  "@m54MemberMostVisits": {
+    "description": "M54: Most visits"
+  },
+  "m54MemberHighestDebt": "Utang terbanyak",
+  "@m54MemberHighestDebt": {
+    "description": "M54: Highest debt"
+  },
+  "m54MemberNameHelp": "Gunakan nama yang mudah Anda kenali. Pelanggan dengan nama sama dibedakan melalui nomor telepon.",
+  "@m54MemberNameHelp": {
+    "description": "M54: Choose a name you will recognize. Phone numbers distinguish customers with the same name."
   }
 }

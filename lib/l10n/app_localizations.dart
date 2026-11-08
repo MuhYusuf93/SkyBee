@@ -10255,6 +10255,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No sellable favorites yet. Products appear here after they sell.'**
   String get m54CashierFavoritesEmpty;
+
+  /// M54: Member transaction history
+  ///
+  /// In en, this message translates to:
+  /// **'Member transaction history'**
+  String get m54MemberHistory;
+
+  /// M54: Choose an end date on or after the start date.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an end date on or after the start date.'**
+  String get m54MemberHistoryDateInvalid;
+
+  /// M54: Net purchases in this period
+  ///
+  /// In en, this message translates to:
+  /// **'Net purchases in this period'**
+  String get m54MemberNetPurchases;
+
+  /// M54: Current outstanding debt
+  ///
+  /// In en, this message translates to:
+  /// **'Current outstanding debt'**
+  String get m54MemberCurrentDebt;
+
+  /// M54: Sale
+  ///
+  /// In en, this message translates to:
+  /// **'Sale'**
+  String get m54MemberSale;
+
+  /// M54: Sale reversal
+  ///
+  /// In en, this message translates to:
+  /// **'Sale reversal'**
+  String get m54MemberSaleReversal;
+
+  /// M54: Sale return
+  ///
+  /// In en, this message translates to:
+  /// **'Sale return'**
+  String get m54MemberSaleReturn;
+
+  /// M54: Debt repayment
+  ///
+  /// In en, this message translates to:
+  /// **'Debt repayment'**
+  String get m54MemberRepayment;
+
+  /// M54: Debt repayment reversal
+  ///
+  /// In en, this message translates to:
+  /// **'Debt repayment reversal'**
+  String get m54MemberRepaymentReversal;
+
+  /// M54: Refund
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get m54MemberRefund;
+
+  /// M54: Has outstanding debt
+  ///
+  /// In en, this message translates to:
+  /// **'Has outstanding debt'**
+  String get m54MemberHasDebt;
+
+  /// M54: Last added
+  ///
+  /// In en, this message translates to:
+  /// **'Last added'**
+  String get m54MemberLastAdded;
+
+  /// M54: Most visits
+  ///
+  /// In en, this message translates to:
+  /// **'Most visits'**
+  String get m54MemberMostVisits;
+
+  /// M54: Highest debt
+  ///
+  /// In en, this message translates to:
+  /// **'Highest debt'**
+  String get m54MemberHighestDebt;
+
+  /// M54: Choose a name you will recognize. Phone numbers distinguish customers with the same name.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a name you will recognize. Phone numbers distinguish customers with the same name.'**
+  String get m54MemberNameHelp;
 }
 
 class _AppLocalizationsDelegate

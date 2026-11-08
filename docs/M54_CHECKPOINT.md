@@ -298,3 +298,25 @@ Audit lokalisasi 1693/1049/245 dan audit PIN 106 cocok. Acceptance perangkat
 untuk skema ini terbuka.
 Analyzer akhir bersih. APK biasa 0.5.4+14 dengan perbaikan fokus terverifikasi
 pada tiga ABI dan alignment 16 KiB tanpa instalasi.
+
+## Tahap 4 · pencarian, daftar dan histori member · skema 52
+
+Checkout mencari prefix nama atau nomor HP dan membersihkan saran yang
+tertunda ketika pilihan member berubah. Daftar pemilik menambah filter
+saldo piutang efektif dan sort Nama, Terakhir ditambahkan, Kunjungan
+terbanyak, dan Utang terbanyak. Nama membuka histori. Edit dan Pulihkan
+memiliki aksi terpisah.
+
+Histori mengurutkan penjualan, reversal, retur, refund, dan pembayaran
+piutang berdasarkan waktu dan ID. Ringkasan pembelian bersih mencakup
+seluruh periode penjualan yang dipilih, memperhitungkan retur terhadap
+penjualan tersebut, dan menampilkan saldo piutang saat ini. Pelunasan
+tidak menambah kunjungan.
+
+Regresi gabungan mencatat 42 eksekusi lulus termasuk kasus yang sama pada
+runner berbeda. Empat kegagalan widget berasal dari dua kasus locale yang
+dijalankan pada dua runner. Finder dibatasi pada layar histori dan harness
+menunggu I/O reload sesudah keluar dari form. Kedua kasus lulus tes ulang
+dalam 17 detik. Analyzer bersih, audit lokalisasi 1708/1055/245 dan APK
+biasa tiga ABI/alignment 16 KiB lulus tanpa instalasi. Acceptance native
+terbuka.
