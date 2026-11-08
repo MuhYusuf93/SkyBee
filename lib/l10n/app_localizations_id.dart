@@ -5837,4 +5837,159 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m54PrepCreditOpen => 'Buka kredit supplier';
+
+  @override
+  String get m54RecoverySheetTitle => 'Lembar Pemulihan Toko';
+
+  @override
+  String get m54RecoverySheetSave => 'Simpan lembar pemulihan (PDF)';
+
+  @override
+  String get m54RecoverySheetShare => 'Bagikan lembar pemulihan';
+
+  @override
+  String get m54RecoverySheetExportWarning =>
+      'PDF memuat kunci rahasia yang dapat memulihkan cadangan toko. Simpan atau bagikan hanya ke tujuan yang Anda percayai. SkyBee akan meminta PIN pemilik sebelum menulis PDF.';
+
+  @override
+  String get m54RecoverySheetPaperWarning =>
+      'RAHASIA. Pemegang lembar ini dapat memulihkan cadangan toko Anda. Simpan di tempat yang hanya dapat Anda akses.';
+
+  @override
+  String get m54RecoverySheetWordHeading => '24 kata pemulihan';
+
+  @override
+  String get m54RecoverySheetQrHeading => 'QR pemulihan toko';
+
+  @override
+  String get m54RecoverySheetInstructions =>
+      'Di SkyBee, buka Kelola, Cadangan, lalu Pulihkan. Pilih arsip toko ini. Pindai QR atau masukkan 24 kata sesuai nomor, lalu validasi arsip.';
+
+  @override
+  String get m54RecoverySheetFooter =>
+      'Simpan lembar ini terpisah dari arsip cadangan toko.';
+
+  @override
+  String get m54RecoverySheetSaved =>
+      'PDF tersimpan dan hasil tulis terverifikasi.';
+
+  @override
+  String get m54RecoverySheetChooserOpened =>
+      'Pemilih tujuan berbagi Android dibuka.';
+
+  @override
+  String get m54RecoverySheetFailed =>
+      'Lembar pemulihan belum berhasil diproses. Coba lagi dari menu Cadangan.';
+
+  @override
+  String get m54ScanRecoveryQr => 'Pindai QR pemulihan';
+
+  @override
+  String get m54RecoverySheetQrHelp =>
+      'Arahkan kamera ke QR pada lembar pemulihan toko yang sesuai dengan arsip yang dipilih.';
+
+  @override
+  String get m54RecoveryQrReady => 'QR pemulihan terbaca.';
+
+  @override
+  String get m54RecoveryQrStoreMismatch =>
+      'QR pemulihan ini milik toko lain. Pilih arsip yang sesuai.';
+
+  @override
+  String get m54ProfitTrend => 'Tren laba kotor';
+
+  @override
+  String get m54ProfitDaily => 'Harian';
+
+  @override
+  String get m54ProfitWeekly => 'Mingguan';
+
+  @override
+  String get m54ProfitMonthly => 'Bulanan';
+
+  @override
+  String get m54ProfitCalendarPolicy =>
+      'Minggu dimulai Senin. Bucket mengikuti rentang terpilih.';
+
+  @override
+  String get m54ProfitChartLegend =>
+      'Batang menunjukkan laba kotor per periode. Tanda × berarti biaya belum lengkap.';
+
+  @override
+  String get m54ProfitPrevious => 'Periode sebelumnya';
+
+  @override
+  String get m54ProfitNext => 'Periode berikutnya';
+
+  @override
+  String get m54ProfitWriteDown => 'Kerugian karantina';
+
+  @override
+  String get m54DriveSelectionBusy =>
+      'Google masih menyelesaikan permintaan sebelumnya. Tutup dialog Google jika masih terbuka.';
+
+  @override
+  String get m54DriveSelectionInterrupted =>
+      'Pemilihan akun Google terputus. Buka kembali Cadangan dan coba lagi.';
+
+  @override
+  String get m54DriveSelectionNoAccount =>
+      'Google tidak mengembalikan akun yang dapat digunakan.';
+
+  @override
+  String get m54DriveScopeUnconfirmed =>
+      'Izin Drive belum dikonfirmasi untuk akun yang dipilih.';
+
+  @override
+  String get m54DriveSelectionUnconfirmed =>
+      'Google belum mengonfirmasi pemilihan akun. Jika pesan ini muncul setelah memilih akun, periksa konfigurasi OAuth untuk versi aplikasi ini.';
+
+  @override
+  String get m54DriveSelectionOAuth =>
+      'Konfigurasi OAuth aplikasi ditolak. Periksa client, ID paket, dan sidik jari sertifikat aplikasi.';
+
+  @override
+  String get m54DriveProviderUnavailable =>
+      'Layanan masuk Google tidak tersedia atau belum dikonfigurasi pada perangkat ini.';
+
+  @override
+  String get m54DriveScopeFailed =>
+      'Google gagal memberi izin Drive untuk akun yang dipilih.';
+
+  @override
+  String get m54DriveSelectionFailed =>
+      'Google gagal menyelesaikan pemilihan akun.';
+
+  @override
+  String get m54DriveSelectionTimeout =>
+      'Google tidak menyelesaikan pemilihan akun atau izin Drive dalam batas waktu.';
+
+  @override
+  String get m54LabelCodeFormat => 'Format kode pada label';
+
+  @override
+  String get m54LabelQrFormat => 'QR 2D';
+
+  @override
+  String get m54LabelCode128Format => 'Barcode 1D (Code 128)';
+
+  @override
+  String get m54LabelCode128Help =>
+      'Code 128 mencetak barcode barang yang tersimpan, termasuk nol di depan. Gunakan QR untuk identitas SkyBee yang tetap sama saat barcode barang berubah.';
+
+  @override
+  String get m54LabelCode128Media =>
+      'Code 128 memakai modul minimal dua titik dan ruang putih sepuluh modul di setiap sisi. Pilih ukuran label yang sesuai dengan printer dan media.';
+
+  @override
+  String get m54LabelCode128Unavailable =>
+      'Barang belum memiliki barcode yang dapat dicetak dalam Code 128. Isi barcode barang yang sesuai atau pilih QR.';
+
+  @override
+  String get m54LabelCode128DoesNotFit =>
+      'Barcode terlalu lebar untuk label ini. Gunakan label lebih lebar, kurangi offset, atau pilih QR.';
+
+  @override
+  String get m54DrivePlayServicesMissing =>
+      'Google Play Services tidak terpasang atau dinonaktifkan. Cadangan lokal tetap tersedia.';
 }

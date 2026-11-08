@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kasir_app/core/domain/app_error.dart';
+import 'package:kasir_app/core/security/recovery_mnemonic.dart';
 import 'package:kasir_app/features/barcode/domain/barcode_camera.dart';
 import 'package:kasir_app/features/barcode/presentation/barcode_scanner_controller.dart';
 
@@ -48,6 +49,43 @@ final class SyntheticBarcodeCamera implements BarcodeCamera {
 }
 
 void m53BarcodeControllerSuite() {
+  test(
+    'M54 recovery QR is accepted only in the dedicated recovery scanner',
+    () async {
+      const store = '00000000-0000-4000-8000-000000000001';
+      final qr = RecoveryMnemonic.recoveryQr(storeId: store, entropy: '0' * 64);
+      for (final recovery in [false, true]) {
+        final camera = SyntheticBarcodeCamera();
+        var accepted = 0;
+        final controller = BarcodeScannerController(
+          camera: camera,
+          authorize: () async {},
+          permission: (action) => action(),
+          recoveryOnly: recovery,
+          lookup: (value, requireIntent) async {
+            requireIntent();
+            expect(RecoveryMnemonic.parseRecoveryQr(value).storeId, store);
+            accepted++;
+            return const BarcodeFeedback('m54RecoveryQrReady', success: true);
+          },
+        );
+        try {
+          await controller.prepare();
+          if (recovery) {
+            camera.frame(qr.replaceFirst(':1:', ':2:'), 'QR_CODE');
+            expect(controller.error, 'm54RecoveryQrInvalid');
+            await controller.prepare();
+          }
+          camera.frame(qr, 'QR_CODE');
+          await controller.accept();
+          expect(accepted, recovery ? 1 : 0);
+          if (!recovery) expect(controller.error, 'm54RecoveryOnly');
+        } finally {
+          controller.dispose();
+        }
+      }
+    },
+  );
   test(
     'M54 cancelled camera lookup cannot mutate after cover then resume',
     () async {

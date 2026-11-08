@@ -3,6 +3,8 @@ import '../../../core/domain/value_types.dart';
 import '../../printer/domain/printer_profile.dart';
 import '../../printer/domain/printer_page_media.dart';
 
+enum ProductLabelFormat { qr, code128 }
+
 /// Label configuration is independent of the receipt profile, including feed,
 /// offsets and media. 203dpi-class page commands use eight nominal dots/mm.
 final class ProductLabelProfile {
@@ -18,8 +20,10 @@ final class ProductLabelProfile {
     this.moduleDots = 4,
     this.price = false,
     this.feed = 3,
+    this.codeFormat = ProductLabelFormat.qr,
   });
   final PrinterProtocol protocol;
+  final ProductLabelFormat codeFormat;
   final int widthMm, heightMm, gapMm, offsetXmm, offsetYmm, moduleDots, feed;
   final bool gap, gapConfirmed, price;
   int get widthDots => widthMm * 8;
@@ -90,6 +94,7 @@ final class ProductLabelProfile {
     'moduleDots': moduleDots,
     'price': price,
     'feed': feed,
+    if (codeFormat != ProductLabelFormat.qr) 'codeFormat': codeFormat.name,
   };
   factory ProductLabelProfile.fromJson(Map<String, dynamic> j) {
     if (j['format'] != 1 || j['protocol'] is! String) {
@@ -107,6 +112,11 @@ final class ProductLabelProfile {
       moduleDots: j['moduleDots'] as int,
       price: j['price'] as bool,
       feed: j['feed'] as int,
+      codeFormat: switch (j['codeFormat']) {
+        null || 'qr' => ProductLabelFormat.qr,
+        'code128' => ProductLabelFormat.code128,
+        _ => throw const FormatException('m53LabelProfileInvalid'),
+      },
     )..validate();
   }
 }
@@ -122,12 +132,14 @@ final class ProductLabelSnapshot {
     required this.price,
     required this.language,
     required this.capturedAt,
+    this.barcode,
   }) {
     ProductLabelCode.encode(product);
     if (productRevision < 0 ||
         name.trim().isEmpty ||
         name.length > 200 ||
         sku.length > 120 ||
+        (barcode != null && barcode!.length > 120) ||
         price.amountMinor < 0 ||
         !const ['id', 'en'].contains(language) ||
         capturedAt < 0 ||
@@ -138,6 +150,7 @@ final class ProductLabelSnapshot {
   final EntityId product;
   final int productRevision, capturedAt;
   final String name, sku, language;
+  final String? barcode;
   final Money price;
   String get code => ProductLabelCode.encode(product);
   Map<String, Object?> toJson() => {
@@ -151,6 +164,7 @@ final class ProductLabelSnapshot {
     'scale': price.scale,
     'language': language,
     'capturedAt': capturedAt,
+    if (barcode != null) 'barcode': barcode,
   };
   factory ProductLabelSnapshot.fromJson(Map<String, dynamic> j) {
     if (j['format'] != 1) {
@@ -168,6 +182,7 @@ final class ProductLabelSnapshot {
       ),
       language: j['language'] as String,
       capturedAt: j['capturedAt'] as int,
+      barcode: j['barcode'] as String?,
     );
   }
 }

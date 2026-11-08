@@ -912,6 +912,12 @@ Gunakan moving weighted average:
 
 Laporan yang tersedia: penjualan, HPP, laba kotor bulan ini, pembayaran yang dicatat pada periode, saldo piutang, serta ringkasan persediaan. Gunakan label `Laba kotor`, karena biaya operasional belum dicatat. Pisahkan pembayaran piutang lama dari penjualan baru. Pembatalan memperhitungkan pembalikan pada periode yang didokumentasikan, tanpa menghapus fakta transaksi asli.
 
+Grafik dan tabel pemilik mengikuti filter laporan dengan pilihan harian,
+mingguan mulai Senin, atau bulanan dalam zona waktu toko. Periode kosong
+bernilai nol. HPP yang belum diketahui tetap ditandai belum lengkap.
+Retur masuk pada tanggal posting dan kerugian karantina dipisahkan dari HPP.
+Ekspor CSV/XLSX menyertakan seluruh periode sesuai pengelompokan terpilih.
+
 Contoh wajib benar: stok 10 × Rp8.000 ditambah 10 × Rp10.000 menghasilkan biaya rata-rata Rp9.000. Penjualan 3 × Rp12.000 menghasilkan penjualan Rp36.000, HPP Rp27.000, laba kotor Rp9.000. Jika dibayar Rp10.000, saldo piutang Rp26.000; pelunasan berikutnya tidak menambah penjualan atau laba kotor.
 
 ## 11. Undo, pembatalan, dan arsip

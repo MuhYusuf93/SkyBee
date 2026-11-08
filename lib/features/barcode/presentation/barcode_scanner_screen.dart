@@ -20,6 +20,7 @@ class BarcodeScannerScreen extends StatefulWidget {
     this.registerUnknown,
     this.camera,
     this.onAccepted,
+    this.recoveryOnly = false,
   });
   final Future<BarcodeFeedback> Function(
     String code,
@@ -28,6 +29,7 @@ class BarcodeScannerScreen extends StatefulWidget {
   lookup;
   final Future<void> Function(String code)? registerUnknown;
   final bool inventory;
+  final bool recoveryOnly;
   final BarcodeCamera? camera;
   final VoidCallback? onAccepted;
   @override
@@ -50,15 +52,19 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
       services.management,
       services.cashierLock,
       inventory: widget.inventory,
+      recoveryOnly: widget.recoveryOnly,
     );
     controller = BarcodeScannerController(
       camera: widget.camera ?? services.barcodeCameraFactory(),
       authorize: access.authorize,
       permission: access.permission,
       lookup: widget.lookup,
+      recoveryOnly: widget.recoveryOnly,
     );
     management = services.management.sessionChanges.listen((_) {
-      if (widget.inventory) controller.suspend();
+      if (widget.inventory || widget.recoveryOnly) {
+        controller.suspend(clear: widget.recoveryOnly);
+      }
     });
     cashier = services.cashierLock.changes.listen((_) => controller.suspend());
     replacement = services.database.replacements.listen(
@@ -80,7 +86,8 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
   }
 
   @override
-  void didPushNext() => controller.suspend(inactive: true);
+  void didPushNext() =>
+      controller.suspend(inactive: true, clear: widget.recoveryOnly);
   @override
   void didPopNext() => controller.resume();
   @override
@@ -88,7 +95,7 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
     if (state == AppLifecycleState.resumed) {
       controller.resume();
     } else {
-      controller.suspend(inactive: true);
+      controller.suspend(inactive: true, clear: widget.recoveryOnly);
     }
   }
 
@@ -129,7 +136,14 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
     final body = ListenableBuilder(
       listenable: controller,
       builder: (context, _) => Scaffold(
-        appBar: AppBar(title: Text(tr(context, 'm53CameraScan'))),
+        appBar: AppBar(
+          title: Text(
+            tr(
+              context,
+              widget.recoveryOnly ? 'm54ScanRecoveryQr' : 'm53CameraScan',
+            ),
+          ),
+        ),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -138,7 +152,14 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(tr(context, 'm53CameraHelp')),
+                    Text(
+                      tr(
+                        context,
+                        widget.recoveryOnly
+                            ? 'm54RecoverySheetQrHelp'
+                            : 'm53CameraHelp',
+                      ),
+                    ),
                     if (controller.busy) const LinearProgressIndicator(),
                     if (controller.error != null)
                       Text(tr(context, controller.error!)),
@@ -161,9 +182,14 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
                       ),
                     ),
                     if (controller.value case final value?) ...[
-                      Text(tr(context, 'm53CameraSelectedCode')),
-                      SelectableText(value.text),
-                      if (controller.choices.length > 1) ...[
+                      if (widget.recoveryOnly)
+                        Text(tr(context, 'm54RecoveryQrReady'))
+                      else ...[
+                        Text(tr(context, 'm53CameraSelectedCode')),
+                        SelectableText(value.text),
+                      ],
+                      if (!widget.recoveryOnly &&
+                          controller.choices.length > 1) ...[
                         Text(tr(context, 'm53CameraEquivalentCodes')),
                         RadioGroup<String>(
                           groupValue: value.format,
@@ -242,9 +268,11 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
         ),
       ),
     );
-    return widget.inventory
+    return widget.inventory || widget.recoveryOnly
         ? ManagementGate(
-            capability: ManagementCapability.inventory,
+            capability: widget.recoveryOnly
+                ? ManagementCapability.owner
+                : ManagementCapability.inventory,
             child: body,
           )
         : body;

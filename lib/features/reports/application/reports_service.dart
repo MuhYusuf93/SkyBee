@@ -6,6 +6,7 @@ import '../../../data/database/database_coordinator.dart';
 import '../../../data/repositories/sqlite_reports_repository.dart';
 import '../../management/application/management_service.dart';
 import '../domain/report_models.dart';
+import '../domain/report_profit.dart';
 
 final class ReportsService {
   ReportsService(this.database, this.access)
@@ -73,6 +74,32 @@ final class ReportsService {
   Future<ReportSummary> summary(ReportFilter filter) => _protected(
     () async =>
         repository.summary(filter, access.clock.today(await timeZone()).iso),
+  );
+
+  Future<ReportProfitPage> profit(
+    ReportFilter filter,
+    ReportProfitPeriod period,
+    int page,
+  ) => _protected(
+    () => database.read((db) async {
+      await access.authorize(db);
+      final settings = (await db.query('store_settings', where: 'id=1')).single;
+      final calendar = ReportProfitCalendar(
+        filter,
+        period,
+        access.clock,
+        settings['time_zone'] as String,
+      );
+      final result = await SqliteReportsRepository.profitPageDatabase(
+        db,
+        calendar,
+        CurrencyPolicy.forCode(settings['currency_code'] as String),
+        database.schemaVersion,
+        page,
+      );
+      await access.authorize(db);
+      return result;
+    }),
   );
   Future<Page<ReportEntry, ReportCursor>> events(
     ReportFilter filter, {

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:archive/archive.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
@@ -10,11 +11,13 @@ import 'package:kasir_app/app/app_services.dart';
 import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/data/database/database_validation.dart';
+import 'package:kasir_app/data/repositories/sqlite_reports_repository.dart';
 import 'package:kasir_app/features/cashier/domain/cashier_models.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/reports/application/report_export_service.dart';
 import 'package:kasir_app/features/reports/application/report_destination_service.dart';
 import 'package:kasir_app/features/reports/domain/report_models.dart';
+import 'package:kasir_app/features/reports/domain/report_profit.dart';
 
 void m51ReportExportSuite(DatabaseFactory factory) {
   late Directory directory;
@@ -127,8 +130,8 @@ void m51ReportExportSuite(DatabaseFactory factory) {
           expect(pages, greaterThanOrEqualTo(5));
           expect(
             control.rows,
-            131,
-          ); //16 summary +3 sales +4 payments +2 items +106 inventory.
+            132,
+          ); //17 summary +3 sales +4 payments +2 items +106 inventory.
           if (Platform.isWindows) {
             final root = await Directory(
               'build/m51-report-reader',
@@ -150,6 +153,154 @@ void m51ReportExportSuite(DatabaseFactory factory) {
       }
     },
   );
+  test('M54 profit buckets seek indexed ranges and export all pages', () async {
+    final zone = await app.reports.timeZone();
+    final clock = app.management.clock;
+    final today = clock.today(zone);
+    final from = CalendarDate(
+      DateTime.parse(
+        today.iso,
+      ).subtract(const Duration(days: 25)).toIso8601String().substring(0, 10),
+    );
+    final id = await app.inventory.create(
+      ProductInput(
+        name: 'PUBLIC cost unknown',
+        sellingPrice: Money(12000, 'IDR', 0),
+      ),
+      stockTracking: false,
+      referenceCost: CostAmount.fromMoney(Money(5000, 'IDR', 0)),
+    );
+    // Simulate a migrated untracked master that predates mandatory reference cost.
+    await db.exclusive(
+      (sql) => sql.update(
+        'products',
+        {'reference_cost_micros': null, 'cost_complete': 0},
+        where: 'id=?',
+        whereArgs: [id.value],
+      ),
+    );
+    final cart = await app.cart.open();
+    final filled = await app.cart.add(cart.id, id);
+    await app.checkout.submit(
+      filled.id,
+      filled.revision,
+      const CheckoutInput(),
+    );
+    final filter = await app.reports.period(from, today);
+    final calendar = ReportProfitCalendar(
+      filter,
+      ReportProfitPeriod.day,
+      clock,
+      zone,
+    );
+    final initial = await app.reports.profit(filter, ReportProfitPeriod.day, 0);
+    final tail = await app.reports.profit(filter, ReportProfitPeriod.day, 1);
+    expect(initial.buckets, hasLength(24));
+    expect(
+      initial.buckets.every((b) => b.grossProfitMicros == BigInt.zero),
+      isTrue,
+    );
+    expect(tail.buckets, hasLength(2));
+    expect(tail.buckets.last.salesMinor, 12000);
+    expect(tail.buckets.last.costMicros, isNull);
+    expect(tail.buckets.last.grossProfitMicros, isNull);
+    expect(tail.buckets.last.writeDownMicros, 0);
+    expect((await app.reports.summary(filter)).grossProfitMicros, isNull);
+    final query = reportSalesTotalsQuery(
+      filter,
+      tail.currency,
+      buckets: calendar.page(1),
+      costKnowledge: true,
+      saleReturns: true,
+    );
+    final plan = await db.read(
+      (sql) => sql.rawQuery('EXPLAIN QUERY PLAN ${query.sql}', query.arguments),
+    );
+    for (final alias in ['s', 'r']) {
+      expect(
+        plan.any((row) {
+          final line = row['detail'].toString();
+          return line.contains('SEARCH $alias USING') &&
+              line.contains('created_at>? AND created_at<?');
+        }),
+        isTrue,
+        reason: plan.toString(),
+      );
+    }
+    for (final xlsx in [false, true]) {
+      final result = await app.reportExport.create(
+        filter,
+        xlsx: xlsx,
+        profitPeriod: ReportProfitPeriod.day,
+        control: ReportExportControl(),
+      );
+      try {
+        final bytes = await result.file.readAsBytes();
+        if (xlsx) {
+          final archive = ZipDecoder().decodeBytes(bytes);
+          final sheet = archive.findFile('xl/worksheets/sheet2.xml')!;
+          final text = utf8.decode(sheet.content);
+          expect(RegExp(r'<row r=').allMatches(text), hasLength(27));
+          expect(text, contains(today.iso));
+          expect(text, contains('incomplete'));
+        } else {
+          final rows = const LineSplitter()
+              .convert(utf8.decode(bytes))
+              .where((line) => line.startsWith('"gross_profit",'))
+              .toList();
+          expect(rows, hasLength(26));
+          expect(rows.first, contains('"0","0","0"'));
+          expect(rows.last, contains('"12000","12000","","incomplete"'));
+        }
+      } finally {
+        await result.dispose();
+      }
+    }
+  });
+
+  test('M54 calendar clips month and week at year and DST boundaries', () {
+    final clock = app.management.clock;
+    const zone = 'America/New_York';
+    ReportFilter selection(String from, String through) => ReportFilter(
+      start: clock.dayStart(CalendarDate(from), zone),
+      end: clock.dayStart(CalendarDate(through), zone, nextDay: true),
+    );
+    final year = selection('2026-12-30', '2027-01-05');
+    final monthly = ReportProfitCalendar(
+      year,
+      ReportProfitPeriod.month,
+      clock,
+      zone,
+    );
+    final weekly = ReportProfitCalendar(
+      year,
+      ReportProfitPeriod.week,
+      clock,
+      zone,
+    );
+    expect(monthly.page(0).map((r) => (r.first.iso, r.last.iso)), [
+      ('2026-12-30', '2026-12-31'),
+      ('2027-01-01', '2027-01-05'),
+    ]);
+    expect(weekly.page(0).map((r) => (r.first.iso, r.last.iso)), [
+      ('2026-12-30', '2027-01-03'),
+      ('2027-01-04', '2027-01-05'),
+    ]);
+    final spring = selection('2027-03-13', '2027-03-15');
+    final daily = ReportProfitCalendar(
+      spring,
+      ReportProfitPeriod.day,
+      clock,
+      zone,
+    );
+    expect(
+      daily
+          .page(0)
+          .map((r) => r.end.dateTime.difference(r.start.dateTime).inHours),
+      [24, 23, 24],
+    );
+  });
+
   test(
     'cancel, IO fault and authorization revocation remove only own staged export',
     () async {

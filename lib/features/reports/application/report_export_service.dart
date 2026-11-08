@@ -8,6 +8,7 @@ import '../../../data/database/database_coordinator.dart';
 import '../../../data/repositories/sqlite_reports_repository.dart';
 import '../../management/application/management_service.dart';
 import '../domain/report_models.dart';
+import '../domain/report_profit.dart';
 import 'report_file_writer.dart';
 
 final class ReportExportCancelled implements Exception {
@@ -63,6 +64,7 @@ final class ReportExportService {
   Future<ReportArtifact> create(
     ReportFilter filter, {
     required bool xlsx,
+    ReportProfitPeriod? profitPeriod,
     required ReportExportControl control,
     void Function(int rows)? progress,
     Future<void> Function()? testPage,
@@ -76,6 +78,7 @@ final class ReportExportService {
       return _create(
         filter,
         xlsx: xlsx,
+        profitPeriod: profitPeriod,
         control: control,
         progress: progress,
         testPage: testPage,
@@ -86,6 +89,7 @@ final class ReportExportService {
   Future<ReportArtifact> _create(
     ReportFilter filter, {
     required bool xlsx,
+    required ReportProfitPeriod? profitPeriod,
     required ReportExportControl control,
     void Function(int rows)? progress,
     Future<void> Function()? testPage,
@@ -154,6 +158,11 @@ final class ReportExportService {
               summary.grossProfitMicros?.toString() ?? '',
               'millionth_minor',
             ),
+            if (profitPeriod != null || summary.writeDownMicros != 0)
+              'quarantine_write_down': (
+                summary.writeDownMicros?.toString() ?? '',
+                'millionth_minor',
+              ),
             'net_payments': (summary.paymentsMinor.toString(), 'minor'),
             'checkout_payments': (
               summary.checkoutPaymentsMinor.toString(),
@@ -192,6 +201,45 @@ final class ReportExportService {
             });
           }
           await page();
+          if (profitPeriod != null) {
+            final calendar = ReportProfitCalendar(
+              filter,
+              profitPeriod,
+              access.clock,
+              zone,
+            );
+            await writer.start('Gross profit');
+            for (var index = 0; index < calendar.pages; index++) {
+              control.check();
+              final buckets = await SqliteReportsRepository.profitPageDatabase(
+                sql,
+                calendar,
+                currency,
+                database.schemaVersion,
+                index,
+              );
+              for (final bucket in buckets.buckets) {
+                final range = bucket.range;
+                add('gross_profit', {
+                  'kind': profitPeriod.name,
+                  'bucket_first_local': range.first.iso,
+                  'bucket_last_local': range.last.iso,
+                  'period_start_utc': range.start.dateTime.toIso8601String(),
+                  'period_end_exclusive_utc': range.end.dateTime
+                      .toIso8601String(),
+                  'amount_minor': BigInt.from(bucket.salesMinor),
+                  'amount_decimal': decimal(bucket.salesMinor, currency.scale),
+                  'cost_micros': bucket.costMicros?.toString(),
+                  'gross_profit_micros': bucket.grossProfitMicros,
+                  'write_down_micros': bucket.writeDownMicros?.toString(),
+                  'cost_status': bucket.costMicros == null
+                      ? 'incomplete'
+                      : 'complete',
+                });
+              }
+              await page();
+            }
+          }
           for (final section in ReportSection.values) {
             await writer.start(
               section == ReportSection.sales ? 'Sales' : 'Payments',
@@ -226,6 +274,8 @@ final class ReportExportService {
                   'amount_minor': row.amountMinor.toString(),
                   'amount_decimal': decimal(row.amountMinor, currency.scale),
                   'cost_micros': row.costMicros?.toString(),
+                  if (row.isSaleReturn)
+                    'write_down_micros': row.writeDownMicros?.toString(),
                   'cost_status': row.costMicros == null
                       ? 'incomplete'
                       : 'complete',

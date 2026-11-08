@@ -131,10 +131,16 @@ final class BackupService {
 
   /// Explicit fresh print authorization is independent of revealing/copying.
   /// Never passes the code to a job record, filesystem name or diagnostic.
-  Future<String> recoveryForPrint({FreshActionProof? claim}) async {
+  Future<String> recoveryForPrint({FreshActionProof? claim}) =>
+      _protectedRecoveryCode('recoveryPrint', claim);
+
+  Future<String> _protectedRecoveryCode(
+    String purpose,
+    FreshActionProof? claim,
+  ) async {
     void fresh() => claim == null
-        ? access.requireFresh('recoveryPrint')
-        : access.requireClaim(claim, 'recoveryPrint');
+        ? access.requireFresh(purpose)
+        : access.requireClaim(claim, purpose);
     await access.authorizeCurrent();
     fresh();
     final value = await platform.key('backup-master-v1', allowCreate: false);
@@ -144,6 +150,37 @@ final class BackupService {
       throw const FormatException('backupCodeInvalid');
     }
     return value;
+  }
+
+  Future<String> _ensureStoreIdOn(DatabaseExecutor db) async {
+    await db.rawInsert(
+      'INSERT OR IGNORE INTO m5_store(id,store_id) VALUES(1,?)',
+      [ids.v4()],
+    );
+    final rows = await db.query('m5_store', columns: ['store_id']);
+    return rows.single['store_id'] as String;
+  }
+
+  /// Printing/exporting before the first archive uses the same stable store
+  /// identity that a later archive will authenticate.
+  Future<({String entropy, String storeId, String store, String date})>
+  recoveryForSheet(FreshActionProof claim) async {
+    const purpose = 'recoverySheet';
+    final entropy = await _protectedRecoveryCode(purpose, claim);
+    return database.transaction((db) async {
+      await access.authorize(db);
+      access.requireClaim(claim, purpose);
+      final storeId = await _ensureStoreIdOn(db);
+      final settings = (await db.query('store_settings')).single;
+      await access.authorize(db);
+      access.requireClaim(claim, purpose);
+      return (
+        entropy: entropy,
+        storeId: storeId,
+        store: settings['name'] as String,
+        date: access.clock.today(settings['time_zone'] as String).iso,
+      );
+    });
   }
 
   /// Copies only an explicitly displayed recovery code after a fresh PIN gate
@@ -235,16 +272,7 @@ final class BackupService {
         await EncryptedDatabase.requireCipher(db);
         await DatabaseValidation.integrity(db);
         snapshotSchema = await db.getVersion();
-        await db.rawInsert(
-          'INSERT OR IGNORE INTO m5_store(id,store_id) VALUES(1,?)',
-          [ids.v4()],
-        );
-        storeId =
-            (await db.query(
-                  'm5_store',
-                  columns: ['store_id'],
-                )).single['store_id']
-                as String;
+        storeId = await _ensureStoreIdOn(db);
         settings = (await db.query('store_settings')).single;
         final available = await _free(directory.path);
         if (available <
@@ -607,7 +635,11 @@ final class BackupService {
     int generation,
   ) async {
     await access.authorizeCurrent();
-    final code = normalizeCode(enteredCode);
+    final input = enteredCode.trim();
+    final qr = RecoveryMnemonic.isRecoveryQr(input)
+        ? RecoveryMnemonic.parseRecoveryQr(input)
+        : null;
+    final code = qr?.entropy ?? normalizeCode(input);
     if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(code)) {
       throw const FormatException('backupCodeInvalid');
     }
@@ -635,6 +667,10 @@ final class BackupService {
             )
             as Map<String, dynamic>,
       );
+      if (qr != null &&
+          qr.storeId.toLowerCase() != manifest.storeId.toLowerCase()) {
+        throw const FormatException('m54RecoveryQrStoreMismatch');
+      }
       if (manifest.schema > Schema.version) {
         throw StateError('backupNewerSchema');
       }

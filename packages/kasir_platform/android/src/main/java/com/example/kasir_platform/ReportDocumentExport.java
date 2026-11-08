@@ -25,13 +25,15 @@ final class ReportDocumentExport {
     private Activity activity;
     private String ownedPause;
     private MethodChannel.Result pending;
+    private boolean pendingRecovery;
     private final Executor io;
     private final Handler main=new Handler(Looper.getMainLooper());
     private final Map<String,Target> targets=new HashMap<>();
     private static final class Target {
         final Activity owner; final Uri uri; final long deadline=SystemClock.elapsedRealtime()+120000;
+        final boolean recovery;
         volatile boolean cancelled=false, writing=false;
-        Target(Activity owner,Uri uri){this.owner=owner;this.uri=uri;}
+        Target(Activity owner,Uri uri,boolean recovery){this.owner=owner;this.uri=uri;this.recovery=recovery;}
         void remove(){try{DocumentsContract.deleteDocument(owner.getContentResolver(),uri);}catch(Exception ignored){}}
     }
     ReportDocumentExport(Executor io){this.io=io;synchronized(LOCK){INSTANCES.add(this);}}
@@ -70,13 +72,16 @@ final class ReportDocumentExport {
     private static boolean paused(){return BARRIER.paused();}
     void choose(MethodChannel.Result result,String name,String mime){
         boolean csv="text/csv".equals(mime), xlsx="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(mime);
+        boolean recovery="application/pdf".equals(mime);
         if(paused()||activity==null||pending!=null||!targets.isEmpty()||!activity.hasWindowFocus()){
             result.error("report_unavailable","Report picker unavailable.",null);return;
         }
-        if(name==null||name.length()>100||!name.matches("[A-Za-z0-9_-]+\\.(csv|xlsx)")||(!csv&&!xlsx)||!name.endsWith(csv?".csv":".xlsx")){
+        if(name==null||name.length()>100||!name.matches("[A-Za-z0-9_-]+\\.(csv|xlsx|pdf)")||
+                (!csv&&!xlsx&&!recovery)||!name.endsWith(csv?".csv":xlsx?".xlsx":".pdf")){
             result.error("report_name_invalid","Report name invalid.",null);return;
         }
         pending=result;
+        pendingRecovery=recovery;
         Intent intent=new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType(mime).putExtra(Intent.EXTRA_TITLE,name);
         try{activity.startActivityForResult(intent,REQUEST);}catch(Exception error){pending=null;result.error("report_unavailable","Report picker unavailable.",null);}
     }
@@ -85,45 +90,61 @@ final class ReportDocumentExport {
         if(pending==null){
             // A cancelled picker can return a newly created empty document late.
             // It never receives bytes; only that returned target may be removed.
-            if(activity!=null&&code==Activity.RESULT_OK&&data!=null&&data.getData()!=null){Target late=new Target(activity,data.getData());io.execute(late::remove);}
+            if(activity!=null&&code==Activity.RESULT_OK&&data!=null&&data.getData()!=null){Target late=new Target(activity,data.getData(),false);io.execute(late::remove);}
             return true;
         }
         MethodChannel.Result result=pending;pending=null;
         if(code!=Activity.RESULT_OK||data==null||data.getData()==null){result.success(null);return true;}
         if(activity==null||paused()){result.error("report_interrupted","Report interrupted.",null);return true;}
-        String token=UUID.randomUUID().toString();Target target=new Target(activity,data.getData());targets.put(token,target);
+        String token=UUID.randomUUID().toString();Target target=new Target(activity,data.getData(),pendingRecovery);targets.put(token,target);
         main.postDelayed(()->{if(targets.get(token)==target&&!target.writing){targets.remove(token);target.cancelled=true;io.execute(target::remove);}},120000);
         result.success(token);return true;
     }
     void cancel(String token){Target target=targets.remove(token);if(target!=null){target.cancelled=true;if(!target.writing)io.execute(target::remove);}}
+    private interface Source { InputStream open() throws IOException; }
+
     void write(MethodChannel.Result result,String token,File file){
+        write(result,token,file.length(),false,()->new FileInputStream(file),()->{});
+    }
+
+    void writeRecovery(MethodChannel.Result result,String token,byte[] bytes){
+        if(!RecoverySheetPdf.isPdf(bytes)){
+            if(bytes!=null)Arrays.fill(bytes,(byte)0);
+            cancel(token);result.error("recovery_pdf_invalid","Recovery sheet invalid.",null);return;
+        }
+        write(result,token,bytes.length,true,()->new ByteArrayInputStream(bytes),
+                ()->Arrays.fill(bytes,(byte)0));
+    }
+
+    private void write(MethodChannel.Result result,String token,long size,boolean recovery,
+                       Source source,Runnable cleanup){
         Target target=targets.get(token);
         synchronized(LOCK){
-            if(target==null||target.writing||target.cancelled||activity==null||!activity.hasWindowFocus()||SystemClock.elapsedRealtime()>target.deadline){
-                cancel(token);result.error("report_expired","Reauthorize report export.",null);return;
+            if(target==null||target.recovery!=recovery||target.writing||target.cancelled||activity==null||!activity.hasWindowFocus()||SystemClock.elapsedRealtime()>target.deadline){
+                cleanup.run();cancel(token);result.error("report_expired","Reauthorize report export.",null);return;
             }
-            if(!BARRIER.beginWrite()){cancel(token);result.error("report_expired","Reauthorize report export.",null);return;}
+            if(!BARRIER.beginWrite()){cleanup.run();cancel(token);result.error("report_expired","Reauthorize report export.",null);return;}
             target.writing=true;
         }
         io.execute(()->{
             try{
-                if(file.length()==0)throw new IOException();
+                if(size<=0)throw new IOException();
                 byte[] expected,actual;
-                try(InputStream input=new FileInputStream(file);OutputStream output=target.owner.getContentResolver().openOutputStream(target.uri,"wt")){
-                    if(output==null)throw new IOException();expected=copy(target,input,output,file.length());output.flush();
+                try(InputStream input=source.open();OutputStream output=target.owner.getContentResolver().openOutputStream(target.uri,"wt")){
+                    if(output==null)throw new IOException();expected=copy(target,input,output,size);output.flush();
                 }
                 try(InputStream input=target.owner.getContentResolver().openInputStream(target.uri)){
-                    if(input==null)throw new IOException();actual=copy(target,input,new OutputStream(){public void write(int b){}public void write(byte[] b,int o,int n){}},file.length());
+                    if(input==null)throw new IOException();actual=copy(target,input,new OutputStream(){public void write(int b){}public void write(byte[] b,int o,int n){}},size);
                 }
                 if(target.cancelled||!Arrays.equals(expected,actual))throw new IOException();
                 main.post(()->{targets.remove(token);result.success(true);});
             }catch(Exception error){target.remove();main.post(()->{targets.remove(token);result.error("report_io_failed","Report write or verification failed.",null);});}
-            finally{BARRIER.endWrite();}
+            finally{cleanup.run();BARRIER.endWrite();}
         });
     }
     private static byte[] copy(Target target,InputStream input,OutputStream output,long maximum)throws Exception{
         MessageDigest hash=MessageDigest.getInstance("SHA-256");byte[] buffer=new byte[65536];long count=0;int n;
-        try{while((n=input.read(buffer))!=-1){if(target.cancelled||SystemClock.elapsedRealtime()>target.deadline||(count+=n)>maximum)throw new IOException();output.write(buffer,0,n);hash.update(buffer,0,n);}return hash.digest();}
+        try{while((n=input.read(buffer))!=-1){if(target.cancelled||SystemClock.elapsedRealtime()>target.deadline||(count+=n)>maximum)throw new IOException();output.write(buffer,0,n);hash.update(buffer,0,n);}if(count!=maximum)throw new IOException();return hash.digest();}
         finally{Arrays.fill(buffer,(byte)0);}
     }
 }

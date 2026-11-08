@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:uuid/uuid.dart';
 import 'package:kasir_app/app/app_version.dart';
 import 'package:kasir_app/core/domain/value_types.dart';
+import 'package:kasir_app/core/security/recovery_mnemonic.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/cashier/domain/cashier_models.dart';
 import 'package:kasir_app/features/backup/domain/backup_manifest.dart';
@@ -133,7 +134,27 @@ void main() {
             await DurablePromotion.digest(File(target.databasePath)),
             targetHash,
           );
-          incoming = await other.backups.inspect(archive.file, code);
+          final recoveryQr = RecoveryMnemonic.recoveryQr(
+            storeId: archive.manifest.storeId,
+            entropy: code,
+          );
+          await expectLater(
+            other.backups.inspect(
+              archive.file,
+              RecoveryMnemonic.recoveryQr(
+                storeId: const Uuid().v4(),
+                entropy: code,
+              ),
+            ),
+            throwsA(
+              isA<FormatException>().having(
+                (error) => error.message,
+                'message',
+                'm54RecoveryQrStoreMismatch',
+              ),
+            ),
+          );
+          incoming = await other.backups.inspect(archive.file, recoveryQr);
           final cancelled = incoming;
           await cancelled.dispose();
           incoming = null;

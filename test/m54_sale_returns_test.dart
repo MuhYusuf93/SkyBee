@@ -16,6 +16,7 @@ import 'package:kasir_app/features/cashier/domain/sale_return_models.dart';
 import 'package:kasir_app/features/cashier/domain/sale_refund_models.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/reports/domain/report_models.dart';
+import 'package:kasir_app/features/reports/domain/report_profit.dart';
 import 'package:kasir_app/features/settings/domain/store_feature_policy.dart';
 
 void main() {
@@ -118,6 +119,28 @@ void main() {
           ownerProof: proof,
         );
         expect(result.refundDue.amountMinor, 12000);
+        final filter = await app.reports.period(
+          CalendarDate('2027-02-28'),
+          CalendarDate('2027-03-02'),
+        );
+        final sales = await app.reports.summary(filter);
+        final trend = await app.reports.profit(
+          filter,
+          ReportProfitPeriod.week,
+          0,
+        );
+        expect(trend.buckets.map((b) => b.salesMinor), [0, -12000]);
+        final returned = trend.buckets.last;
+        expect(returned.range.first.iso, '2027-03-01');
+        expect(returned.range.last.iso, '2027-03-02');
+        expect(returned.costMicros, -5000 * CostAmount.scale);
+        expect(returned.writeDownMicros, 5000 * CostAmount.scale);
+        expect(
+          returned.grossProfitMicros,
+          BigInt.from(-7000 * CostAmount.scale),
+        );
+        expect(sales.grossProfitMicros, returned.grossProfitMicros);
+        expect(sales.writeDownMicros, returned.writeDownMicros);
         expect((await app.inventory.detail(id)).quantity, 999);
         expect(
           (await database.read(
@@ -339,7 +362,8 @@ void main() {
         );
         final summary = await app.reports.summary(range);
         expect(summary.salesMinor, 0);
-        expect(summary.costMicros, 8000 * CostAmount.scale);
+        expect(summary.costMicros, 0);
+        expect(summary.writeDownMicros, 8000 * CostAmount.scale);
         expect(summary.returnCount, 2);
         expect(summary.paymentsMinor, 10000);
         expect(summary.receivablesMinor, 0);

@@ -145,6 +145,11 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
                         val width = call.argument<Int>("width") ?: 0
                         val height = call.argument<Int>("height") ?: 0
                         val packed = call.argument<ByteArray>("pixels")
+                        val format = when (call.argument<String>("format")) {
+                            null, "QR_CODE" -> BarcodeFormat.QR_CODE
+                            "CODE_128" -> BarcodeFormat.CODE_128
+                            else -> error("Unsupported fixture format")
+                        }
                         require(width in 192..640 && height in 192..960)
                         val stride = (width + 7) / 8
                         require(packed != null && packed.size == stride * height)
@@ -156,7 +161,7 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
                         }
                         val decoded = MultiFormatReader().decode(
                             BinaryBitmap(HybridBinarizer(RGBLuminanceSource(width, height, pixels))),
-                            mapOf(DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE)))
+                            mapOf(DecodeHintType.POSSIBLE_FORMATS to listOf(format)))
                         result.success(mapOf("text" to decoded.text,
                             "format" to decoded.barcodeFormat.name, "physicalCamera" to false))
                     } catch (_: Exception) { result.error("DECODE_FAILED", null, null) }

@@ -13,15 +13,21 @@ final class BarcodeAccess {
     this.management,
     this.cashier, {
     required this.inventory,
+    this.recoveryOnly = false,
   }) : generation = database.generation;
   final DatabaseCoordinator database;
   final ManagementService management;
   final CashierLockService cashier;
   final bool inventory;
+  final bool recoveryOnly;
   final int generation;
   Future<void> authorize() => database.read((sql) async {
     if (generation != database.generation) {
       throw const AppError('m53CameraStoreChanged');
+    }
+    if (recoveryOnly) {
+      await management.authorize(sql);
+      return;
     }
     if (!(await SettingsService.policyOn(sql)).barcode) {
       throw const AppError('m53CameraFeatureOff');
@@ -40,7 +46,7 @@ final class BarcodeAccess {
     Future<CameraAvailability> Function() action,
   ) async {
     await authorize();
-    final result = inventory
+    final result = inventory || recoveryOnly
         ? await management.systemInteraction(action)
         : await action();
     await authorize();

@@ -1,1 +1,16 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <queries>
+        <package android:name="com.google.android.gms" />
+    </queries>
+    <application>
+        <provider
+            android:name="com.example.kasir_platform.RecoverySheetFileProvider"
+            android:authorities="${applicationId}.recovery"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/recovery_share_paths" />
+        </provider>
+    </application>
+</manifest>

@@ -149,6 +149,7 @@ final class ProductLabelService {
         'revision',
         'name',
         'sku',
+        'barcode',
         'selling_price_rupiah',
         'currency_code',
         'currency_scale',
@@ -173,6 +174,7 @@ final class ProductLabelService {
       productRevision: row['revision'] as int,
       name: _labelText(row['name'] as String, 200),
       sku: _labelText(row['sku'] as String, 120),
+      barcode: row['barcode'] as String?,
       price: Money(
         row['selling_price_rupiah'] as int,
         row['currency_code'] as String,
@@ -251,6 +253,12 @@ final class ProductLabelService {
     final value = await _snapshot(db, product, expectedRevision, language);
     // Fit is checked before committing a job or connecting to any printer.
     QrLabelLayout(value, media, hardware);
+    if (media.codeFormat == ProductLabelFormat.code128) {
+      final matches = await ProductCodeResolver.lookup(db, value.barcode!);
+      if (matches.length != 1 || matches.single['id'] != product.value) {
+        throw const AppError('m3AmbiguousCode');
+      }
+    }
     final id = const IdGenerator().next().value,
         now = access.clock.milliseconds;
     await db.insert('print_jobs', {

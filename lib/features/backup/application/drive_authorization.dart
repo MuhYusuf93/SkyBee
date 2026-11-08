@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
@@ -78,6 +79,15 @@ final class DriveAuthorizationRequired implements Exception {
   String toString() => 'driveNeedsAuthorization';
 }
 
+/// Only a fixed message key crosses the UI boundary. SDK details can contain
+/// account or credential data and are deliberately discarded.
+final class DriveSelectionFailure implements Exception {
+  const DriveSelectionFailure(this.message);
+  final String message;
+  @override
+  String toString() => message;
+}
+
 /// The Web client ID is public build configuration, never a client secret. The
 /// latest ID supplied by the owner is the default and can be overridden per build.
 final class GoogleDriveAuthorization implements DriveTokenSource {
@@ -88,15 +98,108 @@ final class GoogleDriveAuthorization implements DriveTokenSource {
         '223840564378-1l1bqc7c31fidirriotb1bt88ceh0s0i.apps.googleusercontent.com',
   );
   static Future<void>? _initialization;
+  bool _connecting = false;
   Future<void> initialize() => _initialization ??= GoogleSignIn.instance
       .initialize(serverClientId: webClientId);
-  Future<GoogleSignInAccount> connect() async {
-    await initialize();
-    final account = await GoogleSignIn.instance.authenticate(
-      scopeHint: [scope],
+
+  Future<bool> _playServicesMissing() async {
+    if (!Platform.isAndroid) return false;
+    try {
+      return !await const KasirPlatform().call<bool>(
+        'googlePlayServicesEnabled',
+      );
+    } on PlatformException {
+      return false;
+    } on MissingPluginException {
+      return false;
+    }
+  }
+
+  Future<GoogleSignInAccount> connect({
+    required bool Function() isCurrent,
+  }) async {
+    if (_connecting) {
+      throw const DriveSelectionFailure('m54DriveSelectionBusy');
+    }
+    _connecting = true;
+    var timedOut = false;
+    void requireCurrent() {
+      if (timedOut || !isCurrent()) {
+        throw const DriveSelectionFailure('m54DriveSelectionInterrupted');
+      }
+    }
+
+    Future<GoogleSignInAccount> select() async {
+      var inScopeRequest = false;
+      try {
+        await initialize();
+        requireCurrent();
+        final account = await GoogleSignIn.instance.authenticate();
+        requireCurrent();
+        if (account.id.isEmpty || account.email.isEmpty) {
+          throw const DriveSelectionFailure('m54DriveSelectionNoAccount');
+        }
+        inScopeRequest = true;
+        final tokens = await GoogleSignInPlatform.instance
+            .clientAuthorizationTokensForScopes(
+              ClientAuthorizationTokensForScopesParameters(
+                request: AuthorizationRequestDetails(
+                  scopes: [scope],
+                  userId: account.id,
+                  email: account.email,
+                  promptIfUnauthorized: true,
+                ),
+              ),
+            );
+        requireCurrent();
+        if (tokens == null || tokens.accessToken.isEmpty) {
+          throw const DriveSelectionFailure('m54DriveScopeUnconfirmed');
+        }
+        return account;
+      } on GoogleSignInException catch (error) {
+        if ((error.code ==
+                    GoogleSignInExceptionCode.providerConfigurationError ||
+                error.code == GoogleSignInExceptionCode.unknownError) &&
+            await _playServicesMissing()) {
+          throw const DriveSelectionFailure('m54DrivePlayServicesMissing');
+        }
+        final message = switch (error.code) {
+          // Credential Manager can return canceled for both dismissals and
+          // OAuth setup failures. The scope intent has its own ambiguity.
+          GoogleSignInExceptionCode.canceled =>
+            inScopeRequest
+                ? 'm54DriveScopeUnconfirmed'
+                : 'm54DriveSelectionUnconfirmed',
+          GoogleSignInExceptionCode.clientConfigurationError =>
+            'm54DriveSelectionOAuth',
+          GoogleSignInExceptionCode.providerConfigurationError =>
+            'm54DriveProviderUnavailable',
+          GoogleSignInExceptionCode.interrupted ||
+          GoogleSignInExceptionCode.uiUnavailable =>
+            'm54DriveSelectionInterrupted',
+          GoogleSignInExceptionCode.userMismatch => 'm5DriveAccountMismatch',
+          GoogleSignInExceptionCode.unknownError =>
+            inScopeRequest ? 'm54DriveScopeFailed' : 'm54DriveSelectionFailed',
+        };
+        throw DriveSelectionFailure(message);
+      } on PlatformException {
+        throw DriveSelectionFailure(
+          inScopeRequest ? 'm54DriveScopeFailed' : 'm54DriveSelectionFailed',
+        );
+      } finally {
+        // Timeout returns to the route. The SDK still owns its Activity until
+        // the original call drains, so a second tap cannot open another.
+        _connecting = false;
+      }
+    }
+
+    return select().timeout(
+      const Duration(seconds: 60),
+      onTimeout: () {
+        timedOut = true;
+        throw const DriveSelectionFailure('m54DriveSelectionTimeout');
+      },
     );
-    await account.authorizationClient.authorizeScopes([scope]);
-    return account;
   }
 
   Future<void> disconnect() async {

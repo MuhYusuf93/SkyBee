@@ -12,10 +12,12 @@ final class BarcodeScannerController extends ChangeNotifier {
     required this.authorize,
     required this.permission,
     required this.lookup,
+    this.recoveryOnly = false,
   }) {
     _events = camera.events.listen(_event);
   }
   final BarcodeCamera camera;
+  final bool recoveryOnly;
   final Future<void> Function() authorize;
   final Future<CameraAvailability> Function(
     Future<CameraAvailability> Function(),
@@ -122,13 +124,27 @@ final class BarcodeScannerController extends ChangeNotifier {
     armed = false;
     unawaited(camera.pause());
     if (event is BarcodeDecoded) {
-      if (RecoveryMnemonic.isRecoveryQr(event.value.text)) {
+      final recovery = RecoveryMnemonic.isRecoveryQr(event.value.text);
+      if ((!recoveryOnly && recovery) ||
+          (recoveryOnly && (!recovery || event.value.format != 'QR_CODE'))) {
         value = null;
         choices = const [];
         feedback = null;
-        error = 'm54RecoveryOnly';
+        error = recoveryOnly ? 'm54RecoveryQrInvalid' : 'm54RecoveryOnly';
         _emit();
         return;
+      }
+      if (recoveryOnly) {
+        try {
+          RecoveryMnemonic.parseRecoveryQr(event.value.text);
+        } on FormatException {
+          value = null;
+          choices = const [];
+          feedback = null;
+          error = 'm54RecoveryQrInvalid';
+          _emit();
+          return;
+        }
       }
       value = event.value;
       choices = List.unmodifiable(event.value.choices);

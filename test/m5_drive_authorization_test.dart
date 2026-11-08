@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -58,6 +59,33 @@ class SilentPolicyFixture implements DrivePolicyStore {
   Future<DrivePolicy> read() async => value;
   @override
   Future<void> write(DrivePolicy policy) async => value = policy;
+}
+
+class InteractiveGoogleFixture extends SilentGoogleFixture {
+  final account = Completer<AuthenticationResults>();
+  int scopeRequests = 0;
+  static const selected = AuthenticationResults(
+    user: GoogleSignInUserData(
+      id: 'selected-id',
+      email: 'selected@example.invalid',
+    ),
+    authenticationTokens: AuthenticationTokenData(idToken: null),
+  );
+  @override
+  Future<AuthenticationResults> authenticate(AuthenticateParameters params) =>
+      account.future;
+  @override
+  Future<ClientAuthorizationTokenData?> clientAuthorizationTokensForScopes(
+    ClientAuthorizationTokensForScopesParameters params,
+  ) async {
+    scopeRequests++;
+    expect(params.request.promptIfUnauthorized, isTrue);
+    expect(params.request.userId, selected.user.id);
+    expect(params.request.email, selected.user.email);
+    expect(params.request.scopes, [GoogleDriveAuthorization.scope]);
+    if (failure != null) throw failure!;
+    return result;
+  }
 }
 
 class SilentWorkGate implements DatabaseGate {
@@ -122,6 +150,57 @@ void m5DriveAuthorizationSuite(
     policies = SilentPolicyFixture();
     requests = 0;
   });
+  test(
+    'M54 Drive scopes are bound to the selected account and late results stop',
+    () async {
+      Matcher message(String code) => isA<DriveSelectionFailure>().having(
+        (error) => error.message,
+        'message',
+        code,
+      );
+      for (final outcome in ['selected', 'empty', 'scopeCancel', 'late']) {
+        final sdk = InteractiveGoogleFixture();
+        GoogleSignInPlatform.instance = sdk;
+        var current = true;
+        if (outcome == 'selected') {
+          sdk.result = const ClientAuthorizationTokenData(
+            accessToken: 'PUBLIC',
+          );
+        }
+        if (outcome == 'scopeCancel') {
+          sdk.failure = const GoogleSignInException(
+            code: GoogleSignInExceptionCode.canceled,
+            description: 'sensitive fixture detail',
+          );
+        }
+        final pending = auth.connect(isCurrent: () => current);
+        await Future<void>.delayed(Duration.zero);
+        if (outcome == 'late') {
+          await expectLater(
+            auth.connect(isCurrent: () => true),
+            throwsA(message('m54DriveSelectionBusy')),
+          );
+          current = false;
+        }
+        sdk.account.complete(InteractiveGoogleFixture.selected);
+        if (outcome == 'selected') {
+          expect((await pending).id, InteractiveGoogleFixture.selected.user.id);
+        } else {
+          await expectLater(
+            pending,
+            throwsA(
+              message(
+                outcome == 'late'
+                    ? 'm54DriveSelectionInterrupted'
+                    : 'm54DriveScopeUnconfirmed',
+              ),
+            ),
+          );
+        }
+        expect(sdk.scopeRequests, outcome == 'late' ? 0 : 1);
+      }
+    },
+  );
   test(
     'silent missing authorization becomes actionable without HTTP or UI',
     () async {

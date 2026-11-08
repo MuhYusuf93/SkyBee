@@ -196,6 +196,7 @@ final class ManagementService {
       'restore',
       'storeReset',
       'recoveryPrint',
+      'recoverySheet',
       'receiptException',
       'saleReturnOverride',
       'archivePurge',

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import '../../../core/security/recovery_mnemonic.dart';
+import '../../../core/domain/app_error.dart';
 import 'package:kasir_platform/kasir_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,10 @@ import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/management_session_provider.dart';
 import '../../management/presentation/managed_text_field.dart';
 import '../../management/presentation/fresh_authentication.dart';
+import '../../management/presentation/protected_dialog.dart';
+import '../../barcode/domain/barcode_camera.dart';
+import '../../barcode/presentation/barcode_scanner_screen.dart';
+import '../application/recovery_sheet_service.dart';
 import 'backup_settings_provider.dart';
 import 'backup_export_name_dialog.dart';
 import 'backup_retention_screen.dart';
@@ -65,6 +70,7 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
   final confirmation = TextEditingController(), code = TextEditingController();
   bool codeSaved = false, replaceConfirmed = false, printedCopyStored = false;
   bool _paperFlow = false;
+  String? _sheetMessage;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -154,6 +160,135 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
       state!.app.management.clearFresh('recoveryPrint');
       if (mounted) setState(() => _paperFlow = false);
     }
+  }
+
+  Future<void> _recoverySheet({required bool share}) async {
+    if (_paperFlow) return;
+    final app = state!.app;
+    final service = app.recoverySheets;
+    final route = ModalRoute.of(context);
+    final generation = app.database.generation;
+    final language = Localizations.localeOf(context).languageCode;
+    final action = share ? 'm54RecoverySheetShare' : 'm54RecoverySheetSave';
+    RecoverySheetDestination? target;
+    var handedOff = false;
+    void requireIntent() {
+      if (!mounted ||
+          route?.isCurrent != true ||
+          app.database.generation != generation) {
+        throw const AppError('m53CameraStoreChanged');
+      }
+    }
+
+    setState(() {
+      _paperFlow = true;
+      _sheetMessage = null;
+    });
+    try {
+      final accepted = await showManagedDialog<bool>(
+        context: context,
+        builder: (dialog) => ProtectedDialog(
+          child: AlertDialog(
+            scrollable: true,
+            title: Text(tr(dialog, action)),
+            content: Text(tr(dialog, 'm54RecoverySheetExportWarning')),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialog, false),
+                child: Text(tr(dialog, 'cancel')),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(dialog, true),
+                child: Text(tr(dialog, 'continueAction')),
+              ),
+            ],
+          ),
+        ),
+      );
+      if (!mounted || accepted != true) return;
+      requireIntent();
+      if (!share) {
+        target = await service.choose();
+        if (!mounted) return;
+        if (target == null) {
+          setState(() => _sheetMessage = 'm5Cancelled');
+          return;
+        }
+      }
+      requireIntent();
+      if (!await freshAuthentication(
+        context,
+        RecoverySheetService.ownerPurpose,
+        pinOnly: true,
+        waitForExit: true,
+      )) {
+        return;
+      }
+      requireIntent();
+      final proof = app.management.claimFresh(
+        RecoverySheetService.ownerPurpose,
+      );
+      handedOff = true;
+      await service.output(
+        proof,
+        language,
+        target: target,
+        requireIntent: requireIntent,
+      );
+      if (mounted) {
+        setState(
+          () => _sheetMessage = share
+              ? 'm54RecoverySheetChooserOpened'
+              : 'm54RecoverySheetSaved',
+        );
+      }
+    } on Object catch (error) {
+      if (mounted) {
+        setState(
+          () => _sheetMessage = error is AppError
+              ? error.message
+              : 'm54RecoverySheetFailed',
+        );
+      }
+    } finally {
+      app.management.clearFresh(RecoverySheetService.ownerPurpose);
+      if (target != null && !handedOff) {
+        try {
+          await service.cancel(target);
+        } on Object {
+          // The native picker also expires uncommitted targets independently.
+        }
+      }
+      if (mounted) setState(() => _paperFlow = false);
+    }
+  }
+
+  Future<void> _scanRecovery() async {
+    final app = state!.app;
+    final generation = app.database.generation;
+    final selected = state!.selected;
+    String? scanned;
+    final result = await Navigator.of(context).push<String>(
+      MaterialPageRoute(
+        builder: (scanner) => BarcodeScannerScreen(
+          recoveryOnly: true,
+          lookup: (value, requireIntent) async {
+            requireIntent();
+            scanned = value;
+            return const BarcodeFeedback('m54RecoveryQrReady', success: true);
+          },
+          onAccepted: () => Navigator.of(scanner).pop(scanned),
+        ),
+      ),
+    );
+    if (!mounted ||
+        result == null ||
+        app.database.generation != generation ||
+        !identical(state!.selected, selected) ||
+        !app.management.isUnlocked) {
+      return;
+    }
+    code.text = result;
   }
 
   String shopTime(BackupSettingsProvider s, int? value) => value == null
@@ -344,6 +479,44 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                               label: Text(tr(context, 'm51PrintRecovery')),
                             ),
                             Text(tr(context, 'm51RecoveryPrintStoredOnly')),
+                            Wrap(
+                              spacing: 8,
+                              children: [
+                                OutlinedButton.icon(
+                                  key: const ValueKey('save-recovery-sheet'),
+                                  onPressed:
+                                      s.busy ||
+                                          _paperFlow ||
+                                          !s.recoveryConfigured
+                                      ? null
+                                      : () => _recoverySheet(share: false),
+                                  icon: const Icon(
+                                    Icons.picture_as_pdf_outlined,
+                                  ),
+                                  label: Text(
+                                    tr(context, 'm54RecoverySheetSave'),
+                                  ),
+                                ),
+                                OutlinedButton.icon(
+                                  key: const ValueKey('share-recovery-sheet'),
+                                  onPressed:
+                                      s.busy ||
+                                          _paperFlow ||
+                                          !s.recoveryConfigured
+                                      ? null
+                                      : () => _recoverySheet(share: true),
+                                  icon: const Icon(Icons.share_outlined),
+                                  label: Text(
+                                    tr(context, 'm54RecoverySheetShare'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (_sheetMessage case final notice?)
+                              Semantics(
+                                liveRegion: true,
+                                child: Text(tr(context, notice)),
+                              ),
                             if (s.recoveryPrinted) ...[
                               CheckboxListTile(
                                 value: printedCopyStored,
@@ -554,6 +727,12 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                             ),
                             if (s.selected != null) ...[
                               Text(tr(context, 'm5ArchiveSelected')),
+                              OutlinedButton.icon(
+                                key: const ValueKey('scan-recovery-sheet'),
+                                onPressed: s.busy ? null : _scanRecovery,
+                                icon: const Icon(Icons.qr_code_scanner),
+                                label: Text(tr(context, 'm54ScanRecoveryQr')),
+                              ),
                               ManagedTextField(
                                 key: const ValueKey('backup-recovery-entry'),
                                 controller: code,
@@ -673,6 +852,10 @@ class _BackupSettingsScreenState extends State<BackupSettingsScreen> {
                               FilledButton(
                                 onPressed: s.busy ? null : s.acceptAccount,
                                 child: Text(tr(context, 'm5UseAccount')),
+                              ),
+                              TextButton(
+                                onPressed: s.busy ? null : s.discardAccount,
+                                child: Text(tr(context, 'cancel')),
                               ),
                             ],
                             if (s.policy?.connected == true) ...[

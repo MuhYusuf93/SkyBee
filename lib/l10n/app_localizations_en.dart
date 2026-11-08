@@ -5814,4 +5814,157 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m54PrepCreditOpen => 'Open supplier credit';
+
+  @override
+  String get m54RecoverySheetTitle => 'Store Recovery Sheet';
+
+  @override
+  String get m54RecoverySheetSave => 'Save recovery sheet (PDF)';
+
+  @override
+  String get m54RecoverySheetShare => 'Share recovery sheet';
+
+  @override
+  String get m54RecoverySheetExportWarning =>
+      'This PDF contains a secret key that can restore your store backup. Save or share it only with a destination you trust. SkyBee will ask for the owner PIN before writing the PDF.';
+
+  @override
+  String get m54RecoverySheetPaperWarning =>
+      'CONFIDENTIAL. Anyone with this sheet can restore your store backup. Keep it somewhere only you can access.';
+
+  @override
+  String get m54RecoverySheetWordHeading => '24 recovery words';
+
+  @override
+  String get m54RecoverySheetQrHeading => 'Store recovery QR';
+
+  @override
+  String get m54RecoverySheetInstructions =>
+      'In SkyBee, open Manage, Backup, then Restore. Select an archive for this store. Scan the QR or enter the 24 words in order, then validate the archive.';
+
+  @override
+  String get m54RecoverySheetFooter =>
+      'Keep this sheet separately from the store backup archive.';
+
+  @override
+  String get m54RecoverySheetSaved => 'PDF saved and verified.';
+
+  @override
+  String get m54RecoverySheetChooserOpened => 'Android share chooser opened.';
+
+  @override
+  String get m54RecoverySheetFailed =>
+      'Could not complete the recovery sheet action. Try again from Backup.';
+
+  @override
+  String get m54ScanRecoveryQr => 'Scan recovery QR';
+
+  @override
+  String get m54RecoverySheetQrHelp =>
+      'Aim at the recovery QR for the store whose archive you selected.';
+
+  @override
+  String get m54RecoveryQrReady => 'Recovery QR read.';
+
+  @override
+  String get m54RecoveryQrStoreMismatch =>
+      'This recovery QR belongs to a different store. Select the matching archive.';
+
+  @override
+  String get m54ProfitTrend => 'Gross profit trend';
+
+  @override
+  String get m54ProfitDaily => 'Daily';
+
+  @override
+  String get m54ProfitWeekly => 'Weekly';
+
+  @override
+  String get m54ProfitMonthly => 'Monthly';
+
+  @override
+  String get m54ProfitCalendarPolicy =>
+      'Weeks start Monday. Buckets follow the selected date range.';
+
+  @override
+  String get m54ProfitChartLegend =>
+      'Bars show gross profit per period. × marks incomplete cost.';
+
+  @override
+  String get m54ProfitPrevious => 'Previous periods';
+
+  @override
+  String get m54ProfitNext => 'Next periods';
+
+  @override
+  String get m54ProfitWriteDown => 'Quarantine write-down';
+
+  @override
+  String get m54DriveSelectionBusy =>
+      'Google is still finishing the previous request. Close its dialog if it is still open.';
+
+  @override
+  String get m54DriveSelectionInterrupted =>
+      'Google account selection was interrupted. Return to Backup and try again.';
+
+  @override
+  String get m54DriveSelectionNoAccount =>
+      'Google did not return an account that could be used.';
+
+  @override
+  String get m54DriveScopeUnconfirmed =>
+      'Drive access was not confirmed for the selected account.';
+
+  @override
+  String get m54DriveSelectionUnconfirmed =>
+      'Google did not confirm account selection. If this appeared after choosing an account, check the OAuth configuration for this app build.';
+
+  @override
+  String get m54DriveSelectionOAuth =>
+      'The app\'s OAuth configuration was rejected. Check the client, package ID and app certificate fingerprint.';
+
+  @override
+  String get m54DriveProviderUnavailable =>
+      'Google sign-in services are unavailable or unconfigured on this device.';
+
+  @override
+  String get m54DriveScopeFailed =>
+      'Google could not authorize Drive for the selected account.';
+
+  @override
+  String get m54DriveSelectionFailed =>
+      'Google could not complete account selection.';
+
+  @override
+  String get m54DriveSelectionTimeout =>
+      'Google did not finish account selection or Drive authorization in time.';
+
+  @override
+  String get m54LabelCodeFormat => 'Label code format';
+
+  @override
+  String get m54LabelQrFormat => '2D QR';
+
+  @override
+  String get m54LabelCode128Format => '1D barcode (Code 128)';
+
+  @override
+  String get m54LabelCode128Help =>
+      'Code 128 prints the product’s saved barcode, including leading zeros. Use QR for a SkyBee identity that stays the same when the product barcode changes.';
+
+  @override
+  String get m54LabelCode128Media =>
+      'Code 128 uses modules of at least two dots and a ten-module white margin on each side. Choose a label size that matches your printer and media.';
+
+  @override
+  String get m54LabelCode128Unavailable =>
+      'This product has no barcode suitable for Code 128. Enter a supported product barcode or choose QR.';
+
+  @override
+  String get m54LabelCode128DoesNotFit =>
+      'The barcode is too wide for this label. Use a wider label, reduce the offset, or choose QR.';
+
+  @override
+  String get m54DrivePlayServicesMissing =>
+      'Google Play services is missing or disabled. Local backups remain available.';
 }

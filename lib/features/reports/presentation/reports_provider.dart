@@ -6,6 +6,7 @@ import '../../../core/pagination/paged_controller.dart';
 import '../../management/domain/management_role.dart';
 import '../application/reports_service.dart';
 import '../domain/report_models.dart';
+import '../domain/report_profit.dart';
 
 /// Only this report route owns its filters, summary and bounded detail cache.
 /// Committed mutations reset the cursor generation; obsolete reads are ignored.
@@ -26,6 +27,12 @@ final class ReportsProvider extends ChangeNotifier {
   PagedController<ReportEntry, ReportCursor, ReportFilter>? pager;
   ReportFilter? filter;
   ReportSummary? summary;
+  ReportProfitPeriod profitPeriod = ReportProfitPeriod.day;
+  ReportProfitPage? profitPage;
+  String? profitError;
+  bool profitLoading = false;
+  final _profitCache = <(ReportProfitPeriod, int, int), ReportProfitPage>{};
+  int _profitRequest = 0;
   ReconciliationResult? reconciliation;
   String zone = 'Asia/Jakarta';
   String? error;
@@ -56,6 +63,7 @@ final class ReportsProvider extends ChangeNotifier {
 
   Future<void> change(ReportFilter value) async {
     if (_disposed) return;
+    if (filter != value) profitPage = null;
     filter = value;
     pager ??= PagedController(
       filter: value,
@@ -80,8 +88,12 @@ final class ReportsProvider extends ChangeNotifier {
     error = null;
     summary = null;
     reconciliation = null;
+    _profitCache.clear();
+    final page = profitPage?.index ?? 0;
+    profitPage = null;
     notifyListeners();
     unawaited(pager!.reset(selected));
+    unawaited(loadProfit(profitPeriod, page: page));
     try {
       final result = await service.summary(selected);
       if (_disposed || generation != _generation) return;
@@ -91,6 +103,40 @@ final class ReportsProvider extends ChangeNotifier {
     } finally {
       if (!_disposed && generation == _generation) {
         loading = false;
+        notifyListeners();
+      }
+    }
+  }
+
+  /// Results belong to this route's filter and committed revision. Reusing a
+  /// small set of pages keeps returning to a chart instant without retaining
+  /// all the calendar buckets for a long selection.
+  Future<void> loadProfit(ReportProfitPeriod period, {int page = 0}) async {
+    final selected = filter;
+    if (_disposed || selected == null) return;
+    final request = ++_profitRequest;
+    final revision = service.database.revision;
+    final key = (period, page, revision);
+    profitPeriod = period;
+    profitError = null;
+    profitPage = _profitCache.remove(key);
+    profitLoading = profitPage == null;
+    notifyListeners();
+    try {
+      final result = profitPage ?? await service.profit(selected, period, page);
+      if (_disposed ||
+          request != _profitRequest ||
+          revision != service.database.revision) {
+        return;
+      }
+      _profitCache[key] = result;
+      if (_profitCache.length > 6) _profitCache.remove(_profitCache.keys.first);
+      profitPage = result;
+    } on Object catch (e) {
+      if (!_disposed && request == _profitRequest) profitError = safeError(e);
+    } finally {
+      if (!_disposed && request == _profitRequest) {
+        profitLoading = false;
         notifyListeners();
       }
     }

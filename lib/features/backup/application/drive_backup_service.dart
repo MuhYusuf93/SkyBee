@@ -235,7 +235,13 @@ final class DriveBackupService implements ScheduledDriveBackup {
 
   Future<DrivePolicy> chooseAccount() async {
     await access.authorizeCurrent();
-    final account = await access.systemInteraction(authorization.connect);
+    final generation = database.generation;
+    final account = await access.systemInteraction(
+      () => authorization.connect(
+        isCurrent: () =>
+            access.hasSystemInteraction && database.generation == generation,
+      ),
+    );
     // Not saved and not enabled; PIN is still required to accept this pending
     // identity after Android's activity transition has locked management.
     return DrivePolicy(
@@ -247,12 +253,18 @@ final class DriveBackupService implements ScheduledDriveBackup {
 
   Future<void> acceptAccount(DrivePolicy pending) async {
     await access.authorizeCurrent();
+    final generation = database.generation;
+    final previous = await policies.read();
     final transport = _transport();
     try {
       final user = await transport.identify(pending, initial: true);
       await access.authorizeCurrent();
       await database.exclusive((db) async {
         await access.authorize(db);
+        if (database.generation != generation ||
+            (await policies.read()).generation != previous.generation) {
+          throw const DriveFailure('driveConsentChanged');
+        }
         await policies.write(
           DrivePolicy(
             generation: const Uuid().v4(),

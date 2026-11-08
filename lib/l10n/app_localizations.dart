@@ -10441,6 +10441,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open supplier credit'**
   String get m54PrepCreditOpen;
+
+  /// M54: Store Recovery Sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Store Recovery Sheet'**
+  String get m54RecoverySheetTitle;
+
+  /// M54: Save recovery sheet (PDF)
+  ///
+  /// In en, this message translates to:
+  /// **'Save recovery sheet (PDF)'**
+  String get m54RecoverySheetSave;
+
+  /// M54: Share recovery sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Share recovery sheet'**
+  String get m54RecoverySheetShare;
+
+  /// M54: This PDF contains a secret key that can restore your store backup. Save or share it only with a destination you trust. SkyBee will ask for the owner PIN before writing the PDF.
+  ///
+  /// In en, this message translates to:
+  /// **'This PDF contains a secret key that can restore your store backup. Save or share it only with a destination you trust. SkyBee will ask for the owner PIN before writing the PDF.'**
+  String get m54RecoverySheetExportWarning;
+
+  /// M54: CONFIDENTIAL. Anyone with this sheet can restore your store backup. Keep it somewhere only you can access.
+  ///
+  /// In en, this message translates to:
+  /// **'CONFIDENTIAL. Anyone with this sheet can restore your store backup. Keep it somewhere only you can access.'**
+  String get m54RecoverySheetPaperWarning;
+
+  /// M54: 24 recovery words
+  ///
+  /// In en, this message translates to:
+  /// **'24 recovery words'**
+  String get m54RecoverySheetWordHeading;
+
+  /// M54: Store recovery QR
+  ///
+  /// In en, this message translates to:
+  /// **'Store recovery QR'**
+  String get m54RecoverySheetQrHeading;
+
+  /// M54: In SkyBee, open Manage, Backup, then Restore. Select an archive for this store. Scan the QR or enter the 24 words in order, then validate the archive.
+  ///
+  /// In en, this message translates to:
+  /// **'In SkyBee, open Manage, Backup, then Restore. Select an archive for this store. Scan the QR or enter the 24 words in order, then validate the archive.'**
+  String get m54RecoverySheetInstructions;
+
+  /// M54: Keep this sheet separately from the store backup archive.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep this sheet separately from the store backup archive.'**
+  String get m54RecoverySheetFooter;
+
+  /// M54: PDF saved and verified.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF saved and verified.'**
+  String get m54RecoverySheetSaved;
+
+  /// M54: Android share chooser opened.
+  ///
+  /// In en, this message translates to:
+  /// **'Android share chooser opened.'**
+  String get m54RecoverySheetChooserOpened;
+
+  /// M54: Could not complete the recovery sheet action. Try again from Backup.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not complete the recovery sheet action. Try again from Backup.'**
+  String get m54RecoverySheetFailed;
+
+  /// M54: Scan recovery QR
+  ///
+  /// In en, this message translates to:
+  /// **'Scan recovery QR'**
+  String get m54ScanRecoveryQr;
+
+  /// M54: Aim at the recovery QR for the store whose archive you selected.
+  ///
+  /// In en, this message translates to:
+  /// **'Aim at the recovery QR for the store whose archive you selected.'**
+  String get m54RecoverySheetQrHelp;
+
+  /// M54: Recovery QR read.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery QR read.'**
+  String get m54RecoveryQrReady;
+
+  /// M54: This recovery QR belongs to a different store. Select the matching archive.
+  ///
+  /// In en, this message translates to:
+  /// **'This recovery QR belongs to a different store. Select the matching archive.'**
+  String get m54RecoveryQrStoreMismatch;
+
+  /// M54: Gross profit trend
+  ///
+  /// In en, this message translates to:
+  /// **'Gross profit trend'**
+  String get m54ProfitTrend;
+
+  /// M54: Daily
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get m54ProfitDaily;
+
+  /// M54: Weekly
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get m54ProfitWeekly;
+
+  /// M54: Monthly
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get m54ProfitMonthly;
+
+  /// M54: Weeks start Monday. Buckets follow the selected date range.
+  ///
+  /// In en, this message translates to:
+  /// **'Weeks start Monday. Buckets follow the selected date range.'**
+  String get m54ProfitCalendarPolicy;
+
+  /// M54: Bars show gross profit per period. × marks incomplete cost.
+  ///
+  /// In en, this message translates to:
+  /// **'Bars show gross profit per period. × marks incomplete cost.'**
+  String get m54ProfitChartLegend;
+
+  /// M54: Previous periods
+  ///
+  /// In en, this message translates to:
+  /// **'Previous periods'**
+  String get m54ProfitPrevious;
+
+  /// M54: Next periods
+  ///
+  /// In en, this message translates to:
+  /// **'Next periods'**
+  String get m54ProfitNext;
+
+  /// M54: Quarantine write-down
+  ///
+  /// In en, this message translates to:
+  /// **'Quarantine write-down'**
+  String get m54ProfitWriteDown;
+
+  /// M54: Google is still finishing the previous request. Close its dialog if it is still open.
+  ///
+  /// In en, this message translates to:
+  /// **'Google is still finishing the previous request. Close its dialog if it is still open.'**
+  String get m54DriveSelectionBusy;
+
+  /// M54: Google account selection was interrupted. Return to Backup and try again.
+  ///
+  /// In en, this message translates to:
+  /// **'Google account selection was interrupted. Return to Backup and try again.'**
+  String get m54DriveSelectionInterrupted;
+
+  /// M54: Google did not return an account that could be used.
+  ///
+  /// In en, this message translates to:
+  /// **'Google did not return an account that could be used.'**
+  String get m54DriveSelectionNoAccount;
+
+  /// M54: Drive access was not confirmed for the selected account.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive access was not confirmed for the selected account.'**
+  String get m54DriveScopeUnconfirmed;
+
+  /// M54: Google did not confirm account selection. If this appeared after choosing an account, check the OAuth configuration for this app build.
+  ///
+  /// In en, this message translates to:
+  /// **'Google did not confirm account selection. If this appeared after choosing an account, check the OAuth configuration for this app build.'**
+  String get m54DriveSelectionUnconfirmed;
+
+  /// M54: The app's OAuth configuration was rejected. Check the client, package ID and app certificate fingerprint.
+  ///
+  /// In en, this message translates to:
+  /// **'The app\'s OAuth configuration was rejected. Check the client, package ID and app certificate fingerprint.'**
+  String get m54DriveSelectionOAuth;
+
+  /// M54: Google sign-in services are unavailable or unconfigured on this device.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in services are unavailable or unconfigured on this device.'**
+  String get m54DriveProviderUnavailable;
+
+  /// M54: Google could not authorize Drive for the selected account.
+  ///
+  /// In en, this message translates to:
+  /// **'Google could not authorize Drive for the selected account.'**
+  String get m54DriveScopeFailed;
+
+  /// M54: Google could not complete account selection.
+  ///
+  /// In en, this message translates to:
+  /// **'Google could not complete account selection.'**
+  String get m54DriveSelectionFailed;
+
+  /// M54: Google did not finish account selection or Drive authorization in time.
+  ///
+  /// In en, this message translates to:
+  /// **'Google did not finish account selection or Drive authorization in time.'**
+  String get m54DriveSelectionTimeout;
+
+  /// M54: Label code format
+  ///
+  /// In en, this message translates to:
+  /// **'Label code format'**
+  String get m54LabelCodeFormat;
+
+  /// M54: 2D QR
+  ///
+  /// In en, this message translates to:
+  /// **'2D QR'**
+  String get m54LabelQrFormat;
+
+  /// M54: 1D barcode (Code 128)
+  ///
+  /// In en, this message translates to:
+  /// **'1D barcode (Code 128)'**
+  String get m54LabelCode128Format;
+
+  /// M54: Code 128 prints the product’s saved barcode, including leading zeros. Use QR for a SkyBee identity that stays the same when the product barcode changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Code 128 prints the product’s saved barcode, including leading zeros. Use QR for a SkyBee identity that stays the same when the product barcode changes.'**
+  String get m54LabelCode128Help;
+
+  /// M54: Code 128 uses modules of at least two dots and a ten-module white margin on each side. Choose a label size that matches your printer and media.
+  ///
+  /// In en, this message translates to:
+  /// **'Code 128 uses modules of at least two dots and a ten-module white margin on each side. Choose a label size that matches your printer and media.'**
+  String get m54LabelCode128Media;
+
+  /// M54: This product has no barcode suitable for Code 128. Enter a supported product barcode or choose QR.
+  ///
+  /// In en, this message translates to:
+  /// **'This product has no barcode suitable for Code 128. Enter a supported product barcode or choose QR.'**
+  String get m54LabelCode128Unavailable;
+
+  /// M54: The barcode is too wide for this label. Use a wider label, reduce the offset, or choose QR.
+  ///
+  /// In en, this message translates to:
+  /// **'The barcode is too wide for this label. Use a wider label, reduce the offset, or choose QR.'**
+  String get m54LabelCode128DoesNotFit;
+
+  /// M54: Google Play services is missing or disabled. Local backups remain available.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play services is missing or disabled. Local backups remain available.'**
+  String get m54DrivePlayServicesMissing;
 }
 
 class _AppLocalizationsDelegate

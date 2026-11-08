@@ -48,6 +48,7 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
     private final Set<String> protectedScreens = new HashSet<>();
     private final DocumentPicker picker=new DocumentPicker(IO);
     private final ReportDocumentExport reportPicker=new ReportDocumentExport(IO);
+    private final RecoverySheetShare recoveryShare=new RecoverySheetShare(IO);
     private MethodChannel.Result permissionResult;
     private static final ExecutorService IO = Executors.newCachedThreadPool();
     private static final Map<String,Semaphore> GATES = new ConcurrentHashMap<>();
@@ -60,6 +61,7 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
 
     @Override public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         context = binding.getApplicationContext();
+        recoveryShare.prune(context);
         bluetooth=new PrinterBluetooth(context);
         usb=new PrinterUsb(context,IO);
         biometrics=new StrongBiometricsBridge(context);
@@ -164,6 +166,15 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
             try{reportPicker.write(result,call.argument("token"),privateFile(call.argument("path")));}
             catch(Exception error){result.error("report_path_invalid","Invalid report staging path.",null);}return;
         }
+        if(call.method.equals("writeRecoverySheet")){
+            reportPicker.writeRecovery(result,call.argument("token"),call.argument("bytes"));
+            return;
+        }
+        if(call.method.equals("shareRecoverySheet")){
+            recoveryShare.share(activity==null?null:activity.getActivity(),
+                    call.argument("bytes"),result);
+            return;
+        }
         if(call.method.equals("btDiscover")){
             try{bluetooth.discover().whenComplete((answer,error)->main.post(()->{
                 if(error!=null)result.error("bluetooth_failed","Discovery failed.",null);else result.success(answer);
@@ -172,6 +183,11 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
         IO.execute(() -> {
             try {
                 Object answer = switch (call.method) {
+                    case "renderRecoverySheet" -> {
+                        byte[] matrix=call.argument("qr");
+                        try { yield RecoverySheetPdf.render(call); }
+                        finally { if(matrix!=null)Arrays.fill(matrix,(byte)0); }
+                    }
                     case "key" -> { synchronized (SECRETS) { yield readKey(call.argument("name"), Boolean.TRUE.equals(call.argument("create"))); } }
                     case "saveSecret" -> { synchronized (SECRETS) { writeSecret(call.argument("name"), call.argument("secret")); } yield true; }
                     case "removeSecret" -> { synchronized (SECRETS) { removeSecret(call.argument("name")); } yield true; }
@@ -200,6 +216,14 @@ public final class KasirPlatformPlugin implements FlutterPlugin, MethodChannel.M
                         yield true;
                     }
                     case "freeBytes" -> privateFile(call.argument("path")).getUsableSpace();
+                    case "googlePlayServicesEnabled" -> {
+                        try {
+                            yield context.getPackageManager()
+                                .getApplicationInfo("com.google.android.gms", 0).enabled;
+                        } catch (android.content.pm.PackageManager.NameNotFoundException ignored) {
+                            yield false;
+                        }
+                    }
                     case "syncDirectory" -> {
                         File directory=privateFile(call.argument("path"));
                         if(!directory.isDirectory())throw new IOException("Not a private directory");

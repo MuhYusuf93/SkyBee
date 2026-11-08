@@ -48,8 +48,10 @@ cache 30 hari yang memperhitungkan retur. Skema 52 menambah histori member
 dan filter/sort piutang efektif. Skema 53 menambah penghapusan arsip
 berbatas halaman dengan PIN pemilik, pratinjau, dan validasi ulang
 dependensi. Skema 54 menyatukan kredit penyerahan tanpa nota dengan ledger
-supplier setelah persetujuan pemilik. Tahap 4 lulus host. Uji kamera fisik
-dan restore native, tahap 5, acceptance dan handoff masih terbuka.
+supplier setelah persetujuan pemilik. Tahap 4 lulus host. Tahap 5 mencakup
+lembar pemulihan PDF dan QR, tren laba kotor, label Code 128 dan penanganan
+hasil pemilihan akun Drive. Pemeriksaan revisi tahap 5, restore perangkat,
+kamera fisik, acceptance dan handoff masih berlangsung.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

@@ -6,20 +6,15 @@ import '../../../core/money/money_codec.dart';
 import '../../../core/domain/value_types.dart';
 import '../../printer/application/printer_raster_source.dart';
 import '../../printer/application/receipt_layout.dart';
+import '../../printer/domain/code128_modules.dart';
 import '../../printer/domain/printer_profile.dart';
 import '../domain/product_label.dart';
 
-/// Integer, unfiltered modules with a four-module white quiet zone. A template
-/// that cannot fit is rejected; QR modules are never shrunk to fit long text.
+/// Shared raster and media geometry for QR and Code 128 labels. Both use
+/// whole-dot modules and reject templates below the required quiet zone.
 final class QrLabelLayout implements PrinterRasterSource {
   QrLabelLayout(this.snapshot, this.media, PrinterProfile hardware)
-    : profile = media.printProfile(hardware),
-      qr = QrImage(
-        QrCode(
-          payload: QrPayload.fromString(snapshot.code),
-          errorCorrectLevel: QrErrorCorrectLevel.quartile,
-        ),
-      ) {
+    : profile = media.printProfile(hardware) {
     final arrangement = _arrange();
     arrangement.dispose();
   }
@@ -27,10 +22,26 @@ final class QrLabelLayout implements PrinterRasterSource {
   final ProductLabelProfile media;
   @override
   final PrinterProfile profile;
-  final QrImage qr;
+  late final QrImage qr = QrImage(
+    QrCode(
+      payload: QrPayload.fromString(snapshot.code),
+      errorCorrectLevel: QrErrorCorrectLevel.quartile,
+    ),
+  );
+  late final List<bool>? _bars = media.codeFormat == ProductLabelFormat.code128
+      ? Code128Modules.text(snapshot.barcode ?? '')
+      : null;
+  int get _left => 8 + media.offsetXmm * 16;
+  int get _contentWidth => media.widthDots - _left - 8;
   static const quietModules = 4;
   int get qrSide => (qr.moduleCount + quietModules * 2) * media.moduleDots;
-  double get moduleMm => media.moduleDots / 8;
+  late final int _moduleDots = _bars == null
+      ? media.moduleDots
+      : (_contentWidth ~/ _bars.length).clamp(0, 3);
+  int get _symbolWidth => _bars == null ? qrSide : _bars.length * _moduleDots;
+  int get _symbolHeight =>
+      _bars == null ? qrSide : ((_symbolWidth * 15 + 99) ~/ 100).clamp(64, 120);
+  double get moduleMm => _moduleDots / 8;
   double get totalMediaMm =>
       (media.heightMm + (media.gap ? media.gapMm : media.feed * 3)).toDouble();
   ui.Rect get qrBounds {
@@ -39,8 +50,8 @@ final class QrLabelLayout implements PrinterRasterSource {
       return ui.Rect.fromLTWH(
         a.qrX.toDouble(),
         a.qrY.toDouble(),
-        qrSide.toDouble(),
-        qrSide.toDouble(),
+        _symbolWidth.toDouble(),
+        _symbolHeight.toDouble(),
       );
     } finally {
       a.dispose();
@@ -72,10 +83,11 @@ final class QrLabelLayout implements PrinterRasterSource {
     // All content is centered within this region. Consume twice the offset
     // from its left inset so its center moves by the requested full 8dots/mm;
     // moving only one edge would halve the physical horizontal displacement.
-    final left = 8 + media.offsetXmm * 16,
-        top = 8 + media.offsetYmm * 8,
-        width = media.widthDots - left - 8;
-    if (width < qrSide) throw const FormatException('m53LabelDoesNotFit');
+    final left = _left, top = 8 + media.offsetYmm * 8, width = _contentWidth;
+    if (_bars != null && _moduleDots < 2) {
+      throw const FormatException('m54LabelCode128DoesNotFit');
+    }
+    if (width < _symbolWidth) throw const FormatException('m53LabelDoesNotFit');
     final name = _text(
       snapshot.name,
       18,
@@ -86,9 +98,11 @@ final class QrLabelLayout implements PrinterRasterSource {
     );
     // Explicit halves avoid UUID hyphen word-wrap producing a third line for
     // particular identities. Every character remains visible below the name.
-    final literal = snapshot.code;
+    final literal = _bars == null ? snapshot.code : snapshot.barcode!;
     final code = _text(
-      '${literal.substring(0, 20)}\n${literal.substring(20)}',
+      _bars == null
+          ? '${literal.substring(0, 20)}\n${literal.substring(20)}'
+          : literal,
       12,
       width,
       lines: 2,
@@ -114,7 +128,10 @@ final class QrLabelLayout implements PrinterRasterSource {
         }
       }
       final qrY = top + name.height.ceil() + 4 + code.height.ceil() + 4;
-      if (qrY + qrSide + (price == null ? 0 : price.height.ceil() + 4) + 8 >
+      if (qrY +
+              _symbolHeight +
+              (price == null ? 0 : price.height.ceil() + 4) +
+              8 >
           media.heightDots) {
         throw const FormatException('m53LabelDoesNotFit');
       }
@@ -124,7 +141,7 @@ final class QrLabelLayout implements PrinterRasterSource {
         price,
         left,
         top,
-        left + (width - qrSide) ~/ 2,
+        left + (width - _symbolWidth) ~/ 2,
         qrY,
       );
     } catch (_) {
@@ -148,6 +165,30 @@ final class QrLabelLayout implements PrinterRasterSource {
     final paint = ui.Paint()
       ..color = const ui.Color(0xff000000)
       ..isAntiAlias = false;
+    if (_bars case final bars?) {
+      for (var col = 0; col < bars.length; col++) {
+        if (bars[col]) {
+          canvas.drawRect(
+            ui.Rect.fromLTWH(
+              (a.qrX + col * _moduleDots).toDouble(),
+              a.qrY.toDouble(),
+              _moduleDots.toDouble(),
+              _symbolHeight.toDouble(),
+            ),
+            paint,
+          );
+        }
+      }
+    } else {
+      _paintQr(canvas, a, paint);
+    }
+    a.price?.paint(
+      canvas,
+      ui.Offset(a.left.toDouble(), (a.qrY + _symbolHeight + 4).toDouble()),
+    );
+  }
+
+  void _paintQr(ui.Canvas canvas, _QrLabelArrangement a, ui.Paint paint) {
     for (var row = 0; row < qr.moduleCount; row++) {
       for (var col = 0; col < qr.moduleCount; col++) {
         if (qr.isDark(row, col)) {
@@ -163,10 +204,6 @@ final class QrLabelLayout implements PrinterRasterSource {
         }
       }
     }
-    a.price?.paint(
-      canvas,
-      ui.Offset(a.left.toDouble(), (a.qrY + qrSide + 4).toDouble()),
-    );
   }
 
   Future<ui.Image> image() async {

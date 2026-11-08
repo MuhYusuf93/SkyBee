@@ -882,12 +882,13 @@ void m5SettingsUiSuite(
           expect(state.policy, same(policy));
           expect(state.policy?.connected, scenario.$3);
           expect(state.policy?.enabled, scenario.$3);
-          expect(
-            state.message,
-            scenario.$1 == GoogleSignInExceptionCode.canceled
-                ? 'm5Cancelled'
-                : 'm5OperationFailed',
-          );
+          expect(state.message, switch (scenario.$1) {
+            GoogleSignInExceptionCode.canceled =>
+              'm54DriveSelectionUnconfirmed',
+            GoogleSignInExceptionCode.clientConfigurationError =>
+              'm54DriveSelectionOAuth',
+            _ => 'm54DriveSelectionInterrupted',
+          });
           await tester.runAsync(() async {
             expect(await db.read(DatabaseValidation.fingerprint), before);
             await session.unlock('0001');
@@ -992,6 +993,7 @@ void m5SettingsUiSuite(
       addTearDown(tester.view.resetDevicePixelRatio);
       addTearDown(tester.view.resetViewInsets);
       const id = '00000000-0000-4000-8000-000000000022';
+      const storeId = '00000000-0000-4000-8000-000000000023';
       Map<Object?, Object?>? exportArguments;
       try {
         await tester.runAsync(() async {
@@ -1002,15 +1004,16 @@ void m5SettingsUiSuite(
           final file = File('${directory.path}/archive.kasirbackup');
           final bytes = [22, 1, 2, 3];
           await file.writeAsBytes(bytes);
-          await db.transaction(
-            (sql) => sql.insert('local_backups', {
+          await db.transaction((sql) async {
+            await sql.insert('m5_store', {'id': 1, 'store_id': storeId});
+            await sql.insert('local_backups', {
               'id': id,
               'created_at': 1,
               'manifest_json': '{"id":"$id","schema":8,"currency":"IDR"}',
               'archive_path': file.path,
               'sha256': sha256.convert(bytes).toString(),
-            }),
-          );
+            });
+          });
         });
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(
@@ -1019,6 +1022,9 @@ void m5SettingsUiSuite(
                 if (call.method == 'key') {
                   if (call.arguments['name'] == 'backup-master-v1') {
                     return 'ab' * 32;
+                  }
+                  if (call.arguments['name'] == 'backup-origin-v1') {
+                    return '00000000-0000-4000-8000-000000000024';
                   }
                   throw PlatformException(code: 'key_missing');
                 }
@@ -2063,7 +2069,7 @@ void m5SettingsUiSuite(
                 );
             state = BackupSettingsProvider(app)..selected = file;
             await state!.inspect('SALAH');
-            expect(state!.message, 'm5ArchiveRejected');
+            expect(state!.message, 'm54RecoveryWordCount');
             expect(
               operations(),
               isEmpty,

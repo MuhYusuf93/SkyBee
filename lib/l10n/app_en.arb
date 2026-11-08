@@ -6979,5 +6979,177 @@
   "m54PrepCreditOpen": "Open supplier credit",
   "@m54PrepCreditOpen": {
     "description": "M54: Open supplier credit"
+  },
+  "m54RecoverySheetTitle": "Store Recovery Sheet",
+  "@m54RecoverySheetTitle": {
+    "description": "M54: Store Recovery Sheet"
+  },
+  "m54RecoverySheetSave": "Save recovery sheet (PDF)",
+  "@m54RecoverySheetSave": {
+    "description": "M54: Save recovery sheet (PDF)"
+  },
+  "m54RecoverySheetShare": "Share recovery sheet",
+  "@m54RecoverySheetShare": {
+    "description": "M54: Share recovery sheet"
+  },
+  "m54RecoverySheetExportWarning": "This PDF contains a secret key that can restore your store backup. Save or share it only with a destination you trust. SkyBee will ask for the owner PIN before writing the PDF.",
+  "@m54RecoverySheetExportWarning": {
+    "description": "M54: This PDF contains a secret key that can restore your store backup. Save or share it only with a destination you trust. SkyBee will ask for the owner PIN before writing the PDF."
+  },
+  "m54RecoverySheetPaperWarning": "CONFIDENTIAL. Anyone with this sheet can restore your store backup. Keep it somewhere only you can access.",
+  "@m54RecoverySheetPaperWarning": {
+    "description": "M54: CONFIDENTIAL. Anyone with this sheet can restore your store backup. Keep it somewhere only you can access."
+  },
+  "m54RecoverySheetWordHeading": "24 recovery words",
+  "@m54RecoverySheetWordHeading": {
+    "description": "M54: 24 recovery words"
+  },
+  "m54RecoverySheetQrHeading": "Store recovery QR",
+  "@m54RecoverySheetQrHeading": {
+    "description": "M54: Store recovery QR"
+  },
+  "m54RecoverySheetInstructions": "In SkyBee, open Manage, Backup, then Restore. Select an archive for this store. Scan the QR or enter the 24 words in order, then validate the archive.",
+  "@m54RecoverySheetInstructions": {
+    "description": "M54: In SkyBee, open Manage, Backup, then Restore. Select an archive for this store. Scan the QR or enter the 24 words in order, then validate the archive."
+  },
+  "m54RecoverySheetFooter": "Keep this sheet separately from the store backup archive.",
+  "@m54RecoverySheetFooter": {
+    "description": "M54: Keep this sheet separately from the store backup archive."
+  },
+  "m54RecoverySheetSaved": "PDF saved and verified.",
+  "@m54RecoverySheetSaved": {
+    "description": "M54: PDF saved and verified."
+  },
+  "m54RecoverySheetChooserOpened": "Android share chooser opened.",
+  "@m54RecoverySheetChooserOpened": {
+    "description": "M54: Android share chooser opened."
+  },
+  "m54RecoverySheetFailed": "Could not complete the recovery sheet action. Try again from Backup.",
+  "@m54RecoverySheetFailed": {
+    "description": "M54: Could not complete the recovery sheet action. Try again from Backup."
+  },
+  "m54ScanRecoveryQr": "Scan recovery QR",
+  "@m54ScanRecoveryQr": {
+    "description": "M54: Scan recovery QR"
+  },
+  "m54RecoverySheetQrHelp": "Aim at the recovery QR for the store whose archive you selected.",
+  "@m54RecoverySheetQrHelp": {
+    "description": "M54: Aim at the recovery QR for the store whose archive you selected."
+  },
+  "m54RecoveryQrReady": "Recovery QR read.",
+  "@m54RecoveryQrReady": {
+    "description": "M54: Recovery QR read."
+  },
+  "m54RecoveryQrStoreMismatch": "This recovery QR belongs to a different store. Select the matching archive.",
+  "@m54RecoveryQrStoreMismatch": {
+    "description": "M54: This recovery QR belongs to a different store. Select the matching archive."
+  },
+  "m54ProfitTrend": "Gross profit trend",
+  "@m54ProfitTrend": {
+    "description": "M54: Gross profit trend"
+  },
+  "m54ProfitDaily": "Daily",
+  "@m54ProfitDaily": {
+    "description": "M54: Daily"
+  },
+  "m54ProfitWeekly": "Weekly",
+  "@m54ProfitWeekly": {
+    "description": "M54: Weekly"
+  },
+  "m54ProfitMonthly": "Monthly",
+  "@m54ProfitMonthly": {
+    "description": "M54: Monthly"
+  },
+  "m54ProfitCalendarPolicy": "Weeks start Monday. Buckets follow the selected date range.",
+  "@m54ProfitCalendarPolicy": {
+    "description": "M54: Weeks start Monday. Buckets follow the selected date range."
+  },
+  "m54ProfitChartLegend": "Bars show gross profit per period. × marks incomplete cost.",
+  "@m54ProfitChartLegend": {
+    "description": "M54: Bars show gross profit per period. × marks incomplete cost."
+  },
+  "m54ProfitPrevious": "Previous periods",
+  "@m54ProfitPrevious": {
+    "description": "M54: Previous periods"
+  },
+  "m54ProfitNext": "Next periods",
+  "@m54ProfitNext": {
+    "description": "M54: Next periods"
+  },
+  "m54ProfitWriteDown": "Quarantine write-down",
+  "@m54ProfitWriteDown": {
+    "description": "M54: Quarantine write-down"
+  },
+  "m54DriveSelectionBusy": "Google is still finishing the previous request. Close its dialog if it is still open.",
+  "@m54DriveSelectionBusy": {
+    "description": "M54: Google is still finishing the previous request. Close its dialog if it is still open."
+  },
+  "m54DriveSelectionInterrupted": "Google account selection was interrupted. Return to Backup and try again.",
+  "@m54DriveSelectionInterrupted": {
+    "description": "M54: Google account selection was interrupted. Return to Backup and try again."
+  },
+  "m54DriveSelectionNoAccount": "Google did not return an account that could be used.",
+  "@m54DriveSelectionNoAccount": {
+    "description": "M54: Google did not return an account that could be used."
+  },
+  "m54DriveScopeUnconfirmed": "Drive access was not confirmed for the selected account.",
+  "@m54DriveScopeUnconfirmed": {
+    "description": "M54: Drive access was not confirmed for the selected account."
+  },
+  "m54DriveSelectionUnconfirmed": "Google did not confirm account selection. If this appeared after choosing an account, check the OAuth configuration for this app build.",
+  "@m54DriveSelectionUnconfirmed": {
+    "description": "M54: Google did not confirm account selection. If this appeared after choosing an account, check the OAuth configuration for this app build."
+  },
+  "m54DriveSelectionOAuth": "The app's OAuth configuration was rejected. Check the client, package ID and app certificate fingerprint.",
+  "@m54DriveSelectionOAuth": {
+    "description": "M54: The app's OAuth configuration was rejected. Check the client, package ID and app certificate fingerprint."
+  },
+  "m54DriveProviderUnavailable": "Google sign-in services are unavailable or unconfigured on this device.",
+  "@m54DriveProviderUnavailable": {
+    "description": "M54: Google sign-in services are unavailable or unconfigured on this device."
+  },
+  "m54DriveScopeFailed": "Google could not authorize Drive for the selected account.",
+  "@m54DriveScopeFailed": {
+    "description": "M54: Google could not authorize Drive for the selected account."
+  },
+  "m54DriveSelectionFailed": "Google could not complete account selection.",
+  "@m54DriveSelectionFailed": {
+    "description": "M54: Google could not complete account selection."
+  },
+  "m54DriveSelectionTimeout": "Google did not finish account selection or Drive authorization in time.",
+  "@m54DriveSelectionTimeout": {
+    "description": "M54: Google did not finish account selection or Drive authorization in time."
+  },
+  "m54LabelCodeFormat": "Label code format",
+  "@m54LabelCodeFormat": {
+    "description": "M54: Label code format"
+  },
+  "m54LabelQrFormat": "2D QR",
+  "@m54LabelQrFormat": {
+    "description": "M54: 2D QR"
+  },
+  "m54LabelCode128Format": "1D barcode (Code 128)",
+  "@m54LabelCode128Format": {
+    "description": "M54: 1D barcode (Code 128)"
+  },
+  "m54LabelCode128Help": "Code 128 prints the product’s saved barcode, including leading zeros. Use QR for a SkyBee identity that stays the same when the product barcode changes.",
+  "@m54LabelCode128Help": {
+    "description": "M54: Code 128 prints the product’s saved barcode, including leading zeros. Use QR for a SkyBee identity that stays the same when the product barcode changes."
+  },
+  "m54LabelCode128Media": "Code 128 uses modules of at least two dots and a ten-module white margin on each side. Choose a label size that matches your printer and media.",
+  "@m54LabelCode128Media": {
+    "description": "M54: Code 128 uses modules of at least two dots and a ten-module white margin on each side. Choose a label size that matches your printer and media."
+  },
+  "m54LabelCode128Unavailable": "This product has no barcode suitable for Code 128. Enter a supported product barcode or choose QR.",
+  "@m54LabelCode128Unavailable": {
+    "description": "M54: This product has no barcode suitable for Code 128. Enter a supported product barcode or choose QR."
+  },
+  "m54LabelCode128DoesNotFit": "The barcode is too wide for this label. Use a wider label, reduce the offset, or choose QR.",
+  "@m54LabelCode128DoesNotFit": {
+    "description": "M54: The barcode is too wide for this label. Use a wider label, reduce the offset, or choose QR."
+  },
+  "m54DrivePlayServicesMissing": "Google Play services is missing or disabled. Local backups remain available.",
+  "@m54DrivePlayServicesMissing": {
+    "description": "M54: Google Play services is missing or disabled. Local backups remain available."
   }
 }

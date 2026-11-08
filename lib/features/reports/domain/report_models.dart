@@ -2,6 +2,11 @@ import '../../../core/domain/value_types.dart';
 
 enum ReportSection { sales, payments }
 
+BigInt? grossProfitOf(int salesMinor, int? costMicros) => costMicros == null
+    ? null
+    : BigInt.from(salesMinor) * BigInt.from(CostAmount.scale) -
+          BigInt.from(costMicros);
+
 /// Calendar selection is inclusive in the UI; SQL always uses UTC [start,end).
 final class ReportFilter {
   const ReportFilter({
@@ -68,11 +73,12 @@ final class ReportSummary {
     this.incompleteSaleEvents = 0,
     this.incompleteInventoryProducts = 0,
     this.refundsMinor = 0,
+    this.writeDownMicros = 0,
   });
   final int untrackedProductCount,
       incompleteSaleEvents,
       incompleteInventoryProducts;
-  final int? costMicros, inventoryMicros;
+  final int? costMicros, inventoryMicros, writeDownMicros;
   final CurrencyPolicy currency;
   final int salesMinor,
       saleCount,
@@ -86,10 +92,7 @@ final class ReportSummary {
       inventoryQuantity,
       expiredQuantity,
       productCount;
-  BigInt? get grossProfitMicros => costMicros == null
-      ? null
-      : BigInt.from(salesMinor) * BigInt.from(CostAmount.scale) -
-            BigInt.from(costMicros!);
+  BigInt? get grossProfitMicros => grossProfitOf(salesMinor, costMicros);
 }
 
 final class ReportEntry {
@@ -102,6 +105,7 @@ final class ReportEntry {
           : EntityId(row['sale_id'] as String),
       amountMinor = row['amount_minor'] as int,
       costMicros = row['cost_micros'] as int?,
+      writeDownMicros = row['write_down_micros'] as int?,
       currency = CurrencyPolicy.forCode(row['currency_code'] as String),
       customerName = row['customer_name'] as String?,
       origin = row['origin'] as String,
@@ -110,7 +114,7 @@ final class ReportEntry {
   final EntityId id;
   final EntityId? saleId;
   final int createdAt, kind, amountMinor;
-  final int? costMicros;
+  final int? costMicros, writeDownMicros;
   final CurrencyPolicy currency;
   final String? customerName, reason;
   final String origin;

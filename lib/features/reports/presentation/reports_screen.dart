@@ -12,6 +12,7 @@ import '../domain/report_models.dart';
 import 'financial_filters.dart';
 import 'reports_provider.dart';
 import 'report_export_screen.dart';
+import 'report_profit_section.dart';
 import 'operational_reports_screen.dart';
 
 class ReportsScreen extends StatelessWidget {
@@ -57,6 +58,13 @@ class _ReportsBodyState extends State<_ReportsBody> {
               ? tr(context, 'm53CostIncomplete')
               : codec.formatSignedCost(summary.grossProfitMicros!),
         ),
+        if (summary.writeDownMicros != 0)
+          (
+            'm54ProfitWriteDown',
+            summary.writeDownMicros == null
+                ? tr(context, 'm53CostIncomplete')
+                : codec.formatSignedCost(BigInt.from(summary.writeDownMicros!)),
+          ),
         (
           'm4NetPayments',
           codec.formatSignedMinor(BigInt.from(summary.paymentsMinor)),
@@ -174,7 +182,10 @@ class _ReportsBodyState extends State<_ReportsBody> {
                   OutlinedButton.icon(
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute<void>(
-                        builder: (_) => ReportExportScreen(filter: filter),
+                        builder: (_) => ReportExportScreen(
+                          filter: filter,
+                          profitPeriod: state.profitPeriod,
+                        ),
                       ),
                     ),
                     icon: const Icon(Icons.file_download_outlined),
@@ -208,6 +219,8 @@ class _ReportsBodyState extends State<_ReportsBody> {
                       ),
                   ],
                 ),
+                const SizedBox(height: 16),
+                if (filter != null) ReportProfitSection(state),
                 const SizedBox(height: 16),
                 Text(tr(context, 'm4CurrentSnapshot')),
                 if (filter != null)

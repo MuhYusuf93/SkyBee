@@ -1,8 +1,10 @@
-/// Code128 C with the mandatory horizontal quiet zones. All callers render
+/// Code 128 with mandatory horizontal quiet zones. All callers render
 /// these modules at an integer number of dots to preserve the check symbol.
 abstract final class Code128Modules {
   static const quiet = 10;
+  static const _startB = 104;
   static const _startC = 105;
+  static const _switchB = 100;
   static const _stop = 106;
 
   static List<bool> numeric(String digits) {
@@ -13,13 +15,37 @@ abstract final class Code128Modules {
       for (var at = 0; at < digits.length; at += 2)
         int.parse(digits.substring(at, at + 2)),
     ];
-    var check = _startC;
+    return _encode(_startC, data);
+  }
+
+  /// Preserve existing product barcodes literally, including leading zeros.
+  /// For odd digit runs, keep compact Code C pairs and switch for the last digit.
+  static List<bool> text(String value) {
+    if (value.isEmpty ||
+        value.length > 80 ||
+        value.codeUnits.any((unit) => unit < 32 || unit > 126)) {
+      throw const FormatException('m54LabelCode128Unavailable');
+    }
+    if (RegExp(r'^[0-9]{4,}$').hasMatch(value)) {
+      if (value.length.isEven) return numeric(value);
+      return _encode(_startC, [
+        for (var i = 0; i < value.length - 1; i += 2)
+          int.parse(value.substring(i, i + 2)),
+        _switchB,
+        value.codeUnitAt(value.length - 1) - 32,
+      ]);
+    }
+    return _encode(_startB, [for (final ascii in value.codeUnits) ascii - 32]);
+  }
+
+  static List<bool> _encode(int start, List<int> data) {
+    var check = start;
     for (var i = 0; i < data.length; i++) {
       check += (i + 1) * data[i];
     }
     return [
       for (var i = 0; i < quiet; i++) false,
-      for (final symbol in [_startC, ...data, check % 103, _stop])
+      for (final symbol in [start, ...data, check % 103, _stop])
         for (var run = 0; run < _patterns[symbol].length; run++)
           for (var dot = 0; dot < _patterns[symbol].codeUnitAt(run) - 48; dot++)
             run.isEven,

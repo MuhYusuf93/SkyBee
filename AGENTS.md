@@ -1,5 +1,11 @@
 # Aturan kerja proyek kasir Flutter
 
+## Bahasa dan efisiensi
+
+- Gunakan bahasa Inggris untuk seluruh komunikasi chat, pembaruan progres, penjelasan, ringkasan terminal, dan jawaban akhir.
+- Tulis dokumentasi dan laporan proyek Markdown dalam Bahasa Indonesia. Pertahankan bahasa UI dan lokalisasi yang sudah ada, kecuali pengguna meminta terjemahan.
+- Gunakan token seperlunya tanpa mengurangi ketepatan teknis, cakupan pengujian, atau mutu dokumentasi.
+
 ## Acuan dan tahap aktif
 
 - Baca `docs/SPEC.md`, `docs/PLAN.md`, dan `docs/STATUS.md` sebelum bekerja. Spesifikasi berisi kebutuhan akhir; instruksi pengguna menentukan tahap aktif.

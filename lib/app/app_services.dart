@@ -38,6 +38,7 @@ import '../features/printer/application/printer_transport.dart';
 import '../features/printer/application/printer_output_gate.dart';
 import '../features/printer/application/recovery_print_service.dart';
 import '../features/backup/application/backup_service.dart';
+import '../features/backup/application/recovery_sheet_service.dart';
 import '../features/backup/application/drive_backup_service.dart';
 import '../features/alerts/application/alert_service.dart';
 import '../features/alerts/application/android_stock_notifications.dart';
@@ -186,6 +187,7 @@ final class AppServices {
     pausePeripherals: printing.pauseForRestore,
     resumePeripherals: printing.resumeAfterRestore,
   );
+  late final recoverySheets = RecoverySheetService(backups);
   late final drive = DriveBackupService(database, management, backups);
   late final storeReset = StoreResetService(
     database,

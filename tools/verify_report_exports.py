@@ -20,7 +20,7 @@ for sheet in book:
         xlsx_rows.append(dict(zip(header, (cell.value for cell in cells))))
 book.close()
 for rows in [csv_rows, xlsx_rows]:
-    assert len(rows) == 129
+    assert len(rows) == 132
     summary = {r['metric']: r['value'] for r in rows if r['section'] == 'summary'}
     assert summary['net_sales'] == '12000'
     assert summary['net_payments'] == '11000'
@@ -51,6 +51,6 @@ assert row['amount_decimal'].value == '92233720368547758.07'
 assert row['quantity'].value == '9223372036854775807'
 assert row['name'].value == '=1+2' and row['name'].data_type != 'f'
 precision.close()
-print(json.dumps({'csv': 'PASS', 'xlsx_openpyxl': 'PASS', 'rows': 129,
+print(json.dumps({'csv': 'PASS', 'xlsx_openpyxl': 'PASS', 'rows': 132,
                   'full_period_totals': 'PASS', 'barcode_zeroes': 'PASS',
                   'formula_and_multiline': 'PASS', 'typed_exact_money': 'PASS'}))

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path/path.dart' as p;
 import 'package:uuid/uuid.dart';
 import '../../../app/app_services.dart';
@@ -32,6 +31,7 @@ final class BackupSettingsProvider extends ChangeNotifier {
   String? message, generatedCode, lastManualKey;
   bool generatedUnsaved = false, recoveryPrinted = false;
   DrivePolicy? policy, pendingAccount;
+  int? _pendingAccountDatabase;
   File? selected;
   bool selectedTemporary = false;
   BackupInspection? inspection;
@@ -75,11 +75,15 @@ final class BackupSettingsProvider extends ChangeNotifier {
     } catch (error) {
       message = error is DriveFailure
           ? _driveFailureMessage(error.code)
+          : error is DriveSelectionFailure
+          ? error.message
           : error is FormatException
           ? switch (error.message) {
               'm54RecoveryWordCount' => 'm54RecoveryWordCount',
               'm54RecoveryWordInvalid' => 'm54RecoveryWordInvalid',
               'm54RecoveryChecksumInvalid' => 'm54RecoveryChecksumInvalid',
+              'm54RecoveryQrInvalid' => 'm54RecoveryQrInvalid',
+              'm54RecoveryQrStoreMismatch' => 'm54RecoveryQrStoreMismatch',
               _ => 'm5ArchiveRejected',
             }
           : 'm5OperationFailed';
@@ -276,22 +280,31 @@ final class BackupSettingsProvider extends ChangeNotifier {
     }
   });
   Future<void> chooseAccount() => task(() async {
-    // A replacement attempt invalidates the unconfirmed candidate, not the
-    // persisted destination. Cancel must never leave an older candidate to use.
+    // Replace only the pending selection. Persisted consent changes on accept.
     pendingAccount = null;
-    try {
-      pendingAccount = await app.drive.chooseAccount();
-      message = 'm5AccountPending';
-    } on GoogleSignInException catch (error) {
-      // Only explicit user cancellation is neutral. Configuration/interruption
-      // errors still reach the normal failure mapper; details may contain PII.
-      if (error.code != GoogleSignInExceptionCode.canceled) rethrow;
-      message = 'm5Cancelled';
-    }
+    _pendingAccountDatabase = null;
+    final generation = app.database.generation;
+    final selected = await app.drive.chooseAccount();
+    if (_disposed || generation != app.database.generation) return;
+    pendingAccount = selected;
+    _pendingAccountDatabase = generation;
+    message = 'm5AccountPending';
+  });
+  Future<void> discardAccount() => task(() async {
+    pendingAccount = null;
+    _pendingAccountDatabase = null;
+    message = 'm5Cancelled';
   });
   Future<void> acceptAccount() => task(() async {
+    if (_pendingAccountDatabase != null &&
+        _pendingAccountDatabase != app.database.generation) {
+      pendingAccount = null;
+      _pendingAccountDatabase = null;
+      throw const DriveFailure('driveConsentChanged');
+    }
     await app.drive.acceptAccount(pendingAccount!);
     pendingAccount = null;
+    _pendingAccountDatabase = null;
     policy = await app.drive.settings();
     // Remote pages and their cursors belong to the confirmed account. Keeping
     // the old page beneath a different destination would mislabel its backups.

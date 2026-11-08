@@ -359,4 +359,49 @@ dites ulang dengan klaim dan persetujuan eksplisit. Fixture backup membawa
 kredit penyerahan dan reservasi tersisa. Analyzer bersih, lokalisasi
 1724/1067/245 lulus. APK debug biasa 0.5.4+14 lulus tiga ABI dan alignment
 16 KiB. Tahap 4 selesai di host. Tahap 5 dimulai dari lembar pemulihan PDF.
+
+### Tahap 5 dan sambungan perangkat
+
+Pada 8 November, ADB SDK dan `C:\platform-tools\adb.exe` sama-sama
+menampilkan Poco F6 dan DV8910 `192.168.0.101:5555`. Model DV dilaporkan
+`AX810` dan identitas perangkat `DV8947-KIX`. SELinux kedua perangkat
+`Enforcing`. Cuplikan awal hanya mencatat Poco sesaat setelah daemon
+ADB mulai. Penyebab transport TCP belum muncul saat itu belum terbukti.
+Tidak ada perubahan konfigurasi koneksi. Realme C11 belum muncul dalam
+daftar saat pemeriksaan ini.
+
+PDF memakai Android `PdfDocument` dengan layout A4 serta FileProvider
+privat. Pilihan simpan memverifikasi hasil tulis dan pilihan bagikan
+memberi izin baca sementara. Keduanya memerlukan PIN pemilik khusus.
+Pemindai QR pemulihan hanya tersedia di alur pemulihan dan UUID toko
+diperiksa terhadap manifest arsip terautentikasi. Uji pertama di Poco
+menemukan buffer balikan kanal Android tidak dapat diubah. Salinan
+milik aplikasi kini digunakan untuk pembersihan buffer. Audit uji
+pertama mencatat semua hash berkas yang dilindungi tetap sama.
+
+Tren laporan memakai bucket zona waktu toko, awal minggu Senin,
+agregat SQL berindeks, dan cache halaman berdasarkan revisi. Grafik,
+tabel, ringkasan dan ekspor memisahkan kerugian karantina dari HPP
+dan memakai tanggal posting retur. Profil label menyimpan pilihan
+QR atau Code 128. Barcode lama tetap literal, termasuk nol di depan.
+Media Code 128 ditolak bila tidak muat pada dua titik per modul.
+
+Regresi terfokus Windows lulus 40 kasus. Pembacaan mandiri CSV dan
+OpenXML memverifikasi 132 baris fixture dasar, presisi nominal, nol
+di depan barcode, dan sel formula literal. Kasus tambahan memeriksa
+ekspor tren lintas halaman, periode kosong, biaya tidak lengkap, serta
+batas minggu/bulan/tahun dan DST. Analyzer bersih, 1.767 kunci ID/EN
+sesuai, dan 106 hash lisensi/sumber PIN cocok.
+
+Fixture keluaran Poco lulus 13 kasus. Dua PDF sintetis A4 dirender
+masing-masing satu halaman, diperiksa visual pada 144 dpi dan
+payload-nya dibaca tepat oleh ZXing. Raster ESC/POS QR dan Code 128
+58/80 mm dibaca oleh ZXing Android. Rencana SQL berindeks, ekspor,
+pembatalan dan SDK Drive tiruan juga lulus. Kontrol otomatis ditutup
+dan semua hash berkas terlindungi yang sudah ada tetap sama. Manifest
+sumber 974 berkas cocok sebelum dan sesudah uji
+`35d0a7282cff127bf5a3180a54c2ee87db6f4241585219a891d28697db454f3a`.
+Cadangan lintas kunci, keluaran DV, uji fisik dan Drive nyata masih
+terbuka. Uji host pengaturan lama diulang secara terfokus sesudah
+koreksi fixture retensi, pesan validasi kode, dan waktu tunggu.
 Cakupan fisik dan portable restore native akan diuji pada acceptance.

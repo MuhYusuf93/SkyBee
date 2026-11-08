@@ -10,16 +10,75 @@ import 'package:kasir_app/features/printer/application/receipt_layout.dart';
 import 'package:kasir_app/features/printer/domain/printer_profile.dart';
 
 void m53QrLabelRendererSuite() {
-  ProductLabelSnapshot snapshot({String? name, Money? price}) =>
-      ProductLabelSnapshot(
-        product: EntityId('12345678-1234-4abc-8def-123456789abc'),
-        productRevision: 1,
-        name: name ?? 'PUBLIC QR LABEL',
-        sku: '000000001',
-        price: price ?? Money(12345, 'IDR', 0),
-        language: 'id',
-        capturedAt: 1,
-      );
+  ProductLabelSnapshot snapshot({
+    String? name,
+    Money? price,
+    String? barcode,
+  }) => ProductLabelSnapshot(
+    product: EntityId('12345678-1234-4abc-8def-123456789abc'),
+    productRevision: 1,
+    name: name ?? 'PUBLIC QR LABEL',
+    sku: '000000001',
+    price: price ?? Money(12345, 'IDR', 0),
+    language: 'id',
+    capturedAt: 1,
+    barcode: barcode,
+  );
+  test('M54 Code 128 preserves quiet zones and rejects narrow media', () async {
+    const profile = ProductLabelProfile(
+      protocol: PrinterProtocol.escPosRaster,
+      widthMm: 48,
+      codeFormat: ProductLabelFormat.code128,
+    );
+    expect(
+      ProductLabelProfile.fromJson(profile.toJson()).codeFormat,
+      ProductLabelFormat.code128,
+    );
+    expect(
+      ProductLabelProfile.fromJson(
+        const ProductLabelProfile(
+          protocol: PrinterProtocol.escPosRaster,
+        ).toJson(),
+      ).codeFormat,
+      ProductLabelFormat.qr,
+    );
+    final layout = QrLabelLayout(
+      snapshot(barcode: '0012345678901'),
+      profile,
+      const PrinterProfile(),
+    );
+    final bounds = layout.qrBounds;
+    final unit = (layout.moduleMm * 8).toInt();
+    expect(unit, greaterThanOrEqualTo(2));
+    final img = await layout.image();
+    try {
+      final pixels = (await img.toByteData(
+        format: ui.ImageByteFormat.rawRgba,
+      ))!;
+      int redAt(int x) =>
+          pixels.getUint8((bounds.center.dy.toInt() * img.width + x) * 4);
+      final left = bounds.left.toInt(), right = bounds.right.toInt();
+      for (var i = 0; i < 10 * unit; i++) {
+        expect(redAt(left + i), 255);
+        expect(redAt(right - i - 1), 255);
+      }
+      expect(redAt(left + 10 * unit), 0);
+    } finally {
+      img.dispose();
+    }
+    expect(
+      () => QrLabelLayout(
+        snapshot(barcode: 'LONG-ASCII-' * 4),
+        profile,
+        const PrinterProfile(),
+      ),
+      throwsFormatException,
+    );
+    expect(
+      () => QrLabelLayout(snapshot(), profile, const PrinterProfile()),
+      throwsFormatException,
+    );
+  });
   test(
     'M53 QR label physical offsets translate every preview and printer pixel by eight dots per millimetre',
     () async {

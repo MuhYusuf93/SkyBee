@@ -18,6 +18,16 @@ Override bila diperlukan: `--dart-define=GOOGLE_WEB_CLIENT_ID=<Web-client-ID>`. 
 
 ## Alur aplikasi
 
+Pada M5.4, pemilihan akun, permintaan izin Drive, dan verifikasi tujuan
+memiliki hasil terpisah. Android dapat melaporkan kode `canceled` untuk
+penutupan pemilih akun maupun konfigurasi OAuth yang keliru. Aplikasi
+menyatakan pemilihan belum dikonfirmasi dalam kasus ambigu. Pembatalan
+eksplisit untuk calon akun tetap tersedia di aplikasi. Setiap paket
+`.skybee` atau Uji Teman memerlukan konfirmasi registrasi paket dan
+sidik jari sertifikatnya sendiri sebelum uji nyata. Bukti M5 untuk paket
+integrasi tidak membuktikan registrasi kedua paket tersebut.
+[Dokumentasi SDK Android 7.2.18](https://pub.dev/packages/google_sign_in_android/versions/7.2.18)
+
 Google tidak diminta di startup kasir. Dari pengaturan terproteksi pilih akun melalui SDK resmi GoogleSignIn7.2.0, berikan drive.appdata, lalu konfirmasi identitas tujuan setelah PIN bila dialog Android mengunci aplikasi. UI menampilkan akun tujuan. Sambungan bukan opt-in otomatis: switch auto defaultoff dan memerlukan persetujuan tersendiri serta recovery backup yang sudah dikonfirmasi. Disconnect merevoke policy lokal terlebih dahulu, termasuk jika revoke jaringan gagal.
 
 Worker menggunakan API publik plugin resmi untuk otorisasi akun tertentu tanpa UI; ketika resolution dibutuhkan ia berhenti dengan needs-auth. `about.user.permissionId` dan email diperiksa agar token tidak diam-diam mengarah akun lain. Policy generation dicek sebelum upload/chunk/final. Permintaan yang sudah dikirim ke jaringan tidak bisa ditarik kembali; hasil parsial/timeout harus diperiksa/retry melalui protokol resumable, bukan dinyatakan sukses.

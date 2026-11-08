@@ -1,4 +1,12 @@
-# Handoff aktif — M5.3 sedang dikerjakan
+# Handoff aktif — M5.4 sedang dikerjakan
+
+8 November 2026 WIB. Versi kerja 0.5.4+14, skema 54. Tahap 5
+mengintegrasikan lembar pemulihan PDF, tren laba kotor dan ekspor, label
+Code 128, serta pemilihan akun Drive. Rincian bukti dan batas uji ada pada
+[checkpoint M5.4](M54_CHECKPOINT.md) dan [matriks acceptance](M54_ACCEPTANCE.md).
+Setelah acceptance awal DV8910 dan Poco, beri kabar dan jeda untuk koordinasi
+uji M5.3 dan M5.4 pada Realme C11. Pemasangan `.skybee` dan pembuatan APK Uji
+Teman menunggu tahap tersebut serta arahan lanjut pengguna.
 
 <!-- M54_FOUNDATION_START -->
 7 November 2026 WIB — M5.4 masih aktif, source0.5.4+14/schema38.

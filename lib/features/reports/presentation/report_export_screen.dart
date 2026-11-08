@@ -5,16 +5,22 @@ import '../../../app/app_services.dart';
 import '../../../l10n/localization.dart';
 import '../../management/presentation/management_gate.dart';
 import '../domain/report_models.dart';
+import '../domain/report_profit.dart';
 import '../domain/operational_report.dart';
 import '../application/report_export_service.dart';
 import '../application/report_destination_service.dart';
 
 /// Only progress and bounded artifact handles live in the route, never SQL rows.
 class ReportExportScreen extends StatefulWidget {
-  const ReportExportScreen({super.key, this.filter, this.operational})
-    : assert((filter == null) != (operational == null));
+  const ReportExportScreen({
+    super.key,
+    this.filter,
+    this.operational,
+    this.profitPeriod,
+  }) : assert((filter == null) != (operational == null));
   final ReportFilter? filter;
   final OperationalScope? operational;
+  final ReportProfitPeriod? profitPeriod;
   @override
   State<ReportExportScreen> createState() => _ReportExportState();
 }
@@ -55,6 +61,7 @@ class _ReportExportState extends State<ReportExportScreen> {
           : await app.reportExport.create(
               widget.filter!,
               xlsx: xlsx,
+              profitPeriod: widget.profitPeriod,
               control: control,
               progress: progress,
             );

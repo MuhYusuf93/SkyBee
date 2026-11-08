@@ -4,40 +4,61 @@ import '../../core/domain/value_types.dart';
 import '../../core/pagination/page.dart';
 import '../../features/cashier/application/cashier_store.dart';
 import '../../features/reports/domain/report_models.dart';
+import '../../features/reports/domain/report_profit.dart';
 import '../database/database_coordinator.dart';
 import 'keyset_queries.dart';
 
-/// Exact production aggregate query, also used by EXPLAIN/benchmark.
+// The return reverses snapshot COGS. The quarantined amount is a distinct
+// write-down on that same posting date, with its own cost-completeness check.
+const _unknownWriteDown = '''CASE WHEN r.cost_complete=0 THEN EXISTS(
+  SELECT 1 FROM sale_return_items i
+  WHERE i.sale_return_id=r.id AND i.condition='quarantine' AND i.cost_complete=0
+) ELSE 0 END''';
+
+/// Summary and trends use the same event definition and indexed UTC ranges.
+/// A bounded set of calendar buckets is the outer side of each range scan.
 SqlQuery reportSalesTotalsQuery(
   ReportFilter filter,
   CurrencyPolicy currency, {
   bool costKnowledge = false,
   bool saleReturns = false,
+  List<ReportProfitRange>? buckets,
 }) {
   final customer = filter.customerId == null ? '' : 'AND s.customer_id=?';
-  final periodArgs = <Object?>[
-    filter.start.milliseconds,
-    filter.end.milliseconds,
-    if (filter.customerId != null) filter.customerId!.value,
+  final ranges = [
+    if (buckets == null)
+      (filter.start.milliseconds, filter.end.milliseconds)
+    else
+      for (final bucket in buckets)
+        (bucket.start.milliseconds, bucket.end.milliseconds),
   ];
+  final complete = costKnowledge ? 's.cost_complete' : '1';
   return SqlQuery(
-    '''WITH events AS (
-      SELECT s.total_rupiah AS revenue,s.cost_micros AS cost,0 AS kind,${costKnowledge ? 's.cost_complete' : '1'} AS cost_complete,s.currency_code,s.currency_scale
-        FROM sale_transactions s WHERE s.created_at>=? AND s.created_at<? $customer
-      UNION ALL SELECT -s.total_rupiah,-s.cost_micros,1,${costKnowledge ? 's.cost_complete' : '1'},s.currency_code,s.currency_scale
-        FROM sale_transaction_reversals r JOIN sale_transactions s ON s.id=r.sale_transaction_id
-        WHERE r.created_at>=? AND r.created_at<? $customer
-      ${saleReturns ? '''UNION ALL SELECT -r.net_minor,-r.cost_micros+r.write_down_micros,2,r.cost_complete,s.currency_code,s.currency_scale
-        FROM sale_returns r JOIN sale_transactions s ON s.id=r.sale_transaction_id
-        WHERE r.created_at>=? AND r.created_at<? $customer''' : ''})
+    '''WITH buckets(bucket,start_at,end_at) AS (
+      VALUES ${[for (var i = 0; i < ranges.length; i++) '($i,?,?)'].join(',')}
+    ), events AS (
+      SELECT b.bucket,s.total_rupiah AS revenue,s.cost_micros AS cost,0 AS kind,$complete AS cost_complete,
+        0 AS write_down,0 AS unknown_write_down,s.currency_code,s.currency_scale
+        FROM buckets b CROSS JOIN sale_transactions s WHERE s.created_at>=b.start_at AND s.created_at<b.end_at $customer
+      UNION ALL SELECT b.bucket,-s.total_rupiah,-s.cost_micros,1,$complete,0,0,s.currency_code,s.currency_scale
+        FROM buckets b CROSS JOIN sale_transaction_reversals r JOIN sale_transactions s ON s.id=r.sale_transaction_id
+        WHERE r.created_at>=b.start_at AND r.created_at<b.end_at $customer
+      ${saleReturns ? '''UNION ALL SELECT b.bucket,-r.net_minor,-r.cost_micros,2,r.cost_complete,
+        r.write_down_micros,$_unknownWriteDown,s.currency_code,s.currency_scale
+        FROM buckets b CROSS JOIN sale_returns r JOIN sale_transactions s ON s.id=r.sale_transaction_id
+        WHERE r.created_at>=b.start_at AND r.created_at<b.end_at $customer''' : ''})
       SELECT COALESCE(SUM(revenue),0) AS revenue,CASE WHEN SUM(cost_complete=0)>0 THEN NULL ELSE COALESCE(SUM(cost),0) END AS cost,
+        CASE WHEN SUM(unknown_write_down)>0 THEN NULL ELSE COALESCE(SUM(write_down),0) END AS write_down,
         COALESCE(SUM(cost_complete=0),0) AS incomplete,
         COALESCE(SUM(kind=0),0) AS sales,COALESCE(SUM(kind<>0),0) AS returns,
-        COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch FROM events''',
+        COALESCE(SUM(currency_code<>? OR currency_scale<>?),0) AS mismatch
+        ${buckets == null ? 'FROM events' : '''
+        FROM buckets b LEFT JOIN events e ON e.bucket=b.bucket
+        GROUP BY b.bucket ORDER BY b.bucket'''}''',
     [
-      ...periodArgs,
-      ...periodArgs,
-      if (saleReturns) ...periodArgs,
+      for (final (start, end) in ranges) ...[start, end],
+      if (filter.customerId case final id?)
+        for (var branch = 0; branch < (saleReturns ? 3 : 2); branch++) id.value,
       currency.code,
       currency.scale,
     ],
@@ -125,7 +146,7 @@ SqlQuery reportEventsQuery(
     final saleCost = switch (kind) {
       0 => 's.cost_micros',
       1 => '-s.cost_micros',
-      _ => '-r.cost_micros+r.write_down_micros',
+      _ => '-r.cost_micros',
     };
     final complete = kind == 2
         ? 'r.cost_complete'
@@ -135,15 +156,16 @@ SqlQuery reportEventsQuery(
     final columns = sales
         ? '''$id AS id,$date AS created_at,$kind AS kind,s.id AS sale_id,
       $saleAmount AS amount_minor,CASE WHEN $complete=0 THEN NULL ELSE $saleCost END AS cost_micros,
+      ${kind == 2 ? 'CASE WHEN ($_unknownWriteDown)=1 THEN NULL ELSE r.write_down_micros END' : '0'} AS write_down_micros,
       s.currency_code,s.currency_scale,s.customer_name_snapshot AS customer_name,'${kind == 2 ? 'sale_return' : 'sale'}' AS origin,
       ${kind == 0 ? 'NULL' : 'r.reason'} AS reason,
       EXISTS(SELECT 1 FROM sale_transaction_reversals x WHERE x.sale_transaction_id=s.id) AS reversed'''
         : refund
         ? '''f.id,f.created_at,$kind AS kind,s.id AS sale_id,-f.amount_minor AS amount_minor,
-          0 AS cost_micros,s.currency_code,s.currency_scale,s.customer_name_snapshot AS customer_name,
+          0 AS cost_micros,0 AS write_down_micros,s.currency_code,s.currency_scale,s.customer_name_snapshot AS customer_name,
           'sale_refund' AS origin,r.reason,0 AS reversed'''
         : '''p.id,p.created_at,$kind AS kind,NULL AS sale_id,
-      ${kind == 0 ? '' : '-'}p.amount_rupiah AS amount_minor,0 AS cost_micros,p.currency_code,p.currency_scale,
+      ${kind == 0 ? '' : '-'}p.amount_rupiah AS amount_minor,0 AS cost_micros,0 AS write_down_micros,p.currency_code,p.currency_scale,
       c.name AS customer_name,$_paymentOrigin AS origin,p.reason,
       EXISTS(SELECT 1 FROM payments x WHERE x.reverses_payment_id=p.id) AS reversed''';
     branches.add(
@@ -211,6 +233,44 @@ final class SqliteReportsRepository {
         await authorize?.call(db);
         return result;
       });
+
+  /// Used in the same protected database snapshot as the exported summary.
+  static Future<ReportProfitPage> profitPageDatabase(
+    DatabaseExecutor db,
+    ReportProfitCalendar calendar,
+    CurrencyPolicy currency,
+    int version,
+    int page,
+  ) async {
+    final ranges = calendar.page(page);
+    final query = reportSalesTotalsQuery(
+      calendar.filter,
+      currency,
+      costKnowledge: version >= 17,
+      saleReturns: version >= 41,
+      buckets: ranges,
+    );
+    final rows = await db.rawQuery(query.sql, query.arguments);
+    if (rows.length != ranges.length ||
+        rows.any((row) => row['mismatch'] != 0)) {
+      throw const AppError('m4InconsistentData');
+    }
+    return ReportProfitPage(
+      currency: currency,
+      zone: calendar.zone,
+      index: page,
+      pages: calendar.pages,
+      buckets: List.unmodifiable([
+        for (var i = 0; i < ranges.length; i++)
+          ReportProfitBucket(
+            range: ranges[i],
+            salesMinor: rows[i]['revenue'] as int,
+            costMicros: rows[i]['cost'] as int?,
+            writeDownMicros: rows[i]['write_down'] as int?,
+          ),
+      ]),
+    );
+  }
 
   /// Shared frozen read for exports; never opens another coordinator lease.
   static Future<ReportSummary> summaryDatabase(
@@ -306,6 +366,7 @@ final class SqliteReportsRepository {
       currency: currency,
       salesMinor: sales['revenue'] as int,
       costMicros: sales['cost'] as int?,
+      writeDownMicros: sales['write_down'] as int?,
       incompleteSaleEvents: sales['incomplete'] as int,
       saleCount: sales['sales'] as int,
       returnCount: sales['returns'] as int,

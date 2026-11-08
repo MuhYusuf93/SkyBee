@@ -49,6 +49,7 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
       : [...printers, selected!];
   ProductLabelSnapshot? snapshot;
   PrinterProtocol protocol = PrinterProtocol.escPosRaster;
+  ProductLabelFormat codeFormat = ProductLabelFormat.qr;
   bool gap = false,
       acknowledged = false,
       price = false,
@@ -62,6 +63,7 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
   String values() => jsonEncode([
     for (final c in inputs.values) c.text,
     protocol.name,
+    codeFormat.name,
     gap,
     acknowledged,
     price,
@@ -95,6 +97,7 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
     return ProductLabelProfile.fromJson({
       'format': 1,
       'protocol': protocol.name,
+      'codeFormat': codeFormat.name,
       'gap': gap,
       'gapConfirmed': acknowledged,
       'price': price,
@@ -124,6 +127,8 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
                   'm53LabelPrinterMissing',
                   'm53LabelSnapshotInvalid',
                   'm53LabelIdentityInvalid',
+                  'm54LabelCode128Unavailable',
+                  'm54LabelCode128DoesNotFit',
                 }.contains(key) =>
               key,
             _ => safeError(e),
@@ -146,6 +151,7 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
     final m = printer.media;
     selected = printer;
     protocol = m.protocol;
+    codeFormat = m.codeFormat;
     gap = m.gap;
     acknowledged = m.gapConfirmed;
     price = m.price;
@@ -294,7 +300,14 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
               if (error != null)
                 Text(tr(context, error!), key: const ValueKey('label-error')),
               if (snapshot != null) Text(snapshot!.name),
-              Text(tr(context, 'm53LabelHelp')),
+              Text(
+                tr(
+                  context,
+                  codeFormat == ProductLabelFormat.qr
+                      ? 'm53LabelHelp'
+                      : 'm54LabelCode128Help',
+                ),
+              ),
               if (printers.isEmpty) Text(tr(context, 'm53LabelPrinterMissing')),
               OutlinedButton(
                 key: const ValueKey('label-printer-settings'),
@@ -339,6 +352,40 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
                   onPressed: busy ? null : more,
                   child: Text(tr(context, 'loadMore')),
                 ),
+              DropdownButtonFormField<ProductLabelFormat>(
+                key: ValueKey('label-format-${selected?.id}'),
+                initialValue: codeFormat,
+                decoration: InputDecoration(
+                  labelText: tr(context, 'm54LabelCodeFormat'),
+                ),
+                items: [
+                  for (final format in ProductLabelFormat.values)
+                    DropdownMenuItem(
+                      value: format,
+                      child: Text(
+                        tr(
+                          context,
+                          format == ProductLabelFormat.qr
+                              ? 'm54LabelQrFormat'
+                              : 'm54LabelCode128Format',
+                        ),
+                      ),
+                    ),
+                ],
+                onChanged: busy || job != null
+                    ? null
+                    : (value) {
+                        codeFormat = value!;
+                        if (codeFormat == ProductLabelFormat.code128) {
+                          final module = inputs['moduleDots']!;
+                          final value = int.tryParse(module.text);
+                          if (value == null || value < 4 || value > 12) {
+                            module.text = '4';
+                          }
+                        }
+                        changed();
+                      },
+              ),
               DropdownButtonFormField<PrinterProtocol>(
                 initialValue: protocol,
                 key: ValueKey('label-protocol-${selected?.id}'),
@@ -369,7 +416,11 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
                         changed();
                       },
               ),
-              for (final e in inputs.entries)
+              for (final e in inputs.entries.where(
+                (e) =>
+                    e.key != 'moduleDots' ||
+                    codeFormat == ProductLabelFormat.qr,
+              ))
                 Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: ManagedTextField(
@@ -419,7 +470,14 @@ class _ProductLabelScreenState extends State<ProductLabelScreen> {
                           changed();
                         },
                 ),
-              Text(tr(context, 'm53LabelMediaHelp')),
+              Text(
+                tr(
+                  context,
+                  codeFormat == ProductLabelFormat.qr
+                      ? 'm53LabelMediaHelp'
+                      : 'm54LabelCode128Media',
+                ),
+              ),
               OutlinedButton(
                 key: const ValueKey('label-save'),
                 onPressed: busy || selected == null || job != null

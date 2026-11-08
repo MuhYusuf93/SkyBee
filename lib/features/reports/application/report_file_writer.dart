@@ -58,6 +58,10 @@ final class ReportFileWriter {
     'period_start_utc',
     'period_end_exclusive_utc',
     'captured_utc',
+    'bucket_first_local',
+    'bucket_last_local',
+    'gross_profit_micros',
+    'write_down_micros',
   ];
   static String csv(Object? value) {
     var text = value?.toString() ?? '';

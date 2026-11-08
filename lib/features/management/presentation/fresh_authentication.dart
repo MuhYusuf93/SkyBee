@@ -7,12 +7,12 @@ Future<bool> freshAuthentication(
   BuildContext context,
   String purpose, {
   bool pinOnly = false,
-}) async =>
-    await Navigator.push<bool>(
-      context,
-      MaterialPageRoute(
-        builder: (_) =>
-            PinScreen(freshPurpose: purpose, allowBiometrics: !pinOnly),
-      ),
-    ) ==
-    true;
+  bool waitForExit = false,
+}) async {
+  final route = MaterialPageRoute<bool>(
+    builder: (_) => PinScreen(freshPurpose: purpose, allowBiometrics: !pinOnly),
+  );
+  final accepted = await Navigator.push<bool>(context, route);
+  if (waitForExit) await route.completed;
+  return accepted == true;
+}
