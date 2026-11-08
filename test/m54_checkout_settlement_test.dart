@@ -18,6 +18,10 @@ import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
+  m54CheckoutSettlementSuite(databaseFactoryFfi);
+}
+
+void m54CheckoutSettlementSuite(DatabaseFactory factory) {
   Money idr(int minor) => Money(minor, 'IDR', 0);
   Matcher error(String key) =>
       isA<AppError>().having((e) => e.message, 'message', key);
@@ -95,10 +99,7 @@ void main() {
         'kasir_split_checkout_',
       );
       final path = '${directory.path}/m5_regression_54.db';
-      final db = DatabaseCoordinator(
-        factory: databaseFactoryFfi,
-        databasePath: path,
-      );
+      final db = DatabaseCoordinator(factory: factory, databasePath: path);
       final app = AppServices(db);
       try {
         await app.management.configure('PUBLIC SPLIT', '0001', '0001');
@@ -262,7 +263,7 @@ void main() {
         );
       } finally {
         await db.close();
-        await databaseFactoryFfi.deleteDatabase(path);
+        await factory.deleteDatabase(path);
         await directory.delete();
       }
     },

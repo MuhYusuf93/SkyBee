@@ -145,20 +145,21 @@ extension SupplierReturns on InventoryService {
   }) async {
     _returnQuantity(source, quantity);
     if (database.schemaVersion < 47) return;
+    final lineId = currentLine?.value;
+    final batchId = source['source_batch_id'] as String?;
+    // Android's raw-query bridge binds string arguments and rejects null.
+    // These fixed SQL fragments retain the same predicates when no ID exists.
+    final lineArg = lineId == null ? 'NULL' : '?';
+    final batchArg = batchId == null ? 'NULL' : '?';
     final held = (await db.rawQuery(
       '''SELECT
       COALESCE((SELECT SUM(quantity) FROM supplier_return_reservations
-        WHERE receipt_item_id=? AND id IS NOT ?),0) AS receipt_qty,
+        WHERE receipt_item_id=? AND id IS NOT $lineArg),0) AS receipt_qty,
       COALESCE((SELECT SUM(quantity) FROM supplier_stock_reserved_batches
-        WHERE batch_id=?),0) -
+        WHERE batch_id=$batchArg),0) -
       COALESCE((SELECT quantity FROM supplier_return_reservations
-        WHERE id=? AND batch_id IS NOT NULL),0) AS batch_qty''',
-      [
-        source['receipt_item_id'],
-        currentLine?.value,
-        source['source_batch_id'],
-        currentLine?.value,
-      ],
+        WHERE id=$lineArg AND batch_id IS NOT NULL),0) AS batch_qty''',
+      [source['receipt_item_id'], ?lineId, ?batchId, ?lineId],
     )).single;
     if (quantity >
             (source['eligible_quantity'] as int) -

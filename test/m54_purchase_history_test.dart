@@ -16,16 +16,19 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
+  m54PurchaseHistorySuite(databaseFactoryFfi);
+}
 
+void m54PurchaseHistorySuite(DatabaseFactory factory) {
   test(
     'M54 purchase history migrates facts and compares exact per-piece cost',
     () async {
       final root = await Directory.systemTemp.createTemp(
         'm54_purchase_history_',
       );
-      final path = '${root.path}/purchase_history.db';
+      final path = '${root.path}/m5_regression_54.db';
       var db = DatabaseCoordinator(
-        factory: databaseFactoryFfi,
+        factory: factory,
         databasePath: path,
         schemaVersion: 49,
       );
@@ -96,10 +99,7 @@ void main() {
           (sql) => sql.query('stock_receipt_items', orderBy: 'id'),
         );
         await db.close();
-        db = DatabaseCoordinator(
-          factory: databaseFactoryFfi,
-          databasePath: path,
-        );
+        db = DatabaseCoordinator(factory: factory, databasePath: path);
         app = AppServices(db, clock: clock);
         await app.management.unlock('0001');
         expect(
@@ -209,7 +209,7 @@ void main() {
         );
       } finally {
         await db.close();
-        await databaseFactoryFfi.deleteDatabase(path);
+        await factory.deleteDatabase(path);
         await root.delete();
       }
     },

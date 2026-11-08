@@ -12,6 +12,7 @@ import 'package:kasir_app/data/repositories/sqlite_reports_repository.dart';
 import 'package:kasir_app/features/catalog/domain/product_repository.dart';
 import 'package:kasir_app/features/cashier/application/product_search_service.dart';
 import 'package:kasir_app/features/reports/domain/report_models.dart';
+import 'package:kasir_app/features/reports/domain/report_profit.dart';
 import 'package:kasir_app/features/sale_history/domain/sale_transaction_repository.dart';
 import 'database_contract_suite.dart';
 
@@ -296,11 +297,26 @@ void m4PerformanceSuite(
           () => services.search.suggest('benchmark goods'),
         );
         await measure('monthly_summary', () => services.reports.summary(rf));
+        for (final period in ReportProfitPeriod.values) {
+          await measure(
+            'profit_${period.name}_page',
+            () => services.reports.profit(rf, period, 0),
+          );
+        }
         final summary = await services.reports.summary(rf);
         expect(summary.saleCount, sales);
         expect(summary.salesMinor, sales * 12);
         expect(summary.costMicros, sales * 9000000);
         expect(summary.grossProfitMicros, BigInt.from(sales * 3000000));
+        final month = await services.reports.profit(
+          rf,
+          ReportProfitPeriod.month,
+          0,
+        );
+        expect(
+          month.buckets.single.grossProfitMicros,
+          summary.grossProfitMicros,
+        );
         expect(summary.paymentsMinor, 7200);
         expect(summary.checkoutPaymentsMinor, 6000);
         expect(summary.repaymentsMinor, 1200);

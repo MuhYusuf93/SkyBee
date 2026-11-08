@@ -50,8 +50,13 @@ berbatas halaman dengan PIN pemilik, pratinjau, dan validasi ulang
 dependensi. Skema 54 menyatukan kredit penyerahan tanpa nota dengan ledger
 supplier setelah persetujuan pemilik. Tahap 4 lulus host. Tahap 5 mencakup
 lembar pemulihan PDF dan QR, tren laba kotor, label Code 128 dan penanganan
-hasil pemilihan akun Drive. Pemeriksaan revisi tahap 5, restore perangkat,
-kamera fisik, acceptance dan handoff masih berlangsung.
+hasil pemilihan akun Drive. Poco lulus 22 kasus acceptance dan 13 kasus
+keluaran sebelumnya. DV8910 lulus 35 kasus unik dari dua interval,
+termasuk empat kasus yang lulus setelah perbaikan bind `null`. Hash
+berkas terlindungi cocok. Pengaturan DV dipulihkan dan dibaca kembali.
+Versi 0.5.4+14, skema 54, lulus analyzer serta pemeriksaan APK biasa
+debug dan release. Cetak, kamera, HID dan Drive nyata masih terbuka.
+Pekerjaan dijeda untuk koordinasi uji M5.3 dan M5.4 pada Realme C11.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

@@ -15,16 +15,16 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
+  m54ArchivePurgeSuite(databaseFactoryFfi);
+}
 
+void m54ArchivePurgeSuite(DatabaseFactory factory) {
   test(
     'M54 purge only removes approved archived rows and retains every business witness',
     () async {
       final root = await Directory.systemTemp.createTemp('m54_archive_purge_');
-      final path = '${root.path}/archive.db';
-      final db = DatabaseCoordinator(
-        factory: databaseFactoryFfi,
-        databasePath: path,
-      );
+      final path = '${root.path}/m5_regression_54.db';
+      final db = DatabaseCoordinator(factory: factory, databasePath: path);
       final app = AppServices(db);
       final purge = ArchivePurgeService(db, app.management);
       final scopeChanged = isA<AppError>().having(
@@ -182,7 +182,7 @@ void main() {
         );
       } finally {
         await db.close();
-        await databaseFactoryFfi.deleteDatabase(path);
+        await factory.deleteDatabase(path);
         await root.delete();
       }
     },

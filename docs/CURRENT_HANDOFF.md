@@ -8,6 +8,18 @@ Setelah acceptance awal DV8910 dan Poco, beri kabar dan jeda untuk koordinasi
 uji M5.3 dan M5.4 pada Realme C11. Pemasangan `.skybee` dan pembuatan APK Uji
 Teman menunggu tahap tersebut serta arahan lanjut pengguna.
 
+Interval awal DV8910 lulus 31 kasus dan menemukan empat kegagalan bind
+`null` pada retur supplier berbasis nota. Tes ulang setelah perbaikan
+lulus delapan kasus, termasuk empat kasus itu. Hash berkas terlindungi
+cocok dan pengaturan DV dipulihkan pada kedua interval. Poco lulus
+22 kasus domain dan restore serta 13 kasus keluaran sebelumnya.
+Runner ditutup dan semua hash terlindungi cocok.
+
+Pada 9 November 2026 WIB, ADB menampilkan Poco dan DV8910. Realme
+belum terdeteksi. Jeda berlaku sampai pengguna menyiapkan Realme C11
+untuk uji terisolasi M5.3 dan M5.4. Pemasangan `.skybee` dan pembuatan
+APK Uji Teman mengikuti uji Realme dan arahan lanjut pengguna.
+
 <!-- M54_FOUNDATION_START -->
 7 November 2026 WIB — M5.4 masih aktif, source0.5.4+14/schema38.
 Fondasi lockout/gate/PIN, recovery24kata kompatibel, form/rak/harga dan

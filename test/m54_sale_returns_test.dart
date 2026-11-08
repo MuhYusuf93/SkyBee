@@ -22,7 +22,10 @@ import 'package:kasir_app/features/settings/domain/store_feature_policy.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
+  m54SaleReturnsSuite(databaseFactoryFfi);
+}
 
+void m54SaleReturnsSuite(DatabaseFactory factory) {
   test('M54 return shares exactly consume integer price and HPP residues', () {
     for (final total in [0, 1, 30001, 100000000000001]) {
       final amounts = [
@@ -43,7 +46,7 @@ void main() {
       );
       final path = '${dir.path}/m5_regression_54.db';
       final database = DatabaseCoordinator(
-        factory: databaseFactoryFfi,
+        factory: factory,
         databasePath: path,
       );
       var now = DateTime.utc(2027, 1, 31, 3);
@@ -158,7 +161,7 @@ void main() {
         await database.read(SaleReturnValidation.validate);
       } finally {
         await database.close();
-        await databaseFactoryFfi.deleteDatabase(path);
+        await factory.deleteDatabase(path);
         await dir.delete();
       }
     },
@@ -170,7 +173,7 @@ void main() {
       final dir = await Directory.systemTemp.createTemp('kasir_sale_returns_');
       final path = '${dir.path}/m5_regression_54.db';
       final database = DatabaseCoordinator(
-        factory: databaseFactoryFfi,
+        factory: factory,
         databasePath: path,
       );
       var now = DateTime.utc(2026, 11, 7, 3);
@@ -474,7 +477,7 @@ void main() {
         );
       } finally {
         await database.close();
-        await databaseFactoryFfi.deleteDatabase(path);
+        await factory.deleteDatabase(path);
         await dir.delete();
       }
     },

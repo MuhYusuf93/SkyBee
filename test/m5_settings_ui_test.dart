@@ -2160,16 +2160,18 @@ void m5SettingsUiSuite(
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 400));
         expect(find.byType(AlertDialog), findsNothing);
-        await tester.runAsync(() async {
-          expect(
-            await db
-                .read(
-                  (sql) => sql.rawQuery('SELECT COUNT(*) AS n FROM print_jobs'),
-                )
-                .then((rows) => rows.single['n']),
-            0,
-          );
-        });
+        // Keep pumping while the initial paper-status read and this assertion
+        // share the database lease under the widget test's clock.
+        int? jobs;
+        unawaited(
+          db
+              .read(
+                (sql) => sql.rawQuery('SELECT COUNT(*) AS n FROM print_jobs'),
+              )
+              .then((rows) => jobs = rows.single['n'] as int),
+        );
+        await drain(tester, () => jobs != null);
+        expect(jobs, 0);
         expect(operations(), isEmpty);
       } finally {
         await cleanup(tester);

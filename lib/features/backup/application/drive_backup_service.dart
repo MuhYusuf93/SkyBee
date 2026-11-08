@@ -253,7 +253,7 @@ final class DriveBackupService implements ScheduledDriveBackup {
 
   Future<void> acceptAccount(DrivePolicy pending) async {
     await access.authorizeCurrent();
-    final generation = database.generation;
+    final generation = database.generation, grant = access.generation;
     final previous = await policies.read();
     final transport = _transport();
     try {
@@ -261,7 +261,8 @@ final class DriveBackupService implements ScheduledDriveBackup {
       await access.authorizeCurrent();
       await database.exclusive((db) async {
         await access.authorize(db);
-        if (database.generation != generation ||
+        if (access.generation != grant ||
+            database.generation != generation ||
             (await policies.read()).generation != previous.generation) {
           throw const DriveFailure('driveConsentChanged');
         }

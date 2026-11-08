@@ -405,3 +405,79 @@ Cadangan lintas kunci, keluaran DV, uji fisik dan Drive nyata masih
 terbuka. Uji host pengaturan lama diulang secara terfokus sesudah
 koreksi fixture retensi, pesan validasi kode, dan waktu tunggu.
 Cakupan fisik dan portable restore native akan diuji pada acceptance.
+
+## Acceptance terisolasi tahap 6
+
+Suite Android memakai pemeriksaan domain yang sama dengan Windows dan
+membuka basis data fixture tersendiri melalui SQLCipher. Kasus mencakup
+checkout, retur, lampiran nota, migrasi histori pembelian, arsip, Gudang,
+reservasi supplier, ledger kredit, histori member dan cadangan portable.
+Keluaran PDF, laporan, raster label dan hasil SDK Drive tiruan juga diuji
+pada DV8910. Tes perangkat memakai paket `.integration` dan flag untuk
+menahan pekerjaan latar fixture.
+
+Regresi terfokus Windows lulus 15 kasus domain dan 5 kasus pengaturan.
+Tes pembatalan cetak ulang kini memompa siklus widget sambil menunggu
+antrean baca SQLite. Konfirmasi akun Drive memeriksa ulang sesi pemilik
+dan generasi kebijakan sebelum menyimpan. Analyzer bersih. Verifikasi
+APK release biasa 0.5.4+14 lulus identitas, tanda tangan pengembangan,
+lisensi, ABI ARM32/ARM64/x86-64 dan alignment 16 KiB. Build diulang dengan
+resolusi dependensi setelah percobaan `--no-pub` memakai registran tes
+yang tertinggal.
+
+### Temuan DV8910 pada interval pertama
+
+Pada fase supplier, Android SQLCipher menolak nilai bind `null` pada
+query ketersediaan retur supplier berbasis nota. Empat kasus terdampak
+mencakup reservasi, prasyarat kredit penyerahan, dan seed dua fixture
+cadangan lintas kunci. Windows SQLite menerima bind itu. Query kini
+memakai literal SQL `NULL` ketika ID tidak tersedia dan hanya mengikat
+ID yang ada. Cadangan format lama berhasil dipulihkan. Semua 13 kasus
+keluaran DV juga lulus.
+
+Interval pertama DV selesai dengan 31 kasus lulus dan empat gagal.
+Runner berhenti, hash semua berkas terlindungi yang sudah ada cocok,
+dan pengaturan awake asli dipulihkan serta dibaca ulang. Manifest
+sumber cocok sebelum dan sesudah interval
+`eacda7c11e3bed64ddec8a0aa9980ea821d271db98fdb97b5bd4e967c590cee9`.
+Perbaikan diterapkan setelah audit tersebut. Verifikasi APK debug
+biasa pada revisi awal acceptance juga lulus tiga ABI dan alignment
+16 KiB.
+
+Setelah perbaikan bind, 21 kasus Windows lulus, termasuk regresi
+supplier dan benchmark 10.000 produk dengan 100.000 penjualan.
+Median lima sampel hangat untuk halaman tren harian, mingguan, dan
+bulanan masing-masing 117, 113, dan 84 ms. Waktu ini mengukur query
+dan pemetaan hasil pada Windows dengan data sintetis. Pengukuran
+render dan perangkat Android merupakan bukti terpisah.
+
+Tes ulang DV lulus delapan kasus, termasuk reservasi, kredit penyerahan,
+dua pemulihan arsip skema 54 lintas kunci, dan satu pemulihan legacy.
+Masing-masing kasus yang gagal pada interval pertama kemudian lulus.
+Cakupan DV berjumlah 35 kasus unik dari kedua interval. Runner tertutup,
+hash berkas terlindungi cocok, dan pengaturan asli dibaca kembali.
+Manifest sumber 975 berkas cocok
+`1cd8b00591abf8ba44831391b996c6fe12bbb1233405eb5c30e3723f9a0825bf`.
+Setelah audit, bentuk elemen daftar diubah untuk memenuhi lint Dart
+dengan semantik bind yang sama. Revisi tersebut dipakai pada Poco.
+
+Poco lulus 22 kasus acceptance pada revisi tersebut, termasuk dua
+pemulihan lintas kunci dan satu pemulihan legacy. Bersama 13 kasus
+keluaran sebelumnya, cakupan Poco mencapai 35 kasus unik. Runner
+tertutup dan hash seluruh berkas terlindungi yang sudah ada cocok.
+Manifest sumber 975 berkas cocok
+`c38c86854b01efdc61a5cd0176f090820b1e97198df16d328d872194d39b135d`.
+Analyzer bersih. APK biasa debug dan release dari manifest tersebut
+lulus identitas, versi 0.5.4+14, tanda tangan pengembangan, ABI
+ARM32/ARM64/x86-64, lisensi, dan alignment 16 KiB. Kedua APK tersebut
+digunakan untuk verifikasi berkas.
+
+### Jeda sebelum handoff
+
+Acceptance fixture DV8910 dan Poco selesai. Cetak fisik, kamera dan
+HID fisik, interaksi Android SAF/Bagikan pada lembar pemulihan, serta
+OAuth/Drive nyata masih belum terverifikasi. ADB kembali menampilkan
+DV8910 `192.168.0.101:5555` dengan SELinux `Enforcing` dan Poco F6.
+Realme belum muncul pada 9 November 2026 pukul 00.42 WIB. Lanjutkan
+setelah koordinasi pengguna untuk uji M5.3 dan M5.4 pada Realme C11,
+lalu pemasangan `.skybee` dan pembuatan APK Uji Teman.

@@ -430,4 +430,4 @@ Jika source app berubah, kedua APK handoff harus dibangun ulang/diuji smoke pada
 - SQLite FK: https://www.sqlite.org/foreignkeys.html — proteksi referensi harus aktif; hard delete bukan alasan memutus integritas historis.
 - IAS2 synopsis: https://www.ifrs.org/issued-standards/list-of-standards/ias-2-inventories/ — bedakan biaya persediaan, HPP dan kerugian persediaan. Aplikasi tidak mengklaim laporan akuntansi/pajak tersertifikasi.
 
-**Mulai dengan audit source/baseline dan kontrak M5.4; lanjutkan sampai implementasi, uji DV/Poco dan perbaikannya, handoff `.skybee`/APK Uji Teman, lalu pengujian Realme M5.3+M5.4 sesuai ketersediaan perangkat. M5.5 multi-device tidak dimulai sekarang.**
+**Mulai dengan audit sumber, baseline, dan kontrak M5.4. Lanjutkan dengan implementasi, uji DV/Poco, dan perbaikan. Beri kabar dan jeda untuk koordinasi Realme C11, lalu uji M5.3 dan M5.4 pada Realme sebelum handoff `.skybee` dan APK Uji Teman. M5.5 khusus multi-device dan belum dimulai.**

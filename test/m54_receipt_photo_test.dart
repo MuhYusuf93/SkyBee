@@ -17,7 +17,10 @@ import 'support/m54_receipt_photo_fixture.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
+  m54ReceiptPhotoSuite(databaseFactoryFfi);
+}
 
+void m54ReceiptPhotoSuite(DatabaseFactory factory) {
   test(
     'M54 receipt photo rejects metadata, trailing data and invalid size',
     () {
@@ -53,8 +56,8 @@ void main() {
         'm54_receipt_photo_test_',
       );
       final db = DatabaseCoordinator(
-        factory: databaseFactoryFfi,
-        databasePath: '${root.path}/receiving_photo.db',
+        factory: factory,
+        databasePath: '${root.path}/m5_regression_54.db',
       );
       final app = AppServices(db);
       final first = publicReceiptPhoto(),
@@ -191,7 +194,7 @@ void main() {
         await db.read(ReceiptPhotoValidation.validate);
       } finally {
         await db.close();
-        await databaseFactoryFfi.deleteDatabase(db.databasePath);
+        await factory.deleteDatabase(db.databasePath);
         await root.delete();
       }
     },
