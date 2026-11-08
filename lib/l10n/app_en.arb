@@ -6595,5 +6595,105 @@
   "m54ReturnCountPhysical": "Enter the physical quantity set aside",
   "@m54ReturnCountPhysical": {
     "description": "Supplier return stock reservation and physical quantity prompt."
+  },
+  "m54PrepareReturn": "Prepare return",
+  "@m54PrepareReturn": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PreparedReturns": "Prepared returns",
+  "@m54PreparedReturns": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepBatch": "Tracked stock batch",
+  "@m54PrepBatch": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepQuarantine": "Customer return quarantine",
+  "@m54PrepQuarantine": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepObserved": "Physically counted quantity",
+  "@m54PrepObserved": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepUnknownOrigin": "Supplier origin unknown",
+  "@m54PrepUnknownOrigin": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepReceiptOrigin": "Batch linked to its original receipt",
+  "@m54PrepReceiptOrigin": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepPhysicalHelp": "Choose the physical group set aside. A barcode identifies the product. Availability is counted by batch, quarantine, or physical observation.",
+  "@m54PrepPhysicalHelp": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepProductFound": "Product found",
+  "@m54PrepProductFound": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepChooseSource": "Choose a physical group",
+  "@m54PrepChooseSource": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepReason": "Reason or note",
+  "@m54PrepReason": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepObservationHelp": "Count a separate group that you have just set aside. For goods counted before, choose the existing count record.",
+  "@m54PrepObservationHelp": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepObserve": "Record a new physical group",
+  "@m54PrepObserve": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostReceipt": "Reference cost per unit from the receipt",
+  "@m54PrepCostReceipt": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostReturn": "Reference cost per unit from return cost",
+  "@m54PrepCostReturn": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostAverage": "Reference cost per unit from average stock cost",
+  "@m54PrepCostAverage": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostReference": "Reference cost per unit from the product",
+  "@m54PrepCostReference": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostUnknown": "Reference cost unknown",
+  "@m54PrepCostUnknown": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepDispatch": "Record handover",
+  "@m54PrepDispatch": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepDispatched": "Units handed over",
+  "@m54PrepDispatched": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepDispatchHelp": "Enter the quantity the supplier actually accepted for each line. Leave it blank for goods still on hand.",
+  "@m54PrepDispatchHelp": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepAcceptAll": "Fill all quantities",
+  "@m54PrepAcceptAll": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepRejectRemaining": "Reject the remainder and release its reservation",
+  "@m54PrepRejectRemaining": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepRetainRemaining": "Keep the remainder reserved in the draft",
+  "@m54PrepRetainRemaining": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCreditClaim": "Pending supplier credit claim",
+  "@m54PrepCreditClaim": {
+    "description": "Supplier return preparation, physical availability, or handover label."
   }
 }

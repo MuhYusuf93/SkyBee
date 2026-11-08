@@ -19,6 +19,7 @@ class BarcodeScannerScreen extends StatefulWidget {
     this.inventory = false,
     this.registerUnknown,
     this.camera,
+    this.onAccepted,
   });
   final Future<BarcodeFeedback> Function(
     String code,
@@ -28,6 +29,7 @@ class BarcodeScannerScreen extends StatefulWidget {
   final Future<void> Function(String code)? registerUnknown;
   final bool inventory;
   final BarcodeCamera? camera;
+  final VoidCallback? onAccepted;
   @override
   State<BarcodeScannerScreen> createState() => _BarcodeScannerScreenState();
 }
@@ -104,6 +106,12 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen>
   Future<void> accept() async {
     await controller.accept();
     if (!mounted) return;
+    if (controller.feedback?.success == true &&
+        ModalRoute.of(context)?.isCurrent == true &&
+        widget.onAccepted != null) {
+      widget.onAccepted!();
+      return;
+    }
     // A platform may suppress audio. The visible outcome is always primary.
     try {
       await SystemSound.play(

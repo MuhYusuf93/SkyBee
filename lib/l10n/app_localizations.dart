@@ -9907,6 +9907,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter the physical quantity set aside'**
   String get m54ReturnCountPhysical;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare return'**
+  String get m54PrepareReturn;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepared returns'**
+  String get m54PreparedReturns;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked stock batch'**
+  String get m54PrepBatch;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer return quarantine'**
+  String get m54PrepQuarantine;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Physically counted quantity'**
+  String get m54PrepObserved;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier origin unknown'**
+  String get m54PrepUnknownOrigin;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Batch linked to its original receipt'**
+  String get m54PrepReceiptOrigin;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the physical group set aside. A barcode identifies the product. Availability is counted by batch, quarantine, or physical observation.'**
+  String get m54PrepPhysicalHelp;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Product found'**
+  String get m54PrepProductFound;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a physical group'**
+  String get m54PrepChooseSource;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason or note'**
+  String get m54PrepReason;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Count a separate group that you have just set aside. For goods counted before, choose the existing count record.'**
+  String get m54PrepObservationHelp;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a new physical group'**
+  String get m54PrepObserve;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference cost per unit from the receipt'**
+  String get m54PrepCostReceipt;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference cost per unit from return cost'**
+  String get m54PrepCostReturn;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference cost per unit from average stock cost'**
+  String get m54PrepCostAverage;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference cost per unit from the product'**
+  String get m54PrepCostReference;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference cost unknown'**
+  String get m54PrepCostUnknown;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Record handover'**
+  String get m54PrepDispatch;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Units handed over'**
+  String get m54PrepDispatched;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the quantity the supplier actually accepted for each line. Leave it blank for goods still on hand.'**
+  String get m54PrepDispatchHelp;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill all quantities'**
+  String get m54PrepAcceptAll;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject the remainder and release its reservation'**
+  String get m54PrepRejectRemaining;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the remainder reserved in the draft'**
+  String get m54PrepRetainRemaining;
+
+  /// Supplier return preparation, physical availability, or handover label.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending supplier credit claim'**
+  String get m54PrepCreditClaim;
 }
 
 class _AppLocalizationsDelegate

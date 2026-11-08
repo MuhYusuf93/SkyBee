@@ -12,7 +12,10 @@ import 'package:kasir_app/features/cashier/presentation/cashier_screen.dart';
 import 'package:kasir_app/features/inventory/application/inventory_service.dart';
 import 'package:kasir_app/features/inventory/application/supplier_return_validation.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
+import 'package:kasir_app/features/inventory/presentation/receipt_product_picker.dart';
+import 'package:kasir_app/features/suppliers/presentation/supplier_preparation_screen.dart';
 import 'package:kasir_app/features/suppliers/presentation/supplier_return_screen.dart';
+import 'package:kasir_app/features/suppliers/presentation/supplier_returns_screen.dart';
 import 'package:kasir_app/l10n/localization.dart';
 
 void m53SupplierReturnsWidgetsSuite(DatabaseFactory factory) {
@@ -20,6 +23,7 @@ void m53SupplierReturnsWidgetsSuite(DatabaseFactory factory) {
     WidgetTester t,
     bool Function() ready, {
     String? reason,
+    String Function()? details,
   }) async {
     final watch = Stopwatch()..start();
     while (!ready() &&
@@ -34,7 +38,7 @@ void m53SupplierReturnsWidgetsSuite(DatabaseFactory factory) {
       );
       await t.pump(const Duration(milliseconds: 16));
     }
-    expectSync(ready(), isTrue, reason: reason);
+    expectSync(ready(), isTrue, reason: details?.call() ?? reason);
     await t.pump(const Duration(milliseconds: 300));
   }
 
@@ -108,6 +112,172 @@ void m53SupplierReturnsWidgetsSuite(DatabaseFactory factory) {
     );
     await t.pump(const Duration(milliseconds: 400));
   }
+
+  testWidgets(
+    'M54 warehouse prepares by barcode and records a partial handover',
+    (t) async {
+      late Directory root;
+      late DatabaseCoordinator db;
+      late AppServices app;
+      late EntityId vendor, product, batch;
+      await io(t, () async {
+        root = await Directory.systemTemp.createTemp('kasir_m54_prepared_ui_');
+        db = DatabaseCoordinator(
+          factory: factory,
+          databasePath: '${root.path}/m54_prepared_ui.db',
+        );
+        app = AppServices(db);
+        await app.management.configure('PUBLIC PREPARED UI', '0001', '0001');
+        await app.management.unlock('0001');
+        await app.settings.setLanguage('en');
+        await db.transaction(
+          (sql) => sql.update('store_feature_policy', {
+            'onboarding_completed': 1,
+          }, where: 'id=1'),
+        );
+        vendor = await app.inventory.saveMaster(
+          MasterKind.supplier,
+          'PUBLIC TARGET SUPPLIER',
+        );
+        product = await app.inventory.create(
+          ProductInput(
+            name: 'PUBLIC HANDOVER GOODS',
+            barcode: '88998877',
+            sellingPrice: Money(12000, 'IDR', 0),
+          ),
+        );
+        await app.inventory.adjust(
+          product,
+          5,
+          reason: 'PUBLIC COUNT',
+          operationKey: 'PUBLIC UI PREP STOCK',
+          unitCost: CostAmount.fromMoney(Money(1000, 'IDR', 0)),
+        );
+        batch = EntityId(
+          (await db.read((sql) => sql.query('stock_batches'))).single['id']
+              as String,
+        );
+      });
+      try {
+        t.view.physicalSize = const Size(320, 700);
+        t.view.devicePixelRatio = 1;
+        t.platformDispatcher.textScaleFactorTestValue = 2;
+        addTearDown(t.view.resetPhysicalSize);
+        addTearDown(t.view.resetDevicePixelRatio);
+        addTearDown(t.platformDispatcher.clearTextScaleFactorTestValue);
+        t.testTextInput.register();
+        await t.pumpWidget(KasirApp(services: app));
+        final home = find.byType(CashierScreen);
+        await wait(t, () => home.evaluate().isNotEmpty);
+        unawaited(
+          Navigator.of(t.element(home)).push<void>(
+            MaterialPageRoute(
+              builder: (_) => SupplierReturnsScreen(supplier: vendor),
+            ),
+          ),
+        );
+        await wait(
+          t,
+          () => find
+              .byKey(const ValueKey('supplier-returns-ready'))
+              .evaluate()
+              .isNotEmpty,
+        );
+        await tap(t, find.byKey(const ValueKey('supplier-prepare-return')));
+        final prepared = find.byType(SupplierPreparationScreen);
+        final code = find.descendant(
+          of: find.byKey(const ValueKey('supplier-preparation-barcode')),
+          matching: find.byType(TextField),
+        );
+        await wait(
+          t,
+          () => code.evaluate().isNotEmpty,
+          details: () => find
+              .byType(Text)
+              .evaluate()
+              .map((e) {
+                return (e.widget as Text).data;
+              })
+              .whereType<String>()
+              .take(24)
+              .join(' | '),
+        );
+        await t.showKeyboard(code);
+        await t.enterText(code, '88998877');
+        await t.testTextInput.receiveAction(TextInputAction.done);
+        await wait(
+          t,
+          () => find.byType(ReceiptProductPicker).evaluate().isNotEmpty,
+        );
+        final amount = find.byKey(const ValueKey('receipt-picker-quantity'));
+        await reveal(t, amount);
+        await t.enterText(amount, '3');
+        await tap(t, find.byKey(const ValueKey('receipt-picker-add')));
+        final candidate = find.byKey(
+          ValueKey('supplier-preparation-source-${batch.value}'),
+        );
+        await wait(t, () => candidate.evaluate().isNotEmpty);
+        await tap(t, candidate);
+        final pending = find.descendant(
+          of: prepared,
+          matching: find.byType(LinearProgressIndicator),
+        );
+        await wait(
+          t,
+          () => prepared.evaluate().isNotEmpty && pending.evaluate().isEmpty,
+        );
+        late EntityId document, line;
+        await io(t, () async {
+          final docs = await app.inventory.supplierReturnPreparations(vendor);
+          document = EntityId(docs.items.single['id'] as String);
+          final draft = await app.inventory.supplierReturnPreparation(document);
+          line = draft.lines.single.id;
+          expectSync(draft.lines.single.remaining, 3);
+          expectSync(draft.lines.single.receiptItem, isNull);
+          expectSync((await app.inventory.detail(product)).quantity, 5);
+        });
+        await tap(
+          t,
+          find.byKey(const ValueKey('supplier-preparation-dispatch')),
+        );
+        final count = find.byKey(
+          ValueKey('supplier-preparation-accepted-${line.value}'),
+        );
+        await reveal(t, count);
+        await t.enterText(count, '1');
+        await tap(
+          t,
+          find.byKey(const ValueKey('supplier-preparation-dispatch-save')),
+        );
+        await confirm(t);
+        await wait(
+          t,
+          () => prepared.evaluate().isNotEmpty && pending.evaluate().isEmpty,
+        );
+        await io(t, () async {
+          final draft = await app.inventory.supplierReturnPreparation(document);
+          expectSync(draft.status, 'draft');
+          expectSync(draft.lines.single.remaining, 2);
+          final stock = await app.inventory.detail(product);
+          expectSync(stock.quantity, 4);
+          expectSync(stock.saleable, 2);
+          expectSync(
+            await db.read((sql) => sql.query('supplier_credits')),
+            isEmpty,
+          );
+        });
+        await reveal(t, find.text('Units handed over · 1'));
+        expectSync(t.takeException(), isNull);
+      } finally {
+        await t.pumpWidget(const SizedBox());
+        await io(t, () async {
+          await db.close();
+          await factory.deleteDatabase(db.databasePath);
+          await root.delete();
+        });
+      }
+    },
+  );
 
   for (final language in ['id', 'en']) {
     testWidgets(

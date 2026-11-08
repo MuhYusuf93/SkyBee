@@ -20,6 +20,7 @@ import '../../cashier/domain/quantity_promotion.dart';
 import '../../inventory/application/receipt_draft_validation.dart';
 import '../../inventory/application/stocktake_validation.dart';
 import '../../inventory/application/supplier_return_validation.dart';
+import '../../inventory/application/supplier_return_preparation_validation.dart';
 import '../../suppliers/application/supplier_terms_validation.dart';
 import '../../suppliers/application/supplier_service.dart';
 import '../../labels/application/product_label_validation.dart';
@@ -72,6 +73,7 @@ final class BackupValidation {
     if (schema >= 42) await SaleRefundService.validate(db);
     if (schema >= 43) await QrisAssetService.validate(db);
     if (schema >= 44) await CheckoutSettlementValidation.validate(db);
+    if (schema >= 48) await SupplierReturnPreparationValidation.validate(db);
     if (schema >= 26 &&
         (await db.rawQuery('''SELECT 1 FROM products p
       LEFT JOIN suppliers s ON s.id=p.master_supplier_id

@@ -9,6 +9,8 @@ import '../../management/domain/management_role.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../settings/presentation/language_button.dart';
 import '../domain/supplier_return.dart';
+import '../domain/supplier_return_preparation.dart';
+import 'supplier_preparation_screen.dart';
 import 'supplier_return_screen.dart';
 
 /// Drafts, posted returns and eligible source receipts have independent bounded
@@ -24,10 +26,15 @@ class _SupplierReturnsScreenState extends State<SupplierReturnsScreen> {
   List<Map<String, Object?>> rows = [];
   SupplierReturnCursor? next;
   SupplierReturnReceiptCursor? receiptNext;
+  SupplierPreparationCursor? preparationNext;
   String mode = 'drafts', name = '', error = '';
   bool busy = false, started = false;
   int generation = 0;
-  bool get hasMore => mode == 'receipts' ? receiptNext != null : next != null;
+  bool get hasMore => switch (mode) {
+    'receipts' => receiptNext != null,
+    'prepared' => preparationNext != null,
+    _ => next != null,
+  };
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -50,7 +57,19 @@ class _SupplierReturnsScreenState extends State<SupplierReturnsScreen> {
         throw const AppError('m3DraftChanged');
       }
       final supplier = await app.suppliers.terms(widget.supplier);
-      if (mode == 'receipts') {
+      if (mode == 'prepared') {
+        final page = await app.inventory.supplierReturnPreparations(
+          widget.supplier,
+          after: more ? preparationNext : null,
+        );
+        if (mounted) {
+          setState(() {
+            rows = page.items;
+            preparationNext = page.nextCursor;
+            name = supplier.name;
+          });
+        }
+      } else if (mode == 'receipts') {
         final page = await app.inventory.supplierReturnReceipts(
           widget.supplier,
           after: more ? receiptNext : null,
@@ -103,9 +122,36 @@ class _SupplierReturnsScreenState extends State<SupplierReturnsScreen> {
     }
     if (!mounted) return;
     await Navigator.of(context).push<void>(
-      MaterialPageRoute(builder: (_) => SupplierReturnScreen(id: id)),
+      MaterialPageRoute(
+        builder: (_) => mode == 'prepared'
+            ? SupplierPreparationScreen(id: id)
+            : SupplierReturnScreen(id: id),
+      ),
     );
     if (mounted) await load();
+  }
+
+  Future<void> prepare() async {
+    if (busy) return;
+    setState(() => busy = true);
+    late final EntityId id;
+    try {
+      final app = context.read<AppServices>();
+      if (app.database.generation != generation) {
+        throw const AppError('m3DraftChanged');
+      }
+      id = (await app.inventory.createSupplierReturnPreparation(
+        widget.supplier,
+      )).id;
+    } catch (e) {
+      if (mounted) setState(() => error = safeError(e));
+      return;
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+    if (!mounted) return;
+    setState(() => mode = 'prepared');
+    await open({'id': id.value});
   }
 
   @override
@@ -136,7 +182,14 @@ class _SupplierReturnsScreenState extends State<SupplierReturnsScreen> {
                 children: [
                   Text(name),
                   if (error.isNotEmpty) Text(tr(context, error)),
+                  if (context.read<AppServices>().database.schemaVersion >= 48)
+                    FilledButton(
+                      key: const ValueKey('supplier-prepare-return'),
+                      onPressed: busy ? null : prepare,
+                      child: Text(tr(context, 'm54PrepareReturn')),
+                    ),
                   DropdownButtonFormField<String>(
+                    key: ValueKey(mode),
                     initialValue: mode,
                     isExpanded: true,
                     items: [
@@ -144,6 +197,12 @@ class _SupplierReturnsScreenState extends State<SupplierReturnsScreen> {
                         DropdownMenuItem(
                           value: value,
                           child: Text(tr(context, 'm53ReturnList$value')),
+                        ),
+                      if (context.read<AppServices>().database.schemaVersion >=
+                          48)
+                        DropdownMenuItem(
+                          value: 'prepared',
+                          child: Text(tr(context, 'm54PreparedReturns')),
                         ),
                     ],
                     onChanged: busy
@@ -164,6 +223,12 @@ class _SupplierReturnsScreenState extends State<SupplierReturnsScreen> {
                             context,
                             mode == 'receipts'
                                 ? 'm53ReturnChooseReceipt'
+                                : mode == 'prepared'
+                                ? switch (row['status']) {
+                                    'closed' => 'm53ReturnStatusposted',
+                                    'cancelled' => 'm53ReturnStatuscancelled',
+                                    _ => 'm53ReturnStatusdraft',
+                                  }
                                 : mode == 'drafts'
                                 ? 'm53ReturnStatusdraft'
                                 : row['reversed'] == 1

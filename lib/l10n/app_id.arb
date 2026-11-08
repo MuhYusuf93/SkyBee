@@ -6595,5 +6595,105 @@
   "m54ReturnCountPhysical": "Masukkan jumlah fisik yang disiapkan",
   "@m54ReturnCountPhysical": {
     "description": "Supplier return stock reservation and physical quantity prompt."
+  },
+  "m54PrepareReturn": "Siapkan retur",
+  "@m54PrepareReturn": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PreparedReturns": "Retur yang disiapkan",
+  "@m54PreparedReturns": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepBatch": "Batch stok terlacak",
+  "@m54PrepBatch": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepQuarantine": "Karantina retur pelanggan",
+  "@m54PrepQuarantine": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepObserved": "Jumlah fisik yang dihitung",
+  "@m54PrepObserved": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepUnknownOrigin": "Asal supplier belum diketahui",
+  "@m54PrepUnknownOrigin": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepReceiptOrigin": "Batch terkait penerimaan asli",
+  "@m54PrepReceiptOrigin": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepPhysicalHelp": "Pilih kelompok fisik yang disiapkan. Barcode mengenali produk. Ketersediaan dihitung per batch, karantina, atau hasil hitung fisik.",
+  "@m54PrepPhysicalHelp": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepProductFound": "Produk ditemukan",
+  "@m54PrepProductFound": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepChooseSource": "Pilih kelompok fisik",
+  "@m54PrepChooseSource": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepReason": "Alasan atau catatan",
+  "@m54PrepReason": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepObservationHelp": "Hitung kelompok yang benar-benar baru disiapkan. Untuk barang yang sudah dihitung, pilih catatan hitung yang ada.",
+  "@m54PrepObservationHelp": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepObserve": "Catat kelompok fisik baru",
+  "@m54PrepObserve": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostReceipt": "Biaya acuan per unit dari nota",
+  "@m54PrepCostReceipt": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostReturn": "Biaya acuan per unit dari HPP retur",
+  "@m54PrepCostReturn": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostAverage": "Biaya acuan per unit dari rata-rata stok",
+  "@m54PrepCostAverage": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostReference": "Biaya referensi per unit dari produk",
+  "@m54PrepCostReference": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCostUnknown": "Biaya acuan belum diketahui",
+  "@m54PrepCostUnknown": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepDispatch": "Catat penyerahan",
+  "@m54PrepDispatch": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepDispatched": "Unit diserahkan",
+  "@m54PrepDispatched": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepDispatchHelp": "Masukkan jumlah yang benar-benar diterima supplier pada setiap baris. Jumlah kosong berarti belum diserahkan.",
+  "@m54PrepDispatchHelp": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepAcceptAll": "Isi seluruh jumlah",
+  "@m54PrepAcceptAll": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepRejectRemaining": "Tolak sisa dan lepaskan reservasinya",
+  "@m54PrepRejectRemaining": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepRetainRemaining": "Sisa tetap disiapkan di draft",
+  "@m54PrepRetainRemaining": {
+    "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54PrepCreditClaim": "Klaim kredit supplier tertunda",
+  "@m54PrepCreditClaim": {
+    "description": "Supplier return preparation, physical availability, or handover label."
   }
 }

@@ -214,3 +214,22 @@ Audit lokalisasi 1635/1016/245. Build debug biasa
 lulus verifikasi tiga ABI dan alignment 16 KiB tanpa instalasi. Draft
 karantina lintas supplier, asal belum diketahui, penyerahan parsial dan
 acceptance perangkat masih terbuka.
+
+## Tahap 4 · karantina dan penyerahan parsial · skema 48
+
+Supplier tujuan dapat berbeda dari supplier pada nota. Sumber unit dibatasi
+oleh batch, karantina retur pelanggan, atau hasil hitung fisik yang tersimpan.
+Lima unit karantina terbagi menjadi tiga untuk supplier A dan dua untuk
+supplier B. Penyerahan parsial menahan sisa di draft atau melepasnya saat
+ditolak. Reversal memulihkan kapasitas dan memeriksa perubahan stok dependen.
+Asal yang belum diketahui tetap tidak membuat nota atau tagihan baru.
+Klaim kredit jalur tanpa nota tersimpan sebagai tertunda. Persetujuan dan
+alokasi klaim ini ke ledger belum tersedia. Retur berbasis nota tetap memakai
+alur kredit supplier yang sudah ada.
+
+Regresi host 28/28 lulus, termasuk checkout, backup portable, barcode dan
+UI 320 px skala 2. Tes UI awal gagal menemukan field atau baris yang belum
+terbangun pada daftar lazy. Tes akhir menggulir dan memeriksa data aktual.
+Analyzer bersih, lokalisasi 1660/1031/245. APK debug biasa tiga ABI dan
+alignment 16 KiB lulus verifikasi tanpa instalasi. Kamera fisik, acceptance
+dan handoff terbuka. Pekerjaan berikutnya foto nota dan sisa tahap 4.

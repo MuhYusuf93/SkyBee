@@ -5518,4 +5518,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m54ReturnCountPhysical => 'Enter the physical quantity set aside';
+
+  @override
+  String get m54PrepareReturn => 'Prepare return';
+
+  @override
+  String get m54PreparedReturns => 'Prepared returns';
+
+  @override
+  String get m54PrepBatch => 'Tracked stock batch';
+
+  @override
+  String get m54PrepQuarantine => 'Customer return quarantine';
+
+  @override
+  String get m54PrepObserved => 'Physically counted quantity';
+
+  @override
+  String get m54PrepUnknownOrigin => 'Supplier origin unknown';
+
+  @override
+  String get m54PrepReceiptOrigin => 'Batch linked to its original receipt';
+
+  @override
+  String get m54PrepPhysicalHelp =>
+      'Choose the physical group set aside. A barcode identifies the product. Availability is counted by batch, quarantine, or physical observation.';
+
+  @override
+  String get m54PrepProductFound => 'Product found';
+
+  @override
+  String get m54PrepChooseSource => 'Choose a physical group';
+
+  @override
+  String get m54PrepReason => 'Reason or note';
+
+  @override
+  String get m54PrepObservationHelp =>
+      'Count a separate group that you have just set aside. For goods counted before, choose the existing count record.';
+
+  @override
+  String get m54PrepObserve => 'Record a new physical group';
+
+  @override
+  String get m54PrepCostReceipt => 'Reference cost per unit from the receipt';
+
+  @override
+  String get m54PrepCostReturn => 'Reference cost per unit from return cost';
+
+  @override
+  String get m54PrepCostAverage =>
+      'Reference cost per unit from average stock cost';
+
+  @override
+  String get m54PrepCostReference => 'Reference cost per unit from the product';
+
+  @override
+  String get m54PrepCostUnknown => 'Reference cost unknown';
+
+  @override
+  String get m54PrepDispatch => 'Record handover';
+
+  @override
+  String get m54PrepDispatched => 'Units handed over';
+
+  @override
+  String get m54PrepDispatchHelp =>
+      'Enter the quantity the supplier actually accepted for each line. Leave it blank for goods still on hand.';
+
+  @override
+  String get m54PrepAcceptAll => 'Fill all quantities';
+
+  @override
+  String get m54PrepRejectRemaining =>
+      'Reject the remainder and release its reservation';
+
+  @override
+  String get m54PrepRetainRemaining =>
+      'Keep the remainder reserved in the draft';
+
+  @override
+  String get m54PrepCreditClaim => 'Pending supplier credit claim';
 }

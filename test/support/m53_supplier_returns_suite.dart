@@ -7,7 +7,9 @@ import 'package:kasir_app/core/domain/value_types.dart';
 import 'package:kasir_app/core/time/store_clock.dart';
 import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/inventory/application/inventory_service.dart';
+import 'package:kasir_app/features/inventory/application/receipt_draft_validation.dart';
 import 'package:kasir_app/features/inventory/application/supplier_return_validation.dart';
+import 'package:kasir_app/features/inventory/application/supplier_return_preparation_validation.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/inventory/domain/stock_input.dart';
 import 'package:kasir_app/features/suppliers/application/supplier_service.dart';
@@ -15,6 +17,8 @@ import 'package:kasir_app/features/suppliers/domain/supplier_invoice.dart';
 import 'package:kasir_app/features/settings/domain/store_feature_policy.dart';
 import 'package:kasir_app/features/management/domain/management_role.dart';
 import 'package:kasir_app/features/cashier/domain/cashier_models.dart';
+import 'package:kasir_app/features/cashier/domain/sale_return_models.dart';
+import 'package:kasir_app/features/suppliers/domain/supplier_return_preparation.dart';
 
 void m53SupplierReturnsSuite(DatabaseFactory factory) {
   late Directory root;
@@ -60,6 +64,7 @@ void m53SupplierReturnsSuite(DatabaseFactory factory) {
     try {
       await db.read(SupplierFinanceValidation.validate);
       await db.read(SupplierReturnValidation.validate);
+      await db.read(SupplierReturnPreparationValidation.validate);
     } finally {
       await db.close();
       await factory.deleteDatabase(db.databasePath);
@@ -75,6 +80,200 @@ void m53SupplierReturnsSuite(DatabaseFactory factory) {
           receipt,
         )).items.single['receipt_item_id']
         as String,
+  );
+  test(
+    'M54 quarantine can be split across suppliers and dispatched partially without moving saleable stock',
+    () async {
+      final id = await product('PUBLIC QUARANTINE');
+      final otherVendor = await app.inventory.saveMaster(
+        MasterKind.supplier,
+        'PUBLIC SECOND VENDOR',
+      );
+      await app.inventory.receive(
+        id,
+        5,
+        cost(10000),
+        operationKey: 'PUBLIC CUSTOMER RECEIPT',
+        supplierId: supplier,
+      );
+      var cart = await app.cart.open();
+      cart = await app.cart.add(cart.id, id);
+      cart = await app.cart.quantity(cart.id, id, 5);
+      final sold = await app.checkout.submit(
+        cart.id,
+        cart.revision,
+        const CheckoutInput(),
+      );
+      final source = await app.saleReturns.lookup(sold.number);
+      final returned = await app.saleReturns.preview(sold.id, [
+        SaleReturnSelection(
+          source.items.single.id,
+          5,
+          SaleReturnCondition.quarantine,
+        ),
+      ]);
+      await app.saleReturns.post(
+        returned,
+        operationKey: 'PUBLIC QUARANTINED',
+        reason: 'PUBLIC DAMAGE',
+      );
+      Future<int> available() async {
+        final pools = await app.inventory.supplierPreparationSources(
+          id,
+          SupplierReturnBucket.quarantine,
+        );
+        return pools.items.firstOrNull?.available ?? 0;
+      }
+
+      final bucket = (await app.inventory.supplierPreparationSources(
+        id,
+        SupplierReturnBucket.quarantine,
+      )).items.single;
+      expect(bucket.available, 5);
+      expect(bucket.receiptItem, isNull);
+      var a = await app.inventory.createSupplierReturnPreparation(supplier);
+      var b = await app.inventory.createSupplierReturnPreparation(otherVendor);
+      a = await app.inventory.reserveSupplierPreparationSource(
+        a.id,
+        a.revision,
+        bucket.bucket,
+        bucket.id,
+        3,
+      );
+      expect(await available(), 2);
+      await expectLater(
+        app.inventory.reserveSupplierPreparationSource(
+          b.id,
+          b.revision,
+          bucket.bucket,
+          bucket.id,
+          3,
+        ),
+        throwsA(isA<AppError>()),
+      );
+      b = await app.inventory.reserveSupplierPreparationSource(
+        b.id,
+        b.revision,
+        bucket.bucket,
+        bucket.id,
+        2,
+      );
+      final accepted = {a.lines.single.id: 2};
+      final dispatch = await app.inventory.dispatchSupplierReturnPreparation(
+        a.id,
+        a.revision,
+        accepted,
+        operationKey: 'PUBLIC PARTIAL SEND',
+        creditClaim: money(4000),
+      );
+      expect(
+        await app.inventory.dispatchSupplierReturnPreparation(
+          a.id,
+          a.revision,
+          accepted,
+          operationKey: 'PUBLIC PARTIAL SEND',
+          creditClaim: money(4000),
+        ),
+        dispatch,
+      );
+      a = await app.inventory.supplierReturnPreparation(a.id);
+      expect(a.status, 'draft');
+      expect(a.lines.single.remaining, 1);
+      expect(await available(), 0);
+      await app.inventory.cancelSupplierReturnPreparation(b.id, b.revision);
+      expect(await available(), 2);
+      await app.inventory.reverseSupplierPreparationDispatch(
+        dispatch,
+        operationKey: 'PUBLIC UNDO SEND',
+        reason: 'PUBLIC RETURNED TO QUARANTINE',
+      );
+      expect(await available(), 4);
+      expect((await app.inventory.detail(id)).quantity, 0);
+      expect(
+        (await db.read(
+          (sql) => sql.query('sale_return_items'),
+        )).single['quantity'],
+        5,
+      );
+      expect(await db.read((sql) => sql.query('supplier_credits')), isEmpty);
+      expect(await db.read((sql) => sql.query('cash_drawer_events')), isEmpty);
+    },
+  );
+
+  test(
+    'M54 preparation dispatch handles unknown tracked origin and a distinct untracked observation',
+    () async {
+      final tracked = await product('PUBLIC UNKNOWN ORIGIN');
+      await app.inventory.adjust(
+        tracked,
+        5,
+        operationKey: 'PUBLIC ADJUSTED GOODS',
+        reason: 'PUBLIC PHYSICAL COUNT',
+        unitCost: cost(1000),
+      );
+      final untracked = await app.inventory.create(
+        ProductInput(
+          name: 'PUBLIC COUNTED LOOSE STOCK',
+          sellingPrice: money(12000),
+        ),
+        stockTracking: false,
+        referenceCost: cost(5000),
+      );
+      var doc = await app.inventory.createSupplierReturnPreparation(supplier);
+      final batch = (await app.inventory.supplierPreparationSources(
+        tracked,
+        SupplierReturnBucket.batch,
+      )).items.single;
+      expect(batch.receiptItem, isNull);
+      doc = await app.inventory.reserveSupplierPreparationSource(
+        doc.id,
+        doc.revision,
+        batch.bucket,
+        batch.id,
+        4,
+      );
+      doc = await app.inventory.observeSupplierPreparationStock(
+        doc.id,
+        doc.revision,
+        untracked,
+        2,
+      );
+      expect((await app.inventory.detail(tracked)).saleable, 1);
+      final quantities = {
+        for (final line in doc.lines) line.id: line.remaining,
+      };
+      final dispatch = await app.inventory.dispatchSupplierReturnPreparation(
+        doc.id,
+        doc.revision,
+        quantities,
+        operationKey: 'PUBLIC UNSOURCED DISPATCH',
+      );
+      expect((await app.inventory.detail(tracked)).quantity, 1);
+      expect(
+        (await app.inventory.detail(tracked)).valueMicros,
+        cost(1000).micros,
+      );
+      expect((await app.inventory.detail(untracked)).quantity, 999);
+      expect(await db.read((sql) => sql.query('stock_receipts')), isEmpty);
+      await app.inventory.reverseSupplierPreparationDispatch(
+        dispatch,
+        operationKey: 'PUBLIC UNSOURCED REVERSE',
+        reason: 'PUBLIC SHIPMENT RETURNED',
+      );
+      expect((await app.inventory.detail(tracked)).quantity, 5);
+      expect(
+        (await app.inventory.detail(tracked)).valueMicros,
+        cost(5000).micros,
+      );
+      expect(
+        (await app.inventory.supplierPreparationSources(
+          untracked,
+          SupplierReturnBucket.observed,
+        )).items.single.available,
+        2,
+      );
+      await db.read(ReceiptDraftValidation.validate);
+    },
   );
   test(
     'M54 supplier reservations survive reopen and checkout spends only unreserved pieces',

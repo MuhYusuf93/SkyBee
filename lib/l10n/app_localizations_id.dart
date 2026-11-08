@@ -5544,4 +5544,82 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m54ReturnCountPhysical => 'Masukkan jumlah fisik yang disiapkan';
+
+  @override
+  String get m54PrepareReturn => 'Siapkan retur';
+
+  @override
+  String get m54PreparedReturns => 'Retur yang disiapkan';
+
+  @override
+  String get m54PrepBatch => 'Batch stok terlacak';
+
+  @override
+  String get m54PrepQuarantine => 'Karantina retur pelanggan';
+
+  @override
+  String get m54PrepObserved => 'Jumlah fisik yang dihitung';
+
+  @override
+  String get m54PrepUnknownOrigin => 'Asal supplier belum diketahui';
+
+  @override
+  String get m54PrepReceiptOrigin => 'Batch terkait penerimaan asli';
+
+  @override
+  String get m54PrepPhysicalHelp =>
+      'Pilih kelompok fisik yang disiapkan. Barcode mengenali produk. Ketersediaan dihitung per batch, karantina, atau hasil hitung fisik.';
+
+  @override
+  String get m54PrepProductFound => 'Produk ditemukan';
+
+  @override
+  String get m54PrepChooseSource => 'Pilih kelompok fisik';
+
+  @override
+  String get m54PrepReason => 'Alasan atau catatan';
+
+  @override
+  String get m54PrepObservationHelp =>
+      'Hitung kelompok yang benar-benar baru disiapkan. Untuk barang yang sudah dihitung, pilih catatan hitung yang ada.';
+
+  @override
+  String get m54PrepObserve => 'Catat kelompok fisik baru';
+
+  @override
+  String get m54PrepCostReceipt => 'Biaya acuan per unit dari nota';
+
+  @override
+  String get m54PrepCostReturn => 'Biaya acuan per unit dari HPP retur';
+
+  @override
+  String get m54PrepCostAverage => 'Biaya acuan per unit dari rata-rata stok';
+
+  @override
+  String get m54PrepCostReference => 'Biaya referensi per unit dari produk';
+
+  @override
+  String get m54PrepCostUnknown => 'Biaya acuan belum diketahui';
+
+  @override
+  String get m54PrepDispatch => 'Catat penyerahan';
+
+  @override
+  String get m54PrepDispatched => 'Unit diserahkan';
+
+  @override
+  String get m54PrepDispatchHelp =>
+      'Masukkan jumlah yang benar-benar diterima supplier pada setiap baris. Jumlah kosong berarti belum diserahkan.';
+
+  @override
+  String get m54PrepAcceptAll => 'Isi seluruh jumlah';
+
+  @override
+  String get m54PrepRejectRemaining => 'Tolak sisa dan lepaskan reservasinya';
+
+  @override
+  String get m54PrepRetainRemaining => 'Sisa tetap disiapkan di draft';
+
+  @override
+  String get m54PrepCreditClaim => 'Klaim kredit supplier tertunda';
 }

@@ -31,12 +31,14 @@ import '../../settings/domain/store_feature_policy.dart';
 import '../domain/receipt_draft.dart';
 import '../domain/stocktake_draft.dart';
 import '../../suppliers/domain/supplier_return.dart';
+import '../../suppliers/domain/supplier_return_preparation.dart';
 
 part 'receipt_draft_service.dart';
 part 'stocktake_service.dart';
 part 'stocktake_posting.dart';
 part 'supplier_returns.dart';
 part 'supplier_return_posting.dart';
+part 'supplier_return_preparation_service.dart';
 
 /// Protected master/stock use cases. Every write runs in one dbTxn and checks
 /// access at execution AND before commit. Screen state has no SQL/valuation.
