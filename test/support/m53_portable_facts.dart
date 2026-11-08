@@ -17,6 +17,7 @@ import 'package:kasir_app/features/suppliers/application/supplier_reminder_servi
 import 'package:kasir_app/features/suppliers/domain/supplier_visit.dart';
 import 'package:kasir_app/features/suppliers/domain/supplier_invoice.dart';
 import 'package:kasir_app/features/suppliers/domain/supplier_credit.dart';
+import 'package:kasir_app/features/suppliers/domain/supplier_return_preparation.dart';
 import 'package:kasir_app/features/labels/domain/product_label.dart';
 import 'package:kasir_app/features/printer/domain/printer_profile.dart';
 import 'package:kasir_app/features/printer/application/print_queue_service.dart';
@@ -280,6 +281,46 @@ final class PortableFactsFixture {
       reason: 'PUBLIC REFUND CORRECTION',
       operationKey: op(),
     );
+    if (app.database.schemaVersion >= 54) {
+      final unsourced = await product('GENERIC RETURN');
+      await app.inventory.adjust(
+        unsourced,
+        2,
+        operationKey: op(),
+        reason: 'PUBLIC PHYSICAL COUNT',
+        unitCost: cost(100),
+      );
+      final source = (await app.inventory.supplierPreparationSources(
+        unsourced,
+        SupplierReturnBucket.batch,
+      )).items.single;
+      var prepared = await app.inventory.createSupplierReturnPreparation(
+        supplier,
+      );
+      prepared = await app.inventory.reserveSupplierPreparationSource(
+        prepared.id,
+        prepared.revision,
+        source.bucket,
+        source.id,
+        2,
+      );
+      final dispatched = await app.inventory.dispatchSupplierReturnPreparation(
+        prepared.id,
+        prepared.revision,
+        {prepared.lines.single.id: 1},
+        operationKey: op(),
+        creditClaim: money(500),
+      );
+      await app.suppliers.approveDispatchCredit(
+        dispatched,
+        SupplierCreditApprovalInput(
+          amount: money(400),
+          date: day('2026-11-01'),
+          reason: 'PUBLIC DISPATCH CREDIT',
+        ),
+        operationKey: op(),
+      );
+    }
     var count = await app.inventory.createStocktake();
     count = await app.inventory.includeStocktakeProduct(
       count.id,

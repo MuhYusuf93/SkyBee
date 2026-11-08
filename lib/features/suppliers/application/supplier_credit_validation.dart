@@ -17,6 +17,8 @@ abstract final class SupplierCreditValidation {
 
   static Future<void> _validate(DatabaseExecutor db) async {
     if ((await db.rawQuery('PRAGMA foreign_key_check')).isNotEmpty) _bad();
+    final schema =
+        (await db.rawQuery('PRAGMA user_version')).single.values.single as int;
     for (final sql in [
       '''SELECT 1 FROM supplier_credits c JOIN supplier_returns r ON r.id=c.return_id LEFT JOIN supplier_invoices i ON i.id=c.approved_invoice_id WHERE
         c.supplier_id<>r.supplier_id OR c.currency_code<>r.currency_code OR c.currency_scale<>r.currency_scale OR
@@ -25,8 +27,26 @@ abstract final class SupplierCreditValidation {
           i.currency_code<>c.currency_code OR i.currency_scale<>c.currency_scale OR c.approved_invoice_revision IS NULL OR c.approved_invoice_remaining IS NULL OR c.approved_invoice_revision>i.revision)) OR
         (EXISTS(SELECT 1 FROM supplier_return_reversals v WHERE v.return_id=r.id) AND
           NOT EXISTS(SELECT 1 FROM supplier_credit_reversals v WHERE v.credit_id=c.id)) LIMIT 1''',
-      '''SELECT 1 FROM supplier_credits c WHERE NOT EXISTS(SELECT 1 FROM supplier_credit_reversals v WHERE v.credit_id=c.id)
+      '''SELECT 1 FROM supplier_credits c WHERE c.return_id IS NOT NULL
+        AND NOT EXISTS(SELECT 1 FROM supplier_credit_reversals v WHERE v.credit_id=c.id)
         GROUP BY c.return_id HAVING COUNT(*)>1 LIMIT 1''',
+      if (schema >= 54) ...[
+        '''SELECT 1 FROM supplier_credits c
+          LEFT JOIN supplier_return_dispatches d ON d.id=c.dispatch_id
+          LEFT JOIN supplier_return_preparations p ON p.id=d.preparation_id
+          WHERE (c.return_id IS NOT NULL)+(c.dispatch_id IS NOT NULL)<>1
+            OR (c.dispatch_id IS NOT NULL AND (
+              d.id IS NULL OR d.credit_claim_minor IS NULL OR d.credit_claim_minor<=0 OR
+              p.supplier_id IS NOT c.supplier_id OR p.currency_code IS NOT c.currency_code OR
+              p.currency_scale IS NOT c.currency_scale OR c.approved_invoice_id IS NOT NULL OR
+              c.approved_invoice_revision IS NOT NULL OR c.approved_invoice_remaining IS NOT NULL OR
+              (EXISTS(SELECT 1 FROM supplier_return_dispatch_reversals v WHERE v.dispatch_id=d.id)
+                AND NOT EXISTS(SELECT 1 FROM supplier_credit_reversals v WHERE v.credit_id=c.id))
+            )) LIMIT 1''',
+        '''SELECT 1 FROM supplier_credits c WHERE c.dispatch_id IS NOT NULL
+          AND NOT EXISTS(SELECT 1 FROM supplier_credit_reversals v WHERE v.credit_id=c.id)
+          GROUP BY c.dispatch_id HAVING COUNT(*)>1 LIMIT 1''',
+      ],
       '''SELECT 1 FROM supplier_credit_allocations a JOIN supplier_credits c ON c.id=a.credit_id JOIN supplier_invoices i ON i.id=a.invoice_id WHERE
         i.supplier_id<>c.supplier_id OR a.currency_code<>c.currency_code OR a.currency_scale<>c.currency_scale OR
         a.currency_code<>i.currency_code OR a.currency_scale<>i.currency_scale OR a.amount_minor>c.amount_minor OR a.amount_minor>i.total_minor OR

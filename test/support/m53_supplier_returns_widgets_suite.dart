@@ -245,6 +245,12 @@ void m53SupplierReturnsWidgetsSuite(DatabaseFactory factory) {
         );
         await reveal(t, count);
         await t.enterText(count, '1');
+        final claim = find.descendant(
+          of: find.byKey(const ValueKey('supplier-preparation-credit-claim')),
+          matching: find.byType(TextField),
+        );
+        await reveal(t, claim);
+        await t.enterText(claim, '4000');
         await tap(
           t,
           find.byKey(const ValueKey('supplier-preparation-dispatch-save')),
@@ -267,6 +273,54 @@ void m53SupplierReturnsWidgetsSuite(DatabaseFactory factory) {
           );
         });
         await reveal(t, find.text('Units handed over · 1'));
+        final approve = find.descendant(
+          of: prepared,
+          matching: find.widgetWithText(
+            TextButton,
+            tr(t.element(prepared), 'm53CreditApprove'),
+          ),
+        );
+        await tap(t, approve);
+        await wait(
+          t,
+          () => find
+              .byKey(const ValueKey('supplier-credit-approval-ready'))
+              .evaluate()
+              .isNotEmpty,
+        );
+        final approvedAmount = find.descendant(
+          of: find.byKey(const ValueKey('supplier-credit-amount')),
+          matching: find.byType(TextField),
+        );
+        final reason = find.descendant(
+          of: find.byKey(const ValueKey('supplier-credit-reason')),
+          matching: find.byType(TextField),
+        );
+        await reveal(t, approvedAmount);
+        await t.enterText(approvedAmount, '3500');
+        await reveal(t, reason);
+        await t.enterText(reason, 'PUBLIC AGREEMENT');
+        await tap(
+          t,
+          find.byKey(const ValueKey('supplier-credit-approve-save')),
+        );
+        await confirm(t);
+        await wait(
+          t,
+          () =>
+              prepared.evaluate().isNotEmpty &&
+              pending.evaluate().isEmpty &&
+              approve.evaluate().isEmpty,
+        );
+        await io(t, () async {
+          final credit = (await db.read(
+            (sql) => sql.query('supplier_credits'),
+          )).single;
+          expectSync(credit['amount_minor'], 3500);
+          expectSync(credit['dispatch_id'], isNotNull);
+          expectSync(credit['return_id'], isNull);
+          expectSync((await app.inventory.detail(product)).quantity, 4);
+        });
         expectSync(t.takeException(), isNull);
       } finally {
         await t.pumpWidget(const SizedBox());

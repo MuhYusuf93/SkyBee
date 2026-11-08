@@ -17,7 +17,9 @@ import '../../inventory/presentation/whole_quantity_formatter.dart';
 import '../../management/domain/management_role.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/managed_text_field.dart';
+import '../../management/presentation/management_session_provider.dart';
 import '../domain/supplier_return_preparation.dart';
+import 'supplier_credit_approval_screen.dart';
 import 'supplier_finance_forms.dart';
 
 part 'supplier_preparation_forms.dart';
@@ -280,6 +282,16 @@ class _SupplierPreparationScreenState extends State<SupplierPreparationScreen> {
     if (mounted) await _refresh();
   });
 
+  Future<void> _dispatchCredit(EntityId id) => _run(() async {
+    _requireCurrent();
+    await Navigator.of(context).push<EntityId>(
+      MaterialPageRoute(
+        builder: (_) => SupplierCreditApprovalScreen.dispatch(dispatchId: id),
+      ),
+    );
+    if (mounted) await _refresh();
+  });
+
   @override
   void dispose() {
     _barcode.dispose();
@@ -291,6 +303,9 @@ class _SupplierPreparationScreenState extends State<SupplierPreparationScreen> {
   Widget build(BuildContext context) {
     final doc = _doc;
     final draft = doc?.status == 'draft';
+    final owner = context.select<ManagementSessionProvider, bool>(
+      (state) => state.unlocked && state.service.role == ManagementRole.owner,
+    );
     return ManagementGate(
       capability: _inventory,
       child: Scaffold(
@@ -408,16 +423,42 @@ class _SupplierPreparationScreenState extends State<SupplierPreparationScreen> {
                       title: Text(
                         '${tr(context, 'm54PrepDispatched')} · ${fact['quantity']}',
                       ),
-                      subtitle: Text(
-                        [
-                          if (fact['reason'] != '') fact['reason'] as String,
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (fact['reason'] != '')
+                            Text(fact['reason'] as String),
                           if (fact['credit_claim_minor'] case final int claim)
-                            '${tr(context, 'm54PrepCreditClaim')} · ${moneyLabel(context, claim, currency: doc.currency)}',
+                            Text(
+                              '${tr(context, fact['credit_approved'] == 1 || fact['reversed'] == 1 ? 'm54PrepCreditDeclared' : 'm54PrepCreditClaim')} · ${moneyLabel(context, claim, currency: doc.currency)}',
+                            ),
+                          if (fact['credit_approved'] == 1)
+                            Text(tr(context, 'm54PrepCreditApproved')),
                           if (fact['reversed'] == 1)
-                            tr(context, 'm53ReturnReversed'),
-                        ].join('\n'),
+                            Text(tr(context, 'm53ReturnReversed')),
+                          if (owner &&
+                              fact['reversed'] == 0 &&
+                              fact['credit_approved'] != null &&
+                              fact['credit_claim_minor'] != null)
+                            TextButton(
+                              onPressed: _busy
+                                  ? null
+                                  : () => _dispatchCredit(
+                                      EntityId(fact['id'] as String),
+                                    ),
+                              child: Text(
+                                tr(
+                                  context,
+                                  fact['credit_approved'] == 1
+                                      ? 'm54PrepCreditOpen'
+                                      : 'm53CreditApprove',
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
-                      trailing: fact['reversed'] == 1
+                      trailing:
+                          fact['reversed'] == 1 || fact['credit_approved'] == 1
                           ? null
                           : IconButton(
                               tooltip: tr(context, 'm53ReturnUndo'),

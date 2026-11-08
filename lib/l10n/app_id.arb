@@ -6967,5 +6967,17 @@
   "m54ArchiveDeleted": "Item dihapus",
   "@m54ArchiveDeleted": {
     "description": "M54: Records deleted"
+  },
+  "m54PrepCreditDeclared": "Klaim saat penyerahan",
+  "@m54PrepCreditDeclared": {
+    "description": "M54: Claim at dispatch"
+  },
+  "m54PrepCreditApproved": "Kredit supplier disetujui",
+  "@m54PrepCreditApproved": {
+    "description": "M54: Supplier credit approved"
+  },
+  "m54PrepCreditOpen": "Buka kredit supplier",
+  "@m54PrepCreditOpen": {
+    "description": "M54: Open supplier credit"
   }
 }

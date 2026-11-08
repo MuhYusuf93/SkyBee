@@ -5828,4 +5828,13 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m54ArchiveDeleted => 'Item dihapus';
+
+  @override
+  String get m54PrepCreditDeclared => 'Klaim saat penyerahan';
+
+  @override
+  String get m54PrepCreditApproved => 'Kredit supplier disetujui';
+
+  @override
+  String get m54PrepCreditOpen => 'Buka kredit supplier';
 }

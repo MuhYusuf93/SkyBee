@@ -18,8 +18,17 @@ import 'supplier_credits_screen.dart';
 /// The approved amount is deliberately never inferred from stock valuation.
 /// Owner input and an explicit invoice preview are required before posting.
 class SupplierCreditApprovalScreen extends StatefulWidget {
-  const SupplierCreditApprovalScreen({super.key, required this.returnId});
-  final EntityId returnId;
+  const SupplierCreditApprovalScreen({super.key, required EntityId returnId})
+    : source = returnId,
+      fromDispatch = false;
+  const SupplierCreditApprovalScreen.dispatch({
+    super.key,
+    required EntityId dispatchId,
+  }) : source = dispatchId,
+       fromDispatch = true;
+
+  final EntityId source;
+  final bool fromDispatch;
   @override
   State<SupplierCreditApprovalScreen> createState() =>
       _SupplierCreditApprovalScreenState();
@@ -66,10 +75,14 @@ class _SupplierCreditApprovalScreenState
     try {
       check();
       final service = context.read<AppServices>().suppliers;
-      final value = await service.creditForReturn(widget.returnId);
-      final q = value == null
-          ? await service.creditApprovalQuote(widget.returnId)
-          : null;
+      final value = widget.fromDispatch
+          ? await service.creditForDispatch(widget.source)
+          : await service.creditForReturn(widget.source);
+      final q = value != null
+          ? null
+          : widget.fromDispatch
+          ? await service.dispatchCreditApprovalQuote(widget.source)
+          : await service.creditApprovalQuote(widget.source);
       if (mounted) {
         check();
         setState(() {
@@ -101,7 +114,9 @@ class _SupplierCreditApprovalScreenState
         throw const AppError('m53CreditAmountInvalid');
       }
       field = 'date';
-      if (date!.iso.compareTo(quote!.today.iso) > 0) {
+      final earliest = quote!.earliest;
+      if (date!.iso.compareTo(quote!.today.iso) > 0 ||
+          (earliest != null && date!.iso.compareTo(earliest.iso) < 0)) {
         throw const AppError('m53CreditDateInvalid');
       }
       field = 'reason';
@@ -124,20 +139,21 @@ class _SupplierCreditApprovalScreenState
         return;
       }
       check();
-      final result = await context
-          .read<AppServices>()
-          .suppliers
-          .approveReturnCredit(
-            widget.returnId,
-            SupplierCreditApprovalInput(
-              amount: value,
-              date: date!,
-              reason: reason.text,
-              invoice: quote!.invoice?.id,
-              invoiceRevision: quote!.invoice?.revision,
-            ),
-            operationKey: operationKey,
-          );
+      final service = context.read<AppServices>().suppliers;
+      final approve = widget.fromDispatch
+          ? service.approveDispatchCredit
+          : service.approveReturnCredit;
+      final result = await approve(
+        widget.source,
+        SupplierCreditApprovalInput(
+          amount: value,
+          date: date!,
+          reason: reason.text,
+          invoice: quote!.invoice?.id,
+          invoiceRevision: quote!.invoice?.revision,
+        ),
+        operationKey: operationKey,
+      );
       if (mounted) {
         setState(() => completed = true);
         Navigator.pop(context, result.id);
@@ -236,6 +252,10 @@ class _SupplierCreditApprovalScreenState
                       ),
                     if (q != null) ...[
                       Text(q.supplierName),
+                      if (q.claimedAmount case final claimed?)
+                        Text(
+                          '${tr(context, 'm54PrepCreditClaim')} · ${moneyLabel(context, claimed, currency: q.currency)}',
+                        ),
                       Text(
                         '${tr(context, "m53ReturnInventoryValue")}: ${q.valueComplete ? moneyCodec(context, currency: q.currency).formatSignedCost(q.removedValue) : tr(context, "m53CostIncomplete")}',
                       ),

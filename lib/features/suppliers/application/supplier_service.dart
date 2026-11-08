@@ -18,6 +18,7 @@ part 'supplier_payment_posting.dart';
 part 'supplier_finance_validation.dart';
 part 'supplier_finance_queries.dart';
 part 'supplier_credit_posting.dart';
+part 'supplier_dispatch_credit_posting.dart';
 part 'supplier_credit_refunds.dart';
 part 'supplier_credit_validation.dart';
 part 'supplier_credit_queries.dart';

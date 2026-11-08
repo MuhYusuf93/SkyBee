@@ -599,11 +599,16 @@ extension SupplierReturnPreparationService on InventoryService {
   }) => _read((db) async {
     // Immutable dispatch IDs are seek keys. A reversal is exposed as a fact,
     // so history continues to show the original delivery and its disposition.
+    final credit = database.schemaVersion < 54
+        ? ''
+        : ''',EXISTS(SELECT 1 FROM supplier_credits c
+          WHERE c.dispatch_id=d.id AND NOT EXISTS(
+            SELECT 1 FROM supplier_credit_reversals v WHERE v.credit_id=c.id)) AS credit_approved''';
     final rows = await db.rawQuery(
       '''SELECT d.*,EXISTS(SELECT 1 FROM supplier_return_dispatch_reversals r
         WHERE r.dispatch_id=d.id) AS reversed,
         (SELECT SUM(x.quantity) FROM supplier_return_dispatch_items x
-          WHERE x.dispatch_id=d.id) AS quantity
+          WHERE x.dispatch_id=d.id) AS quantity$credit
       FROM supplier_return_dispatches d WHERE d.preparation_id=?
       ${after == null ? '' : 'AND d.id COLLATE BINARY>?'}
       ORDER BY d.id COLLATE BINARY LIMIT 21''',
@@ -647,6 +652,15 @@ extension SupplierReturnPreparationService on InventoryService {
         throw const AppError('m53ReturnAlreadyReversed');
       }
       return;
+    }
+    if (database.schemaVersion >= 54 &&
+        (await db.rawQuery(
+          '''SELECT 1 FROM supplier_credits c WHERE c.dispatch_id=?
+          AND NOT EXISTS(SELECT 1 FROM supplier_credit_reversals v WHERE v.credit_id=c.id)
+          LIMIT 1''',
+          [dispatch.value],
+        )).isNotEmpty) {
+      throw const AppError('m53ReturnCreditDependency');
     }
     final items = await db.rawQuery(
       '''SELECT x.*,l.batch_id,l.product_id,o.before_quantity,o.before_value_micros,

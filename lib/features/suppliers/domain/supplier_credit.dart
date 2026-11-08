@@ -31,7 +31,14 @@ final class SupplierCredit {
   SupplierCredit(Map<String, Object?> row) : row = Map.unmodifiable(row);
   final Map<String, Object?> row;
   EntityId get id => EntityId(row['id'] as String);
-  EntityId get returnId => EntityId(row['return_id'] as String);
+  EntityId? get returnId => switch (row['return_id']) {
+    final String id => EntityId(id),
+    _ => null,
+  };
+  EntityId? get dispatchId => switch (row['dispatch_id']) {
+    final String id => EntityId(id),
+    _ => null,
+  };
   EntityId get supplier => EntityId(row['supplier_id'] as String);
   CurrencyPolicy get currency =>
       CurrencyPolicy.forCode(row['currency_code'] as String);
@@ -45,7 +52,10 @@ final class SupplierCredit {
 
 final class SupplierCreditQuote {
   const SupplierCreditQuote({
-    required this.returnId,
+    this.returnId,
+    this.dispatchId,
+    this.claimedAmount,
+    this.earliest,
     required this.supplier,
     required this.supplierName,
     required this.currency,
@@ -53,11 +63,14 @@ final class SupplierCreditQuote {
     required this.removedValue,
     required this.valueComplete,
     this.invoice,
-  });
-  final EntityId returnId, supplier;
+  }) : assert((returnId == null) != (dispatchId == null));
+  final EntityId? returnId, dispatchId;
+  final EntityId supplier;
   final String supplierName;
   final CurrencyPolicy currency;
   final CalendarDate today;
+  final CalendarDate? earliest;
+  final int? claimedAmount;
   final BigInt removedValue;
   final bool valueComplete;
   final SupplierInvoice? invoice;

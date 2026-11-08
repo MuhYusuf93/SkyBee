@@ -6967,5 +6967,17 @@
   "m54ArchiveDeleted": "Records deleted",
   "@m54ArchiveDeleted": {
     "description": "M54: Records deleted"
+  },
+  "m54PrepCreditDeclared": "Claim at dispatch",
+  "@m54PrepCreditDeclared": {
+    "description": "M54: Claim at dispatch"
+  },
+  "m54PrepCreditApproved": "Supplier credit approved",
+  "@m54PrepCreditApproved": {
+    "description": "M54: Supplier credit approved"
+  },
+  "m54PrepCreditOpen": "Open supplier credit",
+  "@m54PrepCreditOpen": {
+    "description": "M54: Open supplier credit"
   }
 }

@@ -47,8 +47,9 @@ lulus di host. Skema 51 menambah sort Gudang dan Favorit Kasir dengan
 cache 30 hari yang memperhitungkan retur. Skema 52 menambah histori member
 dan filter/sort piutang efektif. Skema 53 menambah penghapusan arsip
 berbatas halaman dengan PIN pemilik, pratinjau, dan validasi ulang
-dependensi. Regresi host lulus. Uji kamera fisik dan restore native,
-persetujuan klaim tanpa nota, tahap 5, acceptance dan handoff masih terbuka.
+dependensi. Skema 54 menyatukan kredit penyerahan tanpa nota dengan ledger
+supplier setelah persetujuan pemilik. Tahap 4 lulus host. Uji kamera fisik
+dan restore native, tahap 5, acceptance dan handoff masih terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

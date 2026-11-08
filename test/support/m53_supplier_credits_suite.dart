@@ -153,6 +153,183 @@ void m53SupplierCreditsSuite(DatabaseFactory factory) {
   }
 
   test(
+    'M54 dispatch credit migrates the populated ledger and stays separate from stock and cash',
+    () async {
+      final location = db.databasePath;
+      await db.close();
+      await factory.deleteDatabase(location);
+      db = DatabaseCoordinator(
+        factory: factory,
+        databasePath: location,
+        schemaVersion: 53,
+      );
+      app = AppServices(db, clock: clock());
+      await db.transaction(
+        (sql) => sql.insert('management_credentials', credential),
+      );
+      await app.management.unlock('0001');
+      supplier = await app.inventory.saveMaster(
+        MasterKind.supplier,
+        'PUBLIC MIGRATION SUPPLIER',
+      );
+      final (_, receipt, invoice) = await purchase();
+      final returned = await physical(receipt);
+      final legacy = await approve(returned, 15000);
+      expect(legacy.allocated, 15000);
+      const facts = [
+        'supplier_credits',
+        'supplier_credit_events',
+        'supplier_credit_allocations',
+        'supplier_invoices',
+      ];
+      Future<Map<String, List<Map<String, Object?>>>> snapshot() => db.read(
+        (sql) async => {
+          for (final table in facts)
+            table: [
+              for (final row in await sql.query(table, orderBy: 'id'))
+                Map<String, Object?>.of(row)..remove('dispatch_id'),
+            ],
+        },
+      );
+      final before = await snapshot();
+      await db.close();
+      db = DatabaseCoordinator(factory: factory, databasePath: location);
+      app = AppServices(db, clock: clock());
+      await app.management.unlock('0001');
+      expect(await snapshot(), before);
+      final upgraded = await app.suppliers.credit(legacy.id);
+      expect(upgraded.returnId, returned);
+      expect(upgraded.dispatchId, isNull);
+
+      final loose = await app.inventory.create(
+        ProductInput(name: 'PUBLIC OBSERVED GOODS', sellingPrice: money(30000)),
+        stockTracking: false,
+        referenceCost: cost(9000),
+      );
+      var draft = await app.inventory.createSupplierReturnPreparation(supplier);
+      draft = await app.inventory.observeSupplierPreparationStock(
+        draft.id,
+        draft.revision,
+        loose,
+        2,
+      );
+      final dispatch = await app.inventory.dispatchSupplierReturnPreparation(
+        draft.id,
+        draft.revision,
+        {draft.lines.single.id: 2},
+        operationKey: 'public-credit-dispatch',
+        creditClaim: money(4000),
+      );
+      expect(await app.suppliers.creditForDispatch(dispatch), isNull);
+      final claim = await app.suppliers.dispatchCreditApprovalQuote(dispatch);
+      expect(claim.claimedAmount, 4000);
+      expect(claim.valueComplete, isFalse);
+      expect(claim.invoice, isNull);
+      final input = SupplierCreditApprovalInput(
+        amount: money(3500),
+        date: day(),
+        reason: 'PUBLIC CONFIRMED CREDIT',
+      );
+      final credit = await app.suppliers.approveDispatchCredit(
+        dispatch,
+        input,
+        operationKey: 'public-credit-approval',
+      );
+      expect(credit.returnId, isNull);
+      expect(credit.dispatchId, dispatch);
+      expect(credit.available, 3500);
+      expect(
+        (await app.suppliers.approveDispatchCredit(
+          dispatch,
+          input,
+          operationKey: 'public-credit-approval',
+        )).id,
+        credit.id,
+      );
+      await expectLater(
+        app.suppliers.approveDispatchCredit(
+          dispatch,
+          input,
+          operationKey: 'public-credit-duplicate',
+        ),
+        throwsA(isA<AppError>()),
+      );
+      final untouched = await app.suppliers.invoice(invoice.id);
+      expect(untouched.remaining, 985000);
+      expect(await db.read((sql) => sql.query('stock_receipts')), hasLength(1));
+      expect(await db.read((sql) => sql.query('cash_drawer_events')), isEmpty);
+      await expectLater(
+        app.inventory.reverseSupplierPreparationDispatch(
+          dispatch,
+          operationKey: 'public-credit-return',
+          reason: 'PUBLIC CORRECTION',
+        ),
+        throwsA(
+          isA<AppError>().having(
+            (e) => e.message,
+            'message',
+            'm53ReturnCreditDependency',
+          ),
+        ),
+      );
+
+      final allocation = await app.suppliers.allocateCredit(
+        credit.id,
+        credit.revision,
+        invoice.id,
+        untouched.revision,
+        money(3000),
+        day(),
+        operationKey: 'public-credit-allocation',
+      );
+      final partial = await app.suppliers.credit(credit.id);
+      final reduced = await app.suppliers.invoice(invoice.id);
+      expect(partial.available, 500);
+      expect(reduced.remaining, 982000);
+      await expectLater(
+        app.suppliers.reverseCredit(
+          credit.id,
+          partial.revision,
+          reason: 'PUBLIC CORRECTION',
+          operationKey: 'public-credit-reversal',
+        ),
+        throwsA(isA<AppError>()),
+      );
+      await app.suppliers.reverseCreditAllocation(
+        allocation,
+        partial.revision,
+        reduced.revision,
+        reason: 'PUBLIC CORRECTION',
+        operationKey: 'public-credit-allocation-undo',
+      );
+      final usable = await app.suppliers.credit(credit.id);
+      await app.suppliers.reverseCredit(
+        credit.id,
+        usable.revision,
+        reason: 'PUBLIC CORRECTION',
+        operationKey: 'public-credit-reversal',
+      );
+      await app.inventory.reverseSupplierPreparationDispatch(
+        dispatch,
+        operationKey: 'public-credit-return',
+        reason: 'PUBLIC CORRECTION',
+      );
+      expect((await app.inventory.detail(loose)).quantity, 999);
+      expect(
+        (await app.suppliers.invoice(invoice.id)).remaining,
+        untouched.remaining,
+      );
+      expect(await app.suppliers.creditForDispatch(dispatch), isNull);
+      expect((await app.suppliers.credit(credit.id)).reversed, isTrue);
+      expect(
+        await db.read((sql) => sql.rawQuery('PRAGMA foreign_key_check')),
+        isEmpty,
+      );
+      await db.read(SupplierCreditValidation.validate);
+    },
+  );
+
+  test(
     'M53 credits approval amount differs from inventory removed value; allocation and later payment keep historic HPP and stock',
     () async {
       final (id, receipt, initial) = await purchase();

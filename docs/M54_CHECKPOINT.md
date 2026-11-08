@@ -344,3 +344,19 @@ membuat APK eksternal. Gunakan paket fixture terisolasi di serial Realme
 yang telah dikonfirmasi.
 Analyzer akhir bersih. APK biasa 0.5.4+14 terverifikasi pada tiga ABI dan
 alignment 16 KiB. APK belum dipasang.
+
+## Tahap 4 · persetujuan kredit penyerahan · skema 54
+
+Pemilik dapat menyetujui nilai kredit pada penyerahan dengan klaim tertunda,
+termasuk asal yang belum diketahui. Persetujuan menambah saldo kredit.
+Alokasi tagihan atau pencatatan uang diterima tetap aksi terpisah. Reversal
+fisik memerlukan pembalikan kredit aktif beserta transaksi turunannya.
+Migrasi mengganti kolom referensi asal dengan FK opsional ke retur lama dan
+FK opsional ke penyerahan, dengan tepat satu asal serta ID ledger tetap.
+
+Tes migrasi populasi skema 53 lulus. Regresi 27/27 lulus dan skenario UI
+dites ulang dengan klaim dan persetujuan eksplisit. Fixture backup membawa
+kredit penyerahan dan reservasi tersisa. Analyzer bersih, lokalisasi
+1724/1067/245 lulus. APK debug biasa 0.5.4+14 lulus tiga ABI dan alignment
+16 KiB. Tahap 4 selesai di host. Tahap 5 dimulai dari lembar pemulihan PDF.
+Cakupan fisik dan portable restore native akan diuji pada acceptance.

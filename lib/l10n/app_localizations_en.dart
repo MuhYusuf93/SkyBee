@@ -5805,4 +5805,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m54ArchiveDeleted => 'Records deleted';
+
+  @override
+  String get m54PrepCreditDeclared => 'Claim at dispatch';
+
+  @override
+  String get m54PrepCreditApproved => 'Supplier credit approved';
+
+  @override
+  String get m54PrepCreditOpen => 'Open supplier credit';
 }

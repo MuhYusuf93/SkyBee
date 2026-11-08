@@ -12,6 +12,9 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm54PrepCreditDeclared' => l.m54PrepCreditDeclared,
+    'm54PrepCreditApproved' => l.m54PrepCreditApproved,
+    'm54PrepCreditOpen' => l.m54PrepCreditOpen,
     'm54ArchiveSelect' => l.m54ArchiveSelect,
     'm54ArchiveSelectLoaded' => l.m54ArchiveSelectLoaded,
     'm54ArchiveSelected' => l.m54ArchiveSelected,

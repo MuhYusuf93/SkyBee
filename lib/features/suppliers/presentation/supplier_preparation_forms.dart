@@ -286,6 +286,7 @@ class _PreparationDispatchScreenState
                   : (value) => setState(() => _rejectRemaining = value),
             ),
             MoneyField(
+              key: const ValueKey('supplier-preparation-credit-claim'),
               controller: _credit,
               currency: widget.doc.currency,
               label: tr(context, 'm54PrepCreditClaim'),

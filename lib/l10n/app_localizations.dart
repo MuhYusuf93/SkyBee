@@ -10423,6 +10423,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Records deleted'**
   String get m54ArchiveDeleted;
+
+  /// M54: Claim at dispatch
+  ///
+  /// In en, this message translates to:
+  /// **'Claim at dispatch'**
+  String get m54PrepCreditDeclared;
+
+  /// M54: Supplier credit approved
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier credit approved'**
+  String get m54PrepCreditApproved;
+
+  /// M54: Open supplier credit
+  ///
+  /// In en, this message translates to:
+  /// **'Open supplier credit'**
+  String get m54PrepCreditOpen;
 }
 
 class _AppLocalizationsDelegate

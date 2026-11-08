@@ -66,6 +66,7 @@ void main() {
             'supplier_invoices',
             'supplier_payments',
             'supplier_returns',
+            'supplier_return_dispatches',
             'supplier_credits',
             'supplier_credit_refunds',
             'supplier_credit_refund_reversals',
@@ -85,6 +86,21 @@ void main() {
           expect(
             await db.read((sql) => sql.query('sale_transactions')),
             hasLength(4),
+          );
+          expect(
+            await db.read(
+              (sql) => sql.query(
+                'supplier_credits',
+                where: 'dispatch_id IS NOT NULL',
+              ),
+            ),
+            hasLength(1),
+          );
+          expect(
+            await db.read(
+              (sql) => sql.query('supplier_return_preparation_holds'),
+            ),
+            hasLength(1),
           );
           expect(f.reminders.shows, 1);
           // A source-item pointer alone cannot turn an unrelated adjustment
