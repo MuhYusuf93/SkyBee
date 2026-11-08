@@ -43,8 +43,10 @@ menambah karantina lintas supplier dan penyerahan parsial dengan 28 kasus
 host lulus. Skema 49 menyimpan halaman foto nota di SQLCipher dan
 memvalidasi lampiran pada fixture backup host. Skema 50 menambah histori
 pembelian berindeks dan tren biaya per pcs. Regresi opname manual dan scan
-lulus di host. Uji kamera fisik dan restore native, persetujuan klaim tanpa
-nota, sisa tahap 4, tahap 5, acceptance dan handoff masih terbuka.
+lulus di host. Skema 51 menambah sort Gudang dan Favorit Kasir dengan
+cache 30 hari yang memperhitungkan retur. Regresi host lulus. Uji kamera
+fisik dan restore native, persetujuan klaim tanpa nota, member, hapus arsip,
+tahap 5, acceptance dan handoff masih terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

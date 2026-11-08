@@ -56,7 +56,7 @@ final class BackupValidation {
     }
     if (schema >= 20) await _cashierLock(db);
     if (schema >= 22) await _members(db);
-    if (schema >= 23) await _productSearch(db);
+    if (schema >= 23) await _productSearch(db, schema);
     if (schema >= 24) await CashDrawerValidation.validate(db);
     if (schema >= 27) await ReceiptDraftValidation.validate(db);
     if (schema >= 29) await StocktakeValidation.validate(db);
@@ -414,7 +414,7 @@ final class BackupValidation {
   /// Derived popularity is portable but never authoritative. A stale epoch is
   /// rebuilt on the next search; a cache claiming the current epoch must exactly
   /// match the SQL aggregate at its own window, including missing rows.
-  static Future<void> _productSearch(DatabaseExecutor db) async {
+  static Future<void> _productSearch(DatabaseExecutor db, int schema) async {
     const invalid = FormatException('backupOperationalMetadataInvalid');
     final versions = await db.query('cashier_search_versions', limit: 2);
     final windows = await db.query('cashier_popularity_window', limit: 2);
@@ -469,12 +469,12 @@ final class BackupValidation {
       throw invalid;
     }
     if (revision > 0 && epoch == version['sale_epoch']) {
-      final aggregate = ProductPopularityStore.aggregateSql;
+      final aggregate = ProductPopularityStore.aggregateFor(schema);
       for (final reverse in [false, true]) {
         final actual =
             'SELECT product_id,receipts,net_quantity FROM cashier_product_popularity';
-        final left = reverse ? actual : aggregate,
-            right = reverse ? aggregate : actual;
+        final left = reverse ? actual : 'SELECT * FROM ($aggregate)',
+            right = reverse ? 'SELECT * FROM ($aggregate)' : actual;
         if ((await db.rawQuery('SELECT 1 FROM ($left EXCEPT $right) LIMIT 1', [
           from,
           through,

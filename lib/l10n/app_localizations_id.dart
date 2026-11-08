@@ -5712,4 +5712,29 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m54PurchaseCostUnchanged => 'Biaya per pcs tetap';
+
+  @override
+  String get m54WarehouseSort => 'Urut berdasarkan';
+
+  @override
+  String get m54WarehouseStockPriority => 'Prioritas stok';
+
+  @override
+  String get m54WarehouseModified => 'Terakhir diubah';
+
+  @override
+  String get m54WarehousePopularity => 'Paling laku';
+
+  @override
+  String get m54SortDescending => 'Urutan menurun';
+
+  @override
+  String get m54SortAscending => 'Urutan menaik';
+
+  @override
+  String get m54CashierFavorites => 'Barang Favorit';
+
+  @override
+  String get m54CashierFavoritesEmpty =>
+      'Belum ada barang favorit yang dapat dijual. Barang akan muncul setelah ada penjualan.';
 }

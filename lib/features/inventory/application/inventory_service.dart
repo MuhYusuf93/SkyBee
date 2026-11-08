@@ -14,6 +14,7 @@ import '../../../core/pagination/page.dart';
 import '../../../data/database/database_coordinator.dart';
 import '../../../data/repositories/keyset_queries.dart';
 import '../../catalog/domain/product_repository.dart';
+import '../../cashier/application/product_popularity_store.dart';
 import '../../management/application/management_service.dart';
 import '../domain/inventory_models.dart';
 import '../domain/stock_rules.dart';
@@ -1859,7 +1860,7 @@ final class InventoryService {
   }) => _read(
     (db) => db.transaction((dbTxn) async {
       final context = (await dbTxn.rawQuery(
-        '''SELECT s.time_zone,v.catalogue_epoch
+        '''SELECT s.time_zone,v.catalogue_epoch,v.sale_epoch
       FROM store_settings s CROSS JOIN cashier_search_versions v WHERE s.id=1 AND v.id=1''',
       )).single;
       final zone = context['time_zone'] as String,
@@ -1873,6 +1874,26 @@ final class InventoryService {
               after.catalogueEpoch != epoch ||
               after.generation != generation)) {
         throw const AppError('m53WarehouseChanged');
+      }
+      var cacheRevision = 0;
+      if (filter.sort == WarehouseSort.popularity) {
+        final now = access.clock.milliseconds;
+        final saleEpoch = context['sale_epoch'] as int;
+        var window = await ProductPopularityStore.window(dbTxn);
+        final fresh = ProductPopularityStore.fresh(window, now, saleEpoch);
+        if (after != null &&
+            (!fresh || after.cacheRevision != window['cache_revision'])) {
+          throw const AppError('m53WarehouseChanged');
+        }
+        if (!fresh) {
+          window = await ProductPopularityStore.rebuild(
+            dbTxn,
+            now,
+            saleEpoch,
+            schema: database.schemaVersion,
+          );
+        }
+        cacheRevision = window['cache_revision'] as int;
       }
       final query = warehouseQuery(
         filter,
@@ -1902,8 +1923,11 @@ final class InventoryService {
                 zone: zone,
                 generation: generation,
                 catalogueEpoch: epoch,
-                rank: selected.last['warehouse_rank'] as int,
-                createdAt: selected.last['created_at'] as int,
+                cacheRevision: cacheRevision,
+                sortValues: [
+                  for (final column in warehouseSortColumns(filter.sort))
+                    selected.last[column]!,
+                ],
                 id: EntityId(selected.last['id'] as String),
               )
             : null,

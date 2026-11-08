@@ -12,6 +12,14 @@ String tr(BuildContext context, String key) {
     return l.retryAfterSeconds(int.parse(key.split(':').last));
   }
   return switch (key) {
+    'm54CashierFavorites' => l.m54CashierFavorites,
+    'm54CashierFavoritesEmpty' => l.m54CashierFavoritesEmpty,
+    'm54WarehouseSort' => l.m54WarehouseSort,
+    'm54WarehouseStockPriority' => l.m54WarehouseStockPriority,
+    'm54WarehouseModified' => l.m54WarehouseModified,
+    'm54WarehousePopularity' => l.m54WarehousePopularity,
+    'm54SortDescending' => l.m54SortDescending,
+    'm54SortAscending' => l.m54SortAscending,
     'm54PurchaseHistory' => l.m54PurchaseHistory,
     'm54PurchaseNotRecorded' => l.m54PurchaseNotRecorded,
     'm54PurchaseReversed' => l.m54PurchaseReversed,

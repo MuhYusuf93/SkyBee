@@ -3,6 +3,35 @@ import '../../../data/repositories/keyset_queries.dart';
 import '../domain/product_search_page.dart';
 import '../../../core/domain/product_label_code.dart';
 
+/// Match the cart's availability rule before LIMIT, including held batches.
+/// Both references to the store day use the caller's one date snapshot.
+String _saleableProduct(bool reserveStock) {
+  final reservedTotal = reserveStock
+      ? '''COALESCE((SELECT SUM(r.quantity) FROM stock_batches held
+        JOIN supplier_stock_reserved_batches r ON r.batch_id=held.id
+        WHERE held.product_id=p.id),0)'''
+      : '0';
+  return '''(
+    (p.stock_tracking_enabled=0 AND p.stock_quantity>0 AND
+      (p.expiry_enabled=0 OR p.reference_expiry_date IS NULL OR p.reference_expiry_date>?))
+    OR (p.stock_tracking_enabled=1 AND p.stock_quantity>$reservedTotal AND
+      (p.expiry_enabled=0 OR EXISTS(SELECT 1 FROM stock_batches b
+        ${reserveStock ? 'LEFT JOIN supplier_stock_reserved_batches r ON r.batch_id=b.id' : ''}
+        WHERE b.product_id=p.id AND b.remaining_quantity>${reserveStock ? 'COALESCE(r.quantity,0)' : '0'}
+          AND (b.expiry_date IS NULL OR b.expiry_date>?))))
+  )''';
+}
+
+SqlQuery favoriteProductsQuery(String today, {required bool reserveStock}) =>
+    SqlQuery(
+      '''SELECT p.id FROM cashier_product_popularity stats
+      JOIN products p ON p.id=stats.product_id
+      WHERE p.is_deleted=0 AND ${_saleableProduct(reserveStock)}
+      ORDER BY stats.receipts DESC,stats.net_quantity DESC,
+        stats.product_id COLLATE BINARY DESC LIMIT 8''',
+      [today, today],
+    );
+
 /// Query matching and ordering precede LIMIT. Exact codes may remain first even
 /// when unavailable; ordinary candidates always rank eligible stock first.
 SqlQuery pagedProductSearchQuery(
@@ -10,8 +39,9 @@ SqlQuery pagedProductSearchQuery(
   String today,
   ProductSearchOrder order,
   ProductSearchCursor? after,
-  int pageSize,
-) {
+  int pageSize, {
+  bool reserveStock = false,
+}) {
   final raw = text.trim(),
       q = normalizeName(text),
       end = prefixEnd(normalizeName(text));
@@ -31,12 +61,7 @@ SqlQuery pagedProductSearchQuery(
     matched AS(SELECT product_id,MIN(priority) AS relevance FROM candidates GROUP BY product_id),
     scored AS(SELECT p.id,p.normalized_name,m.relevance,
       CASE WHEN p.barcode=? OR p.sku=? ${labelId == null ? '' : 'OR p.id=?'} THEN 0 ELSE 1 END AS code_tier,
-      CASE WHEN p.stock_tracking_enabled=0 THEN
-        CASE WHEN p.expiry_enabled=1 AND p.reference_expiry_date<=? THEN 1 ELSE 0 END
-      ELSE CASE WHEN (CASE WHEN p.expiry_enabled=1 THEN
-        MIN(p.stock_quantity,COALESCE((SELECT SUM(b.remaining_quantity) FROM stock_batches b
-          WHERE b.product_id=p.id AND (b.expiry_date IS NULL OR b.expiry_date>?)),0))
-        ELSE p.stock_quantity END)>0 THEN 0 ELSE 1 END END AS eligibility,
+      CASE WHEN ${_saleableProduct(reserveStock)} THEN 0 ELSE 1 END AS eligibility,
       COALESCE(stats.receipts,0) AS receipts,COALESCE(stats.net_quantity,0) AS net_quantity
       FROM matched m JOIN products p ON p.id=m.product_id
       LEFT JOIN cashier_product_popularity stats ON stats.product_id=p.id WHERE p.is_deleted=0)

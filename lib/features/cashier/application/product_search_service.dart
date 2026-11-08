@@ -204,6 +204,46 @@ final class ProductSearchService implements PagedProductSearch {
     return _legacySuggest(text);
   }
 
+  /// The shortcut is scoped to the active basket and returns public, sellable
+  /// products from the same bounded popularity cache as ranked search.
+  Future<List<CashierProduct>> favorites(
+    EntityId draftId,
+  ) => database.transaction((dbTxn) async {
+    final proof = await CashierLockService.beginOn(dbTxn, store.cashierAccess);
+    await store.draft(dbTxn, draftId);
+    final schema = database.schemaVersion;
+    final settings = await store.settings(dbTxn);
+    final zone = settings['time_zone'] as String;
+    final day = store.clock.today(zone).iso;
+    final now = store.clock.milliseconds;
+    final versions = await ProductPopularityStore.versions(dbTxn);
+    final saleEpoch = versions['sale_epoch'] as int;
+    final window = await ProductPopularityStore.window(dbTxn);
+    if (!ProductPopularityStore.fresh(window, now, saleEpoch)) {
+      await ProductPopularityStore.rebuild(
+        dbTxn,
+        now,
+        saleEpoch,
+        schema: schema,
+      );
+    }
+    final query = favoriteProductsQuery(day, reserveStock: schema >= 47);
+    final rows = await dbTxn.rawQuery(query.sql, query.arguments);
+    final products = await store.publicProductPage(
+      dbTxn,
+      rows.map((row) => EntityId(row['id'] as String)).toList(),
+      today: day,
+      schema: schema,
+    );
+    if (store.clock.today(zone).iso != day) {
+      throw const AppError('m3DraftChanged');
+    }
+    await CashierLockService.endOn(dbTxn, proof);
+    return List.unmodifiable(
+      products.where((product) => !product.archived && product.saleable > 0),
+    );
+  });
+
   Future<List<CashierProduct>> _legacySuggest(String text) async {
     final query = normalizeName(text);
     if (query.isEmpty) return const [];
@@ -288,10 +328,18 @@ final class ProductSearchService implements PagedProductSearch {
           dbTxn,
           now,
           versions['sale_epoch'] as int,
+          schema: database.schemaVersion,
           testStage: testStage,
         );
       }
-      final query = pagedProductSearchQuery(raw, day, order, after, pageSize);
+      final query = pagedProductSearchQuery(
+        raw,
+        day,
+        order,
+        after,
+        pageSize,
+        reserveStock: database.schemaVersion >= 47,
+      );
       final rows = await dbTxn.rawQuery(query.sql, query.arguments);
       final results = await store.publicProductPage(
         dbTxn,

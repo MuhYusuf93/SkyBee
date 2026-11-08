@@ -26,7 +26,7 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 18 | Prioritas gate sesuai route | management-only resume/cashier Back | Implemented, host gate/dirty/back PASS; native7 Poco/DV PASS; OEM lengkap pending |
 | 19 | Satu tombol bahasa promo | ID/EN/draft | Host tab/form satu kontrol terlihat dan draft bertahan setelah perubahan bahasa |
 | 20 | Tap kategori/detail; Edit terpisah | filter/semantics/no longpress | Host tap terfilter dan tombol Edit terpisah; native arsip/navigasi pending |
-| 21 | Sort gudang | name/modified/popularity/seek | Pending |
+| 21 | Sort gudang | name/modified/popularity/seek | Host lulus dua arah, tie, seek, filter gabungan, cursor stale, dan retur. Widget ID/EN 320 px teks 2× lulus. |
 | 22 | Hard-delete arsip terproteksi | fresh owner/eligible preview/FK/race | Pending |
 | 23 | Drive error tahap spesifik | SDK/native picker/cloud terpisah | Pending; OAuth paket perlu diperiksa |
 | 24 | Arsip produk semua scope | commit/reopen/undo/stale checkout | Host commit/reopen, scope daftar, pencarian Kasir, Undo, pesan draft lama, histori utuh; Favorit dan native pending |
@@ -40,7 +40,7 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 32 | Kamera pencarian gudang | permission/no camera/stale callback | Lookup dan callback lama diuji pada suite routing; izin/perangkat fisik belum dibuktikan |
 | 33 | Kebijakan kas persisted/clean form | session state/cancel/failure/race | Implemented; host48PASS termasukUI2 ID/EN320/text2; native7 Poco dan7 DV PASS; hash/awake/controlOff PASS |
 | 34 | Scanner routing/PIN/modal/Enter | HID+commitText/no truncated PIN | PIN raw/Enter/burst host4 dan native4 fondasi PASS; field/focus/setup/SQL guarded host81unik viaretest PASS; native 21 kasus unik Poco dan 21 DV lulus; HID fisik dan OEM belum teruji |
-| 35 | Favorit6–8 | cached stats/active/stock/expired/return | Pending |
+| 35 | Favorit6–8 | cached stats/active/stock/expired/return | Host lulus cache, 8 slot, kelayakan, reservasi dan penambahan satu pcs per tap. Widget ID/EN lulus fokus dan keranjang. Acceptance native terbuka. |
 
 Migrasi populated37→baru, backup lintas key+attachment, formatter/analyze/l10n,
 buildABI16KiB/signature/license dan preservation per interval masih Pending.

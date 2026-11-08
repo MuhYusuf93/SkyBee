@@ -283,6 +283,57 @@ class _ProductsState extends State<_Products> with WidgetsBindingObserver {
                       if (v != null) state.stock(v);
                     },
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonFormField<WarehouseSort>(
+                          key: ValueKey(paging.filter.sort),
+                          initialValue: paging.filter.sort,
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            labelText: tr(context, 'm54WarehouseSort'),
+                          ),
+                          items: [
+                            for (final sort in WarehouseSort.values)
+                              DropdownMenuItem(
+                                value: sort,
+                                child: Text(
+                                  tr(context, switch (sort) {
+                                    WarehouseSort.stockPriority =>
+                                      'm54WarehouseStockPriority',
+                                    WarehouseSort.name => 'name',
+                                    WarehouseSort.modified =>
+                                      'm54WarehouseModified',
+                                    WarehouseSort.popularity =>
+                                      'm54WarehousePopularity',
+                                  }),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                          ],
+                          onChanged: (sort) {
+                            if (sort != null) state.sort(sort);
+                          },
+                        ),
+                      ),
+                      if (paging.filter.sort != WarehouseSort.stockPriority)
+                        IconButton(
+                          key: const ValueKey('warehouse-sort-direction'),
+                          tooltip: tr(
+                            context,
+                            paging.filter.descending
+                                ? 'm54SortDescending'
+                                : 'm54SortAscending',
+                          ),
+                          onPressed: state.reverseSort,
+                          icon: Icon(
+                            paging.filter.descending
+                                ? Icons.arrow_downward
+                                : Icons.arrow_upward,
+                          ),
+                        ),
+                    ],
+                  ),
                   ExpansionTile(
                     title: Text(tr(context, 'm53WarehouseRelations')),
                     children: [

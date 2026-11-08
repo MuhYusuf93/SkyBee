@@ -356,6 +356,18 @@ void m53SupplierReturnsSuite(DatabaseFactory factory) {
       await app.checkout.submit(cart.id, cart.revision, const CheckoutInput());
       expect((await app.inventory.detail(id)).quantity, 3);
       expect((await app.inventory.detail(id)).saleable, 0);
+      final nextCart = await app.cart.next(cart.id);
+      expect(await app.search.favorites(nextCart.id), isEmpty);
+      expect(
+        await db.read(
+          (sql) => sql.query(
+            'cashier_product_popularity',
+            where: 'product_id=?',
+            whereArgs: [id.value],
+          ),
+        ),
+        hasLength(1),
+      );
       first = await app.inventory.reviewSupplierReturnDraft(
         first.id,
         first.revision,

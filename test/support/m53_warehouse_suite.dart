@@ -13,6 +13,8 @@ import 'package:kasir_app/data/database/database_coordinator.dart';
 import 'package:kasir_app/features/inventory/application/warehouse_query.dart';
 import 'package:kasir_app/features/inventory/domain/inventory_models.dart';
 import 'package:kasir_app/features/inventory/domain/warehouse_filter.dart';
+import 'package:kasir_app/features/cashier/domain/cashier_models.dart';
+import 'package:kasir_app/features/cashier/domain/sale_return_models.dart';
 import 'package:kasir_app/features/reports/domain/operational_report.dart';
 import 'database_contract_suite.dart' show fixtureId, productRow;
 
@@ -57,6 +59,142 @@ void m53WarehouseSuite(DatabaseFactory factory) {
     await factory.deleteDatabase(db.databasePath);
   });
   tearDownAll(() async => root.delete());
+  test(
+    'M54 warehouse sorts compose with filters and subtract partial returns',
+    () async {
+      final shelf = await app.inventory.saveMaster(
+        MasterKind.shelf,
+        'PUBLIC SORT',
+      );
+      Future<EntityId> create(String name, String sku, {bool onShelf = true}) =>
+          app.inventory.create(
+            ProductInput(
+              name: name,
+              sku: sku,
+              shelfId: onShelf ? shelf : null,
+              sellingPrice: Money(12000, 'IDR', 0),
+            ),
+            initialQuantity: 20,
+            unitCost: CostAmount.fromMoney(Money(3000, 'IDR', 0)),
+          );
+      final alpha = await create('PUBLIC ALPHA', 'SORT-A');
+      final alphaTie = await create('PUBLIC ALPHA', 'SORT-B');
+      now = now.add(const Duration(minutes: 1));
+      final zulu = await create('PUBLIC ZULU', 'SORT-Z');
+      await create('PUBLIC OFF SHELF', 'SORT-O', onShelf: false);
+
+      WarehouseFilter filter(WarehouseSort sort, {bool descending = false}) =>
+          WarehouseFilter(shelfId: shelf, sort: sort, descending: descending);
+      Future<List<EntityId>> scan(WarehouseFilter filter) async {
+        WarehouseCursor? cursor;
+        final ids = <EntityId>[];
+        do {
+          final page = await app.inventory.warehousePage(
+            filter,
+            cursor,
+            pageSize: 1,
+          );
+          ids.addAll(page.items.map((e) => e.id));
+          cursor = page.nextCursor;
+        } while (cursor != null && ids.length < 5);
+        expect(cursor, isNull);
+        return ids;
+      }
+
+      final alphaOrder = [alpha, alphaTie]
+        ..sort((a, b) => a.value.compareTo(b.value));
+      for (final sort in [WarehouseSort.name, WarehouseSort.modified]) {
+        expect(await scan(filter(sort)), [...alphaOrder, zulu]);
+        expect(await scan(filter(sort, descending: true)), [
+          zulu,
+          ...alphaOrder.reversed,
+        ]);
+      }
+      final byPopularity = filter(WarehouseSort.popularity, descending: true);
+      final first = await app.inventory.warehousePage(
+        byPopularity,
+        null,
+        pageSize: 1,
+      );
+      expect(first.nextCursor, isNotNull);
+
+      Future<SaleReceipt> sell(EntityId product, int quantity) async {
+        var draft = await app.cart.open();
+        if (draft.completedId != null) draft = await app.cart.next(draft.id);
+        draft = await app.cart.add(draft.id, product);
+        if (quantity > 1) {
+          draft = await app.cart.quantity(draft.id, product, quantity);
+        }
+        return app.checkout.submit(
+          draft.id,
+          draft.revision,
+          const CheckoutInput(),
+        );
+      }
+
+      final sold = await sell(alpha, 4);
+      await sell(zulu, 2);
+      expect((await scan(byPopularity)).first, alpha);
+      await expectLater(
+        app.inventory.warehousePage(
+          byPopularity,
+          first.nextCursor,
+          pageSize: 1,
+        ),
+        throwsA(isA<AppError>()),
+      );
+
+      final source = await app.saleReturns.lookup(sold.number);
+      Future<void> returnUnits(int quantity, String key) async {
+        final quote = await app.saleReturns.preview(sold.id, [
+          SaleReturnSelection(
+            source.items.single.id,
+            quantity,
+            SaleReturnCondition.good,
+          ),
+        ]);
+        await app.saleReturns.post(
+          quote,
+          operationKey: key,
+          reason: 'PUBLIC SORT RETURN',
+        );
+      }
+
+      await returnUnits(3, 'public-popularity-partial');
+      expect(await scan(byPopularity), [zulu, alpha, alphaTie]);
+      final score = await db.read(
+        (sql) => sql.query(
+          'cashier_product_popularity',
+          where: 'product_id=?',
+          whereArgs: [alpha.value],
+        ),
+      );
+      expect((score.single['receipts'], score.single['net_quantity']), (1, 1));
+      await returnUnits(1, 'public-popularity-full');
+      expect((await scan(byPopularity)).first, zulu);
+      expect(await scan(filter(WarehouseSort.popularity)), [
+        ...alphaOrder,
+        zulu,
+      ]);
+      final completed = await app.cart.open();
+      final active = await app.cart.next(completed.id);
+      expect(
+        (await app.search.favorites(active.id)).map((product) => product.id),
+        [zulu],
+      );
+      expect(
+        await db.read(
+          (sql) => sql.query(
+            'cashier_product_popularity',
+            where: 'product_id=?',
+            whereArgs: [alpha.value],
+          ),
+        ),
+        isEmpty,
+      );
+    },
+  );
+
   test(
     'M54 supplier associations share one stock and retain receipt provenance',
     () async {

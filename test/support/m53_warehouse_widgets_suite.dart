@@ -234,6 +234,37 @@ void m53WarehouseWidgetsSuite(DatabaseFactory factory) {
                 !state.paging.isLoading,
           );
           expectSync(state.paging.items.single.id.value, fixtureId(1));
+          final sort = find.byKey(const ValueKey(WarehouseSort.stockPriority));
+          await reveal(tester, sort);
+          await tester.tap(sort.hitTestable());
+          await tester.pumpAndSettle();
+          final popularity = tr(
+            tester.element(find.byType(InventoryBrowseScreen)),
+            'm54WarehousePopularity',
+          );
+          await tester.tap(find.text(popularity).last);
+          await drain(
+            tester,
+            () =>
+                state.paging.filter.sort == WarehouseSort.popularity &&
+                !state.paging.isLoading,
+          );
+          final direction = find.byKey(
+            const ValueKey('warehouse-sort-direction'),
+          );
+          await reveal(tester, direction);
+          expectSync(
+            tester.widget<IconButton>(direction).tooltip,
+            tr(tester.element(direction), 'm54SortDescending'),
+          );
+          await tester.tap(direction.hitTestable());
+          await drain(
+            tester,
+            () => !state.paging.filter.descending && !state.paging.isLoading,
+          );
+          expectSync(state.paging.filter.stock, WarehouseStockFilter.empty);
+          expectSync(state.paging.filter.namePrefix, 'public product');
+          expectSync(state.paging.items.single.id.value, fixtureId(1));
           await tester.tap(find.byType(BackButton).last);
           await drain(
             tester,

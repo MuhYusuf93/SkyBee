@@ -5,7 +5,14 @@ import '../../../data/repositories/keyset_queries.dart'
 import '../domain/inventory_models.dart';
 import '../domain/warehouse_filter.dart';
 
-/// SQL ranks/filter before LIMIT. Date-sensitive rank needs a SQL sort; the
+List<String> warehouseSortColumns(WarehouseSort sort) => switch (sort) {
+  WarehouseSort.stockPriority => const ['warehouse_rank', 'created_at'],
+  WarehouseSort.name => const ['normalized_name'],
+  WarehouseSort.modified => const ['updated_at'],
+  WarehouseSort.popularity => const ['popularity_receipts', 'popularity_units'],
+};
+
+/// SQL ranks/filters before LIMIT. Date-sensitive rank needs a SQL sort; the
 /// product/date indexes bound master filters and remaining-batch existence.
 SqlQuery warehouseQuery(
   WarehouseFilter filter,
@@ -15,6 +22,14 @@ SqlQuery warehouseQuery(
   bool useSupplierLinks = false,
 }) {
   validatePageSize(pageSize);
+  final priority = filter.sort == WarehouseSort.stockPriority;
+  final popular = filter.sort == WarehouseSort.popularity;
+  final direction = filter.descending ? 'DESC' : 'ASC';
+  final columns = [
+    for (final column in warehouseSortColumns(filter.sort))
+      column == 'normalized_name' ? '$column COLLATE BINARY' : column,
+    'id COLLATE BINARY',
+  ];
   final conditions = <String>['p.is_deleted=?'];
   final values = <Object?>[day, day, filter.isDeleted ? 1 : 0];
   for (final relation in [
@@ -50,10 +65,17 @@ SqlQuery warehouseQuery(
     outer.add('stock_tracking_enabled=1 AND stock_quantity=0');
   }
   if (after != null) {
-    outer.add(
-      '(warehouse_rank>? OR (warehouse_rank=? AND (created_at,id COLLATE BINARY)<(?,?)))',
-    );
-    values.addAll([after.rank, after.rank, after.createdAt, after.id.value]);
+    if (priority) {
+      outer.add(
+        '(warehouse_rank>? OR (warehouse_rank=? AND (created_at,id COLLATE BINARY)<(?,?)))',
+      );
+      values.add(after.sortValues.first);
+    } else {
+      final operator = filter.descending ? '<' : '>';
+      final marks = List.filled(columns.length, '?').join(',');
+      outer.add('(${columns.join(',')})$operator($marks)');
+    }
+    values.addAll([...after.sortValues, after.id.value]);
   }
   values.add(pageSize + 1);
   return SqlQuery(
@@ -64,10 +86,13 @@ SqlQuery warehouseQuery(
           WHERE b.product_id=p.id AND b.remaining_quantity>0 AND b.expiry_date<=?)) OR
         (p.stock_tracking_enabled=0 AND p.reference_expiry_date<=?)) THEN 0
       WHEN p.stock_tracking_enabled=1 AND p.stock_quantity=0 THEN 1 ELSE 2 END AS warehouse_rank
+      ${popular ? ',COALESCE(stats.receipts,0) AS popularity_receipts,COALESCE(stats.net_quantity,0) AS popularity_units' : ''}
     FROM products p LEFT JOIN categories c ON c.id=p.category_id
-    LEFT JOIN suppliers s ON s.id=p.master_supplier_id WHERE ${conditions.join(' AND ')}
+    LEFT JOIN suppliers s ON s.id=p.master_supplier_id
+    ${popular ? 'LEFT JOIN cashier_product_popularity stats ON stats.product_id=p.id' : ''}
+    WHERE ${conditions.join(' AND ')}
     ) SELECT * FROM ranked ${outer.isEmpty ? '' : 'WHERE ${outer.join(' AND ')}'}
-    ORDER BY warehouse_rank ASC,created_at DESC,id COLLATE BINARY DESC LIMIT ?''',
+    ORDER BY ${priority ? 'warehouse_rank ASC,created_at DESC,id COLLATE BINARY DESC' : columns.map((column) => '$column $direction').join(',')} LIMIT ?''',
     values,
   );
 }

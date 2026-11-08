@@ -6823,5 +6823,37 @@
   "m54PurchaseCostUnchanged": "Cost per piece unchanged",
   "@m54PurchaseCostUnchanged": {
     "description": "M54 purchase history: Cost per piece unchanged"
+  },
+  "m54WarehouseSort": "Sort by",
+  "@m54WarehouseSort": {
+    "description": "M54: Sort by"
+  },
+  "m54WarehouseStockPriority": "Stock priority",
+  "@m54WarehouseStockPriority": {
+    "description": "M54: Stock priority"
+  },
+  "m54WarehouseModified": "Last modified",
+  "@m54WarehouseModified": {
+    "description": "M54: Last modified"
+  },
+  "m54WarehousePopularity": "Best sellers",
+  "@m54WarehousePopularity": {
+    "description": "M54: Best sellers"
+  },
+  "m54SortDescending": "Descending order",
+  "@m54SortDescending": {
+    "description": "M54: Descending order"
+  },
+  "m54SortAscending": "Ascending order",
+  "@m54SortAscending": {
+    "description": "M54: Ascending order"
+  },
+  "m54CashierFavorites": "Favorite products",
+  "@m54CashierFavorites": {
+    "description": "M54: Favorite products"
+  },
+  "m54CashierFavoritesEmpty": "No sellable favorites yet. Products appear here after they sell.",
+  "@m54CashierFavoritesEmpty": {
+    "description": "M54: No sellable favorites yet. Products appear here after they sell."
   }
 }

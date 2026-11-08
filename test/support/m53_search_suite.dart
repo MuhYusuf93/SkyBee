@@ -115,6 +115,61 @@ void m53SearchSuite(DatabaseFactory factory) {
   );
 
   test(
+    'M54 favorites are bounded, sellable and share the rolling cache',
+    () async {
+      final cart = await CartService(db, store).open();
+      expect(await search.favorites(cart.id), isEmpty);
+      for (var i = 1; i <= 10; i++) {
+        await product(i, 'PUBLIC FAVORITE $i', tracked: i != 10);
+        await fact(i, i, i);
+      }
+      await product(
+        11,
+        'PUBLIC EXPIRED',
+        expiry: true,
+        batchExpiry: '2026-10-27',
+      );
+      await product(12, 'PUBLIC EXHAUSTED', stock: 0);
+      await product(13, 'PUBLIC ARCHIVE');
+      await product(14, 'PUBLIC REVERSED');
+      await product(15, 'PUBLIC OUTSIDE WINDOW');
+      await product(
+        16,
+        'PUBLIC EXPIRED UNTRACKED',
+        tracked: false,
+        expiry: true,
+        reference: '2026-10-27',
+      );
+      for (final i in [11, 12, 13, 14, 16]) {
+        await fact(i, i, 999);
+      }
+      await fact(15, 15, 999, at: now.subtract(const Duration(days: 31)));
+      await reverse(14);
+      await db.transaction(
+        (sql) => sql.update(
+          'products',
+          {'is_deleted': 1},
+          where: 'id=?',
+          whereArgs: [fixtureId(13)],
+        ),
+      );
+
+      final first = await search.favorites(cart.id);
+      expect(
+        first.map((p) => p.id.value),
+        List.generate(8, (i) => fixtureId(10 - i)),
+      );
+      expect(first.first.stockTracked, isFalse);
+      final window = await db.read(ProductPopularityStore.window);
+      expect(
+        (await search.favorites(cart.id)).map((p) => p.id),
+        first.map((p) => p.id),
+      );
+      expect(await db.read(ProductPopularityStore.window), window);
+    },
+  );
+
+  test(
     'M53 search eligibility precedes frequency; receipt count precedes units; no unmatched products',
     () async {
       await product(1, 'Baygon');
@@ -798,7 +853,7 @@ void m53SearchSuite(DatabaseFactory factory) {
             query.arguments,
           ),
           'aggregate': await sql.rawQuery(
-            'EXPLAIN QUERY PLAN ${ProductPopularityStore.aggregateSql}',
+            'EXPLAIN QUERY PLAN ${ProductPopularityStore.aggregateFor(db.schemaVersion)}',
             [first.windowFrom, first.windowThrough],
           ),
         },
@@ -807,6 +862,9 @@ void m53SearchSuite(DatabaseFactory factory) {
           .map((r) => r['detail'])
           .join(' ');
       expect(aggregatePlan, contains('sale_transactions_history'));
+      if (db.schemaVersion >= 51) {
+        expect(aggregatePlan, contains('sale_return_items'));
+      }
       expect(
         plans['page']!.map((r) => r['detail']).join(' '),
         contains('cashier_search_terms'),

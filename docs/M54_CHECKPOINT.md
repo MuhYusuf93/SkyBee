@@ -273,3 +273,28 @@ Audit lokalisasi 1685/1046/245 lulus. APK biasa 0.5.4+14 lulus verifikasi
 tiga ABI dan alignment 16 KiB tanpa dipasang. Scanner fisik dan acceptance
 native tetap terbuka.
 Analyzer lulus tanpa masalah dalam 126,7 detik.
+
+## Tahap 4 · sort Gudang dan Favorit Kasir · skema 51
+
+Gudang mempertahankan Prioritas stok sebagai default. Nama, Terakhir diubah,
+dan Paling laku memiliki arah dan cursor sendiri. Filter tetap digabung.
+Gudang dan Kasir berbagi cache rolling 30 hari. Retur mengurangi unit, dan
+struk yang tidak menyisakan unit produk keluar dari hitungan frekuensi produk.
+Reversal lama tetap dikecualikan. Migrasi menandai cache lama untuk dibangun
+ulang. Tes query plan 1.000 produk dan 2.000 penjualan memeriksa indeks periode
+penjualan dan lookup baris retur.
+
+Favorit menampilkan paling banyak delapan produk dari cache yang sama setelah
+menyaring arsip, kedaluwarsa, stok habis dan reservasi. Tombol ada di bawah
+pencarian. Satu pilihan menambah satu pcs melalui keranjang aktif dan kembali
+ke tombol Favorit sesudah panel ditutup. Draft dan teks pencarian dipertahankan.
+
+Regresi dan tes ulang mencakup 30 kasus host unik. Fixture sort diperbaiki agar
+mengakui struk sebelum penjualan berikutnya. Uji widget awal menemukan kolom
+pencarian di luar viewport dan fokus kembali terlalu dini setelah menutup panel.
+Posisi tombol, helper scroll yang mengenali elemen di luar area lukis, dan
+waktu pemulihan fokus diperbaiki. Kedua locale lulus tes ulang dalam 9 detik.
+Audit lokalisasi 1693/1049/245 dan audit PIN 106 cocok. Acceptance perangkat
+untuk skema ini terbuka.
+Analyzer akhir bersih. APK biasa 0.5.4+14 dengan perbaikan fokus terverifikasi
+pada tiga ABI dan alignment 16 KiB tanpa instalasi.

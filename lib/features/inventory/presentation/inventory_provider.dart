@@ -64,6 +64,15 @@ final class InventoryProvider extends ChangeNotifier {
 
   Future<void> stock(WarehouseStockFilter value) =>
       paging.reset(paging.filter.copyWith(stock: value));
+  Future<void> sort(WarehouseSort value) => paging.reset(
+    paging.filter.copyWith(
+      sort: value,
+      descending: value != WarehouseSort.name,
+    ),
+  );
+  Future<void> reverseSort() => paging.reset(
+    paging.filter.copyWith(descending: !paging.filter.descending),
+  );
   Future<void> relation(MasterKind kind, MasterRecord? value) {
     switch (kind) {
       case MasterKind.category:
@@ -78,6 +87,8 @@ final class InventoryProvider extends ChangeNotifier {
         namePrefix: paging.filter.namePrefix,
         isDeleted: paging.filter.isDeleted,
         stock: paging.filter.stock,
+        sort: paging.filter.sort,
+        descending: paging.filter.descending,
         categoryId: selectedCategory?.id,
         shelfId: selectedShelf?.id,
         supplierId: selectedSupplier?.id,

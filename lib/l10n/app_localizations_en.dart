@@ -5689,4 +5689,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m54PurchaseCostUnchanged => 'Cost per piece unchanged';
+
+  @override
+  String get m54WarehouseSort => 'Sort by';
+
+  @override
+  String get m54WarehouseStockPriority => 'Stock priority';
+
+  @override
+  String get m54WarehouseModified => 'Last modified';
+
+  @override
+  String get m54WarehousePopularity => 'Best sellers';
+
+  @override
+  String get m54SortDescending => 'Descending order';
+
+  @override
+  String get m54SortAscending => 'Ascending order';
+
+  @override
+  String get m54CashierFavorites => 'Favorite products';
+
+  @override
+  String get m54CashierFavoritesEmpty =>
+      'No sellable favorites yet. Products appear here after they sell.';
 }

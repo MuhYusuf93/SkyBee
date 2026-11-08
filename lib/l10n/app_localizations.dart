@@ -10207,6 +10207,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cost per piece unchanged'**
   String get m54PurchaseCostUnchanged;
+
+  /// M54: Sort by
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get m54WarehouseSort;
+
+  /// M54: Stock priority
+  ///
+  /// In en, this message translates to:
+  /// **'Stock priority'**
+  String get m54WarehouseStockPriority;
+
+  /// M54: Last modified
+  ///
+  /// In en, this message translates to:
+  /// **'Last modified'**
+  String get m54WarehouseModified;
+
+  /// M54: Best sellers
+  ///
+  /// In en, this message translates to:
+  /// **'Best sellers'**
+  String get m54WarehousePopularity;
+
+  /// M54: Descending order
+  ///
+  /// In en, this message translates to:
+  /// **'Descending order'**
+  String get m54SortDescending;
+
+  /// M54: Ascending order
+  ///
+  /// In en, this message translates to:
+  /// **'Ascending order'**
+  String get m54SortAscending;
+
+  /// M54: Favorite products
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite products'**
+  String get m54CashierFavorites;
+
+  /// M54: No sellable favorites yet. Products appear here after they sell.
+  ///
+  /// In en, this message translates to:
+  /// **'No sellable favorites yet. Products appear here after they sell.'**
+  String get m54CashierFavoritesEmpty;
 }
 
 class _AppLocalizationsDelegate

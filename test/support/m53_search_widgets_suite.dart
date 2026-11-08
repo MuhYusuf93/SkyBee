@@ -88,8 +88,11 @@ void m53SearchWidgetsSuite(DatabaseFactory factory) {
     matching: find.byType(TextField),
   );
   Future<void> revealInput(WidgetTester tester) async {
+    // A focused input can remain alive after its sliver stops painting.
+    bool painted() =>
+        input.evaluate().isNotEmpty && tester.getRect(input).top.isFinite;
     for (var reveal = 0; reveal < 4; reveal++) {
-      if (input.evaluate().isEmpty) {
+      if (!painted()) {
         final element = find.byType(Scrollable).evaluate().firstWhere((
           element,
         ) {
@@ -106,11 +109,7 @@ void m53SearchWidgetsSuite(DatabaseFactory factory) {
             ((element as StatefulElement).state as ScrollableState).position;
         position.jumpTo(position.minScrollExtent);
         await tester.pump(const Duration(milliseconds: 400));
-        for (
-          var attempt = 0;
-          input.evaluate().isEmpty && attempt < 32;
-          attempt++
-        ) {
+        for (var attempt = 0; !painted() && attempt < 32; attempt++) {
           position.jumpTo(
             (position.pixels + position.viewportDimension * .8).clamp(
               position.minScrollExtent,
@@ -121,7 +120,7 @@ void m53SearchWidgetsSuite(DatabaseFactory factory) {
         }
       }
       expectSync(input, findsOneWidget);
-      await tester.ensureVisible(input);
+      await Scrollable.ensureVisible(tester.element(input), alignment: .5);
       await tester.pump(const Duration(milliseconds: 400));
       if (input.hitTestable().evaluate().isNotEmpty) return;
     }
@@ -256,6 +255,35 @@ void m53SearchWidgetsSuite(DatabaseFactory factory) {
           await tester.testTextInput.receiveAction(TextInputAction.search);
           await drain(tester, () => !provider.loading && !cart.busy);
           expectSync(cart.snapshot!.lines, isEmpty);
+          final favorites = find.byKey(const ValueKey('cashier-favorites'));
+          final favorite = find.byKey(
+            ValueKey('cashier-favorite-${fixtureId(2)}'),
+          );
+          final draftId = cart.snapshot!.id;
+          tester.view.viewInsets = const FakeViewPadding();
+          await tester.pump();
+          for (final quantity in [1, 2]) {
+            await tap(tester, favorites);
+            await drain(tester, () => favorite.evaluate().isNotEmpty);
+            await tap(tester, favorite);
+            await drain(
+              tester,
+              () =>
+                  favorite.evaluate().isEmpty &&
+                  cart.snapshot!.lines.singleOrNull?.quantity == quantity,
+            );
+            expectSync(cart.snapshot!.id, draftId);
+            expectSync(
+              cart.snapshot!.lines.single.product.id.value,
+              fixtureId(2),
+            );
+            expectSync(tester.testTextInput.isVisible, isFalse);
+            expectSync(
+              tester.widget<OutlinedButton>(favorites).focusNode!.hasFocus,
+              isTrue,
+            );
+            expectSync(provider.query, '000040');
+          }
           expectSync(tester.takeException(), isNull);
           expectSync(app.management.isUnlocked, isFalse);
         } finally {

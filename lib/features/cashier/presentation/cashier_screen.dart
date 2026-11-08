@@ -23,6 +23,7 @@ import '../../settings/presentation/language_button.dart';
 import '../domain/cashier_models.dart';
 import '../domain/product_search_page.dart';
 import 'cart_provider.dart';
+import 'cashier_favorites_sheet.dart';
 import 'product_search_provider.dart';
 import 'checkout_screen.dart';
 import 'receipt_view.dart';
@@ -503,6 +504,7 @@ class _SearchPane extends StatefulWidget {
 
 class _SearchPaneState extends State<_SearchPane> {
   final inputScope = RouteInputScope();
+  final favoritesFocus = FocusNode();
   late final TextEditingController input;
   @override
   void didChangeDependencies() {
@@ -534,6 +536,32 @@ class _SearchPaneState extends State<_SearchPane> {
 
   FocusNode get focus => widget.focusNode;
   String? addError;
+
+  Future<void> _favorites() async {
+    if (!inputScope.canReceive) return;
+    final cart = context.read<CartProvider>();
+    final draft = cart.snapshot;
+    if (draft == null || draft.completedId != null || cart.busy) return;
+    final search = context.read<AppServices>().search;
+    focus.unfocus();
+    favoritesFocus.requestFocus();
+    ModalRoute<void>? sheetRoute;
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (sheetContext) {
+        sheetRoute = ModalRoute.of<void>(sheetContext);
+        return CashierFavoritesSheet(
+          cart: cart,
+          load: () => search.favorites(draft.id),
+        );
+      },
+    );
+    await sheetRoute?.completed;
+    if (mounted && inputScope.canReceive) favoritesFocus.requestFocus();
+  }
+
   Future<void> camera() async {
     if (!inputScope.canReceive) return;
     focus.unfocus();
@@ -601,6 +629,7 @@ class _SearchPaneState extends State<_SearchPane> {
   @override
   void dispose() {
     inputScope.dispose();
+    favoritesFocus.dispose();
     input.dispose();
     super.dispose();
   }
@@ -653,6 +682,14 @@ class _SearchPaneState extends State<_SearchPane> {
             ),
           ),
         ),
+        if (context.read<AppServices>().database.schemaVersion >= 51)
+          OutlinedButton.icon(
+            key: const ValueKey('cashier-favorites'),
+            focusNode: favoritesFocus,
+            onPressed: context.watch<CartProvider>().busy ? null : _favorites,
+            icon: const Icon(Icons.star_border),
+            label: Text(tr(context, 'm54CashierFavorites')),
+          ),
         if (search.supportsPages && search.query.trim().isNotEmpty)
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
