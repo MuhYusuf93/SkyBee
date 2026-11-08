@@ -481,3 +481,103 @@ DV8910 `192.168.0.101:5555` dengan SELinux `Enforcing` dan Poco F6.
 Realme belum muncul pada 9 November 2026 pukul 00.42 WIB. Lanjutkan
 setelah koordinasi pengguna untuk uji M5.3 dan M5.4 pada Realme C11,
 lalu pemasangan `.skybee` dan pembuatan APK Uji Teman.
+
+### Pengujian Realme C11 dilanjutkan
+
+Pada 9 November 2026 WIB, pengguna mengonfirmasi kesiapan Realme.
+ADB mengenali RMX3231 dengan Android 11/API 30, ARM32, layar
+720 × 1600 piksel, dan sekitar 2,2 GB ruang bebas. Kamera belakang
+dengan fokus otomatis dilaporkan oleh sistem. Fitur sidik jari
+tidak dilaporkan. Paket biasa dan `.skybee` tidak tercantum.
+Pemeriksaan metadata WorkManager fixture mencatat nol pekerjaan
+tertunda sebelum uji. Sumber awal `1054ff2` dibekukan pada manifest
+975 berkas untuk interval Realme M5.4.
+
+Interval pertama Realme lulus 35 kasus M5.4 dalam 23 menit 8 detik.
+Dua arsip skema 54 pulih lintas kunci dan arsip format lama berhasil
+dimigrasikan. Render PDF, raster QR/Code 128, ekspor, dan mock Drive
+lulus. Runner tertutup, hash seluruh berkas terlindungi yang sudah
+ada cocok, dan manifest sumber cocok
+`c38c86854b01efdc61a5cd0176f090820b1e97198df16d328d872194d39b135d`.
+Pemeriksaan WorkManager sebelum interval berikutnya kembali
+mencatat nol pekerjaan tertunda. Pengujian dilanjutkan dengan
+kelompok alur M5.3 dan pemeriksaan input/layar kecil M5.4.
+
+### Jeda Realme untuk pemasangan SkyBee
+
+Pada 9 November 2026 sekitar 01.45 WIB, pengguna meminta
+pengujian Realme dijeda sampai pemasangan `.skybee` selesai.
+Interval alur mencatat 40 kasus lulus tanpa kegagalan sebelum
+runner dihentikan pada kasus prioritas gate Kelola. Kasus itu
+belum selesai dan menjadi titik mulai ulang. Wrapper menutup
+kontrol, memverifikasi manifest sumber, dan mencatat bahwa hash
+seluruh berkas terlindungi yang sudah ada cocok. Status keluar
+runner nonnol berasal dari jeda yang disengaja.
+
+Percobaan awal alur gagal sebelum menjalankan kasus karena
+Windows menafsirkan karakter pola nama di `flutter.bat`, lalu
+karena resolusi ganda SDK di PATH. Runner diperbaiki dengan
+memilih SDK pertama dan meneruskan pola langsung ke proses Dart.
+Perubahan tersebut berada pada alat uji. Tidak ada perubahan
+kode aplikasi berdasarkan hasil Realme sampai titik ini.
+
+Pada percobaan pemasangan sebelumnya, APK `.skybee` naik dari
+0.5.3+13 ke 0.5.4+14 dengan sertifikat yang sama. Script berhenti
+sebelum peluncuran terkendali karena audit byte berbeda. Pemeriksaan
+lanjutan menemukan perbedaan terbatas pada basis data dan catatan
+kesiapan startup. Catatan kesiapan menunjukkan ID startup baru
+dengan identitas toko, status aktivasi dan hitungan 107 produk,
+52 penjualan, serta satu kredensial pengelola yang cocok dengan
+baseline. Snapshot terenkripsi sebelum pemasangan tetap tersedia.
+Urutan lanjutan dari pengguna adalah menuntaskan Realme, menjalankan
+regresi terdampak bila perlu, lalu menuntaskan verifikasi pemasangan
+`.skybee` di Poco.
+
+### Penutupan pengujian Realme C11
+
+Interval lanjutan pada 9 November 2026 WIB melanjutkan sembilan kasus
+tanpa mengulang 40 kasus yang telah lulus. Kedua skenario gate, dua form
+produk ID/EN pada 320 px dengan skala teks 2, dua skenario routing input,
+dua skenario PIN mentah, dan satu benchmark lulus dalam 4 menit 17 detik.
+Totalnya 83 pemeriksaan fungsional dan satu benchmark dari tiga interval.
+Runner keluar dengan kode 0, kontrol berakhir, hash setiap berkas
+terlindungi yang telah ada cocok, dan WorkManager fixture tidak memiliki
+pekerjaan tertunda. Manifest lanjutan 976 berkas cocok
+`f9c68bc4dca221c9b0feffc74deb4d5a60311a3d21b36011889728e3b26d31e6`.
+Bukti lokal tersedia di `build/m54-realme-resume-20261109-045654/`.
+
+Benchmark SQLCipher debug dengan 1.000 produk dan 2.000 penjualan
+sintetis mencatat median lima sampel masing-masing 128,6 ms, 101,7 ms,
+dan 96,0 ms untuk halaman tren laba harian, mingguan, dan bulanan.
+Ringkasan bulanan mencatat median 223,2 ms. Angka ini mengukur kueri
+fixture pada perangkat tersebut. Pengujian Realme hanya memerlukan
+perubahan pada alat uji, sehingga tidak ada regresi aplikasi tambahan
+yang dijalankan di DV8910 atau Poco.
+
+### Handoff SkyBee untuk uji mandiri di Poco F6
+
+Paket `com.example.kasir_app.skybee` 0.5.4+14 dari kode aplikasi
+`1054ff2` terpasang melalui pembaruan in-place. APK debug ARM64 dengan
+minimum API 24 lulus pemeriksaan alignment 16 KiB. SHA-256 APK di
+perangkat cocok dengan `build/m54/skybee-self-test/SkyBee-Self-Test-0.5.4+14.apk`
+`f52b605de5f4ef490bde18a3e5410d455d07f9757f7a75a8b77a1b0070d97678`.
+SHA-256 sertifikat lama dan baru sama,
+`002029d011716641cfb6c8490df92d309920c38be4150770ed14423dd37fcd4c`.
+
+Setelah Realme selesai, pemeriksa peluncuran pertama melewatkan
+label semantik gabungan Daftar belanja. Setelah memperbaiki pencocokan
+label, dua cold start terpisah menghasilkan ID kesiapan baru dan
+layar Kasir. Identitas toko, 107 produk, 52 penjualan, satu kredensial
+pengelola, dan status aktivasi cocok dengan baseline. Hash kunci
+terbungkus dan penanda aktivasi/seed cocok. Basis data dapat dibuka
+dan byte-nya berbeda dari snapshot sebelum pembaruan. Audit ini
+memeriksa ringkasan bisnis dan berkas tersebut. Kesetaraan setiap baris,
+masuk dengan PIN, dan operasi perangkat keras belum diperiksa.
+Tidak ada reset, seed ulang, atau transaksi uji. Aplikasi ditinggalkan
+di layar Kasir. Bukti lokal ada di `build/m54/skybee-self-test/`, termasuk
+snapshot terenkripsi dan `handoff-verified-recheck.json`.
+
+Untuk mulai menguji, buka aplikasi **skybee kasir** di Poco F6 dan
+gunakan PIN yang sudah ada jika diminta. Uji kamera, cetak, HID, dan
+Drive nyata masih terbuka. Realme tidak melaporkan fitur sidik jari.
+APK Uji Teman merupakan bagian handoff terpisah yang masih terbuka.

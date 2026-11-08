@@ -1,12 +1,9 @@
-# Handoff aktif — M5.4 sedang dikerjakan
+# Handoff aktif — M5.4
 
-8 November 2026 WIB. Versi kerja 0.5.4+14, skema 54. Tahap 5
+9 November 2026 WIB. Versi kerja 0.5.4+14, skema 54. Tahap 5
 mengintegrasikan lembar pemulihan PDF, tren laba kotor dan ekspor, label
 Code 128, serta pemilihan akun Drive. Rincian bukti dan batas uji ada pada
 [checkpoint M5.4](M54_CHECKPOINT.md) dan [matriks acceptance](M54_ACCEPTANCE.md).
-Setelah acceptance awal DV8910 dan Poco, beri kabar dan jeda untuk koordinasi
-uji M5.3 dan M5.4 pada Realme C11. Pemasangan `.skybee` dan pembuatan APK Uji
-Teman menunggu tahap tersebut serta arahan lanjut pengguna.
 
 Interval awal DV8910 lulus 31 kasus dan menemukan empat kegagalan bind
 `null` pada retur supplier berbasis nota. Tes ulang setelah perbaikan
@@ -15,10 +12,17 @@ cocok dan pengaturan DV dipulihkan pada kedua interval. Poco lulus
 22 kasus domain dan restore serta 13 kasus keluaran sebelumnya.
 Runner ditutup dan semua hash terlindungi cocok.
 
-Pada 9 November 2026 WIB, ADB menampilkan Poco dan DV8910. Realme
-belum terdeteksi. Jeda berlaku sampai pengguna menyiapkan Realme C11
-untuk uji terisolasi M5.3 dan M5.4. Pemasangan `.skybee` dan pembuatan
-APK Uji Teman mengikuti uji Realme dan arahan lanjut pengguna.
+Realme C11 (RMX3231, Android 11/API 30, ARM32) menyelesaikan 83
+pemeriksaan fungsional M5.3/M5.4 dan satu benchmark pada paket fixture.
+Hash berkas terlindungi cocok dan kontrol runner berakhir. Perbaikan
+hanya pada alat uji, sehingga tidak ada regresi aplikasi tambahan
+di DV8910 atau Poco.
+
+Poco F6 menjalankan `.skybee` 0.5.4+14 hasil pembaruan in-place.
+Hash APK dan sertifikat cocok. Dua cold start mencapai Kasir, dengan
+identitas toko dan hitungan 107 produk, 52 penjualan, serta satu
+kredensial pengelola yang cocok dengan baseline. Buka **skybee kasir**
+untuk uji mandiri. APK Uji Teman, uji fisik dan Drive nyata masih terbuka.
 
 <!-- M54_FOUNDATION_START -->
 7 November 2026 WIB — M5.4 masih aktif, source0.5.4+14/schema38.

@@ -13,7 +13,7 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 5 | QRIS statis konfirmasi manual/split | amount invalidation/cash-only drawer | Host lulus penyimpanan gambar, invalidasi nominal, split dan laci khusus tunai. Split manual dan posting laci lulus fixture DV/Poco. |
 | 6 | Foto nota terenkripsi | EXIF/AEAD/orphan/portable restore | Host dan DV/Poco lulus validasi, rollback, kontrol akses dan pemulihan lintas kunci dengan lampiran. Pengambilan foto fisik terbuka. |
 | 7 | Recovery24kata/PDF1halaman/QR | vektor BIP39/legacy/render/decode | PIN segar dan pemisahan pemindai lulus host. DV/Poco lulus render PDF ID/EN dan pemulihan arsip. Visual A4 dan payload ZXing diperiksa pada PDF Poco. SAF, Bagikan dan pindai fisik terbuka. |
-| 8 | Field invalid pertama | form nyata ID/EN320px/text2 | Host UI2 dan native Poco/DV PASS |
+| 8 | Field invalid pertama | form nyata ID/EN320px/text2 | Host UI2 dan native Poco/DV/Realme lulus |
 | 9 | Histori penerimaan tanggal+jam/biaya | unit/currency/pagination/unknown | Host dan DV/Poco lulus migrasi, snapshot biaya per pcs, pemasok, expiry, reversal, biaya kosong dan pagination. |
 | 10 | Rak sah atau error eksplisit | add/edit/draft/repository | Host UI/repository PASS; add/edit navigasi lengkap pending |
 | 11 | Biaya dan grosir < retail | equality/greater/unknown/pack precision | Host 4 currency dan repository, termasuk biaya referensi sama dengan harga jual; native fondasi Poco/DV; jalur edit referensi native pending |
@@ -23,7 +23,7 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 15 | Tombol pecahan kembalian | plus/minus/undo/currency/commit | Host lulus editor pecahan ID/EN dan EUR. Fixture DV/Poco lulus penghitungan, validasi, pengurangan dan Undo. |
 | 16 | Potongan pembulatan tunai | 86750→86500/split/debt/return | Host dan fixture DV/Poco lulus split, pembulatan turun dan posting kas yang idempoten. Alokasi retur dan piutang juga diuji di host. |
 | 17 | Riwayat member | sale/return/payment/date/seek | Host dan DV/Poco lulus riwayat penjualan, retur, refund, dan pelunasan. Widget host memisahkan aksi lihat dan Edit. |
-| 18 | Prioritas gate sesuai route | management-only resume/cashier Back | Implemented, host gate/dirty/back PASS; native7 Poco/DV PASS; OEM lengkap pending |
+| 18 | Prioritas gate sesuai route | management-only resume/cashier Back | Host dan fixture Poco/DV lulus. Realme lulus gate Kelola, pemulihan draft dan PIN Kasir saat Back. Lifecycle fisik terbuka. |
 | 19 | Satu tombol bahasa promo | ID/EN/draft | Host tab/form satu kontrol terlihat dan draft bertahan setelah perubahan bahasa |
 | 20 | Tap kategori/detail; Edit terpisah | filter/semantics/no longpress | Host tap terfilter dan tombol Edit terpisah; native arsip/navigasi pending |
 | 21 | Sort gudang | name/modified/popularity/seek | Host dan DV/Poco lulus sort, filter gabungan, cursor dan pengurangan retur. Widget ID/EN 320 px skala teks 2 lulus di host. |
@@ -47,7 +47,12 @@ Poco lulus 22 kasus acceptance dan 13 kasus keluaran sebelumnya. Semua
 audit hash terlindungi cocok. Cadangan skema 54 dengan lampiran pulih
 lintas kunci dan fixture arsip format lama bermigrasi. Analyzer,
 lokalisasi, lisensi dan APK biasa tiga ABI dengan alignment 16 KiB lulus.
-Uji fisik, Drive nyata, uji Realme C11 dan handoff masih terbuka.
+Realme C11 lulus 35 kasus acceptance, 48 pemeriksaan alur/input, dan
+satu benchmark SQLCipher. Hash berkas terlindungi cocok. Perbaikan
+terbatas pada alat uji, sehingga pengujian regresi aplikasi tambahan di
+DV8910/Poco tidak diperlukan. `.skybee` 0.5.4+14 terpasang in-place
+di Poco dan mencapai Kasir pada dua cold start. Uji fisik, Drive nyata,
+dan APK Uji Teman masih terbuka.
 Rincian interval dan bukti tersedia di [checkpoint](M54_CHECKPOINT.md).
 
 Bukti dan failure awal: [M54_FOUNDATION_REPORT](M54_FOUNDATION_REPORT.md).

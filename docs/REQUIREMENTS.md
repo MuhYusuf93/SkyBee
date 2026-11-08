@@ -56,7 +56,12 @@ termasuk empat kasus yang lulus setelah perbaikan bind `null`. Hash
 berkas terlindungi cocok. Pengaturan DV dipulihkan dan dibaca kembali.
 Versi 0.5.4+14, skema 54, lulus analyzer serta pemeriksaan APK biasa
 debug dan release. Cetak, kamera, HID dan Drive nyata masih terbuka.
-Pekerjaan dijeda untuk koordinasi uji M5.3 dan M5.4 pada Realme C11.
+Realme C11 (ARM32/API 30) lulus 83 pemeriksaan fungsional dan satu
+benchmark dengan fixture SQLCipher. Bukti mencakup restore lintas kunci,
+retur dan kredit supplier, gate/PIN, routing input, layar sempit ID/EN,
+laporan dan ekspor. Hash berkas terlindungi cocok. `.skybee` 0.5.4+14
+lulus dua cold start ke Kasir dengan paket, penanda seed dan ringkasan
+bisnis terverifikasi. APK Uji Teman dan pemeriksaan fisik tetap terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

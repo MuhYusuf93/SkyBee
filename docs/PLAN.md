@@ -56,7 +56,9 @@ termasuk empat kasus yang lulus setelah perbaikan bind `null`. Hash
 berkas terlindungi cocok. Pengaturan DV dipulihkan dan dibaca kembali.
 Versi 0.5.4+14, skema 54, lulus analyzer serta pemeriksaan APK biasa
 debug dan release. Cetak, kamera, HID dan Drive nyata masih terbuka.
-Pekerjaan dijeda untuk koordinasi uji M5.3 dan M5.4 pada Realme C11.
+Uji fixture Realme C11 selesai dengan 83 pemeriksaan fungsional dan
+satu benchmark lulus. `.skybee` 0.5.4+14 siap untuk uji mandiri di Poco.
+APK Uji Teman masih terbuka sebagai handoff terpisah.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->
@@ -72,11 +74,9 @@ Jangan mengulang reset/seed M5.3: data/config/PIN `.skybee` saat ini dipertahank
 QRIS hanya gambar statis+konfirmasi manual kasir di luar aplikasi. M5.5 khusus
 multi-device dan belum dikerjakan; redesign menyeluruh ditunda ke arahan lain.
 Bagian historis yang menyebut M5.5 visual tidak berlaku sebagai roadmap aktif.
-Seluruh acceptance/handoff M5.4 belum selesai; jangan memakai bukti M5.3 sebagai
-hasil M5.4. Arahan pengguna 8 November memindahkan pengujian M5.3 dan M5.4
-pada Realme C11 ke sebelum handoff. Beri kabar dan jeda sebelum memasang
-paket eksplorasi atau membuat APK eksternal. Gunakan fixture terisolasi
-dengan serial Realme yang dikonfirmasi untuk pengujian perangkat.
+Handoff M5.4 masih mencakup APK Uji Teman. Arahan terakhir menutup uji
+fixture Realme C11, kemudian memverifikasi paket eksplorasi di Poco.
+Pembuatan APK eksternal mengikuti arahan lanjut pengguna.
 
 
 <!-- M53_ACTIVE_H_START -->

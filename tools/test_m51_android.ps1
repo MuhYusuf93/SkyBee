@@ -4,7 +4,8 @@ param(
  [string]$RunName='m51-native',
  [string]$NameFilter='',
  [ValidatePattern('^[1-9][0-9]*[sm]$')][string]$TestTimeout='5m',
- [string[]]$AdditionalDartDefines=@()
+ [string[]]$AdditionalDartDefines=@(),
+ [string]$NamePattern=''
 )
 # M5.1 never downgrades a retained fixture to v6. Existing business files and
 # wrapped secrets are fingerprinted; new tests must namespace their local keys.
@@ -16,6 +17,7 @@ if($RunName -like 'realme-current-*' -and (Test-Path -LiteralPath (Join-Path $ta
 $taskSdk='C:\Users\ACER\AppData\Local\Android\sdk'
 $taskAdb=Join-Path $taskSdk 'platform-tools/adb.exe'
 if($RunName -notmatch '^[a-zA-Z0-9_-]+$'){throw 'Invalid run name'}
+if($NameFilter -and $NamePattern){throw 'Choose a literal name or a regex pattern, not both.'}
 $taskEvidence=Join-Path $taskRoot "build/$RunName-$(Get-Date -Format yyyyMMdd-HHmmss)"
 New-Item -ItemType Directory -Path $taskEvidence | Out-Null
 $env:PATH='C:\Users\ACER\dev\flutter\bin;'+$env:PATH
@@ -48,7 +50,7 @@ function Get-ProtectedHashes {
 $taskBefore=Get-ProtectedHashes
 $taskBefore | ConvertTo-Json -Depth 5 | Set-Content "$taskEvidence/before.json" -Encoding UTF8
 $taskAwake=Join-Path $taskEvidence 'awake-original.json'
-$taskResult=[ordered]@{device=$DeviceId;test=$TestFile;nameFilter=$NameFilter;automaticDeviceControlActive=$true;tests='RUNNING';isolation='NOT CHECKED';downgrade=$false;reset=$false}
+$taskResult=[ordered]@{device=$DeviceId;test=$TestFile;nameFilter=$NameFilter;namePattern=$NamePattern;automaticDeviceControlActive=$true;tests='RUNNING';isolation='NOT CHECKED';downgrade=$false;reset=$false}
 $taskResult | ConvertTo-Json | Set-Content "$taskEvidence/result.json" -Encoding UTF8
 try {
  if($DeviceId -in @('192.168.0.102:5555','192.168.0.101:5555')){& "$PSScriptRoot/dv8910_awake.ps1" -DeviceId $DeviceId -Action Enable -SnapshotPath $taskAwake}
@@ -56,7 +58,7 @@ try {
  if($LASTEXITCODE -ne 0){throw 'Isolated prepare failed'}
  & $taskAdb -s $DeviceId install -r "$taskRoot/build/app/outputs/flutter-apk/app-debug.apk" *> "$taskEvidence/install.log"
  if($LASTEXITCODE -ne 0){throw 'In-place fixture install failed; no uninstall/downgrade fallback'}
- & "$PSScriptRoot/test_android.ps1" -DeviceId $DeviceId -AndroidSdkRoot $taskSdk -TestFiles @($TestFile) -TestTimeout $TestTimeout -NameFilter $NameFilter -AdditionalDartDefines $AdditionalDartDefines *> "$taskEvidence/runner.log"
+ & "$PSScriptRoot/test_android.ps1" -DeviceId $DeviceId -AndroidSdkRoot $taskSdk -TestFiles @($TestFile) -TestTimeout $TestTimeout -NameFilter $NameFilter -NamePattern $NamePattern -AdditionalDartDefines $AdditionalDartDefines *> "$taskEvidence/runner.log"
  if($LASTEXITCODE -ne 0){throw 'Native suite failed'}
  $taskResult.tests=if((Get-Content "$taskEvidence/runner.log" -Raw) -match 'All tests skipped\.'){'SKIPPED'}else{'PASS'}
 } catch {

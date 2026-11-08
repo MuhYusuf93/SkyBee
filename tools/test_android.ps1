@@ -9,7 +9,8 @@ param(
     [switch]$PrepareOnly,
     [ValidateSet('debug','profile','release')][string]$BuildMode='debug',
     [ValidateSet('android-arm','android-arm64','android-x64','android-arm,android-arm64,android-x64')][string]$TargetPlatform='android-arm,android-arm64,android-x64',
-    [string[]]$AdditionalDartDefines=@()
+    [string[]]$AdditionalDartDefines=@(),
+    [string]$NamePattern = ''
 )
 
 # Build/verify a disposable package before letting Flutter install anything.
@@ -50,9 +51,10 @@ try {
     if($BuildMode -ne 'debug' -and -not $PrepareOnly){throw 'Profile/release fixtures use PrepareOnly; Flutter integration runner remains debug.'}
     if($PrepareOnly -and $TestFiles.Count -ne 1){throw 'PrepareOnly requires exactly one isolated entrypoint.'}
     $taskNameFilterArgs = @()
-    if ($NameFilter) {
+    if ($NameFilter -and $NamePattern) { throw 'Choose a literal name or a regex pattern, not both.' }
+    if ($NameFilter -or $NamePattern) {
         if ($TestFiles.Count -ne 1) { throw 'A focused name filter requires exactly one suite.' }
-        $taskNameFilterArgs = @("--plain-name=$NameFilter")
+        $taskNameFilterArgs = if ($NameFilter) { @("--plain-name=$NameFilter") } else { @("--name=$NamePattern") }
     }
     $taskExtraDefines = @()
     if ($PerformanceFixture) { $taskExtraDefines = @('--dart-define=KASIR_PERFORMANCE_FIXTURE=true') }
@@ -101,11 +103,36 @@ try {
         $taskBeforeHash = Get-OperationalDatabaseHash
         Write-Output "Operational DB SHA256 before: $taskBeforeHash"
     }
+    if ($NamePattern) {
+        # flutter.bat expands %* through cmd.exe, which can reinterpret regex
+        # metacharacters. Use the same bootstrapped Flutter tool without cmd.
+        $taskFlutterCommand = Get-Command flutter -CommandType Application | Select-Object -First 1
+        $taskFlutterBin = Split-Path -Parent $taskFlutterCommand.Source
+        $taskFlutterRoot = Split-Path -Parent $taskFlutterBin
+        $taskFlutterDart = Join-Path $taskFlutterBin 'cache/dart-sdk/bin/dart.exe'
+        $taskFlutterSnapshot = Join-Path $taskFlutterBin 'cache/flutter_tools.snapshot'
+        $taskFlutterPackages = Join-Path $taskFlutterRoot 'packages/flutter_tools/.dart_tool/package_config.json'
+    }
     foreach ($taskFile in $TestFiles) {
         # Slow ARM test targets may need a longer bounded harness timeout;
         # this does not alter PIN KDF parameters or remove business assertions.
-        & flutter test $taskFile -d $DeviceId --no-uninstall --dart-define=KASIR_INTEGRATION_TEST=true @taskExtraDefines @taskNameFilterArgs --timeout=$TestTimeout --reporter expanded
-        if ($LASTEXITCODE -ne 0) { throw "Fixture suite failed: $taskFile. Stopping before any further install." }
+        $taskRunArgs = @('test', $taskFile, '-d', $DeviceId, '--no-uninstall',
+            '--dart-define=KASIR_INTEGRATION_TEST=true') + $taskExtraDefines +
+            $taskNameFilterArgs + @("--timeout=$TestTimeout", '--reporter', 'expanded')
+        if ($NamePattern) {
+            $taskPreviousFlutterRoot = $env:FLUTTER_ROOT
+            try {
+                $env:FLUTTER_ROOT = $taskFlutterRoot
+                & $taskFlutterDart "--packages=$taskFlutterPackages" $taskFlutterSnapshot @taskRunArgs
+                $taskRunExit = $LASTEXITCODE
+            } finally {
+                $env:FLUTTER_ROOT = $taskPreviousFlutterRoot
+            }
+        } else {
+            & flutter @taskRunArgs
+            $taskRunExit = $LASTEXITCODE
+        }
+        if ($taskRunExit -ne 0) { throw "Fixture suite failed: $taskFile. Stopping before any further install." }
     }
     if ($VerifyOperationalDatabase) {
         $taskAfterHash = Get-OperationalDatabaseHash
