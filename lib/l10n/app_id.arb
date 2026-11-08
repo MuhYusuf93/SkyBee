@@ -6695,5 +6695,61 @@
   "m54PrepCreditClaim": "Klaim kredit supplier tertunda",
   "@m54PrepCreditClaim": {
     "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54ReceiptPhotos": "Foto nota",
+  "@m54ReceiptPhotos": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoTake": "Ambil foto nota",
+  "@m54ReceiptPhotoTake": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoStart": "Buka pratinjau kamera",
+  "@m54ReceiptPhotoStart": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoCaptureHelp": "Pastikan tulisan dan angka terbaca. Untuk nota panjang, ambil beberapa halaman.",
+  "@m54ReceiptPhotoCaptureHelp": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoPage": "Halaman",
+  "@m54ReceiptPhotoPage": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoPreview": "Pratinjau foto nota",
+  "@m54ReceiptPhotoPreview": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoEmpty": "Belum ada foto pada penerimaan ini.",
+  "@m54ReceiptPhotoEmpty": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoRetake": "Ambil ulang",
+  "@m54ReceiptPhotoRetake": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoRotate": "Putar 90 derajat",
+  "@m54ReceiptPhotoRotate": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoDeleteHelp": "Hapus halaman foto ini dari draft penerimaan?",
+  "@m54ReceiptPhotoDeleteHelp": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoLimit": "Maksimum delapan foto per penerimaan.",
+  "@m54ReceiptPhotoLimit": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoInvalid": "Foto tidak valid atau terlalu besar. Ambil ulang atau bagi menjadi beberapa halaman.",
+  "@m54ReceiptPhotoInvalid": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoUnavailable": "Kamera belum dapat mengambil foto. Coba buka kembali pratinjau.",
+  "@m54ReceiptPhotoUnavailable": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "backupReceiptPhotoInvalid": "Cadangan memuat foto nota rusak atau tidak sesuai dengan penerimaannya.",
+  "@backupReceiptPhotoInvalid": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
   }
 }

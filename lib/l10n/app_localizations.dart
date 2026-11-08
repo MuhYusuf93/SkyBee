@@ -10057,6 +10057,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pending supplier credit claim'**
   String get m54PrepCreditClaim;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt photos'**
+  String get m54ReceiptPhotos;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Take receipt photo'**
+  String get m54ReceiptPhotoTake;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Open camera preview'**
+  String get m54ReceiptPhotoStart;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Check that the text and numbers are legible. Capture multiple pages for a long receipt.'**
+  String get m54ReceiptPhotoCaptureHelp;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get m54ReceiptPhotoPage;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt photo preview'**
+  String get m54ReceiptPhotoPreview;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no photos for this receipt.'**
+  String get m54ReceiptPhotoEmpty;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake'**
+  String get m54ReceiptPhotoRetake;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Rotate 90 degrees'**
+  String get m54ReceiptPhotoRotate;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this photo page from the receiving draft?'**
+  String get m54ReceiptPhotoDeleteHelp;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'A receipt can have up to eight photos.'**
+  String get m54ReceiptPhotoLimit;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'The photo is invalid or too large. Retake it or capture multiple pages.'**
+  String get m54ReceiptPhotoInvalid;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera could not capture a photo. Try reopening the preview.'**
+  String get m54ReceiptPhotoUnavailable;
+
+  /// Private supplier receipt photo capture, draft editing, or restore validation.
+  ///
+  /// In en, this message translates to:
+  /// **'The backup contains an invalid or detached receipt photo.'**
+  String get backupReceiptPhotoInvalid;
 }
 
 class _AppLocalizationsDelegate

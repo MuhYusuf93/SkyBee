@@ -5622,4 +5622,51 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get m54PrepCreditClaim => 'Klaim kredit supplier tertunda';
+
+  @override
+  String get m54ReceiptPhotos => 'Foto nota';
+
+  @override
+  String get m54ReceiptPhotoTake => 'Ambil foto nota';
+
+  @override
+  String get m54ReceiptPhotoStart => 'Buka pratinjau kamera';
+
+  @override
+  String get m54ReceiptPhotoCaptureHelp =>
+      'Pastikan tulisan dan angka terbaca. Untuk nota panjang, ambil beberapa halaman.';
+
+  @override
+  String get m54ReceiptPhotoPage => 'Halaman';
+
+  @override
+  String get m54ReceiptPhotoPreview => 'Pratinjau foto nota';
+
+  @override
+  String get m54ReceiptPhotoEmpty => 'Belum ada foto pada penerimaan ini.';
+
+  @override
+  String get m54ReceiptPhotoRetake => 'Ambil ulang';
+
+  @override
+  String get m54ReceiptPhotoRotate => 'Putar 90 derajat';
+
+  @override
+  String get m54ReceiptPhotoDeleteHelp =>
+      'Hapus halaman foto ini dari draft penerimaan?';
+
+  @override
+  String get m54ReceiptPhotoLimit => 'Maksimum delapan foto per penerimaan.';
+
+  @override
+  String get m54ReceiptPhotoInvalid =>
+      'Foto tidak valid atau terlalu besar. Ambil ulang atau bagi menjadi beberapa halaman.';
+
+  @override
+  String get m54ReceiptPhotoUnavailable =>
+      'Kamera belum dapat mengambil foto. Coba buka kembali pratinjau.';
+
+  @override
+  String get backupReceiptPhotoInvalid =>
+      'Cadangan memuat foto nota rusak atau tidak sesuai dengan penerimaannya.';
 }

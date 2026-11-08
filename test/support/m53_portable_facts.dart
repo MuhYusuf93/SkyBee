@@ -23,6 +23,7 @@ import 'package:kasir_app/features/printer/application/print_queue_service.dart'
 import 'package:kasir_app/features/printer/application/receipt_policy_service.dart';
 import 'package:kasir_app/features/management/application/strong_biometrics.dart';
 import 'm53_qr_label_queue_suite.dart' show LabelTransport;
+import 'm54_receipt_photo_fixture.dart';
 
 /// A–F facts use actual domain writers. Notifications, printer transport and
 /// paper acknowledgement are synthetic; no external contact or device output.
@@ -305,13 +306,20 @@ final class PortableFactsFixture {
       incoming.revision,
       '000000001234',
     );
-    await app.inventory.updateReceiptDraftLine(
+    incoming = await app.inventory.updateReceiptDraftLine(
       incoming.id,
       incoming.revision,
       incoming.lines.single.id,
       input: StockInput(2),
       cost: cost(200),
     );
+    if (app.database.schemaVersion >= 49) {
+      await app.inventory.saveReceiptPhoto(
+        incoming.id,
+        incoming.revision,
+        publicReceiptPhoto(),
+      );
+    }
     await app.receiptPolicy.savePolicy(
       true,
       (await app.receiptPolicy.policy()).revision,

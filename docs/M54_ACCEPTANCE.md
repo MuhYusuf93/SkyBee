@@ -11,7 +11,7 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 3 | Retur sale/garansi/karantina/refund | 5→1→4, debt-first, race/reversal | Host lulus untuk retur parsial, refund tunai/eksternal, garansi, lookup tanggal, serta penyerahan unit karantina ke supplier. Cetak fisik dan native terbuka. |
 | 4 | Grafik+tabel laba kotor | bucket/timezone/unknown/export | Pending |
 | 5 | QRIS statis konfirmasi manual/split | amount invalidation/cash-only drawer | Host lulus untuk penyimpanan gambar, split, invalidasi nominal, dan laci khusus tunai. Uji perangkat terbuka. |
-| 6 | Foto nota terenkripsi | EXIF/AEAD/orphan/portable restore | Pending |
+| 6 | Foto nota terenkripsi | EXIF/AEAD/orphan/portable restore | Host lulus untuk validasi JPEG, rollback, kontrol akses dan fixture backup berfoto. APK terverifikasi. Kamera fisik dan restore native terbuka. |
 | 7 | Recovery24kata/PDF1halaman/QR | vektor BIP39/legacy/render/decode | Codec/UI/copy dan HKDF host PASS; PDF/share/scan khusus belum |
 | 8 | Field invalid pertama | form nyata ID/EN320px/text2 | Host UI2 dan native Poco/DV PASS |
 | 9 | Histori penerimaan tanggal+jam/biaya | unit/currency/pagination/unknown | Pending |

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.Bitmap
 import android.graphics.Rect
 import android.graphics.drawable.GradientDrawable
 import android.hardware.Camera
@@ -29,15 +30,20 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.BarcodeView
 import com.journeyapps.barcodescanner.CameraPreview
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
+import com.journeyapps.barcodescanner.SourceData
+import com.journeyapps.barcodescanner.camera.FitCenterStrategy
+import com.journeyapps.barcodescanner.camera.PreviewCallback
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import java.io.ByteArrayOutputStream
+import java.util.concurrent.Executors
 import kotlin.math.roundToInt
 
-/** One foreground camera owner, no images/files/network. Lifecycle pause never
+/** One foreground camera owner. Receipt photos are encoded in memory. Lifecycle pause never
  * automatically resumes decoding: the Dart scope must explicitly re-authorize.
  * The bundled decoder is pure Java; it introduces no camera-native ABI dependency.
  */
@@ -80,6 +86,7 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
     private val messenger = engine.dartExecutor.binaryMessenger
     private val channel = MethodChannel(messenger, "kasir_app/barcode_camera")
     private val views = mutableMapOf<Int, CameraView>()
+    private val photoWorker = Executors.newSingleThreadExecutor()
     private var active: CameraView? = null
     private var pendingPermission: MethodChannel.Result? = null
     private val permissionTimeout = Handler(Looper.getMainLooper())
@@ -106,7 +113,8 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
         engine.platformViewsController.registry.registerViewFactory("kasir_app/barcode_camera",
             object : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
                 override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-                    return CameraView(context, viewId).also { views[viewId] = it }
+                    val receiptPhoto = (args as? Map<*, *>)?.get("receiptPhoto") == true
+                    return CameraView(context, viewId, receiptPhoto).also { views[viewId] = it }
                 }
             })
         channel.setMethodCallHandler { call, result ->
@@ -194,13 +202,14 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
         disposed = true
         views.values.toList().forEach { it.dispose() }
         views.clear()
+        photoWorker.shutdownNow()
         pendingPermission?.error("CLOSED", null, null)
         pendingPermission = null
         permissionTimeout.removeCallbacksAndMessages(null)
         channel.setMethodCallHandler(null)
     }
 
-    private inner class CameraView(context: Context, private val id: Int) : PlatformView {
+    private inner class CameraView(context: Context, private val id: Int, private val receiptPhoto: Boolean) : PlatformView {
         private val barcode = BarcodeView(context)
         private val preview = FrameLayout(context)
         private val ring = View(context)
@@ -209,11 +218,14 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
         private val calls = MethodChannel(messenger, "kasir_app/barcode_camera/$id")
         private var closed = false
         private var armed = false
+        private var photoResult: MethodChannel.Result? = null
+        private val photoTimeout = Runnable { finishPhoto(null) }
         @Volatile
         private var generation = 0
 
         init {
             barcode.setUseTextureView(true)
+            if (receiptPhoto) barcode.previewScalingStrategy = FitCenterStrategy()
             preview.addView(barcode, FrameLayout.LayoutParams(-1, -1))
             ring.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
             ring.background = GradientDrawable().apply {
@@ -236,6 +248,7 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
                     "arm" -> {
                         val token = call.argument<Int>("token")
                         if (closed || disposed) result.error("CLOSED", null, null)
+                        else if (receiptPhoto) result.error("INVALID_ARM", null, null)
                         else if (token == null || token <= 0) result.error("INVALID_ARM", null, null)
                         else if (!permitted()) result.error("PERMISSION", null, null)
                         else if (cameras() == 0) result.error("NO_CAMERA", null, null)
@@ -264,10 +277,71 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
                             result.success(null)
                         } catch (_: Exception) { pause(); result.error("CAMERA_ERROR", null, null) }
                     }
+                    "armPhoto" -> {
+                        if (!receiptPhoto || closed || disposed || !permitted() || cameras() == 0) {
+                            result.error("PHOTO_UNAVAILABLE", null, null)
+                        } else try {
+                            if (active !== this) active?.pause()
+                            active = this
+                            generation++
+                            armed = true
+                            barcode.resume()
+                            result.success(null)
+                        } catch (_: Exception) {
+                            pause()
+                            result.error("PHOTO_UNAVAILABLE", null, null)
+                        }
+                    }
+                    "capturePhoto" -> capturePhoto(result)
                     "pause" -> { pause(); result.success(null) }
                     else -> result.notImplemented()
                 }
             }
+        }
+
+        /** Capture the uncropped, oriented preview frame through the current
+         * owner. JPEG encoding cannot block the camera or platform thread. */
+        private fun capturePhoto(result: MethodChannel.Result) {
+            val camera = barcode.cameraInstance
+            if (!receiptPhoto || closed || !armed || active !== this ||
+                !barcode.isPreviewActive || camera == null || photoResult != null) {
+                result.error("PHOTO_UNAVAILABLE", null, null)
+                return
+            }
+            photoResult = result
+            val epoch = generation
+            preview.postDelayed(photoTimeout, 7000)
+            try {
+                camera.requestPreview(object : PreviewCallback {
+                    override fun onPreview(frame: SourceData) {
+                        try {
+                            photoWorker.execute {
+                                val bytes = try { encodeReceiptPhoto(frame) } catch (_: Exception) { null }
+                                preview.post {
+                                    if (photoResult === result && generation == epoch) finishPhoto(bytes)
+                                }
+                            }
+                        } catch (_: Exception) {
+                            onPreviewError(IllegalStateException())
+                        }
+                    }
+
+                    override fun onPreviewError(error: Exception) {
+                        preview.post {
+                            if (photoResult === result && generation == epoch) finishPhoto(null)
+                        }
+                    }
+                })
+            } catch (_: Exception) {
+                finishPhoto(null)
+            }
+        }
+
+        private fun finishPhoto(bytes: ByteArray?) {
+            preview.removeCallbacks(photoTimeout)
+            val result = photoResult ?: return
+            photoResult = null
+            if (bytes == null) result.error("PHOTO_UNAVAILABLE", null, null) else result.success(bytes)
         }
 
         private fun listenForFocus(context: Context) {
@@ -331,6 +405,7 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
         fun pause() {
             armed = false
             generation++
+            finishPhoto(null)
             ring.removeCallbacks(hideRing)
             hideRing.run()
             barcode.pause()
@@ -344,5 +419,57 @@ internal class BarcodeCameraPlugin(private val activity: FlutterFragmentActivity
             calls.setMethodCallHandler(null)
             views.remove(id)
         }
+    }
+
+    private fun encodeReceiptPhoto(frame: SourceData): ByteArray {
+        val pixels = frame.dataWidth.toLong() * frame.dataHeight
+        require(pixels in 4096L..8_300_000L)
+        val original = frame.getBitmap(null, if (pixels > 6_000_000) 2 else 1)
+        try {
+            val scale = minOf(1.0, 1280.0 / original.width, 2560.0 / original.height)
+            val width = (original.width * scale).roundToInt()
+            val height = (original.height * scale).roundToInt()
+            require(width >= 64 && height >= 64)
+            val sized = if (scale < 1.0) Bitmap.createScaledBitmap(original, width, height, true) else original
+            try {
+                for (quality in listOf(74, 68)) {
+                    val out = ByteArrayOutputStream()
+                    require(sized.compress(Bitmap.CompressFormat.JPEG, quality, out))
+                    val bytes = stripReceiptPhotoMetadata(out.toByteArray())
+                    if (bytes.size <= 768 * 1024) return bytes
+                }
+                throw IllegalArgumentException()
+            } finally {
+                if (sized !== original) sized.recycle()
+            }
+        } finally {
+            original.recycle()
+        }
+    }
+
+    /** Preserve image coding segments and skip optional application metadata
+     * from the encoder. Camera sensor data is never written to a temporary file. */
+    private fun stripReceiptPhotoMetadata(bytes: ByteArray): ByteArray {
+        val output = ByteArrayOutputStream(bytes.size)
+        output.write(bytes, 0, 2)
+        var start = 2
+        while (start + 4 < bytes.size) {
+            require((bytes[start].toInt() and 255) == 255)
+            var index = start + 1
+            while (index < bytes.size && (bytes[index].toInt() and 255) == 255) index++
+            require(index + 2 < bytes.size)
+            val marker = bytes[index++].toInt() and 255
+            val length = ((bytes[index].toInt() and 255) shl 8) or (bytes[index + 1].toInt() and 255)
+            require(length >= 2 && index + length < bytes.size)
+            if (marker == 0xda) {
+                output.write(bytes, start, bytes.size - start)
+                return output.toByteArray()
+            }
+            if (marker != 0xfe && (marker !in 0xe1..0xef || marker == 0xee)) {
+                output.write(bytes, start, index + length - start)
+            }
+            start = index + length
+        }
+        throw IllegalArgumentException()
     }
 }

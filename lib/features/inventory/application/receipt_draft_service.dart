@@ -381,6 +381,13 @@ extension ReceiptDocuments on InventoryService {
           revision,
           checkCurrency: false,
         );
+        if (database.schemaVersion >= 49) {
+          await db.delete(
+            'receipt_photos',
+            where: 'draft_id=?',
+            whereArgs: [id.value],
+          );
+        }
         await _bumpReceiptOn(db, doc, {'status': 'cancelled'});
       });
 

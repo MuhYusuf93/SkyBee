@@ -40,8 +40,10 @@ gudang yang terikat pada konfirmasi penerimaan. Regresi dan tes ulang meliputi
 dan nilai stok tunggal, diuji dalam 23 kasus host. Skema 47 mereservasi
 batch berbasis nota dan membatasi checkout pada stok bebas. Skema 48
 menambah karantina lintas supplier dan penyerahan parsial dengan 28 kasus
-host lulus. Persetujuan klaim tanpa nota, lampiran, sisa tahap 4, tahap 5,
-acceptance dan handoff masih terbuka.
+host lulus. Skema 49 menyimpan halaman foto nota di SQLCipher dan
+memvalidasi lampiran pada fixture backup host. Uji kamera fisik dan restore
+native, persetujuan klaim tanpa nota, sisa tahap 4, tahap 5, acceptance dan
+handoff masih terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

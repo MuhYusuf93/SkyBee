@@ -12,6 +12,7 @@ import '../../barcode/presentation/barcode_scanner_screen.dart';
 import '../../management/domain/management_role.dart';
 import '../../management/presentation/management_gate.dart';
 import '../../management/presentation/managed_text_field.dart';
+import '../../management/presentation/management_session_provider.dart';
 import '../../management/presentation/protected_dialog.dart';
 import '../../settings/presentation/language_button.dart';
 import '../application/inventory_service.dart';
@@ -20,6 +21,7 @@ import '../domain/receipt_draft.dart';
 import 'product_form.dart';
 import 'receipt_line_editor.dart';
 import 'receipt_product_picker.dart';
+import 'receipt_photo_screen.dart';
 import 'relation_field.dart';
 import '../../suppliers/presentation/supplier_billing_screen.dart';
 import '../../suppliers/presentation/supplier_invoice_screen.dart';
@@ -570,6 +572,17 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
     if (mounted && doc?.status == 'posted') code.clear();
   }
 
+  Future<void> photos() async {
+    if (working || doc == null) return;
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (_) =>
+            ReceiptPhotoScreen(id: widget.id, posted: doc!.status == 'posted'),
+      ),
+    );
+    if (mounted) await load();
+  }
+
   Future<void> reverse() async {
     if (busy || doc == null || doc!.reversed) return;
     if (reason.text.trim().isEmpty) {
@@ -673,6 +686,20 @@ class _ReceiptDraftScreenState extends State<ReceiptDraftScreen>
                 if (doc?.status == 'cancelled')
                   Text(tr(context, 'm53ReceiptDraftCancelled')),
                 if (error != null) Text(tr(context, error!)),
+                if (context.read<AppServices>().database.schemaVersion >= 49 &&
+                    (doc?.status == 'draft' ||
+                        doc?.status == 'posted' &&
+                            context
+                                    .watch<ManagementSessionProvider>()
+                                    .service
+                                    .role ==
+                                ManagementRole.owner))
+                  OutlinedButton.icon(
+                    key: const ValueKey('receipt-document-photos'),
+                    onPressed: working ? null : photos,
+                    icon: const Icon(Icons.photo_camera_outlined),
+                    label: Text(tr(context, 'm54ReceiptPhotos')),
+                  ),
                 if (doc?.status == 'draft') ...[
                   if (billingCosts)
                     Text(tr(context, 'm53SupplierBillingCostsHelp')),

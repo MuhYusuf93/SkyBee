@@ -6695,5 +6695,61 @@
   "m54PrepCreditClaim": "Pending supplier credit claim",
   "@m54PrepCreditClaim": {
     "description": "Supplier return preparation, physical availability, or handover label."
+  },
+  "m54ReceiptPhotos": "Receipt photos",
+  "@m54ReceiptPhotos": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoTake": "Take receipt photo",
+  "@m54ReceiptPhotoTake": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoStart": "Open camera preview",
+  "@m54ReceiptPhotoStart": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoCaptureHelp": "Check that the text and numbers are legible. Capture multiple pages for a long receipt.",
+  "@m54ReceiptPhotoCaptureHelp": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoPage": "Page",
+  "@m54ReceiptPhotoPage": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoPreview": "Receipt photo preview",
+  "@m54ReceiptPhotoPreview": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoEmpty": "There are no photos for this receipt.",
+  "@m54ReceiptPhotoEmpty": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoRetake": "Retake",
+  "@m54ReceiptPhotoRetake": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoRotate": "Rotate 90 degrees",
+  "@m54ReceiptPhotoRotate": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoDeleteHelp": "Remove this photo page from the receiving draft?",
+  "@m54ReceiptPhotoDeleteHelp": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoLimit": "A receipt can have up to eight photos.",
+  "@m54ReceiptPhotoLimit": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoInvalid": "The photo is invalid or too large. Retake it or capture multiple pages.",
+  "@m54ReceiptPhotoInvalid": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54ReceiptPhotoUnavailable": "The camera could not capture a photo. Try reopening the preview.",
+  "@m54ReceiptPhotoUnavailable": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "backupReceiptPhotoInvalid": "The backup contains an invalid or detached receipt photo.",
+  "@backupReceiptPhotoInvalid": {
+    "description": "Private supplier receipt photo capture, draft editing, or restore validation."
   }
 }

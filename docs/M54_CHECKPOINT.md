@@ -233,3 +233,21 @@ terbangun pada daftar lazy. Tes akhir menggulir dan memeriksa data aktual.
 Analyzer bersih, lokalisasi 1660/1031/245. APK debug biasa tiga ABI dan
 alignment 16 KiB lulus verifikasi tanpa instalasi. Kamera fisik, acceptance
 dan handoff terbuka. Pekerjaan berikutnya foto nota dan sisa tahap 4.
+
+## Tahap 4 · foto nota supplier · skema 49
+
+Gudang mengelola halaman draft dalam revisi penerimaan yang sama. Pembatalan
+menghapus halaman draft secara atomik. Setelah posting, pemilik dapat membaca
+halaman yang sudah final. SQLCipher menyimpan JPEG langsung di database.
+Kamera memakai seluruh frame preview berorientasi dari jalur kamera privat,
+dengan maksimal 8 halaman dan 768 KiB per halaman. Rotasi tersimpan sebagai
+metadata, dan validasi backup memeriksa format, dimensi, ukuran dan hash per
+halaman. Fixture portabel kini memiliki satu halaman foto.
+
+Dua tes foto dan dua tes fixture portabel lulus pada run ulang 45 detik.
+Run regresi terkait meluluskan 16 kasus sebelum dua kegagalan kompilasi pada
+fixture portabel. Referensi skema fixture diperbaiki sebelum run ulang.
+Analyzer bersih, formatter tanpa perubahan, audit lokalisasi 1674/1044/245
+dan audit PIN 106 cocok. APK biasa 0.5.4+14 terverifikasi untuk tiga ABI dan
+alignment 16 KiB. APK belum dipasang. Keterbacaan kamera fisik dan restore
+native berfoto tetap terbuka untuk acceptance.

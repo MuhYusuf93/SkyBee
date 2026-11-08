@@ -61,6 +61,7 @@ void main() {
             'cash_drawer_closures',
             'receipt_drafts',
             'receipt_draft_lines',
+            'receipt_photos',
             'stocktake_drafts',
             'supplier_invoices',
             'supplier_payments',

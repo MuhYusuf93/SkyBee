@@ -5599,4 +5599,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get m54PrepCreditClaim => 'Pending supplier credit claim';
+
+  @override
+  String get m54ReceiptPhotos => 'Receipt photos';
+
+  @override
+  String get m54ReceiptPhotoTake => 'Take receipt photo';
+
+  @override
+  String get m54ReceiptPhotoStart => 'Open camera preview';
+
+  @override
+  String get m54ReceiptPhotoCaptureHelp =>
+      'Check that the text and numbers are legible. Capture multiple pages for a long receipt.';
+
+  @override
+  String get m54ReceiptPhotoPage => 'Page';
+
+  @override
+  String get m54ReceiptPhotoPreview => 'Receipt photo preview';
+
+  @override
+  String get m54ReceiptPhotoEmpty => 'There are no photos for this receipt.';
+
+  @override
+  String get m54ReceiptPhotoRetake => 'Retake';
+
+  @override
+  String get m54ReceiptPhotoRotate => 'Rotate 90 degrees';
+
+  @override
+  String get m54ReceiptPhotoDeleteHelp =>
+      'Remove this photo page from the receiving draft?';
+
+  @override
+  String get m54ReceiptPhotoLimit => 'A receipt can have up to eight photos.';
+
+  @override
+  String get m54ReceiptPhotoInvalid =>
+      'The photo is invalid or too large. Retake it or capture multiple pages.';
+
+  @override
+  String get m54ReceiptPhotoUnavailable =>
+      'The camera could not capture a photo. Try reopening the preview.';
+
+  @override
+  String get backupReceiptPhotoInvalid =>
+      'The backup contains an invalid or detached receipt photo.';
 }
