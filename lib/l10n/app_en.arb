@@ -6751,5 +6751,77 @@
   "backupReceiptPhotoInvalid": "The backup contains an invalid or detached receipt photo.",
   "@backupReceiptPhotoInvalid": {
     "description": "Private supplier receipt photo capture, draft editing, or restore validation."
+  },
+  "m54PurchaseHistory": "Purchase history",
+  "@m54PurchaseHistory": {
+    "description": "M54 purchase history: Purchase history"
+  },
+  "m54PurchaseNotRecorded": "Not recorded",
+  "@m54PurchaseNotRecorded": {
+    "description": "M54 purchase history: Not recorded"
+  },
+  "m54PurchaseInputCost": "Purchase price {cost} / {unit}",
+  "@m54PurchaseInputCost": {
+    "description": "M54 purchase history: Purchase price {cost} / {unit}",
+    "placeholders": {
+      "cost": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "m54PurchaseSupplier": "Supplier {name}",
+  "@m54PurchaseSupplier": {
+    "description": "M54 purchase history: Supplier {name}",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "m54PurchaseReversed": "Receipt reversed",
+  "@m54PurchaseReversed": {
+    "description": "M54 purchase history: Receipt reversed"
+  },
+  "m54PurchaseTotal": "Total {cost}",
+  "@m54PurchaseTotal": {
+    "description": "M54 purchase history: Total {cost}",
+    "placeholders": {
+      "cost": {
+        "type": "String"
+      }
+    }
+  },
+  "m54PurchaseBatch": "Batch {value}",
+  "@m54PurchaseBatch": {
+    "description": "M54 purchase history: Batch {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "m54PurchaseExpiry": "Expiry {value}",
+  "@m54PurchaseExpiry": {
+    "description": "M54 purchase history: Expiry {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "m54PurchaseCostHigher": "Cost per piece increased",
+  "@m54PurchaseCostHigher": {
+    "description": "M54 purchase history: Cost per piece increased"
+  },
+  "m54PurchaseCostLower": "Cost per piece decreased",
+  "@m54PurchaseCostLower": {
+    "description": "M54 purchase history: Cost per piece decreased"
+  },
+  "m54PurchaseCostUnchanged": "Cost per piece unchanged",
+  "@m54PurchaseCostUnchanged": {
+    "description": "M54 purchase history: Cost per piece unchanged"
   }
 }

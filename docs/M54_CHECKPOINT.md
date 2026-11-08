@@ -251,3 +251,25 @@ Analyzer bersih, formatter tanpa perubahan, audit lokalisasi 1674/1044/245
 dan audit PIN 106 cocok. APK biasa 0.5.4+14 terverifikasi untuk tiga ABI dan
 alignment 16 KiB. APK belum dipasang. Keterbacaan kamera fisik dan restore
 native berfoto tetap terbuka untuk acceptance.
+
+## Tahap 4 · histori pembelian dan regresi opname · skema 50
+
+Detail produk membuka histori pembelian terpisah. Sumber tanggal dan jam
+adalah header nota dalam zona toko. Baris menampilkan jumlah dan satuan
+input, konversi pcs, harga per unit input, supplier, serta detail total dan
+batch/kedaluwarsa. Stok awal, opname dan perubahan tracking bukan pembanding
+pembelian. Tren membandingkan total dibagi pcs secara eksak dengan penerimaan
+berbiaya diketahui sebelumnya dalam currency yang sama. Dokumen reversal
+tetap terlihat. Indeks turunan ditambahkan tanpa mengubah fakta lama, dan
+backup memeriksa indeks tersebut terhadap nota. ID baris memecahkan timestamp
+yang sama secara deterministik.
+
+Sebanyak 24 kasus host unik lulus melalui regresi dan tes ulang. Run awal
+meluluskan 23 dan satu fixture backup mencapai timeout 30 detik. Kedua mode
+fixture backup kemudian lulus dalam 38 detik pada run terpisah dengan batas
+dua menit per tes. Tes mencakup migrasi 49 ke 50 serta regresi opname service
+dan widget, termasuk 0 eksplisit, input manual, scan simulasi dan batch.
+Audit lokalisasi 1685/1046/245 lulus. APK biasa 0.5.4+14 lulus verifikasi
+tiga ABI dan alignment 16 KiB tanpa dipasang. Scanner fisik dan acceptance
+native tetap terbuka.
+Analyzer lulus tanpa masalah dalam 126,7 detik.

@@ -14,12 +14,12 @@ input OS/hardware, Drive nyata dan handoff dicatat terpisah.
 | 6 | Foto nota terenkripsi | EXIF/AEAD/orphan/portable restore | Host lulus untuk validasi JPEG, rollback, kontrol akses dan fixture backup berfoto. APK terverifikasi. Kamera fisik dan restore native terbuka. |
 | 7 | Recovery24kata/PDF1halaman/QR | vektor BIP39/legacy/render/decode | Codec/UI/copy dan HKDF host PASS; PDF/share/scan khusus belum |
 | 8 | Field invalid pertama | form nyata ID/EN320px/text2 | Host UI2 dan native Poco/DV PASS |
-| 9 | Histori penerimaan tanggal+jam/biaya | unit/currency/pagination/unknown | Pending |
+| 9 | Histori penerimaan tanggal+jam/biaya | unit/currency/pagination/unknown | Host lulus migrasi, snapshot dus ke pcs, pemasok, expiry, reversal, biaya kosong dan seek pada timestamp sama. UI dikompilasi. |
 | 10 | Rak sah atau error eksplisit | add/edit/draft/repository | Host UI/repository PASS; add/edit navigasi lengkap pending |
 | 11 | Biaya dan grosir < retail | equality/greater/unknown/pack precision | Host 4 currency dan repository, termasuk biaya referensi sama dengan harga jual; native fondasi Poco/DV; jalur edit referensi native pending |
 | 12 | Member nama+HP | normalized phone/nama sama | Pending |
 | 13 | Pilihan Code128/QR label | dots/quiet zone/58/80/profil | Pending |
-| 14 | Opname manual+scan | replacement/add/NULL0/conflict/batch | Pending |
+| 14 | Opname manual+scan | replacement/add/NULL0/conflict/batch | Regresi service dan widget host lulus untuk manual, barcode simulasi, 0 eksplisit, Undo, konflik dan pemilihan batch. Scanner fisik terbuka. |
 | 15 | Tombol pecahan kembalian | plus/minus/undo/currency/commit | Host lulus pada editor pecahan ID/EN dan pecahan EUR. Native terbuka. |
 | 16 | Potongan pembulatan tunai | 86750→86500/split/debt/return | Host lulus untuk alokasi potongan, QRIS Rp50.000, kas bersih Rp36.500, piutang dan retur. Native terbuka. |
 | 17 | Riwayat member | sale/return/payment/date/seek | Pending |

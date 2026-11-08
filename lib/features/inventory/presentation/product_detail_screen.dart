@@ -23,6 +23,7 @@ import 'product_form.dart';
 import 'valuation_reconciliation_screen.dart';
 import 'stock_tracking_screen.dart';
 import 'inventory_history_screen.dart';
+import 'purchase_history_screen.dart';
 import 'receipt_line_editor.dart';
 import '../../labels/presentation/product_label_screen.dart';
 
@@ -536,6 +537,16 @@ class _DetailBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Text(tr(context, 'stockByReceipt')),
+                OutlinedButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) =>
+                          PurchaseHistoryScreen(productId: state.id),
+                    ),
+                  ),
+                  child: Text(tr(context, 'm54PurchaseHistory')),
+                ),
                 OutlinedButton(
                   onPressed: () => Navigator.push(
                     context,

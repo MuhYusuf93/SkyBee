@@ -27,6 +27,7 @@ import '../domain/stock_input.dart';
 import '../domain/product_entry_rules.dart';
 import '../../../core/domain/warranty_term.dart';
 import '../domain/change_record.dart';
+import '../domain/purchase_history.dart';
 import '../../settings/application/settings_service.dart';
 import '../../settings/domain/store_feature_policy.dart';
 import '../domain/receipt_draft.dart';
@@ -37,6 +38,7 @@ import '../../suppliers/domain/supplier_return_preparation.dart';
 
 part 'receipt_draft_service.dart';
 part 'receipt_photo_service.dart';
+part 'purchase_history_service.dart';
 part 'stocktake_service.dart';
 part 'stocktake_posting.dart';
 part 'supplier_returns.dart';

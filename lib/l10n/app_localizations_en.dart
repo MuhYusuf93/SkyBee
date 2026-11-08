@@ -5646,4 +5646,47 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get backupReceiptPhotoInvalid =>
       'The backup contains an invalid or detached receipt photo.';
+
+  @override
+  String get m54PurchaseHistory => 'Purchase history';
+
+  @override
+  String get m54PurchaseNotRecorded => 'Not recorded';
+
+  @override
+  String m54PurchaseInputCost(String cost, String unit) {
+    return 'Purchase price $cost / $unit';
+  }
+
+  @override
+  String m54PurchaseSupplier(String name) {
+    return 'Supplier $name';
+  }
+
+  @override
+  String get m54PurchaseReversed => 'Receipt reversed';
+
+  @override
+  String m54PurchaseTotal(String cost) {
+    return 'Total $cost';
+  }
+
+  @override
+  String m54PurchaseBatch(String value) {
+    return 'Batch $value';
+  }
+
+  @override
+  String m54PurchaseExpiry(String value) {
+    return 'Expiry $value';
+  }
+
+  @override
+  String get m54PurchaseCostHigher => 'Cost per piece increased';
+
+  @override
+  String get m54PurchaseCostLower => 'Cost per piece decreased';
+
+  @override
+  String get m54PurchaseCostUnchanged => 'Cost per piece unchanged';
 }

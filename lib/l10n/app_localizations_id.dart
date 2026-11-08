@@ -5669,4 +5669,47 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get backupReceiptPhotoInvalid =>
       'Cadangan memuat foto nota rusak atau tidak sesuai dengan penerimaannya.';
+
+  @override
+  String get m54PurchaseHistory => 'Histori pembelian';
+
+  @override
+  String get m54PurchaseNotRecorded => 'Tidak dicatat';
+
+  @override
+  String m54PurchaseInputCost(String cost, String unit) {
+    return 'Harga beli $cost / $unit';
+  }
+
+  @override
+  String m54PurchaseSupplier(String name) {
+    return 'Supplier $name';
+  }
+
+  @override
+  String get m54PurchaseReversed => 'Penerimaan telah dibalik';
+
+  @override
+  String m54PurchaseTotal(String cost) {
+    return 'Total $cost';
+  }
+
+  @override
+  String m54PurchaseBatch(String value) {
+    return 'Batch $value';
+  }
+
+  @override
+  String m54PurchaseExpiry(String value) {
+    return 'Kedaluwarsa $value';
+  }
+
+  @override
+  String get m54PurchaseCostHigher => 'Biaya per pcs naik';
+
+  @override
+  String get m54PurchaseCostLower => 'Biaya per pcs turun';
+
+  @override
+  String get m54PurchaseCostUnchanged => 'Biaya per pcs tetap';
 }

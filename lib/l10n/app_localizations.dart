@@ -10141,6 +10141,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The backup contains an invalid or detached receipt photo.'**
   String get backupReceiptPhotoInvalid;
+
+  /// M54 purchase history: Purchase history
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase history'**
+  String get m54PurchaseHistory;
+
+  /// M54 purchase history: Not recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Not recorded'**
+  String get m54PurchaseNotRecorded;
+
+  /// M54 purchase history: Purchase price {cost} / {unit}
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase price {cost} / {unit}'**
+  String m54PurchaseInputCost(String cost, String unit);
+
+  /// M54 purchase history: Supplier {name}
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier {name}'**
+  String m54PurchaseSupplier(String name);
+
+  /// M54 purchase history: Receipt reversed
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt reversed'**
+  String get m54PurchaseReversed;
+
+  /// M54 purchase history: Total {cost}
+  ///
+  /// In en, this message translates to:
+  /// **'Total {cost}'**
+  String m54PurchaseTotal(String cost);
+
+  /// M54 purchase history: Batch {value}
+  ///
+  /// In en, this message translates to:
+  /// **'Batch {value}'**
+  String m54PurchaseBatch(String value);
+
+  /// M54 purchase history: Expiry {value}
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry {value}'**
+  String m54PurchaseExpiry(String value);
+
+  /// M54 purchase history: Cost per piece increased
+  ///
+  /// In en, this message translates to:
+  /// **'Cost per piece increased'**
+  String get m54PurchaseCostHigher;
+
+  /// M54 purchase history: Cost per piece decreased
+  ///
+  /// In en, this message translates to:
+  /// **'Cost per piece decreased'**
+  String get m54PurchaseCostLower;
+
+  /// M54 purchase history: Cost per piece unchanged
+  ///
+  /// In en, this message translates to:
+  /// **'Cost per piece unchanged'**
+  String get m54PurchaseCostUnchanged;
 }
 
 class _AppLocalizationsDelegate

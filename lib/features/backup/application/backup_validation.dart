@@ -76,6 +76,14 @@ final class BackupValidation {
     if (schema >= 44) await CheckoutSettlementValidation.validate(db);
     if (schema >= 48) await SupplierReturnPreparationValidation.validate(db);
     if (schema >= 49) await ReceiptPhotoValidation.validate(db);
+    if (schema >= 50 &&
+        (await db.rawQuery('''SELECT 1 FROM stock_receipt_items i
+          JOIN stock_receipts r ON r.id=i.stock_receipt_id
+          LEFT JOIN stock_receipt_item_dates d ON d.item_id=i.id
+          WHERE d.item_id IS NULL OR d.product_id IS NOT i.product_id
+            OR d.received_at IS NOT r.created_at LIMIT 1''')).isNotEmpty) {
+      throw const FormatException('backupReceiptDraftInvalid');
+    }
     if (schema >= 26 &&
         (await db.rawQuery('''SELECT 1 FROM products p
       LEFT JOIN suppliers s ON s.id=p.master_supplier_id
