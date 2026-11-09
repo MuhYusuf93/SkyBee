@@ -62,6 +62,10 @@ retur dan kredit supplier, gate/PIN, routing input, layar sempit ID/EN,
 laporan dan ekspor. Hash berkas terlindungi cocok. `.skybee` 0.5.4+14
 lulus dua cold start ke Kasir dengan paket, penanda seed dan ringkasan
 bisnis terverifikasi. APK Uji Teman dan pemeriksaan fisik tetap terbuka.
+Backup manual Drive 0.5.4+15 lulus regresi snapshot SQLCipher dan verifikasi
+upload simulasi di Poco. Pemeriksaan izin pengelola memakai koneksi snapshot
+yang sudah dikunci dan diulangi sebelum upload. Kebijakan Drive dipertahankan
+saat pembaruan `.skybee`. Bukti upload ulang pada akun nyata masih terbuka.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

@@ -581,3 +581,50 @@ Untuk mulai menguji, buka aplikasi **skybee kasir** di Poco F6 dan
 gunakan PIN yang sudah ada jika diminta. Uji kamera, cetak, HID, dan
 Drive nyata masih terbuka. Realme tidak melaporkan fitur sidik jari.
 APK Uji Teman merupakan bagian handoff terpisah yang masih terbuka.
+
+### Perbaikan backup manual Drive
+
+Pada 9 November 2026 pengguna melaporkan akun Google berhasil terhubung,
+tetapi backup manual menampilkan indikator proses lebih dari lima menit.
+Pemeriksaan ADB baca-saja pada Poco menemukan direktori kerja backup
+kosong dengan cap waktu 22.04.43 WIB. Pada alur snapshot, pemeriksaan
+ulang izin pengelola mengantre pembacaan baru pada koordinator database
+yang sedang dipegang snapshot. Kedua operasi saling menunggu sehingga
+ekspor dan upload belum dimulai.
+
+Perbaikan 0.5.4+15 memakai handle database yang sudah dipegang untuk
+verifikasi pengelola di dalam snapshot. Callback Drive tetap memeriksa
+generasi toko, sesi dan persetujuan. Izin pengelola kembali diverifikasi
+sebelum upload, di luar kunci snapshot. Skema tetap 54. Regresi host
+izin, transport, kegagalan, kelanjutan, dan retensi Drive lulus 30 kasus.
+Dua pemeriksaan metadata versi dan arsip juga lulus. Analyzer bersih.
+Percobaan native pertama ditolak guard sebelum build karena format
+argumen flag fixture keliru. Audit hash cocok dan kontrol ditutup.
+
+Interval native berikutnya mencapai status upload sukses dalam 34 detik.
+Assertion retensi gagal karena server simulasi mengembalikan daftar kosong
+setelah menerima arsip, sehingga retensi ditunda. Hash berkas terlindungi
+cocok. Respons daftar pada fixture diperbaiki untuk menampilkan arsip
+yang sudah dikonfirmasi, tanpa perubahan kode aplikasi tambahan.
+
+Tes ulang Poco lulus dalam 35 detik. Fixture Android mengekspor arsip
+SQLCipher, mencocokkan byte dengan upload simulasi, memverifikasi hash
+dan metadata, mencatat sukses, serta membuktikan bahwa pengulangan
+kunci operasi tidak mengunggah duplikat. Semua hash berkas terlindungi
+yang sudah ada cocok dan kontrol runner ditutup. Bukti lokal ada di
+`build/m54-manual-drive-retest-20261109-222042/`.
+
+Drive menyimpan backup di `appDataFolder` yang tersembunyi dari
+antarmuka Drive. Periksa status upload dan **Versi backup Drive** di
+SkyBee. Keberhasilan koneksi akun yang dilaporkan pengguna tidak
+membuktikan keberhasilan upload akun tersebut.
+
+APK debug ARM64 `.skybee` 0.5.4+15 lulus pemeriksaan paket, sertifikat
+dan alignment 16 KiB, lalu terpasang in-place di Poco. Hash APK terpasang
+`f38cd6348847d55ec01f0a2c5a6eda1854e76a2d03ccfd365fd75356498379e0`
+cocok dengan `build/m54/manual-drive-hotfix/SkyBee-Self-Test-0.5.4+15.apk`.
+Snapshot terenkripsi dan hash dilindungi sebelum peluncuran. Hash kunci,
+kebijakan Drive, dan penanda seed cocok setelah startup ke layar Kasir.
+Status startup mencatat 107 produk, 52 penjualan, dan satu kredensial
+pengelola. Pengguna dapat mengulang **Backup ke Drive sekarang** pada
+akun yang telah terhubung. Upload ulang nyata belum dijalankan dalam audit.

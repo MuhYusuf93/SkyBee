@@ -55,5 +55,10 @@ di Poco dan mencapai Kasir pada dua cold start. Uji fisik, Drive nyata,
 dan APK Uji Teman masih terbuka.
 Rincian interval dan bukti tersedia di [checkpoint](M54_CHECKPOINT.md).
 
+Backup manual Drive 0.5.4+15 memperbaiki penguncian ulang saat membuat
+snapshot. Fixture Poco membuktikan ekspor terenkripsi, verifikasi
+upload simulasi, dan pengulangan tanpa duplikasi. Upload ulang pada
+akun Google pengguna belum terverifikasi.
+
 Bukti dan failure awal: [M54_FOUNDATION_REPORT](M54_FOUNDATION_REPORT.md).
 85kasusunik host melalui runs/retests bukan acceptance seluruh M5.4.

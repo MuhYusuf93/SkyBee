@@ -481,9 +481,11 @@ final class DriveBackupService implements ScheduledDriveBackup {
           workLeaseHeld: true,
           headless: headless,
           checkAuthorization: () async {
+            // Snapshot creation already checks the owner on its leased DB.
+            // This callback also runs inside that lease, so it must not queue
+            // another coordinator read behind the snapshot itself.
             requireOriginalStore();
             await transport.guard(policy, automatic: headless);
-            if (!headless) await access.authorizeCurrent();
             requireOriginalStore();
           },
         );
@@ -500,6 +502,8 @@ final class DriveBackupService implements ScheduledDriveBackup {
         );
         requireOriginalStore();
         await transport.guard(policy, automatic: headless);
+        if (!headless) await access.authorizeCurrent();
+        requireOriginalStore();
         final uploaded = await transport.upload(
           policy,
           archive,

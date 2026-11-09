@@ -1,6 +1,6 @@
 # Handoff aktif — M5.4
 
-9 November 2026 WIB. Versi kerja 0.5.4+14, skema 54. Tahap 5
+9 November 2026 WIB. Versi kerja 0.5.4+15, skema 54. Tahap 5
 mengintegrasikan lembar pemulihan PDF, tren laba kotor dan ekspor, label
 Code 128, serta pemilihan akun Drive. Rincian bukti dan batas uji ada pada
 [checkpoint M5.4](M54_CHECKPOINT.md) dan [matriks acceptance](M54_ACCEPTANCE.md).
@@ -23,6 +23,12 @@ Hash APK dan sertifikat cocok. Dua cold start mencapai Kasir, dengan
 identitas toko dan hitungan 107 produk, 52 penjualan, serta satu
 kredensial pengelola yang cocok dengan baseline. Buka **skybee kasir**
 untuk uji mandiri. APK Uji Teman, uji fisik dan Drive nyata masih terbuka.
+
+Perbaikan backup manual Drive 0.5.4+15 telah menggantikan +14 di Poco.
+Deadlock snapshot diperbaiki dan regresi fixture terenkripsi lulus.
+Kunci, penanda seed, dan kebijakan Drive terverifikasi sesudah startup.
+Upload ulang nyata masih perlu diperiksa melalui **Backup ke Drive sekarang**
+dan **Versi backup Drive** di SkyBee.
 
 <!-- M54_FOUNDATION_START -->
 7 November 2026 WIB — M5.4 masih aktif, source0.5.4+14/schema38.

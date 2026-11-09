@@ -34,6 +34,11 @@ Worker menggunakan API publik plugin resmi untuk otorisasi akun tertentu tanpa U
 
 Transport REST memakai appDataFolder, nama/UUID/properti namespace berbeda antaraordinary dan.integration. Arsip selesai diupload dalam chunk256KiB, range disimpan/resume, ukuran/SHA256/MD5 server diperiksa sebelum complete/retention. Session URL disimpan wrapped di luar DB; token hanya memori/SDK. Tidak mengirim mainfile DB aktif.
 
+Arsip `appDataFolder` tersembunyi dari antarmuka Google Drive. Untuk
+memeriksa hasil backup, pilih **Versi backup Drive** dari pengaturan
+SkyBee dan lihat riwayat backup di perangkat.
+[Dokumentasi folder data aplikasi Google](https://developers.google.com/workspace/drive/api/guides/appdata?hl=id).
+
 Retensi7 hanya complete dari store+origin+namespace yang sama, setelah upload baru diverifikasi. Tidak menyapu backup instalasi lain. Restore dapat memilih versi milik akun/namespace yang sesuai dan tetap memerlukan recovery code serta prosedur safety lokal.
 
 Target21:00 zona toko best effort WorkManager, network constraint, backoff dan catch-up coalesced. Jangan mengklaim exactalarm, pelaksanaan setelahforce-stop, atau waktu yang sama pada semuaOEM. Status attempt/success/error/nexttarget harus dibaca dari catatan aktual. Testing consent dapat membutuhkan otorisasi ulang sekitar7hari.

@@ -62,6 +62,11 @@ Perbaikan hanya pada runner, sehingga regresi aplikasi tambahan di
 DV8910/Poco tidak diperlukan. `.skybee` 0.5.4+14 terpasang in-place
 di Poco dan lulus dua cold start ke Kasir dengan ringkasan bisnis yang
 cocok. APK Uji Teman masih terbuka.
+Perbaikan 0.5.4+15 untuk deadlock backup manual Drive lulus 32 tes host
+dan satu uji native Poco dengan transport simulasi. `.skybee` diperbarui
+in-place dan mencapai Kasir dengan kebijakan Drive serta kunci tetap cocok.
+Koneksi akun Google berhasil menurut pengguna. Upload ulang nyata masih
+perlu diverifikasi dari aplikasi.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->
