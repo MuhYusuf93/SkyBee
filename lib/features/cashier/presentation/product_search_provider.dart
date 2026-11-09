@@ -132,7 +132,10 @@ final class ProductSearchProvider extends ChangeNotifier {
     }
   }
 
-  Future<CashierProduct?> scan(String code) async {
+  Future<CashierProduct?> scan(
+    String code, {
+    bool suggestIfNotFound = false,
+  }) async {
     _timer?.cancel();
     final generation = ++_generation;
     _cursor = null;
@@ -153,6 +156,11 @@ final class ProductSearchProvider extends ChangeNotifier {
       return product;
     } on AppError catch (e) {
       if (!_disposed && generation == _generation) {
+        if (suggestIfNotFound && e.message == 'productNotFound') {
+          // Keyboard Search can be a name token. Only an exact code adds.
+          change(code);
+          return null;
+        }
         error = e.message;
         loading = false;
         notifyListeners();

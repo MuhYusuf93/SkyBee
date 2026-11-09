@@ -133,6 +133,40 @@ void m54ArchiveSuite(DatabaseFactory factory) {
   }
 
   test(
+    'M54 numeric name token matches warehouse and cashier with archive scopes',
+    () async {
+      final book = await app.inventory.create(
+        ProductInput(
+          name: 'CONTOH Buku 066',
+          barcode: '0000000000066',
+          sellingPrice: Money(12000, 'IDR', 0),
+        ),
+        initialQuantity: 0,
+      );
+      final query = WarehouseFilter(namePrefix: '066');
+      expect(
+        (await app.inventory.warehousePage(query, null)).items.single.id,
+        book,
+      );
+      expect((await app.search.suggest('066')).single.id, book);
+      expect((await app.search.scan('0000000000066')).id, book);
+      await app.inventory.archive(
+        book,
+        (await app.inventory.detail(book)).revision,
+      );
+      expect((await app.inventory.warehousePage(query, null)).items, isEmpty);
+      expect(
+        (await app.inventory.warehousePage(
+          query.copyWith(isDeleted: true),
+          null,
+        )).items.single.id,
+        book,
+      );
+      expect(await app.search.suggest('066'), isEmpty);
+    },
+  );
+
+  test(
     'M54 archive all warehouse scopes/search without basket, undo and restart preserve actual status',
     () async {
       expect(await db.read((sql) => sql.query('cart_draft_items')), isEmpty);
@@ -519,7 +553,7 @@ void m54ArchiveSuite(DatabaseFactory factory) {
 
   for (final language in ['id', 'en']) {
     testWidgets(
-      'M54 expired archive Undo keeps rejection visible and archived state $language 320px text2',
+      'M54 archive stock blocker and expired Undo stay visible $language 320px text2',
       (t) async {
         t.testTextInput.register();
         t.view.physicalSize = const Size(320, 900);
@@ -530,6 +564,16 @@ void m54ArchiveSuite(DatabaseFactory factory) {
         addTearDown(t.platformDispatcher.clearTextScaleFactorTestValue);
         try {
           await io(t, () => app.settings.setLanguage(language));
+          await io(
+            t,
+            () => app.inventory.adjust(
+              product,
+              2,
+              operationKey: 'fixture-stock-in',
+              reason: 'Fixture stock in',
+              unitCost: CostAmount.fromMoney(Money(1000, 'IDR', 0)),
+            ),
+          );
           await t.pumpWidget(KasirApp(services: app));
           await drain(
             t,
@@ -556,6 +600,23 @@ void m54ArchiveSuite(DatabaseFactory factory) {
           });
           final c = t.element(find.byType(ProductDetailScreen));
           final archive = find.widgetWithText(OutlinedButton, tr(c, 'archive'));
+          await reveal(t, archive);
+          expectSync(t.widget<OutlinedButton>(archive).onPressed, isNull);
+          expectSync(
+            find.text(tr(c, 'stockRemainsHandleBeforeArchive')),
+            findsOneWidget,
+          );
+          expectSync(detail!.product!.isDeleted, isFalse);
+          await io(t, () async {
+            await app.inventory.adjust(
+              product,
+              0,
+              operationKey: 'fixture-stock-out',
+              reason: 'Fixture stock out',
+            );
+            await detail!.load();
+          });
+          await t.pump();
           await reveal(t, archive);
           await t.tap(archive);
           await t.pump();

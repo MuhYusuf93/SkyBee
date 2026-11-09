@@ -66,6 +66,10 @@ Backup manual Drive 0.5.4+15 lulus regresi snapshot SQLCipher dan verifikasi
 upload simulasi di Poco. Pemeriksaan izin pengelola memakai koneksi snapshot
 yang sudah dikunci dan diulangi sebelum upload. Kebijakan Drive dipertahankan
 saat pembaruan `.skybee`. Bukti upload ulang pada akun nyata masih terbuka.
+Versi 0.5.4+16 menampilkan penolakan arsip di dekat tombol ketika ada stok
+terlacak. Gudang menerima token angka dan Kasir mempertahankan sugesti jika
+Search tidak menemukan kode persis. Lima kasus terarah lulus pada setiap
+perangkat DV8910 dan Poco F6 dengan fixture terisolasi.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

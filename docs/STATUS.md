@@ -67,6 +67,9 @@ dan satu uji native Poco dengan transport simulasi. `.skybee` diperbarui
 in-place dan mencapai Kasir dengan kebijakan Drive serta kunci tetap cocok.
 Koneksi akun Google berhasil menurut pengguna. Upload ulang nyata masih
 perlu diverifikasi dari aplikasi.
+Perbaikan katalog 0.5.4+16 lulus 13 tes host dan lima kasus terarah
+masing-masing di DV8910 dan Poco F6. `.skybee` diperbarui in-place di
+Poco. Stok, kunci, kebijakan Drive dan penanda seed tidak direset.
 M5.5 khusus multi-device.
 [Checkpoint](M54_CHECKPOINT.md), [matriks](M54_ACCEPTANCE.md).
 <!-- M54_FOUNDATION_END -->

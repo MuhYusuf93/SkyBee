@@ -654,7 +654,7 @@ class _SearchPaneState extends State<_SearchPane> {
           onSubmitted: (value) async {
             if (!inputScope.canReceive) return;
             final guard = inputScope.capture();
-            final request = search.scan(value);
+            final request = search.scan(value, suggestIfNotFound: true);
             final version = search.inputVersion;
             final product = await request;
             if (product != null && mounted && _current(guard)) {

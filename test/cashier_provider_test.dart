@@ -28,6 +28,24 @@ CashierProduct sample(int id) => CashierProduct({
   'is_deleted': 0,
 }, 10);
 void main() {
+  test(
+    'keyboard Search falls back to name suggestions without adding',
+    () async {
+      final service = DeferredSearch();
+      final provider = ProductSearchProvider(service, delay: Duration.zero);
+      addTearDown(provider.dispose);
+      provider.change('066');
+      final submitted = provider.scan('066', suggestIfNotFound: true);
+      service.scans.single.completeError(const AppError('productNotFound'));
+      expect(await submitted, isNull);
+      await Future<void>.delayed(Duration.zero);
+      final product = sample(66);
+      service.suggestions['066']!.complete([product]);
+      await Future<void>.delayed(Duration.zero);
+      expect(provider.results.single.id, product.id);
+      expect(provider.error, isNull);
+    },
+  );
   test('late successful scan cannot clear a newer failed scan/input', () async {
     final service = DeferredSearch();
     final provider = ProductSearchProvider(service);

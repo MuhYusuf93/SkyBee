@@ -628,3 +628,37 @@ kebijakan Drive, dan penanda seed cocok setelah startup ke layar Kasir.
 Status startup mencatat 107 produk, 52 penjualan, dan satu kredensial
 pengelola. Pengguna dapat mengulang **Backup ke Drive sekarang** pada
 akun yang telah terhubung. Upload ulang nyata belum dijalankan dalam audit.
+
+### Pengarsipan barang dan pencarian angka
+
+Pengguna melaporkan `CONTOH Minuman 016` tetap aktif sesudah percobaan
+arsip dan `066` tidak menemukan `CONTOH Buku 066`. Seed memberi Minuman
+016 stok fisik jika mode pelacakan aktif. Aturan stok di spesifikasi tetap
+berlaku. Detail Barang menonaktifkan tindakan arsip saat masih ada stok
+terlacak dan menampilkan alasan tepat di bawah tindakan. Jika mutasi
+ditolak sesudah dialog, alasan ditampilkan sebagai notifikasi singkat.
+
+Gudang menerima awalan token angka, termasuk nol di depan, di samping
+awalan nama penuh. Pencocokan angka dilakukan di SQL sebelum batas halaman
+dan tunduk pada filter aktif/arsip. Tombol Search pada keyboard Kasir
+mempertahankan pencarian sugesti ketika kode persis tidak ditemukan.
+Hanya kode persis yang menambah barang secara langsung. Perbaikan versi
+0.5.4+16 tidak mengubah skema database.
+
+Host lulus 13 kasus dan analyzer bersih. DV8910 lulus lima kasus
+terarah dalam 2 menit 44 detik, termasuk pencarian angka, perpindahan
+daftar aktif/arsip, invalidasi daftar yang sudah dibuka, serta peringatan
+stok dan Undo kedaluwarsa dalam ID/EN. Semua hash terlindungi cocok,
+pengaturan awake kembali ke semula, dan kontrol runner ditutup.
+
+Poco F6 lulus lima kasus yang sama dalam 2 menit 11 detik. Audit hash
+berkas terlindungi dan manifest sumber cocok pada kedua perangkat.
+Bukti lokal ada di `build/m54-catalog-dv-20261109-232453/` dan
+`build/m54-catalog-poco-20261109-233101/`.
+
+APK `.skybee` ARM64 0.5.4+16 dipasang in-place di Poco dengan sertifikat
+yang sama. SHA-256 APK terpasang
+`db0c5dd4638c6674ca85d49fb9c55d321c56666df7785c55c6b9339d7e1a2b3a`.
+Pemeriksaan alignment 16 KiB dan hash sebelum peluncuran lulus. Kunci,
+penanda seed, serta kebijakan Drive cocok sesudah startup. Skenario uji
+menggunakan fixture sintetis. Barang pengguna tidak diarsipkan oleh audit.

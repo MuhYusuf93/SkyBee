@@ -60,5 +60,10 @@ snapshot. Fixture Poco membuktikan ekspor terenkripsi, verifikasi
 upload simulasi, dan pengulangan tanpa duplikasi. Upload ulang pada
 akun Google pengguna belum terverifikasi.
 
+Pada 0.5.4+16, peringatan penolakan arsip untuk stok terlacak dan
+pencarian angka `066` lulus regresi host serta fixture DV8910 dan Poco.
+Setelah arsip berhasil, barang berpindah dari daftar aktif ke Arsip dan
+keluar dari pencarian Kasir.
+
 Bukti dan failure awal: [M54_FOUNDATION_REPORT](M54_FOUNDATION_REPORT.md).
 85kasusunik host melalui runs/retests bukan acceptance seluruh M5.4.

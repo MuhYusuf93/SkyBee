@@ -50,12 +50,18 @@ SqlQuery warehouseQuery(
     values.add(supplier.value);
   }
   if (filter.namePrefix.isNotEmpty) {
-    final end = prefixEnd(filter.namePrefix);
+    final prefix = filter.namePrefix;
+    final end = prefixEnd(prefix);
+    // A typed number can start a later name token, including leading zeros.
+    // Other searches retain the indexed full-name prefix path.
+    final numeric = RegExp(r'^[0-9]+$').hasMatch(prefix);
     conditions.add(
-      '(p.normalized_name COLLATE BINARY>=?${end == null ? '' : ' AND p.normalized_name COLLATE BINARY<?'})',
+      '((p.normalized_name COLLATE BINARY>=?${end == null ? '' : ' AND p.normalized_name COLLATE BINARY<?'})'
+      '${numeric ? ' OR p.normalized_name GLOB ?' : ''})',
     );
-    values.add(filter.namePrefix);
+    values.add(prefix);
     if (end != null) values.add(end);
+    if (numeric) values.add('* $prefix*');
   }
   final outer = <String>[];
   if (filter.stock == WarehouseStockFilter.expired) {

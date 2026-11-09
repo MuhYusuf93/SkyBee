@@ -244,6 +244,11 @@ class _DetailBody extends StatelessWidget {
   Widget build(BuildContext context) => Consumer<ProductDetailProvider>(
     builder: (context, state, _) {
       final product = state.product;
+      final hasStockToArchive =
+          product != null &&
+          !product.isDeleted &&
+          product.stockTracked &&
+          product.quantity > 0;
       return Scaffold(
         appBar: AppBar(
           actions: const [LanguageButton()],
@@ -456,7 +461,7 @@ class _DetailBody extends StatelessWidget {
                         ),
                     ],
                     OutlinedButton(
-                      onPressed: state.busy
+                      onPressed: state.busy || hasStockToArchive
                           ? null
                           : () async {
                               final confirm = await showDialog<bool>(
@@ -486,46 +491,58 @@ class _DetailBody extends StatelessWidget {
                               );
                               if (confirm != true) return;
                               UndoToken? token;
-                              if (await state.run(() async {
-                                    token = await state.service.archive(
-                                      state.id,
-                                      product.revision,
-                                      restore: product.isDeleted,
-                                    );
-                                  }) &&
-                                  context.mounted) {
+                              final saved = await state.run(() async {
+                                token = await state.service.archive(
+                                  state.id,
+                                  product.revision,
+                                  restore: product.isDeleted,
+                                );
+                              });
+                              if (!context.mounted) return;
+                              if (!saved) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    duration: const Duration(seconds: 5),
-                                    content: LocalizedNotice(
-                                      messageKey: 'productStatusUpdated',
-                                      onUndo: () async {
-                                        final undone = await state.run(
-                                          () => state.service.undo(token!),
-                                        );
-                                        if (undone) {
-                                          await state.load();
-                                        } else if (context.mounted) {
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                message(
-                                                  context,
-                                                  state.error ??
-                                                      'm3OperationFailed',
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      },
+                                    content: Text(
+                                      message(
+                                        context,
+                                        state.error ?? 'm3OperationFailed',
+                                      ),
                                     ),
                                   ),
                                 );
-                                await state.load();
+                                return;
                               }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: const Duration(seconds: 5),
+                                  content: LocalizedNotice(
+                                    messageKey: 'productStatusUpdated',
+                                    onUndo: () async {
+                                      final undone = await state.run(
+                                        () => state.service.undo(token!),
+                                      );
+                                      if (undone) {
+                                        await state.load();
+                                      } else if (context.mounted) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              message(
+                                                context,
+                                                state.error ??
+                                                    'm3OperationFailed',
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
+                              );
+                              await state.load();
                             },
                       child: Text(
                         product.isDeleted
@@ -535,6 +552,8 @@ class _DetailBody extends StatelessWidget {
                     ),
                   ],
                 ),
+                if (hasStockToArchive)
+                  Text(tr(context, 'stockRemainsHandleBeforeArchive')),
                 const SizedBox(height: 24),
                 Text(tr(context, 'stockByReceipt')),
                 OutlinedButton(

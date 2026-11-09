@@ -1,6 +1,6 @@
 # Handoff aktif — M5.4
 
-9 November 2026 WIB. Versi kerja 0.5.4+15, skema 54. Tahap 5
+9 November 2026 WIB. Versi kerja 0.5.4+16, skema 54. Tahap 5
 mengintegrasikan lembar pemulihan PDF, tren laba kotor dan ekspor, label
 Code 128, serta pemilihan akun Drive. Rincian bukti dan batas uji ada pada
 [checkpoint M5.4](M54_CHECKPOINT.md) dan [matriks acceptance](M54_ACCEPTANCE.md).
@@ -29,6 +29,11 @@ Deadlock snapshot diperbaiki dan regresi fixture terenkripsi lulus.
 Kunci, penanda seed, dan kebijakan Drive terverifikasi sesudah startup.
 Upload ulang nyata masih perlu diperiksa melalui **Backup ke Drive sekarang**
 dan **Versi backup Drive** di SkyBee.
+
+Poco sekarang menjalankan `.skybee` 0.5.4+16. Gudang menerima token angka
+`066`, pencarian Kasir mempertahankan sugesti saat kode persis tidak
+ditemukan, dan tindakan Arsip menampilkan hambatan stok terlacak. Regresi
+terarah lulus pada Poco dan DV8910 dengan hash berkas terlindungi cocok.
 
 <!-- M54_FOUNDATION_START -->
 7 November 2026 WIB — M5.4 masih aktif, source0.5.4+14/schema38.
